@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "pch.h"
 #include "SList.h"
 
 
@@ -15,4 +15,3 @@ int SList::getData()
 {
 	return 10;
 }
-
