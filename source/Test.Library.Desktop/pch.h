@@ -1,11 +1,13 @@
-﻿//
-// pch.h
-// Header for standard system include files.
+// pch.h : include file for standard system include files,
+// or project specific include files that are used frequently, but
+// are changed infrequently
 //
 
 #pragma once
 
-#include <collection.h>
-#include <ppltasks.h>
+#include "targetver.h"
 
-#include "UnitTestApp.xaml.h"
+// Headers for CppUnitTest
+#include "CppUnitTest.h"
+
+// TODO: reference additional headers your program requires here

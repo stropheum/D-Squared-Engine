@@ -1,6 +1,8 @@
-﻿//
-// pch.cpp
-// Include the standard header and generate the precompiled header.
-//
+// pch.cpp : source file that includes just the standard includes
+// Test.Library.Desktop.pch will be the pre-compiled header
+// stdafx.obj will contain the pre-compiled type information
 
-#include "pch.h"
+#include <pch.h>
+
+// TODO: reference any additional headers you need in STDAFX.H
+// and not in this file
