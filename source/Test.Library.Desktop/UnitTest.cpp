@@ -11,6 +11,7 @@ namespace Test_Library_Desktop
         TEST_METHOD(TestMethod1)
         {
             // TODO: Your test code here
+			Assert::Fail(L"Test not implemented");
         }
     };
 }
