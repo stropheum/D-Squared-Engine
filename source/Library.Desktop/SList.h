@@ -3,7 +3,7 @@ class SList
 {
 public:
 	SList();
-	int getData();
 	~SList();
+	static int getData();
 };
 

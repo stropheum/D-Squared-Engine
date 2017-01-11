@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="DirectXGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

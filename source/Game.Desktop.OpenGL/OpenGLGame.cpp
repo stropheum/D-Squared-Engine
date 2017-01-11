@@ -3,8 +3,6 @@
 
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR commandLine, int showCommand)
 {
-	auto list = new SList();
-	auto data = list->getData();
-	delete(list);
+	SList::getData();
 	return 0;
 }
