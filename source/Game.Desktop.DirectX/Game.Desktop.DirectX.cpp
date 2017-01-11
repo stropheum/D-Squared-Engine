@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "Game.Desktop.DirectX.h"
+#include "../Library.Desktop/SList.h"
 
 #define MAX_LOADSTRING 100
 
@@ -26,6 +27,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // TODO: Place code here.
+	// Debug Code: testing use of library
+	auto linkedList = new SList();
+	auto data = linkedList->getData();
+	delete(linkedList);
 
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
