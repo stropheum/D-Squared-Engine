@@ -9,12 +9,19 @@ namespace TestLibraryDesktop
 	TEST_CLASS(SListTest)
 	{
 	public:
+
+		/**
+		 * Sets up leak detection logic
+		 */
 		static void initializeLeakDetection()
 		{
 			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
 			_CrtMemCheckpoint(&sStartMemState);
 		}
-
+		
+		/**
+		 * Detects if memory state has been corrupted
+		 */
 		static void finalizeLeakDetection()
 		{
 			_CrtMemState endMemState, diffMemState;
