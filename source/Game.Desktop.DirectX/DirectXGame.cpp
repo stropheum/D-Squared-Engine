@@ -103,7 +103,7 @@ int WINAPI WinMain(
 	cleanD3D();
 
 	// return this part of the WM_QUIT message to Windows
-	return msg.wParam;
+	return static_cast<int>(msg.wParam);
 }
 
 /**
