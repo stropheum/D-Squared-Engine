@@ -32,6 +32,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	UNREFERENCED_PARAMETER(commandLine);
 	UNREFERENCED_PARAMETER(showCommand);
 
+	// Code for testing instance of SList only
+	SList<int> list{};
+	list.clear();
+
 	// Init GLFW
 	glfwInit();
 	// Set all the required options for GLFW

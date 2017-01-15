@@ -9,7 +9,6 @@ namespace TestLibraryDesktop
 	TEST_CLASS(SListTest)
 	{
 	public:
-
 		/**
 		 * Sets up leak detection logic
 		 */
@@ -53,10 +52,64 @@ namespace TestLibraryDesktop
 			finalizeLeakDetection();
 		}
 
-		TEST_METHOD(TestGetData)
+		TEST_METHOD(TestPushFront)
 		{
-			auto data = SList::getData();
-			Assert::AreEqual(data, 10);
+			//TODO implement method test	
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestPopFront)
+		{
+			//TODO implement method test
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestPushBack)
+		{
+			//TODO implement method test
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestIsEmpty)
+		{
+			//TODO implement method test
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestFront)
+		{
+			//TODO implement method test
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestBack)
+		{
+			//TODO implement method test
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestSize)
+		{
+			//TODO implement method test
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestCopy)
+		{
+			//TODO: implement method test
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestAssignmentOperator)
+		{
+			//TODO: implement method test
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestClear)
+		{
+			//TODO: implement method test
+			Assert::Fail(L"Test not implemented");
 		}
 
 	private:

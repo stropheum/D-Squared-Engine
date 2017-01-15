@@ -24,23 +24,21 @@ struct CUSTOMVERTEX { FLOAT x, y, z, rhw; DWORD color; };
 #define CUSTOMFVF (D3DFVF_XYZRHW | D3DFVF_DIFFUSE)
 
 // the WindowProc function prototype
-LRESULT CALLBACK WindowProc(
-	HWND hWnd, 
-	UINT message, 
-	WPARAM wParam, 
-	LPARAM lParam);
+LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-int WINAPI WinMain(
-	HINSTANCE hInstance, 
-	HINSTANCE previousInstance, 
-	LPSTR commandLine, 
-	int showCommand)
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR commandLine, int showCommand)
 {
+	UNREFERENCED_PARAMETER(previousInstance);
+	UNREFERENCED_PARAMETER(commandLine);
+
+	// Code for testing instance of SList only
+	SList<int> list{};
+	list.clear();
+
 	// the handle for the window, filled by a function
 	HWND hWnd;
 	// this struct holds information for the window class
 	WNDCLASSEX wc;
-
 	// clear out the window class for use
 	ZeroMemory(&wc, sizeof(WNDCLASSEX));
 
@@ -55,7 +53,6 @@ int WINAPI WinMain(
 
 	// register the window class
 	RegisterClassEx(&wc);
-
 	// create the window and use the result as the handle
 	hWnd = CreateWindowEx(NULL,
 		L"WindowClass1",		// name of the window class
@@ -72,11 +69,9 @@ int WINAPI WinMain(
 
 	// display the window on the screen
 	ShowWindow(hWnd, showCommand);
-
 	initD3D(hWnd);
 	// this struct holds Windows event messages
 	MSG msg;
-
 
 	while (true)
 	{
@@ -97,11 +92,7 @@ int WINAPI WinMain(
 		render_frame();
 	}
 
-	UNREFERENCED_PARAMETER(previousInstance);
-	UNREFERENCED_PARAMETER(commandLine);
-
 	cleanD3D();
-
 	// return this part of the WM_QUIT message to Windows
 	return static_cast<int>(msg.wParam);
 }
