@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "SList.h"
+#include <SList.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -52,52 +52,171 @@ namespace TestLibraryDesktop
 			finalizeLeakDetection();
 		}
 
-		TEST_METHOD(TestPushFront)
-		{
-			//TODO implement method test	
-			Assert::Fail(L"Test not implemented");
+		TEST_METHOD(TestPushPopFrontSingle)
+		{	
+			SList<int> list{};
+
+			list.pushFront(1);
+			Assert::AreEqual(1, list.popFront());
 		}
 
-		TEST_METHOD(TestPopFront)
+		TEST_METHOD(TestPushPopFrontSequence)
 		{
-			//TODO implement method test
-			Assert::Fail(L"Test not implemented");
+			SList<int> list{};
+			auto iterations = 100;
+
+			for (auto i = 0; i < iterations; i++)
+			{
+				list.pushFront(i);
+			}
+
+			for (auto i = iterations-1; i >= 0; i--)
+			{
+				Assert::AreEqual(i, list.popFront());
+			}
 		}
 
-		TEST_METHOD(TestPushBack)
+		TEST_METHOD(TestPushBackSingle)
 		{
-			//TODO implement method test
-			Assert::Fail(L"Test not implemented");
+			SList<int> list{};
+
+			list.pushBack(10);
+			Assert::AreEqual(10, list.popFront());
 		}
 
-		TEST_METHOD(TestIsEmpty)
+		TEST_METHOD(TestPushBackSequence)
 		{
-			//TODO implement method test
-			Assert::Fail(L"Test not implemented");
+			SList<int> list{};
+			auto iterations = 100;
+
+			for (auto i = 0; i < iterations; i++)
+			{
+				list.pushBack(i);
+			}
+
+			for (auto i = 0; i < iterations; i++)
+			{
+				Assert::AreEqual(i, list.popFront());
+			}
 		}
 
-		TEST_METHOD(TestFront)
+		TEST_METHOD(TestIsEmptyInitial)
 		{
-			//TODO implement method test
-			Assert::Fail(L"Test not implemented");
+			SList<int> list{};
+			Assert::IsTrue(list.isEmpty());
 		}
 
-		TEST_METHOD(TestBack)
+		TEST_METHOD(TestIsEmptyAfterPop)
 		{
-			//TODO implement method test
-			Assert::Fail(L"Test not implemented");
+			SList<int> list{};
+			list.pushFront(1);
+			list.popFront();
+			Assert::IsTrue(list.isEmpty());
 		}
 
-		TEST_METHOD(TestSize)
+		TEST_METHOD(TestFrontAfterPushFront)
 		{
-			//TODO implement method test
-			Assert::Fail(L"Test not implemented");
+			SList<int> list{};
+			list.pushFront(1);
+			Assert::AreEqual(1, list.front());
+		}
+
+		TEST_METHOD(TestFrontAfterPushBack)
+		{
+			SList<int> list{};
+			list.pushBack(1);
+			Assert::AreEqual(1, list.front());
+		}
+
+		TEST_METHOD(TestFrontAfterPop)
+		{
+			SList<int> list{};
+			list.pushFront(1);
+			list.pushFront(2);
+			list.popFront();
+			Assert::AreEqual(1, list.front());
+		}
+
+		TEST_METHOD(TestBackAfterPushFrontSingle)
+		{
+			SList<int> list{};
+			list.pushFront(1);
+			Assert::AreEqual(1, list.back());
+		}
+
+		TEST_METHOD(TestBackAfterPushBackSingle)
+		{
+			SList<int> list{};
+			list.pushBack(1);
+			Assert::AreEqual(1, list.back());
+		}
+
+		TEST_METHOD(TestInitialSize)
+		{
+			SList<int> list{};
+			Assert::AreEqual(0, list.size());
+		}
+
+		TEST_METHOD(TestSizeAfterPushFrontSingle)
+		{
+			SList<int> list{};
+			list.pushFront(1);
+			Assert::AreEqual(1, list.size());
+		}
+
+		TEST_METHOD(TestSizeAfterPushFrontMultiple)
+		{
+			SList<int> list{};
+			for (auto i = 0; i < 10; i++)
+			{
+				list.pushFront(i);
+			}
+			Assert::AreEqual(10, list.size());
+		}
+
+		TEST_METHOD(TestSizeAfterPushBackSingle)
+		{
+			SList<int> list{};
+			list.pushBack(1);
+			Assert::AreEqual(1, list.size());
+		}
+
+		TEST_METHOD(TestSizeAfterPushBackMultiple)
+		{
+			SList<int> list{};
+			for (auto i = 0; i < 10; i++)
+			{
+				list.pushBack(i);
+			}
+			Assert::AreEqual(10, list.size());
+		}
+
+		TEST_METHOD(TestSizeAfterPop)
+		{
+			SList<int> list{};
+			list.pushFront(1);
+			list.pushBack(1);
+			list.popFront();
+			Assert::AreEqual(1, list.size());
 		}
 
 		TEST_METHOD(TestCopy)
 		{
-			//TODO: implement method test
-			Assert::Fail(L"Test not implemented");
+			SList<int> oldList{};
+			auto iterations = 10;
+
+			for (auto i = 0; i < iterations; i++)
+			{
+				oldList.pushBack(i);
+			}
+
+			auto newList(oldList);
+
+			Assert::AreEqual(oldList.front(), newList.front());
+			for (auto i = 0; i < iterations; i++)
+			{
+				
+			}
 		}
 
 		TEST_METHOD(TestAssignmentOperator)
@@ -106,10 +225,20 @@ namespace TestLibraryDesktop
 			Assert::Fail(L"Test not implemented");
 		}
 
-		TEST_METHOD(TestClear)
+		TEST_METHOD(TestListSizeOnClear)
 		{
-			//TODO: implement method test
-			Assert::Fail(L"Test not implemented");
+			SList<int> list{};
+			list.pushFront(1);
+			list.clear();
+			Assert::AreEqual(0, list.size());
+		}
+
+		TEST_METHOD(TestFrontNullOnClear)
+		{
+			SList<int> list{};
+			list.pushFront(1);
+			list.clear();
+			Assert::AreEqual(0, list.front());
 		}
 
 	private:

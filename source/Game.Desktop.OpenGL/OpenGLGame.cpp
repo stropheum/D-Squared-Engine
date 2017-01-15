@@ -35,6 +35,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	// Code for testing instance of SList only
 	SList<int> list{};
 	list.clear();
+	list.pushFront(1);
+	list.pushBack(12);
 
 	// Init GLFW
 	glfwInit();
