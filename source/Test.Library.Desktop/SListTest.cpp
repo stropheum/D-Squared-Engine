@@ -57,7 +57,7 @@ namespace TestLibraryDesktop
 			SList<int> list{};
 
 			list.pushFront(1);
-			Assert::AreEqual(1, list.popFront());
+			Assert::AreEqual(1, list.popFront(), L"Single pop front failed");
 		}
 
 		TEST_METHOD(TestPushPopFrontSequence)
@@ -221,8 +221,22 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestAssignmentOperator)
 		{
-			//TODO: implement method test
-			Assert::Fail(L"Test not implemented");
+			SList<int> list{};
+			list.pushFront(1);
+			list.pushFront(2);
+			list.pushFront(3);
+
+			SList<int> newList{};
+			newList = list;
+
+//			Assert::AreEqual(list.size(), newList.size(), L"Copied list has different size");
+
+			for (auto i = 0; i < list.size(); i++)
+			{
+				auto expected = list.popFront();
+				auto result = newList.popFront();
+				Assert::AreEqual(expected, result, L"List values do not match");
+			}
 		}
 
 		TEST_METHOD(TestListSizeOnClear)
