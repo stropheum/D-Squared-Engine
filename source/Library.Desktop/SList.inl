@@ -25,6 +25,22 @@ SList<T>::SList(const SList<T>& obj) : mSize(0), mFront(nullptr), mBack(nullptr)
 	}
 }
 
+template <class T>
+SList<T>& SList<T>::operator=(const SList<T>& rhs)
+{
+	if (this != &rhs)
+	{
+		clear();
+		auto current = rhs.mFront;
+		while (current != nullptr)
+		{
+			pushBack(current->mData);
+			current = current->next;
+		}
+	}
+	return *this;
+}
+
 /**
 * Deconstructor
 */
@@ -72,6 +88,29 @@ void SList<T>::pushBack(T data)
 		current->next = new Node(data);
 	}
 	mSize++;
+}
+
+/**
+* Removes all items in the list
+*/
+template <class T>
+void SList<T>::clear()
+{
+	auto current = mFront;
+	if (current != nullptr)
+	{
+		while (current->next != nullptr)
+		{
+			auto temp = current;
+			current = current->next;
+			delete(temp);
+		}
+	}
+	if (mFront != nullptr)
+	{
+		mFront->mData = NULL;
+	}
+	mSize = 0;
 }
 
 /**
@@ -132,43 +171,4 @@ template <class T>
 int SList<T>::size() const
 {
 	return mSize;
-}
-
-/**
-* Removes all items in the list
-*/
-template <class T>
-void SList<T>::clear()
-{
-	auto current = mFront;
-	if (current != nullptr)
-	{
-		while (current->next != nullptr)
-		{
-			auto temp = current;
-			current = current->next;
-			delete(temp);
-		}
-	}
-	if (mFront != nullptr)
-	{
-		mFront->mData = NULL;
-	}
-	mSize = 0;
-}
-
-template <class T>
-SList<T>& SList<T>::operator=(const SList<T>& rhs)
-{
-	if (this != &rhs)
-	{
-		clear();
-		auto current = rhs.mFront;
-		while (current != nullptr)
-		{
-			pushBack(current->mData);
-			current = current->next;
-		}
-	}
-	return *this;
 }

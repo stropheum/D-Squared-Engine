@@ -10,16 +10,20 @@ template <class T> class SList
 public:
 	SList();
 	explicit SList(const SList<T>& obj);
+	SList<T>& operator=(const SList<T>& rhs);
 	~SList();
+
 	void pushFront(T data);
 	void pushBack(T data);
+	void clear();
+
 	T popFront();
 	T& front();
 	T& back();
+
 	bool isEmpty() const;
 	int size() const;
-	void clear();
-	SList<T>& operator=(const SList<T>& rhs);
+
 private:
 	class Node
 	{
