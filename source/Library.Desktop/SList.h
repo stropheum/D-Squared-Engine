@@ -30,10 +30,11 @@ private:
 	public:
 		Node() : mData(nullptr), next(nullptr) {}
 		explicit Node(T data) : mData(data), next(nullptr) {}
-		~Node(){ mData = NULL; }
+		~Node() { mData = NULL; }
 		T mData;
 		Node* next;
 	};
+
 	int mSize;
 	Node* mFront;
 	Node* mBack;
