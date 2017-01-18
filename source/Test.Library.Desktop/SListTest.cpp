@@ -52,36 +52,20 @@ namespace TestLibraryDesktop
 			finalizeLeakDetection();
 		}
 
-		TEST_METHOD(TestPushPopFrontSingle)
-		{	
-			SList<int> list{};
-
-			list.pushFront(1);
-			Assert::AreEqual(1, list.popFront(), L"Single pop front failed");
-		}
-
-		TEST_METHOD(TestPushPopFrontSequence)
+		TEST_METHOD(TestPushPopFront)
 		{
 			SList<int> list{};
 			auto iterations = 100;
 
-			for (auto i = 0; i < iterations; i++)
+			for (int i = 0; i < iterations; i++)
 			{
 				list.pushFront(i);
 			}
 
-			for (auto i = iterations-1; i >= 0; i--)
+			for (int i = iterations-1; i >= 0; i--)
 			{
 				Assert::AreEqual(i, list.popFront());
 			}
-		}
-
-		TEST_METHOD(TestPushBackSingle)
-		{
-			SList<int> list{};
-
-			list.pushBack(10);
-			Assert::AreEqual(10, list.popFront());
 		}
 
 		TEST_METHOD(TestPushBackSequence)
@@ -89,115 +73,71 @@ namespace TestLibraryDesktop
 			SList<int> list{};
 			auto iterations = 100;
 
-			for (auto i = 0; i < iterations; i++)
+			for (int i = 0; i < iterations; i++)
 			{
 				list.pushBack(i);
 			}
 
-			for (auto i = 0; i < iterations; i++)
+			for (int i = 0; i < iterations; i++)
 			{
 				Assert::AreEqual(i, list.popFront());
 			}
 		}
 
-		TEST_METHOD(TestIsEmptyInitial)
-		{
-			SList<int> list{};
-			Assert::IsTrue(list.isEmpty());
-		}
-
 		TEST_METHOD(TestIsEmptyAfterPop)
 		{
 			SList<int> list{};
+			Assert::IsTrue(list.isEmpty());
+
 			list.pushFront(1);
 			list.popFront();
 			Assert::IsTrue(list.isEmpty());
 		}
 
-		TEST_METHOD(TestFrontAfterPushFront)
+		TEST_METHOD(TestFront)
 		{
 			SList<int> list{};
+
 			list.pushFront(1);
 			Assert::AreEqual(1, list.front());
-		}
 
-		TEST_METHOD(TestFrontAfterPushBack)
-		{
-			SList<int> list{};
-			list.pushBack(1);
+			list.pushBack(2);
 			Assert::AreEqual(1, list.front());
-		}
 
-		TEST_METHOD(TestFrontAfterPop)
-		{
-			SList<int> list{};
-			list.pushFront(1);
-			list.pushFront(2);
 			list.popFront();
-			Assert::AreEqual(1, list.front());
+			Assert::AreEqual(2, list.front());
+
+			list.front() = 5;
+			Assert::AreEqual(5, list.front());
 		}
 
-		TEST_METHOD(TestBackAfterPushFrontSingle)
+		TEST_METHOD(TestBack)
 		{
 			SList<int> list{};
+
 			list.pushFront(1);
 			Assert::AreEqual(1, list.back());
+
+			list.pushBack(2);
+			Assert::AreEqual(2, list.back());
 		}
 
-		TEST_METHOD(TestBackAfterPushBackSingle)
-		{
-			SList<int> list{};
-			list.pushBack(1);
-			Assert::AreEqual(1, list.back());
-		}
-
-		TEST_METHOD(TestInitialSize)
+		TEST_METHOD(TestSize)
 		{
 			SList<int> list{};
 			Assert::AreEqual(0, list.size());
-		}
 
-		TEST_METHOD(TestSizeAfterPushFrontSingle)
-		{
-			SList<int> list{};
 			list.pushFront(1);
 			Assert::AreEqual(1, list.size());
-		}
 
-		TEST_METHOD(TestSizeAfterPushFrontMultiple)
-		{
-			SList<int> list{};
-			for (auto i = 0; i < 10; i++)
-			{
-				list.pushFront(i);
-			}
-			Assert::AreEqual(10, list.size());
-		}
+			list.pushBack(2);
+			Assert::AreEqual(2, list.size());
 
-		TEST_METHOD(TestSizeAfterPushBackSingle)
-		{
-			SList<int> list{};
-			list.pushBack(1);
-			Assert::AreEqual(1, list.size());
-		}
-
-		TEST_METHOD(TestSizeAfterPushBackMultiple)
-		{
-			SList<int> list{};
-			for (auto i = 0; i < 10; i++)
-			{
-				list.pushBack(i);
-			}
-			Assert::AreEqual(10, list.size());
-		}
-
-		TEST_METHOD(TestSizeAfterPop)
-		{
-			SList<int> list{};
-			list.pushFront(1);
-			list.pushBack(1);
 			list.popFront();
 			Assert::AreEqual(1, list.size());
+
+			list.popFront();
+			Assert::AreEqual(0, list.size());
 		}
 
 		TEST_METHOD(TestCopy)
@@ -212,10 +152,11 @@ namespace TestLibraryDesktop
 
 			auto newList(oldList);
 
-			Assert::AreEqual(oldList.front(), newList.front());
-			for (auto i = 0; i < iterations; i++)
+			while (!oldList.isEmpty())
 			{
-				
+				auto expected = oldList.popFront();
+				auto actual = newList.popFront();
+				Assert::AreEqual(expected, actual);
 			}
 		}
 
@@ -229,9 +170,7 @@ namespace TestLibraryDesktop
 			SList<int> newList{};
 			newList = list;
 
-//			Assert::AreEqual(list.size(), newList.size(), L"Copied list has different size");
-
-			for (auto i = 0; i < list.size(); i++)
+			for (int i = 0; i < list.size(); i++)
 			{
 				auto expected = list.popFront();
 				auto result = newList.popFront();
@@ -239,20 +178,14 @@ namespace TestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(TestListSizeOnClear)
+		TEST_METHOD(TestClear)
 		{
 			SList<int> list{};
+			
 			list.pushFront(1);
 			list.clear();
-			Assert::AreEqual(0, list.size());
-		}
 
-		TEST_METHOD(TestFrontNullOnClear)
-		{
-			SList<int> list{};
-			list.pushFront(1);
-			list.clear();
-			Assert::AreEqual(0, list.front());
+			Assert::AreEqual(0, list.size());
 		}
 
 	private:
