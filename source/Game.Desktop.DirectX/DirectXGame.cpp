@@ -1,8 +1,4 @@
-#include <windows.h>
-#include <windowsx.h>
-#include <d3d9.h>
-#include "SList.h"
-
+#include "pch.h"
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
