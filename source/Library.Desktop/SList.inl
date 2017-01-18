@@ -1,16 +1,11 @@
 #pragma once
-/**
-* Default constructor
-*/
+
+
 template <class T>
 SList<T>::SList() : mSize(0), mFront(nullptr), mBack(nullptr)
 {
 }
 
-/**
-* Copy Constructor
-* Performs a deep copy of every current element in the list
-*/
 template <class T>
 SList<T>::SList(const SList<T>& obj) : mSize(0), mFront(nullptr), mBack(nullptr)
 {
@@ -41,9 +36,6 @@ SList<T>& SList<T>::operator=(const SList<T>& rhs)
 	return *this;
 }
 
-/**
-* Deconstructor
-*/
 template <class T>
 SList<T>::~SList()
 {
@@ -56,9 +48,6 @@ SList<T>::~SList()
 	}
 }
 
-/**
-* Push an object to the front of the list
-*/
 template <class T>
 void SList<T>::pushFront(T data)
 {
@@ -68,9 +57,6 @@ void SList<T>::pushFront(T data)
 	mSize++;
 }
 
-/**
-* Push an object to the back of the list
-*/
 template <class T>
 void SList<T>::pushBack(T data)
 {
@@ -90,9 +76,6 @@ void SList<T>::pushBack(T data)
 	mSize++;
 }
 
-/**
-* Removes all items in the list
-*/
 template <class T>
 void SList<T>::clear()
 {
@@ -113,9 +96,6 @@ void SList<T>::clear()
 	mSize = 0;
 }
 
-/**
-* Pop and object to the front of the list
-*/
 template <class T>
 T SList<T>::popFront()
 {
@@ -127,20 +107,12 @@ T SList<T>::popFront()
 	return result;
 }
 
-/**
-* Retrieves the front item on the list
-* @Return The templated item at the front of the list
-*/
 template <class T>
 T& SList<T>::front()
 {
 	return mFront->mData;
 }
 
-/**
-* Retrieves the back item on the list
-* @Return The templated item at the back of the list
-*/
 template <class T>
 T& SList<T>::back()
 {
@@ -153,20 +125,12 @@ T& SList<T>::back()
 	//TODO: Throw exception if trying to call back on a null list
 }
 
-/**
-* Determines if the list does not contain any elements
-* @Return true if the list is empty
-*/
 template <class T>
 bool SList<T>::isEmpty() const
 {
 	return mSize == 0;
 }
 
-/**
-* Retrieves the size of the list
-* @Return The list's size
-*/
 template <class T>
 int SList<T>::size() const
 {
