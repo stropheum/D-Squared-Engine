@@ -8,7 +8,6 @@ namespace TestLibraryDesktop
 {		
 	TEST_CLASS(SListTest)
 	{
-	private:
 		SList<int>* list;
 		SList<int*>* pList;
 	public:
@@ -282,6 +281,9 @@ namespace TestLibraryDesktop
 
 			int x = 1;
 			pList->pushFront(&x);
+			pList->clear();
+
+			Assert::AreEqual(0, pList->size(), L"List size non-zero after clear");
 		}
 
 	private:
