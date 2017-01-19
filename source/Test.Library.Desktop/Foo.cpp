@@ -1,14 +1,14 @@
 #include "pch.h"
 #include "Foo.h"
 
-
 /**
  * Constructor
  * @Param data: The data being wrapped by the foo object
  */
 Foo::Foo(int data)
 {
-	mData = new int(10);
+	mData = new int();
+	*mData = data;
 }
 
 /**
@@ -34,6 +34,7 @@ Foo::~Foo()
  */
 Foo& Foo::operator=(const Foo& rhs)
 {
+	delete(mData);
 	mData = new int(rhs.getData());
 	return *this;
 }
@@ -43,7 +44,7 @@ Foo& Foo::operator=(const Foo& rhs)
  */
 bool Foo::operator==(const Foo& rhs) const
 {
-	return (this->mData == rhs.mData);
+	return (this->getData() == rhs.getData());
 }
 
 /**

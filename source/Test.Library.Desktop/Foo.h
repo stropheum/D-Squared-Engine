@@ -35,6 +35,7 @@ public:
 	* @Return: the dereferenced int contained by Foo
 	*/
 	int getData() const;
+
 private:
 	/// Member int that is wrapped by foo
 	int* mData;

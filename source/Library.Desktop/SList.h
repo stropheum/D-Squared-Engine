@@ -83,7 +83,7 @@ private:
 		explicit Node(T data) : mData(data), next(nullptr) {}
 
 		/// Node deconstructor
-		~Node() { mData = NULL; }
+		~Node(){}
 
 		/// Data being contained by the node
 		T mData;

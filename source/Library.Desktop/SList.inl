@@ -89,10 +89,6 @@ void SList<T>::clear()
 			delete(temp);
 		}
 	}
-	if (mFront != nullptr)
-	{
-		mFront->mData = NULL;
-	}
 	mSize = 0;
 }
 
