@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include <SList.h>
+#include "Foo.h"
+#include "implementation.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -8,6 +10,9 @@ namespace TestLibraryDesktop
 {		
 	TEST_CLASS(SListTest)
 	{
+		SList<int>*  list;
+		SList<int*>* pList;
+		SList<Foo>*  fooList;
 	public:
 		/**
 		 * Sets up leak detection logic
@@ -32,160 +37,352 @@ namespace TestLibraryDesktop
 			}
 		}
 
-		TEST_CLASS_INITIALIZE(InitializeClass)
-		{
-			// Initialize data needed for every test
-		}
-
-		TEST_CLASS_CLEANUP(CleanupClass)
-		{
-			// Cleanup class level data
-		}
-
 		TEST_METHOD_INITIALIZE(InitializeMethod)
 		{
 			initializeLeakDetection();
+			list    = new SList<int> ();
+			pList   = new SList<int*>();
+			fooList = new SList<Foo> ();
 		}
 
 		TEST_METHOD_CLEANUP(CleanupMethod)
 		{
+			delete(fooList);
+			delete(pList);
+			delete(list);
 			finalizeLeakDetection();
 		}
 
 		TEST_METHOD(TestPushPopFront)
 		{
-			SList<int> list{};
-			auto iterations = 100;
+			const int iterations = 100;
 
 			for (int i = 0; i < iterations; i++)
 			{
-				list.pushFront(i);
+				list->pushFront(i);
 			}
 
 			for (int i = iterations-1; i >= 0; i--)
 			{
-				Assert::AreEqual(i, list.popFront());
+				Assert::AreEqual(i, list->popFront(), L"Integer list values not equal");
+			}
+
+			int values[iterations];
+			for (int i = 0; i < iterations; i++)
+			{
+				values[i] = i;
+				pList->pushBack(&values[i]);
+			}
+			for (int i = 0; i < iterations; i++)
+			{
+				Assert::AreEqual(i, *pList->popFront(), L"Pointer list values not equal");
+			}
+
+			for (int i = 0; i < iterations; i++)
+			{
+				Foo foo(i);
+				fooList->pushBack(foo);
+			}
+			for (int i = 0; i < iterations; i++)
+			{
+				Foo foo(i);
+				Assert::AreEqual(foo, fooList->popFront(), L"Foo list values not equal");
 			}
 		}
 
-		TEST_METHOD(TestPushBackSequence)
+		TEST_METHOD(TestPushBack)
 		{
-			SList<int> list{};
-			auto iterations = 100;
+			const auto iterations = 100;
 
 			for (int i = 0; i < iterations; i++)
 			{
-				list.pushBack(i);
+				list->pushBack(i);
 			}
 
 			for (int i = 0; i < iterations; i++)
 			{
-				Assert::AreEqual(i, list.popFront());
+				Assert::AreEqual(i, list->popFront(), L"Integer list values not equal");
+			}
+
+			int values[iterations];
+			for (int i = 0; i < iterations; i++)
+			{
+				values[i] = i;
+				pList->pushBack(&values[i]);
+			}
+			for (int i = 0; i < iterations; i++)
+			{
+				Assert::AreEqual(i, *pList->popFront(), L"Pointer list values not equal");
+			}
+
+			for (int i = 0; i < iterations; i++)
+			{
+				Foo foo(i);
+				fooList->pushBack(foo);
+			}
+			for (int i = 0; i < iterations; i++)
+			{
+				Foo foo(i);
+				Assert::AreEqual(foo, fooList->popFront(), L"Foo list values not equal");
 			}
 		}
 
 		TEST_METHOD(TestIsEmptyAfterPop)
 		{
-			SList<int> list{};
-			Assert::IsTrue(list.isEmpty());
+			Assert::IsTrue(list->isEmpty(), L"Integer list is not empty on initialization");
 
-			list.pushFront(1);
-			list.popFront();
-			Assert::IsTrue(list.isEmpty());
+			list->pushFront(1);
+			list->popFront();
+			Assert::IsTrue(list->isEmpty(), L"Integer list is not empty after popping last value");
+
+			Assert::IsTrue(pList->isEmpty(), L"Pointer list is not empty on initialization");
+
+			int x = 1;
+			pList->pushFront(&x);
+			pList->popFront();
+			Assert::IsTrue(pList->isEmpty(), L"Pointer list is not empty after popping last value");
+
+			Foo foo(1);
+			fooList->pushFront(foo);
+			fooList->popFront();
+			Assert::IsTrue(fooList->isEmpty(), L"Foo list is not empty after popping last value");
 		}
 
 		TEST_METHOD(TestFront)
 		{
-			SList<int> list{};
+			list->pushFront(1);
+			Assert::AreEqual(1, list->front(), L"First item pushed is not equal to front value");
 
-			list.pushFront(1);
-			Assert::AreEqual(1, list.front());
+			list->pushBack(2);
+			Assert::AreEqual(1, list->front(), L"Front item changed after push back called");
+			
+			list->popFront();
+			Assert::AreEqual(2, list->front(), L"Front item incorrect after calling pop front");
+			
+			list->front() = 5;
+			Assert::AreEqual(5, list->front(), L"Error attempting to change list.front()");
 
-			list.pushBack(2);
-			Assert::AreEqual(1, list.front());
+			int x = 1; 
+			int y = 2; 
+			int z = 3;
+			pList->pushFront(&x);
+			Assert::AreEqual(&x, pList->front(), L"Conflicting addresses on front after push front");
+			Assert::AreEqual(1, *pList->front(), L"Conflicting values on front after push front");
 
-			list.popFront();
-			Assert::AreEqual(2, list.front());
+			pList->pushBack(&y);
+			Assert::AreEqual(&x, pList->front(), L"Conflicting addresses on front after push back");
+			Assert::AreEqual(1, *pList->front(), L"Conflicting values on front after push back");
 
-			list.front() = 5;
-			Assert::AreEqual(5, list.front());
+			pList->front() = &z;
+			Assert::AreEqual(&z, pList->front(), L"Conflicting addresses on front after changing front directly");
+			Assert::AreEqual(3, *pList->front(), L"Conflicting values on front after changing front directly");
+
+			Foo f1(1);
+			Foo f2(2);
+			Foo f3(3);
+			fooList->pushFront(f1);
+			Assert::AreEqual(f1, fooList->front(), L"Front of Foo list does not match value pushed");
+			fooList->pushBack(f2);
+			Assert::AreEqual(f1, fooList->front(), L"Front of Foo list changed after push back");
+			fooList->front() = f3;
+			Assert::AreEqual(f3, fooList->front(), L"Error changing front of Foo list directly");
 		}
 
 		TEST_METHOD(TestBack)
 		{
-			SList<int> list{};
+			list->pushFront(1);
+			Assert::AreEqual(1, list->back(), L"Conflicting back values after push front");
 
-			list.pushFront(1);
-			Assert::AreEqual(1, list.back());
+			list->pushBack(2);
+			Assert::AreEqual(2, list->back(), L"Conflicting back values after push back");
 
-			list.pushBack(2);
-			Assert::AreEqual(2, list.back());
+			list->back() = 5;
+			Assert::AreEqual(5, list->back(), L"Error attempting to change list.back()");
+
+			int x = 1;
+			int y = 2;
+			int z = 3;
+
+			pList->pushFront(&x);
+			Assert::AreEqual(&x, pList->back(), L"Conflicting back values after push front");
+			Assert::AreEqual(x, *pList->back(), L"Value changed after pushing address to list");
+
+			pList->pushBack(&y);
+			Assert::AreEqual(&y, pList->back(), L"Conflicting back values after push back");
+			Assert::AreEqual(y, *pList->back(), L"Back value changed after pushing back");
+
+			pList->back() = &z;
+			Assert::AreEqual(&z, pList->back(), L"Back pointer not changed after assigning directly");
+			Assert::AreEqual(z, *pList->back(), L"Value corrupted after assigning back address directly");
+
+			Foo f1(1);
+			Foo f2(2);
+			Foo f3(3);
+
+			fooList->pushFront(f1);
+			Assert::AreEqual(f1, fooList->back(), L"Conflicting back values after push front Foo list");
+
+			fooList->pushBack(f2);
+			Assert::AreEqual(f2, fooList->back(), L"Back of Foo list does not match value pushed to back");
+
+			fooList->back() = f3;
+			Assert::AreEqual(f3, fooList->back(), L"Back value of Foo list not set properly");
 		}
 
 		TEST_METHOD(TestSize)
 		{
-			SList<int> list{};
-			Assert::AreEqual(0, list.size());
+			Assert::AreEqual(0, list->size(), L"List size not zero on initialization");
 
-			list.pushFront(1);
-			Assert::AreEqual(1, list.size());
+			list->pushFront(1);
+			Assert::AreEqual(1, list->size(), L"List size not accurate after pushing front");
+			list->pushBack(2);
+			Assert::AreEqual(2, list->size(), L"List size not accurate after pushing back");
+			list->popFront();
+			Assert::AreEqual(1, list->size(), L"List size not accurate after popping front");
+			list->popFront();
+			Assert::AreEqual(0, list->size(), L"List size not accurate after popping last value");
 
-			list.pushBack(2);
-			Assert::AreEqual(2, list.size());
+			int x = 1;
+			int y = 2;
 
-			list.popFront();
-			Assert::AreEqual(1, list.size());
+			Assert::AreEqual(0, pList->size(), L"List size not zero on initialization");
+			pList->pushFront(&x);
+			Assert::AreEqual(1, pList->size(), L"List size not accurate after pushing front");
+			pList->pushBack(&y);
+			Assert::AreEqual(2, pList->size(), L"List size not accurate after pushing back");
+			pList->popFront();
+			Assert::AreEqual(1, pList->size(), L"List size not accurate after popping front");
+			pList->popFront();
+			Assert::AreEqual(0, pList->size(), L"List size not accurate after popping last value");
 
-			list.popFront();
-			Assert::AreEqual(0, list.size());
+			Foo f1(1);
+			Foo f2(2);
+
+			Assert::AreEqual(0, fooList->size(), L"Foo list size not zero on initialization");
+			fooList->pushFront(f1);
+			Assert::AreEqual(1, fooList->size(), L"Foo list not accurate after pushing front");
+			fooList->pushBack(f2);
+			Assert::AreEqual(2, fooList->size(), L"Foo list size not accurate after pushing back");
+			fooList->popFront();
+			Assert::AreEqual(1, fooList->size(), L"Foo list size not accurate after popping front");
+			fooList->popFront();
+			Assert::AreEqual(0, fooList->size(), L"Foo list size not accurate after popping last value");
 		}
 
 		TEST_METHOD(TestCopy)
 		{
-			SList<int> oldList{};
-			auto iterations = 10;
+			const auto iterations = 10;
 
-			for (auto i = 0; i < iterations; i++)
+			for (int i = 0; i < iterations; i++)
 			{
-				oldList.pushBack(i);
+				list->pushBack(i);
+			}
+			auto listCopy(*list);
+			while (!list->isEmpty())
+			{
+				auto expected = list->popFront();
+				auto actual = listCopy.popFront();
+				Assert::AreEqual(expected, actual, L"Copied list contains different values from original");
 			}
 
-			auto newList(oldList);
-
-			while (!oldList.isEmpty())
+			int values[iterations];
+			for (int i = 0; i < iterations; i++)
 			{
-				auto expected = oldList.popFront();
-				auto actual = newList.popFront();
-				Assert::AreEqual(expected, actual);
+				values[i] = i;
+				pList->pushBack(&values[i]);
 			}
+			auto pListCopy(*pList);
+			while (!pList->isEmpty())
+			{
+				auto expected = pList->popFront();
+				auto actual = pListCopy.popFront();
+				Assert::AreEqual(expected, actual, L"Copied list contains different pointer values from original");
+			}
+
+			for (int i = 0; i < iterations; i++)
+			{
+				Foo f(i);
+				fooList->pushBack(f);
+			}
+			auto fooListCopy(*fooList);
+			while (!fooList->isEmpty())
+			{
+				auto expected = fooList->popFront();
+				auto actual = fooListCopy.popFront();
+				Assert::AreEqual(expected, actual, L"Foo list copied values do not match original");
+			}
+
 		}
 
 		TEST_METHOD(TestAssignmentOperator)
 		{
-			SList<int> list{};
-			list.pushFront(1);
-			list.pushFront(2);
-			list.pushFront(3);
+			list->pushFront(1);
+			list->pushFront(2);
+			list->pushFront(3);
 
-			SList<int> newList{};
-			newList = list;
+			SList<int> newList;
+			newList = *list;
 
-			for (int i = 0; i < list.size(); i++)
+			for (int i = 0; i < list->size(); i++)
 			{
-				auto expected = list.popFront();
+				auto expected = list->popFront();
 				auto result = newList.popFront();
 				Assert::AreEqual(expected, result, L"List values do not match");
+			}
+
+			int x = 1;
+			int y = 2;
+			int z = 3;
+			pList->pushFront(&x);
+			pList->pushFront(&y);
+			pList->pushFront(&z);
+
+			SList<int*> pListCopy;
+			pListCopy = *pList;
+
+			for (int i = 0; i < pList->size(); i++)
+			{
+				auto expected = pList->popFront();
+				auto actual = pListCopy.popFront();
+				Assert::AreEqual(expected, actual, L"List values do not match");
+			}
+
+			Foo f1(1);
+			Foo f2(2);
+			Foo f3(3);
+			fooList->pushFront(f1);
+			fooList->pushFront(f2);
+			fooList->pushFront(f3);
+
+			SList<Foo> fooListCopy;
+			fooListCopy = *fooList;
+
+			for (int i = 0; i < fooList->size(); i++)
+			{
+				auto expected = fooList->popFront();
+				auto actual = fooListCopy.popFront();
+				Assert::AreEqual(expected, actual, L"Foo list values do not match");
 			}
 		}
 
 		TEST_METHOD(TestClear)
 		{
-			SList<int> list{};
-			
-			list.pushFront(1);
-			list.clear();
+			list->pushFront(1);
+			list->clear();
 
-			Assert::AreEqual(0, list.size());
+			Assert::AreEqual(0, list->size(), L"List size non-zero after clear");
+
+			int x = 1;
+			pList->pushFront(&x);
+			pList->clear();
+
+			Assert::AreEqual(0, pList->size(), L"List size non-zero after clear");
+
+			Foo foo(1);
+			fooList->pushFront(foo);
+			fooList->clear();
+
+			Assert::AreEqual(0, fooList->size(), L"List size non-zero after clear");
 		}
 
 	private:
