@@ -21,6 +21,7 @@ Library.Desktop.vcxproj.filters
     similar extensions under a specific node (for e.g. ".cpp" files are associated with the
     "Source Files" filter).
 
+	Author: Dale Diaz
 
 /////////////////////////////////////////////////////////////////////////////
 
