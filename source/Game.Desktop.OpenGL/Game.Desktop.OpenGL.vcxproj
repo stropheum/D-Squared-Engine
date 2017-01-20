@@ -72,21 +72,24 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <OutDir>$(SolutionDir)\bin\$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\obj\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
+=======
+    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
+>>>>>>> parent of 5b8cf00... Updated the output and intermediate directories to be more uniform
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)\obj\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)\obj\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+<<<<<<< HEAD
     <OutDir>$(SolutionDir)\bin\$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\obj\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
 =======
@@ -108,6 +111,9 @@
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
 >>>>>>> origin/master
+=======
+    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
+>>>>>>> parent of 5b8cf00... Updated the output and intermediate directories to be more uniform
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

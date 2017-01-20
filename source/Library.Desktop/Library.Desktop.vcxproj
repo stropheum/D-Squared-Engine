@@ -71,18 +71,21 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <OutDir>$(SolutionDir)\bin\$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\obj\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
+=======
+    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
+>>>>>>> parent of 5b8cf00... Updated the output and intermediate directories to be more uniform
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)\bin\$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)\obj\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)\bin\$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)\obj\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+<<<<<<< HEAD
     <OutDir>$(SolutionDir)\bin\$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\obj\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
 =======
@@ -101,6 +104,9 @@
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
 >>>>>>> origin/master
+=======
+    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
+>>>>>>> parent of 5b8cf00... Updated the output and intermediate directories to be more uniform
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
