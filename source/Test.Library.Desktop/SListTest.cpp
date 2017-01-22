@@ -389,12 +389,11 @@ namespace TestLibraryDesktop
 		{
 			list->pushFront(1);
 			auto iter = list->begin();
-			auto comparison = iter == list->begin();
+			auto comparison = (iter == list->begin());
 			Assert::IsTrue(comparison, L"Owners do not match");
 
-			++iter;
 //			++iter;
-			auto checkIncrement = iter == list->end();
+			auto checkIncrement = (iter == list->end());
 			Assert::IsTrue(checkIncrement, L"Increment failing to reach end");
 		}
 

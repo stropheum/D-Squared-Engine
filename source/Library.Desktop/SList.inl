@@ -54,6 +54,10 @@ void SList<T>::pushFront(T data)
 	mFront = new Node(data);
 	mFront->next = temp;
 	mSize++;
+	if (mBack == nullptr)
+	{
+		mBack = mFront;
+	}
 }
 
 template <class T>
@@ -62,6 +66,7 @@ void SList<T>::pushBack(T data)
 	if (mFront == nullptr)
 	{
 		mFront = new Node(data);
+		mBack = mFront;
 	}
 	else
 	{
@@ -71,6 +76,7 @@ void SList<T>::pushBack(T data)
 			current = current->next;
 		}
 		current->next = new Node(data);
+		mBack = current->next;
 	}
 	mSize++;
 }
@@ -106,17 +112,13 @@ template <class T>
 T& SList<T>::front()
 {
 	return mFront->mData;
+	//TODO: Throw exception if trying to call front on a null list
 }
 
 template <class T>
 T& SList<T>::back()
 {
-	auto current = mFront;
-	while (current->next != nullptr)
-	{
-		current = current->next;
-	}
-	return current->mData;
+	return mBack->mData;
 	//TODO: Throw exception if trying to call back on a null list
 }
 
