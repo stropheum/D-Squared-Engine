@@ -75,23 +75,18 @@ public:
 	{
 	public:
 		/// Constructor. Takes a node reference and assigns owner to current SList object
-		Iterator(SList<T>* owner, Node& node);
+		Iterator(SList<T>* owner, Node* node);
 		bool operator==(Iterator& rhs);
 		bool operator!=(Iterator& rhs);
+		void operator++();
+		void operator++(int);
 	private:
 		const SList<T>* mOwner;
-		Node& mNode;
+		Node* mNode;
 	};
 
-	Iterator& begin()
-	{
-		return mBegin;
-	}
-
-	Iterator& end()
-	{
-		return mEnd;
-	}
+	Iterator& begin();
+	Iterator& end();
 
 private:
 	class Node

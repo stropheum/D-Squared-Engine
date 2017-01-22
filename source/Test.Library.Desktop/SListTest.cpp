@@ -388,10 +388,14 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestIteratorStartEndUnique)
 		{
 			list->pushFront(1);
-			auto iterBegin = list->begin();
-			auto iterEnd = list->end();
-			auto comparison = iterBegin != iterEnd;
-			Assert::IsTrue(comparison, L"Begin and End iterators are equal");
+			auto iter = list->begin();
+			auto comparison = iter == list->begin();
+			Assert::IsTrue(comparison, L"Owners do not match");
+
+			++iter;
+//			++iter;
+			auto checkIncrement = iter == list->end();
+			Assert::IsTrue(checkIncrement, L"Increment failing to reach end");
 		}
 
 	private:

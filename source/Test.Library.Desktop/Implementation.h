@@ -9,7 +9,7 @@ namespace Microsoft
 	{
 		namespace CppUnitTestFramework
 		{
-			template<> static std::wstring ToString<Foo>(const Foo& t) 
+			template<> inline std::wstring ToString<Foo>(const Foo& t) 
 			{ 
 				RETURN_WIDE_STRING(t.getData()); 
 			}
