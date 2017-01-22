@@ -385,6 +385,15 @@ namespace TestLibraryDesktop
 			Assert::AreEqual(0, fooList->size(), L"List size non-zero after clear");
 		}
 
+		TEST_METHOD(TestIteratorStartEndUnique)
+		{
+			list->pushFront(1);
+			auto iterBegin = list->begin();
+			auto iterEnd = list->end();
+			auto comparison = iterBegin != iterEnd;
+			Assert::IsTrue(comparison, L"Begin and End iterators are equal");
+		}
+
 	private:
 		static _CrtMemState sStartMemState;
 	};
