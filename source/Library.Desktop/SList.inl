@@ -1,13 +1,12 @@
 #pragma once
 
+template <class T>
+SList<T>::SList() : 
+mSize(0), mFront(nullptr), mBack(nullptr), mStart(*this, *mFront), mEnd(*this, *mBack) {}
 
 template <class T>
-SList<T>::SList() : mSize(0), mFront(nullptr), mBack(nullptr)
-{
-}
-
-template <class T>
-SList<T>::SList(const SList<T>& obj) : mSize(0), mFront(nullptr), mBack(nullptr)
+SList<T>::SList(const SList<T>& obj) : 
+	mSize(0), mFront(nullptr), mBack(nullptr), mStart(*this, *mFront), mEnd(*this, *mBack)
 {
 	auto current = obj.mFront;
 	if (current != nullptr)

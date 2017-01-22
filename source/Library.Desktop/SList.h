@@ -69,10 +69,24 @@ public:
 	int size() const;
 
 private:
+	class Node; /// Forward declaration of node class
+public:
+	class Iterator
+	{
+	public:
+		/// Constructor. Takes a node reference and assigns owner to current SList object
+		Iterator(SList<T>& owner, Node& node);
+		Iterator start();
+		Iterator end();
+	private:
+		const SList<T>& mOwner;
+		Node& mNode;
+	};
+
+private:
 	class Node
 	{
 	public:
-
 		/// Default node constructor
 		Node() : mData(nullptr), next(nullptr) {}
 
@@ -85,21 +99,17 @@ private:
 		/// Node deconstructor
 		~Node(){}
 
-		/// Data being contained by the node
-		T mData;
-
-		/// Pointer to the node that this node is linked to
-		Node* next;
+		T mData;    /// Data being contained by the node
+		Node* next; /// Pointer to the node that this node is linked to
 	};
+	
+	int mSize;    /// Number of elements in the list
+	Node* mFront; /// Front node in the list
+	Node* mBack;  /// Back node in the list
 
-	/// Number of elements in the list
-	int mSize;
-
-	/// Front node in the list
-	Node* mFront;
-
-	/// Back node in the list
-	Node* mBack;
+	Iterator mStart; /// Beginning of iterator
+	Iterator mEnd;   /// End of iterator
 };
 
 #include "SList.inl"
+#include "Iterator.inl"

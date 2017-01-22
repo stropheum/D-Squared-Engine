@@ -170,6 +170,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Iterator.inl" />
     <None Include="SList.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
