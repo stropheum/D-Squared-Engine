@@ -81,7 +81,7 @@ public:
 		friend class SList;
 	public:
 		/// Constructor. Takes a node reference and assigns owner to current SList object
-		Iterator(SList<T>* owner, Node* node); // Constructor should be private?
+		Iterator() = default;
 		Iterator(const Iterator& rhs);
 		Iterator& operator=(const Iterator& rhs);
 		bool operator==(Iterator& rhs);
@@ -90,6 +90,7 @@ public:
 		void operator++(int);
 		T& operator*();
 	private:
+		Iterator(SList<T>* owner, Node* node);
 		const SList<T>* mOwner;
 		Node* mNode;
 	};
