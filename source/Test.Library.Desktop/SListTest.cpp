@@ -395,7 +395,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(comparison, L"Owners do not match");
 
 			++iter;
-//			++iter;
+			++iter;
 			auto checkIncrement = (iter == list->end());
 			Assert::IsTrue(checkIncrement, L"Increment failing to reach end");
 		}
