@@ -1,4 +1,5 @@
 #pragma once
+#include <exception>
 
 template <class T>
 SList<T>::SList() : 
