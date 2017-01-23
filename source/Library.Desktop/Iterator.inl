@@ -49,3 +49,9 @@ void SList<T>::Iterator::operator++(int)
 {
 	++(*this);
 }
+
+template <class T>
+T& SList<T>::Iterator::operator*()
+{
+	return mNode->mData;
+}

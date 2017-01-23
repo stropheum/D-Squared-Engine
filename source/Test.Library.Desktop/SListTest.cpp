@@ -390,13 +390,20 @@ namespace TestLibraryDesktop
 			list->pushFront(1);
 			list->pushFront(2);
 			auto& iter = list->begin();
-			auto comparison = (iter == list->begin());
+			auto comparison = (list->begin() == iter);
 			Assert::IsTrue(comparison, L"Owners do not match");
 
 			++iter;
 			++iter;
 			auto checkIncrement = (iter == list->end());
 			Assert::IsTrue(checkIncrement, L"Increment failing to reach end");
+
+			SList<int> newList{};
+			newList.pushFront(1);
+			auto& val = *newList.begin();
+			Assert::AreEqual(val, *newList.begin());
+			val++;
+			Assert::AreEqual(2, *newList.begin());
 		}
 
 	private:

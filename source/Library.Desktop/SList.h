@@ -88,6 +88,7 @@ public:
 		bool operator!=(Iterator& rhs);
 		void operator++();
 		void operator++(int);
+		T& operator*();
 	private:
 		const SList<T>* mOwner;
 		Node* mNode;
