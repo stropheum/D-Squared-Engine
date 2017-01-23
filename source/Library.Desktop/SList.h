@@ -77,9 +77,12 @@ private:
 public:
 	class Iterator
 	{
+		friend class SList;
 	public:
 		/// Constructor. Takes a node reference and assigns owner to current SList object
-		Iterator(SList<T>* owner, Node* node);
+		Iterator(SList<T>* owner, Node* node); // Constructor should be private?
+		Iterator(const Iterator& rhs);
+		Iterator& operator=(const Iterator& rhs);
 		bool operator==(Iterator& rhs);
 		bool operator!=(Iterator& rhs);
 		void operator++();

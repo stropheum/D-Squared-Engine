@@ -6,8 +6,8 @@ SList<T>::SList() :
 mSize(0), mFront(nullptr), mBack(nullptr), mBegin(this, mFront), mEnd(this, mBack) {}
 
 template <class T>
-SList<T>::SList(const SList<T>& obj) : 
-	mSize(0), mFront(nullptr), mBack(nullptr), mBegin(this, mFront), mEnd(this, mBack)
+SList<T>::SList(const SList<T>& obj) :
+	SList()
 {
 	auto current = obj.mFront;
 	if (current != nullptr)
@@ -54,10 +54,12 @@ void SList<T>::pushFront(T data)
 	auto temp = mFront;
 	mFront = new Node(data);
 	mFront->next = temp;
+	mBegin.mNode = mFront;
 	mSize++;
 	if (mBack == nullptr)
 	{
 		mBack = mFront;
+		mEnd.mNode = mBack;
 	}
 }
 
@@ -68,6 +70,7 @@ void SList<T>::pushBack(T data)
 	{
 		mFront = new Node(data);
 		mBack = mFront;
+		mEnd.mNode = mBack;
 	}
 	else
 	{
@@ -78,6 +81,7 @@ void SList<T>::pushBack(T data)
 		}
 		current->next = new Node(data);
 		mBack = current->next;
+		mEnd.mNode = mBack;
 	}
 	mSize++;
 }
@@ -104,6 +108,7 @@ T SList<T>::popFront()
 	auto oldFront = mFront;
 	auto result = mFront->mData;
 	mFront = mFront->next;
+	mBegin.mNode = mFront;
 	delete(oldFront);
 	mSize--;
 	return result;

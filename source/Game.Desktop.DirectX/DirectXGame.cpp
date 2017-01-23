@@ -29,9 +29,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 
 	// Code for testing instance of SList only
 	SList<int> list{};
-	SList<int>::Iterator iter = list.begin();
+	auto& iterRef = list.begin();
+	auto iter = list.begin();
+	bool compare = iter == list.end();
+	if (compare)
+	{
+		// do things
+	}
+	++iterRef;
 	++iter;
-	iter == list.begin();
 
 	// the handle for the window, filled by a function
 	HWND hWnd;
