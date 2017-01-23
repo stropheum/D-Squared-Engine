@@ -137,6 +137,7 @@ private:
 	};
 	
 	int mSize;       /// Number of elements in the list
+	
 	Node* mFront;    /// Front node in the list
 	Node* mBack;     /// Back node in the list
 
