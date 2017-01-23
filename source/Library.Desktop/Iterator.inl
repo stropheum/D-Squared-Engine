@@ -32,8 +32,5 @@ template <class T>
 void SList<T>::Iterator::operator++(int)
 {
 	// TODO get increment operator to stop breaking
-	if (mNode != nullptr)
-	{
-		mNode = mNode->next;
-	}
+	++(*this);
 }
