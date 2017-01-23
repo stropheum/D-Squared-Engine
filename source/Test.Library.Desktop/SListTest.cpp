@@ -388,6 +388,7 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestIteratorStartEndUnique)
 		{
 			list->pushFront(1);
+			list->pushFront(2);
 			auto iter = list->begin();
 			auto comparison = (iter == list->begin());
 			Assert::IsTrue(comparison, L"Owners do not match");

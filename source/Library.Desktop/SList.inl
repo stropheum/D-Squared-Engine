@@ -111,15 +111,41 @@ T SList<T>::popFront()
 template <class T>
 T& SList<T>::front()
 {
+	if (mFront == nullptr)
+	{
+		throw std::exception("List is null");
+	}
 	return mFront->mData;
-	//TODO: Throw exception if trying to call front on a null list
+}
+
+template <class T>
+const T& SList<T>::front() const
+{
+	if (mFront == nullptr)
+	{
+		throw std::exception("List is null");
+	}
+	return mFront->mData;
 }
 
 template <class T>
 T& SList<T>::back()
 {
+	if (mFront == nullptr)
+	{
+		throw std::exception("List is null");
+	}
 	return mBack->mData;
-	//TODO: Throw exception if trying to call back on a null list
+}
+
+template <class T>
+const T& SList<T>::back() const
+{
+	if (mFront == nullptr)
+	{
+		throw std::exception("List is null");
+	}
+	return mBack->mData;
 }
 
 template <class T>

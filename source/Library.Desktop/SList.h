@@ -50,11 +50,15 @@ public:
 	*/
 	T& front();
 
+	const T& front() const;
+
 	/**
 	* Retrieves the back item on the list
 	* @Return The templated item at the back of the list
 	*/
 	T& back();
+
+	const T& back() const;
 
 	/**
 	* Determines if the list does not contain any elements
@@ -103,6 +107,7 @@ private:
 
 		/// Node deconstructor
 		~Node(){}
+		Node(const Node& rhs) = delete;
 
 		T mData;    /// Data being contained by the node
 		Node* next; /// Pointer to the node that this node is linked to
