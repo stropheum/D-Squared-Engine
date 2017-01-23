@@ -23,17 +23,18 @@ public:
 	/// Deconstructor which De-allocates every object in the list individually
 	~SList();
 
+	class Iterator;
 	/**
 	* Push an object to the front of the list
 	* @Param data: The data being pushed to the front of the list
 	*/
-	void pushFront(T data);
+	Iterator pushFront(T data);
 
 	/**
 	* Push an object to the back of the list
 	* @Param data: The data being pushed to the back of the list
 	*/
-	void pushBack(T data);
+	Iterator pushBack(T data);
 
 	/// Removes all items in the list
 	void clear();

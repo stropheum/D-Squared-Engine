@@ -49,7 +49,7 @@ SList<T>::~SList()
 }
 
 template <class T>
-void SList<T>::pushFront(T data)
+typename SList<T>::Iterator SList<T>::pushFront(T data)
 {
 	auto temp = mFront;
 	mFront = new Node(data);
@@ -62,10 +62,12 @@ void SList<T>::pushFront(T data)
 		mBack->next = nullptr;
 		mEnd.mNode = mBack->next;
 	}
+
+	return Iterator(this, mFront);
 }
 
 template <class T>
-void SList<T>::pushBack(T data)
+typename SList<T>::Iterator SList<T>::pushBack(T data)
 {
 	if (mFront == nullptr)
 	{
@@ -87,6 +89,8 @@ void SList<T>::pushBack(T data)
 		mEnd.mNode = mBack->next;
 	}
 	mSize++;
+
+	return Iterator(this, mBack);
 }
 
 template <class T>

@@ -34,10 +34,13 @@ bool SList<T>::Iterator::operator!=(Iterator& rhs)
 template <class T>
 void SList<T>::Iterator::operator++()
 {
-	// TODO get increment operator to stop breaking
 	if (mNode != nullptr)
 	{
 		mNode = mNode->next;
+	}
+	else
+	{
+		throw std::exception("Incrementing past the end of a Singly-Linked list");
 	}
 }
 

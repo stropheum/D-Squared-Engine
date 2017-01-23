@@ -390,7 +390,6 @@ namespace TestLibraryDesktop
 			list->pushFront(1);
 			list->pushFront(2);
 			auto& iter = list->begin();
-//			auto iter = list->begin();
 			auto comparison = (iter == list->begin());
 			Assert::IsTrue(comparison, L"Owners do not match");
 
