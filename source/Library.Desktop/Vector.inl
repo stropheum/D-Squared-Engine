@@ -1,20 +1,25 @@
 #pragma once
 #include "pch.h"
+#include "Vector.h"
 
 template <class T>
-Vector<T>::Vector()
+Vector<T>::Vector() :
+	mSize(0), mCapacity(10)
 {
-	//TODO: Implement Vector constructor
+	mBuffer = dynamic_cast<T*>(malloc(sizeof(T) * mCapacity));
 }
 
 template <class T>
 Vector<T>::~Vector()
 {
 	//TODO: Delete any heap allocated memory
+	//TODO: Deconstruct all T's in mBuffer
+	free(mBuffer);
 }
 
 template <class T>
-Vector<T>::Vector(const Vector& rhs)
+Vector<T>::Vector(const Vector& rhs) :
+	mSize(rhs.mSize), mCapacity(rhs.mSize)
 {
 	//TODO: Implement copy constructor
 }
@@ -98,10 +103,17 @@ void Vector<T>::popBack()
 }
 
 template <class T>
-void Vector<T>::pushBack()
+void Vector<T>::pushBack(const T& value)
 {
-	//TODO: Implement pushBack method
-	int temp = 0; // To prevent declaration warnings
+	//TODO: Expand if size matches capacity
+	if (mSize < mCapacity)
+	{
+		new (mBuffer + mSize++) T(value);
+	}
+	else
+	{
+		throw std::exception("Attempting to push back with no available capacity. Resizing not yet implemented");
+	}
 }
 
 template <class T>
@@ -124,8 +136,8 @@ void Vector<T>::remove(const T& value)
 }
 
 /// //////////////////////////////// ///
-///  Vector Iterator implementation  ///
-/// //////////////////////////////// ///
+//  Vector Iterator implementation  ///
+// //////////////////////////////// ///
 
 template <class T>
 Vector<T>::Iterator::Iterator() {}
@@ -148,7 +160,7 @@ bool Vector<T>::Iterator::operator==(const Iterator& rhs)
 }
 
 template <class T>
-Vector<T>::Iterator& Vector<T>::Iterator::operator++()
+typename Vector<T>::Iterator& Vector<T>::Iterator::operator++()
 {
 	//TODO: Implement increment operator
 	return this;
@@ -163,7 +175,7 @@ T& Vector<T>::Iterator::operator*()
 }
 
 template <class T>
-Vector<T>::Iterator& Vector<T>::Iterator::operator=(const Iterator& rhs)
+typename Vector<T>::Iterator& Vector<T>::Iterator::operator=(const Iterator& rhs)
 {
 	//TODO: Implement assignment operator
 	return this;

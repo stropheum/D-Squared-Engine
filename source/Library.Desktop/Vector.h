@@ -25,11 +25,15 @@ public:
 	bool isEmpty();
 
 	void popBack();
-	void pushBack();
+	void pushBack(const T& value);
 	void reserve(int32_t capacity);
 	void clear();
 	void remove(const T& value);
-
+private:
+	T* mBuffer;
+	int32_t mSize;
+	int32_t mCapacity;
+public:
 	class Iterator
 	{
 	public:

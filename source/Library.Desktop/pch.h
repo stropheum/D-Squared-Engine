@@ -11,3 +11,5 @@
 /// Include headers
 #include "windows.h"
 #include <cstdint>
+#include <cstdlib>
+#include <exception>
