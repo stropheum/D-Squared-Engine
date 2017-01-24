@@ -288,7 +288,7 @@ bool SList<T>::Iterator::operator!=(Iterator& rhs)
 }
 
 template <class T>
-void SList<T>::Iterator::operator++()
+typename SList<T>::Iterator SList<T>::Iterator::operator++()
 {
 	if (mNode != nullptr)
 	{
@@ -298,12 +298,15 @@ void SList<T>::Iterator::operator++()
 	{
 		throw std::exception("Incrementing past the end of a Singly-Linked list");
 	}
+	return *this;
 }
 
 template <class T>
-void SList<T>::Iterator::operator++(int)
+typename SList<T>::Iterator SList<T>::Iterator::operator++(int)
 {
+	Iterator copy(*this);
 	++(*this);
+	return copy;
 }
 
 template <class T>

@@ -112,10 +112,10 @@ public:
 		bool operator!=(Iterator& rhs);
 		
 		/// Prefix incrememt operator. Sets node reference to its linked node
-		void operator++();
+		Iterator operator++();
 		
 		/// Postfix increment operator. Calls prefix increment operator
-		void operator++(int);
+		Iterator operator++(int);
 		
 		/// Dereference operator
 		/// @Return: A reference to the T member that the iterator's node points to
