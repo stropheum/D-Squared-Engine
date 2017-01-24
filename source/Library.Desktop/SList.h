@@ -77,6 +77,11 @@ public:
 	/// @Return: An Iterator to the location of the inserted value
 	Iterator insertAfter(T value, Iterator& location);
 
+	/// Finds an item in the list
+	/// @Param value: The value being found from the list
+	/// @Return: An iterator pointing to the value if it exists in the list, end otherwise
+	Iterator find(const T& value);
+
 	/// Removes the first instance of a value from the list
 	/// @Param value: The value being removed from the list
 	void remove(T value);

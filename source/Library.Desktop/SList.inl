@@ -213,6 +213,19 @@ typename SList<T>::Iterator SList<T>::insertAfter(T value, Iterator& location)
 }
 
 template <class T>
+typename SList<T>::Iterator SList<T>::find(const T& value)
+{
+	for (auto iter = begin(); iter != end(); ++iter)
+	{
+		if (*iter == value)
+		{
+			return Iterator(this, iter.mNode);
+		}
+	}
+	return mEnd;
+}
+
+template <class T>
 void SList<T>::remove(T value)
 {
 	if (mFront->mData == value)
