@@ -161,4 +161,3 @@ private:
 };
 
 #include "SList.inl"
-#include "Iterator.inl"
