@@ -14,18 +14,14 @@ namespace TestLibraryDesktop
 		SList<int*>* pList;
 		SList<Foo>*  fooList;
 	public:
-		/**
-		 * Sets up leak detection logic
-		 */
+		/// Sets up leak detection logic
 		static void initializeLeakDetection()
 		{
 			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
 			_CrtMemCheckpoint(&sStartMemState);
 		}
 		
-		/**
-		 * Detects if memory state has been corrupted
-		 */
+		/// Detects if memory state has been corrupted
 		static void finalizeLeakDetection()
 		{
 			_CrtMemState endMemState, diffMemState;
@@ -383,6 +379,329 @@ namespace TestLibraryDesktop
 			fooList->clear();
 
 			Assert::AreEqual(0, fooList->size(), L"List size non-zero after clear");
+		}
+
+		TEST_METHOD(TestIteratorBeginEndUnique)
+		{
+			list->pushFront(1);
+			auto& begin = list->begin();
+			auto& end = list->end();
+			bool comparison = (begin == end);
+			Assert::IsFalse(comparison, L"Begin and end nodes are identical");
+
+			int x = 1;
+			pList->pushFront(&x);
+			auto& pListBegin = pList->begin();
+			auto& pListEnd = pList->end();
+			comparison = (pListBegin == pListEnd);
+			Assert::IsFalse(comparison, L"Begin and end nodes are identical");
+
+			Foo foo(1);
+			fooList->pushFront(foo);
+			auto& fooBegin = fooList->begin();
+			auto& fooEnd = fooList->end();
+			comparison = (fooBegin == fooEnd);
+			Assert::IsFalse(comparison, L"Beginand end nodes are identical");
+		}
+
+		TEST_METHOD(TestIteratorDereference)
+		{
+			list->pushFront(1);
+			auto& iter = list->begin();
+			Assert::AreEqual(1, *iter, L"Dereferenced value does not reflect value in node");
+
+			int x = 1;
+			int* xptr = &x;
+			pList->pushFront(xptr);
+			auto& pIter = pList->begin();
+			Assert::AreEqual(xptr, *pIter, L"Dereferenced pointer does not reflect value in node");
+
+			Foo foo(1);
+			fooList->pushFront(foo);
+			auto& fooIter = fooList->begin();
+			Assert::AreEqual(foo, *fooIter, L"Dereferenced foo does not reflect value in node");
+		}
+
+		TEST_METHOD(TestIteratorPreIncrement)
+		{
+			list->pushFront(2);
+			list->pushFront(1);
+			auto& iter = list->begin();
+			Assert::AreEqual(1, *iter, L"Front value not accurate");
+			++iter;
+			Assert::AreEqual(2, *iter, L"Pre increment not pointing to correct node");
+
+			int x = 1;
+			int y = 2;
+			pList->pushFront(&x);
+			pList->pushFront(&y);
+			auto& pIter = pList->begin();
+			Assert::AreEqual(&y, *pIter, L"Front pointer not accurate");
+			++pIter;
+			Assert::AreEqual(&x, *pIter, L"Pre increment not pointing to correct node");
+
+			Foo foo(1);
+			Foo bar(2);
+			fooList->pushFront(foo);
+			fooList->pushFront(bar);
+			auto& fooIter = fooList->begin();
+			Assert::AreEqual(bar, *fooIter, L"Front foo not accurate");
+			++fooIter;
+			Assert::AreEqual(foo, *fooIter, L"Pre increment not pointing to correct node");
+		}
+
+		TEST_METHOD(TestIteratorPostIncrement)
+		{
+			list->pushFront(2);
+			list->pushFront(1);
+			auto& iter = list->begin();
+			Assert::AreEqual(1, *iter, L"Front value not accurate");
+			iter++;
+			Assert::AreEqual(2, *iter, L"Post increment not pointing to correct node");
+
+			int x = 1;
+			int y = 2;
+			pList->pushFront(&x);
+			pList->pushFront(&y);
+			auto& pIter = pList->begin();
+			Assert::AreEqual(&y, *pIter, L"Front pointer not accuarate");
+			pIter++;
+			Assert::AreEqual(&x, *pIter, L"Post increment not pointing to correct node");
+
+			Foo foo(1);
+			Foo bar(2);
+			fooList->pushFront(foo);
+			fooList->pushFront(bar);
+			auto& fooIter = fooList->begin();
+			Assert::AreEqual(bar, *fooIter, L"Front foo not accurate");
+			fooIter++;
+			Assert::AreEqual(foo, *fooIter, L"Post increment not pointing to correct node");
+		}
+
+		TEST_METHOD(TestIteratorCopyConstructor)
+		{
+			auto& iter = list->begin();
+			SList<int>::Iterator iterCopy(iter);
+			bool comparison = (iter == iterCopy);
+			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
+
+			auto& pIter = pList->begin();
+			SList<int*>::Iterator pIterCopy(pIter);
+			comparison = (pIter == pIterCopy);
+			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
+
+			auto& fooIter = fooList->begin();
+			SList<Foo>::Iterator fooIterCopy(fooIter);
+			comparison = (fooIter == fooIterCopy);
+			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
+		}
+
+		TEST_METHOD(TestIteratorAssignmentOperator)
+		{
+			auto& iter = list->begin();
+			SList<int>::Iterator iterCopy;
+			iterCopy = iter;
+			bool comparison = (iter == iterCopy);
+			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
+
+			auto& pIter = pList->begin();
+			SList<int*>::Iterator pIterCopy;
+			pIterCopy = pIter;
+			comparison = (pIter == pIterCopy);
+			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
+
+			auto& fooIter = fooList->begin();
+			SList<Foo>::Iterator fooIterCopy;
+			fooIterCopy = fooIter;
+			comparison = (fooIter == fooIterCopy);
+			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
+		}
+
+		TEST_METHOD(TestIteratorComparisonOperators)
+		{
+			// Int tests
+			auto& iterBegin = list->begin();
+			auto& iterEnd = list->end();
+			bool comparison = (iterBegin == iterEnd);
+			Assert::IsTrue(comparison, L"Iterators who share a null parent should be equivalent");
+			
+			list->pushFront(1);
+			iterBegin = list->begin();
+			iterEnd = list->end();
+			
+			comparison = (iterBegin == iterEnd);
+			Assert::IsFalse(comparison, L"Iterator begin and end should not be equivalent when not null");
+			comparison = (iterBegin != iterEnd);
+			Assert::IsTrue(comparison, L"Iterator begin and end should not be equivalent when not null");
+
+			// Int pointer tests
+			auto& pIterBegin = pList->begin();
+			auto& pIterEnd = pList->end();
+			comparison = (pIterBegin == pIterEnd);
+			Assert::IsTrue(comparison, L"Iterators who share a null parent should be equivalent");
+
+			int x = 1;
+			pList->pushFront(&x);
+			pIterBegin = pList->begin();
+			pIterEnd = pList->end();
+
+			comparison = (pIterBegin == pIterEnd);
+			Assert::IsFalse(comparison, L"Iterator begin and end should not be equivalent when not null");
+			comparison = (pIterBegin != pIterEnd);
+			Assert::IsTrue(comparison, L"Iterator begin and end should not be equivalent when not null");
+
+			// Foo tests
+			auto& fooIterBegin = fooList->begin();
+			auto& fooIterEnd = fooList->end();
+			comparison = (fooIterBegin == fooIterEnd);
+			Assert::IsTrue(comparison, L"Iterators who share a null parent should be equivalent");
+
+			Foo foo(1);
+			fooList->pushFront(foo);
+			fooIterBegin = fooList->begin();
+			fooIterEnd = fooList->end();
+
+			comparison = (fooIterBegin == fooIterEnd);
+			Assert::IsFalse(comparison, L"Iterator begin and end should not be equivalent when not null");
+			comparison = (fooIterBegin != fooIterEnd);
+			Assert::IsTrue(comparison, L"Iterator begin and end should not be equivalent when not null");
+		}
+
+		TEST_METHOD(TestInsertAfter)
+		{
+			// Int tests
+			list->insertAfter(1, list->end());
+			auto& iter = list->begin();
+			Assert::AreEqual(1, *iter, L"Front of list not accurate after insert after on empty list");
+
+			list->insertAfter(2, list->begin());
+			iter = list->begin();
+			Assert::AreEqual(1, *iter, L"Front of list not accurate after insert after on non-empty list");
+			++iter;
+			Assert::AreEqual(2, *iter, L"Erroneous iterator increment");
+
+			// Int pointer tests
+			int x = 1;
+			int y = 2;
+			pList->insertAfter(&x, pList->end());
+			auto& pIter = pList->begin();
+			Assert::AreEqual(&x, *pIter, L"Front of list not accurate after insert after on empty list");
+
+			pList->insertAfter(&y, pList->begin());
+			pIter = pList->begin();
+			Assert::AreEqual(&x, *pIter, L"Front of list not accurate after insert after on non-empty list");
+			++pIter;
+			Assert::AreEqual(&y, *pIter, L"Erroneous iterator increment");
+
+			// Foo tests
+			Foo foo(1);
+			Foo bar(2);
+			fooList->insertAfter(foo, fooList->end());
+			auto& fooIter = fooList->begin();
+			Assert::AreEqual(foo, *fooIter, L"Front of list not accurate after insert after on empty list");
+
+			fooList->insertAfter(bar, fooList->begin());
+			fooIter = fooList->begin();
+			Assert::AreEqual(foo, *fooIter, L"Front of list not accurate after insert after on non-empty list");
+			++fooIter;
+			Assert::AreEqual(bar, *fooIter, L"Erroneous iterator increment");
+		}
+
+		TEST_METHOD(TestRemove)
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				list->pushFront(i);
+			}
+			auto& iter = list->begin();
+			Assert::AreEqual(2, *iter, L"Front of list not accurate after pushing multiple values");
+			list->remove(0);
+			iter = list->begin();
+			Assert::AreEqual(2, *iter, L"Front of list not accurate after removing back value");
+			++iter;
+			Assert::AreEqual(1, *iter, L"Erroneous value after incrementing iterator");
+
+			int x = 1;
+			int y = 2;
+			int z = 3;
+			pList->pushFront(&x);
+			pList->pushFront(&y);
+			pList->pushFront(&z);
+			auto& pIter = pList->begin();
+			Assert::AreEqual(&z, *pIter, L"Front of list not accurate after pushing multiple values");
+			pList->remove(&x);
+			pIter = pList->begin();
+			Assert::AreEqual(&z, *pIter, L"Front of list not accurate after removing back value");
+			++pIter;
+			Assert::AreEqual(&y, *pIter, L"Erroneous value after incrementing iterator");
+
+			Foo foo(1);
+			Foo bar(2);
+			Foo gar(3);
+			fooList->pushFront(foo);
+			fooList->pushFront(bar);
+			fooList->pushFront(gar);
+			auto& fooIter = fooList->begin();
+			Assert::AreEqual(gar, *fooIter, L"Front of list not accurate after pushing multiple values");
+			fooList->remove(foo);
+			fooIter = fooList->begin();
+			Assert::AreEqual(gar, *fooIter, L"Front of list not accurate after removing back value");
+			++fooIter;
+			Assert::AreEqual(bar, *fooIter, L"Erroneous value after incrementing iterator");
+		}
+
+		TEST_METHOD(TestIteratorFind)
+		{
+			list->pushFront(1);
+			list->pushFront(2);
+			list->pushFront(3);
+
+			auto location = list->find(2);
+			auto& iter = list->begin();
+			bool compare = (location != iter);
+			Assert::IsTrue(compare, L"Find called on middle equivalent with begin");
+			++iter;
+			compare = (location == iter);
+			Assert::IsTrue(compare, L"Find called on middle value not equivalent with iterator incremented to same point");
+			++iter;
+			compare = (location != iter);
+			Assert::IsTrue(compare, L"Find called on middle value equivalent with end");
+
+			int x = 1;
+			int y = 2;
+			int z = 3;
+			pList->pushFront(&x);
+			pList->pushFront(&y);
+			pList->pushFront(&z);
+
+			auto pLocation = pList->find(&y);
+			auto& pIter = pList->begin();
+			bool pCompare = (pLocation != pIter);
+			Assert::IsTrue(pCompare, L"Find called on middle equivalent with begin");
+			++pIter;
+			pCompare = (pLocation == pIter, L"Find called on middle value not equivalent with iterator incremented to same point");
+			Assert::IsTrue(pCompare);
+			++pIter;
+			pCompare = (pLocation != pIter);
+			Assert::IsTrue(pCompare, L"Find called on middle value equivalent with end");
+
+			Foo foo(1);
+			Foo bar(2);
+			Foo gar(3);
+			fooList->pushFront(foo);
+			fooList->pushFront(bar);
+			fooList->pushFront(gar);
+
+			auto fooLocation = fooList->find(bar);
+			auto& fooIter = fooList->begin();
+			bool fooCompare = (fooLocation != fooIter);
+			Assert::IsTrue(fooCompare, L"Find called on middle equivalent with begin");
+			++fooIter;
+			fooCompare = (fooLocation == fooIter);
+			Assert::IsTrue(fooCompare, L"Find called on middle value not equivalent with iterator incremented to same point");
+			++fooIter;
+			fooCompare = (fooLocation != fooIter);
+			Assert::IsTrue(fooCompare, L"Find called on middle value equivalent with end");
 		}
 
 	private:

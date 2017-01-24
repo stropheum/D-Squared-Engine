@@ -1,13 +1,13 @@
 #pragma once
-
-
-template <class T>
-SList<T>::SList() : mSize(0), mFront(nullptr), mBack(nullptr)
-{
-}
+#include <exception>
 
 template <class T>
-SList<T>::SList(const SList<T>& obj) : mSize(0), mFront(nullptr), mBack(nullptr)
+SList<T>::SList() : 
+mSize(0), mFront(nullptr), mBack(nullptr), mBegin(this, mFront), mEnd(this, nullptr) {}
+
+template <class T>
+SList<T>::SList(const SList<T>& obj) :
+	SList()
 {
 	auto current = obj.mFront;
 	if (current != nullptr)
@@ -49,20 +49,32 @@ SList<T>::~SList()
 }
 
 template <class T>
-void SList<T>::pushFront(T data)
+typename SList<T>::Iterator SList<T>::pushFront(T data)
 {
 	auto temp = mFront;
 	mFront = new Node(data);
 	mFront->next = temp;
+	mBegin.mNode = mFront;
 	mSize++;
+	if (mBack == nullptr)
+	{
+		mBack = mFront;
+		mBack->next = nullptr;
+		mEnd.mNode = mBack->next;
+	}
+
+	return Iterator(this, mFront);
 }
 
 template <class T>
-void SList<T>::pushBack(T data)
+typename SList<T>::Iterator SList<T>::pushBack(T data)
 {
 	if (mFront == nullptr)
 	{
 		mFront = new Node(data);
+		mBack = mFront;
+		mBack->next = nullptr;
+		mEnd.mNode = mBack->next;
 	}
 	else
 	{
@@ -72,8 +84,16 @@ void SList<T>::pushBack(T data)
 			current = current->next;
 		}
 		current->next = new Node(data);
+		mBack = current->next;
+		mBack->next = nullptr;
+		mEnd.mNode = mBack->next;
 	}
+
 	mSize++;
+	mBegin.mNode = mFront;
+	mEnd.mNode = mBack;
+
+	return Iterator(this, mBack);
 }
 
 template <class T>
@@ -98,6 +118,7 @@ T SList<T>::popFront()
 	auto oldFront = mFront;
 	auto result = mFront->mData;
 	mFront = mFront->next;
+	mBegin.mNode = mFront;
 	delete(oldFront);
 	mSize--;
 	return result;
@@ -106,19 +127,41 @@ T SList<T>::popFront()
 template <class T>
 T& SList<T>::front()
 {
+	if (mFront == nullptr)
+	{
+		throw std::exception("List is null");
+	}
+	return mFront->mData;
+}
+
+template <class T>
+const T& SList<T>::front() const
+{
+	if (mFront == nullptr)
+	{
+		throw std::exception("List is null");
+	}
 	return mFront->mData;
 }
 
 template <class T>
 T& SList<T>::back()
 {
-	auto current = mFront;
-	while (current->next != nullptr)
+	if (mFront == nullptr)
 	{
-		current = current->next;
+		throw std::exception("List is null");
 	}
-	return current->mData;
-	//TODO: Throw exception if trying to call back on a null list
+	return mBack->mData;
+}
+
+template <class T>
+const T& SList<T>::back() const
+{
+	if (mFront == nullptr)
+	{
+		throw std::exception("List is null");
+	}
+	return mBack->mData;
 }
 
 template <class T>
@@ -131,4 +174,80 @@ template <class T>
 int SList<T>::size() const
 {
 	return mSize;
+}
+
+template <class T>
+typename SList<T>::Iterator& SList<T>::begin()
+{
+	return mBegin;
+}
+
+template <class T>
+typename SList<T>::Iterator& SList<T>::end()
+{
+	return mEnd;
+}
+
+template <class T>
+typename SList<T>::Iterator SList<T>::insertAfter(T value, Iterator& location)
+{
+	if (location == end() || location.mNode == mBack)
+	{
+		pushBack(value);
+		
+		return Iterator(this, mBack);
+	}
+
+	for (Iterator iter = begin(); iter != end(); ++iter)
+	{
+		if (location == iter)
+		{
+			Node* temp = new Node(value);
+			temp->next = location.mNode->next;
+			location.mNode->next = temp;
+			return Iterator(this, temp);
+		}
+	}
+
+	return end();
+}
+
+template <class T>
+typename SList<T>::Iterator SList<T>::find(const T& value)
+{
+	for (auto iter = begin(); iter != end(); ++iter)
+	{
+		if (*iter == value)
+		{
+			return Iterator(this, iter.mNode);
+		}
+	}
+	return mEnd;
+}
+
+template <class T>
+void SList<T>::remove(T value)
+{
+	if (mFront->mData == value)
+	{
+		Node* removeNode = mFront;
+		mFront = mFront->next;
+		delete(removeNode);
+		return;
+	}
+
+	Node* lastNode = nullptr;
+	for (auto iter = begin(); iter != end(); ++iter)
+	{
+		if (lastNode != nullptr)
+		{
+			if (iter.mNode->mData == value)
+			{
+				lastNode->next = iter.mNode->next;
+				delete(iter.mNode);
+				return;
+			}
+		}
+		lastNode = iter.mNode;
+	}
 }
