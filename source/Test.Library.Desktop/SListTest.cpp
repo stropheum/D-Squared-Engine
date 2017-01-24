@@ -611,6 +611,49 @@ namespace TestLibraryDesktop
 			Assert::AreEqual(bar, *fooIter);
 		}
 
+		TEST_METHOD(TestRemove)
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				list->pushFront(i);
+			}
+			auto& iter = list->begin();
+			Assert::AreEqual(2, *iter);
+			list->remove(0);
+			iter = list->begin();
+			Assert::AreEqual(2, *iter);
+			++iter;
+			Assert::AreEqual(1, *iter);
+
+			int x = 1;
+			int y = 2;
+			int z = 3;
+			pList->pushFront(&x);
+			pList->pushFront(&y);
+			pList->pushFront(&z);
+			auto& pIter = pList->begin();
+			Assert::AreEqual(&z, *pIter);
+			pList->remove(&x);
+			pIter = pList->begin();
+			Assert::AreEqual(&z, *pIter);
+			++pIter;
+			Assert::AreEqual(&y, *pIter);
+
+			Foo foo(1);
+			Foo bar(2);
+			Foo gar(3);
+			fooList->pushFront(foo);
+			fooList->pushFront(bar);
+			fooList->pushFront(gar);
+			auto& fooIter = fooList->begin();
+			Assert::AreEqual(gar, *fooIter);
+			fooList->remove(foo);
+			fooIter = fooList->begin();
+			Assert::AreEqual(gar, *fooIter);
+			++fooIter;
+			Assert::AreEqual(bar, *fooIter);
+		}
+
 	private:
 		static _CrtMemState sStartMemState;
 	};

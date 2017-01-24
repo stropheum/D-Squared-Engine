@@ -77,6 +77,10 @@ public:
 	/// @Return: An Iterator to the location of the inserted value
 	Iterator insertAfter(T value, Iterator& location);
 
+	/// Removes the first instance of a value from the list
+	/// @Param value: The value being removed from the list
+	void remove(T value);
+
 	class Iterator
 	{
 		friend class SList;

@@ -29,18 +29,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 
 	// Code for testing instance of SList only
 	SList<int> list{};
-	
 	list.pushFront(1);
-	auto& iter = list.begin();
-	if (*iter == 1) {}
-	
-	list.pushBack(1);
-	iter = list.begin();
-	if (*iter == 1) {}
-
-	list.insertAfter(1, list.end());
-	iter = list.begin();
-	if (*iter == 1) {}
+	list.pushFront(2);
+	list.pushFront(3);
+	list.remove(2);
+	list.remove(1);
 
 	// the handle for the window, filled by a function
 	HWND hWnd;

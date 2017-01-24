@@ -211,3 +211,30 @@ typename SList<T>::Iterator SList<T>::insertAfter(T value, Iterator& location)
 
 	return end();
 }
+
+template <class T>
+void SList<T>::remove(T value)
+{
+	if (mFront->mData == value)
+	{
+		Node* removeNode = mFront;
+		mFront = mFront->next;
+		delete(removeNode);
+		return;
+	}
+
+	Node* lastNode = nullptr;
+	for (auto iter = begin(); iter != end(); ++iter)
+	{
+		if (lastNode != nullptr)
+		{
+			if (iter.mNode->mData == value)
+			{
+				lastNode->next = iter.mNode->next;
+				delete(iter.mNode);
+				return;
+			}
+		}
+		lastNode = iter.mNode;
+	}
+}
