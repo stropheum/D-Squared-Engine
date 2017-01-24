@@ -571,6 +571,46 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(comparison, L"Iterator begin and end should not be equivalent when not null");
 		}
 
+		TEST_METHOD(TestInsertAfter)
+		{
+			// Int tests
+			list->insertAfter(1, list->end());
+			auto& iter = list->begin();
+			Assert::AreEqual(1, *iter);
+
+			list->insertAfter(2, list->begin());
+			iter = list->begin();
+			Assert::AreEqual(1, *iter);
+			++iter;
+			Assert::AreEqual(2, *iter);
+
+			// Int pointer tests
+			int x = 1;
+			int y = 2;
+			pList->insertAfter(&x, pList->end());
+			auto& pIter = pList->begin();
+			Assert::AreEqual(&x, *pIter);
+
+			pList->insertAfter(&y, pList->begin());
+			pIter = pList->begin();
+			Assert::AreEqual(&x, *pIter);
+			++pIter;
+			Assert::AreEqual(&y, *pIter);
+
+			// Foo tests
+			Foo foo(1);
+			Foo bar(2);
+			fooList->insertAfter(foo, fooList->end());
+			auto& fooIter = fooList->begin();
+			Assert::AreEqual(foo, *fooIter);
+
+			fooList->insertAfter(bar, fooList->begin());
+			fooIter = fooList->begin();
+			Assert::AreEqual(foo, *fooIter);
+			++fooIter;
+			Assert::AreEqual(bar, *fooIter);
+		}
+
 	private:
 		static _CrtMemState sStartMemState;
 	};

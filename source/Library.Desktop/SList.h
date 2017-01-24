@@ -71,6 +71,12 @@ public:
 	/// @Return:  an iterator that points to the next node of the back node
 	Iterator& end();
 
+	/// Inserts a value after the value in a given iterator
+	/// @Param value: The value being inserted into the list
+	/// @Param location: The point where the value is being inserted after
+	/// @Return: An Iterator to the location of the inserted value
+	Iterator insertAfter(T value, Iterator& location);
+
 	class Iterator
 	{
 		friend class SList;

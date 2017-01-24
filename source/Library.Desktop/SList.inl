@@ -88,7 +88,10 @@ typename SList<T>::Iterator SList<T>::pushBack(T data)
 		mBack->next = nullptr;
 		mEnd.mNode = mBack->next;
 	}
+
 	mSize++;
+	mBegin.mNode = mFront;
+	mEnd.mNode = mBack;
 
 	return Iterator(this, mBack);
 }
@@ -183,4 +186,28 @@ template <class T>
 typename SList<T>::Iterator& SList<T>::end()
 {
 	return mEnd;
+}
+
+template <class T>
+typename SList<T>::Iterator SList<T>::insertAfter(T value, Iterator& location)
+{
+	if (location == end() || location.mNode == mBack)
+	{
+		pushBack(value);
+		
+		return Iterator(this, mBack);
+	}
+
+	for (Iterator iter = begin(); iter != end(); ++iter)
+	{
+		if (location == iter)
+		{
+			Node* temp = new Node(value);
+			temp->next = location.mNode->next;
+			location.mNode->next = temp;
+			return Iterator(this, temp);
+		}
+	}
+
+	return end();
 }
