@@ -4,7 +4,7 @@
 
 template <typename T>
 Vector<T>::Vector() :
-	mBuffer(nullptr), mSize(0), mCapacity(10)
+	mBuffer(nullptr), mSize(0), mCapacity(CAPACITY_INCREMENT)
 {
 	reserve(mCapacity);
 }
@@ -121,15 +121,11 @@ bool Vector<T>::isEmpty() const
 template <typename T>
 void Vector<T>::pushBack(const T& value)
 {
-	//TODO: Expand if size matches capacity
-	if (mSize < mCapacity)
+	if (mSize >= mCapacity)
 	{
-		new(mBuffer+mSize++) T(value);
+		reserve(mCapacity + CAPACITY_INCREMENT);
 	}
-	else
-	{
-		throw std::exception("Attempting to push back with no available capacity. Resizing not yet implemented");
-	}
+	new(mBuffer + mSize++) T(value);
 }
 
 template <typename T>
@@ -159,7 +155,20 @@ void Vector<T>::clear()
 template <typename T>
 void Vector<T>::remove(const T& value)
 {
-	//TODO: Implement remove method
+	std::uint32_t firstValue = mSize;
+	for (std::uint32_t i = 0; i < mSize; i++)
+	{
+		if (at(i) == value)
+		{
+			firstValue = i;
+			break;
+		}
+	}
+
+	for (std::uint32_t i = firstValue; i < mSize; i++)
+	{
+		at(i) = at(i + 1);
+	}
 }
 
 /// //////////////////////////////// ///

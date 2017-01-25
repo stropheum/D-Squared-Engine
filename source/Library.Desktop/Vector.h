@@ -35,6 +35,7 @@ private:
 	T* mBuffer;
 	std::uint32_t mSize;
 	std::uint32_t mCapacity;
+	static const std::uint32_t CAPACITY_INCREMENT = 10;
 public:
 	class Iterator
 	{
