@@ -1,6 +1,4 @@
 #pragma once
-#include "pch.h"
-#include "windows.h"
 
 
 /// @Class SList: Singularly-Linked List
@@ -55,7 +53,7 @@ public:
 	
 	/// @Return: The templated item at the back of the list
 	T& back();
-	
+
 	/// @Return: A const reference to the templated item at the back of the list
 	const T& back() const;
 	
@@ -134,9 +132,6 @@ private:
 	class Node
 	{
 	public:
-		/// Default node constructor
-		Node() : mData(nullptr), mNext(nullptr) {}
-		
 		/// Constructor
 		/// @Param data: The value contained in the node
 		explicit Node(T data) : mData(data), mNext(nullptr) {}

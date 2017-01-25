@@ -10,13 +10,10 @@ SList<T>::SList(const SList<T>& obj) :
 	SList()
 {
 	auto current = obj.mFront;
-	if (current != nullptr)
+	while (current != nullptr)
 	{
-		while (current != nullptr)
-		{
-			pushBack(current->mData);
-			current = current->mNext;
-		}
+		pushBack(current->mData);
+		current = current->mNext;
 	}
 }
 
@@ -190,7 +187,6 @@ typename SList<T>::Iterator SList<T>::insertAfter(T value, Iterator& location)
 	if (location == end() || location.mNode == mBack)
 	{
 		pushBack(value);
-		
 		return Iterator(this, mBack);
 	}
 
