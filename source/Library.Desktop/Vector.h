@@ -1,5 +1,5 @@
 #pragma once
-#include "pch.h"
+#include <cstdint>
 
 template <class T> class Vector
 {
@@ -18,8 +18,8 @@ public:
 
 	T& front();
 	T& back();
-	T& at(const uint32_t index);
-	T& operator[](const uint32_t index);
+	T& at(const std::uint32_t index);
+	T& operator[](const std::uint32_t index);
 	T popBack();
 	
 	std::uint32_t size() const;
@@ -42,12 +42,14 @@ public:
 		Iterator();
 		bool operator==(const Iterator& rhs);
 		Iterator& operator++();
+		Iterator operator++(int);
 		T& operator*();
 		Iterator& operator=(const Iterator& rhs);
 	private:
-		explicit Iterator(const T& value);
+		Iterator(const std::uint32_t index);
 		Iterator(const Iterator& rhs);
-		T* mValue;
+		Vector<T>* mOwner;
+		std::uint32_t mIndex;
 	};
 };
 

@@ -43,22 +43,28 @@ Vector<T>& Vector<T>::operator=(Vector<T>&& rhs)
 template <typename T>
 typename Vector<T>::Iterator Vector<T>::find(const T& value)
 {
-	//TODO: Implement assignment operator
-	return this;
+	uint32_t index = mSize;
+	for (std::uint32_t i = 0; i < mSize; i++)
+	{
+		if ((*mBuffer + i) == value)
+		{
+			index = i;
+			break;
+		}
+	}
+	return Iterator(index);
 }
 
 template <typename T>
 typename Vector<T>::Iterator Vector<T>::begin()
 {
-	//TODO: Implement begin method
-	return Iterator();
+	return Iterator(this, 0);
 }
 
 template <typename T>
 typename Vector<T>::Iterator Vector<T>::end()
 {
-	//TODO: Implement end method
-	return Iterator();
+	return Iterator(this, mSize);
 }
 
 template <typename T>
@@ -76,13 +82,13 @@ T& Vector<T>::back()
 }
 
 template <typename T>
-T& Vector<T>::at(const uint32_t index)
+T& Vector<T>::at(const std::uint32_t index)
 {
 	return operator[](index);
 }
 
 template <typename T>
-T& Vector<T>::operator[](const uint32_t index)
+T& Vector<T>::operator[](const std::uint32_t index)
 {
 	if (index >= mSize) throw std::exception("Index out of bounds");
 	return *(mBuffer + index);
@@ -161,43 +167,50 @@ void Vector<T>::remove(const T& value)
 /// //////////////////////////////// ///
 
 template <typename T>
-Vector<T>::Iterator::Iterator() {}
+Vector<T>::Iterator::Iterator() :
+	mOwner(this), mIndex(0) {}
 
 template <typename T>
-Vector<T>::Iterator::Iterator(const T& value) :
-	mValue(value) {}
+Vector<T>::Iterator::Iterator(const std::uint32_t index) :
+	mOwner(this) , mIndex(index) {}
 
 template <typename T>
-Vector<T>::Iterator::Iterator(const Iterator& rhs)
-{
-	//TODO: Implement copy constructor
-}
+Vector<T>::Iterator::Iterator(const Iterator& rhs) :
+	mOwner(rhs.mOwner), mIndex(rhs.mIndex) {}
 
 template <typename T>
 bool Vector<T>::Iterator::operator==(const Iterator& rhs)
 {
-	//TODO: Implement operator==()
-	return true;
+	return mOwner == rhs.mOwner && mIndex == rhs.mIndex;
 }
 
 template <typename T>
 typename Vector<T>::Iterator& Vector<T>::Iterator::operator++()
 {
-	//TODO: Implement increment operator
-	return this;
+	mIndex++;
+	if (mIndex > mOwner->size()) throw std::exception("Increminting beyond vector bounds");
+	return *this;
+}
+
+template <typename T>
+typename Vector<T>::Iterator Vector<T>::Iterator::operator++(int)
+{
+	Iterator result(mIndex);
+	operator++();
+	return result;
 }
 
 template <typename T>
 T& Vector<T>::Iterator::operator*()
 {
-	//TODO: Implement dereference operator
-	T t{};
-	return t;
+	if (mIndex > mOwner->size()) throw std::exception("Vector out of bounds");
+	return mOwner->at(mIndex);
 }
 
 template <typename T>
 typename Vector<T>::Iterator& Vector<T>::Iterator::operator=(const Iterator& rhs)
 {
-	//TODO: Implement assignment operator
-	return this;
+	mOwner = rhs.mOwner;
+	mIndex = rhs.mIndex;
+	return *this;
 }

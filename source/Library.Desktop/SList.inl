@@ -299,7 +299,7 @@ namespace SList
 	typename SList<T>::Iterator SList<T>::Iterator::operator++(int)
 	{
 		Iterator copy(*this);
-		++(*this);
+		operator++();
 		return copy;
 	}
 
