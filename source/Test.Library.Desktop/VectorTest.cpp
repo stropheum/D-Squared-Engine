@@ -148,6 +148,22 @@ namespace TestLibraryDesktop
 			Assert::AreEqual(gar, fooVector->at(2));
 		}
 
+		TEST_METHOD(TestFront)
+		{
+			intVector->pushBack(1);
+			Assert::AreEqual(1, intVector->front());
+			intVector->pushBack(2);
+			Assert::AreEqual(1, intVector->front());
+		}
+
+		TEST_METHOD(TestBack)
+		{
+			intVector->pushBack(1);
+			Assert::AreEqual(1, intVector->back());
+			intVector->pushBack(2);
+			Assert::AreEqual(2, intVector->back());
+		}
+
 	private:
 		static _CrtMemState sStartMemState;
 	};

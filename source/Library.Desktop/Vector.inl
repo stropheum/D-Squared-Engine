@@ -55,13 +55,15 @@ typename Vector<T>::Iterator Vector<T>::end()
 template <typename T>
 T& Vector<T>::front()
 {
-	return mBuffer;
+	if (mBuffer == nullptr) throw std::exception("Calling front on null vector");
+	return *mBuffer;
 }
 
 template <typename T>
 T& Vector<T>::back()
 {
-	return mBuffer + (sizeof(T)*(mSize - 1));
+	if (mBuffer == nullptr) throw std::exception("Calling back on null vector");
+	return *(mBuffer + (mSize - 1));
 }
 
 template <typename T>
