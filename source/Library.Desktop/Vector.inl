@@ -1,93 +1,95 @@
 #pragma once
 #include "pch.h"
-#include "Vector.h"
+#include <new>
 
-template <class T>
+template <typename T>
 Vector<T>::Vector() :
-	mSize(0), mCapacity(10)
+	mBuffer(nullptr), mSize(0), mCapacity(10)
 {
-	mBuffer = dynamic_cast<T*>(malloc(sizeof(T) * mCapacity));
+	reserve(mCapacity);
 }
 
-template <class T>
+template <typename T>
 Vector<T>::~Vector()
 {
 	//TODO: Delete any heap allocated memory
 	//TODO: Deconstruct all T's in mBuffer
-	free(mBuffer);
+	clear();
 }
 
-template <class T>
-Vector<T>::Vector(const Vector& rhs) :
-	mSize(rhs.mSize), mCapacity(rhs.mSize)
+template <typename T>
+Vector<T>::Vector(const Vector<T>& rhs) :
+	mBuffer(nullptr), mSize(rhs.mSize), mCapacity(rhs.mSize)
 {
-	//TODO: Implement copy constructor
+	reserve(mCapacity);
 }
 
-template <class T>
-typename Vector<T>::Vector& Vector<T>::operator=(const Vector& rhs) 
+template <typename T>
+Vector<T>& Vector<T>::operator=(const Vector<T>& rhs) 
 {
 	//TODO: Implement assignment operator
-	return this;
+	return const_cast<Vector&>(rhs);
 }
 
-template <class T>
+template <typename T>
 typename Vector<T>::Iterator Vector<T>::find(const T& value)
 {
 	//TODO: Implement assignment operator
 	return this;
 }
 
-template <class T>
+template <typename T>
 typename Vector<T>::Iterator Vector<T>::begin()
 {
 	//TODO: Implement begin method
 	return Iterator();
 }
 
-template <class T>
+template <typename T>
 typename Vector<T>::Iterator Vector<T>::end()
 {
 	//TODO: Implement end method
 	return Iterator();
 }
 
-template <class T>
+template <typename T>
 T& Vector<T>::front()
 {
-	//TODO: Implement front method
-	return T();
+	return mBuffer;
 }
 
-template <class T>
+template <typename T>
 T& Vector<T>::back()
 {
-	//TODO: Implement back method
-	return T();
+	return mBuffer + (sizeof(T)*(mSize - 1));
 }
 
-template <class T>
-T& Vector<T>::at(int32_t index)
+template <typename T>
+T& Vector<T>::at(const uint32_t index)
 {
-	//TODO: Implement at method
-	return T();
+	return operator[](index);
 }
 
-template <class T>
-int32_t Vector<T>::size()
+template <typename T>
+T& Vector<T>::operator[](const uint32_t index)
 {
-	//TODO: Implement size method
-	return 0;
+	if (index >= mSize) throw std::exception("Index out of bounds");
+	return *(mBuffer + index);
 }
 
-template <class T>
-int32_t Vector<T>::capacity()
+template <typename T>
+uint32_t Vector<T>::size() const
 {
-	//TODO: Implement capacity method
-	return 0;
+	return mSize;
 }
 
-template <class T>
+template <typename T>
+uint32_t Vector<T>::capacity() const
+{
+	return mCapacity;
+}
+
+template <typename T>
 bool Vector<T>::isEmpty()
 {
 	//TODO: Implement isEmpty method
@@ -95,20 +97,20 @@ bool Vector<T>::isEmpty()
 	return result;
 }
 
-template <class T>
+template <typename T>
 void Vector<T>::popBack()
 {
 	//TODO: Implement popBack method
 	int temp = 0;
 }
 
-template <class T>
+template <typename T>
 void Vector<T>::pushBack(const T& value)
 {
 	//TODO: Expand if size matches capacity
 	if (mSize < mCapacity)
 	{
-		new (mBuffer + mSize++) T(value);
+		new(mBuffer+mSize++) T(value);
 	}
 	else
 	{
@@ -116,57 +118,68 @@ void Vector<T>::pushBack(const T& value)
 	}
 }
 
-template <class T>
-void Vector<T>::reserve(int32_t capacity)
+template <typename T>
+void Vector<T>::reserve(uint32_t capacity)
 {
-	//TODO: Implement reserve method
-	int32_t _capacity = capacity; // Just to remove declaration warnings
+	if (capacity > mSize && capacity >= mCapacity)
+	{
+		T* temp = mBuffer;
+		mBuffer = static_cast<T*>(malloc(sizeof(T) * capacity));
+		memcpy_s(mBuffer, sizeof(T) * mSize, temp, sizeof(T) * mSize);
+		free(temp);
+		mCapacity = capacity;
+	}
 }
 
-template <class T>
+template <typename T>
 void Vector<T>::clear()
 {
-	//TODO: Implement clear method
+	for (uint32_t i = 0; i < mSize; i++)
+	{
+		(mBuffer + i)->~T();
+	}
+	free(mBuffer);
+	mSize = mCapacity = 0;
 }
 
-template <class T>
+template <typename T>
 void Vector<T>::remove(const T& value)
 {
 	//TODO: Implement remove method
 }
 
 /// //////////////////////////////// ///
-//  Vector Iterator implementation  ///
-// //////////////////////////////// ///
+///  Vector Iterator implementation  ///
+/// //////////////////////////////// ///
 
-template <class T>
+template <typename T>
 Vector<T>::Iterator::Iterator() {}
 
-template <class T>
+template <typename T>
 Vector<T>::Iterator::Iterator(const T& value) :
 	mValue(value) {}
 
-template <class T>
+template <typename T>
 Vector<T>::Iterator::Iterator(const Iterator& rhs)
 {
 	//TODO: Implement copy constructor
 }
 
-template <class T>
+template <typename T>
 bool Vector<T>::Iterator::operator==(const Iterator& rhs)
 {
 	//TODO: Implement operator==()
 	return true;
 }
 
-template <class T>
+template <typename T>
 typename Vector<T>::Iterator& Vector<T>::Iterator::operator++()
 {
 	//TODO: Implement increment operator
 	return this;
 }
 
-template <class T>
+template <typename T>
 T& Vector<T>::Iterator::operator*()
 {
 	//TODO: Implement dereference operator
@@ -174,7 +187,7 @@ T& Vector<T>::Iterator::operator*()
 	return t;
 }
 
-template <class T>
+template <typename T>
 typename Vector<T>::Iterator& Vector<T>::Iterator::operator=(const Iterator& rhs)
 {
 	//TODO: Implement assignment operator

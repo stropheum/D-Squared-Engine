@@ -7,8 +7,8 @@ public:
 	class Iterator;
 	Vector();
 	~Vector();
-	Vector(const Vector& rhs);
-	Vector& operator=(const Vector& rhs);
+	Vector(const Vector<T>& rhs);
+	Vector<T>& operator=(const Vector<T>& rhs);
 
 	Iterator find(const T& value);
 	Iterator begin();
@@ -16,23 +16,23 @@ public:
 
 	T& front();
 	T& back();
-	T& at(int32_t index);
-	T& operator[];
+	T& at(const uint32_t index);
+	T& operator[](const uint32_t index);
 	
-	int32_t size();
-	int32_t capacity();
+	uint32_t size() const;
+	uint32_t capacity() const;
 
 	bool isEmpty();
 
 	void popBack();
 	void pushBack(const T& value);
-	void reserve(int32_t capacity);
+	void reserve(uint32_t capacity);
 	void clear();
 	void remove(const T& value);
 private:
 	T* mBuffer;
-	int32_t mSize;
-	int32_t mCapacity;
+	uint32_t mSize;
+	uint32_t mCapacity;
 public:
 	class Iterator
 	{

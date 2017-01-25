@@ -1,11 +1,11 @@
 #pragma once
 #include <exception>
 
-template <class T>
+template <typename T>
 SList<T>::SList() : 
 mSize(0), mFront(nullptr), mBack(nullptr), mBegin(this, mFront), mEnd(this, nullptr) {}
 
-template <class T>
+template <typename T>
 SList<T>::SList(const SList<T>& obj) :
 	SList()
 {
@@ -20,7 +20,7 @@ SList<T>::SList(const SList<T>& obj) :
 	}
 }
 
-template <class T>
+template <typename T>
 SList<T>& SList<T>::operator=(const SList<T>& rhs)
 {
 	if (this != &rhs)
@@ -36,7 +36,7 @@ SList<T>& SList<T>::operator=(const SList<T>& rhs)
 	return *this;
 }
 
-template <class T>
+template <typename T>
 SList<T>::~SList()
 {
 	Node* current = mFront;
@@ -48,7 +48,7 @@ SList<T>::~SList()
 	}
 }
 
-template <class T>
+template <typename T>
 typename SList<T>::Iterator SList<T>::pushFront(T data)
 {
 	auto temp = mFront;
@@ -66,7 +66,7 @@ typename SList<T>::Iterator SList<T>::pushFront(T data)
 	return Iterator(this, mFront);
 }
 
-template <class T>
+template <typename T>
 typename SList<T>::Iterator SList<T>::pushBack(T data)
 {
 	if (mFront == nullptr)
@@ -96,7 +96,7 @@ typename SList<T>::Iterator SList<T>::pushBack(T data)
 	return Iterator(this, mBack);
 }
 
-template <class T>
+template <typename T>
 void SList<T>::clear()
 {
 	auto current = mFront;
@@ -112,7 +112,7 @@ void SList<T>::clear()
 	mSize = 0;
 }
 
-template <class T>
+template <typename T>
 T SList<T>::popFront()
 {
 	auto oldFront = mFront;
@@ -124,7 +124,7 @@ T SList<T>::popFront()
 	return result;
 }
 
-template <class T>
+template <typename T>
 T& SList<T>::front()
 {
 	if (mFront == nullptr)
@@ -134,7 +134,7 @@ T& SList<T>::front()
 	return mFront->mData;
 }
 
-template <class T>
+template <typename T>
 const T& SList<T>::front() const
 {
 	if (mFront == nullptr)
@@ -144,7 +144,7 @@ const T& SList<T>::front() const
 	return mFront->mData;
 }
 
-template <class T>
+template <typename T>
 T& SList<T>::back()
 {
 	if (mFront == nullptr)
@@ -154,7 +154,7 @@ T& SList<T>::back()
 	return mBack->mData;
 }
 
-template <class T>
+template <typename T>
 const T& SList<T>::back() const
 {
 	if (mFront == nullptr)
@@ -164,31 +164,31 @@ const T& SList<T>::back() const
 	return mBack->mData;
 }
 
-template <class T>
+template <typename T>
 bool SList<T>::isEmpty() const
 {
 	return mSize == 0;
 }
 
-template <class T>
+template <typename T>
 int SList<T>::size() const
 {
 	return mSize;
 }
 
-template <class T>
+template <typename T>
 typename SList<T>::Iterator& SList<T>::begin()
 {
 	return mBegin;
 }
 
-template <class T>
+template <typename T>
 typename SList<T>::Iterator& SList<T>::end()
 {
 	return mEnd;
 }
 
-template <class T>
+template <typename T>
 typename SList<T>::Iterator SList<T>::insertAfter(T value, Iterator& location)
 {
 	if (location == end() || location.mNode == mBack)
@@ -212,7 +212,7 @@ typename SList<T>::Iterator SList<T>::insertAfter(T value, Iterator& location)
 	return end();
 }
 
-template <class T>
+template <typename T>
 typename SList<T>::Iterator SList<T>::find(const T& value)
 {
 	for (auto iter = begin(); iter != end(); ++iter)
@@ -225,7 +225,7 @@ typename SList<T>::Iterator SList<T>::find(const T& value)
 	return mEnd;
 }
 
-template <class T>
+template <typename T>
 void SList<T>::remove(T value)
 {
 	if (mFront->mData == value)
@@ -256,15 +256,15 @@ void SList<T>::remove(T value)
 ///  SList Iterator implementation  ///
 /// /////////////////////////////// ///
 
-template <class T>
+template <typename T>
 SList<T>::Iterator::Iterator(SList<T>* owner, Node* node) :
 	mOwner(owner), mNode(node) {}
 
-template <class T>
+template <typename T>
 SList<T>::Iterator::Iterator(const Iterator& rhs) :
 	mOwner(rhs.mOwner), mNode(rhs.mNode) {}
 
-template <class T>
+template <typename T>
 typename SList<T>::Iterator& SList<T>::Iterator::operator=(const Iterator& rhs)
 {
 	mOwner = rhs.mOwner;
@@ -272,7 +272,7 @@ typename SList<T>::Iterator& SList<T>::Iterator::operator=(const Iterator& rhs)
 	return *this;
 }
 
-template <class T>
+template <typename T>
 bool SList<T>::Iterator::operator==(Iterator& rhs)
 {
 	auto bothNull = (mOwner == nullptr) && (rhs.mOwner == nullptr);
@@ -281,13 +281,13 @@ bool SList<T>::Iterator::operator==(Iterator& rhs)
 	return bothNull || (identicalOwners && sameReference);
 }
 
-template <class T>
+template <typename T>
 bool SList<T>::Iterator::operator!=(Iterator& rhs)
 {
 	return !(this == &rhs);
 }
 
-template <class T>
+template <typename T>
 typename SList<T>::Iterator SList<T>::Iterator::operator++()
 {
 	if (mNode != nullptr)
@@ -301,7 +301,7 @@ typename SList<T>::Iterator SList<T>::Iterator::operator++()
 	return *this;
 }
 
-template <class T>
+template <typename T>
 typename SList<T>::Iterator SList<T>::Iterator::operator++(int)
 {
 	Iterator copy(*this);
@@ -309,7 +309,7 @@ typename SList<T>::Iterator SList<T>::Iterator::operator++(int)
 	return copy;
 }
 
-template <class T>
+template <typename T>
 T& SList<T>::Iterator::operator*()
 {
 	return mNode->mData;

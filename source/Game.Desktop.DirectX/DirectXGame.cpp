@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "Vector.h"
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
@@ -29,11 +30,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 
 	// Code for testing instance of SList only
 	SList<int> list{};
-	list.pushFront(1);
-	list.pushFront(2);
-	list.pushFront(3);
-	list.remove(2);
-	list.remove(1);
+	Vector<int>* intVector = new Vector<int>();
+	intVector->pushBack(12);
+	intVector->pushBack(50);
+	intVector->pushBack(100);
+	intVector->reserve(20);
+	auto temp = intVector->at(0);
+	temp = intVector->at(1);
+	temp = intVector->at(2);
+	delete(intVector);
 
 	// the handle for the window, filled by a function
 	HWND hWnd;
