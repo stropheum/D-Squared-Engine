@@ -1,6 +1,6 @@
 #pragma once
-#include "pch.h"
 #include <new>
+#include <cstdint>
 
 template <typename T>
 Vector<T>::Vector() :
@@ -12,23 +12,32 @@ Vector<T>::Vector() :
 template <typename T>
 Vector<T>::~Vector()
 {
-	//TODO: Delete any heap allocated memory
-	//TODO: Deconstruct all T's in mBuffer
 	clear();
 }
 
 template <typename T>
 Vector<T>::Vector(const Vector<T>& rhs) :
-	mBuffer(nullptr), mSize(rhs.mSize), mCapacity(rhs.mSize)
+	mBuffer(nullptr), mSize(0), mCapacity(0)
 {
-	reserve(mCapacity);
+	this->operator=(rhs);
 }
 
 template <typename T>
-Vector<T>& Vector<T>::operator=(const Vector<T>& rhs) 
+Vector<T>& Vector<T>::operator=(const Vector<T>& rhs)
 {
-	//TODO: Implement assignment operator
-	return const_cast<Vector&>(rhs);
+	reserve(rhs.mCapacity);
+	memcpy(mBuffer, rhs.mBuffer, rhs.size());
+	mSize = rhs.mSize;
+	return *this;
+}
+
+template <typename T>
+Vector<T>& Vector<T>::operator=(Vector<T>&& rhs)
+{
+	reserve(rhs.mCapacity);
+	memcpy(mBuffer, rhs.mBuffer, rhs.size());
+	mSize = rhs.mSize;
+	return *this;
 }
 
 template <typename T>
@@ -80,30 +89,27 @@ T& Vector<T>::operator[](const uint32_t index)
 }
 
 template <typename T>
-uint32_t Vector<T>::size() const
+T Vector<T>::popBack()
+{
+	return *(mBuffer + --mSize);
+}
+
+template <typename T>
+std::uint32_t Vector<T>::size() const
 {
 	return mSize;
 }
 
 template <typename T>
-uint32_t Vector<T>::capacity() const
+std::uint32_t Vector<T>::capacity() const
 {
 	return mCapacity;
 }
 
 template <typename T>
-bool Vector<T>::isEmpty()
+bool Vector<T>::isEmpty() const
 {
-	//TODO: Implement isEmpty method
-	bool result = true;
-	return result;
-}
-
-template <typename T>
-void Vector<T>::popBack()
-{
-	//TODO: Implement popBack method
-	int temp = 0;
+	return mSize == 0;
 }
 
 template <typename T>
@@ -121,7 +127,7 @@ void Vector<T>::pushBack(const T& value)
 }
 
 template <typename T>
-void Vector<T>::reserve(uint32_t capacity)
+void Vector<T>::reserve(std::uint32_t capacity)
 {
 	if (capacity > mSize && capacity >= mCapacity)
 	{
@@ -136,7 +142,7 @@ void Vector<T>::reserve(uint32_t capacity)
 template <typename T>
 void Vector<T>::clear()
 {
-	for (uint32_t i = 0; i < mSize; i++)
+	for (std::uint32_t i = 0; i < mSize; i++)
 	{
 		(mBuffer + i)->~T();
 	}

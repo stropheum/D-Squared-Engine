@@ -18,13 +18,16 @@ namespace TestLibraryDesktop
 		/// Sets up leak detection logic
 		static void initializeLeakDetection()
 		{
+#if _Debug
 			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
 			_CrtMemCheckpoint(&sStartMemState);
+#endif //_Debug
 		}
 
 		/// Detects if memory state has been corrupted
 		static void finalizeLeakDetection()
 		{
+#if _Debug
 			_CrtMemState endMemState, diffMemState;
 			_CrtMemCheckpoint(&endMemState);
 			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
@@ -32,6 +35,7 @@ namespace TestLibraryDesktop
 				_CrtMemDumpStatistics(&diffMemState);
 				Assert::Fail(L"Memory Leaks!");
 			}
+#endif //_Debug
 		}
 
 		TEST_METHOD_INITIALIZE(InitializeMethod)
@@ -162,6 +166,27 @@ namespace TestLibraryDesktop
 			Assert::AreEqual(1, intVector->back());
 			intVector->pushBack(2);
 			Assert::AreEqual(2, intVector->back());
+		}
+
+		TEST_METHOD(TestCopy)
+		{
+			intVector->pushBack(1);
+			Vector<int> newVector;
+			newVector = *intVector;
+			Vector<int> newCopyVector(*intVector);
+			Assert::AreEqual(intVector->size(), newVector.size(), L"Assignment operator not functioning");
+			Assert::AreEqual(intVector->size(), newCopyVector.size(), L"Copy constructor not functioning");
+		}
+
+		TEST_METHOD(TestPopBack)
+		{
+			Assert::IsTrue(intVector->isEmpty());
+			intVector->pushBack(1);
+			intVector->pushBack(2);
+
+			Assert::AreEqual(2, intVector->popBack());
+			Assert::AreEqual(1, static_cast<int>(intVector->size()));
+			Assert::AreEqual(1, intVector->popBack());
 		}
 
 	private:

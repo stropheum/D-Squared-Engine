@@ -10,20 +10,23 @@ namespace TestLibraryDesktop
 {		
 	TEST_CLASS(SListTest)
 	{
-		SList<int>*  list;
-		SList<int*>* pList;
-		SList<Foo>*  fooList;
+		SList::SList<int>*  list;
+		SList::SList<int*>* pList;
+		SList::SList<Foo>*  fooList;
 	public:
 		/// Sets up leak detection logic
 		static void initializeLeakDetection()
 		{
+#ifdef _Debug
 			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
 			_CrtMemCheckpoint(&sStartMemState);
+#endif //_Debug
 		}
 		
 		/// Detects if memory state has been corrupted
 		static void finalizeLeakDetection()
 		{
+#ifdef _Debug
 			_CrtMemState endMemState, diffMemState;
 			_CrtMemCheckpoint(&endMemState);
 			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
@@ -31,14 +34,15 @@ namespace TestLibraryDesktop
 				_CrtMemDumpStatistics(&diffMemState);
 				Assert::Fail(L"Memory Leaks!");
 			}
+#endif //_Debug
 		}
 
 		TEST_METHOD_INITIALIZE(InitializeMethod)
 		{
 			initializeLeakDetection();
-			list    = new SList<int> ();
-			pList   = new SList<int*>();
-			fooList = new SList<Foo> ();
+			list    = new SList::SList<int> ();
+			pList   = new SList::SList<int*>();
+			fooList = new SList::SList<Foo> ();
 		}
 
 		TEST_METHOD_CLEANUP(CleanupMethod)
@@ -227,42 +231,42 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestSize)
 		{
-			Assert::AreEqual(0, list->size(), L"List size not zero on initialization");
+			Assert::AreEqual(static_cast<std::uint32_t>(0), list->size(), L"List size not zero on initialization");
 
 			list->pushFront(1);
-			Assert::AreEqual(1, list->size(), L"List size not accurate after pushing front");
+			Assert::AreEqual(static_cast<std::uint32_t>(1), list->size(), L"List size not accurate after pushing front");
 			list->pushBack(2);
-			Assert::AreEqual(2, list->size(), L"List size not accurate after pushing back");
+			Assert::AreEqual(static_cast<std::uint32_t>(2), list->size(), L"List size not accurate after pushing back");
 			list->popFront();
-			Assert::AreEqual(1, list->size(), L"List size not accurate after popping front");
+			Assert::AreEqual(static_cast<std::uint32_t>(1), list->size(), L"List size not accurate after popping front");
 			list->popFront();
-			Assert::AreEqual(0, list->size(), L"List size not accurate after popping last value");
+			Assert::AreEqual(static_cast<std::uint32_t>(0), list->size(), L"List size not accurate after popping last value");
 
 			int x = 1;
 			int y = 2;
 
-			Assert::AreEqual(0, pList->size(), L"List size not zero on initialization");
+			Assert::AreEqual(static_cast<std::uint32_t>(0), pList->size(), L"List size not zero on initialization");
 			pList->pushFront(&x);
-			Assert::AreEqual(1, pList->size(), L"List size not accurate after pushing front");
+			Assert::AreEqual(static_cast<std::uint32_t>(1), pList->size(), L"List size not accurate after pushing front");
 			pList->pushBack(&y);
-			Assert::AreEqual(2, pList->size(), L"List size not accurate after pushing back");
+			Assert::AreEqual(static_cast<std::uint32_t>(2), pList->size(), L"List size not accurate after pushing back");
 			pList->popFront();
-			Assert::AreEqual(1, pList->size(), L"List size not accurate after popping front");
+			Assert::AreEqual(static_cast<std::uint32_t>(1), pList->size(), L"List size not accurate after popping front");
 			pList->popFront();
-			Assert::AreEqual(0, pList->size(), L"List size not accurate after popping last value");
+			Assert::AreEqual(static_cast<std::uint32_t>(0), pList->size(), L"List size not accurate after popping last value");
 
 			Foo f1(1);
 			Foo f2(2);
 
-			Assert::AreEqual(0, fooList->size(), L"Foo list size not zero on initialization");
+			Assert::AreEqual(static_cast<std::uint32_t>(0), fooList->size(), L"Foo list size not zero on initialization");
 			fooList->pushFront(f1);
-			Assert::AreEqual(1, fooList->size(), L"Foo list not accurate after pushing front");
+			Assert::AreEqual(static_cast<std::uint32_t>(1), fooList->size(), L"Foo list not accurate after pushing front");
 			fooList->pushBack(f2);
-			Assert::AreEqual(2, fooList->size(), L"Foo list size not accurate after pushing back");
+			Assert::AreEqual(static_cast<std::uint32_t>(2), fooList->size(), L"Foo list size not accurate after pushing back");
 			fooList->popFront();
-			Assert::AreEqual(1, fooList->size(), L"Foo list size not accurate after popping front");
+			Assert::AreEqual(static_cast<std::uint32_t>(1), fooList->size(), L"Foo list size not accurate after popping front");
 			fooList->popFront();
-			Assert::AreEqual(0, fooList->size(), L"Foo list size not accurate after popping last value");
+			Assert::AreEqual(static_cast<std::uint32_t>(0), fooList->size(), L"Foo list size not accurate after popping last value");
 		}
 
 		TEST_METHOD(TestCopy)
@@ -316,10 +320,10 @@ namespace TestLibraryDesktop
 			list->pushFront(2);
 			list->pushFront(3);
 
-			SList<int> newList;
+			SList::SList<int> newList;
 			newList = *list;
 
-			for (int i = 0; i < list->size(); i++)
+			for (std::uint32_t i = 0; i < list->size(); i++)
 			{
 				auto expected = list->popFront();
 				auto result = newList.popFront();
@@ -333,10 +337,10 @@ namespace TestLibraryDesktop
 			pList->pushFront(&y);
 			pList->pushFront(&z);
 
-			SList<int*> pListCopy;
+			SList::SList<int*> pListCopy;
 			pListCopy = *pList;
 
-			for (int i = 0; i < pList->size(); i++)
+			for (std::uint32_t i = 0; i < pList->size(); i++)
 			{
 				auto expected = pList->popFront();
 				auto actual = pListCopy.popFront();
@@ -350,10 +354,10 @@ namespace TestLibraryDesktop
 			fooList->pushFront(f2);
 			fooList->pushFront(f3);
 
-			SList<Foo> fooListCopy;
+			SList::SList<Foo> fooListCopy;
 			fooListCopy = *fooList;
 
-			for (int i = 0; i < fooList->size(); i++)
+			for (std::uint32_t i = 0; i < fooList->size(); i++)
 			{
 				auto expected = fooList->popFront();
 				auto actual = fooListCopy.popFront();
@@ -366,19 +370,19 @@ namespace TestLibraryDesktop
 			list->pushFront(1);
 			list->clear();
 
-			Assert::AreEqual(0, list->size(), L"List size non-zero after clear");
+			Assert::AreEqual(static_cast<std::uint32_t>(0), list->size(), L"List size non-zero after clear");
 
 			int x = 1;
 			pList->pushFront(&x);
 			pList->clear();
 
-			Assert::AreEqual(0, pList->size(), L"List size non-zero after clear");
+			Assert::AreEqual(static_cast<std::uint32_t>(0), pList->size(), L"List size non-zero after clear");
 
 			Foo foo(1);
 			fooList->pushFront(foo);
 			fooList->clear();
 
-			Assert::AreEqual(0, fooList->size(), L"List size non-zero after clear");
+			Assert::AreEqual(static_cast<std::uint32_t>(0), fooList->size(), L"List size non-zero after clear");
 		}
 
 		TEST_METHOD(TestIteratorBeginEndUnique)
@@ -481,17 +485,17 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestIteratorCopyConstructor)
 		{
 			auto& iter = list->begin();
-			SList<int>::Iterator iterCopy(iter);
+			SList::SList<int>::Iterator iterCopy(iter);
 			bool comparison = (iter == iterCopy);
 			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
 
 			auto& pIter = pList->begin();
-			SList<int*>::Iterator pIterCopy(pIter);
+			SList::SList<int*>::Iterator pIterCopy(pIter);
 			comparison = (pIter == pIterCopy);
 			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
 
 			auto& fooIter = fooList->begin();
-			SList<Foo>::Iterator fooIterCopy(fooIter);
+			SList::SList<Foo>::Iterator fooIterCopy(fooIter);
 			comparison = (fooIter == fooIterCopy);
 			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
 		}
@@ -499,19 +503,19 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestIteratorAssignmentOperator)
 		{
 			auto& iter = list->begin();
-			SList<int>::Iterator iterCopy;
+			SList::SList<int>::Iterator iterCopy;
 			iterCopy = iter;
 			bool comparison = (iter == iterCopy);
 			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
 
 			auto& pIter = pList->begin();
-			SList<int*>::Iterator pIterCopy;
+			SList::SList<int*>::Iterator pIterCopy;
 			pIterCopy = pIter;
 			comparison = (pIter == pIterCopy);
 			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
 
 			auto& fooIter = fooList->begin();
-			SList<Foo>::Iterator fooIterCopy;
+			SList::SList<Foo>::Iterator fooIterCopy;
 			fooIterCopy = fooIter;
 			comparison = (fooIter == fooIterCopy);
 			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
@@ -679,8 +683,8 @@ namespace TestLibraryDesktop
 			bool pCompare = (pLocation != pIter);
 			Assert::IsTrue(pCompare, L"Find called on middle equivalent with begin");
 			++pIter;
-			pCompare = (pLocation == pIter, L"Find called on middle value not equivalent with iterator incremented to same point");
-			Assert::IsTrue(pCompare);
+			pCompare = (pLocation == pIter);
+			Assert::IsTrue(pCompare, L"Find called on middle value not equivalent with iterator incremented to same point");
 			++pIter;
 			pCompare = (pLocation != pIter);
 			Assert::IsTrue(pCompare, L"Find called on middle value equivalent with end");

@@ -1,5 +1,5 @@
 #include "pch.h"
-
+#include "SList.h"
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
@@ -27,7 +27,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	UNREFERENCED_PARAMETER(showCommand);
 
 	// Code for testing instance of SList only
-	SList<int> list{};
+	SList::SList<int> list{};
 	list.clear();
 	list.pushFront(1);
 	list.pushBack(12);

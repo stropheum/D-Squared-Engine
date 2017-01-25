@@ -29,7 +29,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	UNREFERENCED_PARAMETER(commandLine);
 
 	// Code for testing instance of SList only
-	SList<int> list{};
+	SList::SList<int> list{};
 	Vector<int>* intVector = new Vector<int>();
 	intVector->pushBack(12);
 	intVector->pushBack(50);
