@@ -68,7 +68,7 @@ public:
 	/// @Return: An iterator that points to the front node
 	Iterator& begin();
 
-	/// @Return:  an iterator that points to the next node of the back node
+	/// @Return:  an iterator that points to the mNext node of the back node
 	Iterator& end();
 
 	/// Inserts a value after the value in a given iterator
@@ -135,11 +135,11 @@ private:
 	{
 	public:
 		/// Default node constructor
-		Node() : mData(nullptr), next(nullptr) {}
+		Node() : mData(nullptr), mNext(nullptr) {}
 		
 		/// Constructor
 		/// @Param data: The value contained in the node
-		explicit Node(T data) : mData(data), next(nullptr) {}
+		explicit Node(T data) : mData(data), mNext(nullptr) {}
 		
 		/// Node deconstructor
 		~Node(){} 
@@ -148,7 +148,7 @@ private:
 		Node(const Node& rhs) = delete; 
 
 		T mData;     /// Data being contained by the node
-		Node* next;  /// Pointer to the node that this node is linked to
+		Node* mNext;  /// Pointer to the node that this node is linked to
 	};
 	
 	int mSize;       /// Number of elements in the list

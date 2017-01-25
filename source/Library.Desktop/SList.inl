@@ -15,7 +15,7 @@ SList<T>::SList(const SList<T>& obj) :
 		while (current != nullptr)
 		{
 			pushBack(current->mData);
-			current = current->next;
+			current = current->mNext;
 		}
 	}
 }
@@ -30,7 +30,7 @@ SList<T>& SList<T>::operator=(const SList<T>& rhs)
 		while (current != nullptr)
 		{
 			pushBack(current->mData);
-			current = current->next;
+			current = current->mNext;
 		}
 	}
 	return *this;
@@ -42,7 +42,7 @@ SList<T>::~SList()
 	Node* current = mFront;
 	while (current != nullptr)
 	{
-		Node* newCurrent = current->next;
+		Node* newCurrent = current->mNext;
 		delete(current);
 		current = newCurrent;
 	}
@@ -53,14 +53,14 @@ typename SList<T>::Iterator SList<T>::pushFront(T data)
 {
 	auto temp = mFront;
 	mFront = new Node(data);
-	mFront->next = temp;
+	mFront->mNext = temp;
 	mBegin.mNode = mFront;
 	mSize++;
 	if (mBack == nullptr)
 	{
 		mBack = mFront;
-		mBack->next = nullptr;
-		mEnd.mNode = mBack->next;
+		mBack->mNext = nullptr;
+		mEnd.mNode = mBack->mNext;
 	}
 
 	return Iterator(this, mFront);
@@ -73,20 +73,14 @@ typename SList<T>::Iterator SList<T>::pushBack(T data)
 	{
 		mFront = new Node(data);
 		mBack = mFront;
-		mBack->next = nullptr;
-		mEnd.mNode = mBack->next;
+		mBack->mNext = nullptr;
+		mEnd.mNode = mBack->mNext;
 	}
 	else
 	{
-		auto current = mFront;
-		while (current->next != nullptr)
-		{
-			current = current->next;
-		}
-		current->next = new Node(data);
-		mBack = current->next;
-		mBack->next = nullptr;
-		mEnd.mNode = mBack->next;
+		mBack->mNext = new Node(data);
+		mBack = mBack->mNext;
+		mBack->mNext = nullptr;
 	}
 
 	mSize++;
@@ -102,10 +96,10 @@ void SList<T>::clear()
 	auto current = mFront;
 	if (current != nullptr)
 	{
-		while (current->next != nullptr)
+		while (current->mNext != nullptr)
 		{
 			auto temp = current;
-			current = current->next;
+			current = current->mNext;
 			delete(temp);
 		}
 	}
@@ -115,9 +109,11 @@ void SList<T>::clear()
 template <typename T>
 T SList<T>::popFront()
 {
+	if (mFront == nullptr) { throw std::exception("Popping front on null SList"); }
+
 	auto oldFront = mFront;
 	auto result = mFront->mData;
-	mFront = mFront->next;
+	mFront = mFront->mNext;
 	mBegin.mNode = mFront;
 	delete(oldFront);
 	mSize--;
@@ -129,7 +125,7 @@ T& SList<T>::front()
 {
 	if (mFront == nullptr)
 	{
-		throw std::exception("List is null");
+		throw std::exception("SList is null");
 	}
 	return mFront->mData;
 }
@@ -139,7 +135,7 @@ const T& SList<T>::front() const
 {
 	if (mFront == nullptr)
 	{
-		throw std::exception("List is null");
+		throw std::exception("SList is null");
 	}
 	return mFront->mData;
 }
@@ -203,8 +199,8 @@ typename SList<T>::Iterator SList<T>::insertAfter(T value, Iterator& location)
 		if (location == iter)
 		{
 			Node* temp = new Node(value);
-			temp->next = location.mNode->next;
-			location.mNode->next = temp;
+			temp->mNext = location.mNode->mNext;
+			location.mNode->mNext = temp;
 			return Iterator(this, temp);
 		}
 	}
@@ -231,7 +227,7 @@ void SList<T>::remove(T value)
 	if (mFront->mData == value)
 	{
 		Node* removeNode = mFront;
-		mFront = mFront->next;
+		mFront = mFront->mNext;
 		delete(removeNode);
 		return;
 	}
@@ -243,7 +239,7 @@ void SList<T>::remove(T value)
 		{
 			if (iter.mNode->mData == value)
 			{
-				lastNode->next = iter.mNode->next;
+				lastNode->mNext = iter.mNode->mNext;
 				delete(iter.mNode);
 				return;
 			}
@@ -292,7 +288,7 @@ typename SList<T>::Iterator SList<T>::Iterator::operator++()
 {
 	if (mNode != nullptr)
 	{
-		mNode = mNode->next;
+		mNode = mNode->mNext;
 	}
 	else
 	{
