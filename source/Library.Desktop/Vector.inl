@@ -212,15 +212,16 @@ namespace Vector
 	template <class T>
 	void Vector<T>::shrinkToFit()
 	{
-		auto sizeDifference = mSize % 10;
-		if (sizeDifference >= 10)
-		{
-			mCapacity = mSize + sizeDifference;
-			T* temp = mBuffer;
-			mBuffer = static_cast<T*>(malloc(sizeof(T) * mCapacity));
-			memcpy_s(mBuffer, sizeof(T) * mSize, temp, sizeof(T) * mSize);
-			free(temp);
-		}
+		//TODO: Fix this code. Don't use it, it's the devil
+//		auto sizeDifference = mSize % 10;
+//		if (sizeDifference >= 10)
+//		{
+//			mCapacity = mSize + sizeDifference;
+//			T* temp = mBuffer;
+//			mBuffer = static_cast<T*>(malloc(sizeof(T) * mCapacity));
+//			memcpy_s(mBuffer, sizeof(T) * mSize, temp, sizeof(T) * mSize);
+//			free(temp);
+//		}
 	}
 
 

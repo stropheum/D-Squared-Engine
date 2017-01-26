@@ -601,21 +601,99 @@ namespace TestLibraryDesktop
 			}
 		}
 
-//		TEST_METHOD(TestIsEmpty)
-//		{
-//			Assert::Fail(L"Test not implemented");
-//		}
-//
-//		TEST_METHOD(TestPushBack)
-//		{
-//			Assert::Fail(L"Test not implemented");
-//		}
-//
-//		TEST_METHOD(TestReserve)
-//		{
-//			Assert::Fail(L"Test not implemented");
-//		}
-//
+		TEST_METHOD(TestIsEmpty)
+		{
+			Assert::IsTrue(intor.isEmpty(),
+				L"Cleared vector should be empty");
+			intor.pushBack(1);
+			Assert::IsFalse(intor.isEmpty(),
+				L"Non-empty vector should not be empty");
+			intor.popBack();
+			Assert::IsTrue(intor.isEmpty(),
+				L"Vector should be empty after popping last value");
+
+			Assert::IsTrue(pointor.isEmpty(),
+				L"Cleared vector should be empty");
+			int x = 1;
+			pointor.pushBack(&x);
+			Assert::IsFalse(pointor.isEmpty(),
+				L"Non-empty vector should not be empty");
+			pointor.popBack();
+			Assert::IsTrue(pointor.isEmpty(),
+				L"Vector should be empty after popping last value");
+
+			Assert::IsTrue(footor.isEmpty(),
+				L"Cleared vector should be empty");
+			Foo foo(1);
+			footor.pushBack(foo);
+			Assert::IsFalse(footor.isEmpty(),
+				L"Non-empty vector should not be empty");
+			footor.popBack();
+			Assert::IsTrue(footor.isEmpty(),
+				L"Vector should be empty after popping last value");
+		}
+
+		TEST_METHOD(TestPushBack)
+		{
+			intor.pushBack(1);
+			Assert::IsTrue(intor.back() == 1,
+				L"Value pushed to back does not match");
+			Assert::IsTrue(*intor.begin() == 1,
+				L"First value pushed back is not equivalent to begin");
+			intor.pushBack(2);
+			Assert::IsTrue(intor.back() == 2,
+				L"Second value pushed back is not equivalent to begin");
+			
+			int x = 1;
+			int y = 2;
+			pointor.pushBack(&x);
+			Assert::IsTrue(pointor.back() == &x,
+				L"Value pushed to back does not match");
+			Assert::IsTrue(*pointor.begin() == &x,
+				L"First value pushed back is not equivalent to begin");
+			pointor.pushBack(&y);
+			Assert::IsTrue(pointor.back() == &y,
+				L"Second value pushed back is not equivalent to begin");
+
+			Foo foo(1);
+			Foo bar(2);
+			footor.pushBack(foo);
+			Assert::IsTrue(footor.back() == foo,
+				L"Value pushed to back does not match");
+			Assert::IsTrue(*footor.begin() == foo,
+				L"First value pushed back is not equivalent to begin");
+			footor.pushBack(bar);
+			Assert::IsTrue(footor.back() == bar,
+				L"Second value pushed back is not equivalent to begin");
+		}
+
+		TEST_METHOD(TestReserve)
+		{
+			Assert::IsTrue(intor.capacity() == 0,
+				L"Vector capacity should be zero on clear");
+			intor.reserve(100);
+			Assert::IsTrue(intor.capacity() == 100,
+				L"Vector capacity not reserving specified value");
+			Assert::IsTrue(intor.size() == 0,
+				L"Reserve changing vector size erroneously");
+
+			Assert::IsTrue(pointor.capacity() == 0,
+				L"Vector capacity should be zero on clear");
+			pointor.reserve(100);
+			Assert::IsTrue(pointor.capacity() == 100,
+				L"Vector capacity not reserving specified value");
+			Assert::IsTrue(pointor.size() == 0,
+				L"Reserve changing vector size erroneously");
+
+			Assert::IsTrue(footor.capacity() == 0,
+				L"Vector capacity should be zero on clear");
+			footor.reserve(100);
+			Assert::IsTrue(footor.capacity() == 100,
+				L"Vector capacity not reserving specified value");
+			Assert::IsTrue(footor.size() == 0,
+				L"Reserve changing vector size erroneously");
+		}
+
 //		TEST_METHOD(TestClear)
 //		{
 //			Assert::Fail(L"Test not implemented");
