@@ -584,237 +584,53 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestCapacity)
 		{
 			Vector::Vector<int> newintvector;
-			Assert::AreEqual(static_cast<std::uint32_t>(10), newintvector.capacity(),
+			Assert::AreEqual(static_cast<uint32_t>(10), newintvector.capacity(),
 				L"New Vector should have a capacity of 10");
 			for (int i = 0; i < 10; i++)
 			{
 				intor.pushBack(i);
-				Assert::AreEqual(static_cast<std::uint32_t>(10), intor.capacity(),
+				Assert::AreEqual(static_cast<uint32_t>(10), intor.capacity(),
 					L"First ten pushes on a vector should retain the capacity at 10");
 			}
 			intor.pushBack(99);
-			Assert::AreEqual(static_cast<std::uint32_t>(20), intor.capacity(),
+			Assert::AreEqual(static_cast<uint32_t>(20), intor.capacity(),
 				L"on 11th push, vector capacity should be 20");
 			for (int i = 0; i < 11; i++)
 			{
-				intor.popBack();
-				Assert::AreEqual(static_cast<std::uint32_t>(20), intor.capacity(),
-					L"Capacity should not change when popping vector");
+				
 			}
-
-			Vector::Vector<int> newptrvector;
-			Assert::AreEqual(static_cast<std::uint32_t>(10), newptrvector.capacity(),
-				L"New Vector should have a capacity of 10");
-			int x[11];
-			for (int i = 0; i < 10; i++)
-			{
-				x[i] = i;
-				pointor.pushBack(&x[i]);
-				Assert::AreEqual(static_cast<std::uint32_t>(10), pointor.capacity(),
-					L"First ten pushes on a vector should retain the capacity at 10");
-			}
-			x[10] = 11;
-			pointor.pushBack(&x[11]);
-			Assert::AreEqual(static_cast<std::uint32_t>(20), pointor.capacity(),
-				L"on 11th push, vector capacity should be 20");
-			for (int i = 0; i < 11; i++)
-			{
-				pointor.popBack();
-				Assert::AreEqual(static_cast<std::uint32_t>(20), pointor.capacity(),
-					L"Capacity should not change when popping vector");
-			}
-
-			Vector::Vector<int> newfoovector;
-			Assert::AreEqual(static_cast<std::uint32_t>(10), newfoovector.capacity(),
-				L"New Vector should have a capacity of 10");
-			Foo** foo = new Foo*[11];
-			for (int i = 0; i < 10; i++)
-			{
-				foo[i] = new Foo(i);
-				footor.pushBack(*foo[i]);
-				Assert::AreEqual(static_cast<std::uint32_t>(10), footor.capacity(),
-					L"First ten pushes on a vector should retain the capacity at 10");
-			}
-			foo[11] = new Foo(99);
-			footor.pushBack(*foo[11]);
-			Assert::AreEqual(static_cast<std::uint32_t>(20), footor.capacity(),
-				L"on 11th push, vector capacity should be 20");
-			for (int i = 0; i < 11; i++)
-			{
-				footor.popBack();
-				Assert::AreEqual(static_cast<std::uint32_t>(20), footor.capacity(),
-					L"Capacity should not change when popping vector");
-			}
-			delete[] foo;
 		}
 
-		TEST_METHOD(TestIsEmpty)
-		{
-			Assert::IsTrue(intor.isEmpty(),
-				L"Vector should be empty after clear");
-			Vector::Vector<int> newintvector;
-			Assert::IsTrue(newintvector.isEmpty(),
-				L"Vector should be empty on initialize");
-		}
-
-		TEST_METHOD(TestPushBack)
-		{
-			intor.pushBack(1);
-			Assert::AreEqual(static_cast<std::uint32_t>(1), intor.size(),
-				L"Size should be 1 after pushing one value");
-			Assert::AreEqual(static_cast<std::uint32_t>(10), intor.capacity(),
-				L"Capacity should be 10 after pushing one value");
-			Assert::AreEqual(1, intor.back(),
-				L"Value pushed to back is not equivalent to value at back");
-
-			int x = 1;
-			pointor.pushBack(&x);
-			Assert::AreEqual(static_cast<std::uint32_t>(1), pointor.size(),
-				L"Size should be 1 after pushing one value");
-			Assert::AreEqual(static_cast<std::uint32_t>(10), pointor.capacity(),
-				L"Capacity should be 10 after pushing one value");
-			Assert::AreEqual(&x, pointor.back(),
-				L"Value pushed to back is not equivalent to value at back");
-
-			Foo foo(1);
-			footor.pushBack(foo);
-			Assert::AreEqual(static_cast<std::uint32_t>(1), footor.size(),
-				L"Size should be 1 after pushing one value");
-			Assert::AreEqual(static_cast<std::uint32_t>(10), footor.capacity(),
-				L"Capacity should be 10 after pushing one value");
-			Assert::AreEqual(foo, footor.back(),
-				L"Value pushed to back is not equivalent to value at back");
-		}
-
-		TEST_METHOD(TestReserve)
-		{
-			Assert::AreEqual(static_cast<std::uint32_t>(0), intor.capacity(),
-				L"Capacity should be zero on clear");
-			intor.reserve(10);
-			Assert::AreEqual(static_cast<std::uint32_t>(10), intor.capacity(),
-				L"Capacity should be ten when reserving 10 on an empty vector");
-			intor.reserve(5);
-			Assert::AreEqual(static_cast<std::uint32_t>(10), intor.capacity(),
-				L"Capacity should not change when reserving a value smaller than capacity");
-
-			Assert::AreEqual(static_cast<std::uint32_t>(0), pointor.capacity(),
-				L"Capacity should be zero on clear");
-			pointor.reserve(10);
-			Assert::AreEqual(static_cast<std::uint32_t>(10), pointor.capacity(),
-				L"Capacity should be ten when reserving 10 on an empty vector");
-			pointor.reserve(5);
-			Assert::AreEqual(static_cast<std::uint32_t>(10), pointor.capacity(),
-				L"Capacity should not change when reserving a value smaller than capacity");
-
-			Assert::AreEqual(static_cast<std::uint32_t>(0), footor.capacity(),
-				L"Capacity should be zero on clear");
-			footor.reserve(10);
-			Assert::AreEqual(static_cast<std::uint32_t>(10), footor.capacity(),
-				L"Capacity should be ten when reserving 10 on an empty vector");
-			footor.reserve(5);
-			Assert::AreEqual(static_cast<std::uint32_t>(10), footor.capacity(),
-				L"Capacity should not change when reserving a value smaller than capacity");
-		}
-
-		TEST_METHOD(TestClear)
-		{
-			intor.pushBack(1);
-			Assert::IsFalse(intor.isEmpty(),
-				L"Vector should not be empty after push");
-			intor.clear();
-			Assert::AreEqual(static_cast<std::uint32_t>(0), intor.size(),
-				L"Vector size should be 0 on clear");
-			Assert::AreEqual(static_cast<std::uint32_t>(0), intor.capacity(),
-				L"Vector capacity should be 0 on clear");
-			Assert::IsTrue(intor.isEmpty(),
-				L"Vector should be empty after clear");
-
-			int x = 1;
-			pointor.pushBack(&x);
-			Assert::IsFalse(pointor.isEmpty(),
-				L"Vector should not be empty after push");
-			pointor.clear();
-			Assert::AreEqual(static_cast<std::uint32_t>(0), pointor.size(),
-				L"Vector size should be 0 on clear");
-			Assert::AreEqual(static_cast<std::uint32_t>(0), pointor.capacity(),
-				L"Vector capacity should be 0 on clear");
-			Assert::IsTrue(pointor.isEmpty(),
-				L"Vector should be empty after clear");
-
-			Foo foo(1);
-			footor.pushBack(foo);
-			Assert::IsFalse(footor.isEmpty(),
-				L"Vector should not be empty after push");
-			footor.clear();
-			Assert::AreEqual(static_cast<std::uint32_t>(0), footor.size(),
-				L"Vector size should be 0 on clear");
-			Assert::AreEqual(static_cast<std::uint32_t>(0), footor.capacity(),
-				L"Vector capacity should be 0 on clear");
-			Assert::IsTrue(footor.isEmpty(),
-				L"Vector should be empty after clear");
-		}
-
-		TEST_METHOD(TestRemove)
-		{
-			intor.pushBack(1);
-			intor.pushBack(2);
-			intor.remove(1);
-			Assert::IsTrue(intor.find(1) == intor.end(),
-				L"Find on removed item should return end");
-			Assert::IsTrue(2 == intor.back(),
-				L"Back value should be only remaining value after remove");
-			Assert::AreEqual(static_cast<uint32_t>(1), intor.size(),
-				L"Size should be 1 after removing second item from vector");
-			intor.remove(99);
-			Assert::AreEqual(static_cast<std::uint32_t>(1), intor.size(),
-				L"Size should remain the same after removing nonexistent value");
-
-			int x = 1;
-			int y = 2;
-			pointor.pushBack(&x);
-			pointor.pushBack(&y);
-			pointor.remove(&x);
-			Assert::IsTrue(pointor.find(&x) == pointor.end(),
-				L"Find on removed item should return end");
-			Assert::IsTrue(&y == pointor.back(),
-				L"Back value should be only remaining value after remove");
-			Assert::AreEqual(static_cast<uint32_t>(1), pointor.size(),
-				L"Size should be 1 after removing second item from vector");
-			int z = 99;
-			pointor.remove(&z);
-			Assert::AreEqual(static_cast<std::uint32_t>(1), pointor.size(),
-				L"Size should remain the same after removing nonexistent value");
-
-			Foo foo(1);
-			Foo bar(2);
-			footor.pushBack(foo);
-			footor.pushBack(bar);
-			footor.remove(foo);
-			Assert::IsTrue(footor.find(foo) == footor.end(),
-				L"Find on removed item should return end");
-			Assert::IsTrue(bar == footor.back(),
-				L"Back value should be only remaining value after remove");
-			Assert::AreEqual(static_cast<uint32_t>(1), footor.size(),
-				L"Size should be 1 after removing second item from vector");
-			footor.remove(99);
-			Assert::AreEqual(static_cast<std::uint32_t>(1), footor.size(),
-				L"Size should remain the same after removing nonexistent value");
-		}
-
-		TEST_METHOD(TestShrinkToFit)
-		{
-			intor.reserve(100);
-			Assert::AreEqual(static_cast<std::uint32_t>(100), intor.capacity(),
-				L"Capacity should be 100 after reserving that value");
-			for (int i = 0; i < 10; i++)
-			{
-				intor.pushBack(1);
-			}
-			intor.shrinkToFit();
-			Assert::AreEqual(static_cast<std::uint32_t>(10), intor.capacity(),
-				L"Capacity should be 10 after shrink to fit called on a 10 item vector");
-		}
-
+//		TEST_METHOD(TestIsEmpty)
+//		{
+//			Assert::Fail(L"Test not implemented");
+//		}
+//
+//		TEST_METHOD(TestPushBack)
+//		{
+//			Assert::Fail(L"Test not implemented");
+//		}
+//
+//		TEST_METHOD(TestReserve)
+//		{
+//			Assert::Fail(L"Test not implemented");
+//		}
+//
+//		TEST_METHOD(TestClear)
+//		{
+//			Assert::Fail(L"Test not implemented");
+//		}
+//
+//		TEST_METHOD(TestRemove)
+//		{
+//			Assert::Fail(L"Test not implemented");
+//		}
+//
+//		TEST_METHOD(TestShrinkToFit)
+//		{
+//			Assert::Fail(L"Test not implemented");
+//		}
+//
 //		TEST_METHOD(TestIteratorComparisonOperator)
 //		{
 //			Assert::Fail(L"Test not implemented");
