@@ -694,16 +694,50 @@ namespace TestLibraryDesktop
 				L"Reserve changing vector size erroneously");
 		}
 
-//		TEST_METHOD(TestClear)
-//		{
-//			Assert::Fail(L"Test not implemented");
-//		}
-//
-//		TEST_METHOD(TestRemove)
-//		{
-//			Assert::Fail(L"Test not implemented");
-//		}
-//
+		TEST_METHOD(TestClear)
+		{
+			intor.pushBack(1);
+			Assert::IsTrue(intor.size() == 1,
+				L"Size incorrect after pushing first value");
+			intor.clear();
+			Assert::IsTrue(intor.size() == 0,
+				L"Size not zero after clear");
+			Assert::IsTrue(intor.capacity() == 0,
+				L"Capacity not zero after clear");
+
+			int x = 1;
+			pointor.pushBack(&x);
+			Assert::IsTrue(pointor.size() == 1,
+				L"Size incorrect after pushing first value");
+			pointor.clear();
+			Assert::IsTrue(pointor.size() == 0,
+				L"Size not zero after clear");
+			Assert::IsTrue(pointor.capacity() == 0,
+				L"Capacity not zero after clear");
+
+			Foo foo(1);
+			footor.pushBack(foo);
+			Assert::IsTrue(footor.size() == 1,
+				L"Size incorrect after pushing first value");
+			footor.clear();
+			Assert::IsTrue(footor.size() == 0,
+				L"Size not zero after clear");
+			Assert::IsTrue(footor.capacity() == 0,
+				L"Capacity not zero after clear");
+		}
+
+		TEST_METHOD(TestRemove)
+		{
+			intor.pushBack(1);
+			intor.remove(1);
+			Assert::IsTrue(intor.size() == 0,
+				L"Size not reducing after removing a value");
+			intor.pushBack(2);
+			intor.remove(1);
+			Assert::IsTrue(intor.size() == 1,
+				L"Size changing after removing a nonexistent value");
+		}
+
 //		TEST_METHOD(TestShrinkToFit)
 //		{
 //			Assert::Fail(L"Test not implemented");

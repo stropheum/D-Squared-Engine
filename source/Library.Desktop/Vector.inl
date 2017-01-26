@@ -196,17 +196,19 @@ namespace Vector
 		std::uint32_t firstValue = mSize;
 		for (std::uint32_t i = 0; i < mSize; i++)
 		{
-			if (at(i) == value)
+			if (operator[](i) == value)
 			{
 				firstValue = i;
 				break;
 			}
 		}
 
-		for (std::uint32_t i = firstValue; i < mSize; i++)
+		for (std::uint32_t i = firstValue; i < mSize-1; i++)
 		{
 			at(i) = at(i + 1);
 		}
+		
+		if (firstValue != mSize) --mSize;
 	}
 
 	template <class T>
