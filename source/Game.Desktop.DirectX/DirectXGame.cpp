@@ -149,6 +149,14 @@ void initD3D(HWND hWnd)
  */
 void render_frame(void)
 {
+	Vector::Vector<int> myVec;
+	myVec.reserve(100);
+	for (int i = 0; i < 10; i++)
+	{
+		myVec.pushBack(i);
+	}
+	myVec.shrinkToFit();
+
 	// clear the window to a deep blue
 	d3ddev->Clear(0, nullptr, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 40, 100), 1.0f, 0);
 	d3ddev->BeginScene();	// begins the 3D scene	

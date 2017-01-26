@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "SList.h"
+#include "Vector.h"
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
@@ -26,11 +27,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	UNREFERENCED_PARAMETER(commandLine);
 	UNREFERENCED_PARAMETER(showCommand);
 
-	// Code for testing instance of SList only
-	SList::SList<int> list{};
-	list.clear();
-	list.pushFront(1);
-	list.pushBack(12);
+	Vector::Vector<int>* myvec = new Vector::Vector<int>();
+	myvec->reserve(100);
+	for (int i = 0; i < 10; i++)
+	{
+		myvec->pushBack(i);
+	}
+	myvec->shrinkToFit();
+	auto size = myvec->capacity();
+	if (size > 0)
+	{
+		size++;
+	}
 
 	// Init GLFW
 	glfwInit();
