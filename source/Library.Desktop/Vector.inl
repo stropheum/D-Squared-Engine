@@ -203,10 +203,12 @@ namespace Vector
 			}
 		}
 
-		for (std::uint32_t i = firstValue; i < mSize; i++)
+		for (std::uint32_t i = firstValue; i < mSize-1; i++)
 		{
 			at(i) = at(i + 1);
 		}
+
+		if (firstValue != mSize) --mSize;
 	}
 
 	template <class T>
@@ -215,7 +217,7 @@ namespace Vector
 		auto sizeDifference = mSize % 10;
 		if (sizeDifference >= 10)
 		{
-			mCapacity = mSize + sizeDifference;
+			mCapacity = mSize + (CAPACITY_INCREMENT - sizeDifference);
 			T* temp = mBuffer;
 			mBuffer = static_cast<T*>(malloc(sizeof(T) * mCapacity));
 			memcpy_s(mBuffer, sizeof(T) * mSize, temp, sizeof(T) * mSize);
