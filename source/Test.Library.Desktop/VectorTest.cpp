@@ -116,11 +116,12 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(footor == copyFootor, L"Copied Foo vector not equivalent to original");
 		}
 
-//		TEST_METHOD(TestFind)
-//		{
-//			Assert::Fail(L"Test not implemented");
-//		}
-//
+		TEST_METHOD(TestFind)
+		{
+			Vector::Vector<int>::Iterator iter = intor.begin();
+//			Assert::AreEqual(intResult, intor.end());
+		}
+
 //		TEST_METHOD(TestBegin)
 //		{
 //			Assert::Fail(L"Test not implemented");

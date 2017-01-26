@@ -16,8 +16,8 @@ namespace SList
 	public:
 		class Iterator; /// Iterator class forward declaration
 
-						/// Default constructor
-		SList();
+		SList();		/// Default constructor
+		
 		/// Copy constructor using deep copy semantics
 		/// @Param rhs: SList being copied
 		SList(const SList<T>& rhs);

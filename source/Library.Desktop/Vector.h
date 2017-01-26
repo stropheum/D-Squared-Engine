@@ -45,16 +45,17 @@ namespace Vector
 	public:
 		class Iterator
 		{
+			friend class Vector;
 		public:
 			Iterator();
+			Iterator(const Iterator& rhs);
+			Iterator& operator=(const Iterator& rhs);
 			bool operator==(const Iterator& rhs);
 			Iterator& operator++();
 			Iterator operator++(int);
 			T& operator*();
-			Iterator& operator=(const Iterator& rhs);
 		private:
-			Iterator(const std::uint32_t index);
-			Iterator(const Iterator& rhs);
+			Iterator(Vector<T>* owner, const std::uint32_t index);
 			Vector<T>* mOwner;
 			std::uint32_t mIndex;
 		};

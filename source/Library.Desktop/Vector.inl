@@ -8,7 +8,7 @@ namespace Vector
 	Vector<T>::Vector() :
 		mBuffer(nullptr), mSize(0), mCapacity(CAPACITY_INCREMENT)
 	{
-		reserve(10);
+		reserve(mCapacity);
 	}
 
 	template <typename T>
@@ -43,7 +43,7 @@ namespace Vector
 				}
 			}
 		}
-		catch (const std::exception& e) {}
+		catch (const std::exception&) {}
 		return result;
 	}
 
@@ -227,8 +227,8 @@ namespace Vector
 		mOwner(this), mIndex(0) {}
 
 	template <typename T>
-	Vector<T>::Iterator::Iterator(const std::uint32_t index) :
-		mOwner(this), mIndex(index) {}
+	Vector<T>::Iterator::Iterator(Vector<T>* owner, const std::uint32_t index) :
+		mOwner(owner), mIndex(index) {}
 
 	template <typename T>
 	Vector<T>::Iterator::Iterator(const Iterator& rhs) :
