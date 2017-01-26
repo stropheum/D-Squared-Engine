@@ -24,7 +24,7 @@ namespace Vector
 		T& at(const std::uint32_t index);
 		T& operator[](const std::uint32_t index);
 		const T& operator[](const std::uint32_t index) const;
-		T popBack();
+		void popBack();
 
 		std::uint32_t size() const;
 		std::uint32_t capacity() const;

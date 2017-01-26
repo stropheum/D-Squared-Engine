@@ -20,13 +20,19 @@ namespace Vector
 
 	template <typename T>
 	Vector<T>::Vector(const Vector<T>& rhs) :
-		mBuffer(nullptr), mSize(0), mCapacity(0)
+		mBuffer(nullptr), mSize(rhs.mSize), mCapacity(rhs.mCapacity)
 	{
-		//	this->operator=(rhs);
 		reserve(rhs.mCapacity);
 		memcpy(mBuffer, rhs.mBuffer, rhs.size());
 		mSize = rhs.mSize;
-		//	return *this;
+	}
+
+	template <class T>
+	Vector<T>::Vector(Vector<T>&& rhs)
+	{
+		reserve(rhs.mCapacity);
+		memcpy(mBuffer, rhs.mBuffer, rhs.size());
+		mSize = rhs.mSize;
 	}
 
 	template <typename T>
@@ -68,16 +74,16 @@ namespace Vector
 	template <typename T>
 	typename Vector<T>::Iterator Vector<T>::find(const T& value)
 	{
-		uint32_t index = mSize;
-		for (std::uint32_t i = 0; i < mSize; i++)
+		auto index = mSize;
+		for (auto i = 0; i < mSize; i++)
 		{
-			if ((*mBuffer + i) == value)
+			if (*(mBuffer + i) == value)
 			{
 				index = i;
 				break;
 			}
 		}
-		return Iterator(index);
+		return Iterator(this, index);
 	}
 
 	template <typename T>
@@ -95,14 +101,14 @@ namespace Vector
 	template <typename T>
 	T& Vector<T>::front()
 	{
-		if (mBuffer == nullptr) throw std::exception("Calling front on null vector");
+		if (mBuffer == nullptr || mSize == 0) throw std::exception("Calling front on null vector");
 		return *mBuffer;
 	}
 
 	template <typename T>
 	T& Vector<T>::back()
 	{
-		if (mBuffer == nullptr) throw std::exception("Calling back on null vector");
+		if (mBuffer == nullptr || mSize == 0) throw std::exception("Calling back on null vector");
 		return *(mBuffer + (mSize - 1));
 	}
 
@@ -127,9 +133,10 @@ namespace Vector
 	}
 
 	template <typename T>
-	T Vector<T>::popBack()
+	void Vector<T>::popBack()
 	{
-		return *(mBuffer + --mSize);
+		if (mBuffer == nullptr || mSize == 0) throw std::exception("Calling pop back on an empty vector");
+		mBuffer[--mSize].~T();
 	}
 
 	template <typename T>
@@ -180,7 +187,6 @@ namespace Vector
 		{
 			(mBuffer + i)->~T();
 		}
-		//	free(mBuffer);
 		mSize = mCapacity = 0;
 	}
 
@@ -221,7 +227,6 @@ namespace Vector
 	/// //////////////////////////////// ///
 	///  Vector Iterator implementation  ///
 	/// //////////////////////////////// ///
-
 	template <typename T>
 	Vector<T>::Iterator::Iterator() :
 		mOwner(this), mIndex(0) {}
