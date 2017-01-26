@@ -28,18 +28,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	UNREFERENCED_PARAMETER(previousInstance);
 	UNREFERENCED_PARAMETER(commandLine);
 
-	// Code for testing instance of SList only
-	SList::SList<int> list{};
-	Vector<int>* intVector = new Vector<int>();
-	intVector->pushBack(12);
-	intVector->pushBack(50);
-	intVector->pushBack(100);
-	intVector->reserve(20);
-	auto temp = intVector->at(0);
-	temp = intVector->at(1);
-	temp = intVector->at(2);
-	delete(intVector);
-
 	// the handle for the window, filled by a function
 	HWND hWnd;
 	// this struct holds information for the window class

@@ -31,6 +31,11 @@ public:
 	bool operator==(const Foo& rhs) const;
 
 	/**
+	 * Comparison operator which returns the negation of operator==
+	 */
+	bool operator!=(const Foo& rhs) const;
+
+	/**
 	* Accessor method for the int data being wrapped by Foo
 	* @Return: the dereferenced int contained by Foo
 	*/
