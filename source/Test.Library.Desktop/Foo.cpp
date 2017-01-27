@@ -2,23 +2,23 @@
 #include "Foo.h"
 
 /**
+ * Default constructor
+ */
+Foo::Foo() :mData(new int(1)){}
+
+/**
  * Constructor
  * @Param data: The data being wrapped by the foo object
  */
-Foo::Foo(int data)
-{
-	mData = new int();
-	*mData = data;
-}
+Foo::Foo(int data) :
+	mData(new int(data)) {}
 
 /**
  * Copy constructor
  * @Param rhs: Constant reference to the object being copied
  */
-Foo::Foo(const Foo& rhs)
-{
-	mData = new int(rhs.getData());
-}
+Foo::Foo(const Foo& rhs) :
+	Foo(*(rhs.mData)) {}
 
 /**
  * Destructor
@@ -35,7 +35,7 @@ Foo::~Foo()
 Foo& Foo::operator=(const Foo& rhs)
 {
 	delete(mData);
-	mData = new int(rhs.getData());
+	mData = new int(*rhs.mData);
 	return *this;
 }
 

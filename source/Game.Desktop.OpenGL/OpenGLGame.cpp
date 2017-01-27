@@ -1,5 +1,9 @@
 #include "pch.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include "SList.h"
+#include "Vector.h"
+
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
@@ -25,12 +29,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	UNREFERENCED_PARAMETER(previousInstance);
 	UNREFERENCED_PARAMETER(commandLine);
 	UNREFERENCED_PARAMETER(showCommand);
-
-	// Code for testing instance of SList only
-	SList::SList<int> list{};
-	list.clear();
-	list.pushFront(1);
-	list.pushBack(12);
 
 	// Init GLFW
 	glfwInit();

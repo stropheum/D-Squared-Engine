@@ -3,6 +3,11 @@ class Foo
 {
 public:
 	/**
+	 * Default constructor
+	 */
+	Foo();
+
+	/**
 	* Constructor
 	* @Param data: The data being wrapped by the foo object
 	*/
