@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "Vector.h"
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
@@ -26,14 +27,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 {
 	UNREFERENCED_PARAMETER(previousInstance);
 	UNREFERENCED_PARAMETER(commandLine);
-
-	// Code for testing instance of SList only
-	SList<int> list{};
-	list.pushFront(1);
-	list.pushFront(2);
-	list.pushFront(3);
-	list.remove(2);
-	list.remove(1);
 
 	// the handle for the window, filled by a function
 	HWND hWnd;

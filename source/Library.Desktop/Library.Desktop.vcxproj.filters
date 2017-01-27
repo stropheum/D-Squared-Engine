@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\SList">
+      <UniqueIdentifier>{132574fa-6929-470f-b9d9-e3d6a269ddc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Vector">
+      <UniqueIdentifier>{86368be4-42c9-436a-83e3-9df16e570714}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -27,6 +33,9 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -35,10 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="SList.inl">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\SList</Filter>
     </None>
-    <None Include="Iterator.inl">
-      <Filter>Source Files</Filter>
+    <None Include="Vector.inl">
+      <Filter>Source Files\Vector</Filter>
     </None>
   </ItemGroup>
 </Project>

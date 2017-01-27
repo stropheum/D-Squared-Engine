@@ -48,6 +48,14 @@ bool Foo::operator==(const Foo& rhs) const
 }
 
 /**
+ * Comparison operator which returns the negation of operator==
+ */
+bool Foo::operator!=(const Foo& rhs) const
+{
+	return !(operator==(rhs));
+}
+
+/**
  * Accessor method for the int data being wrapped by Foo
  * @Return: the dereferenced int contained by Foo
  */
