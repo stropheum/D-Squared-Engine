@@ -139,7 +139,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestFind)
 		{
-			Vector::Vector<int>::Iterator iter = intor.find(0);
+			auto iter = intor.find(0);
 			Assert::IsTrue(iter == intor.end(),
 				L"Begin and end not equivalent on empty vector");
 			Assert::IsTrue(iter == intor.begin(),
@@ -164,7 +164,7 @@ namespace TestLibraryDesktop
 
 			int x = 1;
 			int y = 2;
-			Vector::Vector<int*>::Iterator piter = pointor.find(&x);
+			auto piter = pointor.find(&x);
 			Assert::IsTrue(piter == pointor.end(),
 				L"Begin and end not equivalent on empty vector");
 			Assert::IsTrue(piter == pointor.begin(),
@@ -189,7 +189,7 @@ namespace TestLibraryDesktop
 
 			Foo foo(1);
 			Foo bar(2);
-			Vector::Vector<Foo>::Iterator fooiter = footor.find(foo);
+			auto fooiter = footor.find(foo);
 			Assert::IsTrue(fooiter == footor.end(),
 				L"Begin and end not equivalent on empty vector");
 			Assert::IsTrue(fooiter == footor.begin(),
@@ -676,6 +676,16 @@ namespace TestLibraryDesktop
 				L"Vector capacity not reserving specified value");
 			Assert::IsTrue(intor.size() == 0,
 				L"Reserve changing vector size erroneously");
+			intor.reserve(10);
+			Assert::IsTrue(intor.capacity() == 10,
+				L"Capacity not changing on reserve when shrinking");
+			for (int i = 0; i < 10; i++)
+			{
+				intor.pushBack(i);
+			}
+			intor.reserve(5);
+			Assert::IsTrue(intor.capacity() == 10,
+				L"Reserving smaller than current size should shrink to fit");
 
 			Assert::IsTrue(pointor.capacity() == 0,
 				L"Vector capacity should be zero on clear");
@@ -684,6 +694,17 @@ namespace TestLibraryDesktop
 				L"Vector capacity not reserving specified value");
 			Assert::IsTrue(pointor.size() == 0,
 				L"Reserve changing vector size erroneously");
+			pointor.reserve(10);
+			Assert::IsTrue(pointor.capacity() == 10,
+				L"Capacity not changing on reserve when shrinking");
+			int x[10];
+			for (int i = 0; i < 10; i++)
+			{
+				x[i] = i;
+				pointor.pushBack(&x[i]);
+			}
+			Assert::IsTrue(intor.capacity() == 10,
+				L"Reserving smaller than current size should shrink to fit");
 
 			Assert::IsTrue(footor.capacity() == 0,
 				L"Vector capacity should be zero on clear");
@@ -692,6 +713,16 @@ namespace TestLibraryDesktop
 				L"Vector capacity not reserving specified value");
 			Assert::IsTrue(footor.size() == 0,
 				L"Reserve changing vector size erroneously");
+			footor.reserve(10);
+			Assert::IsTrue(footor.capacity() == 10,
+				L"Capacity not changing on reserve when shrinking");
+			Foo foo(1);
+			for (int i = 0; i < 10; i++)
+			{
+				footor.pushBack(foo);
+			}
+			Assert::IsTrue(footor.capacity() == 10,
+				L"Reserving smaller than current size should shrink to fit");
 		}
 
 		TEST_METHOD(TestClear)
@@ -738,25 +769,176 @@ namespace TestLibraryDesktop
 				L"Size changing after removing a nonexistent value");
 		}
 
-//		TEST_METHOD(TestShrinkToFit)
-//		{
-//			Assert::Fail(L"Test not implemented");
-//		}
-//
-//		TEST_METHOD(TestIteratorComparisonOperator)
-//		{
-//			Assert::Fail(L"Test not implemented");
-//		}
-//
-//		TEST_METHOD(TestIteratorIncrement)
-//		{
-//			Assert::Fail(L"Test not implemented");
-//		}
-//
-//		TEST_METHOD(TestIteratorDereference)
-//		{
-//			Assert::Fail(L"Test not implemented");
-//		}
+		TEST_METHOD(TestShrinkToFit)
+		{
+			intor.pushBack(1);
+			intor.pushBack(2);
+			intor.pushBack(3);
+			Assert::IsTrue(intor.capacity() == 10,
+				L"Default capacity for vector should be 10");
+			intor.shrinkToFit();
+			Assert::IsTrue(intor.capacity() == 3,
+				L"Capacity should be 3 after shrinking to fit");
+			intor.clear();
+			intor.shrinkToFit();
+			Assert::IsTrue(intor.capacity() == 0,
+				L"Capacity should be 3 after shrinking to fit on empty vector");
+
+			int x = 1;
+			int y = 2;
+			int z = 3;
+			pointor.pushBack(&x);
+			pointor.pushBack(&y);
+			pointor.pushBack(&z);
+			Assert::IsTrue(pointor.capacity() == 10,
+				L"Default capacity for vector should be 10");
+			pointor.shrinkToFit();
+			Assert::IsTrue(pointor.capacity() == 3,
+				L"Capacity should be 3 after shrinking to fit");
+			pointor.clear();
+			pointor.shrinkToFit();
+			Assert::IsTrue(pointor.capacity() == 0,
+				L"Capacity should be 3 after shrinking to fit on empty vector");
+
+			Foo foo(1);
+			Foo bar(2);
+			Foo gar(3);
+			footor.pushBack(foo);
+			footor.pushBack(bar);
+			footor.pushBack(gar);
+			Assert::IsTrue(footor.capacity() == 10,
+				L"Default capacity for vector should be 10");
+			footor.shrinkToFit();
+			Assert::IsTrue(footor.capacity() == 3,
+				L"Capacity should be 3 after shrinking to fit");
+			footor.clear();
+			footor.shrinkToFit();
+			Assert::IsTrue(footor.capacity() == 0,
+				L"Capacity should be 3 after shrinking to fit on empty vector");
+		}
+
+		TEST_METHOD(TestIteratorComparisonOperator)
+		{
+			auto iter = intor.begin();
+			Assert::IsTrue(iter == intor.begin(),
+				L"Iterator should be equivalent to the value it was assigned to");
+			Assert::IsTrue(iter == intor.end(),
+				L"Iterator should be equivalent to end when assigned to begin on an empty vector");
+			intor.pushBack(1);
+			iter = intor.begin();
+			Assert::IsFalse(iter == intor.end(),
+				L"Iterator assigned to begin should not be equivalent to end on a non-empty vector");
+			Vector::Vector<int> newintvector;
+			auto newiter = newintvector.begin();
+			Assert::IsFalse(iter == newiter,
+				L"Iterators with different owners should not be equivalent");
+
+			auto piter = pointor.begin();
+			Assert::IsTrue(piter == pointor.begin(),
+				L"Iterator should be equivalent to the value it was assigned to");
+			Assert::IsTrue(piter == pointor.end(),
+				L"Iterator should be equivalent to end when assigned to begin on an empty vector");
+			int x = 1;
+			pointor.pushBack(&x);
+			piter = pointor.begin();
+			Assert::IsFalse(piter == pointor.end(),
+				L"Iterator assigned to begin should not be equivalent to end on a non-empty vector");
+			Vector::Vector<int*> newptrvector;
+			auto newpiter = newptrvector.begin();
+			Assert::IsFalse(piter == newpiter,
+				L"Iterators with different owners should not be equivalent");
+
+			auto fooiter = footor.begin();
+			Assert::IsTrue(fooiter == footor.begin(),
+				L"Iterator should be equivalent to the value it was assigned to");
+			Assert::IsTrue(fooiter == footor.end(),
+				L"Iterator should be equivalent to end when assigned to begin on an empty vector");
+			Foo foo(1);
+			footor.pushBack(foo);
+			fooiter = footor.begin();
+			Assert::IsFalse(piter == pointor.end(),
+				L"Iterator assigned to begin should not be equivalent to end on a non-empty vector");
+			Vector::Vector<Foo> newfoovector;
+			auto newfooiter = newfoovector.begin();
+			Assert::IsFalse(fooiter == newfooiter,
+				L"Iterators with different owners should not be equivalent");
+		}
+
+		TEST_METHOD(TestIteratorIncrement)
+		{
+			intor.pushBack(1);
+			auto iter = intor.begin();
+			Assert::IsFalse(iter == intor.end(),
+				L"Iterator assigned to begin on a non-empty vector should not be equivalent to end");
+			Assert::IsTrue(++iter == intor.end(),
+				L"Incrementing an iterator on a size of one vector should be equivalent to end");
+			auto func = [&] { ++iter; };
+			Assert::ExpectException<std::exception>(func,
+				L"Incrementing past end should throw an exception");
+
+			int x = 1;
+			pointor.pushBack(&x);
+			auto piter = pointor.begin();
+			Assert::IsFalse(piter == pointor.end(),
+				L"piterator assigned to begin on a non-empty vector should not be equivalent to end");
+			Assert::IsTrue(++piter == pointor.end(),
+				L"Incrementing an piterator on a size of one vector should be equivalent to end");
+			auto pfunc = [&] { ++piter; };
+			Assert::ExpectException<std::exception>(pfunc,
+				L"Incrementing past end should throw an exception");
+
+			Foo foo(1);
+			footor.pushBack(foo);
+			auto fooiter = footor.begin();
+			Assert::IsFalse(fooiter == footor.end(),
+				L"fooiterator assigned to begin on a non-empty vector should not be equivalent to end");
+			Assert::IsTrue(++fooiter == footor.end(),
+				L"Incrementing an fooiterator on a size of one vector should be equivalent to end");
+			auto foofunc = [&] { ++fooiter; };
+			Assert::ExpectException<std::exception>(foofunc,
+				L"Incrementing past end should throw an exception");
+		}
+
+		TEST_METHOD(TestIteratorDereference)
+		{
+			auto iter = intor.begin();
+			auto func1 = [&] { *iter; };
+			Assert::ExpectException<std::exception>(func1,
+				L"Dereferencing begin on an empty vector should throw an exception");
+			intor.pushBack(1);
+			iter = intor.begin();
+			Assert::IsTrue(*iter == 1,
+				L"Dereferencing an iterator at begin should be equivalent to the first value pushed");
+			++iter;
+			Assert::ExpectException<std::exception>(func1,
+				L"Dereferencing end of a vector should throw an exception");
+
+			auto piter = pointor.begin();
+			auto func2 = [&] { *piter; };
+			Assert::ExpectException<std::exception>(func2,
+				L"Dereferencing begin on an empty vector should throw an exception");
+			int x = 1;
+			pointor.pushBack(&x);
+			piter = pointor.begin();
+			Assert::IsTrue(*piter == &x,
+				L"Dereferencing an piterator at begin should be equivalent to the first value pushed");
+			++piter;
+			Assert::ExpectException<std::exception>(func2,
+				L"Dereferencing end of a vector should throw an exception");
+
+			auto fooiter = footor.begin();
+			auto func3 = [&] { *fooiter; };
+			Assert::ExpectException<std::exception>(func3,
+				L"Dereferencing begin on an empty vector should throw an exception");
+			Foo foo(1);
+			footor.pushBack(foo);
+			fooiter = footor.begin();
+			Assert::IsTrue(*fooiter == foo,
+				L"Dereferencing an fooiterator at begin should be equivalent to the first value pushed");
+			++fooiter;
+			Assert::ExpectException<std::exception>(func3,
+				L"Dereferencing end of a vector should throw an exception");
+		}
 
 	private:
 		static _CrtMemState sStartMemState;

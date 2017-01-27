@@ -170,14 +170,14 @@ namespace Vector
 	template <typename T>
 	void Vector<T>::reserve(std::uint32_t capacity)
 	{
-		if (capacity > mSize && capacity >= mCapacity)
-		{
-			T* temp = mBuffer;
-			mBuffer = static_cast<T*>(malloc(sizeof(T) * capacity));
-			memcpy_s(mBuffer, sizeof(T) * mSize, temp, sizeof(T) * mSize);
-			free(temp);
-			mCapacity = capacity;
-		}
+		if (capacity < mSize) capacity = mSize;
+		
+		T* temp = mBuffer;
+		mBuffer = static_cast<T*>(malloc(sizeof(T) * capacity));
+		memcpy_s(mBuffer, sizeof(T) * mSize, temp, sizeof(T) * mSize);
+		
+		free(temp);
+		mCapacity = capacity;
 	}
 
 	template <typename T>
@@ -214,18 +214,8 @@ namespace Vector
 	template <class T>
 	void Vector<T>::shrinkToFit()
 	{
-		//TODO: Fix this code. Don't use it, it's the devil
-//		auto sizeDifference = mSize % 10;
-//		if (sizeDifference >= 10)
-//		{
-//			mCapacity = mSize + sizeDifference;
-//			T* temp = mBuffer;
-//			mBuffer = static_cast<T*>(malloc(sizeof(T) * mCapacity));
-//			memcpy_s(mBuffer, sizeof(T) * mSize, temp, sizeof(T) * mSize);
-//			free(temp);
-//		}
+		reserve(mSize);
 	}
-
 
 	/// //////////////////////////////// ///
 	///  Vector Iterator implementation  ///
