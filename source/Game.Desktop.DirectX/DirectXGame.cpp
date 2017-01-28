@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Vector.h"
+#include "HashMap.h"
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
@@ -27,6 +28,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 {
 	UNREFERENCED_PARAMETER(previousInstance);
 	UNREFERENCED_PARAMETER(commandLine);
+
+	HashMap::HashMap<int, int, int> hashMap(static_cast<std::uint32_t>(10));
 
 	// the handle for the window, filled by a function
 	HWND hWnd;
