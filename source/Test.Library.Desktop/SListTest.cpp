@@ -388,22 +388,22 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestIteratorBeginEndUnique)
 		{
 			list->pushFront(1);
-			auto& begin = list->begin();
-			auto& end = list->end();
+			SList::SList<int>::Iterator begin = list->begin();
+			auto end = list->end();
 			bool comparison = (begin == end);
 			Assert::IsFalse(comparison, L"Begin and end nodes are identical");
 
 			int x = 1;
 			pList->pushFront(&x);
-			auto& pListBegin = pList->begin();
-			auto& pListEnd = pList->end();
+			auto pListBegin = pList->begin();
+			auto pListEnd = pList->end();
 			comparison = (pListBegin == pListEnd);
 			Assert::IsFalse(comparison, L"Begin and end nodes are identical");
 
 			Foo foo(1);
 			fooList->pushFront(foo);
-			auto& fooBegin = fooList->begin();
-			auto& fooEnd = fooList->end();
+			auto fooBegin = fooList->begin();
+			auto fooEnd = fooList->end();
 			comparison = (fooBegin == fooEnd);
 			Assert::IsFalse(comparison, L"Beginand end nodes are identical");
 		}
@@ -411,18 +411,18 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestIteratorDereference)
 		{
 			list->pushFront(1);
-			auto& iter = list->begin();
+			auto iter = list->begin();
 			Assert::AreEqual(1, *iter, L"Dereferenced value does not reflect value in node");
 
 			int x = 1;
 			int* xptr = &x;
 			pList->pushFront(xptr);
-			auto& pIter = pList->begin();
+			auto pIter = pList->begin();
 			Assert::AreEqual(xptr, *pIter, L"Dereferenced pointer does not reflect value in node");
 
 			Foo foo(1);
 			fooList->pushFront(foo);
-			auto& fooIter = fooList->begin();
+			auto fooIter = fooList->begin();
 			Assert::AreEqual(foo, *fooIter, L"Dereferenced foo does not reflect value in node");
 		}
 
@@ -430,7 +430,7 @@ namespace TestLibraryDesktop
 		{
 			list->pushFront(2);
 			list->pushFront(1);
-			auto& iter = list->begin();
+			auto iter = list->begin();
 			Assert::AreEqual(1, *iter, L"Front value not accurate");
 			++iter;
 			Assert::AreEqual(2, *iter, L"Pre increment not pointing to correct node");
@@ -439,7 +439,7 @@ namespace TestLibraryDesktop
 			int y = 2;
 			pList->pushFront(&x);
 			pList->pushFront(&y);
-			auto& pIter = pList->begin();
+			auto pIter = pList->begin();
 			Assert::AreEqual(&y, *pIter, L"Front pointer not accurate");
 			++pIter;
 			Assert::AreEqual(&x, *pIter, L"Pre increment not pointing to correct node");
@@ -448,7 +448,7 @@ namespace TestLibraryDesktop
 			Foo bar(2);
 			fooList->pushFront(foo);
 			fooList->pushFront(bar);
-			auto& fooIter = fooList->begin();
+			auto fooIter = fooList->begin();
 			Assert::AreEqual(bar, *fooIter, L"Front foo not accurate");
 			++fooIter;
 			Assert::AreEqual(foo, *fooIter, L"Pre increment not pointing to correct node");
@@ -458,7 +458,7 @@ namespace TestLibraryDesktop
 		{
 			list->pushFront(2);
 			list->pushFront(1);
-			auto& iter = list->begin();
+			auto iter = list->begin();
 			Assert::AreEqual(1, *iter, L"Front value not accurate");
 			iter++;
 			Assert::AreEqual(2, *iter, L"Post increment not pointing to correct node");
@@ -467,7 +467,7 @@ namespace TestLibraryDesktop
 			int y = 2;
 			pList->pushFront(&x);
 			pList->pushFront(&y);
-			auto& pIter = pList->begin();
+			auto pIter = pList->begin();
 			Assert::AreEqual(&y, *pIter, L"Front pointer not accuarate");
 			pIter++;
 			Assert::AreEqual(&x, *pIter, L"Post increment not pointing to correct node");
@@ -476,7 +476,7 @@ namespace TestLibraryDesktop
 			Foo bar(2);
 			fooList->pushFront(foo);
 			fooList->pushFront(bar);
-			auto& fooIter = fooList->begin();
+			auto fooIter = fooList->begin();
 			Assert::AreEqual(bar, *fooIter, L"Front foo not accurate");
 			fooIter++;
 			Assert::AreEqual(foo, *fooIter, L"Post increment not pointing to correct node");
@@ -484,17 +484,17 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestIteratorCopyConstructor)
 		{
-			auto& iter = list->begin();
+			auto iter = list->begin();
 			SList::SList<int>::Iterator iterCopy(iter);
 			bool comparison = (iter == iterCopy);
 			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
 
-			auto& pIter = pList->begin();
+			auto pIter = pList->begin();
 			SList::SList<int*>::Iterator pIterCopy(pIter);
 			comparison = (pIter == pIterCopy);
 			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
 
-			auto& fooIter = fooList->begin();
+			auto fooIter = fooList->begin();
 			SList::SList<Foo>::Iterator fooIterCopy(fooIter);
 			comparison = (fooIter == fooIterCopy);
 			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
@@ -502,19 +502,19 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestIteratorAssignmentOperator)
 		{
-			auto& iter = list->begin();
+			auto iter = list->begin();
 			SList::SList<int>::Iterator iterCopy;
 			iterCopy = iter;
 			bool comparison = (iter == iterCopy);
 			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
 
-			auto& pIter = pList->begin();
+			auto pIter = pList->begin();
 			SList::SList<int*>::Iterator pIterCopy;
 			pIterCopy = pIter;
 			comparison = (pIter == pIterCopy);
 			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
 
-			auto& fooIter = fooList->begin();
+			auto fooIter = fooList->begin();
 			SList::SList<Foo>::Iterator fooIterCopy;
 			fooIterCopy = fooIter;
 			comparison = (fooIter == fooIterCopy);
@@ -524,8 +524,8 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestIteratorComparisonOperators)
 		{
 			// Int tests
-			auto& iterBegin = list->begin();
-			auto& iterEnd = list->end();
+			auto iterBegin = list->begin();
+			auto iterEnd = list->end();
 			bool comparison = (iterBegin == iterEnd);
 			Assert::IsTrue(comparison, L"Iterators who share a null parent should be equivalent");
 			
@@ -539,8 +539,8 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(comparison, L"Iterator begin and end should not be equivalent when not null");
 
 			// Int pointer tests
-			auto& pIterBegin = pList->begin();
-			auto& pIterEnd = pList->end();
+			auto pIterBegin = pList->begin();
+			auto pIterEnd = pList->end();
 			comparison = (pIterBegin == pIterEnd);
 			Assert::IsTrue(comparison, L"Iterators who share a null parent should be equivalent");
 
@@ -555,8 +555,8 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(comparison, L"Iterator begin and end should not be equivalent when not null");
 
 			// Foo tests
-			auto& fooIterBegin = fooList->begin();
-			auto& fooIterEnd = fooList->end();
+			auto fooIterBegin = fooList->begin();
+			auto fooIterEnd = fooList->end();
 			comparison = (fooIterBegin == fooIterEnd);
 			Assert::IsTrue(comparison, L"Iterators who share a null parent should be equivalent");
 
@@ -575,7 +575,7 @@ namespace TestLibraryDesktop
 		{
 			// Int tests
 			list->insertAfter(1, list->end());
-			auto& iter = list->begin();
+			auto iter = list->begin();
 			Assert::AreEqual(1, *iter, L"Front of list not accurate after insert after on empty list");
 
 			list->insertAfter(2, list->begin());
@@ -588,7 +588,7 @@ namespace TestLibraryDesktop
 			int x = 1;
 			int y = 2;
 			pList->insertAfter(&x, pList->end());
-			auto& pIter = pList->begin();
+			auto pIter = pList->begin();
 			Assert::AreEqual(&x, *pIter, L"Front of list not accurate after insert after on empty list");
 
 			pList->insertAfter(&y, pList->begin());
@@ -601,7 +601,7 @@ namespace TestLibraryDesktop
 			Foo foo(1);
 			Foo bar(2);
 			fooList->insertAfter(foo, fooList->end());
-			auto& fooIter = fooList->begin();
+			auto fooIter = fooList->begin();
 			Assert::AreEqual(foo, *fooIter, L"Front of list not accurate after insert after on empty list");
 
 			fooList->insertAfter(bar, fooList->begin());
@@ -617,7 +617,7 @@ namespace TestLibraryDesktop
 			{
 				list->pushFront(i);
 			}
-			auto& iter = list->begin();
+			auto iter = list->begin();
 			Assert::AreEqual(2, *iter, L"Front of list not accurate after pushing multiple values");
 			list->remove(0);
 			iter = list->begin();
@@ -631,7 +631,7 @@ namespace TestLibraryDesktop
 			pList->pushFront(&x);
 			pList->pushFront(&y);
 			pList->pushFront(&z);
-			auto& pIter = pList->begin();
+			auto pIter = pList->begin();
 			Assert::AreEqual(&z, *pIter, L"Front of list not accurate after pushing multiple values");
 			pList->remove(&x);
 			pIter = pList->begin();
@@ -645,7 +645,7 @@ namespace TestLibraryDesktop
 			fooList->pushFront(foo);
 			fooList->pushFront(bar);
 			fooList->pushFront(gar);
-			auto& fooIter = fooList->begin();
+			auto fooIter = fooList->begin();
 			Assert::AreEqual(gar, *fooIter, L"Front of list not accurate after pushing multiple values");
 			fooList->remove(foo);
 			fooIter = fooList->begin();
@@ -661,7 +661,7 @@ namespace TestLibraryDesktop
 			list->pushFront(3);
 
 			auto location = list->find(2);
-			auto& iter = list->begin();
+			auto iter = list->begin();
 			bool compare = (location != iter);
 			Assert::IsTrue(compare, L"Find called on middle equivalent with begin");
 			++iter;
@@ -679,7 +679,7 @@ namespace TestLibraryDesktop
 			pList->pushFront(&z);
 
 			auto pLocation = pList->find(&y);
-			auto& pIter = pList->begin();
+			auto pIter = pList->begin();
 			bool pCompare = (pLocation != pIter);
 			Assert::IsTrue(pCompare, L"Find called on middle equivalent with begin");
 			++pIter;
@@ -697,7 +697,7 @@ namespace TestLibraryDesktop
 			fooList->pushFront(gar);
 
 			auto fooLocation = fooList->find(bar);
-			auto& fooIter = fooList->begin();
+			auto fooIter = fooList->begin();
 			bool fooCompare = (fooLocation != fooIter);
 			Assert::IsTrue(fooCompare, L"Find called on middle equivalent with begin");
 			++fooIter;

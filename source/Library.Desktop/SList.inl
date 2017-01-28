@@ -5,7 +5,7 @@ namespace SList
 {
 	template <typename T>
 	SList<T>::SList() :
-		mSize(0), mFront(nullptr), mBack(nullptr), mBegin(this, mFront), mEnd(this, nullptr) {}
+		mSize(0), mFront(nullptr), mBack(nullptr) {}
 
 	template <typename T>
 	SList<T>::SList(const SList<T>& obj) :
@@ -53,13 +53,11 @@ namespace SList
 		auto temp = mFront;
 		mFront = new Node(data);
 		mFront->mNext = temp;
-		mBegin.mNode = mFront;
 		mSize++;
 		if (mBack == nullptr)
 		{
 			mBack = mFront;
 			mBack->mNext = nullptr;
-			mEnd.mNode = mBack->mNext;
 		}
 
 		return Iterator(this, mFront);
@@ -73,7 +71,6 @@ namespace SList
 			mFront = new Node(data);
 			mBack = mFront;
 			mBack->mNext = nullptr;
-			mEnd.mNode = mBack->mNext;
 		}
 		else
 		{
@@ -83,9 +80,6 @@ namespace SList
 		}
 
 		mSize++;
-		mBegin.mNode = mFront;
-		mEnd.mNode = mBack;
-
 		return Iterator(this, mBack);
 	}
 
@@ -113,7 +107,6 @@ namespace SList
 		auto oldFront = mFront;
 		auto result = mFront->mData;
 		mFront = mFront->mNext;
-		mBegin.mNode = mFront;
 		delete(oldFront);
 		mSize--;
 		return result;
@@ -172,19 +165,19 @@ namespace SList
 	}
 
 	template <typename T>
-	typename SList<T>::Iterator& SList<T>::begin()
+	typename SList<T>::Iterator SList<T>::begin() 
 	{
-		return mBegin;
+		return Iterator(this, mFront);
 	}
 
 	template <typename T>
-	typename SList<T>::Iterator& SList<T>::end()
+	typename SList<T>::Iterator SList<T>::end() 
 	{
-		return mEnd;
+		return Iterator(this, nullptr);
 	}
 
 	template <typename T>
-	typename SList<T>::Iterator SList<T>::insertAfter(T value, Iterator& location)
+	typename SList<T>::Iterator SList<T>::insertAfter(T value, Iterator location)
 	{
 		if (location == end() || location.mNode == mBack)
 		{
@@ -207,16 +200,13 @@ namespace SList
 	}
 
 	template <typename T>
-	typename SList<T>::Iterator SList<T>::find(const T& value)
+	typename SList<T>::Iterator SList<T>::find(const T& value) 
 	{
 		for (auto iter = begin(); iter != end(); ++iter)
 		{
-			if (*iter == value)
-			{
-				return Iterator(this, iter.mNode);
-			}
+			if (*iter == value) return iter;
 		}
-		return mEnd;
+		return end();
 	}
 
 	template <typename T>
@@ -267,7 +257,7 @@ namespace SList
 	}
 
 	template <typename T>
-	bool SList<T>::Iterator::operator==(Iterator& rhs)
+	bool SList<T>::Iterator::operator==(Iterator& rhs) const
 	{
 		auto bothNull = (mOwner == nullptr) && (rhs.mOwner == nullptr);
 		auto identicalOwners = (mOwner == rhs.mOwner);
@@ -276,7 +266,7 @@ namespace SList
 	}
 
 	template <typename T>
-	bool SList<T>::Iterator::operator!=(Iterator& rhs)
+	bool SList<T>::Iterator::operator!=(Iterator& rhs) const
 	{
 		return !(this == &rhs);
 	}

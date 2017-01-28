@@ -4,8 +4,8 @@
 /// @Class SList: Singularly-Linked List
 /// @Author: Dale Diaz
 ///
-/// An impementation of linked list which allows for dynamic adding of templated items 
-/// Items can be added indefinitely, ensured to be of the templated type, and are only 
+/// An implementation of linked list which allows for dynamic adding of template items 
+/// Items can be added indefinitely, ensured to be of the template type, and are only 
 /// exposed via method calls to front and back, which return references to the data at 
 /// those respective nodes, and dereferencing and iterator object    
 namespace SList
@@ -21,14 +21,13 @@ namespace SList
 		/// Copy constructor using deep copy semantics
 		/// @Param rhs: SList being copied
 		SList(const SList<T>& rhs);
-		/// Copy constructor with right hand value for rhs
-		SList(Iterator&& rhs);
+
 		/// Assignment operator
 		/// @Param rhs: Const reference to the SList being copied
 		/// @Return: Reference to a copy of the SList
 		SList<T>& operator=(const SList<T>& rhs);
 
-		/// Deconstructor which De-allocates every object in the list individually
+		/// Destructor which De-allocates every object in the list individually
 		~SList();
 
 		/// Push an object to the front of the list
@@ -47,10 +46,10 @@ namespace SList
 		/// @Return: The value at the front of the list
 		T popFront();
 
-		/// @Return: The templated item at the front of the list
+		/// @Return: The template item at the front of the list
 		T& front();
 
-		/// @Return: A const reference to the templated item at the front of the list
+		/// @Return: A const reference to the template item at the front of the list
 		const T& front() const;
 
 		/// @Return: The templated item at the back of the list
@@ -66,16 +65,16 @@ namespace SList
 		std::uint32_t size() const;
 
 		/// @Return: An iterator that points to the front node
-		Iterator& begin();
+		Iterator begin();
 
 		/// @Return:  an iterator that points to the mNext node of the back node
-		Iterator& end();
+		Iterator end();
 
 		/// Inserts a value after the value in a given iterator
 		/// @Param value: The value being inserted into the list
 		/// @Param location: The point where the value is being inserted after
 		/// @Return: An Iterator to the location of the inserted value
-		Iterator insertAfter(T value, Iterator& location);
+		Iterator insertAfter(T value, Iterator location);
 
 		/// Finds an item in the list
 		/// @Param value: The value being found from the list
@@ -93,7 +92,7 @@ namespace SList
 			/// Constructor. Takes a node reference and assigns owner to current SList object
 			Iterator() = default;
 
-			/// Copy consructor. Creates new Iterator with identical member references
+			/// Copy constructor. Creates new Iterator with identical member references
 			/// @Param rhs: The iterator reference being copied
 			Iterator(const Iterator& rhs);
 
@@ -104,14 +103,14 @@ namespace SList
 			/// Comparison operator
 			/// @Param rhs: The iterator reference being compared to
 			/// @Return: True if owners and node references are identical
-			bool operator==(Iterator& rhs);
+			bool operator==(Iterator& rhs) const;
 
 			/// Not equals operator
 			/// @Param rhs: The iterator reference being compared to
 			/// @Return: negation of operator==
-			bool operator!=(Iterator& rhs);
+			bool operator!=(Iterator& rhs) const;
 
-			/// Prefix incrememt operator. Sets node reference to its linked node
+			/// Prefix increment operator. Sets node reference to its linked node
 			Iterator operator++();
 
 			/// Postfix increment operator. Calls prefix increment operator
@@ -136,13 +135,13 @@ namespace SList
 		public:
 			/// Constructor
 			/// @Param data: The value contained in the node
-			explicit Node(T data) : mData(data), mNext(nullptr) {}
+			Node(T data) : mData(data), mNext(nullptr) {}
 
-			/// Node deconstructor
+			/// Node destructor
 			~Node() {}
 
-			/// Disabled copy constructor
-			Node(const Node& rhs) = delete;
+			/// Default copy constructor
+			Node(const Node& rhs) = default;
 
 			T mData;     /// Data being contained by the node
 			Node* mNext;  /// Pointer to the node that this node is linked to
@@ -152,9 +151,6 @@ namespace SList
 
 		Node* mFront;    /// Front node in the list
 		Node* mBack;     /// Back node in the list
-
-		Iterator mBegin; /// Beginning of iterator
-		Iterator mEnd;   /// End of iterator
 	};
 
 
