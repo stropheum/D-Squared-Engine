@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "HashMap.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -41,9 +42,9 @@ namespace TestLibraryDesktop
 			finalizeLeakDetection();
 		}
 
-		TEST_METHOD(TestMethod1)
+		TEST_METHOD(TestConstruction)
 		{
-			// TODO: Your test code here
+			HashMap::HashMap<int, int> hashMap(10);
 		}
 	};
 }

@@ -1,15 +1,16 @@
 #include "pch.h"
 #include "Vector.h"
 #include "HashMap.h"
+#include <cstdint>
+
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
-// include the Direct3D Library file
-#pragma comment (lib, "d3d9.lib")
+#pragma comment (lib, "d3d9.lib") // include the Direct3D Library file
 
 // global declarations
-LPDIRECT3D9 d3d;	// the pointer to our Direct3D interface
-LPDIRECT3DDEVICE9 d3ddev; // the pointer to the device class
+LPDIRECT3D9 d3d;							// the pointer to our Direct3D interface
+LPDIRECT3DDEVICE9 d3ddev;					// the pointer to the device class
 LPDIRECT3DVERTEXBUFFER9 v_buffer = nullptr; // the pointer to the vertex buffer
 
 // function prototypes
@@ -29,14 +30,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	UNREFERENCED_PARAMETER(previousInstance);
 	UNREFERENCED_PARAMETER(commandLine);
 
-	HashMap::HashMap<int, int, int> hashMap(static_cast<std::uint32_t>(10));
+	HashMap::HashMap<int, int> hashMap(10);
 
-	// the handle for the window, filled by a function
-	HWND hWnd;
-	// this struct holds information for the window class
-	WNDCLASSEX wc;
-	// clear out the window class for use
-	ZeroMemory(&wc, sizeof(WNDCLASSEX));
+	HWND hWnd; // the handle for the window, filled by a function
+	WNDCLASSEX wc; // this struct holds information for the window class
+	ZeroMemory(&wc, sizeof(WNDCLASSEX)); // clear out the window class for use
 
 	// fill in the struct with the needed information
 	wc.cbSize = sizeof(WNDCLASSEX);
@@ -47,8 +45,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	wc.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW);
 	wc.lpszClassName = L"WindowClass1";
 
-	// register the window class
-	RegisterClassEx(&wc);
+	RegisterClassEx(&wc); // register the window class
 	// create the window and use the result as the handle
 	hWnd = CreateWindowEx(NULL,
 		L"WindowClass1",		// name of the window class
@@ -63,39 +60,28 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 		hInstance,				// application handle
 		nullptr);				// used with multiple windows, NULL
 
-	// display the window on the screen
-	ShowWindow(hWnd, showCommand);
+	ShowWindow(hWnd, showCommand); // display the window on the screen
 	initD3D(hWnd);
-	// this struct holds Windows event messages
-	MSG msg;
+	MSG msg; // this struct holds Windows event messages
 
 	while (true)
 	{
 		// Check to see if any messages are waiting in the queue
 		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
-			// translate keystroke messages into the right format
-			TranslateMessage(&msg);
-			// send the message to the WindowProc function
-			DispatchMessage(&msg);
+			TranslateMessage(&msg); // translate keystroke messages into the right format
+			DispatchMessage(&msg); // send the message to the WindowProc function
 		}
 
-		// If the message is WM_QUOT, exit the while loop
-		if (msg.message == WM_QUIT)
-			break;
-
-		// Run game code here
-		render_frame();
+		if (msg.message == WM_QUIT) break; // If the message is WM_QUOT, exit the while loop
+		render_frame(); // Run game code here
 	}
 
 	cleanD3D();
-	// return this part of the WM_QUIT message to Windows
-	return static_cast<int>(msg.wParam);
+	return static_cast<std::uint32_t>(msg.wParam); // return this part of the WM_QUIT message to Windows
 }
 
-/**
- * this is the main message handler for the program
- */
+
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	// sort through and find what code to run for the message given
@@ -117,9 +103,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 }
 
 
-/**
- * this function initializes and prepares Direct3D for use
- */
+/// This function initializes and prepares Direct3D for use
 void initD3D(HWND hWnd)
 {
 	d3d = Direct3DCreate9(D3D_SDK_VERSION);	// create the Direct3D interface
@@ -127,14 +111,14 @@ void initD3D(HWND hWnd)
 	D3DPRESENT_PARAMETERS d3dpp;			// create a struct to hold various device information
 
 	ZeroMemory(&d3dpp, sizeof(d3dpp));		// clear out the struct for use
-	d3dpp.Windowed = true;					// program windowed, not fullscreen
+	d3dpp.Windowed = true;					// program windowed, not full screen
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD; // Discard old frames
 	d3dpp.hDeviceWindow = hWnd;				// set the window to be used by Direct3D
 	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
 	d3dpp.BackBufferWidth = SCREEN_WIDTH;
 	d3dpp.BackBufferHeight = SCREEN_HEIGHT;
 
-	// create a device class using this information and infromation from the d3dpp struct
+	// create a device class using this information and information from the d3dpp struct
 	d3d->CreateDevice(
 		D3DADAPTER_DEFAULT,
 		D3DDEVTYPE_HAL,
@@ -147,9 +131,7 @@ void initD3D(HWND hWnd)
 	init_graphics(); // call the function to initialize the triangle
 }
 
-/**
- * This is the function used to render a single frame
- */
+/// This is the function used to render a single frame
 void render_frame(void)
 {
 	// clear the window to a deep blue
@@ -168,9 +150,7 @@ void render_frame(void)
 	d3ddev->Present(nullptr, nullptr, nullptr, nullptr); // displays the created frame
 }
 
-/**
- * This is the function that clenas up Direct3D and COM
- */
+/// This is the function that cleans up Direct3D and COM
 void cleanD3D(void)
 {
 	v_buffer->Release(); // close and release the vertex buffer
@@ -178,9 +158,7 @@ void cleanD3D(void)
 	d3d->Release();	   // close and release Direct3D
 }
 
-/**
- * This is the function that puts the 3D models into the video RAM
- */
+/// This is the function that puts the 3D models into the video RAM
 void init_graphics(void)
 {
 	// create the vertices using the CUSTOMVERTEX struct
