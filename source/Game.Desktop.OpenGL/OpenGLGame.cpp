@@ -38,8 +38,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	UNREFERENCED_PARAMETER(commandLine);
 	UNREFERENCED_PARAMETER(showCommand);
 
-	HashMap::HashMap<std::string, int> hm(13);
-	std::string strings[10];
+	HashMap::HashMap<char*, int> hm(13);
+	char* strings[10];
 	strings[0] = "zero";
 	strings[1] = "one";
 	strings[2] = "two";

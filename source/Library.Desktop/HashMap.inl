@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <functional>
+#include "Vector.h"
 
 namespace HashMap
 {
@@ -9,7 +10,13 @@ namespace HashMap
 	template <HashMapTemplate>
 	HashMap<TKey, TData>::HashMap(
 		std::uint32_t hashMapSize, std::function<std::uint32_t(TKey, std::uint32_t)> hashFunctor=defaultHashFunctor) :
-		mHashMapSize(hashMapSize), mHashFunctor(hashFunctor) {}
+		mHashMapSize(hashMapSize), mHashFunctor(hashFunctor)
+	{
+		for (std::uint32_t i = 0; i < hashMapSize; i++)
+		{ // Create a Vector to represent each "bucket"
+			mBuckets.pushBack(Vector::Vector<TData>());
+		}
+	}
 
 	template <HashMapTemplate>
 	HashMap<TKey, TData>::~HashMap()
@@ -58,15 +65,16 @@ namespace HashMap
 	std::uint32_t HashMap<TKey, TData>::defaultHashFunctor(const TKey& key, const std::uint32_t& hashMapSize)
 	{
 		// Convert the key to an array of bytes
-		const char* bytes = reinterpret_cast<const char*>(key.c_str());
-		std::uint64_t sum = 0;
+		auto bytes = reinterpret_cast<const char*>(key);
+		std::uint32_t sum = 0;
+
 		// Iterate over the array of bytes, building an integer
-		for (std::uint32_t i = 0; i < strlen(bytes); i++)
+		for (std::uint32_t i = 0; i < sizeof(key); i++)
 		{
-//			if (i != 0) sum <<= 8;
 			sum += bytes[i];
 		}
-//		// Mod the summed byte array value by the size of the hash map to get the bucket index
+
+		// Mod the summed byte array value by the size of the hash map to get the bucket index
 		return sum % hashMapSize;
 	}
 

@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <utility>
 #include <functional>
+#include "Vector.h"
 
 namespace HashMap
 {
@@ -50,6 +51,7 @@ namespace HashMap
 	private:
 		std::uint32_t mHashMapSize;
 		std::function<std::uint32_t(TKey key, std::uint32_t hashMapSize)> mHashFunctor;
+		Vector::Vector<Vector::Vector<TData>> mBuckets;
 
 		/// Simple hash algorithm to determine which bucket the data will be placed into
 		/// @Param key: Key being used to determine index of HashMap element
