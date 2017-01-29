@@ -13,9 +13,9 @@ namespace HashMap
 		class Iterator; /// Forward declaration of Iterator class
 
 		/// Constructor for HashMap
-		/// @Param hashTableSize: The predefined 
-		HashMap(std::uint32_t hashTableSize, std::function<int(TData)> HashFunctor=nullptr);
-		
+		/// @Param hashMapSize: The predefined 
+		HashMap(std::uint32_t hashMapSize, std::function<std::uint32_t(TKey, std::uint32_t)> hashFunctor=defaultHashFunctor);
+
 		/// Destructor
 		~HashMap();
 		
@@ -35,7 +35,8 @@ namespace HashMap
 		/// Finds an instance of a key in the HashMap and returns its associated value
 		/// @Param rhs: constant reference to the key being searched for
 		/// @Return: An Iterator containing the found PairType, end otherwise
-		Iterator find(const TKey& key) const;
+		void find(const TKey& key) const;
+		//TODO: Change return type back to iterator once implemented
 
 		/// Inserts a Pairtype into the HashMap
 		/// @Param entry: The PairType being added to the HashMap
@@ -47,7 +48,26 @@ namespace HashMap
 		/// @Return: A reference to the data associated with the key
 		TData& operator[](const TKey& key);
 	private:
-		std::function<void()> mHashFunctor;
+		std::uint32_t mHashMapSize;
+		std::function<std::uint32_t(TKey key, std::uint32_t hashMapSize)> mHashFunctor;
+
+		/// Simple hash algorithm to determine which bucket the data will be placed into
+		/// @Param key: Key being used to determine index of HashMap element
+		/// @Param hashMapSize: The number of buckets in the HashMap
+		static std::uint32_t defaultHashFunctor(const TKey& key, const std::uint32_t& hashMapSize)
+		{
+			// Convert the key to an array of bytes
+			const char* bytes = reinterpret_cast<const char*>(std::addressof(key));
+			std::uint32_t sum = 0;
+			// Iterate over the array of bytes, summing their values
+			for (std::uint32_t i = 0; i < strlen(bytes); i++)
+			{
+				sum += bytes[i];
+			}
+			// Mod the summed byte array value by the size of the hash map to get the bucket index
+			return sum % hashMapSize;
+		}
+
 	public:
 		class Iterator
 		{

@@ -7,11 +7,9 @@ namespace HashMap
 #define HashMapTemplate typename TKey, typename TData
 
 	template <HashMapTemplate>
-	HashMap<TKey, TData>::HashMap(std::uint32_t hashTableSize, std::function<int(TData)> HashFunctor=nullptr) 
-	{
-		UNREFERENCED_PARAMETER(hashTableSize);
-		//TODO: implement constructor
-	}
+	HashMap<TKey, TData>::HashMap(
+		std::uint32_t hashMapSize, std::function<std::uint32_t(TKey, std::uint32_t)> hashFunctor=defaultHashFunctor) :
+		mHashMapSize(hashMapSize), mHashFunctor(hashFunctor) {}
 
 	template <HashMapTemplate>
 	HashMap<TKey, TData>::~HashMap()
@@ -32,10 +30,21 @@ namespace HashMap
 		return *this;
 	}
 
+//	template <HashMapTemplate>
+//	typename HashMap<TKey, TData>::Iterator HashMap<TKey, TData>::find(const TKey& key) const
+//	{
+//		//TODO: Implement find method
+//	}
+
+	//TODO: Remove this method and replace it with the one that returns an iterator
 	template <HashMapTemplate>
-	typename HashMap<TKey, TData>::Iterator HashMap<TKey, TData>::find(const TKey& key) const
+	void HashMap<TKey, TData>::find(const TKey& key) const
 	{
-		//TODO: Implement find method
+		std::uint32_t result = mHashFunctor(key, mHashMapSize);
+		if (result == 2)
+		{
+			// do things
+		}
 	}
 
 	template <HashMapTemplate>

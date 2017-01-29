@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include "SList.h"
 #include "Vector.h"
+#include "HashMap.h"
 
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
@@ -29,6 +30,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	UNREFERENCED_PARAMETER(previousInstance);
 	UNREFERENCED_PARAMETER(commandLine);
 	UNREFERENCED_PARAMETER(showCommand);
+
+	HashMap::HashMap<int, int> hm(10);
+	for (int i = 0; i < 10; i++)
+	{
+		hm.find(i);
+	}
 
 	// Init GLFW
 	glfwInit();
