@@ -25,6 +25,12 @@ const GLchar* fragmentShaderSource = "#version 330 core\n"
 "color = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
 "}\n\0";
 
+std::uint32_t replacementHash(std::string key, int mapSize)
+{
+	UNREFERENCED_PARAMETER(key);
+	return mapSize-1;
+}
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR commandLine, int showCommand)
 {
 	UNREFERENCED_PARAMETER(hInstance);
@@ -32,7 +38,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	UNREFERENCED_PARAMETER(commandLine);
 	UNREFERENCED_PARAMETER(showCommand);
 
-	HashMap::HashMap<std::string, int> hm(10);
+	HashMap::HashMap<std::string, int> hm(13);
 	std::string strings[10];
 	strings[0] = "zero";
 	strings[1] = "one";
