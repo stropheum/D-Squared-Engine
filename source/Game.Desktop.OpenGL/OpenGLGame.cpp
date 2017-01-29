@@ -1,6 +1,7 @@
 #include "pch.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <string>
 #include "SList.h"
 #include "Vector.h"
 #include "HashMap.h"
@@ -31,10 +32,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	UNREFERENCED_PARAMETER(commandLine);
 	UNREFERENCED_PARAMETER(showCommand);
 
-	HashMap::HashMap<int, int> hm(10);
-	for (int i = 0; i < 10; i++)
+	HashMap::HashMap<std::string, int> hm(10);
+	std::string strings[10];
+	strings[0] = "zero";
+	strings[1] = "one";
+	strings[2] = "two";
+	strings[3] = "three";
+	strings[4] = "four";
+	strings[5] = "five";
+	strings[6] = "six";
+	strings[7] = "seven";
+	strings[8] = "eight";
+	strings[9] = "nine";
+	for (auto str : strings)
 	{
-		hm.find(i);
+		hm.find(str);
 	}
 
 	// Init GLFW

@@ -59,10 +59,11 @@ namespace HashMap
 			// Convert the key to an array of bytes
 			const char* bytes = reinterpret_cast<const char*>(std::addressof(key));
 			std::uint32_t sum = 0;
-			// Iterate over the array of bytes, summing their values
+			// Iterate over the array of bytes, building an integer
 			for (std::uint32_t i = 0; i < strlen(bytes); i++)
 			{
-				sum += bytes[i];
+				if (i != 0) sum <<= 8;
+				sum |= bytes[i];
 			}
 			// Mod the summed byte array value by the size of the hash map to get the bucket index
 			return sum % hashMapSize;
