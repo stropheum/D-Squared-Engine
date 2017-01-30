@@ -9,6 +9,7 @@ namespace HashMap
 	template <class TKey, class TData> class HashMap
 	{
 		typedef std::pair<TKey, TData> PairType;
+		typedef Vector::Vector<PairType> BucketType;
 
 	public:
 		class Iterator; /// Forward declaration of Iterator class
@@ -59,7 +60,7 @@ namespace HashMap
 	private:
 		std::uint32_t mHashMapSize;
 		std::function<std::uint32_t(TKey key, std::uint32_t hashMapSize)> mHashFunctor;
-		Vector::Vector<Vector::Vector<PairType>> mBuckets;
+		Vector::Vector<BucketType> mBuckets;
 
 		static const uint32_t defaultHashMapSize = 13; // If no size is specified, number of buckets defaults to 13
 

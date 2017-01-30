@@ -47,7 +47,7 @@ namespace HashMap
 	{
 		for (std::uint32_t i = 0; i < mHashMapSize; i++)
 		{ // Create a vector to represent each "bucket:
-			mBuckets.pushBack(Vector::Vector<PairType>());
+			mBuckets.pushBack(BucketType());
 		}
 	}
 
