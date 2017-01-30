@@ -8,14 +8,19 @@ namespace HashMap
 #define HashMapTemplate typename TKey, typename TData
 
 	template <HashMapTemplate>
+	HashMap<TKey, TData>::HashMap():
+		mHashMapSize(defaultHashMapSize), mHashFunctor(defaultHashFunctor)
+	{
+		initializeBuckets();
+	}
+
+	template <HashMapTemplate>
 	HashMap<TKey, TData>::HashMap(
-		std::uint32_t hashMapSize, std::function<std::uint32_t(TKey, std::uint32_t)> hashFunctor=defaultHashFunctor) :
+		std::uint32_t hashMapSize=defaultHashMapSize, 
+		std::function<std::uint32_t(TKey, std::uint32_t)> hashFunctor=defaultHashFunctor):
 		mHashMapSize(hashMapSize), mHashFunctor(hashFunctor)
 	{
-		for (std::uint32_t i = 0; i < hashMapSize; i++)
-		{ // Create a Vector to represent each "bucket"
-			mBuckets.pushBack(Vector::Vector<TData>());
-		}
+		initializeBuckets();
 	}
 
 	template <HashMapTemplate>
@@ -25,8 +30,8 @@ namespace HashMap
 	}
 
 	template <HashMapTemplate>
-	HashMap<TKey, TData>::HashMap(const HashMap<TKey, TData>& rhs)
-	{
+	HashMap<TKey, TData>::HashMap(const HashMap<TKey, TData>& rhs): 
+		mHashMapSize(rhs.mHashMapSize), mHashFunctor(rhs.mHashFunctor) {
 		//TODO: Implement copy constructor
 	}
 
@@ -37,7 +42,16 @@ namespace HashMap
 		return *this;
 	}
 
-//	template <HashMapTemplate>
+	template <class TKey, class TData>
+	void HashMap<TKey, TData>::initializeBuckets()
+	{
+		for (std::uint32_t i = 0; i < mHashMapSize; i++)
+		{ // Create a vector to represent each "bucket:
+			mBuckets.pushBack(Vector::Vector<PairType>());
+		}
+	}
+
+	//	template <HashMapTemplate>
 //	typename HashMap<TKey, TData>::Iterator HashMap<TKey, TData>::find(const TKey& key) const
 //	{
 //		//TODO: Implement find method
@@ -55,13 +69,44 @@ namespace HashMap
 		}
 	}
 
+	template <class TKey, class TData>
+	typename HashMap<TKey, TData>::Iterator HashMap<TKey, TData>::insert(const PairType& entry)
+	{
+		// Determine which bucket the data will be put into
+		std::uint32_t bucketIndex = mHashFunctor(entry.first, mHashMapSize);
+		
+		// Push the data onto the appropriate bucket
+		mBuckets[bucketIndex].pushBack(entry.second);
+		
+		// Return an iterator pointing to the entry
+		return Iterator(this, entry);
+	}
+
+
 	template <HashMapTemplate>
 	TData& HashMap<TKey, TData>::operator[](const TKey& key)
 	{
-		//TODO: Implement index of operator
+		std::uint32_t bucketIndex = mHashFunctor(key, mHashMapSize);
+		for (PairType value : mBuckets[bucketIndex])
+		{
+			if (value->first == key)
+			{
+				return value->second;
+			}
+		}
+		throw std::exception("Accessing non-existent HashMap key");
 	}
 
-	template <class TKey, class TData>
+	template <HashMapTemplate>
+	void HashMap<TKey, TData>::clear()
+	{
+		for (std::uint32_t i = 0; i < mHashMapSize; i++)
+		{
+			mBuckets[i].~Vector();
+		}
+	}
+
+	template <HashMapTemplate>
 	std::uint32_t HashMap<TKey, TData>::defaultHashFunctor(const TKey& key, const std::uint32_t& hashMapSize)
 	{
 		// Convert the key to an array of bytes
@@ -78,7 +123,11 @@ namespace HashMap
 		return sum % hashMapSize;
 	}
 
+	template <class TKey, class TData>
+	HashMap<TKey, TData>::Iterator::Iterator():
+		mOwner(nullptr), mPair(nullptr) {}
+
 	template <HashMapTemplate>
-	HashMap<TKey, TData>::Iterator::Iterator(const HashMap<TKey, TData>* owner, const TKey& key, const TData& data) :
-		mOwner(owner), mPair(key, data) {}
+	HashMap<TKey, TData>::Iterator::Iterator(const HashMap<TKey, TData>* owner, const PairType& pair) :
+		mOwner(owner), mPair(pair) {}
 }

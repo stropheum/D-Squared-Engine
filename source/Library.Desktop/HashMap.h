@@ -13,6 +13,11 @@ namespace HashMap
 	public:
 		class Iterator; /// Forward declaration of Iterator class
 
+		/// Default constructor for HashMap
+		/// HashMap size will default to 13
+		/// Default hash functor will be used
+		HashMap();
+
 		/// Constructor for HashMap
 		/// @Param hashMapSize: The predefined 
 		HashMap(std::uint32_t hashMapSize, std::function<std::uint32_t(TKey, std::uint32_t)> hashFunctor=defaultHashFunctor);
@@ -48,15 +53,23 @@ namespace HashMap
 		/// @Param key: Key being used as an index for the HashMap element
 		/// @Return: A reference to the data associated with the key
 		TData& operator[](const TKey& key);
+
+		/// Clears all memory stored in the HashMap
+		void clear();
 	private:
 		std::uint32_t mHashMapSize;
 		std::function<std::uint32_t(TKey key, std::uint32_t hashMapSize)> mHashFunctor;
-		Vector::Vector<Vector::Vector<TData>> mBuckets;
+		Vector::Vector<Vector::Vector<PairType>> mBuckets;
+
+		static const uint32_t defaultHashMapSize = 13; // If no size is specified, number of buckets defaults to 13
 
 		/// Simple hash algorithm to determine which bucket the data will be placed into
 		/// @Param key: Key being used to determine index of HashMap element
 		/// @Param hashMapSize: The number of buckets in the HashMap
 		static std::uint32_t defaultHashFunctor(const TKey& key, const std::uint32_t& hashMapSize);
+
+		/// Creates one vector of type TData for each bucket in the specified size
+		void initializeBuckets();
 
 	public:
 		class Iterator
@@ -65,7 +78,7 @@ namespace HashMap
 		public:
 			Iterator();
 		private:
-			Iterator(const HashMap<TKey, TData>* owner, const TKey& key, const TData& data);
+			Iterator(const HashMap<TKey, TData>* owner, const PairType& pair);
 			const HashMap<TKey, TData>* mOwner;
 			PairType mPair;
 		};
