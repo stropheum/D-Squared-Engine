@@ -578,7 +578,7 @@ namespace TestLibraryDesktop
 			intor.pushBack(2);
 			intor.pushBack(3);
 			intor.popBack();
-			Assert::AreEqual(static_cast<uint32_t>(2), intor.size(), L"Vector size not reducing after valid pop back");
+			Assert::AreEqual(2U, intor.size(), L"Vector size not reducing after valid pop back");
 
 
 			/// Pointer vector tests
@@ -592,7 +592,7 @@ namespace TestLibraryDesktop
 			pointor.pushBack(&y);
 			pointor.pushBack(&z);
 			pointor.popBack();
-			Assert::AreEqual(static_cast<uint32_t>(2), pointor.size(), L"Vector size not reducing after valid pop back");
+			Assert::AreEqual(2U, pointor.size(), L"Vector size not reducing after valid pop back");
 
 
 			/// Foo vector tests
@@ -606,7 +606,7 @@ namespace TestLibraryDesktop
 			footor.pushBack(bar);
 			footor.pushBack(gar);
 			footor.popBack();
-			Assert::AreEqual(static_cast<uint32_t>(2), footor.size(), L"Vector size not reducing after valid pop back");
+			Assert::AreEqual(2U, footor.size(), L"Vector size not reducing after valid pop back");
 		}
 
 		TEST_METHOD(TestSize)
@@ -655,76 +655,76 @@ namespace TestLibraryDesktop
 		{
 			/// Int vector tests
 			Vector::Vector<int> newintvector;
-			Assert::AreEqual(static_cast<uint32_t>(10), newintvector.capacity(), L"New Vector should have a capacity of 10");
+			Assert::AreEqual(10U, newintvector.capacity(), L"New Vector should have a capacity of 10");
 			
 			const auto constIntor(newintvector);
-			Assert::AreEqual(static_cast<std::uint32_t>(10), constIntor.capacity());
+			Assert::AreEqual(10U, constIntor.capacity());
 
 			for (int i = 0; i < 10; i++)
 			{
 				intor.pushBack(i);
-				Assert::AreEqual(static_cast<uint32_t>(10), intor.capacity(), L"First ten pushes on a vector should retain the capacity at 10");
+				Assert::AreEqual(10U, intor.capacity(), L"First ten pushes on a vector should retain the capacity at 10");
 			}
 			
 			intor.pushBack(99);
-			Assert::AreEqual(static_cast<uint32_t>(20), intor.capacity(), L"on 11th push, vector capacity should be 20");
+			Assert::AreEqual(20U, intor.capacity(), L"on 11th push, vector capacity should be 20");
 			
 			for (int i = 0; i < 11; i++)
 			{
 				intor.popBack();
-				Assert::AreEqual(static_cast<std::uint32_t>(10), newintvector.capacity(), L"New Vector should have capacity of 10");
+				Assert::AreEqual(10U, newintvector.capacity(), L"New Vector should have capacity of 10");
 			}
 			
 
 			/// Pointer vector tests
 			Vector::Vector<int> newptrvector;
-			Assert::AreEqual(static_cast<uint32_t>(10), newptrvector.capacity(), L"New Vector should have a capacity of 10");
+			Assert::AreEqual(10U, newptrvector.capacity(), L"New Vector should have a capacity of 10");
 			
 			const auto constPointor(newptrvector);
-			Assert::AreEqual(static_cast<std::uint32_t>(10), constPointor.capacity());
+			Assert::AreEqual(10U, constPointor.capacity());
 
 			int x[11];
 			for (int i = 0; i < 10; i++)
 			{
 				x[i] = i;
 				pointor.pushBack(&x[i]);
-				Assert::AreEqual(static_cast<uint32_t>(10), pointor.capacity(), L"First ten pushes on a vector should retain the capacity at 10");
+				Assert::AreEqual(10U, pointor.capacity(), L"First ten pushes on a vector should retain the capacity at 10");
 			}
 			
 			x[10] = 99;
 			pointor.pushBack(&x[10]);
-			Assert::AreEqual(static_cast<uint32_t>(20), pointor.capacity(), L"on 11th push, vector capacity should be 20");
+			Assert::AreEqual(20U, pointor.capacity(), L"on 11th push, vector capacity should be 20");
 
 			for (int i = 0; i < 11; i++)
 			{
 				pointor.popBack();
-				Assert::AreEqual(static_cast<std::uint32_t>(10), newptrvector.capacity(), L"New Vector should have capacity of 10");
+				Assert::AreEqual(10U, newptrvector.capacity(), L"New Vector should have capacity of 10");
 			}
 
 
 			/// Foo vector tests
 			Vector::Vector<int> newfoovector;
-			Assert::AreEqual(static_cast<uint32_t>(10), newfoovector.capacity(), L"New Vector should have a capacity of 10");
+			Assert::AreEqual(10U, newfoovector.capacity(), L"New Vector should have a capacity of 10");
 			
 			const auto constFootor(newfoovector);
-			Assert::AreEqual(static_cast<std::uint32_t>(10), constFootor.capacity());
+			Assert::AreEqual(10U, constFootor.capacity());
 
 			Foo foo[11];
 			for (int i = 0; i < 10; i++)
 			{
 				foo[i] = Foo(i);
 				footor.pushBack(foo[i]);
-				Assert::AreEqual(static_cast<uint32_t>(10), footor.capacity(), L"First ten pushes on a vector should retain the capacity at 10");
+				Assert::AreEqual(10U, footor.capacity(), L"First ten pushes on a vector should retain the capacity at 10");
 			}
 			
 			foo[10] = Foo(99);
 			footor.pushBack(foo[10]);
-			Assert::AreEqual(static_cast<uint32_t>(20), footor.capacity(), L"on 11th push, vector capacity should be 20");
+			Assert::AreEqual(20U, footor.capacity(), L"on 11th push, vector capacity should be 20");
 			
 			for (int i = 0; i < 11; i++)
 			{
 				footor.popBack();
-				Assert::AreEqual(static_cast<std::uint32_t>(10), newfoovector.capacity(), L"New Vector should have capacity of 10");
+				Assert::AreEqual(10U, newfoovector.capacity(), L"New Vector should have capacity of 10");
 			}
 		}
 

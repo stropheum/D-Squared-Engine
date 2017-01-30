@@ -7,14 +7,14 @@ namespace HashMap
 {
 #define HashMapTemplate typename TKey, typename TData
 
-	template <HashMapTemplate>
+	template <typename TKey, typename TData>
 	HashMap<TKey, TData>::HashMap():
-		mHashMapSize(defaultHashMapSize), mHashFunctor(defaultHashFunctor)
+		mHashMapSize(defaultHashMapSize), mHashFunctor(defaultHashFunctor), mBuckets(mHashMapSize)
 	{
 		initializeBuckets();
 	}
 
-	template <HashMapTemplate>
+	template <typename TKey, typename TData>
 	HashMap<TKey, TData>::HashMap(
 		std::uint32_t hashMapSize=defaultHashMapSize, 
 		std::function<std::uint32_t(TKey, std::uint32_t)> hashFunctor=defaultHashFunctor):
@@ -23,19 +23,19 @@ namespace HashMap
 		initializeBuckets();
 	}
 
-	template <HashMapTemplate>
+	template <typename TKey, typename TData>
 	HashMap<TKey, TData>::~HashMap()
 	{
 		//TODO: Implement destructor
 	}
 
-	template <HashMapTemplate>
+	template <typename TKey, typename TData>
 	HashMap<TKey, TData>::HashMap(const HashMap<TKey, TData>& rhs): 
 		mHashMapSize(rhs.mHashMapSize), mHashFunctor(rhs.mHashFunctor) {
 		//TODO: Implement copy constructor
 	}
 
-	template <HashMapTemplate>
+	template <typename TKey, typename TData>
 	HashMap<TKey, TData>& HashMap<TKey, TData>::operator=(const HashMap<TKey, TData>& rhs)
 	{
 		//TODO: Implement assignment operator
@@ -51,14 +51,14 @@ namespace HashMap
 		}
 	}
 
-	//	template <HashMapTemplate>
+	//	template <typename TKey, typename TData>
 //	typename HashMap<TKey, TData>::Iterator HashMap<TKey, TData>::find(const TKey& key) const
 //	{
 //		//TODO: Implement find method
 //	}
 
 	//TODO: Remove this method and replace it with the one that returns an iterator
-	template <HashMapTemplate>
+	template <typename TKey, typename TData>
 	void HashMap<TKey, TData>::find(const TKey& key) const
 	{
 		std::uint32_t result = mHashFunctor(key, mHashMapSize);
@@ -83,7 +83,7 @@ namespace HashMap
 	}
 
 
-	template <HashMapTemplate>
+	template <typename TKey, typename TData>
 	TData& HashMap<TKey, TData>::operator[](const TKey& key)
 	{
 		auto bucket = mBuckets[mHashFunctor(key, mHashMapSize)];
@@ -97,7 +97,7 @@ namespace HashMap
 		throw std::exception("Accessing non-existent HashMap key");
 	}
 
-	template <HashMapTemplate>
+	template <typename TKey, typename TData>
 	void HashMap<TKey, TData>::clear()
 	{
 		for (std::uint32_t i = 0; i < mHashMapSize; i++)
@@ -106,7 +106,7 @@ namespace HashMap
 		}
 	}
 
-	template <HashMapTemplate>
+	template <typename TKey, typename TData>
 	std::uint32_t HashMap<TKey, TData>::defaultHashFunctor(const TKey& key, const std::uint32_t& hashMapSize)
 	{
 		// Convert the key to an array of bytes
@@ -123,11 +123,11 @@ namespace HashMap
 		return sum % hashMapSize;
 	}
 
-	template <class TKey, class TData>
+	template <typename TKey, typename TData>
 	HashMap<TKey, TData>::Iterator::Iterator():
 		mOwner(nullptr), mPair(nullptr) {}
 
-	template <HashMapTemplate>
+	template <typename TKey, typename TData>
 	HashMap<TKey, TData>::Iterator::Iterator(const HashMap<TKey, TData>* owner, const PairType& pair) :
 		mOwner(owner), mPair(pair) {}
 }

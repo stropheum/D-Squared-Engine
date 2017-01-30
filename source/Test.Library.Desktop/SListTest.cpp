@@ -231,53 +231,53 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestSize)
 		{
-			Assert::AreEqual(static_cast<std::uint32_t>(0), list->size(), L"List size not zero on initialization");
+			Assert::AreEqual(0U, list->size(), L"List size not zero on initialization");
 
 			list->pushFront(1);
-			Assert::AreEqual(static_cast<std::uint32_t>(1), list->size(), L"List size not accurate after pushing front");
+			Assert::AreEqual(1U, list->size(), L"List size not accurate after pushing front");
 			
 			list->pushBack(2);
-			Assert::AreEqual(static_cast<std::uint32_t>(2), list->size(), L"List size not accurate after pushing back");
+			Assert::AreEqual(2U, list->size(), L"List size not accurate after pushing back");
 			
 			list->popFront();
-			Assert::AreEqual(static_cast<std::uint32_t>(1), list->size(), L"List size not accurate after popping front");
+			Assert::AreEqual(1U, list->size(), L"List size not accurate after popping front");
 			
 			list->popFront();
-			Assert::AreEqual(static_cast<std::uint32_t>(0), list->size(), L"List size not accurate after popping last value");
+			Assert::AreEqual(0U, list->size(), L"List size not accurate after popping last value");
 
 			int x = 1;
 			int y = 2;
 
-			Assert::AreEqual(static_cast<std::uint32_t>(0), pList->size(), L"List size not zero on initialization");
+			Assert::AreEqual(0U, pList->size(), L"List size not zero on initialization");
 			
 			pList->pushFront(&x);
-			Assert::AreEqual(static_cast<std::uint32_t>(1), pList->size(), L"List size not accurate after pushing front");
+			Assert::AreEqual(1U, pList->size(), L"List size not accurate after pushing front");
 			
 			pList->pushBack(&y);
-			Assert::AreEqual(static_cast<std::uint32_t>(2), pList->size(), L"List size not accurate after pushing back");
+			Assert::AreEqual(2U, pList->size(), L"List size not accurate after pushing back");
 			
 			pList->popFront();
-			Assert::AreEqual(static_cast<std::uint32_t>(1), pList->size(), L"List size not accurate after popping front");
+			Assert::AreEqual(1U, pList->size(), L"List size not accurate after popping front");
 			
 			pList->popFront();
-			Assert::AreEqual(static_cast<std::uint32_t>(0), pList->size(), L"List size not accurate after popping last value");
+			Assert::AreEqual(0U, pList->size(), L"List size not accurate after popping last value");
 
 			Foo f1(1);
 			Foo f2(2);
 
-			Assert::AreEqual(static_cast<std::uint32_t>(0), fooList->size(), L"Foo list size not zero on initialization");
+			Assert::AreEqual(0U, fooList->size(), L"Foo list size not zero on initialization");
 			
 			fooList->pushFront(f1);
-			Assert::AreEqual(static_cast<std::uint32_t>(1), fooList->size(), L"Foo list not accurate after pushing front");
+			Assert::AreEqual(1U, fooList->size(), L"Foo list not accurate after pushing front");
 			
 			fooList->pushBack(f2);
-			Assert::AreEqual(static_cast<std::uint32_t>(2), fooList->size(), L"Foo list size not accurate after pushing back");
+			Assert::AreEqual(2U, fooList->size(), L"Foo list size not accurate after pushing back");
 			
 			fooList->popFront();
-			Assert::AreEqual(static_cast<std::uint32_t>(1), fooList->size(), L"Foo list size not accurate after popping front");
+			Assert::AreEqual(1U, fooList->size(), L"Foo list size not accurate after popping front");
 			
 			fooList->popFront();
-			Assert::AreEqual(static_cast<std::uint32_t>(0), fooList->size(), L"Foo list size not accurate after popping last value");
+			Assert::AreEqual(0U, fooList->size(), L"Foo list size not accurate after popping last value");
 		}
 
 		TEST_METHOD(TestCopy)
@@ -381,19 +381,19 @@ namespace TestLibraryDesktop
 			list->pushFront(1);
 			list->clear();
 
-			Assert::AreEqual(static_cast<std::uint32_t>(0), list->size(), L"List size non-zero after clear");
+			Assert::AreEqual(0U, list->size(), L"List size non-zero after clear");
 
 			int x = 1;
 			pList->pushFront(&x);
 			pList->clear();
 
-			Assert::AreEqual(static_cast<std::uint32_t>(0), pList->size(), L"List size non-zero after clear");
+			Assert::AreEqual(0U, pList->size(), L"List size non-zero after clear");
 
 			Foo foo(1);
 			fooList->pushFront(foo);
 			fooList->clear();
 
-			Assert::AreEqual(static_cast<std::uint32_t>(0), fooList->size(), L"List size non-zero after clear");
+			Assert::AreEqual(0U, fooList->size(), L"List size non-zero after clear");
 		}
 
 		TEST_METHOD(TestIteratorBeginEndUnique)
