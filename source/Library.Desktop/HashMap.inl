@@ -86,8 +86,8 @@ namespace HashMap
 	template <HashMapTemplate>
 	TData& HashMap<TKey, TData>::operator[](const TKey& key)
 	{
-		std::uint32_t bucketIndex = mHashFunctor(key, mHashMapSize);
-		for (PairType value : mBuckets[bucketIndex])
+		auto bucket = mBuckets[mHashFunctor(key, mHashMapSize)];
+		for (PairType value : bucket)
 		{
 			if (value->first == key)
 			{
