@@ -150,6 +150,14 @@ namespace HashMap
 	}
 
 	template <typename TKey, typename TValue>
+	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::Iterator::operator++(int)
+	{
+		auto copy = *this;
+		operator++();
+		return copy;
+	}
+
+	template <typename TKey, typename TValue>
 	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::Iterator::begin()
 	{
 		return Iterator(this, mBuckets[0].begin());
@@ -159,13 +167,5 @@ namespace HashMap
 	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::Iterator::end()
 	{
 		return Iterator(this, mBuckets[mOwner->mHashMapSize - 1].end());
-	}
-
-	template <typename TKey, typename TValue>
-	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::Iterator::operator++(int)
-	{
-		auto copy = *this;
-		operator++();
-		return copy;
 	}
 }
