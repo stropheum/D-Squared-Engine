@@ -5,8 +5,8 @@
 namespace Vector
 {
 	template <typename T>
-	Vector<T>::Vector() :
-		mBuffer(nullptr), mSize(0), mCapacity(CAPACITY_INCREMENT)
+	Vector<T>::Vector(bool fixedSize = false) :
+		mBuffer(nullptr), mSize(0), mFixedSize(fixedSize), mCapacity(CAPACITY_INCREMENT)
 	{
 		reserve(mCapacity);
 	}
@@ -48,6 +48,7 @@ namespace Vector
 	{
 		if (mBuffer == nullptr) throw std::exception("Assigning to null pointer");
 		clear();
+		mFixedSize = rhs.mFixedSize;
 		reserve(rhs.mCapacity);
 		if (rhs.mSize > 0)
 		{

@@ -6,9 +6,9 @@
 
 namespace HashMap
 {
-	template <class TKey, class TData> class HashMap
+	template <class TKey, class TValue> class HashMap
 	{
-		typedef std::pair<TKey, TData> PairType;
+		typedef std::pair<TKey, TValue> PairType;
 		typedef Vector::Vector<PairType> BucketType;
 
 	public:
@@ -21,22 +21,22 @@ namespace HashMap
 
 		/// Constructor for HashMap
 		/// @Param hashMapSize: The predefined 
-		HashMap(std::uint32_t hashMapSize, std::function<std::uint32_t(TKey, std::uint32_t)> hashFunctor=defaultHashFunctor);
+		HashMap(std::uint32_t hashMapSize, std::function<std::uint32_t(TKey)> hashFunctor=defaultHashFunctor);
 
 		/// Destructor
 		~HashMap();
 		
 		/// Copy constructor
 		/// @Param rhs: Constant reference to the HashMap being copied
-		HashMap(const HashMap<TKey, TData>& rhs);
+		HashMap(const HashMap<TKey, TValue>& rhs);
 
 		/// Move semantics (disabled);
-		HashMap(HashMap<TKey, TData>&& rhs) = delete;
+		HashMap(HashMap<TKey, TValue>&& rhs) = delete;
 
 		/// Assignment operator
 		/// @Param rhs: Constant reference to the HAshMap being copied
 		/// @Return: A deep copy of the right-hand HashMap 
-		HashMap<TKey, TData>& operator=(const HashMap<TKey, TData>& rhs);
+		HashMap<TKey, TValue>& operator=(const HashMap<TKey, TValue>& rhs);
 
 
 		/// Finds an instance of a key in the HashMap and returns its associated value
@@ -53,13 +53,13 @@ namespace HashMap
 		/// Index-of operator
 		/// @Param key: Key being used as an index for the HashMap element
 		/// @Return: A reference to the data associated with the key
-		TData& operator[](const TKey& key);
+		TValue& operator[](const TKey& key);
 
 		/// Clears all memory stored in the HashMap
 		void clear();
 	private:
 		std::uint32_t mHashMapSize;
-		std::function<std::uint32_t(TKey key, std::uint32_t hashMapSize)> mHashFunctor;
+		std::function<std::uint32_t(TKey key)> mHashFunctor;
 		Vector::Vector<BucketType> mBuckets;
 
 		static const uint32_t defaultHashMapSize = 13; // If no size is specified, number of buckets defaults to 13
@@ -67,7 +67,9 @@ namespace HashMap
 		/// Simple hash algorithm to determine which bucket the data will be placed into
 		/// @Param key: Key being used to determine index of HashMap element
 		/// @Param hashMapSize: The number of buckets in the HashMap
-		static std::uint32_t defaultHashFunctor(const TKey& key, const std::uint32_t& hashMapSize);
+		static std::uint32_t defaultHashFunctor(const TKey& key);
+
+		Iterator begin();
 
 		/// Creates one vector of type TData for each bucket in the specified size
 		void initializeBuckets();
@@ -78,10 +80,17 @@ namespace HashMap
 			friend class HashMap;
 		public:
 			Iterator();
+			Iterator& operator++();
+			Iterator operator++(int);
+			Iterator begin();
+			Iterator end();
 		private:
-			Iterator(const HashMap<TKey, TData>* owner, const PairType& pair);
-			const HashMap<TKey, TData>* mOwner;
-			PairType mPair;
+//			Vector::Vector<PairType>::Iterator(const HashMap<TKey, TValue>* owner, Vector::Vector<PairType>::Iterator iter);
+			Iterator(const HashMap<TKey, TValue>* owner, typename Vector::Vector<PairType>::Iterator iter);
+
+			const HashMap<TKey, TValue>* mOwner;
+			std::uint32_t mBucketIndex;
+			typename Vector::Vector<BucketType>::Iterator mIter;
 		};
 	};
 }

@@ -17,7 +17,9 @@ namespace Vector
 		
 		/// Default constructor
 		/// Allocates memory in mBuffer for a capacity of 10 templated values
-		Vector();
+		Vector(bool fixedSize = false);
+
+		Vector(std::uint32_t maxSize, bool fixedSize = false);
 
 		/// Copy constructor
 		/// @Param rhs: The Vector being copied
@@ -135,6 +137,7 @@ namespace Vector
 		T* mBuffer; /// The space where elements will be stored
 		std::uint32_t mSize; /// The number of elements in the Vector
 		std::uint32_t mCapacity; /// The number of elements memory has been allocated for
+		bool mFixedSize; /// Value to determine if the vector can be resized
 		static const std::uint32_t CAPACITY_INCREMENT = 10; /// Standard reserve value increment
 	public:
 		class Iterator
