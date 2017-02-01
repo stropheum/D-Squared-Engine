@@ -45,7 +45,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestConstruction)
 		{
-			HashMap::HashMap<char*, int> hm(13);
+			HashMap::HashMap<char*, char*> hm(13);
 			char* strings[10];
 			strings[0] = "zero";
 			strings[1] = "one";
@@ -57,12 +57,14 @@ namespace TestLibraryDesktop
 			strings[7] = "seven";
 			strings[8] = "eight";
 			strings[9] = "nine";
-			for (auto str : strings)
+
+			for (int i = 0; i < 10; i++)
 			{
-				hm.find(str);
+				std::pair<char*, char*> myPair(reinterpret_cast<char*>(i), strings[i]);
+				hm.insert(myPair);
 			}
 
-			HashMap::HashMap<Foo, int> foomap();
+			auto iter = hm.begin();
 		}
 	};
 }

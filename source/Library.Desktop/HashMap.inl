@@ -17,7 +17,7 @@ namespace HashMap
 	template <typename TKey, typename TValue>
 	HashMap<TKey, TValue>::HashMap(
 		std::uint32_t hashMapSize=defaultHashMapSize, 
-		std::function<std::uint32_t(TKey)> hashFunctor=defaultHashFunctor):
+		std::function<std::uint32_t(const TKey&)> hashFunctor=defaultHashFunctor):
 		mHashMapSize(hashMapSize), mHashFunctor(hashFunctor)
 	{
 		initializeBuckets();
@@ -73,13 +73,13 @@ namespace HashMap
 	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::insert(const PairType& entry)
 	{
 		// Determine which bucket the data will be put into
-		std::uint32_t bucketIndex = mHashFunctor(entry.first, mHashMapSize);
+		std::uint32_t bucketIndex = mHashFunctor(entry.first) % mHashMapSize;
 		
 		// Push the data onto the appropriate bucket
-		mBuckets[bucketIndex].pushBack(entry.second);
+		mBuckets[bucketIndex].pushBack(entry);
 		
 		// Return an iterator pointing to the entry
-		return Iterator(this, entry);
+		return HashMap<TKey, TValue>::Iterator(this, mBuckets[bucketIndex].find(entry));
 	}
 
 
@@ -97,6 +97,12 @@ namespace HashMap
 		throw std::exception("Accessing non-existent HashMap key");
 	}
 
+	template <class TKey, class TValue>
+	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::begin()
+	{
+		return HashMap<TKey, TValue>::Iterator(this, mBuckets[0].begin());
+	}
+
 	template <typename TKey, typename TValue>
 	void HashMap<TKey, TValue>::clear()
 	{
@@ -110,11 +116,11 @@ namespace HashMap
 	std::uint32_t HashMap<TKey, TValue>::defaultHashFunctor(const TKey& key)
 	{
 		// Convert the key to an array of bytes
-		auto bytes = reinterpret_cast<const char*>(key);
+//		auto bytes = reinterpret_cast<const char*>(key);
 		std::uint32_t sum = 0;
-
+		const std::int8_t* bytes = reinterpret_cast<const std::int8_t*>(&key);
 		// Iterate over the array of bytes, building an integer
-		for (std::uint32_t i = 0; i < sizeof(key); i++)
+		for (std::uint32_t i = 0; i < strlen(reinterpret_cast<const char*>(bytes)); i++)
 		{
 			sum += bytes[i];
 		}
@@ -155,12 +161,6 @@ namespace HashMap
 		auto copy = *this;
 		operator++();
 		return copy;
-	}
-
-	template <typename TKey, typename TValue>
-	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::Iterator::begin()
-	{
-		return Iterator(this, mBuckets[0].begin());
 	}
 
 	template <typename TKey, typename TValue>
