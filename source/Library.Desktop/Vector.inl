@@ -132,6 +132,7 @@ namespace Vector
 	template <typename T>
 	const T& Vector<T>::operator[](const std::uint32_t index) const
 	{
+		if (mBuffer == nullptr) throw std::exception("Buffer is null");
 		if (index >= mSize) throw std::exception("Index out of bounds");
 		return const_cast<const T&>(*(mBuffer + index));
 	}
@@ -265,6 +266,7 @@ namespace Vector
 	template <typename T>
 	T& Vector<T>::Iterator::operator*() const
 	{
+		if (mOwner == nullptr) throw std::exception("Owner is null");
 		if (mIndex > mOwner->size()) throw std::exception("Vector out of bounds");
 		return const_cast<T&>(mOwner->operator[](mIndex));
 	}

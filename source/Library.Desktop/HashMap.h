@@ -70,6 +70,7 @@ namespace HashMap
 		/// @Param key: Key being used to determine index of HashMap element
 		/// @Param hashMapSize: The number of buckets in the HashMap
 		static std::uint32_t defaultHashFunctor(const TKey& key);
+		HashMap(const typename HashMap<TKey, TValue>::Iterator& rhs);
 
 		/// Creates one vector of type TData for each bucket in the specified size
 		void initializeBuckets();
@@ -80,16 +81,16 @@ namespace HashMap
 			friend class HashMap;
 		public:
 			Iterator();
+			Iterator(const Iterator& rhs);
+			Iterator& operator=(const Iterator& rhs);
 			Iterator& operator++();
 			Iterator operator++(int);
 			PairType& operator*() const;
 			PairType& operator->() const;
 			bool operator==(const Iterator& rhs) const;
 			bool operator!=(const Iterator& rhs) const;
-//			Iterator begin();
-//			Iterator end();
 		private:
-			Iterator(const HashMap<TKey, TValue>* owner, typename Vector::Vector<PairType>::Iterator iter);
+			Iterator(const HashMap<TKey, TValue>* owner, std::uint32_t bucketIndex, typename Vector::Vector<PairType>::Iterator iter);
 
 			const HashMap<TKey, TValue>* mOwner;
 			std::uint32_t mBucketIndex;

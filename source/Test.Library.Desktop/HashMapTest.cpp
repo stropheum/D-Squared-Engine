@@ -46,6 +46,18 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestConstruction)
 		{
 			HashMap::HashMap<char*, char*> hm(13);
+			char* keys[10];
+			keys[0] = "key zero";
+			keys[1] = "key one";
+			keys[2] = "key two";
+			keys[3] = "key three";
+			keys[4] = "key four";
+			keys[5] = "key five";
+			keys[6] = "key six";
+			keys[7] = "key seven";
+			keys[8] = "key eight";
+			keys[9] = "key nine";
+
 			char* strings[10];
 			strings[0] = "zero";
 			strings[1] = "one";
@@ -60,11 +72,12 @@ namespace TestLibraryDesktop
 
 			for (int i = 0; i < 10; i++)
 			{
-				std::pair<char*, char*> myPair(reinterpret_cast<char*>(i), strings[i]);
+				std::pair<char*, char*> myPair(keys[i], strings[i]);
 				hm.insert(myPair);
 			}
 
-			auto val = hm.find(strings[0]);
+			auto val = hm.find(keys[0]);
+			auto dref = *val;
 		}
 	};
 }
