@@ -116,17 +116,17 @@ namespace HashMap
 	std::uint32_t HashMap<TKey, TValue>::defaultHashFunctor(const TKey& key)
 	{
 		// Convert the key to an array of bytes
-//		auto bytes = reinterpret_cast<const char*>(key);
-		std::uint32_t sum = 0;
 		const std::int8_t* bytes = reinterpret_cast<const std::int8_t*>(&key);
+		
 		// Iterate over the array of bytes, building an integer
+		std::uint32_t hash = 0;
 		for (std::uint32_t i = 0; i < strlen(reinterpret_cast<const char*>(bytes)); i++)
 		{
-			sum += bytes[i];
+			hash += bytes[i];
 		}
 
 		// Mod the summed byte array value by the size of the hash map to get the bucket index
-		return sum;
+		return hash;
 	}
 
 	template <typename TKey, typename TValue>
