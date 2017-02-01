@@ -64,8 +64,7 @@ namespace TestLibraryDesktop
 				hm.insert(myPair);
 			}
 
-			auto iter = hm.begin();
-			auto val = *iter;
+			auto val = hm.find(strings[0]);
 		}
 	};
 }

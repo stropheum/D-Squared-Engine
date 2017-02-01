@@ -58,22 +58,10 @@ namespace HashMap
 		Iterator iter;
 		for (iter = begin(); iter != end(); ++iter)
 		{
-//			if ((*iter).first == key) break;
+			if ((*iter).first == key) break;
 		}
 		return iter;
 	}
-
-	//TODO: Remove this method and replace it with the one that returns an iterator
-//	template <typename TKey, typename TValue>
-//	void HashMap<TKey, TValue>::find(const TKey& key) const
-//	{
-//		std::uint32_t result = mHashFunctor(key);
-//		auto temp = result;
-//		if (result == 2 && temp == 0)
-//		{
-//			// do things
-//		}
-//	}
 
 	template <class TKey, class TValue>
 	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::insert(const PairType& entry)
