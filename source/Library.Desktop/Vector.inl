@@ -263,7 +263,7 @@ namespace Vector
 	}
 
 	template <typename T>
-	T& Vector<T>::Iterator::operator*()
+	T& Vector<T>::Iterator::operator*() const
 	{
 		if (mIndex > mOwner->size()) throw std::exception("Vector out of bounds");
 		return const_cast<T&>(mOwner->operator[](mIndex));

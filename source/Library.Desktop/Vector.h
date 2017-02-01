@@ -177,7 +177,7 @@ namespace Vector
 			/// Dereference operator
 			/// @Return: A reference to the value pointed at by the Iterator
 			/// @Exception: Thrown if dereferencing a null value
-			T& operator*();
+			T& operator*() const;
 		private:
 			/// Internal Iterator constructor
 			/// @Param owner: The Vector that owns this Iterator object

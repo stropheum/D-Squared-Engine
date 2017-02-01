@@ -5,7 +5,7 @@
 
 namespace HashMap
 {
-#define HashMapTemplate typename TKey, typename TData
+#define HashMapTemplate typename TKey, typename TValue
 
 	template <typename TKey, typename TValue>
 	HashMap<TKey, TValue>::HashMap():
@@ -51,23 +51,29 @@ namespace HashMap
 		}
 	}
 
-//	template <typename TKey, typename TData>
-//	typename HashMap<TKey, TData>::Iterator HashMap<TKey, TData>::find(const TKey& key) const
-//	{
-//		//TODO: Implement find method
-//	}
+	template <typename TKey, typename TValue>
+	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::find(const TKey& key) const
+	{
+		UNREFERENCED_PARAMETER(key);
+		Iterator iter;
+		for (iter = begin(); iter != end(); ++iter)
+		{
+//			if ((*iter).first == key) break;
+		}
+		return iter;
+	}
 
 	//TODO: Remove this method and replace it with the one that returns an iterator
-	template <typename TKey, typename TValue>
-	void HashMap<TKey, TValue>::find(const TKey& key) const
-	{
-		std::uint32_t result = mHashFunctor(key);
-		auto temp = result;
-		if (result == 2 && temp == 0)
-		{
-			// do things
-		}
-	}
+//	template <typename TKey, typename TValue>
+//	void HashMap<TKey, TValue>::find(const TKey& key) const
+//	{
+//		std::uint32_t result = mHashFunctor(key);
+//		auto temp = result;
+//		if (result == 2 && temp == 0)
+//		{
+//			// do things
+//		}
+//	}
 
 	template <class TKey, class TValue>
 	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::insert(const PairType& entry)
@@ -98,9 +104,24 @@ namespace HashMap
 	}
 
 	template <class TKey, class TValue>
-	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::begin()
+	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::begin() const
 	{
-		return HashMap<TKey, TValue>::Iterator(this, mBuckets[0].begin());
+		// TODO: Make this find the first non-empty bucket and return begin on that
+//		return HashMap<TKey, TValue>::Iterator(this, mBuckets[0].begin());
+
+		std::uint32_t index = 0;
+		auto iter = mBuckets[index].begin();
+		while (iter == mBuckets[index].end() && index + 1 < mHashMapSize)
+		{
+			iter = mBuckets[++index].begin();
+		}
+		return Iterator(this, iter);
+	}
+
+	template <class TKey, class TValue>
+	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::end() const
+	{
+		return Iterator(this, mBuckets[mHashMapSize - 1].end());
 	}
 
 	template <typename TKey, typename TValue>
@@ -131,7 +152,7 @@ namespace HashMap
 
 	template <typename TKey, typename TValue>
 	HashMap<TKey, TValue>::Iterator::Iterator():
-		mOwner(nullptr), mBucketIndex(0), mIter(mBuckets[0].begin()) {}
+		mOwner(nullptr), mBucketIndex(0), mIter(mOwner->mBuckets[0].begin()) {}
 
 	template <typename TKey, typename TValue>
 	HashMap<TKey, TValue>::Iterator::Iterator(const HashMap<TKey, TValue>* owner, typename Vector::Vector<PairType>::Iterator iter) :
@@ -143,16 +164,30 @@ namespace HashMap
 		if (mOwner == nullptr) throw std::exception("Incrementing beyond HashMap bounds");
 
 		++mIter;
-		while (mIter == mBuckets[mBucketIndex].end())
+		while (mIter == mOwner->mBuckets[mBucketIndex].end())
 		{
 			if (mBucketIndex + 1 < mOwner->mHashMapSize)
 			{
 				++mBucketIndex;
-				mIter = mBuckets[mBucketIndex].begin();
+				mIter = mOwner->mBuckets[mBucketIndex].begin();
 			}
 			else break;
 		}
 		return *this;
+	}
+
+	template <typename TKey, typename TValue>
+	typename HashMap<TKey, TValue>::PairType& HashMap<TKey, TValue>::Iterator::operator*() const
+	{
+		if (mOwner == nullptr) throw std::exception("Attempting to dereference null iterator");
+		return (*mIter);
+	}
+
+	template <typename TKey, typename TValue>
+	typename HashMap<TKey, TValue>::PairType& HashMap<TKey, TValue>::Iterator::operator->() const
+	{
+		if (mOwner == nullptr) throw std::exception("Attempting to dereference null iterator");
+		return (*mIter);
 	}
 
 	template <typename TKey, typename TValue>
@@ -164,8 +199,16 @@ namespace HashMap
 	}
 
 	template <typename TKey, typename TValue>
-	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::Iterator::end()
+	bool HashMap<TKey, TValue>::Iterator::operator==(const Iterator& rhs) const
 	{
-		return Iterator(this, mBuckets[mOwner->mHashMapSize - 1].end());
+		return mOwner == rhs.mOwner &&
+			mBucketIndex == rhs.mBucketIndex &&
+			operator*() == *rhs;
+	}
+
+	template <typename TKey, typename TValue>
+	bool HashMap<TKey, TValue>::Iterator::operator!=(const Iterator& rhs) const
+	{
+		return !(operator==(rhs));
 	}
 }

@@ -42,8 +42,7 @@ namespace HashMap
 		/// Finds an instance of a key in the HashMap and returns its associated value
 		/// @Param rhs: constant reference to the key being searched for
 		/// @Return: An Iterator containing the found PairType, end otherwise
-		void find(const TKey& key) const;
-		//TODO: Change return type back to iterator once implemented
+		Iterator find(const TKey& key) const;
 
 		/// Inserts a Pairtype into the HashMap
 		/// @Param entry: The PairType being added to the HashMap
@@ -55,7 +54,8 @@ namespace HashMap
 		/// @Return: A reference to the data associated with the key
 		TValue& operator[](const TKey& key);
 
-		Iterator begin();
+		Iterator begin() const;
+		Iterator end() const;
 
 		/// Clears all memory stored in the HashMap
 		void clear();
@@ -82,10 +82,13 @@ namespace HashMap
 			Iterator();
 			Iterator& operator++();
 			Iterator operator++(int);
-			Iterator begin();
-			Iterator end();
+			PairType& operator*() const;
+			PairType& operator->() const;
+			bool operator==(const Iterator& rhs) const;
+			bool operator!=(const Iterator& rhs) const;
+//			Iterator begin();
+//			Iterator end();
 		private:
-//			Vector::Vector<PairType>::Iterator(const HashMap<TKey, TValue>* owner, Vector::Vector<PairType>::Iterator iter);
 			Iterator(const HashMap<TKey, TValue>* owner, typename Vector::Vector<PairType>::Iterator iter);
 
 			const HashMap<TKey, TValue>* mOwner;

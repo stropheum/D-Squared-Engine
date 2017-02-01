@@ -65,6 +65,7 @@ namespace TestLibraryDesktop
 			}
 
 			auto iter = hm.begin();
+			auto val = *iter;
 		}
 	};
 }
