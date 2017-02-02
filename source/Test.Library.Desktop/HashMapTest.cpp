@@ -90,7 +90,7 @@ namespace TestLibraryDesktop
 			std::pair<char*, char*> myPair(keys[0], strings[0]);
 			newMap.insert(myPair);
 			
-			hm.find("somebullshit");
+			Assert::IsTrue(hm.find("somebullshit") == hm.end());
 		}
 	};
 }

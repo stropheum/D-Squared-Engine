@@ -55,12 +55,24 @@ namespace HashMap
 	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::find(const TKey& key) const
 	{
 		if (mBuckets.isEmpty()) throw std::exception("Buckets are null");
+		std::uint32_t hashIndex = mHashFunctor(key) % mHashMapSize;
+		
 		Iterator iter;
-		for (iter = begin(); iter != end(); ++iter)
+		auto vIter = mBuckets[hashIndex].begin();
+		
+		while (vIter != mBuckets[hashIndex].end())
 		{
-			if ((*iter).first == key) break;
+			if ((*vIter).first == key) break;
+			++vIter;
 		}
-		return iter;
+
+		if (vIter == mBuckets[hashIndex].end())
+		{
+			hashIndex = mHashMapSize - 1;
+			vIter = mBuckets[hashIndex++].end();
+		}
+
+		return Iterator(this, hashIndex, vIter);
 	}
 
 	template <class TKey, class TValue>
@@ -80,16 +92,15 @@ namespace HashMap
 	template <typename TKey, typename TValue>
 	TValue& HashMap<TKey, TValue>::operator[](const TKey& key)
 	{
-		auto bucket = mBuckets[mHashFunctor(key, mHashMapSize) % mHashMapSize];
-		for (PairType value : bucket)
+		auto iter = find(key);
+		
+		if (iter == end())
 		{
-			if (value->first == key)
-			{
-				return value->second;
-			}
+			PairType newPair(key, nullptr);
+			iter = insert(newPair);
 		}
-		PairType newPair(key, nullptr);
-		return *(insert(newPair)).second;
+		
+		return *iter;
 	}
 
 	template <class TKey, class TValue>

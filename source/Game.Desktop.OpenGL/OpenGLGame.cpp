@@ -50,9 +50,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	strings[7] = "seven";
 	strings[8] = "eight";
 	strings[9] = "nine";
-	for (auto str : strings)
+	for (int i = 0; i < 10; i++)
 	{
-		hm.find(str);
+		std::pair<char*, int> mypair(strings[i], i);
+		hm.insert(mypair);
+	}
+	for (int i = 0; i < 10; i++)
+	{
+		if (hm.find(strings[i]) == hm.end())
+		{
+			OutputDebugStringW(L"Error");
+		}
+	}
+	if (hm.find("somebullshit") == hm.end())
+	{
+		OutputDebugStringW(L"Error");
 	}
 
 	// Init GLFW
@@ -144,11 +156,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 
 	while (!glfwWindowShouldClose(window))
 	{
-		// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
+		// Check if any events have been activated (key pressed, mouse moved etc.) and call corresponding response functions
 		glfwPollEvents();
 
 		// Render
-		// Clear the colorbuffer
+		// Clear the color buffer
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
