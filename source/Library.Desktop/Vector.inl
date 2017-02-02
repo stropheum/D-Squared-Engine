@@ -250,7 +250,10 @@ namespace Vector
 	template <typename T>
 	typename Vector<T>::Iterator& Vector<T>::Iterator::operator++()
 	{
-		mIndex++;
+		if (mIndex < mOwner->mSize)
+		{
+			mIndex++;
+		}
 		if (mIndex > mOwner->size()) throw std::exception("Incrementing beyond vector bounds");
 		return *this;
 	}

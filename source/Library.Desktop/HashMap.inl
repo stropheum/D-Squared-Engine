@@ -7,9 +7,9 @@ namespace HashMap
 {
 #define HashMapTemplate typename TKey, typename TValue
 
-	template <typename TKey, typename TValue>
-	HashMap<TKey, TValue>::HashMap():
-		mHashMapSize(defaultHashMapSize), mHashFunctor(defaultHashFunctor), mBuckets(mHashMapSize)
+	template <class TKey, class TValue>
+	HashMap<TKey, TValue>::HashMap(std::function<std::uint32_t(const TKey&)> hashFunctor = defaultHashFunctor):
+		mHashMapSize(defaultHashMapSize), mHashFunctor(hashFunctor)
 	{
 		initializeBuckets();
 	}
@@ -17,7 +17,7 @@ namespace HashMap
 	template <typename TKey, typename TValue>
 	HashMap<TKey, TValue>::HashMap(
 		std::uint32_t hashMapSize=defaultHashMapSize, 
-		std::function<std::uint32_t(const TKey&)> hashFunctor=defaultHashFunctor):
+		std::function<std::uint32_t(const TKey&)> hashFunctor = defaultHashFunctor):
 		mHashMapSize(hashMapSize), mHashFunctor(hashFunctor)
 	{
 		initializeBuckets();
@@ -80,7 +80,7 @@ namespace HashMap
 	template <typename TKey, typename TValue>
 	TValue& HashMap<TKey, TValue>::operator[](const TKey& key)
 	{
-		auto bucket = mBuckets[mHashFunctor(key, mHashMapSize) & mHashMapSize];
+		auto bucket = mBuckets[mHashFunctor(key, mHashMapSize) % mHashMapSize];
 		for (PairType value : bucket)
 		{
 			if (value->first == key)
@@ -88,15 +88,13 @@ namespace HashMap
 				return value->second;
 			}
 		}
-		throw std::exception("Accessing non-existent HashMap key");
+		PairType newPair(key, nullptr);
+		return *(insert(newPair)).second;
 	}
 
 	template <class TKey, class TValue>
 	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::begin() const
 	{
-		// TODO: Make this find the first non-empty bucket and return begin on that
-//		return HashMap<TKey, TValue>::Iterator(this, mBuckets[0].begin());
-
 		std::uint32_t index = 0;
 		auto iter = mBuckets[index].begin();
 		while (iter == mBuckets[index].end() && index + 1 < mHashMapSize)
@@ -164,18 +162,26 @@ namespace HashMap
 	typename HashMap<TKey, TValue>::Iterator& HashMap<TKey, TValue>::Iterator::operator++()
 	{
 		if (mOwner == nullptr) throw std::exception("Incrementing beyond HashMap bounds");
-
+		
 		++mIter;
 		while (mIter == mOwner->mBuckets[mBucketIndex].end())
 		{
-			if (mBucketIndex + 1 < mOwner->mHashMapSize)
+			if (++mBucketIndex< mOwner->mHashMapSize)
 			{
-				++mBucketIndex;
 				mIter = mOwner->mBuckets[mBucketIndex].begin();
 			}
 			else break;
 		}
+	
 		return *this;
+	}
+
+	template <typename TKey, typename TValue>
+	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::Iterator::operator++(int)
+	{
+		auto copy = *this;
+		operator++();
+		return copy;
 	}
 
 	template <typename TKey, typename TValue>
@@ -193,20 +199,13 @@ namespace HashMap
 	}
 
 	template <typename TKey, typename TValue>
-	typename HashMap<TKey, TValue>::Iterator HashMap<TKey, TValue>::Iterator::operator++(int)
-	{
-		auto copy = *this;
-		operator++();
-		return copy;
-	}
-
-	template <typename TKey, typename TValue>
 	bool HashMap<TKey, TValue>::Iterator::operator==(const Iterator& rhs) const
 	{
 		if (mOwner == nullptr) throw std::exception("Owner is null");
+
 		return mOwner == rhs.mOwner &&
 			mBucketIndex == rhs.mBucketIndex &&
-			operator*() == *rhs;
+			mIter == rhs.mIter;
 	}
 
 	template <typename TKey, typename TValue>

@@ -1062,9 +1062,6 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(iter == intor.end(), L"Iterator assigned to begin on a non-empty vector should not be equivalent to end");
 			Assert::IsTrue(++iter == intor.end(), L"Incrementing an iterator on a size of one vector should be equivalent to end");
 			
-			auto func = [&] { ++iter; };
-			Assert::ExpectException<std::exception>(func, L"Incrementing past end should throw an exception");
-
 
 			/// pointer vector tests
 			int x = 1;
@@ -1072,9 +1069,6 @@ namespace TestLibraryDesktop
 			auto piter = pointor.begin();
 			Assert::IsFalse(piter == pointor.end(), L"piterator assigned to begin on a non-empty vector should not be equivalent to end");
 			Assert::IsTrue(++piter == pointor.end(), L"Incrementing an piterator on a size of one vector should be equivalent to end");
-			
-			auto pfunc = [&] { ++piter; };
-			Assert::ExpectException<std::exception>(pfunc, L"Incrementing past end should throw an exception");
 
 
 			/// foo vector tests
@@ -1083,9 +1077,6 @@ namespace TestLibraryDesktop
 			auto fooiter = footor.begin();
 			Assert::IsFalse(fooiter == footor.end(), L"fooiterator assigned to begin on a non-empty vector should not be equivalent to end");
 			Assert::IsTrue(++fooiter == footor.end(), L"Incrementing an fooiterator on a size of one vector should be equivalent to end");
-			
-			auto foofunc = [&] { ++fooiter; };
-			Assert::ExpectException<std::exception>(foofunc, L"Incrementing past end should throw an exception");
 		}
 
 		TEST_METHOD(TestIteratorDereference)

@@ -59,16 +59,16 @@ namespace TestLibraryDesktop
 			keys[9] = "key nine";
 
 			char* strings[10];
-			strings[0] = "zero";
-			strings[1] = "one";
-			strings[2] = "two";
-			strings[3] = "three";
-			strings[4] = "four";
-			strings[5] = "five";
-			strings[6] = "six";
-			strings[7] = "seven";
-			strings[8] = "eight";
-			strings[9] = "nine";
+			strings[0] = "value zero";
+			strings[1] = "value one";
+			strings[2] = "value two";
+			strings[3] = "value three";
+			strings[4] = "value four";
+			strings[5] = "value five";
+			strings[6] = "value six";
+			strings[7] = "value seven";
+			strings[8] = "value eight";
+			strings[9] = "value nine";
 
 			for (int i = 0; i < 10; i++)
 			{
@@ -76,8 +76,21 @@ namespace TestLibraryDesktop
 				hm.insert(myPair);
 			}
 
-			auto val = hm.find(keys[0]);
-			auto dref = *val;
+//			auto val = hm.find(keys[0]);
+			for (std::uint32_t i = 0; i < 10; i++)
+			{
+				auto val = hm.find(keys[i]);
+				auto dref = *val;
+				if (true)
+				{
+//					auto val = 1;
+				}
+			}
+			HashMap::HashMap<char*, char*> newMap;
+			std::pair<char*, char*> myPair(keys[0], strings[0]);
+			newMap.insert(myPair);
+			
+			hm.find("somebullshit");
 		}
 	};
 }

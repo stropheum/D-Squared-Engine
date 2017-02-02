@@ -17,7 +17,7 @@ namespace HashMap
 		/// Default constructor for HashMap
 		/// HashMap size will default to 13
 		/// Default hash functor will be used
-		HashMap();
+		HashMap(std::function<std::uint32_t(const TKey&)> hashFunctor=defaultHashFunctor);
 
 		/// Constructor for HashMap
 		/// @Param hashMapSize: The predefined 
