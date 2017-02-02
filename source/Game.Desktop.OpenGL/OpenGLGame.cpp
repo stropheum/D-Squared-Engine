@@ -57,14 +57,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	}
 	for (int i = 0; i < 10; i++)
 	{
-		if (hm.find(strings[i]) == hm.end())
-		{
-			OutputDebugStringW(L"Error");
-		}
-	}
-	if (hm.find("somebullshit") == hm.end())
-	{
-		OutputDebugStringW(L"Error");
+		// Potentially dangerous. not asserting against end. could throw an exception
+		auto dref = *hm.find(strings[i]);
+		auto copy = dref;
 	}
 
 	// Init GLFW

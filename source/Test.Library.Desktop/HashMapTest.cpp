@@ -72,25 +72,34 @@ namespace TestLibraryDesktop
 
 			for (int i = 0; i < 10; i++)
 			{
-				std::pair<char*, char*> myPair(keys[i], strings[i]);
-				hm.insert(myPair);
+//				std::pair<char*, char*> myPair(keys[i], strings[i]);
+				hm.insert(std::pair<char*, char*>(keys[i], strings[i]));
 			}
 
 //			auto val = hm.find(keys[0]);
 			for (std::uint32_t i = 0; i < 10; i++)
 			{
 				auto val = hm.find(keys[i]);
-				auto dref = *val;
-				if (true)
+				
+				try
 				{
-//					auto val = 1;
-				}
+					auto dref = *val;
+				} 
+				catch (std::exception e) {}
+
 			}
-			HashMap::HashMap<char*, char*> newMap;
-			std::pair<char*, char*> myPair(keys[0], strings[0]);
-			newMap.insert(myPair);
+
+			std::uint32_t i = 0;
+			for (auto iter = hm.begin(); iter != hm.end(); ++iter, ++i)
+			{
+				auto dref = iter;
+			}
+
+//			HashMap::HashMap<char*, char*> newMap;
+//			std::pair<char*, char*> myPair(keys[0], strings[0]);
+//			newMap.insert(myPair);
 			
-			Assert::IsTrue(hm.find("somebullshit") == hm.end());
+//			Assert::IsTrue(hm.find("somebullshit") == hm.end());
 		}
 	};
 }

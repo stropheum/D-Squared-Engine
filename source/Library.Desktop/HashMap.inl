@@ -24,21 +24,26 @@ namespace HashMap
 	}
 
 	template <typename TKey, typename TValue>
-	HashMap<TKey, TValue>::~HashMap()
-	{
-		//TODO: Implement destructor
-	}
-
-	template <typename TKey, typename TValue>
 	HashMap<TKey, TValue>::HashMap(const HashMap<TKey, TValue>& rhs): 
-		mHashMapSize(rhs.mHashMapSize), mHashFunctor(rhs.mHashFunctor) {
-		//TODO: Implement copy constructor
+		mHashMapSize(rhs.mHashMapSize), mHashFunctor(rhs.mHashFunctor)
+	{
+		initializeBuckets();
+		for (std::uint32_t i = 0; i < mHashMapSize; i++)
+		{
+			mBuckets[i] = rhs->mBuckets[i];
+		}
 	}
 
 	template <typename TKey, typename TValue>
 	HashMap<TKey, TValue>& HashMap<TKey, TValue>::operator=(const HashMap<TKey, TValue>& rhs)
 	{
-		//TODO: Implement assignment operator
+		mHashMapSize = rhs.mHashMapSize;
+		mHashFunctor = rhs.mHashFunctor;
+		initializeBuckets();
+		for (std::uint32_t i = 0; i < mHashMapSize; i++)
+		{
+			mBuckets[i] = rhs.mBuckets[i];
+		}
 		return *this;
 	}
 
@@ -88,6 +93,16 @@ namespace HashMap
 		return HashMap<TKey, TValue>::Iterator(this, bucketIndex, mBuckets[bucketIndex].find(entry));
 	}
 
+	template <class TKey, class TValue>
+	void HashMap<TKey,TValue>::remove(const TKey& key)
+	{
+		auto iter = find(key);
+		if (iter != end())
+		{
+			std::uint32_t hashIndex = mHashFunctor(key) % mHashMapSize;
+			mBuckets[hashIndex].remove(*iter);
+		}
+	}
 
 	template <typename TKey, typename TValue>
 	TValue& HashMap<TKey, TValue>::operator[](const TKey& key)
@@ -130,6 +145,19 @@ namespace HashMap
 		}
 	}
 
+	template <class TKey, class TValue>
+	std::uint32_t HashMap<TKey, TValue>::size() const
+	{
+		return mHashMapSize;
+	}
+
+	template <class TKey, class TValue>
+	bool HashMap<TKey, TValue>::containsKey(const TKey& key)
+	{
+		auto iter = find(key);
+		return iter != end();
+	}
+
 	template <typename TKey, typename TValue>
 	std::uint32_t HashMap<TKey, TValue>::defaultHashFunctor(const TKey& key)
 	{
@@ -162,7 +190,7 @@ namespace HashMap
 	template <typename TKey, typename TValue>
 	typename HashMap<TKey, TValue>::Iterator& HashMap<TKey, TValue>::Iterator::operator=(const Iterator& rhs)
 	{
-		if (rhs.mOwner == nullptr) throw std::exception("Rhs owner is null");
+		if (rhs.mOwner == nullptr) throw std::exception("Right hand side owner is null");
 		mOwner = rhs.mOwner;
 		mBucketIndex = rhs.mBucketIndex;
 		mIter = rhs.mIter;
