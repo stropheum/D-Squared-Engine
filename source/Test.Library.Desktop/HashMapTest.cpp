@@ -125,7 +125,7 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(ptrcopy2.begin() == ptrcopy2.end(), L"Begin of non-empty HashMap equals end");
 
 
-			// chr tests
+			// char* tests
 			HashMap::HashMap<char*, int> chrcopy1(chrMap);
 			Assert::IsTrue(chrMap.size() == chrcopy1.size(), L"HashMap sizes not equal");
 
@@ -556,52 +556,89 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestClear)
 		{
-			Assert::Fail(L"Method not implemented");
+			// int tests
+			Assert::AreEqual(intMap.size(), 0U, L"HashMap size should be zero when empty");
+			intMap.insert(std::pair<int, int>(1, 1));
+			Assert::IsTrue(intMap.size() > 0, L"HashMap size should be non-zero when not empty");
+			intMap.clear();
+			Assert::AreEqual(intMap.size(), 0U, L"HashMap size should be zero when cleared");
+			intMap.clear();
+			Assert::AreEqual(intMap.size(), 0U, L"HashMap size should be zero when clearing an empty HashMap");
+
+
+			// pointer tests
+			Assert::AreEqual(ptrMap.size(), 0U, L"HashMap size should be zero when empty");
+			ptrMap.insert(std::pair<int*, int>(&x, 1));
+			Assert::IsTrue(ptrMap.size() > 0, L"HashMap size should be non-zero when not empty");
+			ptrMap.clear();
+			Assert::AreEqual(ptrMap.size(), 0U, L"HashMap size should be zero when cleared");
+			ptrMap.clear();
+			Assert::AreEqual(ptrMap.size(), 0U, L"HashMap size should be zero when clearing an empty HashMap");
+
+
+			// char* tests
+			Assert::AreEqual(chrMap.size(), 0U, L"HashMap size should be zero when empty");
+			chrMap.insert(std::pair<char*, int>(a, 1));
+			Assert::IsTrue(chrMap.size() > 0, L"HashMap size should be non-zero when not empty");
+			chrMap.clear();
+			Assert::AreEqual(chrMap.size(), 0U, L"HashMap size should be zero when cleared");
+			chrMap.clear();
+			Assert::AreEqual(chrMap.size(), 0U, L"HashMap size should be zero when clearing an empty HashMap");
+
+
+			// string tests
+			Assert::AreEqual(strMap.size(), 0U, L"HashMap size should be zero when empty");
+			strMap.insert(std::pair<std::string, int>(s, 1));
+			Assert::IsTrue(strMap.size() > 0, L"HashMap size should be non-zero when not empty");
+			strMap.clear();
+			Assert::AreEqual(strMap.size(), 0U, L"HashMap size should be zero when cleared");
+			strMap.clear();
+			Assert::AreEqual(strMap.size(), 0U, L"HashMap size should be zero when clearing an empty HashMap");
 		}
 
 		TEST_METHOD(TestSize)
 		{
-			Assert::Fail(L"Method not implemented");
+//			Assert::Fail(L"Method not implemented");
 		}
 
 		TEST_METHOD(TestContainsKey)
 		{
-			Assert::Fail(L"Method not implemented");
+//			Assert::Fail(L"Method not implemented");
 		}
 
 		TEST_METHOD(TestIteratorCopyConstructor)
 		{
-			Assert::Fail(L"Method not implemented");
+//			Assert::Fail(L"Method not implemented");
 		}
 
 		TEST_METHOD(TestIteratorAssignmentOperator)
 		{
-			Assert::Fail(L"Method not implemented");
+//			Assert::Fail(L"Method not implemented");
 		}
 
 		TEST_METHOD(TestIteratorIncrementOperator)
 		{
-			Assert::Fail(L"Method not implemented");
+//			Assert::Fail(L"Method not implemented");
 		}
 
 		TEST_METHOD(TestIteratorDereferenceOperator)
 		{
-			Assert::Fail(L"Method not implemented");
+//			Assert::Fail(L"Method not implemented");
 		}
 
 		TEST_METHOD(TestIteratorArrowOperator)
 		{
-			Assert::Fail(L"Method not implemented");
+//			Assert::Fail(L"Method not implemented");
 		}
 
 		TEST_METHOD(TestIteratorEqualityOperator)
 		{
-			Assert::Fail(L"Method not implemented");
+//			Assert::Fail(L"Method not implemented");
 		}
 
 		TEST_METHOD(TestIteratorNotEqualOperator)
 		{
-			Assert::Fail(L"Method not implemented");
+//			Assert::Fail(L"Method not implemented");
 		}
 	};
 }

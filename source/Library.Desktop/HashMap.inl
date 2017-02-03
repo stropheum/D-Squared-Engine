@@ -16,6 +16,7 @@ namespace HashMap
 		mHashMapSize(rhs.mHashMapSize), mSize(rhs.mSize)
 	{
 		initializeBuckets();
+		mSize = rhs.mSize;
 		for (std::uint32_t i = 0; i < mHashMapSize; i++)
 		{
 			mBuckets[i] = rhs.mBuckets[i];
@@ -40,6 +41,7 @@ namespace HashMap
 	template <typename TKey, typename TValue, typename HashFunctor>
 	void HashMap<TKey, TValue, HashFunctor>::initializeBuckets()
 	{
+		mSize = 0;
 		for (std::uint32_t i = 0; i < mHashMapSize; i++)
 		{ // Create a vector to represent each "bucket:
 			mBuckets.pushBack(BucketType());
@@ -140,7 +142,7 @@ namespace HashMap
 	{
 		for (std::uint32_t i = 0; i < mHashMapSize; i++)
 		{
-			if (!mBuckets[i].isEmpty()) mBuckets[i].~Vector();
+			mBuckets[i].clear();
 		}
 		initializeBuckets();
 	}
