@@ -305,7 +305,93 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestRemove)
 		{
-			Assert::Fail(L"Method not implemented");
+			// int tests
+			Assert::IsFalse(intMap.containsKey(1), L"Empty HashMap should not contain any keys");
+			
+			std::uint32_t intMapSize = intMap.size();
+			intMap.insert(std::pair<int, int>(1, 1));
+			Assert::IsTrue(intMap.containsKey(1), L"Key doesn't exist in HashMap after inserting");
+			Assert::AreNotEqual(intMapSize, intMap.size(), L"Size not changing after inserting into HashMap");
+			
+			intMapSize = intMap.size();
+			intMap.remove(1);
+			Assert::IsFalse(intMap.containsKey(1), L"Key still exists in HashMap after removing");
+			Assert::AreNotEqual(intMapSize, intMap.size(), L"Size not changing after removing from HashMap");
+			
+			intMapSize = intMap.size();
+			intMap.remove(1);
+			Assert::AreEqual(intMapSize, intMap.size(), L"Size should not change after removing non-existent key");
+
+
+			// pointer tests
+			Assert::IsFalse(ptrMap.containsKey(&x), L"Empty HashMap should not contain any keys");
+
+			std::uint32_t ptrMapSize = ptrMap.size();
+			ptrMap.insert(std::pair<int*, int>(&x, 1));
+			Assert::IsTrue(ptrMap.containsKey(&x), L"Key doesn't exist in HashMap after inserting");
+			Assert::AreNotEqual(ptrMapSize, ptrMap.size(), L"Size not changing after inserting into HashMap");
+
+			ptrMapSize = ptrMap.size();
+			ptrMap.remove(&x);
+			Assert::IsFalse(ptrMap.containsKey(&x), L"Key still exists in HashMap after removing");
+			Assert::AreNotEqual(ptrMapSize, ptrMap.size(), L"Size not changing after removing from HashMap");
+
+			ptrMapSize = ptrMap.size();
+			ptrMap.remove(&x);
+			Assert::AreEqual(ptrMapSize, ptrMap.size(), L"Size should not change after removing non-existent key");
+
+
+			// char* tests
+			Assert::IsFalse(chrMap.containsKey(a), L"Empty HashMap should not contain any keys");
+
+			std::uint32_t chrMapSize = chrMap.size();
+			chrMap.insert(std::pair<char*, int>(a, 1));
+			Assert::IsTrue(chrMap.containsKey(a), L"Key doesn't exist in HashMap after inserting");
+			Assert::AreNotEqual(chrMapSize, chrMap.size(), L"Size not changing after inserting into HashMap");
+
+			chrMapSize = chrMap.size();
+			chrMap.remove(a);
+			Assert::IsFalse(chrMap.containsKey(a), L"Key still exists in HashMap after removing");
+			Assert::AreNotEqual(chrMapSize, chrMap.size(), L"Size not changing after removing from HashMap");
+
+			chrMapSize = chrMap.size();
+			chrMap.remove(a);
+			Assert::AreEqual(chrMapSize, chrMap.size(), L"Size should not change after removing non-existent key");
+
+			// string tests
+			Assert::IsFalse(strMap.containsKey(s), L"Empty HashMap should not contain any keys");
+
+			std::uint32_t strMapSize = strMap.size();
+			strMap.insert(std::pair<std::string, int>(s, 1));
+			Assert::IsTrue(strMap.containsKey(s), L"Key doesn't exist in HashMap after inserting");
+			Assert::AreNotEqual(strMapSize, strMap.size(), L"Size not changing after inserting into HashMap");
+
+			strMapSize = strMap.size();
+			strMap.remove(s);
+			Assert::IsFalse(strMap.containsKey(s), L"Key still exists in HashMap after removing");
+			Assert::AreNotEqual(strMapSize, strMap.size(), L"Size not changing after removing from HashMap");
+
+			strMapSize = strMap.size();
+			strMap.remove(s);
+			Assert::AreEqual(strMapSize, strMap.size(), L"Size should not change after removing non-existent key");
+
+
+			// foo tests
+			Assert::IsFalse(fooMap.containsKey(foo), L"Empty HashMap should not contain any keys");
+
+			std::uint32_t fooMapSize = fooMap.size();
+			fooMap.insert(std::pair<Foo, int>(foo, 1));
+			Assert::IsTrue(fooMap.containsKey(foo), L"Key doesn't exist in HashMap after inserting");
+			Assert::AreNotEqual(fooMapSize, fooMap.size(), L"Size not changing after inserting into HashMap");
+
+			fooMapSize = fooMap.size();
+			fooMap.remove(foo);
+			Assert::IsFalse(fooMap.containsKey(foo), L"Key still exists in HashMap after removing");
+			Assert::AreNotEqual(fooMapSize, fooMap.size(), L"Size not changing after removing from HashMap");
+
+			fooMapSize = fooMap.size();
+			fooMap.remove(foo);
+			Assert::AreEqual(fooMapSize, fooMap.size(), L"Size should not change after removing non-existent key");
 		}
 
 		TEST_METHOD(TestIndexOperator)

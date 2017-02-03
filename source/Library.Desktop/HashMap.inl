@@ -140,7 +140,7 @@ namespace HashMap
 	template <typename TKey, typename TValue, typename HashFunctor>
 	std::uint32_t HashMap<TKey, TValue, HashFunctor>::size() const
 	{
-		return mHashMapSize;
+		return mSize;
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
@@ -199,14 +199,14 @@ namespace HashMap
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
-	typename HashMap<TKey, TValue, HashFunctor>::PairType& HashMap<TKey, TValue, HashFunctor>::Iterator::operator*() const
+	const typename HashMap<TKey, TValue, HashFunctor>::PairType& HashMap<TKey, TValue, HashFunctor>::Iterator::operator*() const
 	{
 		if (mOwner == nullptr) throw std::exception("Attempting to dereference null iterator");
 		return (*mIter);
 	}
 
 	template <typename TKey, typename TValue, class HashFunctor>
-	typename HashMap<TKey, TValue, HashFunctor>::PairType* HashMap<TKey, TValue, HashFunctor>::Iterator::operator->() const
+	const typename HashMap<TKey, TValue, HashFunctor>::PairType* HashMap<TKey, TValue, HashFunctor>::Iterator::operator->() const
 	{
 		return *this;
 	}
