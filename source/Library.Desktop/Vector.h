@@ -19,7 +19,7 @@ namespace Vector
 		/// Allocates memory in mBuffer for a capacity of 10 templated values
 		Vector(bool fixedSize = false);
 
-		Vector(std::uint32_t maxSize, bool fixedSize = false);
+		explicit Vector(std::uint32_t maxSize, bool fixedSize = false);
 
 		/// Copy constructor
 		/// @Param rhs: The Vector being copied
@@ -165,12 +165,12 @@ namespace Vector
 			/// @Return: True if the iterators are not equivalent
 			bool operator!=(const Iterator& rhs) const;
 
-			/// Pre-increment operator
+			/// Increment operator(prefix)
 			/// @Return: Current iterator after increment has occurred
 			/// @Exception: Thrown if incrementing beyond vector bounds
 			Iterator& operator++();
 
-			/// Post-increment operator
+			/// Increment operator(postfix)
 			/// @Return: Copy of iterator before increment has occurred
 			Iterator operator++(int);
 

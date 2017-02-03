@@ -18,7 +18,7 @@ namespace HashMap
 		initializeBuckets();
 		for (std::uint32_t i = 0; i < mHashMapSize; i++)
 		{
-			mBuckets[i] = rhs->mBuckets[i];
+			mBuckets[i] = rhs.mBuckets[i];
 		}
 	}
 
@@ -77,6 +77,7 @@ namespace HashMap
 		
 		// Push the data onto the appropriate bucket
 		mBuckets[bucketIndex].pushBack(entry);
+		mSize++;
 		
 		// Return an iterator pointing to the entry
 		return HashMap<TKey, TValue>::Iterator(this, bucketIndex, mBuckets[bucketIndex].find(entry));
@@ -90,6 +91,7 @@ namespace HashMap
 		{
 			std::uint32_t hashIndex = mHashFunctor(key) % mHashMapSize;
 			mBuckets[hashIndex].remove(*iter);
+			mSize--;
 		}
 	}
 
