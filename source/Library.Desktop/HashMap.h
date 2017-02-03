@@ -37,7 +37,7 @@ namespace HashMap
 		HashMap<TKey, TValue, HashFunctor>& operator=(const HashMap<TKey, TValue, HashFunctor>& rhs);
 
 		/// Move assignment operator (disabled)
-		HashMap<TKey, TValue, HashFunctor>& operator-(const HashMap<TKey, TValue, HashFunctor>&& rhs) = delete;
+		HashMap<TKey, TValue, HashFunctor>& operator=(const HashMap<TKey, TValue, HashFunctor>&& rhs) = delete;
 
 
 		/// Finds an instance of a key in the HashMap and returns its associated value
