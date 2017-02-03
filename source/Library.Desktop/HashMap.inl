@@ -206,8 +206,7 @@ namespace HashMap
 	template <typename TKey, typename TValue, typename HashFunctor>
 	typename HashMap<TKey, TValue, HashFunctor>::PairType& HashMap<TKey, TValue, HashFunctor>::Iterator::operator->() const
 	{
-		if (mOwner == nullptr) throw std::exception("Attempting to dereference null iterator");
-		return (*mIter);
+		return *this;
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>

@@ -9,7 +9,9 @@ namespace HashMap
 {
 	template <typename TKey, typename TValue, class HashFunctor=DefaultHash<TKey>> class HashMap
 	{
+		/// The key/value pairs being used by the HashMap
 		typedef std::pair<TKey, TValue> PairType;
+		/// The buckets being used in the Vector chain. This implementation uses Vectors of PairTypes
 		typedef Vector::Vector<PairType> BucketType;
 
 	public:
@@ -74,13 +76,13 @@ namespace HashMap
 
 		/// Determines if a value has been inserted into the HashMap with the specified key
 		/// @Param key: The key being searched for
-		/// @Return: True if the key exists in the hashmap
+		/// @Return: True if the key exists in the HashMap
 		bool containsKey(const TKey& key);
 
 	private:
-		std::uint32_t mHashMapSize;								/// Number of buckets in the hash map.
-		HashFunctor mHashFunctor;
-		Vector::Vector<BucketType> mBuckets;					/// Collection of buckets in the hash map
+		std::uint32_t mHashMapSize;			 /// Number of buckets in the hash map.
+		HashFunctor mHashFunctor;			 /// The hash function being used by this HashMap
+		Vector::Vector<BucketType> mBuckets; /// Collection of buckets in the hash map
 
 		static const uint32_t defaultHashMapSize = 13; // If no size is specified, number of buckets defaults to 13
 
@@ -92,22 +94,56 @@ namespace HashMap
 		{
 			friend class HashMap;
 		public:
+			/// Iterator constructor. Creates an Iterator pointing to nothing. Used for lazy initialization
 			Iterator();
+
+			/// Virtual destructor
 			virtual ~Iterator() = default;
+
+			/// Copy Constructor. Creates an iterator equivalent to the current Iterator
+			/// @Param rhs: The Iterator being copied
 			Iterator(const Iterator& rhs);
+
+			/// Assignment Operator
+			/// @Param rhs: The Iterator being assigned to
+			/// @Return: A reference to the Iterator copy
 			Iterator& operator=(const Iterator& rhs);
+
+			/// Increment operator(prefix)
+			/// @Return: A reference to the next Iterator in the HashMap
 			Iterator& operator++();
+
+			/// Increment operator(postfix)
+			/// @Return: A copy of the Iterator before it has been incremented
 			Iterator operator++(int);
+
+			/// Dereference operator
+			/// @Return: A PairType that the Iterator's member iterator is pointing to
 			PairType& operator*() const;
+
+			/// Arrow operator
+			/// @Return: A PairType that the Iterator's member iterator is pointing to
 			PairType& operator->() const;
+
+			/// Equality operator
+			/// @Param rhs: The Iterator being compared against
+			/// @return: True if the two Iterators are equivalent
 			bool operator==(const Iterator& rhs) const;
+
+			/// Not-Equal operator
+			/// @Param rhs: The Iterator being compared against
+			/// @Return: False if the two Iterators are equivalent
 			bool operator!=(const Iterator& rhs) const;
 		private:
+			/// Private constructor. Used for traversing the chained vectors
+			/// @Param owner: The HashMap that owns this iterator
+			/// @Param bucketIndex: The index into the Vector chain
+			/// @Param iter: The iterator that mIter is being assigned to
 			Iterator(const HashMap<TKey, TValue, HashFunctor>* owner, std::uint32_t bucketIndex, typename Vector::Vector<PairType>::Iterator iter);
 
-			const HashMap<TKey, TValue, HashFunctor>* mOwner;
-			std::uint32_t mBucketIndex;
-			typename Vector::Vector<PairType>::Iterator mIter;
+			const HashMap<TKey, TValue, HashFunctor>* mOwner;	/// The HashMap that owns this Iterator
+			std::uint32_t mBucketIndex;							/// The index into the Vector chain
+			typename Vector::Vector<PairType>::Iterator mIter;	/// The Iterator on the Vector of PairTypes that is currently being iterated on
 		};
 	};
 }

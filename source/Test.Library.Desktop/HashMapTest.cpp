@@ -43,49 +43,49 @@ namespace TestLibraryDesktop
 			finalizeLeakDetection();
 		}
 
-		TEST_METHOD(TestConstruction)
+		TEST_METHOD(TempTest)
 		{
-//			HashMap::HashMap<char*, char*> hm(13);
-//			char* keys[10];
-//			keys[0] = "key zero";
-//			keys[1] = "key one";
-//			keys[2] = "key two";
-//			keys[3] = "key three";
-//			keys[4] = "key four";
-//			keys[5] = "key five";
-//			keys[6] = "key six";
-//			keys[7] = "key seven";
-//			keys[8] = "key eight";
-//			keys[9] = "key nine";
-//
-//			char* strings[10];
-//			strings[0] = "value zero";
-//			strings[1] = "value one";
-//			strings[2] = "value two";
-//			strings[3] = "value three";
-//			strings[4] = "value four";
-//			strings[5] = "value five";
-//			strings[6] = "value six";
-//			strings[7] = "value seven";
-//			strings[8] = "value eight";
-//			strings[9] = "value nine";
-//
-//			for (int i = 0; i < 10; i++)
-//			{
-////				std::pair<char*, char*> myPair(keys[i], strings[i]);
-//				hm.insert(std::pair<char*, char*>(keys[i], strings[i]));
-//			}
+			HashMap::HashMap<char*, char*> hm(13);
+			char* keys[10];
+			keys[0] = "key zero";
+			keys[1] = "key one";
+			keys[2] = "key two";
+			keys[3] = "key three";
+			keys[4] = "key four";
+			keys[5] = "key five";
+			keys[6] = "key six";
+			keys[7] = "key seven";
+			keys[8] = "key eight";
+			keys[9] = "key nine";
+
+			char* strings[10];
+			strings[0] = "value zero";
+			strings[1] = "value one";
+			strings[2] = "value two";
+			strings[3] = "value three";
+			strings[4] = "value four";
+			strings[5] = "value five";
+			strings[6] = "value six";
+			strings[7] = "value seven";
+			strings[8] = "value eight";
+			strings[9] = "value nine";
+
+			for (int i = 0; i < 10; i++)
+			{
+//				std::pair<char*, char*> myPair(keys[i], strings[i]);
+				hm.insert(std::pair<char*, char*>(keys[i], strings[i]));
+			}
 			
-//			for (int i = 0; i < 10; i++)
-//			{
-//				auto iter = hm.find(keys[i]);
-//				if (iter != hm.end())
-//				{
-//					auto expected = strings[i];
-//					auto actual = (*iter).second;
-//					Assert::IsTrue(expected == actual);
-//				}
-//			}
+			for (int i = 0; i < 10; i++)
+			{
+				auto iter = hm.find(keys[i]);
+				if (iter != hm.end())
+				{
+					auto expected = strings[i];
+					auto actual = (*iter).second;
+					Assert::IsTrue(expected == actual);
+				}
+			}
 
 			HashMap::HashMap<int,   int> intMap(13);
 			HashMap::HashMap<int*,  int> ptrMap(13);
@@ -102,6 +102,11 @@ namespace TestLibraryDesktop
 
 			Foo foo(1);
 			fooMap.insert(std::pair<Foo, int>(foo, 1));
+		}
+
+		TEST_METHOD(TestTemplateSpecialization)
+		{
+			Assert::Fail(L"Method not implemented");
 		}
 	};
 }

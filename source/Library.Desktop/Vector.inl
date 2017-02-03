@@ -6,7 +6,7 @@ namespace Vector
 {
 	template <typename T>
 	Vector<T>::Vector(bool fixedSize = false) :
-		mBuffer(nullptr), mSize(0), mFixedSize(fixedSize), mCapacity(CAPACITY_INCREMENT)
+		mBuffer(nullptr), mSize(0), mCapacity(CAPACITY_INCREMENT), mFixedSize(fixedSize)
 	{
 		reserve(mCapacity);
 	}
@@ -47,8 +47,9 @@ namespace Vector
 	Vector<T>& Vector<T>::operator=(const Vector<T>& rhs)
 	{
 		if (mBuffer == nullptr) throw std::exception("Assigning to null pointer");
-		clear();
 		mFixedSize = rhs.mFixedSize;
+		
+		clear();
 		reserve(rhs.mCapacity);
 		if (rhs.mSize > 0)
 		{
@@ -166,8 +167,11 @@ namespace Vector
 	template <typename T>
 	void Vector<T>::pushBack(const T& value)
 	{
-		if (mSize >= mCapacity) reserve(mCapacity + CAPACITY_INCREMENT);
-		new(mBuffer + mSize++) T(value);
+		if (!mFixedSize)
+		{
+			if (mSize >= mCapacity) reserve(mCapacity + CAPACITY_INCREMENT);
+			new(mBuffer + mSize++) T(value);
+		}
 	}
 
 	template <typename T>
@@ -217,7 +221,7 @@ namespace Vector
 	template <class T>
 	void Vector<T>::shrinkToFit()
 	{
-		reserve(mSize);
+		if (!mFixedSize) reserve(mSize);
 	}
 
 	/// //////////////////////////////// ///

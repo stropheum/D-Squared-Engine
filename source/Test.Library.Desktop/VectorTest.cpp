@@ -443,7 +443,7 @@ namespace TestLibraryDesktop
 
 			auto func3 = [this] { intor.at(-1); };
 			Assert::ExpectException<std::exception>(func3, L"Accessing a negative index of a vector should throw an exception");
-			Assert::IsTrue(1 == intor.at(0), L"First element added should be equivalent to Vector.at(0)");
+			Assert::IsTrue(1u == intor.at(0), L"First element added should be equivalent to Vector.at(0)");
 			
 			intor.pushBack(2);
 			Assert::IsTrue(1 == intor.at(0), L"First element should be equivalent to Vector.at(0) after pushing back multiple values");
