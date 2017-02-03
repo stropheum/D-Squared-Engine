@@ -155,6 +155,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DefaultHash.h" />
     <ClInclude Include="HashMap.h" />
     <ClInclude Include="SList.h" />
     <ClInclude Include="pch.h" />
