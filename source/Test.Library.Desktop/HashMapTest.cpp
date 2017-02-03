@@ -9,6 +9,11 @@ namespace TestLibraryDesktop
 {
 	TEST_CLASS(TestHashMap)
 	{
+		HashMap::HashMap<int,		  int> intMap;
+		HashMap::HashMap<int*,		  int> ptrMap;
+		HashMap::HashMap<char*,       int> chrMap;
+		HashMap::HashMap<std::string, int> strMap;
+		HashMap::HashMap<Foo,         int> fooMap;
 	public:
 		/// Sets up leak detection logic
 		static void initializeLeakDetection()
@@ -36,6 +41,11 @@ namespace TestLibraryDesktop
 		TEST_METHOD_INITIALIZE(methodInitialize)
 		{
 			initializeLeakDetection();
+			intMap.clear();
+			ptrMap.clear();
+			chrMap.clear();
+			strMap.clear();
+			fooMap.clear();
 		}
 
 		TEST_METHOD_CLEANUP(methodCleanup)
@@ -45,12 +55,6 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestTemplateSpecialization)
 		{
-			HashMap::HashMap<int, int> intMap(13);
-			HashMap::HashMap<int*, int> ptrMap(13);
-			HashMap::HashMap<char*, int> charMap(13);
-			HashMap::HashMap<std::string, int> stringMap(13);
-			HashMap::HashMap<Foo, int> fooMap(13);
-
 			intMap.insert(std::pair<int, int>(1, 1));
 			Assert::IsTrue(intMap.containsKey(1), L"intMap does not contain inserted key");
 
@@ -59,12 +63,12 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(ptrMap.containsKey(&x), L"ptrMap does not contain inserted key");
 
 			char* c = "stuff";
-			charMap.insert(std::pair<char*, int>(c, 1));
-			Assert::IsTrue(charMap.containsKey(c), L"charMap does not contain inserted key");
+			chrMap.insert(std::pair<char*, int>(c, 1));
+			Assert::IsTrue(chrMap.containsKey(c), L"charMap does not contain inserted key");
 
 			std::string s = "thangs";
-			stringMap.insert(std::pair<std::string, int>(s, 1));
-			Assert::IsTrue(stringMap.containsKey(s), L"stringMap does not contain inserted key");
+			strMap.insert(std::pair<std::string, int>(s, 1));
+			Assert::IsTrue(strMap.containsKey(s), L"stringMap does not contain inserted key");
 
 			Foo foo(1);
 			fooMap.insert(std::pair<Foo, int>(foo, 1));

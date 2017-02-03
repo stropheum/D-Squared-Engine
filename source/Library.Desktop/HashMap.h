@@ -14,12 +14,14 @@ namespace HashMap
 		/// The buckets being used in the Vector chain. This implementation uses Vectors of PairTypes
 		typedef Vector::Vector<PairType> BucketType;
 
+		static const uint32_t defaultHashMapSize = 13; // If no size is specified, number of buckets defaults to 13
+
 	public:
 		class Iterator; /// Forward declaration of Iterator class
 
 		/// Constructor for HashMap
 		/// @Param hashMapSize: The predefined 
-		explicit HashMap(std::uint32_t hashMapSize);
+		explicit HashMap(std::uint32_t hashMapSize = defaultHashMapSize);
 
 		/// Virtual destructor to prevent inheritance
 		virtual ~HashMap() = default;
@@ -84,8 +86,7 @@ namespace HashMap
 		std::uint32_t mHashMapSize;			 /// Number of buckets in the hash map.
 		HashFunctor mHashFunctor;			 /// The hash function being used by this HashMap
 		Vector::Vector<BucketType> mBuckets; /// Collection of buckets in the hash map
-
-		static const uint32_t defaultHashMapSize = 13; // If no size is specified, number of buckets defaults to 13
+		std::uint32_t mSize;
 
 		/// Creates one vector of type TData for each bucket in the specified size
 		void initializeBuckets();

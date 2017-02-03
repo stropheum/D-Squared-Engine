@@ -5,15 +5,15 @@
 namespace HashMap
 {
 	template <typename TKey, typename TValue, typename HashFunctor>
-	HashMap<TKey, TValue, HashFunctor>::HashMap(std::uint32_t hashMapSize):
-		mHashMapSize(hashMapSize)
+	HashMap<TKey, TValue, HashFunctor>::HashMap(std::uint32_t hashMapSize = defaultHashMapSize) :
+		mHashMapSize(hashMapSize), mSize(0)
 	{
 		initializeBuckets();
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
 	HashMap<TKey, TValue, HashFunctor>::HashMap(const HashMap<TKey, TValue, HashFunctor>& rhs):
-		mHashMapSize(rhs.mHashMapSize)
+		mHashMapSize(rhs.mHashMapSize), mSize(rhs.mSize)
 	{
 		initializeBuckets();
 		for (std::uint32_t i = 0; i < mHashMapSize; i++)
@@ -130,8 +130,9 @@ namespace HashMap
 	{
 		for (std::uint32_t i = 0; i < mHashMapSize; i++)
 		{
-			mBuckets[i].~Vector();
+			if (!mBuckets[i].isEmpty()) mBuckets[i].~Vector();
 		}
+		initializeBuckets();
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
