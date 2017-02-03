@@ -514,7 +514,44 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestEnd)
 		{
-			Assert::Fail(L"Method not implemented");
+			// int tests
+			Assert::IsTrue(intMap.begin() == intMap.end(), L"Begin should be equivalent to end on empty HashMap");
+			intMap.insert(std::pair<int, int>(1, 1));
+			Assert::IsFalse(intMap.begin() == intMap.end(), L"Begin should not be equivalent to end on non-empty HashMap");
+			intMap.remove(1);
+			Assert::IsTrue(intMap.begin() == intMap.end(), L"Begin should be equivalent to end on empty HashMap");
+
+
+			// pointer tests
+			Assert::IsTrue(ptrMap.begin() == ptrMap.end(), L"Begin should be equivalent to end on empty HashMap");
+			ptrMap.insert(std::pair<int*, int>(&x, 1));
+			Assert::IsFalse(ptrMap.begin() == ptrMap.end(), L"Begin should not be equivalent to end on non-empty HashMap");
+			ptrMap.remove(&x);
+			Assert::IsTrue(ptrMap.begin() == ptrMap.end(), L"Begin should be equivalent to end on empty HashMap");
+
+
+			// char* tests
+			Assert::IsTrue(chrMap.begin() == chrMap.end(), L"Begin should be equivalent to end on empty HashMap");
+			chrMap.insert(std::pair<char*, int>(a, 1));
+			Assert::IsFalse(chrMap.begin() == chrMap.end(), L"Begin should not be equivalent to end on non-empty HashMap");
+			chrMap.remove(a);
+			Assert::IsTrue(chrMap.begin() == chrMap.end(), L"Begin should be equivalent to end on empty HashMap");
+
+
+			// string tests
+			Assert::IsTrue(strMap.begin() == strMap.end(), L"Begin should be equivalent to end on empty HashMap");
+			strMap.insert(std::pair<std::string, int>(s, 1));
+			Assert::IsFalse(strMap.begin() == strMap.end(), L"Begin should not be equivalent to end on non-empty HashMap");
+			strMap.remove(s);
+			Assert::IsTrue(strMap.begin() == strMap.end(), L"Begin should be equivalent to end on empty HashMap");
+
+
+			// foo tests
+			Assert::IsTrue(fooMap.begin() == fooMap.end(), L"Begin should be equivalent to end on empty HashMap");
+			fooMap.insert(std::pair<Foo, int>(foo, 1));
+			Assert::IsFalse(fooMap.begin() == fooMap.end(), L"Begin should not be equivalent to end on non-empty HashMap");
+			fooMap.remove(foo);
+			Assert::IsTrue(fooMap.begin() == fooMap.end(), L"Begin should be equivalent to end on empty HashMap");
 		}
 
 		TEST_METHOD(TestClear)
