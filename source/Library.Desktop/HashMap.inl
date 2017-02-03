@@ -1,6 +1,5 @@
 #pragma once
 #include <cstdint>
-#include <functional>
 #include "Vector.h"
 
 namespace HashMap
@@ -203,8 +202,8 @@ namespace HashMap
 		return (*mIter);
 	}
 
-	template <typename TKey, typename TValue, typename HashFunctor>
-	typename HashMap<TKey, TValue, HashFunctor>::PairType& HashMap<TKey, TValue, HashFunctor>::Iterator::operator->() const
+	template <typename TKey, typename TValue, class HashFunctor>
+	typename HashMap<TKey, TValue, HashFunctor>::PairType* HashMap<TKey, TValue, HashFunctor>::Iterator::operator->() const
 	{
 		return *this;
 	}

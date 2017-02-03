@@ -43,6 +43,7 @@ namespace HashMap
 		/// Finds an instance of a key in the HashMap and returns its associated value
 		/// @Param rhs: constant reference to the key being searched for
 		/// @Return: An Iterator containing the found PairType, end otherwise
+		/// @Exception: Thrown if bucket chain is null
 		Iterator find(const TKey& key) const;
 
 		/// Inserts a Pairtype into the HashMap
@@ -107,10 +108,12 @@ namespace HashMap
 			/// Assignment Operator
 			/// @Param rhs: The Iterator being assigned to
 			/// @Return: A reference to the Iterator copy
+			/// @Exception: Thrown if right hand side owner is null
 			Iterator& operator=(const Iterator& rhs);
 
 			/// Increment operator(prefix)
 			/// @Return: A reference to the next Iterator in the HashMap
+			/// @Exception: Thrown if incrementing beyond end of HashMap 
 			Iterator& operator++();
 
 			/// Increment operator(postfix)
@@ -118,21 +121,24 @@ namespace HashMap
 			Iterator operator++(int);
 
 			/// Dereference operator
-			/// @Return: A PairType that the Iterator's member iterator is pointing to
+			/// @Return: A reference to a PairType that the Iterator's member iterator is pointing to
+			/// @Exception: Thrown if attempting to dereferencing the end of the HashMap
 			PairType& operator*() const;
-
+			
 			/// Arrow operator
-			/// @Return: A PairType that the Iterator's member iterator is pointing to
-			PairType& operator->() const;
+			/// @Return: A pointer to a PairType that the Iterator's member iterator is pointing to
+			PairType* operator->() const;
 
 			/// Equality operator
 			/// @Param rhs: The Iterator being compared against
 			/// @return: True if the two Iterators are equivalent
+			/// @Exception: Thrown if owner is null
 			bool operator==(const Iterator& rhs) const;
 
 			/// Not-Equal operator
 			/// @Param rhs: The Iterator being compared against
 			/// @Return: False if the two Iterators are equivalent
+			/// @Exception: Thrown if owner is null
 			bool operator!=(const Iterator& rhs) const;
 		private:
 			/// Private constructor. Used for traversing the chained vectors
