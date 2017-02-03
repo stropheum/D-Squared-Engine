@@ -916,7 +916,44 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestIteratorIncrementOperator)
 		{
-//			Assert::Fail(L"Method not implemented");
+			// int tests
+			intMap.insert(std::pair<int, int>(1, 1));
+			intMap.insert(std::pair<int, int>(2, 2));
+			auto interator = intMap.begin();
+			Assert::IsTrue(interator == intMap.begin() && ++interator != intMap.end(), L"Incrementing past first element should not return end when other items exist");
+			Assert::IsTrue(++interator == intMap.end() && ++interator == intMap.end(), L"Incrementing past end should still return end");
+
+
+			// pointer tests
+			ptrMap.insert(std::pair<int*, int>(&x, 1));
+			ptrMap.insert(std::pair<int*, int>(&y, 2));
+			auto pointerator = ptrMap.begin();
+			Assert::IsTrue(pointerator == ptrMap.begin() && ++pointerator != ptrMap.end(), L"Incrementing past first element should not return end when other items exist");
+			Assert::IsTrue(++pointerator == ptrMap.end() && ++pointerator == ptrMap.end(), L"Incrementing past end should still return end");
+
+
+			// char* tests
+			chrMap.insert(std::pair<char*, int>(a, 1));
+			chrMap.insert(std::pair<char*, int>(b, 2));
+			auto charterator = chrMap.begin();
+			Assert::IsTrue(charterator == chrMap.begin() && ++charterator != chrMap.end(), L"Incrementing past first element should not return end when other items exist");
+			Assert::IsTrue(++charterator == chrMap.end() && ++charterator == chrMap.end(), L"Incrementing past end should still return end");
+
+
+			// string tests
+			strMap.insert(std::pair<std::string, int>(s, 1));
+			strMap.insert(std::pair<std::string, int>(t, 2));
+			auto stringerator = strMap.begin();
+			Assert::IsTrue(stringerator == strMap.begin() && ++stringerator != strMap.end(), L"Incrementing past first element should not return end when other items exist");
+			Assert::IsTrue(++stringerator == strMap.end() && ++stringerator == strMap.end(), L"Incrementing past end should still return end");
+
+
+			// foo tests
+			fooMap.insert(std::pair<Foo, int>(foo, 1));
+			fooMap.insert(std::pair<Foo, int>(bar, 2));
+			auto footerator = fooMap.begin();
+			Assert::IsTrue(footerator == fooMap.begin() && ++footerator != fooMap.end(), L"Incrementing past first element should not return end when other items exist");
+			Assert::IsTrue(++footerator == fooMap.end() && ++footerator == fooMap.end(), L"Incrementing past end should still return end");
 		}
 
 		TEST_METHOD(TestIteratorDereferenceOperator)
