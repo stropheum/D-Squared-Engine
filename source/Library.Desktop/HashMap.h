@@ -124,11 +124,11 @@ namespace HashMap
 			/// Dereference operator
 			/// @Return: A reference to a PairType that the Iterator's member iterator is pointing to
 			/// @Exception: Thrown if attempting to dereferencing the end of the HashMap
-			const PairType& operator*() const;
+			PairType& operator*() const;
 			
 			/// Arrow operator
 			/// @Return: A pointer to a PairType that the Iterator's member iterator is pointing to
-			const PairType* operator->() const;
+			PairType* operator->() const;
 
 			/// Equality operator
 			/// @Param rhs: The Iterator being compared against

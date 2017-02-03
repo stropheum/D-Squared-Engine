@@ -33,6 +33,7 @@ namespace HashMap
 		{
 			mBuckets[i] = rhs.mBuckets[i];
 		}
+		mSize = rhs.mSize;
 		return *this;
 	}
 
@@ -102,11 +103,11 @@ namespace HashMap
 		
 		if (iter == end())
 		{
-			PairType newPair(key, nullptr);
+			PairType newPair(key, TValue());
 			iter = insert(newPair);
 		}
 		
-		return *iter;
+		return (*iter).second;
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
@@ -199,14 +200,14 @@ namespace HashMap
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
-	const typename HashMap<TKey, TValue, HashFunctor>::PairType& HashMap<TKey, TValue, HashFunctor>::Iterator::operator*() const
+	typename HashMap<TKey, TValue, HashFunctor>::PairType& HashMap<TKey, TValue, HashFunctor>::Iterator::operator*() const
 	{
 		if (mOwner == nullptr) throw std::exception("Attempting to dereference null iterator");
 		return (*mIter);
 	}
 
 	template <typename TKey, typename TValue, class HashFunctor>
-	const typename HashMap<TKey, TValue, HashFunctor>::PairType* HashMap<TKey, TValue, HashFunctor>::Iterator::operator->() const
+	typename HashMap<TKey, TValue, HashFunctor>::PairType* HashMap<TKey, TValue, HashFunctor>::Iterator::operator->() const
 	{
 		return *this;
 	}

@@ -396,7 +396,63 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestIndexOperator)
 		{
-			Assert::Fail(L"Method not implemented");
+			// int tests
+			std::uint32_t intMapSize = intMap.size();
+			auto& intMapVal = intMap[1];
+			Assert::AreNotEqual(intMapSize, intMap.size(), L"HashMap size not increasing after indexing a non-existent key");
+
+			intMap.insert(std::pair<int, int>(1, 1));
+			Assert::AreNotEqual(intMap[1], 1, L"Incorrect value returned with index operator");
+
+			intMapVal = 1;
+			Assert::AreEqual(intMap[1], 1, L"HashMapValue not changed when assigned from index operator");
+
+
+			// pointer tests
+			std::uint32_t ptrMapSize = ptrMap.size();
+			auto& ptrMapVal = ptrMap[&x];
+			Assert::AreNotEqual(ptrMapSize, ptrMap.size(), L"HashMap size not increasing after indexing a non-existent key");
+
+			ptrMap.insert(std::pair<int*, int>(&x, 1));
+			Assert::AreNotEqual(ptrMap[&x], 1, L"Incorrect value returned with index operator");
+
+			ptrMapVal = 1;
+			Assert::AreEqual(ptrMap[&x], 1, L"HashMapValue not changed when assigned from index operator");
+
+
+			// char* tests
+			std::uint32_t chrMapSize = chrMap.size();
+			auto& chrMapVal = chrMap[a];
+			Assert::AreNotEqual(chrMapSize, chrMap.size(), L"HashMap size not increasing after indexing a non-existent key");
+
+			chrMap.insert(std::pair<char*, int>(a, 1));
+			Assert::AreNotEqual(chrMap[a], 1, L"Incorrect value returned with index operator");
+
+			chrMapVal = 1;
+			Assert::AreEqual(chrMap[a], 1, L"HashMapValue not changed when assigned from index operator");
+
+
+			// string tests
+			std::uint32_t strMapSize = strMap.size();
+			auto& strMapVal = strMap[s];
+			Assert::AreNotEqual(strMapSize, strMap.size(), L"HashMap size not increasing after indexing a non-existent key");
+
+			strMap.insert(std::pair<std::string, int>(s, 1));
+			Assert::AreNotEqual(strMap[s], 1, L"Incorrect value returned with index operator");
+
+			strMapVal = 1;
+			Assert::AreEqual(strMap[s], 1, L"HashMapValue not changed when assigned from index operator");
+
+			// foo tests
+			std::uint32_t fooMapSize = fooMap.size();
+			auto& fooMapVal = fooMap[foo];
+			Assert::AreNotEqual(fooMapSize, fooMap.size(), L"HashMap size not increasing after indexing a non-existent key");
+
+			fooMap.insert(std::pair<Foo, int>(foo, 1));
+			Assert::AreNotEqual(fooMap[foo], 1, L"Incorrect value returned with index operator");
+
+			fooMapVal = 1;
+			Assert::AreEqual(fooMap[foo], 1, L"HashMapValue not changed when assigned from index operator");
 		}
 
 		TEST_METHOD(TestBegin)

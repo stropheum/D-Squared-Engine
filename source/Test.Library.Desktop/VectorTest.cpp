@@ -344,7 +344,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(intor.front() == 5, L"Unable to modify Vector.front()");
 
 			const Vector::Vector<int> constIntVector(intor);
-			auto val = constIntVector.front();
+//			auto val = constIntVector.front();
 			Assert::IsTrue(constIntVector.front() == intor.front(), L"Front of const copied vector should be equivalent to original");
 
 			/// Pointer vector tests
