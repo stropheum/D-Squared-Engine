@@ -752,7 +752,84 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestIteratorCopyConstructor)
 		{
-//			Assert::Fail(L"Method not implemented");
+			// int tests
+			auto interator_1(intMap.begin());
+			Assert::IsTrue(interator_1 == intMap.begin() && interator_1 == intMap.end(), L"Iterator copy should be equivalent to begin and end of empty HashMap");
+			
+			intMap.insert(std::pair<int, int>(1, 1));
+			auto interator_2(intMap.begin());
+			Assert::IsTrue(interator_2 == intMap.begin() && interator_2 != intMap.end(), L"Iterator copy should be equivalent to only the value it's assigned to");
+
+			auto interator_3(intMap.end());
+			Assert::IsTrue(interator_3 != intMap.begin() && interator_3 == intMap.end(), L"Iterator copy should be equivalent to only the value it's assigned to");
+
+			auto interator_4(intMap.find(1));
+			intMap.clear();
+			Assert::IsTrue(interator_4 != intMap.find(1), L"Iterator set to HashMap value should not be equivalent to a find call of that value after clear");
+
+
+			// pointer tests
+			auto pointerator_1(ptrMap.begin());
+			Assert::IsTrue(pointerator_1 == ptrMap.begin() && pointerator_1 == ptrMap.end(), L"Iterator copy should be equivalent to begin and end of empty HashMap");
+
+			ptrMap.insert(std::pair<int*, int>(&x, 1));
+			auto pointerator_2(ptrMap.begin());
+			Assert::IsTrue(pointerator_2 == ptrMap.begin() && pointerator_2 != ptrMap.end(), L"Iterator copy should be equivalent to only the value it's assigned to");
+
+			auto pointerator_3(ptrMap.end());
+			Assert::IsTrue(pointerator_3 != ptrMap.begin() && pointerator_3 == ptrMap.end(), L"Iterator copy should be equivalent to only the value it's assigned to");
+
+			auto pointerator_4(ptrMap.find(&x));
+			ptrMap.clear();
+			Assert::IsTrue(pointerator_4 != ptrMap.find(&x), L"Iterator set to HashMap value should not be equivalent to a find call of that value after clear");
+
+
+			// char* tests
+			auto charterator_1(chrMap.begin());
+			Assert::IsTrue(charterator_1 == chrMap.begin() && charterator_1 == chrMap.end(), L"Iterator copy should be equivalent to begin and end of empty HashMap");
+
+			chrMap.insert(std::pair<char*, int>(a, 1));
+			auto charterator_2(chrMap.begin());
+			Assert::IsTrue(charterator_2 == chrMap.begin() && charterator_2 != chrMap.end(), L"Iterator copy should be equivalent to only the value it's assigned to");
+
+			auto charterator_3(chrMap.end());
+			Assert::IsTrue(charterator_3 != chrMap.begin() && charterator_3 == chrMap.end(), L"Iterator copy should be equivalent to only the value it's assigned to");
+
+			auto charterator_4(chrMap.find(a));
+			chrMap.clear();
+			Assert::IsTrue(charterator_4 != chrMap.find(a), L"Iterator set to HashMap value should not be equivalent to a find call of that value after clear");
+
+
+			// string tests
+			auto stringerator_1(strMap.begin());
+			Assert::IsTrue(stringerator_1 == strMap.begin() && stringerator_1 == strMap.end(), L"Iterator copy should be equivalent to begin and end of empty HashMap");
+
+			strMap.insert(std::pair<std::string, int>(s, 1));
+			auto stringerator_2(strMap.begin());
+			Assert::IsTrue(stringerator_2 == strMap.begin() && stringerator_2 != strMap.end(), L"Iterator copy should be equivalent to only the value it's assigned to");
+
+			auto stringerator_3(strMap.end());
+			Assert::IsTrue(stringerator_3 != strMap.begin() && stringerator_3 == strMap.end(), L"Iterator copy should be equivalent to only the value it's assigned to");
+
+			auto stringerator_4(strMap.find(s));
+			strMap.clear();
+			Assert::IsTrue(stringerator_4 != strMap.find(s), L"Iterator set to HashMap value should not be equivalent to a find call of that value after clear");
+
+
+			// foo tests
+			auto footerator_1(fooMap.begin());
+			Assert::IsTrue(footerator_1 == fooMap.begin() && footerator_1 == fooMap.end(), L"Iterator copy should be equivalent to begin and end of empty HashMap");
+
+			fooMap.insert(std::pair<Foo, int>(foo, 1));
+			auto footerator_2(fooMap.begin());
+			Assert::IsTrue(footerator_2 == fooMap.begin() && footerator_2 != fooMap.end(), L"Iterator copy should be equivalent to only the value it's assigned to");
+
+			auto footerator_3(fooMap.end());
+			Assert::IsTrue(footerator_3 != fooMap.begin() && footerator_3 == fooMap.end(), L"Iterator copy should be equivalent to only the value it's assigned to");
+
+			auto footerator_4(fooMap.find(foo));
+			fooMap.clear();
+			Assert::IsTrue(footerator_4 != fooMap.find(foo), L"Iterator set to HashMap value should not be equivalent to a find call of that value after clear");
 		}
 
 		TEST_METHOD(TestIteratorAssignmentOperator)
