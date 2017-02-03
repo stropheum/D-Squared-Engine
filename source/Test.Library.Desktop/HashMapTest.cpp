@@ -695,7 +695,59 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestContainsKey)
 		{
-//			Assert::Fail(L"Method not implemented");
+			// int tests
+			Assert::IsFalse(intMap.containsKey(1), L"Empty map should not contain any keys");
+
+			intMap.insert(std::pair<int, int>(1, 1));
+			Assert::IsFalse(intMap.containsKey(10), L"Map should not contain a key that hasn't been inserted");
+			Assert::IsTrue(intMap.containsKey(1), L"HashMap does not contain a key that has been inserted");
+
+			intMap.remove(1);
+			Assert::IsFalse(intMap.containsKey(1), L"Map should not contain a key that has been removed");
+
+
+			// pointer tests
+			Assert::IsFalse(ptrMap.containsKey(&x), L"Empty map should not contain any keys");
+
+			ptrMap.insert(std::pair<int*, int>(&x, 1));
+			Assert::IsFalse(ptrMap.containsKey(&y), L"Map should not contain a key that hasn't been inserted");
+			Assert::IsTrue(ptrMap.containsKey(&x), L"HashMap does not contain a key that has been inserted");
+
+			ptrMap.remove(&x);
+			Assert::IsFalse(ptrMap.containsKey(&x), L"Map should not contain a key that has been removed");
+
+
+			// char* tests
+			Assert::IsFalse(chrMap.containsKey(a), L"Empty map should not contain any keys");
+
+			chrMap.insert(std::pair<char*, int>(a, 1));
+			Assert::IsFalse(chrMap.containsKey(b), L"Map should not contain a key that hasn't been inserted");
+			Assert::IsTrue(chrMap.containsKey(a), L"HashMap does not contain a key that has been inserted");
+
+			chrMap.remove(a);
+			Assert::IsFalse(chrMap.containsKey(a), L"Map should not contain a key that has been removed");
+
+
+			// string tests
+			Assert::IsFalse(strMap.containsKey(s), L"Empty map should not contain any keys");
+
+			strMap.insert(std::pair<std::string, int>(s, 1));
+			Assert::IsFalse(strMap.containsKey(t), L"Map should not contain a key that hasn't been inserted");
+			Assert::IsTrue(strMap.containsKey(s), L"HashMap does not contain a key that has been inserted");
+
+			strMap.remove(s);
+			Assert::IsFalse(strMap.containsKey(s), L"Map should not contain a key that has been removed");
+
+
+			// foo tests
+			Assert::IsFalse(fooMap.containsKey(foo), L"Empty map should not contain any keys");
+
+			fooMap.insert(std::pair<Foo, int>(foo, 1));
+			Assert::IsFalse(fooMap.containsKey(bar), L"Map should not contain a key that hasn't been inserted");
+			Assert::IsTrue(fooMap.containsKey(foo), L"HashMap does not contain a key that has been inserted");
+
+			fooMap.remove(foo);
+			Assert::IsFalse(fooMap.containsKey(foo), L"Map should not contain a key that has been removed");
 		}
 
 		TEST_METHOD(TestIteratorCopyConstructor)
