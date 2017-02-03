@@ -598,7 +598,99 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestSize)
 		{
-//			Assert::Fail(L"Method not implemented");
+			// int tests
+			Assert::AreEqual(intMap.size(), 0U, L"Length of empty HashMap should be zero");
+			
+			intMap.insert(std::pair<int, int>(1, 1));
+			Assert::AreEqual(intMap.size(), 1U, L"Size should be one after inserting one item");
+			
+			intMap.insert(std::pair<int, int>(2, 2));
+			Assert::AreEqual(intMap.size(), 2U, L"Size should increase when adding a value");
+
+			intMap.remove(10);
+			Assert::AreEqual(intMap.size(), 2U, L"Size should not change when removing a non-existent value");
+
+			intMap.remove(1);
+			Assert::AreEqual(intMap.size(), 1U, L"Size should decrease when removing an item");
+
+			intMap.clear();
+			Assert::AreEqual(intMap.size(), 0U, L"Size should be zero after clearing");
+
+
+			// pointer tests
+			Assert::AreEqual(ptrMap.size(), 0U, L"Length of empty HashMap should be zero");
+
+			ptrMap.insert(std::pair<int*, int>(&x, 1));
+			Assert::AreEqual(ptrMap.size(), 1U, L"Size should be one after inserting one item");
+
+			ptrMap.insert(std::pair<int*, int>(&y, 2));
+			Assert::AreEqual(ptrMap.size(), 2U, L"Size should increase when adding a value");
+
+			ptrMap.remove(&z);
+			Assert::AreEqual(ptrMap.size(), 2U, L"Size should not change when removing a non-existent value");
+
+			ptrMap.remove(&x);
+			Assert::AreEqual(ptrMap.size(), 1U, L"Size should decrease when removing an item");
+
+			ptrMap.clear();
+			Assert::AreEqual(ptrMap.size(), 0U, L"Size should be zero after clearing");
+
+
+			// char* tests
+			Assert::AreEqual(chrMap.size(), 0U, L"Length of empty HashMap should be zero");
+
+			chrMap.insert(std::pair<char*, int>(a, 1));
+			Assert::AreEqual(chrMap.size(), 1U, L"Size should be one after inserting one item");
+
+			chrMap.insert(std::pair<char*, int>(b, 2));
+			Assert::AreEqual(chrMap.size(), 2U, L"Size should increase when adding a value");
+
+			chrMap.remove(c);
+			Assert::AreEqual(chrMap.size(), 2U, L"Size should not change when removing a non-existent value");
+
+			chrMap.remove(a);
+			Assert::AreEqual(chrMap.size(), 1U, L"Size should decrease when removing an item");
+
+			chrMap.clear();
+			Assert::AreEqual(chrMap.size(), 0U, L"Size should be zero after clearing");
+
+
+			// string tests
+			Assert::AreEqual(strMap.size(), 0U, L"Length of empty HashMap should be zero");
+
+			strMap.insert(std::pair<std::string, int>(s, 1));
+			Assert::AreEqual(strMap.size(), 1U, L"Size should be one after inserting one item");
+
+			strMap.insert(std::pair<std::string, int>(t, 2));
+			Assert::AreEqual(strMap.size(), 2U, L"Size should increase when adding a value");
+
+			strMap.remove(u);
+			Assert::AreEqual(strMap.size(), 2U, L"Size should not change when removing a non-existent value");
+
+			strMap.remove(s);
+			Assert::AreEqual(strMap.size(), 1U, L"Size should decrease when removing an item");
+
+			strMap.clear();
+			Assert::AreEqual(strMap.size(), 0U, L"Size should be zero after clearing");
+
+
+			// foo tests
+			Assert::AreEqual(fooMap.size(), 0U, L"Length of empty HashMap should be zero");
+
+			fooMap.insert(std::pair<Foo, int>(foo, 1));
+			Assert::AreEqual(fooMap.size(), 1U, L"Size should be one after inserting one item");
+
+			fooMap.insert(std::pair<Foo, int>(bar, 2));
+			Assert::AreEqual(fooMap.size(), 2U, L"Size should increase when adding a value");
+
+			fooMap.remove(gar);
+			Assert::AreEqual(fooMap.size(), 2U, L"Size should not change when removing a non-existent value");
+
+			fooMap.remove(foo);
+			Assert::AreEqual(fooMap.size(), 1U, L"Size should decrease when removing an item");
+
+			fooMap.clear();
+			Assert::AreEqual(fooMap.size(), 0U, L"Size should be zero after clearing");
 		}
 
 		TEST_METHOD(TestContainsKey)
