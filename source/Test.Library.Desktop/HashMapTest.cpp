@@ -504,11 +504,11 @@ namespace TestLibraryDesktop
 			// foo tests
 			Assert::IsTrue(fooMap.begin() == fooMap.end(), L"Begin does not equal end on empty HashMap");
 
-			std::pair<Foo, int> fooPair(1, 1);
+			std::pair<Foo, int> fooPair(foo, 1);
 			fooMap.insert(fooPair);
 			Assert::IsTrue(fooPair == *(fooMap.begin()));
 
-			fooMap.remove(1);
+			fooMap.remove(foo);
 			Assert::IsTrue(fooMap.begin() == fooMap.end(), L"Begin does not equal end on empty HashMap");
 		}
 

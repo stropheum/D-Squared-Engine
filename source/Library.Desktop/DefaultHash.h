@@ -103,7 +103,7 @@ namespace HashMap
 			const std::int8_t* bytes = reinterpret_cast<const std::int8_t*>(&value);
 
 			std::uint32_t hash = 0;
-			std::uint32_t size = strlen(reinterpret_cast<const char*>(bytes));
+			auto size = strlen(reinterpret_cast<const char*>(bytes));
 			for (std::uint32_t i = 0; i < size; i++)
 			{
 				hash += bytes[i];

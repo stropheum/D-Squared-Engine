@@ -11,7 +11,7 @@ public:
 	* Constructor
 	* @Param data: The data being wrapped by the foo object
 	*/
-	Foo(int data);
+	explicit Foo(int data);
 	
 	/**
 	* Copy constructor
