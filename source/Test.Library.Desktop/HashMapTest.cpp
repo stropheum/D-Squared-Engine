@@ -457,7 +457,59 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestBegin)
 		{
-			Assert::Fail(L"Method not implemented");
+			// int tests
+			Assert::IsTrue(intMap.begin() == intMap.end(), L"Begin does not equal end on empty HashMap");
+
+			std::pair<int, int> intPair(1, 1);
+			intMap.insert(intPair);
+			Assert::IsTrue(intPair == *(intMap.begin()));
+
+			intMap.remove(1);
+			Assert::IsTrue(intMap.begin() == intMap.end(), L"Begin does not equal end on empty HashMap");
+
+
+			// pointer tests
+			Assert::IsTrue(ptrMap.begin() == ptrMap.end(), L"Begin does not equal end on empty HashMap");
+
+			std::pair<int*, int> ptrPair(&x, 1);
+			ptrMap.insert(ptrPair);
+			Assert::IsTrue(ptrPair == *(ptrMap.begin()));
+
+			ptrMap.remove(&x);
+			Assert::IsTrue(ptrMap.begin() == ptrMap.end(), L"Begin does not equal end on empty HashMap");
+
+
+			// char* tests
+			Assert::IsTrue(chrMap.begin() == chrMap.end(), L"Begin does not equal end on empty HashMap");
+
+			std::pair<char*, int> chrPair(a, 1);
+			chrMap.insert(chrPair);
+			Assert::IsTrue(chrPair == *(chrMap.begin()));
+
+			chrMap.remove(a);
+			Assert::IsTrue(chrMap.begin() == chrMap.end(), L"Begin does not equal end on empty HashMap");
+
+
+			// string tests
+			Assert::IsTrue(strMap.begin() == strMap.end(), L"Begin does not equal end on empty HashMap");
+
+			std::pair<std::string, int> strPair(s, 1);
+			strMap.insert(strPair);
+			Assert::IsTrue(strPair == *(strMap.begin()));
+
+			strMap.remove(s);
+			Assert::IsTrue(strMap.begin() == strMap.end(), L"Begin does not equal end on empty HashMap");
+
+
+			// foo tests
+			Assert::IsTrue(fooMap.begin() == fooMap.end(), L"Begin does not equal end on empty HashMap");
+
+			std::pair<Foo, int> fooPair(1, 1);
+			fooMap.insert(fooPair);
+			Assert::IsTrue(fooPair == *(fooMap.begin()));
+
+			fooMap.remove(1);
+			Assert::IsTrue(fooMap.begin() == fooMap.end(), L"Begin does not equal end on empty HashMap");
 		}
 
 		TEST_METHOD(TestEnd)

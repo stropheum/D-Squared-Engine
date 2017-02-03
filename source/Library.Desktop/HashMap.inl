@@ -113,13 +113,20 @@ namespace HashMap
 	template <typename TKey, typename TValue, typename HashFunctor>
 	typename HashMap<TKey, TValue, HashFunctor>::Iterator HashMap<TKey, TValue, HashFunctor>::begin() const
 	{
-		std::uint32_t index = 0;
-		auto iter = mBuckets[index].begin();
-		while (iter == mBuckets[index].end() && index + 1 < mHashMapSize)
+		Iterator result = end();
+
+		if (mSize > 0)
 		{
-			iter = mBuckets[++index].begin();
+			std::uint32_t index = 0;
+			auto iter = mBuckets[index].begin();
+			while (iter == mBuckets[index].end() && index + 1 < mHashMapSize)
+			{
+				iter = mBuckets[++index].begin();
+			}
+			result = Iterator(this, index, iter);
 		}
-		return Iterator(this, index, iter);
+
+		return result;
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
@@ -209,7 +216,7 @@ namespace HashMap
 	template <typename TKey, typename TValue, class HashFunctor>
 	typename HashMap<TKey, TValue, HashFunctor>::PairType* HashMap<TKey, TValue, HashFunctor>::Iterator::operator->() const
 	{
-		return *this;
+		return &(operator*());
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
