@@ -265,14 +265,42 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestInsert)
 		{
 			// int tests
+			auto intInsert = intMap.insert(std::pair<int, int>(1, 1));
+			Assert::IsTrue(intInsert == intMap.begin(), L"Inserting first element should return begin");
+			
+			intMap.insert(std::pair<int, int>(10, 1));
+			Assert::IsTrue(intMap.containsKey(10), L"Key doesn't exist after inserting");
 
+			
 			// pointer tests
+			auto ptrInsert = ptrMap.insert(std::pair<int*, int>(&x, 1));
+			Assert::IsTrue(ptrInsert == ptrMap.begin(), L"Inserting first element should return begin");
+			
+			ptrMap.insert(std::pair<int*, int>(&y, 1));
+			Assert::IsTrue(ptrMap.containsKey(&y), L"Key doesn't exist after inserting");
 
+			
 			// char* tests
+			auto chrInsert = chrMap.insert(std::pair<char*, int>(a, 1));
+			Assert::IsTrue(chrInsert == chrMap.begin(), L"Inserting first element should return begin");
+
+			chrMap.insert(std::pair<char*, int>(b, 1));
+			Assert::IsTrue(chrMap.containsKey(b), L"Key doesn't exist after inserting");
+
 
 			// string tests
+			auto strInsert = strMap.insert(std::pair<std::string, int>(s, 1));
+			Assert::IsTrue(strInsert == strMap.begin(), L"Inserting first element should return begin");
+
+			strMap.insert(std::pair<std::string, int>(t, 1));
+			Assert::IsTrue(strMap.containsKey(t), L"Key doesn't exist after inserting");
 
 			// foo tests
+			auto fooInsert = fooMap.insert(std::pair<Foo, int>(foo, 1));
+			Assert::IsTrue(fooInsert == fooMap.begin(), L"Inserting first element should return begin");
+
+			fooMap.insert(std::pair<Foo, int>(bar, 1));
+			Assert::IsTrue(fooMap.containsKey(bar), L"Key doesn't exist after inserting");
 		}
 
 		TEST_METHOD(TestRemove)
