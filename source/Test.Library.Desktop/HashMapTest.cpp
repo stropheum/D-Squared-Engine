@@ -1049,15 +1049,5 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(foo == fooMap.begin()->first, L"Dereferencing iterator does not yield accurate key");
 			Assert::AreEqual(1, fooMap.begin()->second, L"Dereferencing iterator does not yield accurate value");
 		}
-
-		TEST_METHOD(TestIteratorEqualityOperator)
-		{
-//			Assert::Fail(L"Method not implemented");
-		}
-
-		TEST_METHOD(TestIteratorNotEqualOperator)
-		{
-//			Assert::Fail(L"Method not implemented");
-		}
 	};
 }
