@@ -10,7 +10,7 @@ namespace HashMap
 	template <typename TKey, typename TValue, class HashFunctor=DefaultHash<TKey>> class HashMap
 	{
 		/// The key/value pairs being used by the HashMap
-		typedef std::pair<TKey, TValue> PairType;
+		typedef std::pair<const TKey, TValue> PairType;
 		/// The buckets being used in the Vector chain. This implementation uses Vectors of PairTypes
 		typedef Vector::Vector<PairType> BucketType;
 

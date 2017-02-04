@@ -123,7 +123,7 @@ namespace HashMap
 	{
 		auto iter = find(key);
 
-		if (iter == end()) throw std::exception("Attempting to call insert on a const HsshMap");
+		if (iter == end()) throw std::exception("Attempting to call insert on a const HashMap");
 
 		return iter->second;
 	}

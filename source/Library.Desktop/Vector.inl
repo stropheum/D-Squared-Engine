@@ -210,10 +210,9 @@ namespace Vector
 			}
 		}
 
-		for (std::uint32_t i = firstValue; i < mSize-1; i++)
-		{
-			at(i) = at(i + 1);
-		}
+		// Shift the entire buffer after the removed value down by 1 and decrement size
+		auto sizeToMove = sizeof(mBuffer) - (firstValue * sizeof(T));
+		memmove(mBuffer + firstValue, mBuffer + firstValue + 1, sizeToMove);
 		
 		if (firstValue != mSize) --mSize;
 	}

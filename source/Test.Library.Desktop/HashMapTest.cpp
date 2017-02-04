@@ -309,7 +309,7 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(intMap.containsKey(1), L"Empty HashMap should not contain any keys");
 			
 			std::uint32_t intMapSize = intMap.size();
-			intMap.insert(std::pair<int, int>(1, 1));
+			intMap.insert(std::pair<const int, int>(1, 1));
 			Assert::IsTrue(intMap.containsKey(1), L"Key doesn't exist in HashMap after inserting");
 			Assert::AreNotEqual(intMapSize, intMap.size(), L"Size not changing after inserting into HashMap");
 			
@@ -464,7 +464,7 @@ namespace TestLibraryDesktop
 			// int tests
 			Assert::IsTrue(intMap.begin() == intMap.end(), L"Begin does not equal end on empty HashMap");
 
-			std::pair<int, int> intPair(1, 1);
+			std::pair<const int, int> intPair(1, 1);
 			intMap.insert(intPair);
 			Assert::IsTrue(intPair == *(intMap.begin()));
 
@@ -475,7 +475,7 @@ namespace TestLibraryDesktop
 			// pointer tests
 			Assert::IsTrue(ptrMap.begin() == ptrMap.end(), L"Begin does not equal end on empty HashMap");
 
-			std::pair<int*, int> ptrPair(&x, 1);
+			std::pair<int* const, int> ptrPair(&x, 1);
 			ptrMap.insert(ptrPair);
 			Assert::IsTrue(ptrPair == *(ptrMap.begin()));
 
@@ -486,7 +486,7 @@ namespace TestLibraryDesktop
 			// char* tests
 			Assert::IsTrue(chrMap.begin() == chrMap.end(), L"Begin does not equal end on empty HashMap");
 
-			std::pair<char*, int> chrPair(a, 1);
+			std::pair<char* const, int> chrPair(a, 1);
 			chrMap.insert(chrPair);
 			Assert::IsTrue(chrPair == *(chrMap.begin()));
 
@@ -497,7 +497,7 @@ namespace TestLibraryDesktop
 			// string tests
 			Assert::IsTrue(strMap.begin() == strMap.end(), L"Begin does not equal end on empty HashMap");
 
-			std::pair<std::string, int> strPair(s, 1);
+			std::pair<const std::string, int> strPair(s, 1);
 			strMap.insert(strPair);
 			Assert::IsTrue(strPair == *(strMap.begin()));
 
@@ -508,7 +508,7 @@ namespace TestLibraryDesktop
 			// foo tests
 			Assert::IsTrue(fooMap.begin() == fooMap.end(), L"Begin does not equal end on empty HashMap");
 
-			std::pair<Foo, int> fooPair(foo, 1);
+			std::pair<const Foo, int> fooPair(foo, 1);
 			fooMap.insert(fooPair);
 			Assert::IsTrue(fooPair == *(fooMap.begin()));
 
