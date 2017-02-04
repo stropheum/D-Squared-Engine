@@ -1005,7 +1005,49 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestIteratorArrowOperator)
 		{
-//			Assert::Fail(L"Method not implemented");
+			// int tests
+			auto intFunc = [&] { *intMap.begin(); };
+			Assert::ExpectException<std::exception>(intFunc, L"Exception should be thrown when attempting to dereference end of HashMap");
+
+			intMap.insert(std::pair<int, int>(1, 1));
+			Assert::AreEqual(1,  intMap.begin()->first, L"Dereferencing iterator does not yield accurate key");
+			Assert::AreEqual(1, intMap.begin()->second, L"Dereferencing iterator does not yield accurate value");
+
+
+			// pointer tests
+			auto ptrFunc = [&] { *ptrMap.begin(); };
+			Assert::ExpectException<std::exception>(ptrFunc, L"Exception should be thrown when attempting to dereference end of HashMap");
+
+			ptrMap.insert(std::pair<int*, int>(&x, 1));
+			Assert::AreEqual(&x, ptrMap.begin()->first, L"Dereferencing iterator does not yield accurate key");
+			Assert::AreEqual(1, ptrMap.begin()->second, L"Dereferencing iterator does not yield accurate value");
+
+
+			// char* tests
+			auto chrFunc = [&] { *chrMap.begin(); };
+			Assert::ExpectException<std::exception>(chrFunc, L"Exception should be thrown when attempting to dereference end of HashMap");
+
+			chrMap.insert(std::pair<char*, int>(a, 1));
+			Assert::AreEqual(a, chrMap.begin()->first, L"Dereferencing iterator does not yield accurate key");
+			Assert::AreEqual(1, chrMap.begin()->second, L"Dereferencing iterator does not yield accurate value");
+
+
+			// string tests
+			auto strFunc = [&] { *strMap.begin(); };
+			Assert::ExpectException<std::exception>(strFunc, L"Exception should be thrown when attempting to dereference end of HashMap");
+
+			strMap.insert(std::pair<std::string, int>(s, 1));
+			Assert::AreEqual(s, strMap.begin()->first, L"Dereferencing iterator does not yield accurate key");
+			Assert::AreEqual(1, strMap.begin()->second, L"Dereferencing iterator does not yield accurate value");
+
+
+			// foo tests
+			auto fooFunc = [&] { *fooMap.begin(); };
+			Assert::ExpectException<std::exception>(fooFunc, L"Exception should be thrown when attempting to dereference end of HashMap");
+
+			fooMap.insert(std::pair<Foo, int>(foo, 1));
+			Assert::IsTrue(foo == fooMap.begin()->first, L"Dereferencing iterator does not yield accurate key");
+			Assert::AreEqual(1, fooMap.begin()->second, L"Dereferencing iterator does not yield accurate value");
 		}
 
 		TEST_METHOD(TestIteratorEqualityOperator)
