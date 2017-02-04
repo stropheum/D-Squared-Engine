@@ -6,7 +6,7 @@ namespace HashMap
 {
 	template <typename TKey, typename TValue, typename HashFunctor>
 	HashMap<TKey, TValue, HashFunctor>::HashMap(std::uint32_t hashMapSize = defaultHashMapSize) :
-		mHashMapSize(hashMapSize), mSize(0)
+		mHashMapSize(hashMapSize), mSize(0), mBuckets()
 	{
 		initializeBuckets();
 	}

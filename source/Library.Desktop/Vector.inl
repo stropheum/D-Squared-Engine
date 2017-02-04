@@ -211,7 +211,7 @@ namespace Vector
 		}
 
 		// Shift the entire buffer after the removed value down by 1 and decrement size
-		auto sizeToMove = sizeof(mBuffer) - (firstValue * sizeof(T));
+		auto sizeToMove = (mCapacity * sizeof(T)) - (firstValue * sizeof(T));
 		memmove(mBuffer + firstValue, mBuffer + firstValue + 1, sizeToMove);
 		
 		if (firstValue != mSize) --mSize;

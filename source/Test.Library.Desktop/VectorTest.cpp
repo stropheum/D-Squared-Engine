@@ -546,12 +546,12 @@ namespace TestLibraryDesktop
 
 
 			/// Foo vector tests
-			auto foofunc1 = [this] { footor[0]; };
+			auto foofunc1 = [this] { footor[0U]; };
 			Assert::ExpectException<std::exception>(foofunc1, L"Accessing index of an empty vector should throw an exception");
 			
 			Foo foo(1);
 			footor.pushBack(foo);
-			auto foofunc2 = [this] { footor[1]; };
+			auto foofunc2 = [this] { footor[1U]; };
 			Assert::ExpectException<std::exception>(foofunc2, L"Accessing out of vector bounds should throw an exception");
 			
 			auto foofunc3 = [this] { footor[-1]; };
