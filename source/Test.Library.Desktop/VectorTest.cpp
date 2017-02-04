@@ -434,38 +434,30 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestAt)
 		{
 			/// Int vector tests
-			auto func1 = [this] { intor.at(0); };
+			auto func1 = [this] { intor.at(0U); };
 			Assert::ExpectException<std::exception>(func1, L"Accessing index of an empty vector should throw an exception");
 			
 			intor.pushBack(1);
-			auto func2 = [this] { intor.at(1); };
+			auto func2 = [this] { intor.at(1U); };
 			Assert::ExpectException<std::exception>(func2, L"Accessing out of vector bounds should throw an exception");
-
-			auto func3 = [this] { intor.at(-1); };
-			Assert::ExpectException<std::exception>(func3, L"Accessing a negative index of a vector should throw an exception");
-			Assert::IsTrue(1u == intor.at(0), L"First element added should be equivalent to Vector.at(0)");
 			
 			intor.pushBack(2);
-			Assert::IsTrue(1 == intor.at(0), L"First element should be equivalent to Vector.at(0) after pushing back multiple values");
-			Assert::IsTrue(2 == intor.at(1), L"Last element should be equivalent to Vector.at(n-1)");
+			Assert::IsTrue(1 == intor.at(0U), L"First element should be equivalent to Vector.at(0) after pushing back multiple values");
+			Assert::IsTrue(2 == intor.at(1U), L"Last element should be equivalent to Vector.at(n-1)");
 
 			const auto constIntor(intor);
-			Assert::IsTrue(1 == constIntor.at(0));
-			Assert::IsTrue(2 == constIntor.at(1));
+			Assert::IsTrue(1 == constIntor.at(0U));
+			Assert::IsTrue(2 == constIntor.at(1U));
 
 
 			/// Pointer vector tests
-			auto ptrfunc1 = [this] { pointor.at(0); };
+			auto ptrfunc1 = [this] { pointor.at(0U); };
 			Assert::ExpectException<std::exception>(ptrfunc1, L"Accessing index of an empty vector should throw an exception");
 			
 			int x = 1;
 			pointor.pushBack(&x);
-			auto ptrfunc2 = [this] { pointor.at(1); };
+			auto ptrfunc2 = [this] { pointor.at(1U); };
 			Assert::ExpectException<std::exception>(ptrfunc2, L"Accessing out of vector bounds should throw an exception");
-			
-			auto ptrfunc3 = [this] { pointor.at(-1); };
-			Assert::ExpectException<std::exception>(ptrfunc3, L"Accessing a negative index of a vector should throw an exception");
-			Assert::IsTrue(&x == pointor.at(0), L"First element added should be equivalent to Vector.at(0)");
 			
 			int y = 2;
 			pointor.pushBack(&y);
@@ -484,11 +476,7 @@ namespace TestLibraryDesktop
 			footor.pushBack(foo);
 			auto foofunc2 = [this] { footor.at(1); };
 			Assert::ExpectException<std::exception>(foofunc2, L"Accessing out of vector bounds should throw an exception");
-			
-			auto foofunc3 = [this] { footor.at(-1); };
-			Assert::ExpectException<std::exception>(foofunc3, L"Accessing a negative index of a vector should throw an exception");
-			Assert::IsTrue(foo == footor.at(0), L"First element added should be equivalent to Vector.at(0)");
-			
+		
 			Foo bar(2);
 			footor.pushBack(bar);
 			Assert::IsTrue(foo == footor.at(0), L"First element should be equivalent to Vector.at(0) after pushing back multiple values");
@@ -509,10 +497,6 @@ namespace TestLibraryDesktop
 			auto func2 = [this] { intor[1]; };
 			Assert::ExpectException<std::exception>(func2, L"Accessing out of vector bounds should throw an exception");
 			
-			auto func3 = [this] { intor[-1]; };
-			Assert::ExpectException<std::exception>(func3, L"Accessing a negative index of a vector should throw an exception");
-			Assert::IsTrue(1 == intor[0], L"First element added should be equivalent to Vector[0]");
-			
 			intor.pushBack(2);
 			Assert::IsTrue(1 == intor[0], L"First element should be equivalent to Vector[0] after pushing back multiple values");
 			Assert::IsTrue(2 == intor[1], L"Last element should be equivalent to Vector[n-1]");
@@ -530,10 +514,6 @@ namespace TestLibraryDesktop
 			pointor.pushBack(&x);
 			auto ptrfunc2 = [this] { pointor[1]; };
 			Assert::ExpectException<std::exception>(ptrfunc2, L"Accessing out of vector bounds should throw an exception");
-			
-			auto ptrfunc3 = [this] { pointor[-1]; };
-			Assert::ExpectException<std::exception>(ptrfunc3, L"Accessing a negative index of a vector should throw an exception");
-			Assert::IsTrue(&x == pointor[0], L"First element added should be equivalent to Vector[0]");
 			
 			int y = 2;
 			pointor.pushBack(&y);
@@ -553,10 +533,6 @@ namespace TestLibraryDesktop
 			footor.pushBack(foo);
 			auto foofunc2 = [this] { footor[1U]; };
 			Assert::ExpectException<std::exception>(foofunc2, L"Accessing out of vector bounds should throw an exception");
-			
-			auto foofunc3 = [this] { footor[-1]; };
-			Assert::ExpectException<std::exception>(foofunc3, L"Accessing a negative index of a vector should throw an exception");
-			Assert::IsTrue(foo == footor[0], L"First element added should be equivalent to Vector[0]");
 			
 			Foo bar(2);
 			footor.pushBack(bar);

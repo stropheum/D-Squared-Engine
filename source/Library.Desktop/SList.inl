@@ -177,9 +177,9 @@ namespace SList
 	}
 
 	template <typename T>
-	typename SList<T>::Iterator SList<T>::insertAfter(T value, Iterator location)
+	typename SList<T>::Iterator SList<T>::insertAfter(const T& value, const Iterator& location)
 	{
-		if (location == end() || location.mNode == mBack)
+		if (location == this->end() || location.mNode == mBack)
 		{
 			pushBack(value);
 			return Iterator(this, mBack);
@@ -257,7 +257,7 @@ namespace SList
 	}
 
 	template <typename T>
-	bool SList<T>::Iterator::operator==(Iterator& rhs) const
+	bool SList<T>::Iterator::operator==(const Iterator& rhs) const
 	{
 		auto bothNull = (mOwner == nullptr) && (rhs.mOwner == nullptr);
 		auto identicalOwners = (mOwner == rhs.mOwner);
@@ -266,7 +266,7 @@ namespace SList
 	}
 
 	template <typename T>
-	bool SList<T>::Iterator::operator!=(Iterator& rhs) const
+	bool SList<T>::Iterator::operator!=(const Iterator& rhs) const
 	{
 		return !(this == &rhs);
 	}
