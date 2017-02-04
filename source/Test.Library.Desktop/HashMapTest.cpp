@@ -407,6 +407,10 @@ namespace TestLibraryDesktop
 			intMapVal = 1;
 			Assert::AreEqual(intMap[1], 1, L"HashMapValue not changed when assigned from index operator");
 
+			const HashMap::HashMap<int, int> constIntMap(intMap);
+			auto intFunc = [&] { constIntMap[2]; };
+//			Assert::ExpectException<std::exception>(intFunc, "Indexing nonexistent key value on const HashMap should throw exception");
+
 
 			// pointer tests
 			std::uint32_t ptrMapSize = ptrMap.size();
@@ -520,6 +524,8 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(intMap.begin() == intMap.end(), L"Begin should not be equivalent to end on non-empty HashMap");
 			intMap.remove(1);
 			Assert::IsTrue(intMap.begin() == intMap.end(), L"Begin should be equivalent to end on empty HashMap");
+			auto intFunc = [&] { *intMap.end(); };
+			Assert::ExpectException<std::exception>(intFunc, L"Dereferencing end of HashMap should throw exception");
 
 
 			// pointer tests
@@ -528,6 +534,8 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(ptrMap.begin() == ptrMap.end(), L"Begin should not be equivalent to end on non-empty HashMap");
 			ptrMap.remove(&x);
 			Assert::IsTrue(ptrMap.begin() == ptrMap.end(), L"Begin should be equivalent to end on empty HashMap");
+			auto ptrFunc = [&] { *ptrMap.end(); };
+			Assert::ExpectException<std::exception>(ptrFunc, L"Dereferencing end of HashMap should throw exception");
 
 
 			// char* tests
@@ -536,6 +544,8 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(chrMap.begin() == chrMap.end(), L"Begin should not be equivalent to end on non-empty HashMap");
 			chrMap.remove(a);
 			Assert::IsTrue(chrMap.begin() == chrMap.end(), L"Begin should be equivalent to end on empty HashMap");
+			auto chrFunc = [&] { *chrMap.end(); };
+			Assert::ExpectException<std::exception>(chrFunc, L"Dereferencing end of HashMap should throw exception");
 
 
 			// string tests
@@ -544,6 +554,8 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(strMap.begin() == strMap.end(), L"Begin should not be equivalent to end on non-empty HashMap");
 			strMap.remove(s);
 			Assert::IsTrue(strMap.begin() == strMap.end(), L"Begin should be equivalent to end on empty HashMap");
+			auto strFunc = [&] { *strMap.end(); };
+			Assert::ExpectException<std::exception>(strFunc, L"Dereferencing end of HashMap should throw exception");
 
 
 			// foo tests
@@ -552,6 +564,8 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(fooMap.begin() == fooMap.end(), L"Begin should not be equivalent to end on non-empty HashMap");
 			fooMap.remove(foo);
 			Assert::IsTrue(fooMap.begin() == fooMap.end(), L"Begin should be equivalent to end on empty HashMap");
+			auto fooFunc = [&] { *fooMap.end(); };
+			Assert::ExpectException<std::exception>(intFunc, L"Dereferencing end of HashMap should throw exception");
 		}
 
 		TEST_METHOD(TestClear)

@@ -45,7 +45,7 @@ namespace HashMap
 		/// Finds an instance of a key in the HashMap and returns its associated value
 		/// @Param rhs: constant reference to the key being searched for
 		/// @Return: An Iterator containing the found PairType, end otherwise
-		/// @Exception: Thrown if bucket chain is null
+		/// @Exception: Thrown if bucket chain is null. Should never be reached
 		Iterator find(const TKey& key) const;
 
 		/// Inserts a Pairtype into the HashMap
@@ -61,6 +61,11 @@ namespace HashMap
 		/// @Param key: Key being used as an index for the HashMap element
 		/// @Return: A reference to the data associated with the key
 		TValue& operator[](const TKey& key);
+
+		/// Const Index-of operator
+		/// @Param key: Key being used as an index for the HashMap element
+		/// @Return: A reference to the data associated with the key
+		const TValue& operator[](const TKey& key) const;
 
 		/// Points to the first data point in the HashMap
 		/// @Return: An iterator pointing to the first piece of data in the HashMap
@@ -80,7 +85,7 @@ namespace HashMap
 		/// Determines if a value has been inserted into the HashMap with the specified key
 		/// @Param key: The key being searched for
 		/// @Return: True if the key exists in the HashMap
-		bool containsKey(const TKey& key);
+		bool containsKey(const TKey& key) const;
 
 	private:
 		std::uint32_t mHashMapSize;			 /// Number of buckets in the hash map.
@@ -109,12 +114,11 @@ namespace HashMap
 			/// Assignment Operator
 			/// @Param rhs: The Iterator being assigned to
 			/// @Return: A reference to the Iterator copy
-			/// @Exception: Thrown if right hand side owner is null
+			/// @Exception: Thrown if right hand side owner is null. Should never be reached
 			Iterator& operator=(const Iterator& rhs);
 
 			/// Increment operator(prefix)
 			/// @Return: A reference to the next Iterator in the HashMap
-			/// @Exception: Thrown if incrementing beyond end of HashMap 
 			Iterator& operator++();
 
 			/// Increment operator(postfix)
@@ -128,6 +132,7 @@ namespace HashMap
 			
 			/// Arrow operator
 			/// @Return: A pointer to a PairType that the Iterator's member iterator is pointing to
+			/// @Exception: Thrown if attempting to dereference the end of the HashMap
 			PairType* operator->() const;
 
 			/// Equality operator

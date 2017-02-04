@@ -15,6 +15,8 @@ namespace HashMap
 	HashMap<TKey, TValue, HashFunctor>::HashMap(const HashMap<TKey, TValue, HashFunctor>& rhs):
 		mHashMapSize(rhs.mHashMapSize), mSize(rhs.mSize)
 	{
+		if (this == &rhs) throw std::exception("Self assignment error");
+
 		initializeBuckets();
 		mSize = rhs.mSize;
 		for (std::uint32_t i = 0; i < mHashMapSize; i++)
@@ -27,6 +29,8 @@ namespace HashMap
 	HashMap<TKey, TValue, HashFunctor>& 
 		HashMap<TKey, TValue, HashFunctor>::operator=(const HashMap<TKey, TValue, HashFunctor>& rhs)
 	{
+		if (this == &rhs) throw std::exception("Self assignment error");
+
 		mHashMapSize = rhs.mHashMapSize;
 		mHashFunctor = rhs.mHashFunctor;
 		initializeBuckets();
@@ -57,12 +61,14 @@ namespace HashMap
 		Iterator iter;
 		auto vIter = mBuckets[hashIndex].begin();
 		
+		// Iterate until matching key is found or end of bucket is hit
 		while (vIter != mBuckets[hashIndex].end())
 		{
 			if ((*vIter).first == key) break;
 			++vIter;
 		}
 
+		// If we are at the end of hte bucket, return the end of the HashMap
 		if (vIter == mBuckets[hashIndex].end())
 		{
 			hashIndex = mHashMapSize - 1;
@@ -109,7 +115,17 @@ namespace HashMap
 			iter = insert(newPair);
 		}
 		
-		return (*iter).second;
+		return iter->second;
+	}
+
+	template <typename TKey, typename TValue, typename HashFunctor>
+	const TValue& HashMap<TKey, TValue, HashFunctor>::operator[](const TKey& key) const
+	{
+		auto iter = find(key);
+
+		if (iter == end()) throw std::exception("Attempting to call insert on a const HsshMap");
+
+		return iter->second;
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
@@ -154,7 +170,7 @@ namespace HashMap
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
-	bool HashMap<TKey, TValue, HashFunctor>::containsKey(const TKey& key)
+	bool HashMap<TKey, TValue, HashFunctor>::containsKey(const TKey& key) const
 	{
 		auto iter = find(key);
 		return iter != end();
