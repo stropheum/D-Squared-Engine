@@ -165,13 +165,13 @@ namespace SList
 	}
 
 	template <typename T>
-	typename SList<T>::Iterator SList<T>::begin() 
+	typename SList<T>::Iterator SList<T>::begin()
 	{
 		return Iterator(this, mFront);
 	}
 
 	template <typename T>
-	typename SList<T>::Iterator SList<T>::end() 
+	typename SList<T>::Iterator SList<T>::end()
 	{
 		return Iterator(this, nullptr);
 	}

@@ -147,7 +147,7 @@ namespace SList
 			Node* mNext;  /// Pointer to the node that this node is linked to
 		};
 
-		std::uint32_t mSize;       /// Number of elements in the list
+		std::uint32_t mSize; /// Number of elements in the list
 
 		Node* mFront;    /// Front node in the list
 		Node* mBack;     /// Back node in the list
