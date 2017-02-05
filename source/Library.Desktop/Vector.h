@@ -17,7 +17,9 @@ namespace Vector
 		
 		/// Default constructor
 		/// Allocates memory in mBuffer for a capacity of 10 templated values
-		Vector();
+		Vector(bool fixedSize = false);
+
+		explicit Vector(std::uint32_t maxSize, bool fixedSize = false);
 
 		/// Copy constructor
 		/// @Param rhs: The Vector being copied
@@ -135,6 +137,7 @@ namespace Vector
 		T* mBuffer; /// The space where elements will be stored
 		std::uint32_t mSize; /// The number of elements in the Vector
 		std::uint32_t mCapacity; /// The number of elements memory has been allocated for
+		bool mFixedSize; /// Value to determine if the vector can be resized
 		static const std::uint32_t CAPACITY_INCREMENT = 10; /// Standard reserve value increment
 	public:
 		class Iterator
@@ -162,19 +165,19 @@ namespace Vector
 			/// @Return: True if the iterators are not equivalent
 			bool operator!=(const Iterator& rhs) const;
 
-			/// Pre-increment operator
+			/// Increment operator(prefix)
 			/// @Return: Current iterator after increment has occurred
 			/// @Exception: Thrown if incrementing beyond vector bounds
 			Iterator& operator++();
 
-			/// Post-increment operator
+			/// Increment operator(postfix)
 			/// @Return: Copy of iterator before increment has occurred
 			Iterator operator++(int);
 
 			/// Dereference operator
 			/// @Return: A reference to the value pointed at by the Iterator
 			/// @Exception: Thrown if dereferencing a null value
-			T& operator*();
+			T& operator*() const;
 		private:
 			/// Internal Iterator constructor
 			/// @Param owner: The Vector that owns this Iterator object

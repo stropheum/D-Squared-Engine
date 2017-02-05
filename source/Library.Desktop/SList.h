@@ -74,7 +74,7 @@ namespace SList
 		/// @Param value: The value being inserted into the list
 		/// @Param location: The point where the value is being inserted after
 		/// @Return: An Iterator to the location of the inserted value
-		Iterator insertAfter(T value, Iterator location);
+		Iterator insertAfter(const T& value, const Iterator& location);
 
 		/// Finds an item in the list
 		/// @Param value: The value being found from the list
@@ -103,12 +103,12 @@ namespace SList
 			/// Comparison operator
 			/// @Param rhs: The iterator reference being compared to
 			/// @Return: True if owners and node references are identical
-			bool operator==(Iterator& rhs) const;
+			bool operator==(const Iterator& rhs) const;
 
 			/// Not equals operator
 			/// @Param rhs: The iterator reference being compared to
 			/// @Return: negation of operator==
-			bool operator!=(Iterator& rhs) const;
+			bool operator!=(const Iterator& rhs) const;
 
 			/// Prefix increment operator. Sets node reference to its linked node
 			Iterator operator++();
@@ -147,7 +147,7 @@ namespace SList
 			Node* mNext;  /// Pointer to the node that this node is linked to
 		};
 
-		std::uint32_t mSize;       /// Number of elements in the list
+		std::uint32_t mSize; /// Number of elements in the list
 
 		Node* mFront;    /// Front node in the list
 		Node* mBack;     /// Back node in the list

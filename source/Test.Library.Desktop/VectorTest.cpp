@@ -344,7 +344,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(intor.front() == 5, L"Unable to modify Vector.front()");
 
 			const Vector::Vector<int> constIntVector(intor);
-			auto val = constIntVector.front();
+//			auto val = constIntVector.front();
 			Assert::IsTrue(constIntVector.front() == intor.front(), L"Front of const copied vector should be equivalent to original");
 
 			/// Pointer vector tests
@@ -434,38 +434,30 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestAt)
 		{
 			/// Int vector tests
-			auto func1 = [this] { intor.at(0); };
+			auto func1 = [this] { intor.at(0U); };
 			Assert::ExpectException<std::exception>(func1, L"Accessing index of an empty vector should throw an exception");
 			
 			intor.pushBack(1);
-			auto func2 = [this] { intor.at(1); };
+			auto func2 = [this] { intor.at(1U); };
 			Assert::ExpectException<std::exception>(func2, L"Accessing out of vector bounds should throw an exception");
-
-			auto func3 = [this] { intor.at(-1); };
-			Assert::ExpectException<std::exception>(func3, L"Accessing a negative index of a vector should throw an exception");
-			Assert::IsTrue(1 == intor.at(0), L"First element added should be equivalent to Vector.at(0)");
 			
 			intor.pushBack(2);
-			Assert::IsTrue(1 == intor.at(0), L"First element should be equivalent to Vector.at(0) after pushing back multiple values");
-			Assert::IsTrue(2 == intor.at(1), L"Last element should be equivalent to Vector.at(n-1)");
+			Assert::IsTrue(1 == intor.at(0U), L"First element should be equivalent to Vector.at(0) after pushing back multiple values");
+			Assert::IsTrue(2 == intor.at(1U), L"Last element should be equivalent to Vector.at(n-1)");
 
 			const auto constIntor(intor);
-			Assert::IsTrue(1 == constIntor.at(0));
-			Assert::IsTrue(2 == constIntor.at(1));
+			Assert::IsTrue(1 == constIntor.at(0U));
+			Assert::IsTrue(2 == constIntor.at(1U));
 
 
 			/// Pointer vector tests
-			auto ptrfunc1 = [this] { pointor.at(0); };
+			auto ptrfunc1 = [this] { pointor.at(0U); };
 			Assert::ExpectException<std::exception>(ptrfunc1, L"Accessing index of an empty vector should throw an exception");
 			
 			int x = 1;
 			pointor.pushBack(&x);
-			auto ptrfunc2 = [this] { pointor.at(1); };
+			auto ptrfunc2 = [this] { pointor.at(1U); };
 			Assert::ExpectException<std::exception>(ptrfunc2, L"Accessing out of vector bounds should throw an exception");
-			
-			auto ptrfunc3 = [this] { pointor.at(-1); };
-			Assert::ExpectException<std::exception>(ptrfunc3, L"Accessing a negative index of a vector should throw an exception");
-			Assert::IsTrue(&x == pointor.at(0), L"First element added should be equivalent to Vector.at(0)");
 			
 			int y = 2;
 			pointor.pushBack(&y);
@@ -484,11 +476,7 @@ namespace TestLibraryDesktop
 			footor.pushBack(foo);
 			auto foofunc2 = [this] { footor.at(1); };
 			Assert::ExpectException<std::exception>(foofunc2, L"Accessing out of vector bounds should throw an exception");
-			
-			auto foofunc3 = [this] { footor.at(-1); };
-			Assert::ExpectException<std::exception>(foofunc3, L"Accessing a negative index of a vector should throw an exception");
-			Assert::IsTrue(foo == footor.at(0), L"First element added should be equivalent to Vector.at(0)");
-			
+		
 			Foo bar(2);
 			footor.pushBack(bar);
 			Assert::IsTrue(foo == footor.at(0), L"First element should be equivalent to Vector.at(0) after pushing back multiple values");
@@ -509,10 +497,6 @@ namespace TestLibraryDesktop
 			auto func2 = [this] { intor[1]; };
 			Assert::ExpectException<std::exception>(func2, L"Accessing out of vector bounds should throw an exception");
 			
-			auto func3 = [this] { intor[-1]; };
-			Assert::ExpectException<std::exception>(func3, L"Accessing a negative index of a vector should throw an exception");
-			Assert::IsTrue(1 == intor[0], L"First element added should be equivalent to Vector[0]");
-			
 			intor.pushBack(2);
 			Assert::IsTrue(1 == intor[0], L"First element should be equivalent to Vector[0] after pushing back multiple values");
 			Assert::IsTrue(2 == intor[1], L"Last element should be equivalent to Vector[n-1]");
@@ -531,10 +515,6 @@ namespace TestLibraryDesktop
 			auto ptrfunc2 = [this] { pointor[1]; };
 			Assert::ExpectException<std::exception>(ptrfunc2, L"Accessing out of vector bounds should throw an exception");
 			
-			auto ptrfunc3 = [this] { pointor[-1]; };
-			Assert::ExpectException<std::exception>(ptrfunc3, L"Accessing a negative index of a vector should throw an exception");
-			Assert::IsTrue(&x == pointor[0], L"First element added should be equivalent to Vector[0]");
-			
 			int y = 2;
 			pointor.pushBack(&y);
 			Assert::IsTrue(&x == pointor[0], L"First element should be equivalent to Vector[0] after pushing back multiple values");
@@ -546,17 +526,13 @@ namespace TestLibraryDesktop
 
 
 			/// Foo vector tests
-			auto foofunc1 = [this] { footor[0]; };
+			auto foofunc1 = [this] { footor[0U]; };
 			Assert::ExpectException<std::exception>(foofunc1, L"Accessing index of an empty vector should throw an exception");
 			
 			Foo foo(1);
 			footor.pushBack(foo);
-			auto foofunc2 = [this] { footor[1]; };
+			auto foofunc2 = [this] { footor[1U]; };
 			Assert::ExpectException<std::exception>(foofunc2, L"Accessing out of vector bounds should throw an exception");
-			
-			auto foofunc3 = [this] { footor[-1]; };
-			Assert::ExpectException<std::exception>(foofunc3, L"Accessing a negative index of a vector should throw an exception");
-			Assert::IsTrue(foo == footor[0], L"First element added should be equivalent to Vector[0]");
 			
 			Foo bar(2);
 			footor.pushBack(bar);
@@ -578,7 +554,7 @@ namespace TestLibraryDesktop
 			intor.pushBack(2);
 			intor.pushBack(3);
 			intor.popBack();
-			Assert::AreEqual(static_cast<uint32_t>(2), intor.size(), L"Vector size not reducing after valid pop back");
+			Assert::AreEqual(2U, intor.size(), L"Vector size not reducing after valid pop back");
 
 
 			/// Pointer vector tests
@@ -592,7 +568,7 @@ namespace TestLibraryDesktop
 			pointor.pushBack(&y);
 			pointor.pushBack(&z);
 			pointor.popBack();
-			Assert::AreEqual(static_cast<uint32_t>(2), pointor.size(), L"Vector size not reducing after valid pop back");
+			Assert::AreEqual(2U, pointor.size(), L"Vector size not reducing after valid pop back");
 
 
 			/// Foo vector tests
@@ -606,7 +582,7 @@ namespace TestLibraryDesktop
 			footor.pushBack(bar);
 			footor.pushBack(gar);
 			footor.popBack();
-			Assert::AreEqual(static_cast<uint32_t>(2), footor.size(), L"Vector size not reducing after valid pop back");
+			Assert::AreEqual(2U, footor.size(), L"Vector size not reducing after valid pop back");
 		}
 
 		TEST_METHOD(TestSize)
@@ -655,76 +631,76 @@ namespace TestLibraryDesktop
 		{
 			/// Int vector tests
 			Vector::Vector<int> newintvector;
-			Assert::AreEqual(static_cast<uint32_t>(10), newintvector.capacity(), L"New Vector should have a capacity of 10");
+			Assert::AreEqual(10U, newintvector.capacity(), L"New Vector should have a capacity of 10");
 			
 			const auto constIntor(newintvector);
-			Assert::AreEqual(static_cast<std::uint32_t>(10), constIntor.capacity());
+			Assert::AreEqual(10U, constIntor.capacity());
 
 			for (int i = 0; i < 10; i++)
 			{
 				intor.pushBack(i);
-				Assert::AreEqual(static_cast<uint32_t>(10), intor.capacity(), L"First ten pushes on a vector should retain the capacity at 10");
+				Assert::AreEqual(10U, intor.capacity(), L"First ten pushes on a vector should retain the capacity at 10");
 			}
 			
 			intor.pushBack(99);
-			Assert::AreEqual(static_cast<uint32_t>(20), intor.capacity(), L"on 11th push, vector capacity should be 20");
+			Assert::AreEqual(20U, intor.capacity(), L"on 11th push, vector capacity should be 20");
 			
 			for (int i = 0; i < 11; i++)
 			{
 				intor.popBack();
-				Assert::AreEqual(static_cast<std::uint32_t>(10), newintvector.capacity(), L"New Vector should have capacity of 10");
+				Assert::AreEqual(10U, newintvector.capacity(), L"New Vector should have capacity of 10");
 			}
 			
 
 			/// Pointer vector tests
 			Vector::Vector<int> newptrvector;
-			Assert::AreEqual(static_cast<uint32_t>(10), newptrvector.capacity(), L"New Vector should have a capacity of 10");
+			Assert::AreEqual(10U, newptrvector.capacity(), L"New Vector should have a capacity of 10");
 			
 			const auto constPointor(newptrvector);
-			Assert::AreEqual(static_cast<std::uint32_t>(10), constPointor.capacity());
+			Assert::AreEqual(10U, constPointor.capacity());
 
 			int x[11];
 			for (int i = 0; i < 10; i++)
 			{
 				x[i] = i;
 				pointor.pushBack(&x[i]);
-				Assert::AreEqual(static_cast<uint32_t>(10), pointor.capacity(), L"First ten pushes on a vector should retain the capacity at 10");
+				Assert::AreEqual(10U, pointor.capacity(), L"First ten pushes on a vector should retain the capacity at 10");
 			}
 			
 			x[10] = 99;
 			pointor.pushBack(&x[10]);
-			Assert::AreEqual(static_cast<uint32_t>(20), pointor.capacity(), L"on 11th push, vector capacity should be 20");
+			Assert::AreEqual(20U, pointor.capacity(), L"on 11th push, vector capacity should be 20");
 
 			for (int i = 0; i < 11; i++)
 			{
 				pointor.popBack();
-				Assert::AreEqual(static_cast<std::uint32_t>(10), newptrvector.capacity(), L"New Vector should have capacity of 10");
+				Assert::AreEqual(10U, newptrvector.capacity(), L"New Vector should have capacity of 10");
 			}
 
 
 			/// Foo vector tests
 			Vector::Vector<int> newfoovector;
-			Assert::AreEqual(static_cast<uint32_t>(10), newfoovector.capacity(), L"New Vector should have a capacity of 10");
+			Assert::AreEqual(10U, newfoovector.capacity(), L"New Vector should have a capacity of 10");
 			
 			const auto constFootor(newfoovector);
-			Assert::AreEqual(static_cast<std::uint32_t>(10), constFootor.capacity());
+			Assert::AreEqual(10U, constFootor.capacity());
 
 			Foo foo[11];
 			for (int i = 0; i < 10; i++)
 			{
 				foo[i] = Foo(i);
 				footor.pushBack(foo[i]);
-				Assert::AreEqual(static_cast<uint32_t>(10), footor.capacity(), L"First ten pushes on a vector should retain the capacity at 10");
+				Assert::AreEqual(10U, footor.capacity(), L"First ten pushes on a vector should retain the capacity at 10");
 			}
 			
 			foo[10] = Foo(99);
 			footor.pushBack(foo[10]);
-			Assert::AreEqual(static_cast<uint32_t>(20), footor.capacity(), L"on 11th push, vector capacity should be 20");
+			Assert::AreEqual(20U, footor.capacity(), L"on 11th push, vector capacity should be 20");
 			
 			for (int i = 0; i < 11; i++)
 			{
 				footor.popBack();
-				Assert::AreEqual(static_cast<std::uint32_t>(10), newfoovector.capacity(), L"New Vector should have capacity of 10");
+				Assert::AreEqual(10U, newfoovector.capacity(), L"New Vector should have capacity of 10");
 			}
 		}
 
@@ -1062,9 +1038,6 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(iter == intor.end(), L"Iterator assigned to begin on a non-empty vector should not be equivalent to end");
 			Assert::IsTrue(++iter == intor.end(), L"Incrementing an iterator on a size of one vector should be equivalent to end");
 			
-			auto func = [&] { ++iter; };
-			Assert::ExpectException<std::exception>(func, L"Incrementing past end should throw an exception");
-
 
 			/// pointer vector tests
 			int x = 1;
@@ -1072,9 +1045,6 @@ namespace TestLibraryDesktop
 			auto piter = pointor.begin();
 			Assert::IsFalse(piter == pointor.end(), L"piterator assigned to begin on a non-empty vector should not be equivalent to end");
 			Assert::IsTrue(++piter == pointor.end(), L"Incrementing an piterator on a size of one vector should be equivalent to end");
-			
-			auto pfunc = [&] { ++piter; };
-			Assert::ExpectException<std::exception>(pfunc, L"Incrementing past end should throw an exception");
 
 
 			/// foo vector tests
@@ -1083,9 +1053,6 @@ namespace TestLibraryDesktop
 			auto fooiter = footor.begin();
 			Assert::IsFalse(fooiter == footor.end(), L"fooiterator assigned to begin on a non-empty vector should not be equivalent to end");
 			Assert::IsTrue(++fooiter == footor.end(), L"Incrementing an fooiterator on a size of one vector should be equivalent to end");
-			
-			auto foofunc = [&] { ++fooiter; };
-			Assert::ExpectException<std::exception>(foofunc, L"Incrementing past end should throw an exception");
 		}
 
 		TEST_METHOD(TestIteratorDereference)
