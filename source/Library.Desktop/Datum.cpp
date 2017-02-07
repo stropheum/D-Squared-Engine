@@ -26,8 +26,8 @@ namespace Datum
 
 	/// Move copy constructor
 	/// @Param rhs: Datum object being copied
-	Datum::Datum(Datum&& rhs):
-		mType(rhs.mType), mData(rhs.mData)
+	Datum::Datum(Datum&& rhs) :
+		mType(rhs.mType), mData(rhs.mData), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
 	{
 		switch (rhs.mType)
 		{
