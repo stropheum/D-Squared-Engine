@@ -127,12 +127,40 @@ namespace Datum
 	}
 
 	template<>
+	void Datum::set(const std::uint32_t& value, const std::uint32_t index)
+	{
+		if (mType != DatumType::Integer) throw std::exception("Calling set on invalid type");
+		mData.i[index] = value;
+	}
+
+	template<>
+	void Datum::set(const float& value, const std::uint32_t index)
+	{
+		if (mType != DatumType::Float) throw std::exception("Calling set on invalid type");
+		mData.f[index] = value;
+	}
+
+	template<>
+	void Datum::set(const std::string& value, const std::uint32_t index)
+	{
+		if (mType != DatumType::String) throw std::exception("Calling set on invalid type");
+		mData.s[index] = value;
+	}
+
+	template<>
+	void Datum::set(Library::RTTI* const& value, const std::uint32_t index)
+	{
+		if (mType != DatumType::Pointer) throw std::exception("Calling set on invalid type");
+		mData.r[index] = value;
+	}
+
+	template<>
 	std::uint32_t& Datum::get(const std::uint32_t index)
 	{
 		if (mType != DatumType::Integer) throw std::exception("Calling get on invalid type");
 		if (mData.i == nullptr) throw std::exception("Attempting to dereference nullptr");
 		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
-		return *(mData.i + index);
+		return mData.i[index];
 		
 	}
 
@@ -142,7 +170,7 @@ namespace Datum
 		if (mType != DatumType::Float) throw std::exception("Calling get on invalid type");
 		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
 		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
-		return *(mData.f + index);
+		return mData.f[index];
 		
 	}
 
@@ -152,7 +180,7 @@ namespace Datum
 		if (mType != DatumType::String) throw std::exception("Calling get on invalid type");
 		if (mData.s == nullptr) throw std::exception("Attempting to dereference nullptr");
 		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
-		return *(mData.s + index);
+		return mData.s[index];
 	}
 
 	template<>
@@ -161,7 +189,7 @@ namespace Datum
 		if (mType != DatumType::Pointer) throw std::exception("Calling get on invalid type");
 		if (mData.r == nullptr) throw std::exception("Attempting to dereference nullptr");
 		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
-		return *(mData.r + index);
+		return mData.r[index];
 	}
 
 	/// Reserves the number of elements in the local buffer

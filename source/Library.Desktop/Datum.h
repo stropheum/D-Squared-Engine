@@ -65,7 +65,7 @@ namespace Datum
 		void clear();
 		// TODO: Declare setStorage()
 		// TODO: Declare set();
-		// TODO: Declare get();
+		template <typename T> void set(const T& value, const std::uint32_t index = 0);
 		template <typename T> T& get(const std::uint32_t index = 0);
 		// TODO: Declare setFromString()
 		// TODO: Declare toString();
