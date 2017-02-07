@@ -5,13 +5,13 @@ namespace Datum
 {
 	/// Constructor
 	Datum::Datum():
-		mType(DatumType::Unknown), mCapacity(13), mSize(0), mDataIsExternal(false)
+		mType(DatumType::Unknown), mActiveStorage(mData), mCapacity(13), mSize(0), mDataIsExternal(false)
 	{}
 
 	/// Overloaded constructor
 	/// @Param type: The type of the Datum object
 	Datum::Datum(DatumType type) :
-		mType(type), mCapacity(13), mSize(0), mDataIsExternal(false)
+		mType(type), mActiveStorage(mData), mCapacity(13), mSize(0), mDataIsExternal(false)
 	{}
 
 	/// Destructor
@@ -21,13 +21,13 @@ namespace Datum
 	/// Copy constructor
 	/// @Param rhs: Datum object being copied
 	Datum::Datum(const Datum& rhs):
-		mType(rhs.mType), mData(rhs.mData), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
+		mType(rhs.mType), mData(rhs.mData), mActiveStorage(mData), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
 	{}
 
 	/// Move copy constructor
 	/// @Param rhs: Datum object being copied
 	Datum::Datum(Datum&& rhs) :
-		mType(rhs.mType), mData(rhs.mData), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
+		mType(rhs.mType), mData(rhs.mData), mActiveStorage(mData), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
 	{
 		switch (rhs.mType)
 		{
@@ -127,7 +127,7 @@ namespace Datum
 	}
 
 	template<>
-	void Datum::set(const std::uint32_t& value, const std::uint32_t index)
+	void Datum::set(const std::int32_t& value, const std::uint32_t index)
 	{
 		if (mType != DatumType::Integer) throw std::exception("Calling set on invalid type");
 		mData.i[index] = value;
@@ -155,7 +155,7 @@ namespace Datum
 	}
 
 	template<>
-	std::uint32_t& Datum::get(const std::uint32_t index)
+	std::int32_t& Datum::get(const std::uint32_t index)
 	{
 		if (mType != DatumType::Integer) throw std::exception("Calling get on invalid type");
 		if (mData.i == nullptr) throw std::exception("Attempting to dereference nullptr");

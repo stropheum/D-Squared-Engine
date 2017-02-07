@@ -21,7 +21,7 @@ namespace Datum
 	public:
 		union Values
 		{
-			std::uint32_t* i;
+			std::int32_t* i;
 			float* f;
 			// Vector;
 			// Matrix
@@ -39,21 +39,21 @@ namespace Datum
 		Datum& operator=(const Datum& rhs);
 		Datum& operator=(Datum&& rhs);
 		Datum& operator=(const DatumType& rhs);
-		Datum& operator=(const std::uint32_t& rhs);
+		Datum& operator=(const std::int32_t& rhs);
 		Datum& operator=(const float& rhs);
 		Datum& operator=(const std::string& rhs);
 		Datum& operator=(const Library::RTTI*& rhs);
 
 		bool operator==(const Datum& rhs) const;
 		bool operator==(const DatumType& rhs);
-		bool operator==(const std::uint32_t& rhs);
+		bool operator==(const std::int32_t& rhs);
 		bool operator==(const float& rhs);
 		bool operator==(const std::string& rhs);
 		bool operator==(const Library::RTTI*& rhs);
 
 		bool operator!=(const Datum& rhs) const;
 		bool operator!=(const DatumType& rhs);
-		bool operator!=(const std::uint32_t& rhs);
+		bool operator!=(const std::int32_t& rhs);
 		bool operator!=(const float& rhs);
 		bool operator!=(const std::string& rhs);
 		bool operator!=(const Library::RTTI*& rhs);
@@ -74,6 +74,9 @@ namespace Datum
 		
 		DatumType mType;
 		Values mData;
+		/// Reference to the active data
+		/// By default, reference is set to mData, but can be diverted to external data
+		Values& mActiveStorage;
 		std::uint32_t mCapacity;
 		std::uint32_t mSize;
 		bool mDataIsExternal;
