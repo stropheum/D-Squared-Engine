@@ -360,9 +360,21 @@ namespace Datum
 		return mData.r[index];
 	}
 
+	void Datum::setFromString(std::string value)
+	{
+		// TODO: Implement setFromString method
+		UNREFERENCED_PARAMETER(value);
+	}
+
+	std::string Datum::toString()
+	{
+		return "I didn't do the thing yet";
+	}
+
 	/// Reserves the number of elements in the local buffer
 	void Datum::reserve(std::uint32_t capacity)
 	{
+		// TODO: Implement reserve method
 		UNREFERENCED_PARAMETER(capacity);
 	}
 }

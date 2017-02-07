@@ -62,7 +62,6 @@ namespace Datum
 		void setSize(std::uint32_t size);
 		void clear();
 
-		// TODO: Declare setStorage()
 		void setStorage(std::int32_t* data, std::uint32_t size);
 		void setStorage(float* data, std::uint32_t size);
 		void setStorage(std::string* data, std::uint32_t size);
@@ -75,8 +74,8 @@ namespace Datum
 
 		template <typename T> T& get(const std::uint32_t index = 0);
 		
-		// TODO: Declare setFromString()
-		// TODO: Declare toString();
+		void setFromString(std::string value);
+		std::string toString();
 	private:
 		void reserve(std::uint32_t capacity);
 		
