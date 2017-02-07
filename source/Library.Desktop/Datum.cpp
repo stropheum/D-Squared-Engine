@@ -92,7 +92,7 @@ namespace Datum
 		return *this;
 	}
 
-	/// Assignment operator for float
+	/// Assignment operator for floatr
 	/// @Param rhs: Float being assigned to
 	/// @Return: The newly assigned Datum object
 	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
@@ -236,8 +236,23 @@ namespace Datum
 	/// @Param size: the new number of values
 	void Datum::setSize(std::uint32_t size)
 	{
-		// TODO: Implement setSize method
-		UNREFERENCED_PARAMETER(size);
+		switch (mType)
+		{
+		case DatumType::Integer:
+			setSizeInt(size);
+			break;
+		case DatumType::Float:
+			setSizeFloat(size);
+			break;
+		case DatumType::String:
+			setSizeString(size);
+			break;
+		case DatumType::Pointer:
+			setSizePointer(size);
+			break;
+		default:
+			throw std::exception("Attempting to reserve on uninitialized Datum object");
+		}
 	}
 
 	/// Clear the array without shrinking the capacity
@@ -343,6 +358,24 @@ namespace Datum
 	}
 
 	template<>
+	glm::vec4& Datum::get(const std::uint32_t index)
+	{
+		if (mType != DatumType::Vector) throw std::exception("Calling get on invalid type");
+		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
+		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
+		return mData.v[index];
+	}
+
+	template<>
+	glm::mat4& Datum::get(const std::uint32_t index)
+	{
+		if (mType != DatumType::Matrix) throw std::exception("Calling get on invalid type");
+		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
+		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
+		return mData.m[index];
+	}
+
+	template<>
 	std::string& Datum::get(const std::uint32_t index)
 	{
 		if (mType != DatumType::String) throw std::exception("Calling get on invalid type");
@@ -371,32 +404,9 @@ namespace Datum
 		return "I didn't do the thing yet";
 	}
 
-	/// Reserves the number of elements in the local buffer
-	/// @Param capacity: The current maximum size of the array
-	void Datum::reserve(std::uint32_t capacity)
-	{
-		switch(mType)
-		{
-			case DatumType::Integer:
-				reserveInt(capacity);
-				break;
-			case DatumType::Float:
-				reserveFloat(capacity);
-				break;
-			case DatumType::String:
-				reserveString(capacity);
-				break;
-			case DatumType::Pointer:
-				reservePointer(capacity);
-				break;
-			default:
-				throw std::exception("Attempting to reserve on uninitialized Datum object");
-		}
-	}
-
 	/// Reserves the number of integers in the local buffer
 	/// @Param capacity: The current maximum size of the array
-	void Datum::reserveInt(std::uint32_t capacity)
+	void Datum::setSizeInt(std::uint32_t capacity)
 	{
 		if (capacity < mSize) capacity = mSize;
 
@@ -410,7 +420,7 @@ namespace Datum
 
 	/// Reserves the number of floats in the local buffer
 	/// @Param capacity: The current maximum size of the array
-	void Datum::reserveFloat(std::uint32_t capacity)
+	void Datum::setSizeFloat(std::uint32_t capacity)
 	{
 		if (capacity < mSize) capacity = mSize;
 
@@ -424,7 +434,7 @@ namespace Datum
 
 	/// Reserves the number of strings in the local buffer
 	/// @Param capacity: The current maximum size of the array
-	void Datum::reserveString(std::uint32_t capacity)
+	void Datum::setSizeString(std::uint32_t capacity)
 	{
 		if (capacity < mSize) capacity = mSize;
 
@@ -438,7 +448,7 @@ namespace Datum
 
 	/// Reserves the number of RTTI pointers in the local buffer
 	/// @Param capacity: The current maximum size of the array
-	void Datum::reservePointer(std::uint32_t capacity)
+	void Datum::setSizePointer(std::uint32_t capacity)
 	{
 		if (capacity < mSize) capacity = mSize;
 

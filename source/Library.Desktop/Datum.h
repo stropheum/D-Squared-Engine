@@ -1,6 +1,12 @@
 #pragma once
 #include "RTTI.h"
 
+#define CLM_FORCE_CXX98
+#pragma warning(push)
+#pragma warning(disable:4201)
+#include "glm/glm.hpp"
+#pragma warning(pop)
+
 namespace Datum
 {
 	/// Types of possible Datum
@@ -23,9 +29,8 @@ namespace Datum
 		{
 			std::int32_t* i;
 			float* f;
-			// Vector;
-			// Matrix
-			// Table
+			glm::vec4* v;
+			glm::mat4* m;
 			std::string* s;
 			Library::RTTI** r;
 		};
@@ -47,12 +52,16 @@ namespace Datum
 		bool operator==(const DatumType& rhs) const;
 		bool operator==(const std::int32_t& rhs) const;
 		bool operator==(const float& rhs) const;
+		bool operator==(const glm::vec4& rhs) const;
+		bool operator==(const glm::mat4& rhs) const;
 		bool operator==(const std::string& rhs) const;
 		bool operator==(const Library::RTTI*& rhs) const;
 
 		bool operator!=(const DatumType& rhs) const;
 		bool operator!=(const std::int32_t& rhs) const;
 		bool operator!=(const float& rhs) const;
+		bool operator!=(const glm::vec4& rhs) const;
+		bool operator!=(const glm::mat4& rhs) const;
 		bool operator!=(const std::string& rhs) const;
 		bool operator!=(const Library::RTTI*& rhs) const;
 
@@ -64,11 +73,15 @@ namespace Datum
 
 		void setStorage(std::int32_t* data, std::uint32_t size);
 		void setStorage(float* data, std::uint32_t size);
+		void setStorage(glm::vec4* data, std::uint32_t size);
+		void setStorage(glm::mat4* data, std::uint32_t size);
 		void setStorage(std::string* data, std::uint32_t size);
 		void setStorage(Library::RTTI** data, std::uint32_t size);
 		
 		void set(const std::int32_t& value, const std::uint32_t index = 0) const;
 		void set(const float& value, const std::uint32_t index = 0) const;
+		void set(const glm::vec4& value, const std::uint32_t index = 0) const;
+		void set(const glm::mat4& value, const std::uint32_t index = 0) const;
 		void set(const std::string& value, const std::uint32_t index = 0) const;
 		void set(Library::RTTI* const value, const std::uint32_t index = 0) const;
 
@@ -77,11 +90,10 @@ namespace Datum
 		void setFromString(std::string value);
 		std::string toString();
 	private:
-		void reserve(std::uint32_t capacity);
-		void reserveInt(std::uint32_t capacity);
-		void reserveFloat(std::uint32_t capcity);
-		void reserveString(std::uint32_t capacity);
-		void reservePointer(std::uint32_t capacity);
+		void setSizeInt(std::uint32_t capacity);
+		void setSizeFloat(std::uint32_t capcity);
+		void setSizeString(std::uint32_t capacity);
+		void setSizePointer(std::uint32_t capacity);
 		
 		DatumType mType;
 		Values mData;
