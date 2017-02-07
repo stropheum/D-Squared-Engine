@@ -78,6 +78,10 @@ namespace Datum
 		std::string toString();
 	private:
 		void reserve(std::uint32_t capacity);
+		void reserveInt(std::uint32_t capacity);
+		void reserveFloat(std::uint32_t capcity);
+		void reserveString(std::uint32_t capacity);
+		void reservePointer(std::uint32_t capacity);
 		
 		DatumType mType;
 		Values mData;
