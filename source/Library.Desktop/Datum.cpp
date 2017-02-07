@@ -5,13 +5,13 @@ namespace Datum
 {
 	/// Constructor
 	Datum::Datum():
-		mType(DatumType::Unknown), mActiveStorage(mData), mCapacity(13), mSize(0), mDataIsExternal(false)
+		mType(DatumType::Unknown), mActiveStorage(&mData), mCapacity(13), mSize(0), mDataIsExternal(false)
 	{}
 
 	/// Overloaded constructor
 	/// @Param type: The type of the Datum object
 	Datum::Datum(DatumType type) :
-		mType(type), mActiveStorage(mData), mCapacity(13), mSize(0), mDataIsExternal(false)
+		mType(type), mActiveStorage(&mData), mCapacity(13), mSize(0), mDataIsExternal(false)
 	{}
 
 	/// Destructor
@@ -21,13 +21,13 @@ namespace Datum
 	/// Copy constructor
 	/// @Param rhs: Datum object being copied
 	Datum::Datum(const Datum& rhs):
-		mType(rhs.mType), mData(rhs.mData), mActiveStorage(mData), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
+		mType(rhs.mType), mData(rhs.mData), mActiveStorage(&mData), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
 	{}
 
 	/// Move copy constructor
 	/// @Param rhs: Datum object being copied
 	Datum::Datum(Datum&& rhs) :
-		mType(rhs.mType), mData(rhs.mData), mActiveStorage(mData), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
+		mType(rhs.mType), mData(rhs.mData), mActiveStorage(&mData), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
 	{
 		switch (rhs.mType)
 		{
@@ -51,40 +51,160 @@ namespace Datum
 		rhs.mSize = NULL;
 	}
 
-	/// Assignment operator
-	/// @Param rhs: Datum object being copied
-	/// @Return: A Copy of the specified Datum object
+	/// Datum assignment operator
+	/// @Param rhs: Datum object being assigned to
+	/// @Return; The newly copied Datum object
 	Datum& Datum::operator=(const Datum& rhs)
 	{
-		// TODO: Implement assignment operator
+		// TODO: Implement datum assignment operator
 		UNREFERENCED_PARAMETER(rhs);
 		return *this;
 	}
 
-	/// Move assignment operator
-	/// @Param rhs: Datum object being copied
-	/// @Return: A Copy of the specified Datum object
+	/// Datum move assignment operator
+	/// @Param rhs: Datum object being assigned to
+	/// @Return: The newly copied Datum object
 	Datum& Datum::operator=(Datum&& rhs)
 	{
-		// TODO: Implement move assignment operator
+		// TODO: Implement Datum move assignment operator
 		UNREFERENCED_PARAMETER(rhs);
 		return *this;
 	}
 
-	/// Comparison operator
-	/// @Param rhs: The Datum object being compared against
-	/// @Return: True if the two Datum objects are equivalent
-	bool Datum::operator==(const Datum& rhs) const
+	/// Type assignment operator
+	/// @Param rhs: DatumType being assigned to
+	/// @Return: The newly assigned Datum object
+	/// @Exception: Thrown if attempting to reassign a new type to a Datum object
+	Datum& Datum::operator=(const DatumType& rhs)
 	{
-		// TODO: Implement comparison operator
-		UNREFERENCED_PARAMETER(rhs);
-		return true;
+		setType(rhs);
+		return *this;
 	}
 
-	/// Negated comparison operator
-	/// @Param rhs: The Datum object being compared against
-	/// @Return: True if the two Datum objects are not equivalent
-	bool Datum::operator!=(const Datum& rhs) const
+	/// Assignment operator for std::int32_t
+	/// @Param rhs: Integer being assigned to
+	/// @Return: The newly assigned Datum object
+	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
+	Datum& Datum::operator=(const std::int32_t& rhs)
+	{
+		if (mType != DatumType::Integer || mSize > 1) throw std::exception("Invalid assignment invocation");
+		mData.i[0] = rhs;
+		return *this;
+	}
+
+	/// Assignment operator for float
+	/// @Param rhs: Float being assigned to
+	/// @Return: The newly assigned Datum object
+	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
+	Datum& Datum::operator=(const float& rhs)
+	{
+		if (mType != DatumType::Float || mSize > 1) throw std::exception("Invalid assignment invocation");
+		mData.f[0] = rhs;
+		return *this;
+	}
+
+	/// Assignment operator for std::string
+	/// @Param rhs: String being assigned to
+	/// @Return: The newly assigned Datum object
+	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
+	Datum& Datum::operator=(const std::string& rhs)
+	{
+		if (mType != DatumType::String || mSize > 1) throw std::exception("Invalid assignment invocation");
+		mData.s[0] = rhs;
+		return *this;
+	}
+
+	/// Assignment operator for float
+	/// @Param rhs: Float being assigned to
+	/// @Return: The newly assigned Datum object
+	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
+	Datum& Datum::operator=(Library::RTTI* const& rhs)
+	{
+		if (mType != DatumType::Pointer || mSize > 1) throw std::exception("Invalid assignment invocation");
+		mData.r[0] = rhs;
+		return *this;
+	}
+
+	/// Comparison operator for DatumType value
+	/// @Param rhs: The DatumType being compared against
+	/// @Return: True if the types are the same
+	bool Datum::operator==(const DatumType& rhs) const
+	{
+		return mType == rhs;
+	}
+
+	/// Comparison operator for std::int32_t
+	/// @Param rhs: The signed integer being compared against
+	/// @Return: True if the integer values are the same. False if size is not 1 or if type is invalid
+	bool Datum::operator==(const std::int32_t& rhs) const
+	{
+		return mType == DatumType::Integer &&
+			mSize == 1 && mData.i[0] == rhs;
+	}
+
+	/// Comparison operator for float
+	/// @Param rhs: The float being compared against
+	/// @Return: True if the float values are the same. False if size is not 1 or if type is invalid
+	bool Datum::operator==(const float& rhs) const
+	{
+		return mType == DatumType::Float &&
+			mSize == 1 && mData.f[0] == rhs;
+	}
+
+	/// Comparison operator for std::string
+	/// @Param rhs: The string being compared against
+	/// @Return: True if the string values are the same. False if size is not 1 or if type is invalid
+	bool Datum::operator==(const std::string& rhs) const
+	{
+		return mType == DatumType::String &&
+			mSize == 1 && mData.s[0] == rhs;
+	}
+
+	/// Comparison operator for RTTI pointers
+	/// @Param rhs: The RTTI pointer being compared against
+	/// @Return: True if the pointers are the same. False if size is not 1 or if type is invalid
+	bool Datum::operator==(const Library::RTTI*& rhs) const
+	{
+		return mType == DatumType::Pointer &&
+			mSize == 1 && mData.r[0] == rhs;
+	}
+
+	/// Inequality operator for DatumType
+	/// @Param: The DatumType being compared against
+	/// @Return: True if the types are not equivalent
+	bool Datum::operator!=(const DatumType& rhs) const
+	{
+		return !(operator==(rhs));
+	}
+
+	/// Inequality operator for std::int32_t
+	/// @Param: The integer being compared against
+	/// @Return: True if the integers are not equivalent
+	bool Datum::operator!=(const std::int32_t& rhs) const
+	{
+		return !(operator==(rhs));
+	}
+
+	/// Inequality operator for float
+	/// @Param: The float being compared against
+	/// @Return: True if the floats are not equivalent
+	bool Datum::operator!=(const float& rhs) const
+	{
+		return !(operator==(rhs));
+	}
+
+	/// Inequality operator for std::string
+	/// @Param: The string being compared against
+	/// @Return: True if the strings are not equivalent
+	bool Datum::operator!=(const std::string& rhs) const
+	{
+		return !(operator==(rhs));
+	}
+
+	/// Inequality operator for RTTI pointer
+	/// @Param: The RTTI pointer being compared against
+	/// @Return: True if the pointers are not equivalent
+	bool Datum::operator!=(const Library::RTTI*& rhs) const
 	{
 		return !(operator==(rhs));
 	}
@@ -93,12 +213,12 @@ namespace Datum
 	/// @Return: The DatumType of this Datum object
 	DatumType Datum::type() const
 	{
-		// TODO: Implement type method
-		return DatumType::Unknown;
+		return mType;
 	}
 
 	/// Set the DatumType of the Datum object
 	/// @Param type: The new type of the Datum object
+	/// @Exception: Thrown if attempting to reassign a new type to a Datum object
 	void Datum::setType(const DatumType& type)
 	{
 		if (mType == DatumType::Unknown || mType == type)  mType = type;
@@ -126,29 +246,77 @@ namespace Datum
 		// TODO: Implement clear method
 	}
 
-	template<>
-	void Datum::set(const std::int32_t& value, const std::uint32_t index)
+	/// Sets the external storage to the specified pointer
+	/// @Param data: The external storage being utilized
+	/// @Pram size: The number of elements in the external storage
+	void Datum::setStorage(std::int32_t* data, std::uint32_t size)
+	{
+		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		mData.i = data;
+		mSize = size;
+	}
+
+	/// Sets the external storage to the specified pointer
+	/// @Param data: The external storage being utilized
+	/// @Pram size: The number of elements in the external storage
+	void Datum::setStorage(float* data, std::uint32_t size)
+	{
+		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		mData.f = data;
+		mSize = size;
+	}
+
+	/// Sets the external storage to the specified pointer
+	/// @Param data: The external storage being utilized
+	/// @Pram size: The number of elements in the external storage
+	void Datum::setStorage(std::string* data, std::uint32_t size)
+	{
+		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		mData.s = data;
+		mSize = size;
+	}
+
+	/// Sets the external storage to the specified pointer
+	/// @Param data: The external storage being utilized
+	/// @Pram size: The number of elements in the external storage
+	void Datum::setStorage(Library::RTTI** data, std::uint32_t size)
+	{
+		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		mData.r = data;
+		mSize = size;
+	}
+
+	/// Sets the value of a given index of the data
+	/// @Param value: The value being assigned
+	/// @Param index: The index of the value being assigned to
+	void Datum::set(const std::int32_t& value, const std::uint32_t index) const
 	{
 		if (mType != DatumType::Integer) throw std::exception("Calling set on invalid type");
 		mData.i[index] = value;
 	}
 
-	template<>
-	void Datum::set(const float& value, const std::uint32_t index)
+	/// Sets the value of a given index of the data
+	/// @Param value: The value being assigned
+	/// @Param index: The index of the value being assigned to
+	void Datum::set(const float& value, const std::uint32_t index) const
 	{
 		if (mType != DatumType::Float) throw std::exception("Calling set on invalid type");
 		mData.f[index] = value;
 	}
 
-	template<>
-	void Datum::set(const std::string& value, const std::uint32_t index)
+	/// Sets the value of a given index of the data
+	/// @Param value: The value being assigned
+	/// @Param index: The index of the value being assigned to
+	void Datum::set(const std::string& value, const std::uint32_t index) const
 	{
 		if (mType != DatumType::String) throw std::exception("Calling set on invalid type");
 		mData.s[index] = value;
 	}
 
-	template<>
-	void Datum::set(Library::RTTI* const& value, const std::uint32_t index)
+	/// Sets the value of a given index of the data
+	/// @Param value: The value being assigned
+	/// @Param index: The index of the value being assigned to
+	void Datum::set(Library::RTTI* const value, const std::uint32_t index) const
 	{
 		if (mType != DatumType::Pointer) throw std::exception("Calling set on invalid type");
 		mData.r[index] = value;
