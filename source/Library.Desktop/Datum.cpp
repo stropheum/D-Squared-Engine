@@ -5,13 +5,13 @@ namespace Datum
 {
 	/// Constructor
 	Datum::Datum():
-		mType(DatumType::Unknown), mCapacity(13), mSize(0)
+		mType(DatumType::Unknown), mCapacity(13), mSize(0), mDataIsExternal(false)
 	{}
 
 	/// Overloaded constructor
 	/// @Param type: The type of the Datum object
-	Datum::Datum(DatumType type): 
-		mType(type), mCapacity(13), mSize(0)
+	Datum::Datum(DatumType type) :
+		mType(type), mCapacity(13), mSize(0), mDataIsExternal(false)
 	{}
 
 	/// Destructor
@@ -21,7 +21,7 @@ namespace Datum
 	/// Copy constructor
 	/// @Param rhs: Datum object being copied
 	Datum::Datum(const Datum& rhs):
-		mType(rhs.mType), mData(rhs.mData), mCapacity(rhs.mCapacity), mSize(rhs.mSize)
+		mType(rhs.mType), mData(rhs.mData), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
 	{}
 
 	/// Move copy constructor
@@ -126,8 +126,47 @@ namespace Datum
 		// TODO: Implement clear method
 	}
 
+	template<>
+	std::uint32_t& Datum::get(const std::uint32_t index)
+	{
+		if (mType != DatumType::Integer) throw std::exception("Calling get on invalid type");
+		if (mData.i == nullptr) throw std::exception("Attempting to dereference nullptr");
+		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
+		return *(mData.i + index);
+		
+	}
+
+	template<>
+	float& Datum::get(const std::uint32_t index)
+	{
+		if (mType != DatumType::Float) throw std::exception("Calling get on invalid type");
+		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
+		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
+		return *(mData.f + index);
+		
+	}
+
+	template<>
+	std::string& Datum::get(const std::uint32_t index)
+	{
+		if (mType != DatumType::String) throw std::exception("Calling get on invalid type");
+		if (mData.s == nullptr) throw std::exception("Attempting to dereference nullptr");
+		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
+		return *(mData.s + index);
+	}
+
+	template<>
+	Library::RTTI*& Datum::get(const std::uint32_t index)
+	{
+		if (mType != DatumType::Pointer) throw std::exception("Calling get on invalid type");
+		if (mData.r == nullptr) throw std::exception("Attempting to dereference nullptr");
+		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
+		return *(mData.r + index);
+	}
+
 	/// Reserves the number of elements in the local buffer
 	void Datum::reserve(std::uint32_t capacity)
 	{
+		UNREFERENCED_PARAMETER(capacity);
 	}
 }

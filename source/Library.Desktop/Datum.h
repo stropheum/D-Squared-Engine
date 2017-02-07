@@ -35,10 +35,28 @@ namespace Datum
 		~Datum();
 		Datum(const Datum& rhs);
 		Datum(Datum&& rhs);
+		// TODO: Overload assignment operator to take a rhs of each data type
 		Datum& operator=(const Datum& rhs);
 		Datum& operator=(Datum&& rhs);
+		Datum& operator=(const DatumType& rhs);
+		Datum& operator=(const std::uint32_t& rhs);
+		Datum& operator=(const float& rhs);
+		Datum& operator=(const std::string& rhs);
+		Datum& operator=(const Library::RTTI*& rhs);
+
 		bool operator==(const Datum& rhs) const;
+		bool operator==(const DatumType& rhs);
+		bool operator==(const std::uint32_t& rhs);
+		bool operator==(const float& rhs);
+		bool operator==(const std::string& rhs);
+		bool operator==(const Library::RTTI*& rhs);
+
 		bool operator!=(const Datum& rhs) const;
+		bool operator!=(const DatumType& rhs);
+		bool operator!=(const std::uint32_t& rhs);
+		bool operator!=(const float& rhs);
+		bool operator!=(const std::string& rhs);
+		bool operator!=(const Library::RTTI*& rhs);
 
 		DatumType type() const;
 		void setType(const DatumType& type);
@@ -48,6 +66,7 @@ namespace Datum
 		// TODO: Declare setStorage()
 		// TODO: Declare set();
 		// TODO: Declare get();
+		template <typename T> T& get(const std::uint32_t index = 0);
 		// TODO: Declare setFromString()
 		// TODO: Declare toString();
 	private:
@@ -57,5 +76,6 @@ namespace Datum
 		Values mData;
 		std::uint32_t mCapacity;
 		std::uint32_t mSize;
+		bool mDataIsExternal;
 	};
 }
