@@ -13,3 +13,5 @@
 #include <cstdint>
 #include <cstdlib>
 #include <exception>
+#include <string>
+#include "RTTI.h"

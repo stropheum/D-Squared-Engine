@@ -4,31 +4,51 @@
 namespace Datum
 {
 	/// Constructor
-	Datum::Datum()
-	{
-		// TODO: Implement constructor
-	}
+	Datum::Datum():
+		mType(DatumType::Unknown), mCapacity(13), mSize(0)
+	{}
+
+	/// Overloaded constructor
+	/// @Param type: The type of the Datum object
+	Datum::Datum(DatumType type): 
+		mType(type), mCapacity(13), mSize(0)
+	{}
 
 	/// Destructor
 	Datum::~Datum()
-	{
-		// TODO: Clean up any heap-allocated memory or remove destructor
-	}
+	{}
 
 	/// Copy constructor
 	/// @Param rhs: Datum object being copied
-	Datum::Datum(const Datum& rhs)
-	{
-		// TODO: Implement copy constructor
-		UNREFERENCED_PARAMETER(rhs);
-	}
+	Datum::Datum(const Datum& rhs):
+		mType(rhs.mType), mData(rhs.mData), mCapacity(rhs.mCapacity), mSize(rhs.mSize)
+	{}
 
 	/// Move copy constructor
 	/// @Param rhs: Datum object being copied
-	Datum::Datum(const Datum&& rhs)
+	Datum::Datum(Datum&& rhs):
+		mType(rhs.mType), mData(rhs.mData)
 	{
-		// TODO: Implement move copy constructor
-		UNREFERENCED_PARAMETER(rhs);
+		switch (rhs.mType)
+		{
+			case DatumType::Integer:
+				if (rhs.mData.i != nullptr) free(rhs.mData.i);
+				break;
+			case DatumType::Float:
+				if (rhs.mData.f != nullptr) free(rhs.mData.f);
+				break;
+			case DatumType::String:
+				if (rhs.mData.s != nullptr) free(rhs.mData.s);
+				break;
+			case DatumType::Pointer:
+				if (rhs.mData.r != nullptr) free(rhs.mData.r);
+				break;
+			default: 
+				break;
+		}
+		rhs.mType = DatumType::Unknown;
+		rhs.mCapacity = NULL;
+		rhs.mSize = NULL;
 	}
 
 	/// Assignment operator
@@ -44,7 +64,7 @@ namespace Datum
 	/// Move assignment operator
 	/// @Param rhs: Datum object being copied
 	/// @Return: A Copy of the specified Datum object
-	Datum& Datum::operator=(const Datum&& rhs)
+	Datum& Datum::operator=(Datum&& rhs)
 	{
 		// TODO: Implement move assignment operator
 		UNREFERENCED_PARAMETER(rhs);
@@ -54,7 +74,7 @@ namespace Datum
 	/// Comparison operator
 	/// @Param rhs: The Datum object being compared against
 	/// @Return: True if the two Datum objects are equivalent
-	bool Datum::operator==(const Datum& rhs)
+	bool Datum::operator==(const Datum& rhs) const
 	{
 		// TODO: Implement comparison operator
 		UNREFERENCED_PARAMETER(rhs);
@@ -64,14 +84,14 @@ namespace Datum
 	/// Negated comparison operator
 	/// @Param rhs: The Datum object being compared against
 	/// @Return: True if the two Datum objects are not equivalent
-	bool Datum::operator!=(const Datum& rhs)
+	bool Datum::operator!=(const Datum& rhs) const
 	{
 		return !(operator==(rhs));
 	}
 
 	/// The type associated with this object
 	/// @Return: The DatumType of this Datum object
-	Datum::DatumType Datum::type() const
+	DatumType Datum::type() const
 	{
 		// TODO: Implement type method
 		return DatumType::Unknown;
@@ -81,16 +101,15 @@ namespace Datum
 	/// @Param type: The new type of the Datum object
 	void Datum::setType(const DatumType& type)
 	{
-		// TODO: Implement setType method
-		UNREFERENCED_PARAMETER(type);
+		if (mType == DatumType::Unknown || mType == type)  mType = type;
+		else throw std::exception("Attempting to change type on Datum object");
 	}
 
 	/// The number of values in the Datum object
 	/// @Return: The number of items associated with this Datum object
 	std::uint32_t Datum::size() const
 	{
-		// TODO: Implement size method
-		return 0;
+		return mSize;
 	}
 
 	/// Set number of values and reserve memory if needed
@@ -105,5 +124,10 @@ namespace Datum
 	void Datum::clear()
 	{
 		// TODO: Implement clear method
+	}
+
+	/// Reserves the number of elements in the local buffer
+	void Datum::reserve(std::uint32_t capacity)
+	{
 	}
 }
