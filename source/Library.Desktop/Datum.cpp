@@ -457,7 +457,6 @@ namespace Library
 		if (mData.i == nullptr) throw std::exception("Attempting to dereference nullptr");
 		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
 		return mData.i[index];
-		
 	}
 
 	template<>
@@ -467,7 +466,6 @@ namespace Library
 		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
 		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
 		return mData.f[index];
-		
 	}
 
 	template<>
@@ -519,85 +517,85 @@ namespace Library
 
 	/// Reserves the number of integers in the local buffer
 	/// @Param capacity: The current maximum size of the array
-	void Datum::setSizeInt(std::uint32_t capacity)
+	void Datum::setSizeInt(std::uint32_t size)
 	{
-		if (capacity < mSize) capacity = mSize;
+		if (size < mSize) size = mSize;
+		if (size > mCapacity) mCapacity = size;
 
 		std::int32_t* temp = mData.i;
-		mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * capacity));
+		mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * mCapacity));
 		memcpy_s(mData.i, sizeof(std::int32_t) * mSize, temp, sizeof(std::int32_t) * mSize);
 
 		free(temp);
-		mCapacity = capacity;
 	}
 
 	/// Reserves the number of floats in the local buffer
 	/// @Param capacity: The current maximum size of the array
-	void Datum::setSizeFloat(std::uint32_t capacity)
+	void Datum::setSizeFloat(std::uint32_t size)
 	{
-		if (capacity < mSize) capacity = mSize;
+		if (size < mSize) size = mSize;
+		if (size > mCapacity) mCapacity = size;
 
-		std::int32_t* temp = mData.i;
-		mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * capacity));
-		memcpy_s(mData.i, sizeof(std::int32_t) * mSize, temp, sizeof(std::int32_t) * mSize);
+		float* temp = mData.f;
+		mData.f = static_cast<float*>(malloc(sizeof(float) * mCapacity));
+		memcpy_s(mData.f, sizeof(float) * mSize, temp, sizeof(float) * mSize);
 
 		free(temp);
-		mCapacity = capacity;
 	}
 
 	/// Reserves the number of vectors in the local buffer
 	/// @Param capacity: The current maximum size of the array
-	void Datum::setSizeVector(std::uint32_t capacity)
+	void Datum::setSizeVector(std::uint32_t size)
 	{
-		if (capacity < mSize) capacity = mSize;
+		if (size < mSize) size = mSize;
+		if (size > mCapacity) mCapacity = size;
 
 		glm::vec4* temp = mData.v;
-		mData.v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4) * capacity));
+		mData.v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4) * mCapacity));
 		memcpy_s(mData.v, sizeof(glm::vec4) * mSize, temp, sizeof(glm::vec4) * mSize);
 
 		free(temp);
-		mCapacity = capacity;
 	}
 
 	/// Reserves the number of matrices in the local buffer
 	/// @Param capacity: The current maximum size of the array
-	void Datum::setSizeMatrix(std::uint32_t capacity)
+	void Datum::setSizeMatrix(std::uint32_t size)
 	{
-		if (capacity < mSize) capacity = mSize;
+		if (size < mSize) size = mSize;
+		if (size > mCapacity) mCapacity = size;
 
 		glm::mat4* temp = mData.m;
-		mData.m = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4) * capacity));
+		mData.m = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4) * mCapacity));
 		memcpy_s(mData.m, sizeof(glm::mat4) * mSize, temp, sizeof(glm::mat4) * mSize);
 
 		free(temp);
-		mCapacity = capacity;
 	}
 
 	/// Reserves the number of strings in the local buffer
 	/// @Param capacity: The current maximum size of the array
-	void Datum::setSizeString(std::uint32_t capacity)
+	void Datum::setSizeString(std::uint32_t size)
 	{
-		if (capacity < mSize) capacity = mSize;
+		if (size < mSize) size = mSize;
+		if (size > mCapacity) mCapacity = size;
 
-		std::int32_t* temp = mData.i;
-		mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * capacity));
-		memcpy_s(mData.i, sizeof(std::int32_t) * mSize, temp, sizeof(std::int32_t) * mSize);
+		std::string* temp = mData.s;
+		mData.s = static_cast<std::string*>(malloc(sizeof(std::string) * mCapacity));
+		memcpy_s(mData.s, sizeof(std::string) * mSize, temp, sizeof(std::string) * mSize);
 
 		free(temp);
-		mCapacity = capacity;
 	}
 
 	/// Reserves the number of RTTI pointers in the local buffer
 	/// @Param capacity: The current maximum size of the array
-	void Datum::setSizePointer(std::uint32_t capacity)
+	void Datum::setSizePointer(std::uint32_t size)
 	{
-		if (capacity < mSize) capacity = mSize;
+		if (size < mSize) size = mSize;
+		if (size > mCapacity) mCapacity = size;
 
-		std::int32_t* temp = mData.i;
-		mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * capacity));
-		memcpy_s(mData.i, sizeof(std::int32_t) * mSize, temp, sizeof(std::int32_t) * mSize);
+		Library::RTTI** temp = mData.r;
+		mData.r = static_cast<Library::RTTI**>(malloc(sizeof(Library::RTTI) * mCapacity));
+		memcpy_s(mData.r, sizeof(Library::RTTI) * mSize, temp, sizeof(Library::RTTI) * mSize);
 
 		free(temp);
-		mCapacity = capacity;
 	}
 }
