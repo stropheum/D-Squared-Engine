@@ -5,18 +5,42 @@ namespace Library
 {
 	/// Constructor
 	Datum::Datum():
-		mType(DatumType::Unknown), mCapacity(13), mSize(0), mDataIsExternal(false)
+		mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
 	{}
 
 	/// Overloaded constructor
 	/// @Param type: The type of the Datum object
 	Datum::Datum(DatumType type) :
-		mType(type), mCapacity(13), mSize(0), mDataIsExternal(false)
-	{}
+		mType(type), mCapacity(1), mSize(0), mDataIsExternal(false)
+	{
+		// Reserve size of 1
+	}
 
 	/// Destructor
 	Datum::~Datum()
-	{}
+	{
+		switch (mType)
+		{
+			case DatumType::Integer:
+				// TODO: Clear int values
+				break;
+			case DatumType::Float:
+				// TODO: Clear float values
+				break;
+			case DatumType::Vector:
+				// TODO: Clear vector values
+				break;
+			case DatumType::Matrix:
+				// TODO: Clear matrix values
+				break;
+			case DatumType::String:
+				// TODO: Clear string values
+				break;
+			case DatumType::Pointer:
+				// TODO: Clear pointer values
+				break;
+		}
+	}
 
 	/// Copy constructor
 	/// @Param rhs: Datum object being copied
@@ -361,10 +385,12 @@ namespace Library
 	void Datum::setStorage(std::int32_t* data, std::uint32_t size)
 	{
 		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		if (mType == DatumType::Integer && mData.i != nullptr)
+			throw std::exception("Attempting to set storage on a non-empty Datum object");
 		mDataIsExternal = true;
 		mType = DatumType::Integer;
 		mData.i = data;
-		mSize = size;
+		mCapacity = mSize = size;
 	}
 
 	/// Sets the external storage to the specified pointer
@@ -373,10 +399,12 @@ namespace Library
 	void Datum::setStorage(float* data, std::uint32_t size)
 	{
 		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		if (mType == DatumType::Float && mData.f != nullptr)
+			throw std::exception("Attempting to set storage on a non-empty Datum object");
 		mDataIsExternal = true;
 		mType = DatumType::Float;
 		mData.f = data;
-		mSize = size;
+		mCapacity = mSize = size;
 	}
 
 	/// Sets the external storage to the specified pointer
@@ -385,10 +413,12 @@ namespace Library
 	void Datum::setStorage(glm::vec4* data, std::uint32_t size)
 	{
 		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		if (mType == DatumType::Vector && mData.v != nullptr)
+			throw std::exception("Attempting to set storage on a non-empty Datum object");
 		mDataIsExternal = true;
 		mType = DatumType::Vector;
 		mData.v = data;
-		mSize = size;
+		mCapacity = mSize = size;
 	}
 
 	/// Sets the external storage to the specified pointer
@@ -397,10 +427,12 @@ namespace Library
 	void Datum::setStorage(glm::mat4* data, std::uint32_t size)
 	{
 		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		if (mType == DatumType::Matrix && mData.m != nullptr)
+			throw std::exception("Attempting to set storage on a non-empty Datum object");
 		mDataIsExternal = true;
 		mType = DatumType::Matrix;
 		mData.m = data;
-		mSize = size;
+		mCapacity = mSize = size;
 	}
 
 	/// Sets the external storage to the specified pointer
@@ -409,10 +441,12 @@ namespace Library
 	void Datum::setStorage(std::string* data, std::uint32_t size)
 	{
 		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		if (mType == DatumType::String && mData.s != nullptr)
+			throw std::exception("Attempting to set storage on a non-empty Datum object");
 		mDataIsExternal = true;
 		mType = DatumType::String;
 		mData.s = data;
-		mSize = size;
+		mCapacity = mSize = size;
 	}
 
 	/// Sets the external storage to the specified pointer
@@ -421,64 +455,72 @@ namespace Library
 	void Datum::setStorage(Library::RTTI** data, std::uint32_t size)
 	{
 		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		if (mType == DatumType::Pointer && mData.r != nullptr)
+			throw std::exception("Attempting to set storage on a non-empty Datum object");
 		mDataIsExternal = true;
 		mType = DatumType::Pointer;
 		mData.r = data;
-		mSize = size;
+		mCapacity = mSize = size;
 	}
 
 	/// Sets a specified index of the array to the specified value
 	/// @Param value: The int32_t being assigned
 	/// @Param index: The index of the value being assigned to
-	void Datum::set(const std::int32_t& value, const std::uint32_t index) const
+	void Datum::set(const std::int32_t& value, const std::uint32_t index)
 	{
 		if (mType != DatumType::Integer) throw std::exception("Calling set on invalid type");
-		mData.i[index] = value;
+		if (index > mSize) setSize(index + 1);
+		new(mData.i + index) std::int32_t(value);
 	}
 
 	/// Sets a specified index of the array to the specified value
 	/// @Param value: The float being assigned
 	/// @Param index: The index of the value being assigned to
-	void Datum::set(const float& value, const std::uint32_t index) const
+	void Datum::set(const float& value, const std::uint32_t index)
 	{
 		if (mType != DatumType::Float) throw std::exception("Calling set on invalid type");
-		mData.f[index] = value;
+		if (index > mSize) setSize(index + 1);
+		new(mData.f + index) float(value);
 	}
 
 	/// Sets a specified index of the array to the specified value
 	/// @Param value: The vec4 being assigned
 	/// @Param index: The index of the value being assigned to
-	void Datum::set(const glm::vec4& value, const std::uint32_t index) const
+	void Datum::set(const glm::vec4& value, const std::uint32_t index)
 	{
 		if (mType != DatumType::Vector) throw std::exception("Calling set on invalid type");
-		mData.v[index] = value;
+		if (index > mSize) setSize(index + 1);
+		new(mData.v + index) glm::vec4(value);
 	}
 
 	/// Sets a specified index of the array to the specified value
 	/// @Param value: The mat4 being assigned
 	/// @Param index: The index of the value being assigned to
-	void Datum::set(const glm::mat4& value, const std::uint32_t index) const
+	void Datum::set(const glm::mat4& value, const std::uint32_t index)
 	{
 		if (mType != DatumType::Matrix) throw std::exception("Calling set on invalid type");
-		mData.m[index] = value;
+		if (index > mSize) setSize(index + 1);
+		new(mData.m + index) glm::mat4(value);
 	}
 
 	/// Sets a specified index of the array to the specified value
 	/// @Param value: The string being assigned
 	/// @Param index: The index of the value being assigned to
-	void Datum::set(const std::string& value, const std::uint32_t index) const
+	void Datum::set(const std::string& value, const std::uint32_t index)
 	{
 		if (mType != DatumType::String) throw std::exception("Calling set on invalid type");
-		mData.s[index] = value;
+		if (index > mSize) setSize(index + 1);
+		new(mData.s + index) std::string(value);
 	}
 
 	/// Sets a specified index of the array to the specified value
 	/// @Param value: The RTTI* being assigned
 	/// @Param index: The index of the value being assigned to
-	void Datum::set(Library::RTTI* const& value, const std::uint32_t index) const
+	void Datum::set(Library::RTTI* const& value, const std::uint32_t index)
 	{
-		if (mType != DatumType::Pointer) throw std::exception("Calling set on invalid type");
-		mData.r[index] = value;
+		if (mType != DatumType::Integer) throw std::exception("Calling set on invalid type");
+		if (index > mSize) setSize(index + 1);
+		new(mData.r + index) RTTI*(value);
 	}
 
 	template<>

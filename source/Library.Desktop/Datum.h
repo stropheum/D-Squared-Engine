@@ -26,8 +26,9 @@ namespace Library
 	class Datum
 	{
 	public:
-		union Values
+		union DatumValues
 		{
+			void* vp; // Void pointer member for when type doesn't matter
 			std::int32_t* i;
 			float* f;
 			glm::vec4* v;
@@ -79,12 +80,12 @@ namespace Library
 		void setStorage(std::string* data, std::uint32_t size);
 		void setStorage(Library::RTTI** data, std::uint32_t size);
 		
-		void set(const std::int32_t& value, const std::uint32_t index = 0) const;
-		void set(const float& value, const std::uint32_t index = 0) const;
-		void set(const glm::vec4& value, const std::uint32_t index = 0) const;
-		void set(const glm::mat4& value, const std::uint32_t index = 0) const;
-		void set(const std::string& value, const std::uint32_t index = 0) const;
-		void set(Library::RTTI* const& value, const std::uint32_t index = 0) const;
+		void set(const std::int32_t& value, const std::uint32_t index = 0);
+		void set(const float& value, const std::uint32_t index = 0);
+		void set(const glm::vec4& value, const std::uint32_t index = 0);
+		void set(const glm::mat4& value, const std::uint32_t index = 0);
+		void set(const std::string& value, const std::uint32_t index = 0);
+		void set(Library::RTTI* const& value, const std::uint32_t index = 0);
 
 		template <typename T> T& get(const std::uint32_t index = 0);
 		
@@ -107,7 +108,7 @@ namespace Library
 		void setSizePointer(std::uint32_t capacity);
 		
 		DatumType mType;
-		Values mData;
+		DatumValues mData;
 		std::uint32_t mCapacity;
 		std::uint32_t mSize;
 		bool mDataIsExternal;
