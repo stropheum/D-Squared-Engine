@@ -601,40 +601,28 @@ namespace Library
 	/// Clear all float values from the array
 	void Datum::clearFloat()
 	{
-		for (std::uint32_t i = 0; i < mSize; i++)
-		{
-			mData.f[i] = NULL;
-		}
+		for (std::uint32_t i = 0; i < mSize; i++) mData.f[i] = NULL;
 		mSize = 0;
 	}
 
 	/// Clear all vector values from the array
 	void Datum::clearVector()
 	{
-		for (std::uint32_t i = 0; i < mSize; i++)
-		{
-			mData.v[i] = glm::vec4(NULL);
-		}
+		for (std::uint32_t i = 0; i < mSize; i++) mData.v[i] = glm::vec4(NULL);
 		mSize = 0;
 	}
 
 	/// Clear all matrix values from the array
 	void Datum::clearMatrix()
 	{
-		for (std::uint32_t i = 0; i < mSize; i++)
-		{
-			mData.m[i] = glm::mat4(NULL);
-		}
+		for (std::uint32_t i = 0; i < mSize; i++) mData.m[i] = glm::mat4(NULL);
 		mSize = 0;
 	}
 
 	/// Clear all string values from the array
 	void Datum::clearString()
 	{
-		for (std::uint32_t i = 0; i < mSize; i++)
-		{
-			mData.s[i] = "";
-		}
+		for (std::uint32_t i = 0; i < mSize; i++) mData.s[i] = "";
 		mSize = 0;
 	}
 
