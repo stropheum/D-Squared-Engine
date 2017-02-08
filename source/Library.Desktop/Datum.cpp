@@ -334,16 +334,22 @@ namespace Library
 		switch(mType)
 		{
 			case DatumType::Integer:
+				clearInt();
 				break;
 			case DatumType::Float:
+				clearFloat();
 				break;
 			case DatumType::Vector:
+				clearVector();
 				break;
 			case DatumType::Matrix:
+				clearMatrix();
 				break;
 			case DatumType::String:
+				clearString();
 				break;
 			case DatumType::Pointer:
+				clearPointer();
 				break;
 			default: throw std::exception("Attempting to clear invalid type");
 		}
