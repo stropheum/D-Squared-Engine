@@ -21,14 +21,39 @@ namespace Library
 	/// Copy constructor
 	/// @Param rhs: Datum object being copied
 	Datum::Datum(const Datum& rhs):
-		mType(rhs.mType), mData(rhs.mData), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
-	{}
+		mType(DatumType::Unknown), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
+	{
+		switch (rhs.mType)
+		{
+			case DatumType::Integer:
+				setStorage(rhs.mData.i, rhs.mSize);
+				break;
+			case DatumType::Float:
+				setStorage(rhs.mData.f, rhs.mSize);
+				break;
+			case DatumType::Vector:
+				setStorage(rhs.mData.v, rhs.mSize);
+				break;
+			case DatumType::Matrix:
+				setStorage(rhs.mData.m, rhs.mSize);
+				break;
+			case DatumType::String:
+				setStorage(rhs.mData.s, rhs.mSize);
+				break;
+			case DatumType::Pointer:
+				setStorage(rhs.mData.r, rhs.mSize);
+				break;
+			default:
+				throw std::exception("Attempting to set Datum to invalid type");
+		}
+	}
 
 	/// Move copy constructor
 	/// @Param rhs: Datum object being copied
 	Datum::Datum(Datum&& rhs) :
-		mType(rhs.mType), mData(rhs.mData), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
+		mType(rhs.mType), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
 	{
+		// TODO: Handle deep copy semantics
 		switch (rhs.mType)
 		{
 			case DatumType::Integer:
