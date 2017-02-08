@@ -48,6 +48,8 @@ namespace Library
 		Datum& operator=(const DatumType& rhs);
 		Datum& operator=(const std::int32_t& rhs);
 		Datum& operator=(const float& rhs);
+		Datum& operator=(const glm::vec4& rhs);
+		Datum& operator=(const glm::mat4& rhs);
 		Datum& operator=(const std::string& rhs);
 		Datum& operator=(Library::RTTI* const& rhs);
 
@@ -57,7 +59,7 @@ namespace Library
 		bool operator==(const glm::vec4& rhs) const;
 		bool operator==(const glm::mat4& rhs) const;
 		bool operator==(const std::string& rhs) const;
-		bool operator==(const Library::RTTI*& rhs) const;
+		bool operator==(Library::RTTI* const& rhs) const;
 
 		bool operator!=(const DatumType& rhs) const;
 		bool operator!=(const std::int32_t& rhs) const;
@@ -65,12 +67,13 @@ namespace Library
 		bool operator!=(const glm::vec4& rhs) const;
 		bool operator!=(const glm::mat4& rhs) const;
 		bool operator!=(const std::string& rhs) const;
-		bool operator!=(const Library::RTTI*& rhs) const;
+		bool operator!=(Library::RTTI* const& rhs) const;
 
 		DatumType type() const;
 		void setType(const DatumType& type);
 		std::uint32_t size() const;
 		void setSize(std::uint32_t size);
+		void reserve(std::uint32_t capacity);
 		void clear();
 
 		void setStorage(std::int32_t* data, std::uint32_t size);
@@ -87,6 +90,19 @@ namespace Library
 		void set(const std::string& value, const std::uint32_t index = 0);
 		void set(Library::RTTI* const& value, const std::uint32_t index = 0);
 
+		void pushBack(const std::int32_t& value);
+		void pushBack(const float& value);
+		void pushBack(const glm::vec4& value);
+		void pushBack(const glm::mat4& value);
+		void pushBack(const std::string& value);
+		void pushBack(RTTI* const& value);
+
+		/// Gets the item at the specified index in the array
+		/// @Param index: The index of the item being retrieved
+		/// @Return: The object at the specified index
+		/// @Exception: Thrown if calling get on invalid type
+		/// @Exception: Thrown if data is null
+		/// @Exception: Thrown if index is greater than or equal to current size
 		template <typename T> T& get(const std::uint32_t index = 0);
 		
 		void setFromString(std::string value);
@@ -100,12 +116,19 @@ namespace Library
 		void clearString();
 		void clearPointer();
 
-		void setSizeInt(std::uint32_t capacity);
-		void setSizeFloat(std::uint32_t capcity);
-		void setSizeVector(std::uint32_t capacity);
-		void setSizeMatrix(std::uint32_t capacity);
-		void setSizeString(std::uint32_t capacity);
-		void setSizePointer(std::uint32_t capacity);
+		void setSizeInt(std::uint32_t size);
+		void setSizeFloat(std::uint32_t size);
+		void setSizeVector(std::uint32_t size);
+		void setSizeMatrix(std::uint32_t size);
+		void setSizeString(std::uint32_t size);
+		void setSizePointer(std::uint32_t size);
+
+		void reserveInt(std::uint32_t capacity);
+		void reserveFloat(std::uint32_t capacity);
+		void reserveVector(std::uint32_t capacity);
+		void reserveMatrix(std::uint32_t capacity);
+		void reserveString(std::uint32_t capacity);
+		void reservePointer(std::uint32_t capacity);
 		
 		DatumType mType;
 		DatumValues mData;

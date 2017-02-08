@@ -175,12 +175,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Foo.h" />
+    <ClInclude Include="FooRTTI.h" />
     <ClInclude Include="Implementation.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DatumTest.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Foo.cpp" />
+    <ClCompile Include="FooRTTI.cpp" />
     <ClCompile Include="HashMapTest.cpp">
       <SubType>
       </SubType>
@@ -201,6 +208,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Test.Library.Desktop.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
