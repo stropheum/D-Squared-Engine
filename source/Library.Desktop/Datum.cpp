@@ -23,8 +23,11 @@ namespace Library
 	Datum::Datum(const Datum& rhs):
 		mType(DatumType::Unknown), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
 	{
-		switch (rhs.mType)
+		if (rhs.mDataIsExternal) mData = rhs.mData;
+		else
 		{
+			switch (rhs.mType)
+			{
 			case DatumType::Integer:
 				setStorage(rhs.mData.i, rhs.mSize);
 				break;
@@ -45,6 +48,7 @@ namespace Library
 				break;
 			default:
 				throw std::exception("Attempting to set Datum to invalid type");
+			}
 		}
 	}
 
