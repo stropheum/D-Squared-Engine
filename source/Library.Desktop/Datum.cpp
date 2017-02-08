@@ -23,7 +23,7 @@ namespace Library
 	Datum::Datum(const Datum& rhs):
 		mType(DatumType::Unknown), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
 	{
-		if (rhs.mDataIsExternal) mData = rhs.mData;
+		if (rhs.mDataIsExternal) mData = rhs.mData; // If storage is external, only shallow copy the pointer
 		else
 		{
 			switch (rhs.mType)
@@ -297,8 +297,11 @@ namespace Library
 
 	/// Set number of values and reserve memory if needed
 	/// @Param size: the new number of values
+	/// @Exception: Thrown if attempting to resize external data
 	void Datum::setSize(std::uint32_t size)
 	{
+		if (mDataIsExternal) throw std::exception("Attempting to resize external storage");
+
 		switch (mType)
 		{
 		case DatumType::Integer:
@@ -325,9 +328,25 @@ namespace Library
 	}
 
 	/// Clear the array without shrinking the capacity
+	/// @Exception: Thrown if trying to clear with an invalid type set
 	void Datum::clear()
 	{
-		// TODO: Implement clear method
+		switch(mType)
+		{
+			case DatumType::Integer:
+				break;
+			case DatumType::Float:
+				break;
+			case DatumType::Vector:
+				break;
+			case DatumType::Matrix:
+				break;
+			case DatumType::String:
+				break;
+			case DatumType::Pointer:
+				break;
+			default: throw std::exception("Attempting to clear invalid type");
+		}
 	}
 
 	/// Sets the external storage to the specified pointer
@@ -336,6 +355,7 @@ namespace Library
 	void Datum::setStorage(std::int32_t* data, std::uint32_t size)
 	{
 		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		mDataIsExternal = true;
 		mType = DatumType::Integer;
 		mData.i = data;
 		mSize = size;
@@ -347,6 +367,7 @@ namespace Library
 	void Datum::setStorage(float* data, std::uint32_t size)
 	{
 		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		mDataIsExternal = true;
 		mType = DatumType::Float;
 		mData.f = data;
 		mSize = size;
@@ -358,6 +379,7 @@ namespace Library
 	void Datum::setStorage(glm::vec4* data, std::uint32_t size)
 	{
 		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		mDataIsExternal = true;
 		mType = DatumType::Vector;
 		mData.v = data;
 		mSize = size;
@@ -369,6 +391,7 @@ namespace Library
 	void Datum::setStorage(glm::mat4* data, std::uint32_t size)
 	{
 		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		mDataIsExternal = true;
 		mType = DatumType::Matrix;
 		mData.m = data;
 		mSize = size;
@@ -380,6 +403,7 @@ namespace Library
 	void Datum::setStorage(std::string* data, std::uint32_t size)
 	{
 		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		mDataIsExternal = true;
 		mType = DatumType::String;
 		mData.s = data;
 		mSize = size;
@@ -391,6 +415,7 @@ namespace Library
 	void Datum::setStorage(Library::RTTI** data, std::uint32_t size)
 	{
 		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		mDataIsExternal = true;
 		mType = DatumType::Pointer;
 		mData.r = data;
 		mSize = size;
@@ -513,6 +538,66 @@ namespace Library
 	std::string Datum::toString()
 	{
 		return "I didn't do the thing yet";
+	}
+
+	/// Clears all std::int32_t values from the array
+	void Datum::clearInt()
+	{
+		for (std::uint32_t i = 0; i < mSize; i++)
+		{
+			mData.i[i] = NULL;
+		}
+		mSize = 0;
+	}
+
+	/// Clear all float values from the array
+	void Datum::clearFloat()
+	{
+		for (std::uint32_t i = 0; i < mSize; i++)
+		{
+			mData.f[i] = NULL;
+		}
+		mSize = 0;
+	}
+
+	/// Clear all vector values from the array
+	void Datum::clearVector()
+	{
+		for (std::uint32_t i = 0; i < mSize; i++)
+		{
+			mData.v[i] = glm::vec4(NULL);
+		}
+		mSize = 0;
+	}
+
+	/// Clear all matrix values from the array
+	void Datum::clearMatrix()
+	{
+		for (std::uint32_t i = 0; i < mSize; i++)
+		{
+			mData.m[i] = glm::mat4(NULL);
+		}
+		mSize = 0;
+	}
+
+	/// Clear all string values from the array
+	void Datum::clearString()
+	{
+		for (std::uint32_t i = 0; i < mSize; i++)
+		{
+			mData.s[i] = "";
+		}
+		mSize = 0;
+	}
+
+	/// Clear all pointer values from the array
+	void Datum::clearPointer()
+	{
+		for (std::uint32_t i = 0; i < mSize; i++)
+		{
+			if (mData.r[i] != nullptr) free(mData.r[i]);
+		}
+		mSize = 0;
 	}
 
 	/// Reserves the number of integers in the local buffer

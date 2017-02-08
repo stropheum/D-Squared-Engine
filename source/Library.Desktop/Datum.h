@@ -90,7 +90,15 @@ namespace Library
 		
 		void setFromString(std::string value);
 		std::string toString();
+
 	private:
+		void clearInt();
+		void clearFloat();
+		void clearVector();
+		void clearMatrix();
+		void clearString();
+		void clearPointer();
+
 		void setSizeInt(std::uint32_t capacity);
 		void setSizeFloat(std::uint32_t capcity);
 		void setSizeVector(std::uint32_t capacity);
