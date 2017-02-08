@@ -1,4 +1,5 @@
 #pragma once
+
 #include "RTTI.h"
 
 #define CLM_FORCE_CXX98

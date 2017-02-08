@@ -151,6 +151,24 @@ namespace Datum
 			mSize == 1 && mData.f[0] == rhs;
 	}
 
+	/// Comparison operator for v3c4
+	/// @Param rhs: The vector being compared against
+	/// @Return: True if the vectors are equivalent. False if size is not 1 or if type is invalid
+	bool Datum::operator==(const glm::vec4& rhs) const
+	{
+		return mType == DatumType::Vector &&
+			mSize == 1 && mData.v[0] == rhs;
+	}
+
+	/// Comparison operator for mat4
+	/// @Param rhs: The matrix being  compared against
+	/// @Return: True if the matrices are equivalent. FAlse if size is not 1 or if type is invalid
+	bool Datum::operator==(const glm::mat4& rhs) const
+	{
+		return mType == DatumType::Vector &&
+			mSize == 1 && mData.m[0] == rhs;
+	}
+
 	/// Comparison operator for std::string
 	/// @Param rhs: The string being compared against
 	/// @Return: True if the string values are the same. False if size is not 1 or if type is invalid
@@ -170,7 +188,7 @@ namespace Datum
 	}
 
 	/// Inequality operator for DatumType
-	/// @Param: The DatumType being compared against
+	/// @Param rhs: The DatumType being compared against
 	/// @Return: True if the types are not equivalent
 	bool Datum::operator!=(const DatumType& rhs) const
 	{
@@ -178,7 +196,7 @@ namespace Datum
 	}
 
 	/// Inequality operator for std::int32_t
-	/// @Param: The integer being compared against
+	/// @Param rhs: The integer being compared against
 	/// @Return: True if the integers are not equivalent
 	bool Datum::operator!=(const std::int32_t& rhs) const
 	{
@@ -186,15 +204,31 @@ namespace Datum
 	}
 
 	/// Inequality operator for float
-	/// @Param: The float being compared against
+	/// @Param rhs: The float being compared against
 	/// @Return: True if the floats are not equivalent
 	bool Datum::operator!=(const float& rhs) const
 	{
 		return !(operator==(rhs));
 	}
 
+	/// Inequality operator for vec4
+	/// @Param rhs: The vector being compared against
+	/// @Return: True if the vectors are not equivalent
+	bool Datum::operator!=(const glm::vec4& rhs) const
+	{
+		return !(operator==(rhs));
+	}
+
+	/// Inequality operator for mat4
+	/// @Param rhs: The matrix being compared against
+	/// @Return: True if the matrices are not equivalent
+	bool Datum::operator!=(const glm::mat4& rhs) const
+	{
+		return !(operator==(rhs));
+	}
+
 	/// Inequality operator for std::string
-	/// @Param: The string being compared against
+	/// @Param rhs: The string being compared against
 	/// @Return: True if the strings are not equivalent
 	bool Datum::operator!=(const std::string& rhs) const
 	{
@@ -202,7 +236,7 @@ namespace Datum
 	}
 
 	/// Inequality operator for RTTI pointer
-	/// @Param: The RTTI pointer being compared against
+	/// @Param rhs: The RTTI pointer being compared against
 	/// @Return: True if the pointers are not equivalent
 	bool Datum::operator!=(const Library::RTTI*& rhs) const
 	{

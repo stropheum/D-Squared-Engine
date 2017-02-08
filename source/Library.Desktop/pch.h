@@ -15,3 +15,9 @@
 #include <exception>
 #include <string>
 #include "RTTI.h"
+
+#define CLM_FORCE_CXX98
+#pragma warning(push)
+#pragma warning(disable:4201)
+#include "glm/glm.hpp"
+#pragma warning(pop)
