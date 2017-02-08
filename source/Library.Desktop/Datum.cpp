@@ -301,17 +301,41 @@ namespace Library
 	void Datum::setStorage(std::int32_t* data, std::uint32_t size)
 	{
 		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		mType = DatumType::Integer;
 		mData.i = data;
 		mSize = size;
 	}
 
 	/// Sets the external storage to the specified pointer
 	/// @Param data: The external storage being utilized
-	/// @Pram size: The number of elements in the external storage
+	/// @Param size: The number of elements in the external storage
 	void Datum::setStorage(float* data, std::uint32_t size)
 	{
 		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		mType = DatumType::Float;
 		mData.f = data;
+		mSize = size;
+	}
+
+	/// Sets the external storage to the specified pointer
+	/// @Param data: The external storage being utilized
+	/// @Param size: The number of elements in the external storage
+	void Datum::setStorage(glm::vec4* data, std::uint32_t size)
+	{
+		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		mType = DatumType::Vector;
+		mData.v = data;
+		mSize = size;
+	}
+
+	/// Sets the external storage to the specified pointer
+	/// @Param data: The external storage being utilized
+	/// @Param size: The number of elements in the external storage
+	void Datum::setStorage(glm::mat4* data, std::uint32_t size)
+	{
+		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		mType = DatumType::Matrix;
+		mData.m = data;
 		mSize = size;
 	}
 
@@ -321,6 +345,7 @@ namespace Library
 	void Datum::setStorage(std::string* data, std::uint32_t size)
 	{
 		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		mType = DatumType::String;
 		mData.s = data;
 		mSize = size;
 	}
@@ -331,6 +356,7 @@ namespace Library
 	void Datum::setStorage(Library::RTTI** data, std::uint32_t size)
 	{
 		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		mType = DatumType::Pointer;
 		mData.r = data;
 		mSize = size;
 	}
