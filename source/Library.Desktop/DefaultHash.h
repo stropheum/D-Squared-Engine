@@ -2,7 +2,7 @@
 #include <cstdint>
 #include "../Test.Library.Desktop/Foo.h"
 
-namespace HashMap
+namespace Library
 {
 	template <class T> class DefaultHash
 	{

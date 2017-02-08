@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Datum.h"
 
-namespace Datum
+namespace Library
 {
 	/// Constructor
 	Datum::Datum():
@@ -92,7 +92,7 @@ namespace Datum
 		return *this;
 	}
 
-	/// Assignment operator for floatr
+	/// Assignment operator for float
 	/// @Param rhs: Float being assigned to
 	/// @Return: The newly assigned Datum object
 	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1

@@ -2,11 +2,11 @@
 #include <cstdint>
 #include "Vector.h"
 
-namespace HashMap
+namespace Library
 {
 	template <typename TKey, typename TValue, typename HashFunctor>
-	HashMap<TKey, TValue, HashFunctor>::HashMap(std::uint32_t hashMapSize = defaultHashMapSize) :
-		mHashMapSize(hashMapSize), mSize(0), mBuckets()
+	HashMap<TKey, TValue, HashFunctor>::HashMap(std::uint32_t hashMapSize = defaultHashMapSize):
+		mHashMapSize(hashMapSize), mBuckets(), mSize(0)
 	{
 		initializeBuckets();
 	}
@@ -68,7 +68,7 @@ namespace HashMap
 			++vIter;
 		}
 
-		// If we are at the end of hte bucket, return the end of the HashMap
+		// If we are at the end of the bucket, return the end of the HashMap
 		if (vIter == mBuckets[hashIndex].end())
 		{
 			hashIndex = mHashMapSize - 1;
@@ -178,14 +178,14 @@ namespace HashMap
 
 	template <typename TKey, typename TValue, typename HashFunctor>
 	HashMap<TKey, TValue, HashFunctor>::Iterator::Iterator():
-		mOwner(nullptr), mBucketIndex(0), mIter(Vector::Vector<PairType>::Iterator()) {}
+		mOwner(nullptr), mBucketIndex(0), mIter(Library::Vector<PairType>::Iterator()) {}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
 	HashMap<TKey, TValue, HashFunctor>::Iterator::Iterator(const Iterator& rhs) :
 		mOwner(rhs.mOwner), mBucketIndex(rhs.mBucketIndex), mIter(rhs.mIter) {}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
-	HashMap<TKey, TValue, HashFunctor>::Iterator::Iterator(const HashMap<TKey, TValue, HashFunctor>* owner, std::uint32_t bucketIndex, typename Vector::Vector<PairType>::Iterator iter) :
+	HashMap<TKey, TValue, HashFunctor>::Iterator::Iterator(const HashMap<TKey, TValue, HashFunctor>* owner, std::uint32_t bucketIndex, typename Library::Vector<PairType>::Iterator iter) :
 		mOwner(owner), mBucketIndex(bucketIndex), mIter(iter) {}
 
 	template <typename TKey, typename TValue, typename HashFunctor>

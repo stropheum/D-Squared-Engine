@@ -8,7 +8,7 @@
 #include "glm/glm.hpp"
 #pragma warning(pop)
 
-namespace Datum
+namespace Library
 {
 	/// Types of possible Datum
 	enum class DatumType

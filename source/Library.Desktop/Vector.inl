@@ -2,7 +2,7 @@
 #include <new>
 #include <cstdint>
 
-namespace Vector
+namespace Library
 {
 	template <typename T>
 	Vector<T>::Vector(bool fixedSize = false) :

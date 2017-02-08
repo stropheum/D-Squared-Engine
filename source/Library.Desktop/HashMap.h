@@ -5,14 +5,14 @@
 #include "Vector.h"
 #include "DefaultHash.h"
 
-namespace HashMap
+namespace Library
 {
 	template <typename TKey, typename TValue, class HashFunctor=DefaultHash<TKey>> class HashMap
 	{
 		/// The key/value pairs being used by the HashMap
 		typedef std::pair<const TKey, TValue> PairType;
 		/// The buckets being used in the Vector chain. This implementation uses Vectors of PairTypes
-		typedef Vector::Vector<PairType> BucketType;
+		typedef Library::Vector<PairType> BucketType;
 
 		static const uint32_t defaultHashMapSize = 13; // If no size is specified, number of buckets defaults to 13
 
@@ -90,7 +90,7 @@ namespace HashMap
 	private:
 		std::uint32_t mHashMapSize;			 /// Number of buckets in the hash map.
 		HashFunctor mHashFunctor;			 /// The hash function being used by this HashMap
-		Vector::Vector<BucketType> mBuckets; /// Collection of buckets in the hash map
+		Library::Vector<BucketType> mBuckets; /// Collection of buckets in the hash map
 		std::uint32_t mSize;
 
 		/// Creates one vector of type TData for each bucket in the specified size
@@ -151,11 +151,11 @@ namespace HashMap
 			/// @Param owner: The HashMap that owns this iterator
 			/// @Param bucketIndex: The index into the Vector chain
 			/// @Param iter: The iterator that mIter is being assigned to
-			Iterator(const HashMap<TKey, TValue, HashFunctor>* owner, std::uint32_t bucketIndex, typename Vector::Vector<PairType>::Iterator iter);
+			Iterator(const HashMap<TKey, TValue, HashFunctor>* owner, std::uint32_t bucketIndex, typename Library::Vector<PairType>::Iterator iter);
 
 			const HashMap<TKey, TValue, HashFunctor>* mOwner;	/// The HashMap that owns this Iterator
 			std::uint32_t mBucketIndex;							/// The index into the Vector chain
-			typename Vector::Vector<PairType>::Iterator mIter;	/// The Iterator on the Vector of PairTypes that is currently being iterated on
+			typename Library::Vector<PairType>::Iterator mIter;	/// The Iterator on the Vector of PairTypes that is currently being iterated on
 		};
 	};
 }

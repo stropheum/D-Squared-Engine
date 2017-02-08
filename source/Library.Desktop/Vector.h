@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-namespace Vector
+namespace Library
 {
 	/// @Class Vector: A templated dynamically allocated array
 	/// @Author: Dale Diaz
