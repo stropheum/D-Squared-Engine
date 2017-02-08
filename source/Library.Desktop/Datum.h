@@ -84,7 +84,7 @@ namespace Library
 		void set(const glm::vec4& value, const std::uint32_t index = 0) const;
 		void set(const glm::mat4& value, const std::uint32_t index = 0) const;
 		void set(const std::string& value, const std::uint32_t index = 0) const;
-		void set(Library::RTTI* const value, const std::uint32_t index = 0) const;
+		void set(Library::RTTI* const& value, const std::uint32_t index = 0) const;
 
 		template <typename T> T& get(const std::uint32_t index = 0);
 		
@@ -93,6 +93,8 @@ namespace Library
 	private:
 		void setSizeInt(std::uint32_t capacity);
 		void setSizeFloat(std::uint32_t capcity);
+		void setSizeVector(std::uint32_t capacity);
+		void setSizeMatrix(std::uint32_t capacity);
 		void setSizeString(std::uint32_t capacity);
 		void setSizePointer(std::uint32_t capacity);
 		

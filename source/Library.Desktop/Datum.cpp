@@ -307,6 +307,12 @@ namespace Library
 		case DatumType::Float:
 			setSizeFloat(size);
 			break;
+		case DatumType::Vector:
+			setSizeVector(size);
+			break;
+		case DatumType::Matrix:
+			setSizeMatrix(size);
+			break;
 		case DatumType::String:
 			setSizeString(size);
 			break;
@@ -390,8 +396,8 @@ namespace Library
 		mSize = size;
 	}
 
-	/// Sets the value of a given index of the data
-	/// @Param value: The value being assigned
+	/// Sets a specified index of the array to the specified value
+	/// @Param value: The int32_t being assigned
 	/// @Param index: The index of the value being assigned to
 	void Datum::set(const std::int32_t& value, const std::uint32_t index) const
 	{
@@ -399,8 +405,8 @@ namespace Library
 		mData.i[index] = value;
 	}
 
-	/// Sets the value of a given index of the data
-	/// @Param value: The value being assigned
+	/// Sets a specified index of the array to the specified value
+	/// @Param value: The float being assigned
 	/// @Param index: The index of the value being assigned to
 	void Datum::set(const float& value, const std::uint32_t index) const
 	{
@@ -408,8 +414,26 @@ namespace Library
 		mData.f[index] = value;
 	}
 
-	/// Sets the value of a given index of the data
-	/// @Param value: The value being assigned
+	/// Sets a specified index of the array to the specified value
+	/// @Param value: The vec4 being assigned
+	/// @Param index: The index of the value being assigned to
+	void Datum::set(const glm::vec4& value, const std::uint32_t index) const
+	{
+		if (mType != DatumType::Vector) throw std::exception("Calling set on invalid type");
+		mData.v[index] = value;
+	}
+
+	/// Sets a specified index of the array to the specified value
+	/// @Param value: The mat4 being assigned
+	/// @Param index: The index of the value being assigned to
+	void Datum::set(const glm::mat4& value, const std::uint32_t index) const
+	{
+		if (mType != DatumType::Matrix) throw std::exception("Calling set on invalid type");
+		mData.m[index] = value;
+	}
+
+	/// Sets a specified index of the array to the specified value
+	/// @Param value: The string being assigned
 	/// @Param index: The index of the value being assigned to
 	void Datum::set(const std::string& value, const std::uint32_t index) const
 	{
@@ -417,10 +441,10 @@ namespace Library
 		mData.s[index] = value;
 	}
 
-	/// Sets the value of a given index of the data
-	/// @Param value: The value being assigned
+	/// Sets a specified index of the array to the specified value
+	/// @Param value: The RTTI* being assigned
 	/// @Param index: The index of the value being assigned to
-	void Datum::set(Library::RTTI* const value, const std::uint32_t index) const
+	void Datum::set(Library::RTTI* const& value, const std::uint32_t index) const
 	{
 		if (mType != DatumType::Pointer) throw std::exception("Calling set on invalid type");
 		mData.r[index] = value;
@@ -516,6 +540,34 @@ namespace Library
 		std::int32_t* temp = mData.i;
 		mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * capacity));
 		memcpy_s(mData.i, sizeof(std::int32_t) * mSize, temp, sizeof(std::int32_t) * mSize);
+
+		free(temp);
+		mCapacity = capacity;
+	}
+
+	/// Reserves the number of vectors in the local buffer
+	/// @Param capacity: The current maximum size of the array
+	void Datum::setSizeVector(std::uint32_t capacity)
+	{
+		if (capacity < mSize) capacity = mSize;
+
+		glm::vec4* temp = mData.v;
+		mData.v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4) * capacity));
+		memcpy_s(mData.v, sizeof(glm::vec4) * mSize, temp, sizeof(glm::vec4) * mSize);
+
+		free(temp);
+		mCapacity = capacity;
+	}
+
+	/// Reserves the number of matrices in the local buffer
+	/// @Param capacity: The current maximum size of the array
+	void Datum::setSizeMatrix(std::uint32_t capacity)
+	{
+		if (capacity < mSize) capacity = mSize;
+
+		glm::mat4* temp = mData.m;
+		mData.m = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4) * capacity));
+		memcpy_s(mData.m, sizeof(glm::mat4) * mSize, temp, sizeof(glm::mat4) * mSize);
 
 		free(temp);
 		mCapacity = capacity;
