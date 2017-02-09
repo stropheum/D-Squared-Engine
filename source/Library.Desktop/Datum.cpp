@@ -726,15 +726,44 @@ namespace Library
 		return mData.r[index];
 	}
 
-	void Datum::setFromString(std::string value)
+	/// Parses a string value and sets the value to the specified index
+	/// @Param value: The string value being parsed
+	/// @Param index: The location being set to. Default is 0
+	/// @Exception: Thrown if syntax is invalid
+	void Datum::setFromString(const std::string& value, const std::uint32_t& index)
 	{
-		// TODO: Implement setFromString method
-		UNREFERENCED_PARAMETER(value);
+		switch (mType)
+		{
+			case DatumType::Unknown:
+				setFromStringInt(value, index);
+				break;
+			case DatumType::Integer:
+				setFromStringFloat(value, index);
+				break;
+			case DatumType::Float:
+				setFromStringFloat(value, index);
+				break;
+			case DatumType::Vector:
+				setFromStringVector(value, index);
+				break;
+			case DatumType::Matrix:
+				setFromStringMatrix(value, index);
+				break;
+			case DatumType::String:
+				setFromStringString(value, index);
+				break;
+			case DatumType::Pointer:
+				setFromStringPointer(value, index);
+				break;
+			default: throw std::exception("Invalid syntax");
+		}
 	}
 
 	std::string Datum::toString()
 	{
-		return "I didn't do the thing yet";
+		std::string result = "";
+		// TODO: Implement toString		
+		return result;
 	}
 
 	/// Clears all std::int32_t values from the array
@@ -997,5 +1026,41 @@ namespace Library
 		memcpy_s(mData.r, sizeof(Library::RTTI) * mSize, temp, sizeof(Library::RTTI) * mSize);
 
 		if (temp != nullptr) free(temp);
+	}
+
+	void Datum::setFromStringInt(const std::string& value, const std::uint32_t& index)
+	{
+		UNREFERENCED_PARAMETER(value);
+		UNREFERENCED_PARAMETER(index);
+	}
+
+	void Datum::setFromStringFloat(const std::string& value, const std::uint32_t& index)
+	{
+		UNREFERENCED_PARAMETER(value);
+		UNREFERENCED_PARAMETER(index);
+	}
+
+	void Datum::setFromStringVector(const std::string& value, const std::uint32_t& index)
+	{
+		UNREFERENCED_PARAMETER(value);
+		UNREFERENCED_PARAMETER(index);
+	}
+
+	void Datum::setFromStringMatrix(const std::string& value, const std::uint32_t& index)
+	{
+		UNREFERENCED_PARAMETER(value);
+		UNREFERENCED_PARAMETER(index);
+	}
+
+	void Datum::setFromStringString(const std::string& value, const std::uint32_t& index)
+	{
+		UNREFERENCED_PARAMETER(value);
+		UNREFERENCED_PARAMETER(index);
+	}
+
+	void Datum::setFromStringPointer(const std::string& value, const std::uint32_t& index)
+	{
+		UNREFERENCED_PARAMETER(value);
+		UNREFERENCED_PARAMETER(index);
 	}
 }

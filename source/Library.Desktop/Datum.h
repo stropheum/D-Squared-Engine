@@ -106,7 +106,7 @@ namespace Library
 		/// @Exception: Thrown if index is greater than or equal to current size
 		template <typename T> T& get(const std::uint32_t index = 0);
 		
-		void setFromString(std::string value);
+		void setFromString(const std::string& value, const std::uint32_t& index = 0);
 		std::string toString();
 
 	private:
@@ -130,6 +130,13 @@ namespace Library
 		void reserveMatrix(std::uint32_t capacity);
 		void reserveString(std::uint32_t capacity);
 		void reservePointer(std::uint32_t capacity);
+
+		void setFromStringInt(const std::string& value, const std::uint32_t& index = 0);
+		void setFromStringFloat(const std::string& value, const std::uint32_t& index = 0);
+		void setFromStringVector(const std::string& value, const std::uint32_t& index = 0);
+		void setFromStringMatrix(const std::string& value, const std::uint32_t& index = 0);
+		void setFromStringString(const std::string& value, const std::uint32_t& index = 0);
+		void setFromStringPointer(const std::string& value, const std::uint32_t& index = 0);
 		
 		DatumType mType;
 		DatumValues mData;
