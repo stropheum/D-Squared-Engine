@@ -59,4 +59,9 @@ namespace Library
 		UNREFERENCED_PARAMETER(capacity);
 		throw std::exception("Attempting to reserve size of unknown type");
 	}
+
+	void TypeState::clear()
+	{
+		throw std::exception("Attempting to call clear on an unspecified Datum");
+	}
 }

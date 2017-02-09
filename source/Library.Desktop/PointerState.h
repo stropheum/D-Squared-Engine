@@ -14,5 +14,6 @@ namespace Library
 
 		void setSize(std::uint32_t size) override;
 		void reserve(std::uint32_t capacity) override;
+		void clear() override;
 	};
 }

@@ -50,4 +50,13 @@ namespace Library
 
 		if (temp != nullptr) free(temp);
 	}
+
+	void PointerState::clear()
+	{
+		if (mContext->mSize > 0)
+		{
+			for (std::uint32_t i = 0; i < mContext->mSize; i++) mContext->mData.r[i] = nullptr;
+			mContext->mSize = 0;
+		}
+	}
 }

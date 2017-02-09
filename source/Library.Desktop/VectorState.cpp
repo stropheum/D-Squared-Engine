@@ -51,4 +51,13 @@ namespace Library
 
 		if (temp != nullptr) free(temp);
 	}
+
+	void VectorState::clear()
+	{
+		if (mContext->mSize > 0)
+		{
+			for (std::uint32_t i = 0; i < mContext->mSize; i++) mContext->mData.v[i] = glm::vec4(NULL);
+			mContext->mSize = 0;
+		}
+	}
 }

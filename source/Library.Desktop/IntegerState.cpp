@@ -47,4 +47,13 @@ namespace Library
 
 		if (temp != nullptr) free(temp);
 	}
+
+	void IntegerState::clear()
+	{
+		if (mContext->mSize > 0)
+		{
+			for (std::uint32_t i = 0; i < mContext->mSize; i++) mContext->mData.i[i] = NULL;
+			mContext->mSize = 0;
+		}
+	}
 }

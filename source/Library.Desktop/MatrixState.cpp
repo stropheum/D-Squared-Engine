@@ -51,4 +51,13 @@ namespace Library
 
 		if (temp != nullptr) free(temp);
 	}
+
+	void MatrixState::clear()
+	{
+		if (mContext->mSize > 0)
+		{
+			for (std::uint32_t i = 0; i <mContext->mSize; i++) mContext->mData.m[i] = glm::mat4(NULL);
+			mContext->mSize = 0;
+		}
+	}
 }

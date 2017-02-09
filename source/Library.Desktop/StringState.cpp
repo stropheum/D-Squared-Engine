@@ -56,4 +56,13 @@ namespace Library
 			mContext->mData.s[i] = temp[i];
 		}
 	}
+
+	void StringState::clear()
+	{
+		if (mContext->mSize > 0)
+		{
+			for (std::uint32_t i = 0; i < mContext->mSize; i++) mContext->mData.s[i] = "";
+			mContext->mSize = 0;
+		}
+	}
 }

@@ -391,28 +391,29 @@ namespace Library
 	/// @Exception: Thrown if trying to clear with an invalid type set
 	void Datum::clear()
 	{
-		switch(mType)
-		{
-			case DatumType::Integer:
-				clearInt();
-				break;
-			case DatumType::Float:
-				clearFloat();
-				break;
-			case DatumType::Vector:
-				clearVector();
-				break;
-			case DatumType::Matrix:
-				clearMatrix();
-				break;
-			case DatumType::String:
-				clearString();
-				break;
-			case DatumType::Pointer:
-				clearPointer();
-				break;
-			default: throw std::exception("Attempting to clear invalid type");
-		}
+		mTypeState->clear();
+//		switch(mType)
+//		{
+//			case DatumType::Integer:
+//				clearInt();
+//				break;
+//			case DatumType::Float:
+//				clearFloat();
+//				break;
+//			case DatumType::Vector:
+//				clearVector();
+//				break;
+//			case DatumType::Matrix:
+//				clearMatrix();
+//				break;
+//			case DatumType::String:
+//				clearString();
+//				break;
+//			case DatumType::Pointer:
+//				clearPointer();
+//				break;
+//			default: throw std::exception("Attempting to clear invalid type");
+//		}
 	}
 
 	/// Sets the external storage to the specified pointer
@@ -693,6 +694,7 @@ namespace Library
 	/// @Exception: Thrown if syntax is invalid
 	void Datum::setFromString(const std::string& value, const std::uint32_t& index)
 	{
+		// TODO: Divert this functionality to mTypeState
 		switch (mType)
 		{
 			case DatumType::Unknown:
@@ -725,66 +727,6 @@ namespace Library
 		std::string result = "";
 		// TODO: Implement toString		
 		return result;
-	}
-
-	/// Clears all std::int32_t values from the array
-	void Datum::clearInt()
-	{
-		if (mSize > 0)
-		{
-			for (std::uint32_t i = 0; i < mSize; i++) mData.i[i] = NULL;
-			mSize = 0;
-		}
-	}
-
-	/// Clear all float values from the array
-	void Datum::clearFloat()
-	{
-		if (mSize > 0)
-		{
-			for (std::uint32_t i = 0; i < mSize; i++) mData.f[i] = NULL;
-			mSize = 0;
-		}
-	}
-
-	/// Clear all vector values from the array
-	void Datum::clearVector()
-	{
-		if (mSize > 0)
-		{
-			for (std::uint32_t i = 0; i < mSize; i++) mData.v[i] = glm::vec4(NULL);
-			mSize = 0;
-		}
-	}
-
-	/// Clear all matrix values from the array
-	void Datum::clearMatrix()
-	{
-		if (mSize > 0)
-		{
-			for (std::uint32_t i = 0; i < mSize; i++) mData.m[i] = glm::mat4(NULL);
-			mSize = 0;
-		}
-	}
-
-	/// Clear all string values from the array
-	void Datum::clearString()
-	{
-		if (mSize > 0)
-		{
-			for (std::uint32_t i = 0; i < mSize; i++) mData.s[i] = "";
-			mSize = 0;
-		}
-	}
-
-	/// Clear all pointer values from the array
-	void Datum::clearPointer()
-	{
-		if (mSize > 0)
-		{
-			for (std::uint32_t i = 0; i < mSize; i++) mData.r[i] = nullptr;
-			mSize = 0;
-		}
 	}
 
 	void Datum::setFromStringInt(const std::string& value, const std::uint32_t& index)
