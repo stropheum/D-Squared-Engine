@@ -420,7 +420,7 @@ namespace TestLibraryDesktop
 			iDatum.setSize(10);
 			Assert::AreEqual(iDatum.size(), 10u, L"Size not equal after calling setSize");
 			iDatum.setSize(1);
-			Assert::AreEqual(iDatum.size(), 10u, L"setSize should not reduce current size");
+			Assert::AreEqual(iDatum.size(), 1u, L"setSize should reduce current size");
 
 
 			// Float
@@ -432,7 +432,7 @@ namespace TestLibraryDesktop
 			fDatum.setSize(10);
 			Assert::AreEqual(fDatum.size(), 10u, L"Size not equal after calling setSize");
 			fDatum.setSize(1);
-			Assert::AreEqual(fDatum.size(), 10u, L"setSize should not reduce current size");
+			Assert::AreEqual(fDatum.size(), 1u, L"setSize should reduce current size");
 
 
 			// Vector
@@ -444,7 +444,7 @@ namespace TestLibraryDesktop
 			vDatum.setSize(10);
 			Assert::AreEqual(vDatum.size(), 10u, L"Size not equal after calling setSize");
 			vDatum.setSize(1);
-			Assert::AreEqual(vDatum.size(), 10u, L"setSize should not reduce current size");
+			Assert::AreEqual(vDatum.size(), 1u, L"setSize should reduce current size");
 
 
 			// Matrix
@@ -456,7 +456,7 @@ namespace TestLibraryDesktop
 			mDatum.setSize(10);
 			Assert::AreEqual(mDatum.size(), 10u, L"Size not equal after calling setSize");
 			mDatum.setSize(1);
-			Assert::AreEqual(mDatum.size(), 10u, L"setSize should not reduce current size");
+			Assert::AreEqual(mDatum.size(), 1u, L"setSize should reduce current size");
 
 
 			// String
@@ -468,7 +468,7 @@ namespace TestLibraryDesktop
 			sDatum.setSize(10);
 			Assert::AreEqual(sDatum.size(), 10u, L"Size not equal after calling setSize");
 			sDatum.setSize(1);
-			Assert::AreEqual(sDatum.size(), 10u, L"setSize should not reduce current size");
+			Assert::AreEqual(sDatum.size(), 1u, L"setSize should reduce current size");
 
 
 			// Pointer
@@ -480,7 +480,7 @@ namespace TestLibraryDesktop
 			rDatum.setSize(10);
 			Assert::AreEqual(rDatum.size(), 10u, L"Size not equal after calling setSize");
 			rDatum.setSize(1);
-			Assert::AreEqual(rDatum.size(), 10u, L"setSize should not reduce current size");
+			Assert::AreEqual(rDatum.size(), 1u, L"setSize should reduce current size");
 		}
 
 		TEST_METHOD(TestReserve)

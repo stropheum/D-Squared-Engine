@@ -795,7 +795,6 @@ namespace Library
 	/// @Param capacity: The current maximum size of the array
 	void Datum::setSizeInt(std::uint32_t size)
 	{
-		if (size < mSize) size = mSize;
 		if (size > mCapacity) mCapacity = size;
 
 		std::int32_t* temp = mData.i;
@@ -809,7 +808,6 @@ namespace Library
 	/// @Param capacity: The current maximum size of the array
 	void Datum::setSizeFloat(std::uint32_t size)
 	{
-		if (size < mSize) size = mSize;
 		if (size > mCapacity) mCapacity = size;
 
 		float* temp = mData.f;
@@ -823,7 +821,6 @@ namespace Library
 	/// @Param capacity: The current maximum size of the array
 	void Datum::setSizeVector(std::uint32_t size)
 	{
-		if (size < mSize) size = mSize;
 		if (size > mCapacity) mCapacity = size;
 
 		glm::vec4* temp = mData.v;
@@ -837,7 +834,6 @@ namespace Library
 	/// @Param capacity: The current maximum size of the array
 	void Datum::setSizeMatrix(std::uint32_t size)
 	{
-		if (size < mSize) size = mSize;
 		if (size > mCapacity) mCapacity = size;
 
 		glm::mat4* temp = mData.m;
@@ -851,7 +847,6 @@ namespace Library
 	/// @Param capacity: The current maximum size of the array
 	void Datum::setSizeString(std::uint32_t size)
 	{
-		if (size < mSize) size = mSize;
 		if (size > mCapacity) mCapacity = size;
 
 		std::string* temp = mData.s;
@@ -868,7 +863,6 @@ namespace Library
 	/// @Param capacity: The current maximum size of the array
 	void Datum::setSizePointer(std::uint32_t size)
 	{
-		if (size < mSize) size = mSize;
 		if (size > mCapacity) mCapacity = size;
 
 		Library::RTTI** temp = mData.r;
