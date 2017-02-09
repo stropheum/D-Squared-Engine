@@ -487,33 +487,98 @@ namespace TestLibraryDesktop
 		{
 			// Integer
 			iDatum.reserve(10);
-			Assert::AreEqual(iDatum.size(), 0u);
-			Assert::AreEqual(iDatum.capacity(), 10u);
+			Assert::AreEqual(0u, iDatum.size());
+			Assert::AreEqual(10u, iDatum.capacity());
 
 			iDatum.setSize(10);
-			Assert::AreEqual(iDatum.size(), 10u);
-			Assert::AreEqual(iDatum.capacity(), 10u);
+			Assert::AreEqual(10u, iDatum.size());
+			Assert::AreEqual(10u, iDatum.capacity());
 
 			iDatum.reserve(10);
-			Assert::AreEqual(iDatum.size(), 10u);
-			Assert::AreEqual(iDatum.capacity(), 10u);
+			Assert::AreEqual(10u, iDatum.size());
+			Assert::AreEqual(10u, iDatum.capacity());
 			
 			Assert::ExpectException<std::exception>([&] {iDatum.reserve(0); });
 
 
 			// Float
+			fDatum.reserve(10);
+			Assert::AreEqual(fDatum.size(), 0u);
+			Assert::AreEqual(fDatum.capacity(), 10u);
+
+			fDatum.setSize(10);
+			Assert::AreEqual(fDatum.size(), 10u);
+			Assert::AreEqual(fDatum.capacity(), 10u);
+
+			fDatum.reserve(10);
+			Assert::AreEqual(fDatum.size(), 10u);
+			Assert::AreEqual(fDatum.capacity(), 10u);
+
+			Assert::ExpectException<std::exception>([&] {fDatum.reserve(0); });
 
 
 			// Vector
+			vDatum.reserve(10);
+			Assert::AreEqual(vDatum.size(), 0u);
+			Assert::AreEqual(vDatum.capacity(), 10u);
+
+			vDatum.setSize(10);
+			Assert::AreEqual(vDatum.size(), 10u);
+			Assert::AreEqual(vDatum.capacity(), 10u);
+
+			vDatum.reserve(10);
+			Assert::AreEqual(vDatum.size(), 10u);
+			Assert::AreEqual(vDatum.capacity(), 10u);
+
+			Assert::ExpectException<std::exception>([&] {vDatum.reserve(0); });
 			
 
 			// Matrix
+			mDatum.reserve(10);
+			Assert::AreEqual(mDatum.size(), 0u);
+			Assert::AreEqual(mDatum.capacity(), 10u);
+
+			mDatum.setSize(10);
+			Assert::AreEqual(mDatum.size(), 10u);
+			Assert::AreEqual(mDatum.capacity(), 10u);
+
+			mDatum.reserve(10);
+			Assert::AreEqual(mDatum.size(), 10u);
+			Assert::AreEqual(mDatum.capacity(), 10u);
+
+			Assert::ExpectException<std::exception>([&] {mDatum.reserve(0); });
 
 
 			// String
+			sDatum.reserve(10);
+//			Assert::AreEqual(sDatum.size(), 0u);
+//			Assert::AreEqual(sDatum.capacity(), 10u);
+//
+//			sDatum.setSize(10);
+//			Assert::AreEqual(sDatum.size(), 10u);
+//			Assert::AreEqual(sDatum.capacity(), 10u);
+//
+//			sDatum.reserve(10);
+//			Assert::AreEqual(sDatum.size(), 10u);
+//			Assert::AreEqual(sDatum.capacity(), 10u);
+//
+//			Assert::ExpectException<std::exception>([&] {sDatum.reserve(0); });
 
 
 			// Pointer
+//			rDatum.reserve(10);
+//			Assert::AreEqual(rDatum.size(), 0u);
+//			Assert::AreEqual(rDatum.capacity(), 10u);
+//
+//			rDatum.setSize(10);
+//			Assert::AreEqual(rDatum.size(), 10u);
+//			Assert::AreEqual(rDatum.capacity(), 10u);
+//
+//			rDatum.reserve(10);
+//			Assert::AreEqual(rDatum.size(), 10u);
+//			Assert::AreEqual(rDatum.capacity(), 10u);
+//
+//			Assert::ExpectException<std::exception>([&] {rDatum.reserve(0); });
 		}
 
 		TEST_METHOD(TestClear)

@@ -801,6 +801,14 @@ namespace Library
 		mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * mCapacity));
 		memcpy_s(mData.i, sizeof(std::int32_t) * mSize, temp, sizeof(std::int32_t) * mSize);
 
+		if (size < mSize)
+		{
+			for (std::uint32_t i = size; i < mSize; i++)
+			{
+				mData.i[i] = NULL;
+			}
+		}
+
 		mSize = size;
 	}
 
@@ -813,6 +821,14 @@ namespace Library
 		float* temp = mData.f;
 		mData.f = static_cast<float*>(malloc(sizeof(float) * mCapacity));
 		memcpy_s(mData.f, sizeof(float) * mSize, temp, sizeof(float) * mSize);
+
+		if (size < mSize)
+		{
+			for (std::uint32_t i = size; i < mSize; i++)
+			{
+				mData.f[i] = NULL;
+			}
+		}
 
 		mSize = size;
 	}
@@ -827,6 +843,14 @@ namespace Library
 		mData.v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4) * mCapacity));
 		memcpy_s(mData.v, sizeof(glm::vec4) * mSize, temp, sizeof(glm::vec4) * mSize);
 
+		if (size < mSize)
+		{
+			for (std::uint32_t i = size; i < mSize; i++)
+			{
+				mData.v[i] = glm::vec4(NULL);
+			}
+		}
+
 		mSize = size;
 	}
 
@@ -839,6 +863,14 @@ namespace Library
 		glm::mat4* temp = mData.m;
 		mData.m = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4) * mCapacity));
 		memcpy_s(mData.m, sizeof(glm::mat4) * mSize, temp, sizeof(glm::mat4) * mSize);
+
+		if (size < mSize)
+		{
+			for (std::uint32_t i = size; i < mSize; i++)
+			{
+				mData.m[i] = glm::mat4(NULL);
+			}
+		}
 
 		mSize = size;
 	}
@@ -856,6 +888,14 @@ namespace Library
 			mData.s[i] = temp[i];
 		}
 
+		if (size < mSize)
+		{
+			for (std::uint32_t i = size; i < mSize; i++)
+			{
+				mData.s[i] = "";
+			}
+		}
+
 		mSize = size;
 	}
 
@@ -869,12 +909,21 @@ namespace Library
 		mData.r = static_cast<Library::RTTI**>(malloc(sizeof(Library::RTTI) * mCapacity));
 		memcpy_s(mData.r, sizeof(Library::RTTI) * mSize, temp, sizeof(Library::RTTI) * mSize);
 
+		if (size < mSize)
+		{
+			for (std::uint32_t i = size; i < mSize; i++)
+			{
+				mData.r[i] = nullptr;
+			}
+		}
+
 		mSize = size;
 	}
 
 	void Datum::reserveInt(std::uint32_t capacity)
 	{
 		if (capacity < mSize) throw std::exception("Attempting to clobber occupied data");
+		mCapacity = capacity;
 
 		std::int32_t* temp = mData.i;
 		mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * mCapacity));
@@ -886,6 +935,7 @@ namespace Library
 	void Datum::reserveFloat(std::uint32_t capacity)
 	{
 		if (capacity < mSize) throw std::exception("Attempting to clobber occupied data");
+		mCapacity = capacity;
 
 		float* temp = mData.f;
 		mData.f = static_cast<float*>(malloc(sizeof(float) * mCapacity));
@@ -897,6 +947,7 @@ namespace Library
 	void Datum::reserveVector(std::uint32_t capacity)
 	{
 		if (capacity < mSize) throw std::exception("Attempting to clobber occupied data");
+		mCapacity = capacity;
 
 		glm::vec4* temp = mData.v;
 		mData.v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4) * mCapacity));
@@ -908,6 +959,7 @@ namespace Library
 	void Datum::reserveMatrix(std::uint32_t capacity)
 	{
 		if (capacity < mSize) throw std::exception("Attempting to clobber occupied data");
+		mCapacity = capacity;
 
 		glm::mat4* temp = mData.m;
 		mData.m = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4) * mCapacity));
@@ -919,6 +971,7 @@ namespace Library
 	void Datum::reserveString(std::uint32_t capacity)
 	{
 		if (capacity < mSize) throw std::exception("Attempting to clobber occupied data");
+		mCapacity = capacity;
 
 		std::string* temp = mData.s;
 		mData.s = new std::string[mCapacity];
@@ -926,13 +979,12 @@ namespace Library
 		{
 			mData.s[i] = temp[i];
 		}
-
-		if (temp != nullptr) free(temp);
 	}
 
 	void Datum::reservePointer(std::uint32_t capacity)
 	{
 		if (capacity < mSize) throw std::exception("Attempting to clobber occupied data");
+		mCapacity = capacity;
 
 		Library::RTTI** temp = mData.r;
 		mData.r = static_cast<Library::RTTI**>(malloc(sizeof(Library::RTTI*) * mCapacity));
