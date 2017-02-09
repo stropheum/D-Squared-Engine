@@ -421,12 +421,99 @@ namespace TestLibraryDesktop
 			Assert::AreEqual(iDatum.size(), 10u, L"Size not equal after calling setSize");
 			iDatum.setSize(1);
 			Assert::AreEqual(iDatum.size(), 10u, L"setSize should not reduce current size");
+
+
+			// Float
+			Assert::AreEqual(fDatum.size(), 0u, L"Size not zero on empty Datum");
+			fDatum.pushBack(f1);
+			Assert::AreEqual(fDatum.size(), 1u), L"Size does not reflect number of elements pushed";
+			fDatum.pushBack(f2);
+			Assert::AreEqual(fDatum.size(), 2u, L"Size does not reflect number of elements pushed");
+			fDatum.setSize(10);
+			Assert::AreEqual(fDatum.size(), 10u, L"Size not equal after calling setSize");
+			fDatum.setSize(1);
+			Assert::AreEqual(fDatum.size(), 10u, L"setSize should not reduce current size");
+
+
+			// Vector
+			Assert::AreEqual(vDatum.size(), 0u, L"Size not zero on empty Datum");
+			vDatum.pushBack(v1);
+			Assert::AreEqual(vDatum.size(), 1u), L"Size does not reflect number of elements pushed";
+			vDatum.pushBack(v2);
+			Assert::AreEqual(vDatum.size(), 2u, L"Size does not reflect number of elements pushed");
+			vDatum.setSize(10);
+			Assert::AreEqual(vDatum.size(), 10u, L"Size not equal after calling setSize");
+			vDatum.setSize(1);
+			Assert::AreEqual(vDatum.size(), 10u, L"setSize should not reduce current size");
+
+
+			// Matrix
+			Assert::AreEqual(mDatum.size(), 0u, L"Size not zero on empty Datum");
+			mDatum.pushBack(m1);
+			Assert::AreEqual(mDatum.size(), 1u), L"Size does not reflect number of elements pushed";
+			mDatum.pushBack(m2);
+			Assert::AreEqual(mDatum.size(), 2u, L"Size does not reflect number of elements pushed");
+			mDatum.setSize(10);
+			Assert::AreEqual(mDatum.size(), 10u, L"Size not equal after calling setSize");
+			mDatum.setSize(1);
+			Assert::AreEqual(mDatum.size(), 10u, L"setSize should not reduce current size");
+
+
+			// String
+			Assert::AreEqual(sDatum.size(), 0u, L"Size not zero on empty Datum");
+			sDatum.pushBack(s1);
+			Assert::AreEqual(sDatum.size(), 1u), L"Size does not reflect number of elements pushed";
+			sDatum.pushBack(s2);
+			Assert::AreEqual(sDatum.size(), 2u, L"Size does not reflect number of elements pushed");
+			sDatum.setSize(10);
+			Assert::AreEqual(sDatum.size(), 10u, L"Size not equal after calling setSize");
+			sDatum.setSize(1);
+			Assert::AreEqual(sDatum.size(), 10u, L"setSize should not reduce current size");
+
+
+			// Pointer
+			Assert::AreEqual(rDatum.size(), 0u, L"Size not zero on empty Datum");
+			rDatum.pushBack(r1);
+			Assert::AreEqual(rDatum.size(), 1u), L"Size does not reflect number of elements pushed";
+			rDatum.pushBack(r2);
+			Assert::AreEqual(rDatum.size(), 2u, L"Size does not reflect number of elements pushed");
+			rDatum.setSize(10);
+			Assert::AreEqual(rDatum.size(), 10u, L"Size not equal after calling setSize");
+			rDatum.setSize(1);
+			Assert::AreEqual(rDatum.size(), 10u, L"setSize should not reduce current size");
 		}
 
 		TEST_METHOD(TestReserve)
 		{
-			// TODO: Implement test method
-			Assert::Fail();
+			// Integer
+			iDatum.reserve(10);
+			Assert::AreEqual(iDatum.size(), 0u);
+			Assert::AreEqual(iDatum.capacity(), 10u);
+
+			iDatum.setSize(10);
+			Assert::AreEqual(iDatum.size(), 10u);
+			Assert::AreEqual(iDatum.capacity(), 10u);
+
+			iDatum.reserve(10);
+			Assert::AreEqual(iDatum.size(), 10u);
+			Assert::AreEqual(iDatum.capacity(), 10u);
+			
+			Assert::ExpectException<std::exception>([&] {iDatum.reserve(0); });
+
+
+			// Float
+
+
+			// Vector
+			
+
+			// Matrix
+
+
+			// String
+
+
+			// Pointer
 		}
 
 		TEST_METHOD(TestClear)
