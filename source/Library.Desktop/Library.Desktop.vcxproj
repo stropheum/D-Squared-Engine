@@ -166,7 +166,6 @@
     <ClInclude Include="RTTI.h" />
     <ClInclude Include="SList.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="targetver.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>

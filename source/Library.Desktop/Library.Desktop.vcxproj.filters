@@ -1,66 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Datum">
+      <UniqueIdentifier>{fed2e44b-7171-4c2e-98e1-9f66e7a11e65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Precompiled Header">
+      <UniqueIdentifier>{393aeed4-31f9-48c2-b621-ff8e80500f18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage">
+      <UniqueIdentifier>{dc64ff8e-29f5-447e-b883-0cb772b19506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage\HashMap">
+      <UniqueIdentifier>{dde02c87-9ee9-4f63-ae9b-138b92a38e22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage\Vector">
+      <UniqueIdentifier>{bb30c127-45e5-4c4c-8bff-acb21212b6e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage\SList">
+      <UniqueIdentifier>{13932c7f-3ebb-482b-b9b4-4a03b46db89b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HashMap.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Datum.h">
+      <Filter>Datum</Filter>
     </ClInclude>
     <ClInclude Include="DefaultHash.h">
-      <Filter>Header Files</Filter>
+      <Filter>Storage\HashMap</Filter>
+    </ClInclude>
+    <ClInclude Include="HashMap.h">
+      <Filter>Storage\HashMap</Filter>
     </ClInclude>
     <ClInclude Include="RTTI.h">
-      <Filter>Header Files</Filter>
+      <Filter>Datum</Filter>
     </ClInclude>
-    <ClInclude Include="Datum.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="SList.h">
+      <Filter>Storage\SList</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Storage\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Precompiled Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Datum.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Datum</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Precompiled Header</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="HashMap.inl">
+      <Filter>Storage\HashMap</Filter>
+    </None>
     <None Include="SList.inl">
-      <Filter>Source Files</Filter>
+      <Filter>Storage\SList</Filter>
     </None>
     <None Include="Vector.inl">
-      <Filter>Source Files</Filter>
+      <Filter>Storage\Vector</Filter>
     </None>
-    <None Include="HashMap.inl">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>
