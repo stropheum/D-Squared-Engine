@@ -162,14 +162,24 @@
   <ItemGroup>
     <ClInclude Include="Datum.h" />
     <ClInclude Include="DefaultHash.h" />
+    <ClInclude Include="FloatState.h" />
     <ClInclude Include="HashMap.h" />
+    <ClInclude Include="IntegerState.h" />
+    <ClInclude Include="MatrixState.h" />
+    <ClInclude Include="PointerState.h" />
     <ClInclude Include="RTTI.h" />
     <ClInclude Include="SList.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="StringState.h" />
+    <ClInclude Include="TypeState.h" />
     <ClInclude Include="Vector.h" />
+    <ClInclude Include="VectorState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Datum.cpp" />
+    <ClCompile Include="FloatState.cpp" />
+    <ClCompile Include="IntegerState.cpp" />
+    <ClCompile Include="MatrixState.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -180,6 +190,10 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="PointerState.cpp" />
+    <ClCompile Include="StringState.cpp" />
+    <ClCompile Include="TypeState.cpp" />
+    <ClCompile Include="VectorState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HashMap.inl" />

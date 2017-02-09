@@ -25,6 +25,14 @@ namespace Library
 
 	class Datum
 	{
+		friend class TypeState;
+		friend class IntegerState;
+		friend class FloatState;
+		friend class VectorState;
+		friend class MatrixState;
+		friend class StringState;
+		friend class PointerState;
+		
 	public:
 		union DatumValues
 		{
@@ -110,6 +118,8 @@ namespace Library
 		std::string toString();
 
 	private:
+		TypeState* mTypeState;
+
 		void clearInt();
 		void clearFloat();
 		void clearVector();

@@ -5,13 +5,13 @@ namespace Library
 {
 	/// Constructor
 	Datum::Datum():
-		mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
+		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
 	{}
 
 	/// Overloaded constructor
 	/// @Param type: The type of the Datum object
 	Datum::Datum(DatumType type) :
-		mType(type), mCapacity(1), mSize(0), mDataIsExternal(false)
+		mTypeState(nullptr), mType(type), mCapacity(1), mSize(0), mDataIsExternal(false)
 	{
 		// Reserve size of 1
 	}
@@ -81,7 +81,7 @@ namespace Library
 	/// Move copy constructor
 	/// @Param rhs: Datum object being copied
 	Datum::Datum(Datum&& rhs) :
-		mType(rhs.mType), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
+		mTypeState(nullptr), mType(rhs.mType), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
 	{
 		// TODO: Handle deep copy semantics
 		switch (rhs.mType)
@@ -142,11 +142,8 @@ namespace Library
 	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
 	Datum& Datum::operator=(const std::int32_t& rhs)
 	{
-		if (mSize > 1) throw std::exception("Invalid assignment invocation");
 		setType(DatumType::Integer);
-		if (mSize == 0) setSize(1);
-		mData.i[0] = rhs;
-		return *this;
+		return mTypeState->operator=(rhs);
 	}
 
 	/// Assignment operator for float
@@ -155,11 +152,8 @@ namespace Library
 	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
 	Datum& Datum::operator=(const float& rhs)
 	{
-		if (mSize > 1) throw std::exception("Invalid assignment invocation");
 		setType(DatumType::Float);
-		if (mSize == 0) setSize(1);
-		mData.f[0] = rhs;
-		return *this;
+		return mTypeState->operator=(rhs);
 	}
 
 	/// Assignment operator for vec4
@@ -168,11 +162,8 @@ namespace Library
 	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
 	Datum& Datum::operator=(const glm::vec4& rhs)
 	{
-		if (mSize > 1) throw std::exception("Invalid assignment invocation");
 		setType(DatumType::Vector);
-		if (mSize == 0) setSize(1);
-		mData.v[0] = rhs;
-		return *this;
+		return mTypeState->operator=(rhs);
 	}
 
 	/// Assignment operator for mat4
@@ -181,11 +172,8 @@ namespace Library
 	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
 	Datum& Datum::operator=(const glm::mat4& rhs)
 	{
-		if (mSize > 1) throw std::exception("Invalid assignment invocation");
 		setType(DatumType::Matrix);
-		if (mSize == 0) setSize(1);
-		mData.m[0] = rhs;
-		return *this;
+		return mTypeState->operator=(rhs);
 	}
 
 	/// Assignment operator for std::string
@@ -194,11 +182,8 @@ namespace Library
 	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
 	Datum& Datum::operator=(const std::string& rhs)
 	{
-		if (mSize > 1) throw std::exception("Invalid assignment invocation");
 		setType(DatumType::String);
-		if (mSize == 0) setSize(1);
-		mData.s[0] = rhs;
-		return *this;
+		return mTypeState->operator=(rhs);
 	}
 
 	/// Assignment operator for float
@@ -207,11 +192,8 @@ namespace Library
 	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
 	Datum& Datum::operator=(Library::RTTI* const& rhs)
 	{
-
 		setType(DatumType::Pointer);
-		if (mSize == 0) setSize(1);
-		mData.r[0] = rhs;
-		return *this;
+		return mTypeState->operator=(rhs);
 	}
 
 	/// Comparison operator for DatumType value
@@ -344,8 +326,33 @@ namespace Library
 	/// @Exception: Thrown if attempting to reassign a new type to a Datum object
 	void Datum::setType(const DatumType& type)
 	{
-		if (mType == DatumType::Unknown || mType == type)  mType = type;
+		if (mType == type) return; // Avoid double instantiation of state without throwing an exception
+		
+		if (mType == DatumType::Unknown) mType = type;
 		else throw std::exception("Attempting to change type on Datum object");
+		
+		switch (mType)
+		{
+			case DatumType::Integer:
+				mTypeState = new IntegerState(this);
+				break;
+			case DatumType::Float:
+				mTypeState = new FloatState(this);
+				break;
+			case DatumType::Vector:
+				mTypeState = new VectorState(this);
+				break;
+			case DatumType::Matrix:
+				mTypeState = new MatrixState(this);
+				break;
+			case DatumType::String:
+				mTypeState = new StringState(this);
+				break;
+			case DatumType::Pointer:
+				mTypeState = new PointerState(this);
+				break;
+			default: throw std::exception("Invalid type assignment");
+		}
 	}
 
 	/// The number of values in the Datum object
@@ -368,30 +375,30 @@ namespace Library
 	void Datum::setSize(std::uint32_t size)
 	{
 		if (mDataIsExternal) throw std::exception("Attempting to resize external storage");
-
-		switch (mType)
-		{
-			case DatumType::Integer:
-				setSizeInt(size);
-				break;
-			case DatumType::Float:
-				setSizeFloat(size);
-				break;
-			case DatumType::Vector:
-				setSizeVector(size);
-				break;
-			case DatumType::Matrix:
-				setSizeMatrix(size);
-				break;
-			case DatumType::String:
-				setSizeString(size);
-				break;
-			case DatumType::Pointer:
-				setSizePointer(size);
-				break;
-			default:
-				throw std::exception("Attempting to reserve on uninitialized Datum object");
-		}
+		mTypeState->setSize(size);
+//		switch (mType)
+//		{
+//			case DatumType::Integer:
+//				setSizeInt(size);
+//				break;
+//			case DatumType::Float:
+//				setSizeFloat(size);
+//				break;
+//			case DatumType::Vector:
+//				setSizeVector(size);
+//				break;
+//			case DatumType::Matrix:
+//				setSizeMatrix(size);
+//				break;
+//			case DatumType::String:
+//				setSizeString(size);
+//				break;
+//			case DatumType::Pointer:
+//				setSizePointer(size);
+//				break;
+//			default:
+//				throw std::exception("Attempting to reserve on uninitialized Datum object");
+//		}
 	}
 
 	/// Reserve additional capacity for uninitialized values
@@ -824,135 +831,6 @@ namespace Library
 			for (std::uint32_t i = 0; i < mSize; i++) mData.r[i] = nullptr;
 			mSize = 0;
 		}
-	}
-
-	/// Reserves the number of integers in the local buffer
-	/// @Param capacity: The current maximum size of the array
-	void Datum::setSizeInt(std::uint32_t size)
-	{
-		if (size > mCapacity) mCapacity = size;
-
-		std::int32_t* temp = mData.i;
-		mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * mCapacity));
-		memcpy_s(mData.i, sizeof(std::int32_t) * mSize, temp, sizeof(std::int32_t) * mSize);
-
-		if (size < mSize)
-		{
-			for (std::uint32_t i = size; i < mSize; i++)
-			{
-				mData.i[i] = NULL;
-			}
-		}
-
-		mSize = size;
-	}
-
-	/// Reserves the number of floats in the local buffer
-	/// @Param capacity: The current maximum size of the array
-	void Datum::setSizeFloat(std::uint32_t size)
-	{
-		if (size > mCapacity) mCapacity = size;
-
-		float* temp = mData.f;
-		mData.f = static_cast<float*>(malloc(sizeof(float) * mCapacity));
-		memcpy_s(mData.f, sizeof(float) * mSize, temp, sizeof(float) * mSize);
-
-		if (size < mSize)
-		{
-			for (std::uint32_t i = size; i < mSize; i++)
-			{
-				mData.f[i] = NULL;
-			}
-		}
-
-		mSize = size;
-	}
-
-	/// Reserves the number of vectors in the local buffer
-	/// @Param capacity: The current maximum size of the array
-	void Datum::setSizeVector(std::uint32_t size)
-	{
-		if (size > mCapacity) mCapacity = size;
-
-		glm::vec4* temp = mData.v;
-		mData.v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4) * mCapacity));
-		memcpy_s(mData.v, sizeof(glm::vec4) * mSize, temp, sizeof(glm::vec4) * mSize);
-
-		if (size < mSize)
-		{
-			for (std::uint32_t i = size; i < mSize; i++)
-			{
-				mData.v[i] = glm::vec4(NULL);
-			}
-		}
-
-		mSize = size;
-	}
-
-	/// Reserves the number of matrices in the local buffer
-	/// @Param capacity: The current maximum size of the array
-	void Datum::setSizeMatrix(std::uint32_t size)
-	{
-		if (size > mCapacity) mCapacity = size;
-
-		glm::mat4* temp = mData.m;
-		mData.m = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4) * mCapacity));
-		memcpy_s(mData.m, sizeof(glm::mat4) * mSize, temp, sizeof(glm::mat4) * mSize);
-
-		if (size < mSize)
-		{
-			for (std::uint32_t i = size; i < mSize; i++)
-			{
-				mData.m[i] = glm::mat4(NULL);
-			}
-		}
-
-		mSize = size;
-	}
-
-	/// Reserves the number of strings in the local buffer
-	/// @Param capacity: The current maximum size of the array
-	void Datum::setSizeString(std::uint32_t size)
-	{
-		if (size > mCapacity) mCapacity = size;
-
-		std::string* temp = mData.s;
-		mData.s = new std::string[mCapacity];
-		for (std::uint32_t i = 0; i < mSize; i++)
-		{
-			mData.s[i] = temp[i];
-		}
-
-		if (size < mSize)
-		{
-			for (std::uint32_t i = size; i < mSize; i++)
-			{
-				mData.s[i] = "";
-			}
-		}
-
-		mSize = size;
-	}
-
-	/// Reserves the number of RTTI pointers in the local buffer
-	/// @Param capacity: The current maximum size of the array
-	void Datum::setSizePointer(std::uint32_t size)
-	{
-		if (size > mCapacity) mCapacity = size;
-
-		Library::RTTI** temp = mData.r;
-		mData.r = static_cast<Library::RTTI**>(malloc(sizeof(Library::RTTI) * mCapacity));
-		memcpy_s(mData.r, sizeof(Library::RTTI) * mSize, temp, sizeof(Library::RTTI) * mSize);
-
-		if (size < mSize)
-		{
-			for (std::uint32_t i = size; i < mSize; i++)
-			{
-				mData.r[i] = nullptr;
-			}
-		}
-
-		mSize = size;
 	}
 
 	void Datum::reserveInt(std::uint32_t capacity)

@@ -17,6 +17,14 @@
 #include <string>
 #include "RTTI.h"
 
+#include "TypeState.h"
+#include "IntegerState.h"
+#include "FloatState.h"
+#include "VectorState.h"
+#include "MatrixState.h"
+#include "StringState.h"
+#include "PointerState.h"
+
 #define CLM_FORCE_CXX98
 #pragma warning(push)
 #pragma warning(disable:4201)

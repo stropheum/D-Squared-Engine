@@ -23,6 +23,30 @@
     <Filter Include="Storage\SList">
       <UniqueIdentifier>{13932c7f-3ebb-482b-b9b4-4a03b46db89b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Datum\TypeState">
+      <UniqueIdentifier>{0866b993-4784-4aef-8d44-e1d6558ca03b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Datum\TypeState\Integer">
+      <UniqueIdentifier>{b282db97-1fa2-4803-a995-02579c7539f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Datum\TypeState\Base Class">
+      <UniqueIdentifier>{67ca90a5-b34c-4dad-9568-e340600042c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Datum\TypeState\Float">
+      <UniqueIdentifier>{76cecd8c-7302-4f5b-a0f4-3c66259f21b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Datum\TypeState\Vector">
+      <UniqueIdentifier>{d98ed69f-0f2b-4d53-8efd-fc93f95e7b4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Datum\TypeState\Matrix">
+      <UniqueIdentifier>{80fefe37-a69f-4083-9987-1bcac7e33841}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Datum\TypeState\String">
+      <UniqueIdentifier>{f03fc57d-c3ca-493c-9918-b5e15defcb00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Datum\TypeState\Pointer">
+      <UniqueIdentifier>{761dfb5b-de1f-411a-93ea-904e429601c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -49,6 +73,27 @@
     <ClInclude Include="pch.h">
       <Filter>Precompiled Header</Filter>
     </ClInclude>
+    <ClInclude Include="IntegerState.h">
+      <Filter>Datum\TypeState\Integer</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeState.h">
+      <Filter>Datum\TypeState\Base Class</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatState.h">
+      <Filter>Datum\TypeState\Float</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorState.h">
+      <Filter>Datum\TypeState\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixState.h">
+      <Filter>Datum\TypeState\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="StringState.h">
+      <Filter>Datum\TypeState\String</Filter>
+    </ClInclude>
+    <ClInclude Include="PointerState.h">
+      <Filter>Datum\TypeState\Pointer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Datum.cpp">
@@ -56,6 +101,27 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Precompiled Header</Filter>
+    </ClCompile>
+    <ClCompile Include="IntegerState.cpp">
+      <Filter>Datum\TypeState\Integer</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeState.cpp">
+      <Filter>Datum\TypeState\Base Class</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatState.cpp">
+      <Filter>Datum\TypeState\Float</Filter>
+    </ClCompile>
+    <ClCompile Include="VectorState.cpp">
+      <Filter>Datum\TypeState\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixState.cpp">
+      <Filter>Datum\TypeState\Matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="StringState.cpp">
+      <Filter>Datum\TypeState\String</Filter>
+    </ClCompile>
+    <ClCompile Include="PointerState.cpp">
+      <Filter>Datum\TypeState\Pointer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
