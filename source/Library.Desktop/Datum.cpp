@@ -376,29 +376,6 @@ namespace Library
 	{
 		if (mDataIsExternal) throw std::exception("Attempting to resize external storage");
 		mTypeState->setSize(size);
-//		switch (mType)
-//		{
-//			case DatumType::Integer:
-//				setSizeInt(size);
-//				break;
-//			case DatumType::Float:
-//				setSizeFloat(size);
-//				break;
-//			case DatumType::Vector:
-//				setSizeVector(size);
-//				break;
-//			case DatumType::Matrix:
-//				setSizeMatrix(size);
-//				break;
-//			case DatumType::String:
-//				setSizeString(size);
-//				break;
-//			case DatumType::Pointer:
-//				setSizePointer(size);
-//				break;
-//			default:
-//				throw std::exception("Attempting to reserve on uninitialized Datum object");
-//		}
 	}
 
 	/// Reserve additional capacity for uninitialized values
@@ -407,30 +384,7 @@ namespace Library
 	void Datum::reserve(std::uint32_t capacity)
 	{
 		if (mDataIsExternal) throw std::exception("Attempting to resize external storage");
-
-		switch (mType)
-		{
-		case DatumType::Integer:
-			reserveInt(capacity);
-			break;
-		case DatumType::Float:
-			reserveFloat(capacity);
-			break;
-		case DatumType::Vector:
-			reserveVector(capacity);
-			break;
-		case DatumType::Matrix:
-			reserveMatrix(capacity);
-			break;
-		case DatumType::String:
-			reserveString(capacity);
-			break;
-		case DatumType::Pointer:
-			reservePointer(capacity);
-			break;
-		default:
-			throw std::exception("Attempting to reserve on uninitialized Datum object");
-		}
+		mTypeState->reserve(capacity);
 	}
 
 	/// Clear the array without shrinking the capacity
@@ -831,79 +785,6 @@ namespace Library
 			for (std::uint32_t i = 0; i < mSize; i++) mData.r[i] = nullptr;
 			mSize = 0;
 		}
-	}
-
-	void Datum::reserveInt(std::uint32_t capacity)
-	{
-		if (capacity < mSize) throw std::exception("Attempting to clobber occupied data");
-		mCapacity = capacity;
-
-		std::int32_t* temp = mData.i;
-		mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * mCapacity));
-		memcpy_s(mData.i, sizeof(std::int32_t) * mSize, temp, sizeof(std::int32_t) * mSize);
-
-		if (temp != nullptr) free(temp);
-	}
-
-	void Datum::reserveFloat(std::uint32_t capacity)
-	{
-		if (capacity < mSize) throw std::exception("Attempting to clobber occupied data");
-		mCapacity = capacity;
-
-		float* temp = mData.f;
-		mData.f = static_cast<float*>(malloc(sizeof(float) * mCapacity));
-		memcpy_s(mData.f, sizeof(float) * mSize, temp, sizeof(float) * mSize);
-
-		if (temp != nullptr) free(temp);
-	}
-
-	void Datum::reserveVector(std::uint32_t capacity)
-	{
-		if (capacity < mSize) throw std::exception("Attempting to clobber occupied data");
-		mCapacity = capacity;
-
-		glm::vec4* temp = mData.v;
-		mData.v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4) * mCapacity));
-		memcpy_s(mData.v, sizeof(glm::vec4) * mSize, temp, sizeof(glm::vec4) * mSize);
-
-		if (temp != nullptr) free(temp);
-	}
-
-	void Datum::reserveMatrix(std::uint32_t capacity)
-	{
-		if (capacity < mSize) throw std::exception("Attempting to clobber occupied data");
-		mCapacity = capacity;
-
-		glm::mat4* temp = mData.m;
-		mData.m = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4) * mCapacity));
-		memcpy_s(mData.m, sizeof(glm::mat4) * mSize, temp, sizeof(glm::mat4) * mSize);
-
-		if (temp != nullptr) free(temp);
-	}
-
-	void Datum::reserveString(std::uint32_t capacity)
-	{
-		if (capacity < mSize) throw std::exception("Attempting to clobber occupied data");
-		mCapacity = capacity;
-
-		std::string* temp = mData.s;
-		mData.s = new std::string[mCapacity];
-		for (std::uint32_t i = 0; i < mSize; i++)
-		{
-			mData.s[i] = temp[i];
-		}
-	}
-
-	void Datum::reservePointer(std::uint32_t capacity)
-	{
-		if (capacity < mSize) throw std::exception("Attempting to clobber occupied data");
-		mCapacity = capacity;
-
-		Library::RTTI** temp = mData.r;
-		mData.r = static_cast<Library::RTTI**>(malloc(sizeof(Library::RTTI*) * mCapacity));
-		memcpy_s(mData.r, sizeof(Library::RTTI) * mSize, temp, sizeof(Library::RTTI) * mSize);
-
-		if (temp != nullptr) free(temp);
 	}
 
 	void Datum::setFromStringInt(const std::string& value, const std::uint32_t& index)

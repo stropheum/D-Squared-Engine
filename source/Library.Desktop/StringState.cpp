@@ -43,4 +43,17 @@ namespace Library
 
 		mContext->mSize = size;
 	}
+
+	void StringState::reserve(std::uint32_t capacity)
+	{
+		if (capacity < mContext->mSize) throw std::exception("Attempting to clobber occupied data");
+		mContext->mCapacity = capacity;
+
+		std::string* temp = mContext->mData.s;
+		mContext->mData.s = new std::string[mContext->mCapacity];
+		for (std::uint32_t i = 0; i < mContext->mSize; i++)
+		{
+			mContext->mData.s[i] = temp[i];
+		}
+	}
 }

@@ -12,6 +12,7 @@ namespace Library
 		Datum& operator=(const std::string& rhs) override;
 
 		void setSize(std::uint32_t size) override;
+		void reserve(std::uint32_t capacity) override;
 	};
 }
 

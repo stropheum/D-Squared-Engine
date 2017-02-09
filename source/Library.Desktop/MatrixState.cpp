@@ -39,4 +39,16 @@ namespace Library
 
 		mContext->mSize = size;
 	}
+
+	void MatrixState::reserve(std::uint32_t capacity)
+	{
+		if (capacity < mContext->mSize) throw std::exception("Attempting to clobber occupied data");
+		mContext->mCapacity = capacity;
+
+		glm::mat4* temp = mContext->mData.m;
+		mContext->mData.m = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4) * mContext->mCapacity));
+		memcpy_s(mContext->mData.m, sizeof(glm::mat4) * mContext->mSize, temp, sizeof(glm::mat4) * mContext->mSize);
+
+		if (temp != nullptr) free(temp);
+	}
 }

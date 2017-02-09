@@ -17,6 +17,7 @@ namespace Library
 		virtual Datum& operator=(Library::RTTI* const& rhs);
 
 		virtual void setSize(std::uint32_t size);
+		virtual void reserve(std::uint32_t capacity);
 
 	protected:
 		TypeState(Datum* const context);

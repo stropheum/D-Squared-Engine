@@ -54,4 +54,9 @@ namespace Library
 		throw std::exception("Calling set size on Datum with no type");
 	}
 
+	void TypeState::reserve(std::uint32_t capacity)
+	{
+		UNREFERENCED_PARAMETER(capacity);
+		throw std::exception("Attempting to reserve size of unknown type");
+	}
 }

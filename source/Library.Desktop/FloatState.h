@@ -13,6 +13,7 @@ namespace Library
 		Datum& operator=(const float& rhs) override;
 
 		void setSize(std::uint32_t size) override;
+		void reserve(std::uint32_t capacity) override;
 	};
 }
 
