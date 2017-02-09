@@ -72,6 +72,7 @@ namespace Library
 		DatumType type() const;
 		void setType(const DatumType& type);
 		std::uint32_t size() const;
+		std::uint32_t capacity() const;
 		void setSize(std::uint32_t size);
 		void reserve(std::uint32_t capacity);
 		void clear();

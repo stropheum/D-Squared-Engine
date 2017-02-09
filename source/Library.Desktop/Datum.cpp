@@ -355,6 +355,13 @@ namespace Library
 		return mSize;
 	}
 
+	/// The number of potential values in the Datum object
+	/// @Return: The number of objects that can currently be stored in the Datum object
+	std::uint32_t Datum::capacity() const
+	{
+		return mCapacity;
+	}
+
 	/// Set number of values and reserve memory if needed
 	/// @Param size: the new number of values
 	/// @Exception: Thrown if attempting to resize external data
@@ -385,8 +392,6 @@ namespace Library
 			default:
 				throw std::exception("Attempting to reserve on uninitialized Datum object");
 		}
-
-		mSize = size;
 	}
 
 	/// Reserve additional capacity for uninitialized values
@@ -796,6 +801,8 @@ namespace Library
 		std::int32_t* temp = mData.i;
 		mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * mCapacity));
 		memcpy_s(mData.i, sizeof(std::int32_t) * mSize, temp, sizeof(std::int32_t) * mSize);
+
+		mSize = size;
 	}
 
 	/// Reserves the number of floats in the local buffer
@@ -808,6 +815,8 @@ namespace Library
 		float* temp = mData.f;
 		mData.f = static_cast<float*>(malloc(sizeof(float) * mCapacity));
 		memcpy_s(mData.f, sizeof(float) * mSize, temp, sizeof(float) * mSize);
+
+		mSize = size;
 	}
 
 	/// Reserves the number of vectors in the local buffer
@@ -820,6 +829,8 @@ namespace Library
 		glm::vec4* temp = mData.v;
 		mData.v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4) * mCapacity));
 		memcpy_s(mData.v, sizeof(glm::vec4) * mSize, temp, sizeof(glm::vec4) * mSize);
+
+		mSize = size;
 	}
 
 	/// Reserves the number of matrices in the local buffer
@@ -832,6 +843,8 @@ namespace Library
 		glm::mat4* temp = mData.m;
 		mData.m = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4) * mCapacity));
 		memcpy_s(mData.m, sizeof(glm::mat4) * mSize, temp, sizeof(glm::mat4) * mSize);
+
+		mSize = size;
 	}
 
 	/// Reserves the number of strings in the local buffer
@@ -847,6 +860,8 @@ namespace Library
 		{
 			mData.s[i] = temp[i];
 		}
+
+		mSize = size;
 	}
 
 	/// Reserves the number of RTTI pointers in the local buffer
@@ -859,6 +874,8 @@ namespace Library
 		Library::RTTI** temp = mData.r;
 		mData.r = static_cast<Library::RTTI**>(malloc(sizeof(Library::RTTI) * mCapacity));
 		memcpy_s(mData.r, sizeof(Library::RTTI) * mSize, temp, sizeof(Library::RTTI) * mSize);
+
+		mSize = size;
 	}
 
 	void Datum::reserveInt(std::uint32_t capacity)
@@ -874,31 +891,59 @@ namespace Library
 
 	void Datum::reserveFloat(std::uint32_t capacity)
 	{
-		// TODO: Implement reserve float method
-		UNREFERENCED_PARAMETER(capacity);
+		if (capacity < mSize) throw std::exception("Attempting to clobber occupied data");
+
+		float* temp = mData.f;
+		mData.f = static_cast<float*>(malloc(sizeof(float) * mCapacity));
+		memcpy_s(mData.f, sizeof(float) * mSize, temp, sizeof(float) * mSize);
+
+		if (temp != nullptr) free(temp);
 	}
 
 	void Datum::reserveVector(std::uint32_t capacity)
 	{
-		// TODO: Implement reserve vector method
-		UNREFERENCED_PARAMETER(capacity);
+		if (capacity < mSize) throw std::exception("Attempting to clobber occupied data");
+
+		glm::vec4* temp = mData.v;
+		mData.v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4) * mCapacity));
+		memcpy_s(mData.v, sizeof(glm::vec4) * mSize, temp, sizeof(glm::vec4) * mSize);
+
+		if (temp != nullptr) free(temp);
 	}
 
 	void Datum::reserveMatrix(std::uint32_t capacity)
 	{
-		// TODO: Implement reserve matrix method
-		UNREFERENCED_PARAMETER(capacity);
+		if (capacity < mSize) throw std::exception("Attempting to clobber occupied data");
+
+		glm::mat4* temp = mData.m;
+		mData.m = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4) * mCapacity));
+		memcpy_s(mData.m, sizeof(glm::mat4) * mSize, temp, sizeof(glm::mat4) * mSize);
+
+		if (temp != nullptr) free(temp);
 	}
 
 	void Datum::reserveString(std::uint32_t capacity)
 	{
-		// TODO: Implement reserve string method
-		UNREFERENCED_PARAMETER(capacity);
+		if (capacity < mSize) throw std::exception("Attempting to clobber occupied data");
+
+		std::string* temp = mData.s;
+		mData.s = new std::string[mCapacity];
+		for (std::uint32_t i = 0; i < mSize; i++)
+		{
+			mData.s[i] = temp[i];
+		}
+
+		if (temp != nullptr) free(temp);
 	}
 
 	void Datum::reservePointer(std::uint32_t capacity)
 	{
-		// TODO: Implement reserve pointer method
-		UNREFERENCED_PARAMETER(capacity);
+		if (capacity < mSize) throw std::exception("Attempting to clobber occupied data");
+
+		Library::RTTI** temp = mData.r;
+		mData.r = static_cast<Library::RTTI**>(malloc(sizeof(Library::RTTI*) * mCapacity));
+		memcpy_s(mData.r, sizeof(Library::RTTI) * mSize, temp, sizeof(Library::RTTI) * mSize);
+
+		if (temp != nullptr) free(temp);
 	}
 }

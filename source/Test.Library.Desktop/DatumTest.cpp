@@ -411,8 +411,16 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestSize)
 		{
-			// TODO: Implement test method
-			Assert::Fail();
+			// Integer
+			Assert::AreEqual(iDatum.size(), 0u, L"Size not zero on empty Datum");
+			iDatum.pushBack(i1);
+			Assert::AreEqual(iDatum.size(), 1u), L"Size does not reflect number of elements pushed";
+			iDatum.pushBack(i2);
+			Assert::AreEqual(iDatum.size(), 2u, L"Size does not reflect number of elements pushed");
+			iDatum.setSize(10);
+			Assert::AreEqual(iDatum.size(), 10u, L"Size not equal after calling setSize");
+			iDatum.setSize(1);
+			Assert::AreEqual(iDatum.size(), 10u, L"setSize should not reduce current size");
 		}
 
 		TEST_METHOD(TestReserve)
