@@ -551,40 +551,132 @@ namespace TestLibraryDesktop
 
 			// String
 			sDatum.reserve(10);
-//			Assert::AreEqual(sDatum.size(), 0u);
-//			Assert::AreEqual(sDatum.capacity(), 10u);
-//
-//			sDatum.setSize(10);
-//			Assert::AreEqual(sDatum.size(), 10u);
-//			Assert::AreEqual(sDatum.capacity(), 10u);
-//
-//			sDatum.reserve(10);
-//			Assert::AreEqual(sDatum.size(), 10u);
-//			Assert::AreEqual(sDatum.capacity(), 10u);
-//
-//			Assert::ExpectException<std::exception>([&] {sDatum.reserve(0); });
+			Assert::AreEqual(sDatum.size(), 0u);
+			Assert::AreEqual(sDatum.capacity(), 10u);
+
+			sDatum.setSize(10);
+			Assert::AreEqual(sDatum.size(), 10u);
+			Assert::AreEqual(sDatum.capacity(), 10u);
+
+			sDatum.reserve(10);
+			Assert::AreEqual(sDatum.size(), 10u);
+			Assert::AreEqual(sDatum.capacity(), 10u);
+
+			Assert::ExpectException<std::exception>([&] {sDatum.reserve(0); });
 
 
 			// Pointer
-//			rDatum.reserve(10);
-//			Assert::AreEqual(rDatum.size(), 0u);
-//			Assert::AreEqual(rDatum.capacity(), 10u);
-//
-//			rDatum.setSize(10);
-//			Assert::AreEqual(rDatum.size(), 10u);
-//			Assert::AreEqual(rDatum.capacity(), 10u);
-//
-//			rDatum.reserve(10);
-//			Assert::AreEqual(rDatum.size(), 10u);
-//			Assert::AreEqual(rDatum.capacity(), 10u);
-//
-//			Assert::ExpectException<std::exception>([&] {rDatum.reserve(0); });
+			rDatum.reserve(10);
+			Assert::AreEqual(rDatum.size(), 0u);
+			Assert::AreEqual(rDatum.capacity(), 10u);
+
+			rDatum.setSize(10);
+			Assert::AreEqual(rDatum.size(), 10u);
+			Assert::AreEqual(rDatum.capacity(), 10u);
+
+			rDatum.reserve(10);
+			Assert::AreEqual(rDatum.size(), 10u);
+			Assert::AreEqual(rDatum.capacity(), 10u);
+
+			Assert::ExpectException<std::exception>([&] {rDatum.reserve(0); });
 		}
 
 		TEST_METHOD(TestClear)
 		{
-			// TODO: Implement test method
-			Assert::Fail();
+			// Integer
+			iDatum.setSize(10);
+			iDatum.clear();
+			Assert::AreEqual(10u, iDatum.capacity());
+			Assert::AreEqual(0u, iDatum.size());
+
+			iDatum = i1;
+			iDatum.clear();
+			Assert::AreEqual(10u, iDatum.capacity());
+			Assert::AreEqual(0u, iDatum.size());
+			
+			iDatum.clear();
+			Assert::AreEqual(10u, iDatum.capacity());
+			Assert::AreEqual(0u, iDatum.size());
+
+
+			// Float
+			fDatum.setSize(10);
+			fDatum.clear();
+			Assert::AreEqual(10u, fDatum.capacity());
+			Assert::AreEqual(0u, fDatum.size());
+
+			fDatum = f1;
+			fDatum.clear();
+			Assert::AreEqual(10u, fDatum.capacity());
+			Assert::AreEqual(0u, fDatum.size());
+
+			fDatum.clear();
+			Assert::AreEqual(10u, fDatum.capacity());
+			Assert::AreEqual(0u, fDatum.size());
+
+
+			// Vector
+			vDatum.setSize(10);
+			vDatum.clear();
+			Assert::AreEqual(10u, vDatum.capacity());
+			Assert::AreEqual(0u, vDatum.size());
+
+			vDatum = v1;
+			vDatum.clear();
+			Assert::AreEqual(10u, vDatum.capacity());
+			Assert::AreEqual(0u, vDatum.size());
+
+			vDatum.clear();
+			Assert::AreEqual(10u, vDatum.capacity());
+			Assert::AreEqual(0u, vDatum.size());
+
+
+			// Matrix
+			mDatum.setSize(10);
+			mDatum.clear();
+			Assert::AreEqual(10u, mDatum.capacity());
+			Assert::AreEqual(0u, mDatum.size());
+
+			mDatum = m1;
+			mDatum.clear();
+			Assert::AreEqual(10u, mDatum.capacity());
+			Assert::AreEqual(0u, mDatum.size());
+
+			mDatum.clear();
+			Assert::AreEqual(10u, mDatum.capacity());
+			Assert::AreEqual(0u, mDatum.size());
+
+
+			// String
+			sDatum.setSize(10);
+			sDatum.clear();
+			Assert::AreEqual(10u, sDatum.capacity());
+			Assert::AreEqual(0u, sDatum.size());
+
+			sDatum = s1;
+			sDatum.clear();
+			Assert::AreEqual(10u, sDatum.capacity());
+			Assert::AreEqual(0u, sDatum.size());
+
+			sDatum.clear();
+			Assert::AreEqual(10u, sDatum.capacity());
+			Assert::AreEqual(0u, sDatum.size());
+
+
+			// Pointer
+			rDatum.setSize(10);
+			rDatum.clear();
+			Assert::AreEqual(10u, rDatum.capacity());
+			Assert::AreEqual(0u, rDatum.size());
+
+			rDatum = r1;
+			rDatum.clear();
+			Assert::AreEqual(10u, rDatum.capacity());
+			Assert::AreEqual(0u, rDatum.size());
+
+			rDatum.clear();
+			Assert::AreEqual(10u, rDatum.capacity());
+			Assert::AreEqual(0u, rDatum.size());
 		}
 
 		TEST_METHOD(TestSetStorage)
@@ -595,8 +687,112 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestSet)
 		{
-			// TODO: Implement test method
-			Assert::Fail();
+			// Integer
+			Assert::ExpectException<std::exception>([&] {iDatum.set(i1, 10); });
+			Assert::ExpectException<std::exception>([&] {iDatum.set(f1, 0); });
+			
+			iDatum.reserve(10);
+			iDatum.set(i1, 0);
+			Assert::IsTrue(iDatum == i1);
+			
+			iDatum.pushBack(i2);
+			iDatum.set(i3, 0);
+			Assert::IsTrue(iDatum.get<std::int32_t>(0) == i3);
+			Assert::IsTrue(iDatum.get<std::int32_t>(1) == i2);
+
+			iDatum.set(i1, 1);
+			Assert::IsTrue(iDatum.get<std::int32_t>(1) == i1);
+			Assert::ExpectException<std::exception>([&] { iDatum.set(i1, 10); });
+
+
+			// Float
+			Assert::ExpectException<std::exception>([&] {fDatum.set(f1, 10); });
+			Assert::ExpectException<std::exception>([&] {fDatum.set(i1, 0); });
+
+			fDatum.reserve(10);
+			fDatum.set(f1, 0);
+			Assert::IsTrue(fDatum == f1);
+
+			fDatum.pushBack(f2);
+			fDatum.set(f3, 0);
+			Assert::IsTrue(fDatum.get<float>(0) == f3);
+			Assert::IsTrue(fDatum.get<float>(1) == f2);
+
+			fDatum.set(f1, 1);
+			Assert::IsTrue(fDatum.get<float>(1) == f1);
+			Assert::ExpectException<std::exception>([&] { fDatum.set(f1, 10); });
+
+
+			// Vector
+			Assert::ExpectException<std::exception>([&] {vDatum.set(v1, 10); });
+			Assert::ExpectException<std::exception>([&] {vDatum.set(i1, 0); });
+
+			vDatum.reserve(10);
+			vDatum.set(v1, 0);
+			Assert::IsTrue(vDatum == v1);
+
+			vDatum.pushBack(v2);
+			vDatum.set(v3, 0);
+			Assert::IsTrue(vDatum.get<glm::vec4>(0) == v3);
+			Assert::IsTrue(vDatum.get<glm::vec4>(1) == v2);
+
+			vDatum.set(v1, 1);
+			Assert::IsTrue(vDatum.get<glm::vec4>(1) == v1);
+			Assert::ExpectException<std::exception>([&] { vDatum.set(v1, 10); });
+
+
+			// Matrix
+			Assert::ExpectException<std::exception>([&] {mDatum.set(m1, 10); });
+			Assert::ExpectException<std::exception>([&] {mDatum.set(i1, 0); });
+
+			mDatum.reserve(10);
+			mDatum.set(m1, 0);
+			Assert::IsTrue(mDatum == m1);
+
+			mDatum.pushBack(m2);
+			mDatum.set(m3, 0);
+			Assert::IsTrue(mDatum.get<glm::mat4>(0) == m3);
+			Assert::IsTrue(mDatum.get<glm::mat4>(1) == m2);
+
+			mDatum.set(m1, 1);
+			Assert::IsTrue(mDatum.get<glm::mat4>(1) == m1);
+			Assert::ExpectException<std::exception>([&] { mDatum.set(m1, 10); });
+
+
+			// String
+			Assert::ExpectException<std::exception>([&] {sDatum.set(s1, 10); });
+			Assert::ExpectException<std::exception>([&] {sDatum.set(i1, 0); });
+
+			sDatum.reserve(10);
+			sDatum.set(s1, 0);
+			Assert::IsTrue(sDatum == s1);
+
+			sDatum.pushBack(s2);
+			sDatum.set(s3, 0);
+			Assert::IsTrue(sDatum.get<std::string>(0) == s3);
+			Assert::IsTrue(sDatum.get<std::string>(1) == s2);
+
+			sDatum.set(s1, 1);
+			Assert::IsTrue(sDatum.get<std::string>(1) == s1);
+			Assert::ExpectException<std::exception>([&] { sDatum.set(s1, 10); });
+
+
+			// Pointer
+			Assert::ExpectException<std::exception>([&] {rDatum.set(r1, 10); });
+			Assert::ExpectException<std::exception>([&] {rDatum.set(i1, 0); });
+
+			rDatum.reserve(10);
+			rDatum.set(r1, 0);
+			Assert::IsTrue(rDatum == r1);
+
+			rDatum.pushBack(r2);
+			rDatum.set(r3, 0);
+			Assert::IsTrue(rDatum.get<Library::RTTI*>(0) == r3);
+			Assert::IsTrue(rDatum.get<Library::RTTI*>(1) == r2);
+
+			rDatum.set(r1, 1);
+			Assert::IsTrue(rDatum.get<Library::RTTI*>(1) == r1);
+			Assert::ExpectException<std::exception>([&] { rDatum.set(r1, 10); });
 		}
 
 		TEST_METHOD(TestSetFromString)

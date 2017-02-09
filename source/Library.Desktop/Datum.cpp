@@ -547,12 +547,13 @@ namespace Library
 	/// Sets a specified index of the array to the specified value
 	/// @Param value: The int32_t being assigned
 	/// @Param index: The index of the value being assigned to
-	/// @Exception: Thrown if calling set on invalid type
-	/// @Exception: Thrown if attempting to set beyond existing size
+	/// @Exception invalidType: Thrown if calling set on invalid type
+	/// @Exception indexOutObBounds: Thrown if attempting to set beyond existing size
 	void Datum::set(const std::int32_t& value, const std::uint32_t index)
 	{
 		if (mType != DatumType::Integer) throw std::exception("Calling set on invalid type");
 		if (index > mSize) throw std::exception("Attempting to set beyond current size");
+		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
 		new(mData.i + index) std::int32_t(value);
 	}
 
@@ -565,6 +566,7 @@ namespace Library
 	{
 		if (mType != DatumType::Float) throw std::exception("Calling set on invalid type");
 		if (index > mSize) throw std::exception("Attempting to set beyond current size");
+		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
 		new(mData.f + index) float(value);
 	}
 
@@ -577,6 +579,7 @@ namespace Library
 	{
 		if (mType != DatumType::Vector) throw std::exception("Calling set on invalid type");
 		if (index > mSize) throw std::exception("Attempting to set beyond current size");
+		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
 		new(mData.v + index) glm::vec4(value);
 	}
 
@@ -589,6 +592,7 @@ namespace Library
 	{
 		if (mType != DatumType::Matrix) throw std::exception("Calling set on invalid type");
 		if (index > mSize) throw std::exception("Attempting to set beyond current size");
+		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
 		new(mData.m + index) glm::mat4(value);
 	}
 
@@ -601,6 +605,7 @@ namespace Library
 	{
 		if (mType != DatumType::String) throw std::exception("Calling set on invalid type");
 		if (index > mSize) throw std::exception("Attempting to set beyond current size");
+		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
 		new(mData.s + index) std::string(value);
 	}
 
@@ -613,6 +618,7 @@ namespace Library
 	{
 		if (mType != DatumType::Pointer) throw std::exception("Calling set on invalid type");
 		if (index > mSize) throw std::exception("Attempting to set beyond current size");
+		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
 		new(mData.r + index) RTTI*(value);
 	}
 
