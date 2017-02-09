@@ -392,28 +392,6 @@ namespace Library
 	void Datum::clear()
 	{
 		mTypeState->clear();
-//		switch(mType)
-//		{
-//			case DatumType::Integer:
-//				clearInt();
-//				break;
-//			case DatumType::Float:
-//				clearFloat();
-//				break;
-//			case DatumType::Vector:
-//				clearVector();
-//				break;
-//			case DatumType::Matrix:
-//				clearMatrix();
-//				break;
-//			case DatumType::String:
-//				clearString();
-//				break;
-//			case DatumType::Pointer:
-//				clearPointer();
-//				break;
-//			default: throw std::exception("Attempting to clear invalid type");
-//		}
 	}
 
 	/// Sets the external storage to the specified pointer
@@ -694,32 +672,7 @@ namespace Library
 	/// @Exception: Thrown if syntax is invalid
 	void Datum::setFromString(const std::string& value, const std::uint32_t& index)
 	{
-		// TODO: Divert this functionality to mTypeState
-		switch (mType)
-		{
-			case DatumType::Unknown:
-				setFromStringInt(value, index);
-				break;
-			case DatumType::Integer:
-				setFromStringFloat(value, index);
-				break;
-			case DatumType::Float:
-				setFromStringFloat(value, index);
-				break;
-			case DatumType::Vector:
-				setFromStringVector(value, index);
-				break;
-			case DatumType::Matrix:
-				setFromStringMatrix(value, index);
-				break;
-			case DatumType::String:
-				setFromStringString(value, index);
-				break;
-			case DatumType::Pointer:
-				setFromStringPointer(value, index);
-				break;
-			default: throw std::exception("Invalid syntax");
-		}
+		mTypeState->setFromString(value, index);
 	}
 
 	std::string Datum::toString()
@@ -727,41 +680,5 @@ namespace Library
 		std::string result = "";
 		// TODO: Implement toString		
 		return result;
-	}
-
-	void Datum::setFromStringInt(const std::string& value, const std::uint32_t& index)
-	{
-		UNREFERENCED_PARAMETER(value);
-		UNREFERENCED_PARAMETER(index);
-	}
-
-	void Datum::setFromStringFloat(const std::string& value, const std::uint32_t& index)
-	{
-		UNREFERENCED_PARAMETER(value);
-		UNREFERENCED_PARAMETER(index);
-	}
-
-	void Datum::setFromStringVector(const std::string& value, const std::uint32_t& index)
-	{
-		UNREFERENCED_PARAMETER(value);
-		UNREFERENCED_PARAMETER(index);
-	}
-
-	void Datum::setFromStringMatrix(const std::string& value, const std::uint32_t& index)
-	{
-		UNREFERENCED_PARAMETER(value);
-		UNREFERENCED_PARAMETER(index);
-	}
-
-	void Datum::setFromStringString(const std::string& value, const std::uint32_t& index)
-	{
-		UNREFERENCED_PARAMETER(value);
-		UNREFERENCED_PARAMETER(index);
-	}
-
-	void Datum::setFromStringPointer(const std::string& value, const std::uint32_t& index)
-	{
-		UNREFERENCED_PARAMETER(value);
-		UNREFERENCED_PARAMETER(index);
 	}
 }

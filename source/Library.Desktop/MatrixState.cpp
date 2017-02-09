@@ -60,4 +60,10 @@ namespace Library
 			mContext->mSize = 0;
 		}
 	}
+
+	void MatrixState::setFromString(const std::string& value, const std::uint32_t& index)
+	{
+		UNREFERENCED_PARAMETER(value);
+		UNREFERENCED_PARAMETER(index);
+	}
 }

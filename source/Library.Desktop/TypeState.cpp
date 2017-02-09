@@ -64,4 +64,11 @@ namespace Library
 	{
 		throw std::exception("Attempting to call clear on an unspecified Datum");
 	}
+
+	void TypeState::setFromString(const std::string& value, const std::uint32_t& index)
+	{
+		UNREFERENCED_PARAMETER(value);
+		UNREFERENCED_PARAMETER(index);
+		throw std::exception("Attempting to call setFromString on unspecified Datum");
+	}
 }

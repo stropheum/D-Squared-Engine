@@ -120,27 +120,6 @@ namespace Library
 	private:
 		TypeState* mTypeState;
 
-		void clearInt();
-		void clearFloat();
-		void clearVector();
-		void clearMatrix();
-		void clearString();
-		void clearPointer();
-
-		void setSizeInt(std::uint32_t size);
-		void setSizeFloat(std::uint32_t size);
-		void setSizeVector(std::uint32_t size);
-		void setSizeMatrix(std::uint32_t size);
-		void setSizeString(std::uint32_t size);
-		void setSizePointer(std::uint32_t size);
-
-		void reserveInt(std::uint32_t capacity);
-		void reserveFloat(std::uint32_t capacity);
-		void reserveVector(std::uint32_t capacity);
-		void reserveMatrix(std::uint32_t capacity);
-		void reserveString(std::uint32_t capacity);
-		void reservePointer(std::uint32_t capacity);
-
 		void setFromStringInt(const std::string& value, const std::uint32_t& index = 0);
 		void setFromStringFloat(const std::string& value, const std::uint32_t& index = 0);
 		void setFromStringVector(const std::string& value, const std::uint32_t& index = 0);
