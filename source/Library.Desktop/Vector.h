@@ -19,8 +19,6 @@ namespace Library
 		/// Allocates memory in mBuffer for a capacity of 10 templated values
 		Vector(bool fixedSize = false);
 
-		explicit Vector(std::uint32_t maxSize, bool fixedSize = false);
-
 		/// Copy constructor
 		/// @Param rhs: The Vector being copied
 		Vector(const Vector<T>& rhs);

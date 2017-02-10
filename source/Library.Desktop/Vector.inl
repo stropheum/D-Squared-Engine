@@ -29,7 +29,8 @@ namespace Library
 	bool Vector<T>::operator==(const Vector<T>& rhs) const
 	{
 		bool result = (mSize == rhs.mSize);
-		try
+		
+		if (result)
 		{
 			for (std::uint32_t i = 0; i < mSize; i++)
 			{
@@ -39,23 +40,25 @@ namespace Library
 				}
 			}
 		}
-		catch (const std::exception&) {}
+
 		return result;
 	}
 
 	template <typename T>
 	Vector<T>& Vector<T>::operator=(const Vector<T>& rhs)
 	{
-		if (mBuffer == nullptr) throw std::exception("Assigning to null pointer");
-		mFixedSize = rhs.mFixedSize;
-		
-		clear();
-		reserve(rhs.mCapacity);
-		if (rhs.mSize > 0)
+		if (this != &rhs)
 		{
-			for (auto iter = rhs.begin(); iter != rhs.end(); ++iter)
+			mFixedSize = rhs.mFixedSize;
+
+			clear();
+			reserve(rhs.mCapacity);
+			if (rhs.mSize > 0)
 			{
-				pushBack(*iter);
+				for (auto iter = rhs.begin(); iter != rhs.end(); ++iter)
+				{
+					pushBack(*iter);
+				}
 			}
 		}
 		return *this;
