@@ -94,15 +94,6 @@ namespace Library
 	template <typename TKey, typename TValue, typename HashFunctor>
 	TValue& HashMap<TKey, TValue, HashFunctor>::operator[](const TKey& key)
 	{
-//		auto iter = find(key);
-//
-//		if (iter == end())
-//		{
-//			PairType newPair(key, TValue());
-//			iter = insert(newPair);
-//		}
-//
-//		return iter->second;
 		PairType newPair(key, TValue());
 		auto iter = insert(newPair);
 		return iter->second;
@@ -112,9 +103,7 @@ namespace Library
 	const TValue& HashMap<TKey, TValue, HashFunctor>::operator[](const TKey& key) const
 	{
 		auto iter = find(key);
-
-		if (iter == end()) throw std::exception("Attempting to call insert on a const HashMap");
-
+		if (iter == end()) throw std::exception("Indexing out of bounds on const HashMap");
 		return iter->second;
 	}
 
