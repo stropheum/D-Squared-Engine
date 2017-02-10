@@ -425,7 +425,7 @@ namespace TestLibraryDesktop
 			Assert::AreNotEqual(intMap[1], 1, L"Incorrect value returned with index operator");
 
 			intMapVal = 1;
-			Assert::AreEqual(intMap[1], 1, L"HashMapValue not changed when assigned from index operator");
+			Assert::AreEqual(1, intMap[1], L"HashMapValue not changed when assigned from index operator");
 
 			const Library::HashMap<int, int> constIntMap(intMap);
 			Assert::ExpectException<std::exception>([&] { constIntMap[2]; }, L"Indexing nonexistent key value");

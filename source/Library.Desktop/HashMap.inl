@@ -63,9 +63,15 @@ namespace Library
 		std::uint32_t bucketIndex = mHashFunctor(entry.first) % mBucketCount;
 		
 		// Push the data onto the appropriate bucket
-		auto iter = mBuckets[bucketIndex].pushBack(entry);
-		mSize++;
-		
+		auto& bucket = mBuckets[bucketIndex];
+
+		auto iter = bucket.find(entry);
+		if (iter == bucket.end())
+		{
+			mSize++;
+			iter = bucket.pushBack(entry); // Reassign iter if a new value has to be added
+		}
+
 		// Return an iterator pointing to the entry
 		return HashMap<TKey, TValue>::Iterator(this, bucketIndex, iter);
 	}
@@ -86,14 +92,16 @@ namespace Library
 	TValue& HashMap<TKey, TValue, HashFunctor>::operator[](const TKey& key)
 	{
 		auto iter = find(key);
-		
+
 		if (iter == end())
 		{
 			PairType newPair(key, TValue());
 			iter = insert(newPair);
 		}
-		
+
 		return iter->second;
+//		auto iter = insert(PairType(key, TValue()));
+//		return iter->second;
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
