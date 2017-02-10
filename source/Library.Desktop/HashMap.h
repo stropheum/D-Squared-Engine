@@ -14,14 +14,14 @@ namespace Library
 		/// The buckets being used in the Vector chain. This implementation uses Vectors of PairTypes
 		typedef Library::Vector<PairType> BucketType;
 
-		static const uint32_t defaultHashMapSize = 13; // If no size is specified, number of buckets defaults to 13
+		static const uint32_t defaultBucketCount = 13; // If no size is specified, number of buckets defaults to 13
 
 	public:
 		class Iterator; /// Forward declaration of Iterator class
 
 		/// Constructor for HashMap
 		/// @Param hashMapSize: The predefined 
-		explicit HashMap(std::uint32_t hashMapSize = defaultHashMapSize);
+		explicit HashMap(std::uint32_t hashMapSize = defaultBucketCount);
 
 		/// Virtual destructor to prevent inheritance
 		virtual ~HashMap() = default;
