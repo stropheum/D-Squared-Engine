@@ -428,9 +428,7 @@ namespace TestLibraryDesktop
 			Assert::AreEqual(intMap[1], 1, L"HashMapValue not changed when assigned from index operator");
 
 			const Library::HashMap<int, int> constIntMap(intMap);
-			auto intFunc = [&] { constIntMap[2]; };
-//			Assert::ExpectException<std::exception>(intFunc, "Indexing nonexistent key value on const HashMap should throw exception");
-
+			Assert::ExpectException<std::exception>([&] { constIntMap[2]; }, L"Indexing nonexistent key value");
 
 			// pointer tests
 			std::uint32_t ptrMapSize = ptrMap.size();
@@ -954,47 +952,58 @@ namespace TestLibraryDesktop
 			intMap.insert(std::pair<int, int>(1, 1));
 			intMap.insert(std::pair<int, int>(2, 2));
 			auto interator = intMap.begin();
-			Assert::IsTrue(interator == intMap.begin() && ++interator != intMap.end(), L"Incrementing past first element should not return end when other items exist");
-			Assert::IsTrue(++interator == intMap.end() && ++interator == intMap.end(), L"Incrementing past end should still return end");
+			Assert::IsTrue(interator == intMap.begin() && ++interator != intMap.end(), 
+				L"Incrementing past first element should not return end when other items exist");
+			Assert::IsTrue(++interator == intMap.end() && ++interator == intMap.end(), 
+				L"Incrementing past end should still return end");
 
 
 			// pointer tests
 			ptrMap.insert(std::pair<int*, int>(&x, 1));
 			ptrMap.insert(std::pair<int*, int>(&y, 2));
 			auto pointerator = ptrMap.begin();
-			Assert::IsTrue(pointerator == ptrMap.begin() && ++pointerator != ptrMap.end(), L"Incrementing past first element should not return end when other items exist");
-			Assert::IsTrue(++pointerator == ptrMap.end() && ++pointerator == ptrMap.end(), L"Incrementing past end should still return end");
+			Assert::IsTrue(pointerator == ptrMap.begin() && ++pointerator != ptrMap.end(), 
+				L"Incrementing past first element should not return end when other items exist");
+			Assert::IsTrue(++pointerator == ptrMap.end() && ++pointerator == ptrMap.end(), 
+				L"Incrementing past end should still return end");
 
 
 			// char* tests
 			chrMap.insert(std::pair<char*, int>(a, 1));
 			chrMap.insert(std::pair<char*, int>(b, 2));
 			auto charterator = chrMap.begin();
-			Assert::IsTrue(charterator == chrMap.begin() && ++charterator != chrMap.end(), L"Incrementing past first element should not return end when other items exist");
-			Assert::IsTrue(++charterator == chrMap.end() && ++charterator == chrMap.end(), L"Incrementing past end should still return end");
+			Assert::IsTrue(charterator == chrMap.begin() && ++charterator != chrMap.end(), 
+				L"Incrementing past first element should not return end when other items exist");
+			Assert::IsTrue(++charterator == chrMap.end() && ++charterator == chrMap.end(), 
+				L"Incrementing past end should still return end");
 
 
 			// string tests
 			strMap.insert(std::pair<std::string, int>(s, 1));
 			strMap.insert(std::pair<std::string, int>(t, 2));
 			auto stringerator = strMap.begin();
-			Assert::IsTrue(stringerator == strMap.begin() && ++stringerator != strMap.end(), L"Incrementing past first element should not return end when other items exist");
-			Assert::IsTrue(++stringerator == strMap.end() && ++stringerator == strMap.end(), L"Incrementing past end should still return end");
+			Assert::IsTrue(stringerator == strMap.begin() && ++stringerator != strMap.end(), 
+				L"Incrementing past first element should not return end when other items exist");
+			Assert::IsTrue(++stringerator == strMap.end() && ++stringerator == strMap.end(), 
+				L"Incrementing past end should still return end");
 
 
 			// foo tests
 			fooMap.insert(std::pair<Foo, int>(foo, 1));
 			fooMap.insert(std::pair<Foo, int>(bar, 2));
 			auto footerator = fooMap.begin();
-			Assert::IsTrue(footerator == fooMap.begin() && ++footerator != fooMap.end(), L"Incrementing past first element should not return end when other items exist");
-			Assert::IsTrue(++footerator == fooMap.end() && ++footerator == fooMap.end(), L"Incrementing past end should still return end");
+			Assert::IsTrue(footerator == fooMap.begin() && ++footerator != fooMap.end(), 
+				L"Incrementing past first element should not return end when other items exist");
+			Assert::IsTrue(++footerator == fooMap.end() && ++footerator == fooMap.end(), 
+				L"Incrementing past end should still return end");
 		}
 
 		TEST_METHOD(TestIteratorDereferenceOperator)
 		{
 			// int tests
 			auto intFunc = [&]{ *intMap.begin(); };
-			Assert::ExpectException<std::exception>(intFunc, L"Exception should be thrown when attempting to dereference end of HashMap");
+			Assert::ExpectException<std::exception>(intFunc, 
+				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			intMap.insert(std::pair<int, int>(1, 1));
 			Assert::AreEqual(1, (*intMap.begin()).first, L"Dereferencing iterator does not yield accurate key");
@@ -1003,7 +1012,8 @@ namespace TestLibraryDesktop
 
 			// pointer tests
 			auto ptrFunc = [&] { *ptrMap.begin(); };
-			Assert::ExpectException<std::exception>(ptrFunc, L"Exception should be thrown when attempting to dereference end of HashMap");
+			Assert::ExpectException<std::exception>(ptrFunc, 
+				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			ptrMap.insert(std::pair<int*, int>(&x, 1));
 			Assert::AreEqual(&x, (*ptrMap.begin()).first, L"Dereferencing iterator does not yield accurate key");
@@ -1012,7 +1022,8 @@ namespace TestLibraryDesktop
 
 			// char* tests
 			auto chrFunc = [&] { *chrMap.begin(); };
-			Assert::ExpectException<std::exception>(chrFunc, L"Exception should be thrown when attempting to dereference end of HashMap");
+			Assert::ExpectException<std::exception>(chrFunc, 
+				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			chrMap.insert(std::pair<char*, int>(a, 1));
 			Assert::AreEqual(a, (*chrMap.begin()).first, L"Dereferencing iterator does not yield accurate key");
@@ -1021,7 +1032,8 @@ namespace TestLibraryDesktop
 
 			// string tests
 			auto strFunc = [&] { *strMap.begin(); };
-			Assert::ExpectException<std::exception>(strFunc, L"Exception should be thrown when attempting to dereference end of HashMap");
+			Assert::ExpectException<std::exception>(strFunc, 
+				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			strMap.insert(std::pair<std::string, int>(s, 1));
 			Assert::AreEqual(s, (*strMap.begin()).first, L"Dereferencing iterator does not yield accurate key");
@@ -1030,7 +1042,8 @@ namespace TestLibraryDesktop
 
 			// foo tests
 			auto fooFunc = [&] { *fooMap.begin(); };
-			Assert::ExpectException<std::exception>(fooFunc, L"Exception should be thrown when attempting to dereference end of HashMap");
+			Assert::ExpectException<std::exception>(fooFunc, 
+				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			fooMap.insert(std::pair<Foo, int>(foo, 1));
 			Assert::IsTrue(foo == (*fooMap.begin()).first, L"Dereferencing iterator does not yield accurate key");
@@ -1041,7 +1054,8 @@ namespace TestLibraryDesktop
 		{
 			// int tests
 			auto intFunc = [&] { *intMap.begin(); };
-			Assert::ExpectException<std::exception>(intFunc, L"Exception should be thrown when attempting to dereference end of HashMap");
+			Assert::ExpectException<std::exception>(intFunc, 
+				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			intMap.insert(std::pair<int, int>(1, 1));
 			Assert::AreEqual(1,  intMap.begin()->first, L"Dereferencing iterator does not yield accurate key");
@@ -1050,7 +1064,8 @@ namespace TestLibraryDesktop
 
 			// pointer tests
 			auto ptrFunc = [&] { *ptrMap.begin(); };
-			Assert::ExpectException<std::exception>(ptrFunc, L"Exception should be thrown when attempting to dereference end of HashMap");
+			Assert::ExpectException<std::exception>(ptrFunc, 
+				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			ptrMap.insert(std::pair<int*, int>(&x, 1));
 			Assert::AreEqual(&x, ptrMap.begin()->first, L"Dereferencing iterator does not yield accurate key");
@@ -1059,7 +1074,8 @@ namespace TestLibraryDesktop
 
 			// char* tests
 			auto chrFunc = [&] { *chrMap.begin(); };
-			Assert::ExpectException<std::exception>(chrFunc, L"Exception should be thrown when attempting to dereference end of HashMap");
+			Assert::ExpectException<std::exception>(chrFunc, 
+				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			chrMap.insert(std::pair<char*, int>(a, 1));
 			Assert::AreEqual(a, chrMap.begin()->first, L"Dereferencing iterator does not yield accurate key");
@@ -1068,7 +1084,8 @@ namespace TestLibraryDesktop
 
 			// string tests
 			auto strFunc = [&] { *strMap.begin(); };
-			Assert::ExpectException<std::exception>(strFunc, L"Exception should be thrown when attempting to dereference end of HashMap");
+			Assert::ExpectException<std::exception>(strFunc, 
+				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			strMap.insert(std::pair<std::string, int>(s, 1));
 			Assert::AreEqual(s, strMap.begin()->first, L"Dereferencing iterator does not yield accurate key");
@@ -1077,7 +1094,8 @@ namespace TestLibraryDesktop
 
 			// foo tests
 			auto fooFunc = [&] { *fooMap.begin(); };
-			Assert::ExpectException<std::exception>(fooFunc, L"Exception should be thrown when attempting to dereference end of HashMap");
+			Assert::ExpectException<std::exception>(fooFunc, 
+				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			fooMap.insert(std::pair<Foo, int>(foo, 1));
 			Assert::IsTrue(foo == fooMap.begin()->first, L"Dereferencing iterator does not yield accurate key");

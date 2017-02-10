@@ -89,7 +89,7 @@ namespace Library
 
 		/// Const version of the index operator
 		/// @Param index: The index being retrieved
-		/// @Retrun: A const reference to the element at the specified index. Throws exception if out of bounds
+		/// @Return: A const reference to the element at the specified index. Throws exception if out of bounds
 		/// @Exception: Thrown if accessing an index greater than or equal to size
 		const T& operator[](const std::uint32_t index) const;
 

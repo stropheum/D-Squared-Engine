@@ -193,14 +193,16 @@ namespace Library
 	{
 		if (mOwner == nullptr) throw std::exception("Incrementing beyond HashMap bounds");
 		
-		++mIter;
-		while (mIter == mOwner->mBuckets[mBucketIndex].end())
-		{
-			if (++mBucketIndex< mOwner->mBucketCount)
+		{ // As long as we are within proper range, don't bypass increment
+			++mIter;
+			while (mIter == mOwner->mBuckets[mBucketIndex].end())
 			{
-				mIter = mOwner->mBuckets[mBucketIndex].begin();
+				if (++mBucketIndex < mOwner->mBucketCount)
+				{
+					mIter = mOwner->mBuckets[mBucketIndex].begin();
+				}
+				else break;
 			}
-			else break;
 		}
 	
 		return *this;
