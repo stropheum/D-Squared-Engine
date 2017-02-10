@@ -19,8 +19,8 @@ namespace Library
 	}
 
 	template <typename T>
-	Vector<T>::Vector(const Vector<T>& rhs) :
-		Vector()
+	Vector<T>::Vector(const Vector<T>& rhs):
+		mBuffer(nullptr), mSize(0), mCapacity(rhs.mCapacity), mFixedSize(rhs.mFixedSize)
 	{
 		operator=(rhs);
 	}
@@ -89,28 +89,28 @@ namespace Library
 	template <typename T>
 	T& Vector<T>::front()
 	{
-		if (mBuffer == nullptr || mSize == 0) throw std::exception("Calling front on a null vector");
+		if (mSize == 0) throw std::exception("Calling front on a null vector");
 		return *mBuffer;
 	}
 
 	template <typename T>
 	const T& Vector<T>::front() const
 	{
-		if (mBuffer == nullptr || mSize == 0) throw std::exception("Calling front on a null vector");
+		if (mSize == 0) throw std::exception("Calling front on a null vector");
 		return const_cast<const T&>(*mBuffer);
 	}
 
 	template <typename T>
 	T& Vector<T>::back()
 	{
-		if (mBuffer == nullptr || mSize == 0) throw std::exception("Calling back on null vector");
+		if (mSize == 0) throw std::exception("Calling back on null vector");
 		return *(mBuffer + (mSize - 1));
 	}
 
 	template <typename T>
 	const T& Vector<T>::back() const
 	{
-		if (mBuffer == nullptr || mSize == 0) throw std::exception("Calling back on a null vector");
+		if (mSize == 0) throw std::exception("Calling back on a null vector");
 		return *(mBuffer + (mSize - 1));
 	}
 
