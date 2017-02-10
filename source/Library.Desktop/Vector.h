@@ -112,7 +112,7 @@ namespace Library
 		/// Adds an element to the first empty index available
 		/// If there is no available capacity, reserve is called with 10 additional elements
 		/// @Param value: The value being added to the Vector
-		void pushBack(const T& value);
+		Iterator pushBack(const T& value);
 
 		/// Reserves space in the Vector for more elements
 		/// @Param capacity: The new capacity of the Vector

@@ -63,11 +63,11 @@ namespace Library
 		std::uint32_t bucketIndex = mHashFunctor(entry.first) % mBucketCount;
 		
 		// Push the data onto the appropriate bucket
-		mBuckets[bucketIndex].pushBack(entry);
+		auto iter = mBuckets[bucketIndex].pushBack(entry);
 		mSize++;
 		
 		// Return an iterator pointing to the entry
-		return HashMap<TKey, TValue>::Iterator(this, bucketIndex, mBuckets[bucketIndex].find(entry));
+		return HashMap<TKey, TValue>::Iterator(this, bucketIndex, iter);
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>

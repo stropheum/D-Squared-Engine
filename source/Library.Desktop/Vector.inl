@@ -168,13 +168,16 @@ namespace Library
 	}
 
 	template <typename T>
-	void Vector<T>::pushBack(const T& value)
+	typename Vector<T>::Iterator Vector<T>::pushBack(const T& value)
 	{
+		typename Vector<T>::Iterator iter = end();
 		if (!mFixedSize)
 		{
 			if (mSize >= mCapacity) reserve(mCapacity + CAPACITY_INCREMENT);
 			new(mBuffer + mSize++) T(value);
+			iter = Iterator(this, mSize - 1); // Reassign iter to point to last value pushed back
 		}
+		return iter;
 	}
 
 	template <typename T>
