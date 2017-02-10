@@ -48,32 +48,35 @@ namespace Library
 		std::uint32_t hashIndex = mHashFunctor(key) % mBucketCount;
 		auto& bucket = mBuckets[hashIndex];
 
-		for (auto iter = bucket.begin(); iter != bucket.end(); ++iter)
+		typename Vector<PairType>::Iterator iter;
+		for (iter = bucket.begin(); iter != bucket.end(); ++iter)
 		{
-			if ((*iter).first == key) return Iterator(this, hashIndex, iter);
+			if ((*iter).first == key) break;
 		}
 
-		return end();
+		if (iter == bucket.end())
+		{
+			return end();
+		}
+		else
+		{
+			return HashMap<TKey, TValue, HashFunctor>::Iterator(this, hashIndex, iter);
+		}
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
 	typename HashMap<TKey, TValue, HashFunctor>::Iterator HashMap<TKey, TValue, HashFunctor>::insert(const PairType& entry)
 	{
-		// Determine which bucket the data will be put into
-		std::uint32_t bucketIndex = mHashFunctor(entry.first) % mBucketCount;
-		
-		// Push the data onto the appropriate bucket
-		auto& bucket = mBuckets[bucketIndex];
-
-		auto iter = bucket.find(entry);
-		if (iter == bucket.end())
+		auto iter = find(entry.first);
+		if (iter == end())
 		{
 			mSize++;
-			iter = bucket.pushBack(entry); // Reassign iter if a new value has to be added
+			std::uint32_t bucketIndex = mHashFunctor(entry.first) % mBucketCount;
+			auto vIter = mBuckets[bucketIndex].pushBack(entry);
+			iter = HashMap<TKey, TValue>::Iterator(this, bucketIndex, vIter);
 		}
 
-		// Return an iterator pointing to the entry
-		return HashMap<TKey, TValue>::Iterator(this, bucketIndex, iter);
+		return iter;
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
@@ -91,17 +94,18 @@ namespace Library
 	template <typename TKey, typename TValue, typename HashFunctor>
 	TValue& HashMap<TKey, TValue, HashFunctor>::operator[](const TKey& key)
 	{
-		auto iter = find(key);
-
-		if (iter == end())
-		{
-			PairType newPair(key, TValue());
-			iter = insert(newPair);
-		}
-
-		return iter->second;
-//		auto iter = insert(PairType(key, TValue()));
+//		auto iter = find(key);
+//
+//		if (iter == end())
+//		{
+//			PairType newPair(key, TValue());
+//			iter = insert(newPair);
+//		}
+//
 //		return iter->second;
+		PairType newPair(key, TValue());
+		auto iter = insert(newPair);
+		return iter->second;
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
