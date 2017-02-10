@@ -14,32 +14,20 @@ namespace Library
 
 	template <typename TKey, typename TValue, typename HashFunctor>
 	HashMap<TKey, TValue, HashFunctor>::HashMap(const HashMap<TKey, TValue, HashFunctor>& rhs):
-		mBucketCount(rhs.mBucketCount), mSize(rhs.mSize)
-	{
-		if (this == &rhs) throw std::exception("Self assignment error");
-
-		initializeBuckets();
-		mSize = rhs.mSize;
-		for (std::uint32_t i = 0; i < mBucketCount; i++)
-		{
-			mBuckets[i] = rhs.mBuckets[i];
-		}
-	}
+		mBucketCount(rhs.mBucketCount), mBuckets(rhs.mBuckets), mSize(rhs.mSize)
+	{}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
 	HashMap<TKey, TValue, HashFunctor>& 
 		HashMap<TKey, TValue, HashFunctor>::operator=(const HashMap<TKey, TValue, HashFunctor>& rhs)
 	{
-		if (this == &rhs) throw std::exception("Self assignment error");
-
-		mBucketCount = rhs.mBucketCount;
-		mHashFunctor = rhs.mHashFunctor;
-		initializeBuckets();
-		for (std::uint32_t i = 0; i < mBucketCount; i++)
+		if (this != &rhs)
 		{
-			mBuckets[i] = rhs.mBuckets[i];
+			mBucketCount = rhs.mBucketCount;
+			mBuckets = rhs.mBuckets;
+			mSize = rhs.mSize;
+			mHashFunctor = rhs.mHashFunctor;
 		}
-		mSize = rhs.mSize;
 		return *this;
 	}
 
@@ -193,6 +181,7 @@ namespace Library
 	{
 		if (mOwner == nullptr) throw std::exception("Incrementing beyond HashMap bounds");
 		
+		if (mBucketIndex < mOwner->mBucketCount)
 		{ // As long as we are within proper range, don't bypass increment
 			++mIter;
 			while (mIter == mOwner->mBuckets[mBucketIndex].end())
