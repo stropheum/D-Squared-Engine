@@ -225,14 +225,27 @@ namespace Library
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
-	typename HashMap<TKey, TValue, HashFunctor>::PairType& HashMap<TKey, TValue, HashFunctor>::Iterator::operator*() const
+	typename HashMap<TKey, TValue, HashFunctor>::PairType& HashMap<TKey, TValue, HashFunctor>::Iterator::operator*()
+	{
+		if (mOwner == nullptr) throw std::exception("Attempting to dereference null iterator");
+		return (*mIter);
+	}
+
+	template <typename TKey, typename TValue, typename HashFunctor>
+	const typename HashMap<TKey, TValue, HashFunctor>::PairType& HashMap<TKey, TValue, HashFunctor>::Iterator::operator*() const
 	{
 		if (mOwner == nullptr) throw std::exception("Attempting to dereference null iterator");
 		return (*mIter);
 	}
 
 	template <typename TKey, typename TValue, class HashFunctor>
-	typename HashMap<TKey, TValue, HashFunctor>::PairType* HashMap<TKey, TValue, HashFunctor>::Iterator::operator->() const
+	typename HashMap<TKey, TValue, HashFunctor>::PairType* HashMap<TKey, TValue, HashFunctor>::Iterator::operator->()
+	{
+		return &(operator*());
+	}
+
+	template <typename TKey, typename TValue, class HashFunctor>
+	const typename HashMap<TKey, TValue, HashFunctor>::PairType* HashMap<TKey, TValue, HashFunctor>::Iterator::operator->() const
 	{
 		return &(operator*());
 	}

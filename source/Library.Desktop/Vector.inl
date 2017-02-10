@@ -276,7 +276,15 @@ namespace Library
 	}
 
 	template <typename T>
-	T& Vector<T>::Iterator::operator*() const
+	T& Vector<T>::Iterator::operator*()
+	{
+		if (mOwner == nullptr) throw std::exception("Owner is null");
+		if (mIndex > mOwner->size()) throw std::exception("Vector out of bounds");
+		return const_cast<T&>(mOwner->operator[](mIndex));
+	}
+
+	template <typename T>
+	const T& Vector<T>::Iterator::operator*() const
 	{
 		if (mOwner == nullptr) throw std::exception("Owner is null");
 		if (mIndex > mOwner->size()) throw std::exception("Vector out of bounds");

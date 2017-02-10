@@ -128,12 +128,16 @@ namespace Library
 			/// Dereference operator
 			/// @Return: A reference to a PairType that the Iterator's member iterator is pointing to
 			/// @Exception: Thrown if attempting to dereferencing the end of the HashMap
-			PairType& operator*() const;
+			PairType& operator*();
+
+			const PairType& operator*() const;
 			
 			/// Arrow operator
 			/// @Return: A pointer to a PairType that the Iterator's member iterator is pointing to
 			/// @Exception: Thrown if attempting to dereference the end of the HashMap
-			PairType* operator->() const;
+			PairType* operator->();
+
+			const PairType* operator->() const;
 
 			/// Equality operator
 			/// @Param rhs: The Iterator being compared against
