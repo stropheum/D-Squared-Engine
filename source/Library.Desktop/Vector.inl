@@ -256,11 +256,14 @@ namespace Library
 	template <typename T>
 	typename Vector<T>::Iterator& Vector<T>::Iterator::operator++()
 	{
+		if (mOwner == nullptr) throw std::exception("Attempting to dereference nullptr");
+		if (mIndex >= mOwner->size()) throw std::exception("Incrementing beyond vector bounds");
+		
 		if (mIndex < mOwner->mSize)
 		{
 			mIndex++;
 		}
-		if (mIndex > mOwner->size()) throw std::exception("Incrementing beyond vector bounds");
+
 		return *this;
 	}
 
