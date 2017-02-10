@@ -5,6 +5,26 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+template<>
+class Library::DefaultHash<Foo>
+{
+public:
+	std::uint32_t operator()(const Foo& key) const
+	{
+		std::uint32_t value = key.getData();
+		const std::int8_t* bytes = reinterpret_cast<const std::int8_t*>(&value);
+
+		std::uint32_t hash = 0;
+		auto size = strlen(reinterpret_cast<const char*>(bytes));
+		for (std::uint32_t i = 0; i < size; i++)
+		{
+			hash += bytes[i];
+		}
+
+		return hash;
+	}
+};
+
 namespace TestLibraryDesktop
 {
 	TEST_CLASS(HashMapTest)
