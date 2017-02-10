@@ -58,25 +58,14 @@ namespace Library
 	{
 		if (mBuckets.isEmpty()) throw std::exception("Buckets are null");
 		std::uint32_t hashIndex = mHashFunctor(key) % mBucketCount;
-		
-		Iterator iter;
-		auto vIter = mBuckets[hashIndex].begin();
-		
-		// Iterate until matching key is found or end of bucket is hit
-		while (vIter != mBuckets[hashIndex].end())
+		auto& bucket = mBuckets[hashIndex];
+
+		for (auto iter = bucket.begin(); iter != bucket.end(); ++iter)
 		{
-			if ((*vIter).first == key) break;
-			++vIter;
+			if ((*iter).first == key) return Iterator(this, hashIndex, iter);
 		}
 
-		// If we are at the end of the bucket, return the end of the HashMap
-		if (vIter == mBuckets[hashIndex].end())
-		{
-			hashIndex = mBucketCount - 1;
-			vIter = mBuckets[hashIndex++].end();
-		}
-
-		return Iterator(this, hashIndex, vIter);
+		return end();
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
@@ -161,7 +150,7 @@ namespace Library
 		{
 			mBuckets[i].clear();
 		}
-		initializeBuckets();
+		mSize = 0;
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
