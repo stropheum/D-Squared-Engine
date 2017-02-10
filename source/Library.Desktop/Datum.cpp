@@ -22,22 +22,22 @@ namespace Library
 		switch (mType)
 		{
 			case DatumType::Integer:
-				// TODO: Clear int values
+				if (mData.i != nullptr) free(mData.i);
 				break;
 			case DatumType::Float:
-				// TODO: Clear float values
+				if (mData.f != nullptr) free(mData.f);
 				break;
 			case DatumType::Vector:
-				// TODO: Clear vector values
+				if (mData.v != nullptr) free(mData.v);
 				break;
 			case DatumType::Matrix:
-				// TODO: Clear matrix values
+				if (mData.m != nullptr) free(mData.m);
 				break;
 			case DatumType::String:
-				// TODO: Clear string values
+				if (mData.s != nullptr) free(mData.s);
 				break;
 			case DatumType::Pointer:
-				// TODO: Clear pointer values
+				if (mData.r != nullptr) free(mData.r);
 				break;
 			default: ;
 		}
