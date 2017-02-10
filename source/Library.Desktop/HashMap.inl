@@ -5,21 +5,22 @@
 namespace Library
 {
 	template <typename TKey, typename TValue, typename HashFunctor>
-	HashMap<TKey, TValue, HashFunctor>::HashMap(std::uint32_t hashMapSize = defaultHashMapSize):
-		mHashMapSize(hashMapSize), mBuckets(), mSize(0)
+	HashMap<TKey, TValue, HashFunctor>::HashMap(std::uint32_t bucketCount = defaultHashMapSize):
+		mBucketCount(bucketCount), mBuckets(), mSize(0)
 	{
+		if (mBucketCount == 0) throw std::exception("HashMap constructed with an invalid amount of buckets");
 		initializeBuckets();
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
 	HashMap<TKey, TValue, HashFunctor>::HashMap(const HashMap<TKey, TValue, HashFunctor>& rhs):
-		mHashMapSize(rhs.mHashMapSize), mSize(rhs.mSize)
+		mBucketCount(rhs.mBucketCount), mSize(rhs.mSize)
 	{
 		if (this == &rhs) throw std::exception("Self assignment error");
 
 		initializeBuckets();
 		mSize = rhs.mSize;
-		for (std::uint32_t i = 0; i < mHashMapSize; i++)
+		for (std::uint32_t i = 0; i < mBucketCount; i++)
 		{
 			mBuckets[i] = rhs.mBuckets[i];
 		}
@@ -31,10 +32,10 @@ namespace Library
 	{
 		if (this == &rhs) throw std::exception("Self assignment error");
 
-		mHashMapSize = rhs.mHashMapSize;
+		mBucketCount = rhs.mBucketCount;
 		mHashFunctor = rhs.mHashFunctor;
 		initializeBuckets();
-		for (std::uint32_t i = 0; i < mHashMapSize; i++)
+		for (std::uint32_t i = 0; i < mBucketCount; i++)
 		{
 			mBuckets[i] = rhs.mBuckets[i];
 		}
@@ -46,7 +47,7 @@ namespace Library
 	void HashMap<TKey, TValue, HashFunctor>::initializeBuckets()
 	{
 		mSize = 0;
-		for (std::uint32_t i = 0; i < mHashMapSize; i++)
+		for (std::uint32_t i = 0; i < mBucketCount; i++)
 		{ // Create a vector to represent each "bucket:
 			mBuckets.pushBack(BucketType());
 		}
@@ -56,7 +57,7 @@ namespace Library
 	typename HashMap<TKey, TValue, HashFunctor>::Iterator HashMap<TKey, TValue, HashFunctor>::find(const TKey& key) const
 	{
 		if (mBuckets.isEmpty()) throw std::exception("Buckets are null");
-		std::uint32_t hashIndex = mHashFunctor(key) % mHashMapSize;
+		std::uint32_t hashIndex = mHashFunctor(key) % mBucketCount;
 		
 		Iterator iter;
 		auto vIter = mBuckets[hashIndex].begin();
@@ -71,7 +72,7 @@ namespace Library
 		// If we are at the end of the bucket, return the end of the HashMap
 		if (vIter == mBuckets[hashIndex].end())
 		{
-			hashIndex = mHashMapSize - 1;
+			hashIndex = mBucketCount - 1;
 			vIter = mBuckets[hashIndex++].end();
 		}
 
@@ -82,7 +83,7 @@ namespace Library
 	typename HashMap<TKey, TValue, HashFunctor>::Iterator HashMap<TKey, TValue, HashFunctor>::insert(const PairType& entry)
 	{
 		// Determine which bucket the data will be put into
-		std::uint32_t bucketIndex = mHashFunctor(entry.first) % mHashMapSize;
+		std::uint32_t bucketIndex = mHashFunctor(entry.first) % mBucketCount;
 		
 		// Push the data onto the appropriate bucket
 		mBuckets[bucketIndex].pushBack(entry);
@@ -98,7 +99,7 @@ namespace Library
 		auto iter = find(key);
 		if (iter != end())
 		{
-			std::uint32_t hashIndex = mHashFunctor(key) % mHashMapSize;
+			std::uint32_t hashIndex = mHashFunctor(key) % mBucketCount;
 			mBuckets[hashIndex].remove(*iter);
 			mSize--;
 		}
@@ -137,7 +138,7 @@ namespace Library
 		{
 			std::uint32_t index = 0;
 			auto iter = mBuckets[index].begin();
-			while (iter == mBuckets[index].end() && index + 1 < mHashMapSize)
+			while (iter == mBuckets[index].end() && index + 1 < mBucketCount)
 			{
 				iter = mBuckets[++index].begin();
 			}
@@ -150,13 +151,13 @@ namespace Library
 	template <typename TKey, typename TValue, typename HashFunctor>
 	typename HashMap<TKey, TValue, HashFunctor>::Iterator HashMap<TKey, TValue, HashFunctor>::end() const
 	{
-		return Iterator(this, mHashMapSize, mBuckets[mHashMapSize - 1].end());
+		return Iterator(this, mBucketCount, mBuckets[mBucketCount - 1].end());
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
 	void HashMap<TKey, TValue, HashFunctor>::clear()
 	{
-		for (std::uint32_t i = 0; i < mHashMapSize; i++)
+		for (std::uint32_t i = 0; i < mBucketCount; i++)
 		{
 			mBuckets[i].clear();
 		}
@@ -206,7 +207,7 @@ namespace Library
 		++mIter;
 		while (mIter == mOwner->mBuckets[mBucketIndex].end())
 		{
-			if (++mBucketIndex< mOwner->mHashMapSize)
+			if (++mBucketIndex< mOwner->mBucketCount)
 			{
 				mIter = mOwner->mBuckets[mBucketIndex].begin();
 			}

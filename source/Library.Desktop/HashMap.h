@@ -88,7 +88,7 @@ namespace Library
 		bool containsKey(const TKey& key) const;
 
 	private:
-		std::uint32_t mHashMapSize;			 /// Number of buckets in the hash map.
+		std::uint32_t mBucketCount;			 /// Number of buckets in the hash map.
 		HashFunctor mHashFunctor;			 /// The hash function being used by this HashMap
 		Library::Vector<BucketType> mBuckets; /// Collection of buckets in the hash map
 		std::uint32_t mSize;

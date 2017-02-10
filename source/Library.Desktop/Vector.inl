@@ -31,7 +31,7 @@ namespace Library
 		bool result = (mSize == rhs.mSize);
 		
 		if (result)
-		{
+		{ // If sizes are equal, compare further
 			for (std::uint32_t i = 0; i < mSize; i++)
 			{
 				if (operator[](i) != rhs[i])
