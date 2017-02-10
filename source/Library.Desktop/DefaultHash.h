@@ -1,6 +1,5 @@
 #pragma once
 #include <cstdint>
-#include "../Test.Library.Desktop/Foo.h"
 
 namespace Library
 {
@@ -12,7 +11,7 @@ namespace Library
 			const std::int8_t* bytes = reinterpret_cast<const std::int8_t*>(&key);
 
 			std::uint32_t hash = 0;
-			std::uint32_t size = strlen(reinterpret_cast<const char*>(bytes));
+			std::uint32_t size = sizeof(T);
 			for (std::uint32_t i = 0; i < size; i++)
 			{
 				hash += bytes[i];
@@ -28,16 +27,7 @@ namespace Library
 	public:
 		std::uint32_t operator()(const int& key) const
 		{
-			const std::int8_t* bytes = reinterpret_cast<const std::int8_t*>(&key);
-
-			std::uint32_t hash = 0;
-			auto size = strlen(reinterpret_cast<const char*>(bytes));
-			for (std::uint32_t i = 0; i < size; i++)
-			{
-				hash += bytes[i];
-			}
-			
-			return hash;
+			return key; // Integers are in and of themselves unique integers, no need to hash
 		}
 	};
 
@@ -75,8 +65,9 @@ namespace Library
 		}
 	};
 
-	template<>
-	class DefaultHash<int*>
+	/// Partial pointer specialization
+	template<typename T>
+	class DefaultHash<T*>
 	{
 	public:
 		std::uint32_t operator()(const int* key) const
@@ -85,26 +76,6 @@ namespace Library
 
 			std::uint32_t hash = 0;
 			for (std::uint32_t i = 0; i < strlen(reinterpret_cast<const char*>(bytes)); i++)
-			{
-				hash += bytes[i];
-			}
-
-			return hash;
-		}
-	};
-
-	template<>
-	class DefaultHash<Foo>
-	{
-	public:
-		std::uint32_t operator()(const Foo& key) const
-		{
-			std::uint32_t value = key.getData();
-			const std::int8_t* bytes = reinterpret_cast<const std::int8_t*>(&value);
-
-			std::uint32_t hash = 0;
-			auto size = strlen(reinterpret_cast<const char*>(bytes));
-			for (std::uint32_t i = 0; i < size; i++)
 			{
 				hash += bytes[i];
 			}
