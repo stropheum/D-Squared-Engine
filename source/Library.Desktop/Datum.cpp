@@ -19,7 +19,7 @@ namespace Library
 	/// Destructor
 	Datum::~Datum()
 	{
-		if (mCapacity > 0)
+		if (mCapacity > 0 && !mDataIsExternal)
 		{	// Don't bother clearing memory if there isn't any reserved space
 			setSize(0); // Remove all elements, allowing us to shrink buffer to zero
 			reserve(0); // Reserve frees the old buffer and allocates new size (of nothing)
@@ -40,40 +40,14 @@ namespace Library
 	Datum::Datum(Datum&& rhs) :
 		mTypeState(nullptr), mType(rhs.mType), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
 	{
-		// TODO: Handle deep copy semantics
-		switch (rhs.mType)
-		{
-			case DatumType::Integer:
-				if (rhs.mData.i != nullptr) free(rhs.mData.i);
-				break;
-			case DatumType::Float:
-				if (rhs.mData.f != nullptr) free(rhs.mData.f);
-				break;
-			case DatumType::Vector:
-				if (rhs.mData.v != nullptr) free(rhs.mData.v);
-				break;
-			case DatumType::Matrix:
-				if (rhs.mData.m != nullptr) free(rhs.mData.m);
-				break;
-			case DatumType::String:
-				if (rhs.mData.s != nullptr) free(rhs.mData.s);
-				break;
-			case DatumType::Pointer:
-				if (rhs.mData.r != nullptr) free(rhs.mData.r);
-				break;
-			default: 
-				break;
-		}
-		rhs.mType = DatumType::Unknown;
-		rhs.mCapacity = NULL;
-		rhs.mSize = NULL;
+		operator=(rhs); // Perform a deep copy of all the data
 	}
 
 	/// Datum assignment operator
 	/// @Param rhs: Datum object being assigned to
 	/// @Return; The newly copied Datum object
 	Datum& Datum::operator=(const Datum& rhs)
-	{
+	{	// TODO: Divert copy semantics to a helper function so move semantics and assignment can look cleaner
 		setType(rhs.mType); // Must set type in order to instantiate mTypeState
 		if (rhs.mDataIsExternal)
 		{
@@ -132,9 +106,67 @@ namespace Library
 	/// @Param rhs: Datum object being assigned to
 	/// @Return: The newly copied Datum object
 	Datum& Datum::operator=(Datum&& rhs)
-	{
-		// TODO: Implement Datum move assignment operator
-		UNREFERENCED_PARAMETER(rhs);
+	{	// TODO: Divert copy semantics to a helper function so move semantics and assignment can look cleaner
+		setType(rhs.mType); // Must set type in order to instantiate mTypeState
+		if (rhs.mDataIsExternal)
+		{
+			mTypeState->setStorage(rhs);
+		}
+		else
+		{
+			switch (rhs.mType)
+			{	// Destroy all the data in rhs
+				case DatumType::Integer:
+					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					{
+						pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+					}
+					if (rhs.mData.i != nullptr) free(rhs.mData.i);
+					break;
+				case DatumType::Float:
+					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					{
+						pushBack(const_cast<Datum&>(rhs).get<float>(i));
+					}
+					if (rhs.mData.f != nullptr) free(rhs.mData.f);
+					break;
+				case DatumType::Vector:
+					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					{
+						pushBack(const_cast<Datum&>(rhs).get<glm::vec4>(i));
+					}
+					if (rhs.mData.v != nullptr) free(rhs.mData.v);
+					break;
+				case DatumType::Matrix:
+					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					{
+						pushBack(const_cast<Datum&>(rhs).get<glm::mat4>(i));
+					}
+					if (rhs.mData.m != nullptr) free(rhs.mData.m);
+					break;
+				case DatumType::String:
+					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					{
+						pushBack(const_cast<Datum&>(rhs).get<std::string>(i));
+					}
+					if (rhs.mData.s != nullptr) free(rhs.mData.s);
+					break;
+				case DatumType::Pointer:
+					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					{
+						pushBack(const_cast<Datum&>(rhs).get<Library::RTTI*>(i));
+					}
+					if (rhs.mData.r != nullptr) free(rhs.mData.r);
+					break;
+				default:
+					break;
+			}
+		}
+		
+		rhs.mType = DatumType::Unknown;
+		rhs.mCapacity = NULL;
+		rhs.mSize = NULL;
+
 		return *this;
 	}
 
@@ -403,7 +435,8 @@ namespace Library
 	/// @Exception: Thrown if trying to clear with an invalid type set
 	void Datum::clear()
 	{
-		mTypeState->clear();
+//		mTypeState->clear();
+		setSize(0);
 	}
 
 	/// Sets a specified index of the array to the specified value

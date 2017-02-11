@@ -10,7 +10,6 @@ namespace Library
 	TypeState::~TypeState()
 	{}
 
-#pragma region Assignment Operators
 	Datum& TypeState::operator=(const std::int32_t& rhs)
 	{
 		UNREFERENCED_PARAMETER(rhs);
@@ -46,7 +45,6 @@ namespace Library
 		UNREFERENCED_PARAMETER(rhs);
 		throw std::exception("Invalid assignment operation");
 	}
-#pragma endregion 
 
 	void TypeState::setSize(std::uint32_t size)
 	{
