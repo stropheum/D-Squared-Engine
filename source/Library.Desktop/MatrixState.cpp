@@ -66,4 +66,9 @@ namespace Library
 		UNREFERENCED_PARAMETER(value);
 		UNREFERENCED_PARAMETER(index);
 	}
+
+	void MatrixState::setStorage(const Datum& rhs)
+	{
+		mContext->setStorage(rhs.mData.m, rhs.mSize);
+	}
 }

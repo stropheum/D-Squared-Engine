@@ -41,11 +41,10 @@ namespace Library
 		if (capacity < mContext->mSize) throw std::exception("Attempting to clobber occupied data");
 		mContext->mCapacity = capacity;
 
-		std::int32_t* temp = mContext->mData.i;
+		std::int32_t* temp= mContext->mData.i;
 		mContext->mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * mContext->mCapacity));
 		memcpy_s(mContext->mData.i, sizeof(std::int32_t) * mContext->mSize, temp, sizeof(std::int32_t) * mContext->mSize);
-
-		if (temp != nullptr) free(temp);
+		// TODO: Figure out why trying to free temp causes the world to end
 	}
 
 	void IntegerState::clear()
@@ -61,5 +60,10 @@ namespace Library
 	{
 		UNREFERENCED_PARAMETER(value);
 		UNREFERENCED_PARAMETER(index);
+	}
+
+	void IntegerState::setStorage(const Datum& rhs)
+	{
+		mContext->setStorage(rhs.mData.i, rhs.mSize);
 	}
 }

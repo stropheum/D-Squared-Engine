@@ -65,4 +65,9 @@ namespace Library
 		UNREFERENCED_PARAMETER(value);
 		UNREFERENCED_PARAMETER(index);
 	}
+
+	void PointerState::setStorage(const Datum& rhs)
+	{
+		mContext->setStorage(rhs.mData.r, rhs.mSize);
+	}
 }

@@ -20,6 +20,7 @@ namespace Library
 		virtual void reserve(std::uint32_t capacity);
 		virtual void clear();
 		virtual void setFromString(const std::string& value, const std::uint32_t& index);
+		virtual void setStorage(const Datum& rhs);
 
 	protected:
 		TypeState(Datum* const context);

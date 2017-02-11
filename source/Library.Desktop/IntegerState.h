@@ -15,5 +15,6 @@ namespace Library
 		void reserve(std::uint32_t capacity) override;
 		void clear() override;
 		void setFromString(const std::string& value, const std::uint32_t& index) override;
+		void setStorage(const Datum& rhs) override;
 	};
 }

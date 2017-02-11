@@ -66,4 +66,9 @@ namespace Library
 		UNREFERENCED_PARAMETER(value);
 		UNREFERENCED_PARAMETER(index);
 	}
+
+	void VectorState::setStorage(const Datum& rhs)
+	{
+		mContext->setStorage(rhs.mData.v, rhs.mSize);
+	}
 }

@@ -13,7 +13,7 @@ namespace Library
 	Datum::Datum(DatumType type) :
 		mTypeState(nullptr), mType(type), mCapacity(1), mSize(0), mDataIsExternal(false)
 	{
-		// Reserve size of 1
+		reserve(mCapacity);
 	}
 
 	/// Destructor
@@ -29,36 +29,10 @@ namespace Library
 	/// Copy constructor
 	/// @Param rhs: Datum object being copied
 	/// @Exception: Thrown if attempting to construct a non-existing datum type
-	Datum::Datum(const Datum& rhs):
-		mType(DatumType::Unknown), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
+	Datum::Datum(const Datum& rhs): 
+		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(rhs.mCapacity), mSize(0), mDataIsExternal(rhs.mDataIsExternal)
 	{
-		if (rhs.mDataIsExternal) mData = rhs.mData; // If storage is external, only shallow copy the pointer
-		else
-		{
-			switch (rhs.mType)
-			{
-			case DatumType::Integer:
-				setStorage(rhs.mData.i, rhs.mSize);
-				break;
-			case DatumType::Float:
-				setStorage(rhs.mData.f, rhs.mSize);
-				break;
-			case DatumType::Vector:
-				setStorage(rhs.mData.v, rhs.mSize);
-				break;
-			case DatumType::Matrix:
-				setStorage(rhs.mData.m, rhs.mSize);
-				break;
-			case DatumType::String:
-				setStorage(rhs.mData.s, rhs.mSize);
-				break;
-			case DatumType::Pointer:
-				setStorage(rhs.mData.r, rhs.mSize);
-				break;
-			default:
-				throw std::exception("Attempting to set Datum to invalid type");
-			}
-		}
+		operator=(rhs);
 	}
 
 	/// Move copy constructor
@@ -94,8 +68,58 @@ namespace Library
 	/// @Return; The newly copied Datum object
 	Datum& Datum::operator=(const Datum& rhs)
 	{
-		// TODO: Implement datum assignment operator
-		UNREFERENCED_PARAMETER(rhs);
+		setType(rhs.mType); // Must set type in order to instantiate mTypeState
+		if (rhs.mDataIsExternal)
+		{
+			mTypeState->setStorage(rhs);
+		}
+		else
+		{
+			reserve(rhs.mCapacity);
+			switch (rhs.mType)
+			{
+			case DatumType::Integer:
+				for (std::uint32_t i = 0; i < rhs.mSize; i++)
+				{
+					pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+				}
+				break;
+			case DatumType::Float:
+				for (std::uint32_t i = 0; i < rhs.mSize; i++)
+				{
+					pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+				}
+				break;
+			case DatumType::Vector:
+				for (std::uint32_t i = 0; i < rhs.mSize; i++)
+				{
+					pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+				}
+				break;
+			case DatumType::Matrix:
+				for (std::uint32_t i = 0; i < rhs.mSize; i++)
+				{
+					pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+				}
+				break;
+			case DatumType::String:
+				for (std::uint32_t i = 0; i < rhs.mSize; i++)
+				{
+					pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+				}
+				break;
+			case DatumType::Pointer:
+				for (std::uint32_t i = 0; i < rhs.mSize; i++)
+				{
+					pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+				}
+				break;
+			default:
+				throw std::exception("Attempting to push back unknown type");
+			}
+			
+		}
+
 		return *this;
 	}
 
@@ -593,60 +617,6 @@ namespace Library
 		if (value == nullptr) throw std::exception("Attempting to push back nullptr");
 		setSize(mSize + 1);
 		set(value, mSize - 1);
-	}
-
-	template<>
-	std::int32_t& Datum::get(const std::uint32_t index)
-	{
-		if (mType != DatumType::Integer) throw std::exception("Calling get on invalid type");
-		if (mData.i == nullptr) throw std::exception("Attempting to dereference nullptr");
-		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
-		return mData.i[index];
-	}
-
-	template<>
-	float& Datum::get(const std::uint32_t index)
-	{
-		if (mType != DatumType::Float) throw std::exception("Calling get on invalid type");
-		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
-		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
-		return mData.f[index];
-	}
-
-	template<>
-	glm::vec4& Datum::get(const std::uint32_t index)
-	{
-		if (mType != DatumType::Vector) throw std::exception("Calling get on invalid type");
-		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
-		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
-		return mData.v[index];
-	}
-
-	template<>
-	glm::mat4& Datum::get(const std::uint32_t index)
-	{
-		if (mType != DatumType::Matrix) throw std::exception("Calling get on invalid type");
-		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
-		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
-		return mData.m[index];
-	}
-
-	template<>
-	std::string& Datum::get(const std::uint32_t index)
-	{
-		if (mType != DatumType::String) throw std::exception("Calling get on invalid type");
-		if (mData.s == nullptr) throw std::exception("Attempting to dereference nullptr");
-		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
-		return mData.s[index];
-	}
-
-	template<>
-	Library::RTTI*& Datum::get(const std::uint32_t index)
-	{
-		if (mType != DatumType::Pointer) throw std::exception("Calling get on invalid type");
-		if (mData.r == nullptr) throw std::exception("Attempting to dereference nullptr");
-		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
-		return mData.r[index];
 	}
 
 	/// Parses a string value and sets the value to the specified index

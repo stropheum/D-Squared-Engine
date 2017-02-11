@@ -71,4 +71,10 @@ namespace Library
 		UNREFERENCED_PARAMETER(index);
 		throw std::exception("Attempting to call setFromString on unspecified Datum");
 	}
+
+	void TypeState::setStorage(const Datum& rhs)
+	{
+		UNREFERENCED_PARAMETER(rhs);
+		throw std::exception("Attempting to set external storage with no specified Datum type");
+	}
 }
