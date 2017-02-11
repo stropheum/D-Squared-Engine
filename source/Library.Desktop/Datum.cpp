@@ -435,40 +435,63 @@ namespace Library
 	/// @Exception: Thrown if trying to clear with an invalid type set
 	void Datum::clear()
 	{
-		//		mTypeState->clear();
-		setSize(0);
+		mTypeState->clear();
 	}
 
+	/// Sets the external storage to the specified int32_t*
+	/// Note: Size on external storage is considered static
+	/// @Param data: The specified external storage
+	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(std::int32_t* data, std::uint32_t size)
 	{
 		setType(DatumType::Integer);
 		mTypeState->setStorage(data, size);
 	}
 
+	/// Sets the external storage to the specified float*
+	/// Note: Size on external storage is considered static
+	/// @Param data: The specified external storage
+	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(float* data, std::uint32_t size)
 	{
 		setType(DatumType::Float);
 		mTypeState->setStorage(data, size);
 	}
 
+	/// Sets the external storage to the specified glm::vec4*
+	/// Note: Size on external storage is considered static
+	/// @Param data: The specified external storage
+	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(glm::vec4* data, std::uint32_t size)
 	{
 		setType(DatumType::Vector);
 		mTypeState->setStorage(data, size);
 	}
 
+	/// Sets the external storage to the specified glm::mat4*
+	/// Note: Size on external storage is considered static
+	/// @Param data: The specified external storage
+	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(glm::mat4* data, std::uint32_t size)
 	{
 		setType(DatumType::Matrix);
 		mTypeState->setStorage(data, size);
 	}
 
+	/// Sets the external storage to the specified std::string*
+	/// Note: Size on external storage is considered static
+	/// @Param data: The specified external storage
+	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(std::string* data, std::uint32_t size)
 	{
 		setType(DatumType::String);
 		mTypeState->setStorage(data, size);
 	}
 
+	/// Sets the external storage to the specified RTTI**
+	/// Note: Size on external storage is considered static
+	/// @Param data: The specified external storage
+	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(Library::RTTI** data, std::uint32_t size)
 	{
 		setType(DatumType::Pointer);

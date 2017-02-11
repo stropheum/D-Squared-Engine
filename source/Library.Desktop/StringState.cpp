@@ -4,14 +4,15 @@
 
 namespace Library
 {
+	/// Constructor
+	/// @Param context: The Datum object that the state operates one
 	StringState::StringState(Datum* const context):
 		TypeState(context)
 	{}
 
-
-	StringState::~StringState()
-	{}
-
+	/// Scalar assignment operator
+	/// @Param rhs: The string being set to the only element in the Datum
+	/// @Return: The modified Datum object
 	Datum& StringState::operator=(const std::string& rhs)
 	{
 		if (mContext->mSize > 1) throw std::exception("Invalid assignment invocation");
@@ -44,6 +45,8 @@ namespace Library
 		mContext->mSize = size;
 	}
 
+	/// Modifies the capacity of the array to any value greater than or equal to current size
+	/// @Param capacity: The new capacity of the array
 	void StringState::reserve(std::uint32_t capacity)
 	{
 		if (capacity < mContext->mSize) throw std::exception("Attempting to clobber occupied data");
@@ -58,6 +61,7 @@ namespace Library
 		mContext->mCapacity = capacity;
 	}
 
+	/// Clears the value of all elements in the array without changing capacity
 	void StringState::clear()
 	{
 		if (mContext->mSize > 0)
@@ -73,6 +77,8 @@ namespace Library
 		UNREFERENCED_PARAMETER(index);
 	}
 
+	/// Sets external storage on copy
+	/// @Param rhs: The Datum object that the storage reference is being taken from
 	void StringState::setStorage(const Datum& rhs)
 	{
 		setStorage(rhs.mData.s, rhs.mSize);

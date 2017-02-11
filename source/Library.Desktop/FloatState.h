@@ -7,8 +7,7 @@ namespace Library
 		public TypeState
 	{
 	public:
-		FloatState(Datum* const context);
-		~FloatState();
+		explicit FloatState(Datum* const context);
 
 		Datum& operator=(const float& rhs) override;
 

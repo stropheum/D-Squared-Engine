@@ -7,8 +7,7 @@ namespace Library
 		public TypeState
 	{
 	public:
-		PointerState(Datum* const context);
-		~PointerState();
+		explicit PointerState(Datum* const context);
 
 		Datum& operator=(Library::RTTI* const& rhs) override;
 

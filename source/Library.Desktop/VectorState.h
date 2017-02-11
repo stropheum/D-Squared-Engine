@@ -7,8 +7,7 @@ namespace Library
 		public TypeState
 	{
 	public:
-		VectorState(Datum* const context);
-		~VectorState();
+		explicit VectorState(Datum* const context);
 
 		Datum& operator=(const glm::vec4& rhs) override;
 

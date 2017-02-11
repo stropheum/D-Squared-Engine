@@ -6,8 +6,7 @@ namespace Library
 		public Library::TypeState
 	{
 	public:
-		StringState(Datum* const context);
-		~StringState();
+		explicit StringState(Datum* const context);
 
 		Datum& operator=(const std::string& rhs) override;
 

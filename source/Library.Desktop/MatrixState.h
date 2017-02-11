@@ -7,8 +7,7 @@ namespace Library
 		public TypeState
 	{
 	public:
-		MatrixState(Datum* const context);
-		~MatrixState();
+		explicit MatrixState(Datum* const context);
 
 		Datum& operator=(const glm::mat4& rhs) override;
 

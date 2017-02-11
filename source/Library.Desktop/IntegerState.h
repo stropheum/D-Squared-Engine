@@ -7,7 +7,7 @@ namespace Library
 		public TypeState
 	{
 	public:
-		IntegerState(Datum* const context);
+		explicit IntegerState(Datum* const context);
 
 		Datum& operator=(const std::int32_t& rhs) override;
 
