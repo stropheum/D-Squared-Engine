@@ -119,14 +119,6 @@ namespace Library
 
 	private:
 		TypeState* mTypeState;
-
-//		void setFromStringInt(const std::string& value, const std::uint32_t& index = 0);
-//		void setFromStringFloat(const std::string& value, const std::uint32_t& index = 0);
-//		void setFromStringVector(const std::string& value, const std::uint32_t& index = 0);
-//		void setFromStringMatrix(const std::string& value, const std::uint32_t& index = 0);
-//		void setFromStringString(const std::string& value, const std::uint32_t& index = 0);
-//		void setFromStringPointer(const std::string& value, const std::uint32_t& index = 0);
-		
 		DatumType mType;
 		DatumValues mData;
 		std::uint32_t mCapacity;

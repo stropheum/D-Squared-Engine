@@ -630,7 +630,7 @@ namespace Library
 
 	std::string Datum::toString()
 	{
-		std::string result = "";
+		std::string result = "I'm a string hurr durr";
 		// TODO: Implement toString		
 		return result;
 	}
