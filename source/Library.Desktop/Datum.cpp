@@ -117,7 +117,6 @@ namespace Library
 			default:
 				throw std::exception("Attempting to push back unknown type");
 			}
-			
 		}
 
 		return *this;
@@ -399,96 +398,6 @@ namespace Library
 	void Datum::clear()
 	{
 		mTypeState->clear();
-	}
-
-	/// Sets the external storage to the specified pointer
-	/// @Param data: The external storage being utilized
-	/// @Pram size: The number of elements in the external storage
-	/// @Exception: Thrown if attempting to reassign datum type, or if local memory is already used
-	void Datum::setStorage(std::int32_t* data, std::uint32_t size)
-	{
-		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
-		if (mType == DatumType::Integer && mData.i != nullptr)
-			throw std::exception("Attempting to set storage on a non-empty Datum object");
-		mDataIsExternal = true;
-		mType = DatumType::Integer;
-		mData.i = data;
-		mCapacity = mSize = size;
-	}
-
-	/// Sets the external storage to the specified pointer
-	/// @Param data: The external storage being utilized
-	/// @Param size: The number of elements in the external storage
-	/// @Exception: Thrown if attempting to reassign datum type, or if local memory is already used
-	void Datum::setStorage(float* data, std::uint32_t size)
-	{
-		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
-		if (mType == DatumType::Float && mData.f != nullptr)
-			throw std::exception("Attempting to set storage on a non-empty Datum object");
-		mDataIsExternal = true;
-		mType = DatumType::Float;
-		mData.f = data;
-		mCapacity = mSize = size;
-	}
-
-	/// Sets the external storage to the specified pointer
-	/// @Param data: The external storage being utilized
-	/// @Param size: The number of elements in the external storage
-	/// @Exception: Thrown if attempting to reassign datum type, or if local memory is already used
-	void Datum::setStorage(glm::vec4* data, std::uint32_t size)
-	{
-		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
-		if (mType == DatumType::Vector && mData.v != nullptr)
-			throw std::exception("Attempting to set storage on a non-empty Datum object");
-		mDataIsExternal = true;
-		mType = DatumType::Vector;
-		mData.v = data;
-		mCapacity = mSize = size;
-	}
-
-	/// Sets the external storage to the specified pointer
-	/// @Param data: The external storage being utilized
-	/// @Param size: The number of elements in the external storage
-	/// @Exception: Thrown if attempting to reassign datum type, or if local memory is already used
-	void Datum::setStorage(glm::mat4* data, std::uint32_t size)
-	{
-		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
-		if (mType == DatumType::Matrix && mData.m != nullptr)
-			throw std::exception("Attempting to set storage on a non-empty Datum object");
-		mDataIsExternal = true;
-		mType = DatumType::Matrix;
-		mData.m = data;
-		mCapacity = mSize = size;
-	}
-
-	/// Sets the external storage to the specified pointer
-	/// @Param data: The external storage being utilized
-	/// @Pram size: The number of elements in the external storage
-	/// @Exception: Thrown if attempting to reassign datum type, or if local memory is already used
-	void Datum::setStorage(std::string* data, std::uint32_t size)
-	{
-		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
-		if (mType == DatumType::String && mData.s != nullptr)
-			throw std::exception("Attempting to set storage on a non-empty Datum object");
-		mDataIsExternal = true;
-		mType = DatumType::String;
-		mData.s = data;
-		mCapacity = mSize = size;
-	}
-
-	/// Sets the external storage to the specified pointer
-	/// @Param data: The external storage being utilized
-	/// @Pram size: The number of elements in the external storage
-	/// @Exception: Thrown if attempting to reassign datum type, or if local memory is already used
-	void Datum::setStorage(Library::RTTI** data, std::uint32_t size)
-	{
-		if (mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
-		if (mType == DatumType::Pointer && mData.r != nullptr)
-			throw std::exception("Attempting to set storage on a non-empty Datum object");
-		mDataIsExternal = true;
-		mType = DatumType::Pointer;
-		mData.r = data;
-		mCapacity = mSize = size;
 	}
 
 	/// Sets a specified index of the array to the specified value

@@ -74,6 +74,21 @@ namespace Library
 
 	void StringState::setStorage(const Datum& rhs)
 	{
-		mContext->setStorage(rhs.mData.s, rhs.mSize);
+		setStorage(rhs.mData.s, rhs.mSize);
+	}
+
+	/// Sets the external storage to the specified pointer
+	/// @Param data: The external storage being utilized
+	/// @Pram size: The number of elements in the external storage
+	/// @Exception: Thrown if attempting to reassign datum type, or if local memory is already used
+	void StringState::setStorage(std::string* data, std::uint32_t size)
+	{
+		if (mContext->mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
+		if (mContext->mType == DatumType::String && mContext->mData.s != nullptr)
+			throw std::exception("Attempting to set storage on a non-empty Datum object");
+		mContext->mDataIsExternal = true;
+		mContext->mType = DatumType::String;
+		mContext->mData.s = data;
+		mContext->mCapacity = mContext->mSize = size;
 	}
 }

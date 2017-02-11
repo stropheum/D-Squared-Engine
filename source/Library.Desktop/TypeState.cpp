@@ -77,4 +77,46 @@ namespace Library
 		UNREFERENCED_PARAMETER(rhs);
 		throw std::exception("Attempting to set external storage with no specified Datum type");
 	}
+
+	void TypeState::setStorage(std::int32_t* data, std::uint32_t size)
+	{
+		UNREFERENCED_PARAMETER(data);
+		UNREFERENCED_PARAMETER(size);
+		throw std::exception("Attempting to set storage on unknown type");
+	}
+
+	void TypeState::setStorage(float* data, std::uint32_t size)
+	{
+		UNREFERENCED_PARAMETER(data);
+		UNREFERENCED_PARAMETER(size);
+		throw std::exception("Attempting to set storage on unknown type");
+	}
+
+	void TypeState::setStorage(glm::vec4* data, std::uint32_t size)
+	{
+		UNREFERENCED_PARAMETER(data);
+		UNREFERENCED_PARAMETER(size);
+		throw std::exception("Attempting to set storage on unknown type");
+	}
+
+	void TypeState::setStorage(glm::mat4* data, std::uint32_t size)
+	{
+		UNREFERENCED_PARAMETER(data);
+		UNREFERENCED_PARAMETER(size);
+		throw std::exception("Attempting to set storage on unknown type");
+	}
+
+	void TypeState::setStorage(std::string* data, std::uint32_t size)
+	{
+		UNREFERENCED_PARAMETER(data);
+		UNREFERENCED_PARAMETER(size);
+		throw std::exception("Attempting to set storage on unknown type");
+	}
+
+	void TypeState::setStorage(Library::RTTI** data, std::uint32_t size)
+	{
+		UNREFERENCED_PARAMETER(data);
+		UNREFERENCED_PARAMETER(size);
+		throw std::exception("Attempting to set storage on unknown type");
+	}
 }
