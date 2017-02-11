@@ -4,7 +4,7 @@
 namespace Library
 {
 	/// Constructor
-	Datum::Datum():
+	Datum::Datum() :
 		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
 	{}
 
@@ -29,7 +29,7 @@ namespace Library
 	/// Copy constructor
 	/// @Param rhs: Datum object being copied
 	/// @Exception: Thrown if attempting to construct a non-existing datum type
-	Datum::Datum(const Datum& rhs): 
+	Datum::Datum(const Datum& rhs) :
 		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(rhs.mCapacity), mSize(0), mDataIsExternal(rhs.mDataIsExternal)
 	{
 		operator=(rhs);
@@ -58,44 +58,44 @@ namespace Library
 			reserve(rhs.mCapacity);
 			switch (rhs.mType)
 			{
-			case DatumType::Integer:
-				for (std::uint32_t i = 0; i < rhs.mSize; i++)
-				{
-					pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
-				}
-				break;
-			case DatumType::Float:
-				for (std::uint32_t i = 0; i < rhs.mSize; i++)
-				{
-					pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
-				}
-				break;
-			case DatumType::Vector:
-				for (std::uint32_t i = 0; i < rhs.mSize; i++)
-				{
-					pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
-				}
-				break;
-			case DatumType::Matrix:
-				for (std::uint32_t i = 0; i < rhs.mSize; i++)
-				{
-					pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
-				}
-				break;
-			case DatumType::String:
-				for (std::uint32_t i = 0; i < rhs.mSize; i++)
-				{
-					pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
-				}
-				break;
-			case DatumType::Pointer:
-				for (std::uint32_t i = 0; i < rhs.mSize; i++)
-				{
-					pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
-				}
-				break;
-			default:
-				throw std::exception("Attempting to push back unknown type");
+				case DatumType::Integer:
+					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					{
+						pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+					}
+					break;
+				case DatumType::Float:
+					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					{
+						pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+					}
+					break;
+				case DatumType::Vector:
+					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					{
+						pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+					}
+					break;
+				case DatumType::Matrix:
+					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					{
+						pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+					}
+					break;
+				case DatumType::String:
+					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					{
+						pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+					}
+					break;
+				case DatumType::Pointer:
+					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					{
+						pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+					}
+					break;
+				default:
+					throw std::exception("Attempting to push back unknown type");
 			}
 		}
 
@@ -162,7 +162,7 @@ namespace Library
 					break;
 			}
 		}
-		
+
 		rhs.mType = DatumType::Unknown;
 		rhs.mCapacity = NULL;
 		rhs.mSize = NULL;
@@ -371,10 +371,10 @@ namespace Library
 	void Datum::setType(const DatumType& type)
 	{
 		if (mType == type) return; // Avoid double instantiation of state without throwing an exception
-		
+
 		if (mType == DatumType::Unknown) mType = type;
 		else throw std::exception("Attempting to change type on Datum object");
-		
+
 		switch (mType)
 		{
 			case DatumType::Integer:
@@ -435,7 +435,7 @@ namespace Library
 	/// @Exception: Thrown if trying to clear with an invalid type set
 	void Datum::clear()
 	{
-//		mTypeState->clear();
+		//		mTypeState->clear();
 		setSize(0);
 	}
 
