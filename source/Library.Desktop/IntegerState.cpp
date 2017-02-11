@@ -39,12 +39,14 @@ namespace Library
 	void IntegerState::reserve(std::uint32_t capacity)
 	{
 		if (capacity < mContext->mSize) throw std::exception("Attempting to clobber occupied data");
-		mContext->mCapacity = capacity;
+		
 
 		std::int32_t* temp= mContext->mData.i;
-		mContext->mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * mContext->mCapacity));
+		mContext->mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * capacity));
 		memcpy_s(mContext->mData.i, sizeof(std::int32_t) * mContext->mSize, temp, sizeof(std::int32_t) * mContext->mSize);
-		// TODO: Figure out why trying to free temp causes the world to end
+		
+		if (mContext->mCapacity > 0) { free(temp); }
+		mContext->mCapacity = capacity;
 	}
 
 	void IntegerState::clear()
@@ -75,7 +77,9 @@ namespace Library
 	{
 		if (mContext->mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
 		if (mContext->mType == DatumType::Integer && mContext->mData.i != nullptr)
+		{
 			throw std::exception("Attempting to set storage on a non-empty Datum object");
+		}
 		mContext->mDataIsExternal = true;
 		mContext->mType = DatumType::Integer;
 		mContext->mData.i = data;

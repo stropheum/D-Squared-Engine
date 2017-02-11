@@ -42,13 +42,13 @@ namespace Library
 	void PointerState::reserve(std::uint32_t capacity)
 	{
 		if (capacity < mContext->mSize) throw std::exception("Attempting to clobber occupied data");
-		mContext->mCapacity = capacity;
 
 		Library::RTTI** temp = mContext->mData.r;
-		mContext->mData.r = static_cast<Library::RTTI**>(malloc(sizeof(Library::RTTI*) * mContext->mCapacity));
+		mContext->mData.r = static_cast<Library::RTTI**>(malloc(sizeof(Library::RTTI*) * capacity));
 		memcpy_s(mContext->mData.r, sizeof(Library::RTTI) * mContext->mSize, temp, sizeof(Library::RTTI) * mContext->mSize);
 
-		if (temp != nullptr) free(temp);
+		if (mContext->mCapacity > 0) { free(temp); }
+		mContext->mCapacity = capacity;
 	}
 
 	void PointerState::clear()

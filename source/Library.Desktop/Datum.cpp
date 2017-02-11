@@ -49,6 +49,12 @@ namespace Library
 			case DatumType::Float:
 				if (rhs.mData.f != nullptr) free(rhs.mData.f);
 				break;
+			case DatumType::Vector:
+				if (rhs.mData.v != nullptr) free(rhs.mData.v);
+				break;
+			case DatumType::Matrix:
+				if (rhs.mData.m != nullptr) free(rhs.mData.m);
+				break;
 			case DatumType::String:
 				if (rhs.mData.s != nullptr) free(rhs.mData.s);
 				break;

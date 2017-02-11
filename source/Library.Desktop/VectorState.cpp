@@ -43,13 +43,13 @@ namespace Library
 	void VectorState::reserve(std::uint32_t capacity)
 	{
 		if (capacity < mContext->mSize) throw std::exception("Attempting to clobber occupied data");
-		mContext->mCapacity = capacity;
 
 		glm::vec4* temp = mContext->mData.v;
-		mContext->mData.v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4) * mContext->mCapacity));
+		mContext->mData.v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4) * capacity));
 		memcpy_s(mContext->mData.v, sizeof(glm::vec4) * mContext->mSize, temp, sizeof(glm::vec4) * mContext->mSize);
 
-		if (temp != nullptr) free(temp);
+		if (mContext->mCapacity > 0) { free(temp); }
+		mContext->mCapacity = capacity;
 	}
 
 	void VectorState::clear()

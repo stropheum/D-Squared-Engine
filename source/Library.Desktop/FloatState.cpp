@@ -43,13 +43,13 @@ namespace Library
 	void FloatState::reserve(std::uint32_t capacity)
 	{
 		if (capacity < mContext->mSize) throw std::exception("Attempting to clobber occupied data");
-		mContext->mCapacity = capacity;
 
 		float* temp = mContext->mData.f;
-		mContext->mData.f = static_cast<float*>(malloc(sizeof(float) * mContext->mCapacity));
+		mContext->mData.f = static_cast<float*>(malloc(sizeof(float) * capacity));
 		memcpy_s(mContext->mData.f, sizeof(float) * mContext->mSize, temp, sizeof(float) * mContext->mSize);
 
-		if (temp != nullptr) free(temp);
+		if (mContext->mCapacity > 0) { free(temp); }
+		mContext->mCapacity = capacity;
 	}
 
 	void FloatState::clear()
