@@ -19,27 +19,10 @@ namespace Library
 	/// Destructor
 	Datum::~Datum()
 	{
-		switch (mType)
-		{
-			case DatumType::Integer:
-				if (mData.i != nullptr) free(mData.i);
-				break;
-			case DatumType::Float:
-				if (mData.f != nullptr) free(mData.f);
-				break;
-			case DatumType::Vector:
-				if (mData.v != nullptr) free(mData.v);
-				break;
-			case DatumType::Matrix:
-				if (mData.m != nullptr) free(mData.m);
-				break;
-			case DatumType::String:
-				if (mData.s != nullptr) free(mData.s);
-				break;
-			case DatumType::Pointer:
-				if (mData.r != nullptr) free(mData.r);
-				break;
-			default: ;
+		if (mCapacity > 0)
+		{	// Don't bother clearing memory if there isn't any reserved space
+			setSize(0); // Remove all elements, allowing us to shrink buffer to zero
+			reserve(0); // Reserve frees the old buffer and allocates new size (of nothing)
 		}
 	}
 

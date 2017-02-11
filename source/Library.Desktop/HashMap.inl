@@ -7,7 +7,7 @@ namespace Library
 	template <typename TKey, typename TValue, typename HashFunctor>
 	HashMap<TKey, TValue, HashFunctor>::HashMap(std::uint32_t bucketCount = defaultBucketCount):
 		mBucketCount(bucketCount), mBuckets(), mSize(0)
-	{
+	{	// HashMaps need to be constructed with at least one bucket, or nothing will be able to be stored
 		if (mBucketCount == 0) throw std::exception("HashMap constructed with an invalid amount of buckets");
 		initializeBuckets();
 	}
@@ -36,9 +36,10 @@ namespace Library
 	{
 		mSize = 0;
 		for (std::uint32_t i = 0; i < mBucketCount; i++)
-		{ // Create a vector to represent each "bucket:
+		{	// Create a vector to represent each "bucket:
 			mBuckets.pushBack(BucketType());
 		}
+		mBuckets.shrinkToFit();
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
@@ -183,7 +184,7 @@ namespace Library
 		if (mOwner == nullptr) throw std::exception("Incrementing beyond HashMap bounds");
 		
 		if (mBucketIndex < mOwner->mBucketCount)
-		{ // As long as we are within proper range, don't bypass increment
+		{	// As long as we are within proper range, don't bypass increment
 			++mIter;
 			while (mIter == mOwner->mBuckets[mBucketIndex].end())
 			{
