@@ -84,11 +84,10 @@ namespace Library
 	/// @Exception: Thrown if attempting to reassign datum type, or if local memory is already used
 	void StringState::setStorage(std::string* data, std::uint32_t size)
 	{
-		if (mContext->mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
-		if (mContext->mType == DatumType::String && mContext->mData.s != nullptr)
-			throw std::exception("Attempting to set storage on a non-empty Datum object");
+		if (mContext->mType != DatumType::String) throw std::exception("Attempting to reassign Datum Type");
+		if (mContext->mCapacity > 0) throw std::exception("Set storage called on non-empty Datum");
+		
 		mContext->mDataIsExternal = true;
-		mContext->mType = DatumType::String;
 		mContext->mData.s = data;
 		mContext->mCapacity = mContext->mSize = size;
 	}

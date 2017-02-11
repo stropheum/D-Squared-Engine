@@ -439,6 +439,42 @@ namespace Library
 		setSize(0);
 	}
 
+	void Datum::setStorage(std::int32_t* data, std::uint32_t size)
+	{
+		setType(DatumType::Integer);
+		mTypeState->setStorage(data, size);
+	}
+
+	void Datum::setStorage(float* data, std::uint32_t size)
+	{
+		setType(DatumType::Float);
+		mTypeState->setStorage(data, size);
+	}
+
+	void Datum::setStorage(glm::vec4* data, std::uint32_t size)
+	{
+		setType(DatumType::Vector);
+		mTypeState->setStorage(data, size);
+	}
+
+	void Datum::setStorage(glm::mat4* data, std::uint32_t size)
+	{
+		setType(DatumType::Matrix);
+		mTypeState->setStorage(data, size);
+	}
+
+	void Datum::setStorage(std::string* data, std::uint32_t size)
+	{
+		setType(DatumType::String);
+		mTypeState->setStorage(data, size);
+	}
+
+	void Datum::setStorage(Library::RTTI** data, std::uint32_t size)
+	{
+		setType(DatumType::Pointer);
+		mTypeState->setStorage(data, size);
+	}
+
 	/// Sets a specified index of the array to the specified value
 	/// @Param value: The int32_t being assigned
 	/// @Param index: The index of the value being assigned to

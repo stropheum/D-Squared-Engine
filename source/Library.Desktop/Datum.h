@@ -85,12 +85,12 @@ namespace Library
 		void reserve(std::uint32_t capacity);
 		void clear();
 
-//		void setStorage(std::int32_t* data, std::uint32_t size);
-//		void setStorage(float* data, std::uint32_t size);
-//		void setStorage(glm::vec4* data, std::uint32_t size);
-//		void setStorage(glm::mat4* data, std::uint32_t size);
-//		void setStorage(std::string* data, std::uint32_t size);
-//		void setStorage(Library::RTTI** data, std::uint32_t size);
+		void setStorage(std::int32_t* data, std::uint32_t size);
+		void setStorage(float* data, std::uint32_t size);
+		void setStorage(glm::vec4* data, std::uint32_t size);
+		void setStorage(glm::mat4* data, std::uint32_t size);
+		void setStorage(std::string* data, std::uint32_t size);
+		void setStorage(Library::RTTI** data, std::uint32_t size);
 		
 		void set(const std::int32_t& value, const std::uint32_t index = 0);
 		void set(const float& value, const std::uint32_t index = 0);

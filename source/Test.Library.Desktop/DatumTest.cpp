@@ -686,8 +686,9 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestSetStorage)
 		{
-			// TODO: Implement test method
-			Assert::Fail();
+			Library::Datum iTemp;
+			std::int32_t* iStorage = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * 10));
+			iTemp.setStorage(iStorage, 10);
 		}
 
 		TEST_METHOD(TestSet)
