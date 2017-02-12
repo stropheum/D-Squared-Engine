@@ -52,12 +52,6 @@ namespace Library
 		throw std::exception("Invalid assignment operation");
 	}
 
-	void TypeState::setStorage(const Datum& rhs)
-	{
-		UNREFERENCED_PARAMETER(rhs);
-		throw std::exception("Attempting to set external storage with no specified Datum type");
-	}
-
 	void TypeState::setStorage(std::int32_t* data, std::uint32_t size)
 	{
 		UNREFERENCED_PARAMETER(data);

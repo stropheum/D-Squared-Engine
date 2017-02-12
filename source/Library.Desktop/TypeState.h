@@ -54,7 +54,7 @@ namespace Library
 		virtual void setFromString(const std::string& value, const std::uint32_t& index)=0;
 		/// Sets the external storage of the Datum object being copied
 		/// @Param rhs: The datum object which stores the reference to the external storage
-		virtual void setStorage(const Datum& rhs);
+		virtual void setStorage(const Datum& rhs)=0;
 		/// Sets the external storage of the specified integer array
 		/// @Param data: The external storage array
 		/// @Param size: The size of the array
