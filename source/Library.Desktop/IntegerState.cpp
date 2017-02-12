@@ -68,8 +68,8 @@ namespace Library
 
 	void IntegerState::setFromString(const std::string& value, const std::uint32_t& index)
 	{
-		UNREFERENCED_PARAMETER(value);
-		UNREFERENCED_PARAMETER(index);
+		std::int32_t result = std::stoi(value);
+		mContext->set(result, index);
 	}
 
 	/// Sets external storage on copy

@@ -803,8 +803,41 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestSetFromString)
 		{
-			// TODO: Implement test method
-			Assert::Fail();
+			// Integer
+			iDatum.setFromString("1");
+			Assert::IsTrue(iDatum == 1);
+			Assert::IsFalse(iDatum == 2);
+			
+			iDatum.setFromString("2", 1);
+			Assert::IsTrue(iDatum.get<std::int32_t>(0) == 1);
+			Assert::IsTrue(iDatum.get<std::int32_t>(1) == 2);
+
+			iDatum.setFromString("3", 1);
+			Assert::IsTrue(iDatum.get<std::int32_t>(0) == 1);
+			Assert::IsTrue(iDatum.get<std::int32_t>(1) == 3);
+
+
+			// Float
+
+
+			// Vector
+
+
+			// Matrix
+
+
+			// String
+			sDatum.setFromString(s1);
+			Assert::IsTrue(sDatum == s1);
+			Assert::IsFalse(sDatum == s2);
+			
+			sDatum.setFromString(s2, 1);
+			Assert::IsTrue(sDatum.get<std::string>(0) == s1);
+			Assert::IsTrue(sDatum.get<std::string>(1) == s2);
+
+			sDatum.setFromString(s3, 1);
+			Assert::IsTrue(sDatum.get<std::string>(0) == s1);
+			Assert::IsTrue(sDatum.get<std::string>(1) == s3);
 		}
 
 		TEST_METHOD(TestToString)

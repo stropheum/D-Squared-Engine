@@ -72,9 +72,8 @@ namespace Library
 	}
 
 	void StringState::setFromString(const std::string& value, const std::uint32_t& index)
-	{
-		UNREFERENCED_PARAMETER(value);
-		UNREFERENCED_PARAMETER(index);
+	{   // Strings don't have to be parsed, so they can be passed directly top set
+		mContext->set(value, index); 
 	}
 
 	/// Sets external storage on copy
