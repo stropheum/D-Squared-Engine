@@ -1369,5 +1369,100 @@ namespace TestLibraryDesktop
 			Assert::IsTrue("" == rDatum.toString(), L"pointer toString should return an empty string representation");
 			Assert::IsTrue("" == rDatum.toString(0), L"pointer toString should return an empty string representation");
 		}
+
+		TEST_METHOD(TestInvalidStateUsage)
+		{
+			std::uint32_t size = 10;
+			std::int32_t* iData = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * size));
+			float* fData = static_cast<float*>(malloc(sizeof(float) * size));
+			glm::vec4* vData = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4) * size));
+			glm::mat4* mData = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4) * size));
+			std::string* sData = static_cast<std::string*>(malloc(sizeof(std::string) * size));
+			Library::RTTI** rData = static_cast<Library::RTTI**>(malloc(sizeof(Library::RTTI*) * size));
+
+
+			// Integer
+			Assert::ExpectException<std::exception>([&] { iDatum = f1; });
+			Assert::ExpectException<std::exception>([&] { iDatum = v1; });
+			Assert::ExpectException<std::exception>([&] { iDatum = m1; });
+			Assert::ExpectException<std::exception>([&] { iDatum = s1; });
+			Assert::ExpectException<std::exception>([&] { iDatum = r1; });
+
+			Assert::ExpectException<std::exception>([&] { iDatum.setStorage(fData, size); });
+			Assert::ExpectException<std::exception>([&] { iDatum.setStorage(vData, size); });
+			Assert::ExpectException<std::exception>([&] { iDatum.setStorage(mData, size); });
+			Assert::ExpectException<std::exception>([&] { iDatum.setStorage(sData, size); });
+			Assert::ExpectException<std::exception>([&] { iDatum.setStorage(rData, size); });
+
+
+			// Float
+			Assert::ExpectException<std::exception>([&] { fDatum = i1; });
+			Assert::ExpectException<std::exception>([&] { fDatum = v1; });
+			Assert::ExpectException<std::exception>([&] { fDatum = m1; });
+			Assert::ExpectException<std::exception>([&] { fDatum = s1; });
+			Assert::ExpectException<std::exception>([&] { fDatum = r1; });
+
+			Assert::ExpectException<std::exception>([&] { fDatum.setStorage(iData, size); });
+			Assert::ExpectException<std::exception>([&] { fDatum.setStorage(vData, size); });
+			Assert::ExpectException<std::exception>([&] { fDatum.setStorage(mData, size); });
+			Assert::ExpectException<std::exception>([&] { fDatum.setStorage(sData, size); });
+			Assert::ExpectException<std::exception>([&] { fDatum.setStorage(rData, size); });
+
+
+			// Vector
+			Assert::ExpectException<std::exception>([&] { vDatum = i1; });
+			Assert::ExpectException<std::exception>([&] { vDatum = f1; });
+			Assert::ExpectException<std::exception>([&] { vDatum = m1; });
+			Assert::ExpectException<std::exception>([&] { vDatum = s1; });
+			Assert::ExpectException<std::exception>([&] { vDatum = r1; });
+
+			Assert::ExpectException<std::exception>([&] { vDatum.setStorage(iData, size); });
+			Assert::ExpectException<std::exception>([&] { vDatum.setStorage(fData, size); });
+			Assert::ExpectException<std::exception>([&] { vDatum.setStorage(mData, size); });
+			Assert::ExpectException<std::exception>([&] { vDatum.setStorage(sData, size); });
+			Assert::ExpectException<std::exception>([&] { vDatum.setStorage(rData, size); });
+
+
+			// Matrix
+			Assert::ExpectException<std::exception>([&] { mDatum = i1; });
+			Assert::ExpectException<std::exception>([&] { mDatum = f1; });
+			Assert::ExpectException<std::exception>([&] { mDatum = v1; });
+			Assert::ExpectException<std::exception>([&] { mDatum = s1; });
+			Assert::ExpectException<std::exception>([&] { mDatum = r1; });
+
+			Assert::ExpectException<std::exception>([&] { mDatum.setStorage(iData, size); });
+			Assert::ExpectException<std::exception>([&] { mDatum.setStorage(fData, size); });
+			Assert::ExpectException<std::exception>([&] { mDatum.setStorage(vData, size); });
+			Assert::ExpectException<std::exception>([&] { mDatum.setStorage(sData, size); });
+			Assert::ExpectException<std::exception>([&] { mDatum.setStorage(rData, size); });
+
+
+			// String
+			Assert::ExpectException<std::exception>([&] { sDatum = i1; });
+			Assert::ExpectException<std::exception>([&] { sDatum = f1; });
+			Assert::ExpectException<std::exception>([&] { sDatum = v1; });
+			Assert::ExpectException<std::exception>([&] { sDatum = m1; });
+			Assert::ExpectException<std::exception>([&] { sDatum = r1; });
+
+			Assert::ExpectException<std::exception>([&] { sDatum.setStorage(iData, size); });
+			Assert::ExpectException<std::exception>([&] { sDatum.setStorage(fData, size); });
+			Assert::ExpectException<std::exception>([&] { sDatum.setStorage(vData, size); });
+			Assert::ExpectException<std::exception>([&] { sDatum.setStorage(mData, size); });
+			Assert::ExpectException<std::exception>([&] { sDatum.setStorage(rData, size); });
+
+
+			// Pointer
+			Assert::ExpectException<std::exception>([&] { rDatum = i1; });
+			Assert::ExpectException<std::exception>([&] { rDatum = f1; });
+			Assert::ExpectException<std::exception>([&] { rDatum = v1; });
+			Assert::ExpectException<std::exception>([&] { rDatum = m1; });
+			Assert::ExpectException<std::exception>([&] { rDatum = s1; });
+
+			Assert::ExpectException<std::exception>([&] { rDatum.setStorage(iData, size); });
+			Assert::ExpectException<std::exception>([&] { rDatum.setStorage(fData, size); });
+			Assert::ExpectException<std::exception>([&] { rDatum.setStorage(vData, size); });
+			Assert::ExpectException<std::exception>([&] { rDatum.setStorage(mData, size); });
+			Assert::ExpectException<std::exception>([&] { rDatum.setStorage(sData, size); });
+		}
 	};
 }

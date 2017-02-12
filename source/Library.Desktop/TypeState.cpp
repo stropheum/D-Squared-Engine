@@ -52,30 +52,6 @@ namespace Library
 		throw std::exception("Invalid assignment operation");
 	}
 
-	void TypeState::setSize(std::uint32_t size)
-	{
-		UNREFERENCED_PARAMETER(size);
-		throw std::exception("Calling set size on Datum with no type");
-	}
-
-	void TypeState::reserve(std::uint32_t capacity)
-	{
-		UNREFERENCED_PARAMETER(capacity);
-		throw std::exception("Attempting to reserve size of unknown type");
-	}
-
-	void TypeState::clear()
-	{
-		throw std::exception("Attempting to call clear on an unspecified Datum");
-	}
-
-	void TypeState::setFromString(const std::string& value, const std::uint32_t& index)
-	{
-		UNREFERENCED_PARAMETER(value);
-		UNREFERENCED_PARAMETER(index);
-		throw std::exception("Attempting to call setFromString on unspecified Datum");
-	}
-
 	void TypeState::setStorage(const Datum& rhs)
 	{
 		UNREFERENCED_PARAMETER(rhs);

@@ -42,20 +42,16 @@ namespace Library
 
 		/// Sets the number of elements in the array
 		/// @param size: The new number of elements in the array
-		/// @Exception: Thrown if called from this context
-		virtual void setSize(std::uint32_t size);
+		virtual void setSize(std::uint32_t size)=0;
 		/// Reserves capacity for the specified number of elements in the array
 		/// @Param: The new potential number of elements in the array
-		/// @Exception: Thrown if called from this context
-		virtual void reserve(std::uint32_t capacity);
+		virtual void reserve(std::uint32_t capacity)=0;
 		/// Clears all values in the array without changing capacity
-		/// @Exception: Thrown if called from this context
-		virtual void clear();
+		virtual void clear()=0;
 		/// Parses a string value and assigns the specified index of the array to its value
 		/// @Param value: The string value being parsed
 		/// @Param index: The index of the array being assigned to
-		/// @Exception: Thrown if called from this context
-		virtual void setFromString(const std::string& value, const std::uint32_t& index);
+		virtual void setFromString(const std::string& value, const std::uint32_t& index)=0;
 		/// Sets the external storage of the Datum object being copied
 		/// @Param rhs: The datum object which stores the reference to the external storage
 		virtual void setStorage(const Datum& rhs);
