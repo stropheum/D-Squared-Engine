@@ -92,10 +92,11 @@ namespace Library
 		mContext->mCapacity = mContext->mSize = size;
 	}
 
+	/// A string representation of a piece of data stored in the Datum object
+	/// @Param index: Optional index of the value being retrieved. Defaulted to first element
 	std::string PointerState::toString(std::uint32_t index)
 	{
-		char value[50];
-		sprintf_s(value, "%d", reinterpret_cast<size_t>(mContext->get<Library::RTTI*>(index)));
-		return value;
+		UNREFERENCED_PARAMETER(index);
+		return "";
 	}
 }

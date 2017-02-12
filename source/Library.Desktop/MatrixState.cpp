@@ -93,6 +93,8 @@ namespace Library
 		mContext->mCapacity = mContext->mSize = size;
 	}
 
+	/// A string representation of a piece of data stored in the Datum object
+	/// @Param index: Optional index of the value being retrieved. Defaulted to first element
 	std::string MatrixState::toString(std::uint32_t index)
 	{
 		return glm::to_string(mContext->get<glm::mat4>(index));

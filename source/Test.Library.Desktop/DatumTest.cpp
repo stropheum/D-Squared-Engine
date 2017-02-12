@@ -809,8 +809,110 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestToString)
 		{
-			// TODO: Implement test method
-			Assert::Fail();
+			// Integer
+			iDatum = i1;
+			Assert::IsTrue("1" == iDatum.toString(), L"toString invalid on scalar assignment");
+			iDatum = i2;
+			Assert::IsTrue("2" == iDatum.toString(), L"toString invalid on scalar assignment");
+			iDatum = i3;
+			Assert::IsTrue("3" == iDatum.toString(), L"toString invalid on scalar assignment");
+
+			iDatum.clear();
+			iDatum.pushBack(i1);
+			iDatum.pushBack(i2);
+			iDatum.pushBack(i3);
+			Assert::IsTrue("1" == iDatum.toString(0), L"toString invalid with multiple values");
+			Assert::IsTrue("2" == iDatum.toString(1), L"toString invalid with multiple values");
+			Assert::IsTrue("3" == iDatum.toString(2), L"toString invalid with multiple values");
+
+			iDatum.set(i1, 1);
+			Assert::IsTrue("1" == iDatum.toString(1), L"toString invalid after set");
+
+			
+			// Float
+			fDatum = f1;
+			Assert::IsTrue("1.000000" == fDatum.toString(), L"toString invalid on scalar assignment");
+			fDatum = f2;
+			Assert::IsTrue("2.000000" == fDatum.toString(), L"toString invalid on scalar assignment");
+			fDatum = f3;
+			Assert::IsTrue("3.000000" == fDatum.toString(), L"toString invalid on scalar assignment");
+
+			fDatum.clear();
+			fDatum.pushBack(f1);
+			fDatum.pushBack(f2);
+			fDatum.pushBack(f3);
+			Assert::IsTrue("1.000000" == fDatum.toString(0), L"toString invalid with multiple values");
+			Assert::IsTrue("2.000000" == fDatum.toString(1), L"toString invalid with multiple values");
+			Assert::IsTrue("3.000000" == fDatum.toString(2), L"toString invalid with multiple values");
+
+			fDatum.set(f1, 1);
+			Assert::IsTrue("1.000000" == fDatum.toString(1), L"toString invalid after set");
+
+
+			// Vector
+			vDatum = v1;
+			auto vs1 = "vec4(1.000000, 1.000000, 1.000000, 1.000000)";
+			auto vs2 = "vec4(2.000000, 2.000000, 2.000000, 2.000000)";
+			auto vs3 = "vec4(3.000000, 3.000000, 3.000000, 3.000000)";
+			Assert::IsTrue(vs1 == vDatum.toString(), L"toString invalid on scalar assignment");
+			vDatum = v2;
+			Assert::IsTrue(vs2 == vDatum.toString(), L"toString invalid on scalar assignment");
+			vDatum = v3;
+			Assert::IsTrue(vs3 == vDatum.toString(), L"toString invalid on scalar assignment");
+
+			vDatum.clear();
+			vDatum.pushBack(v1);
+			vDatum.pushBack(v2);
+			vDatum.pushBack(v3);
+			Assert::IsTrue(vs1 == vDatum.toString(0), L"toString invalid with multiple values");
+			Assert::IsTrue(vs2 == vDatum.toString(1), L"toString invalid with multiple values");
+			Assert::IsTrue(vs3 == vDatum.toString(2), L"toString invalid with multiple values");
+
+			vDatum.set(v1, 1);
+			Assert::IsTrue(vs1 == vDatum.toString(1), L"toString invalid after set");
+
+
+			// Matrix
+			mDatum = m1;
+			auto ms1 = "mat4x4((1.000000, 0.000000, 0.000000, 0.000000), (0.000000, 1.000000, 0.000000, 0.000000), (0.000000, 0.000000, 1.000000, 0.000000), (0.000000, 0.000000, 0.000000, 1.000000))";
+			auto ms2 = "mat4x4((2.000000, 0.000000, 0.000000, 0.000000), (0.000000, 2.000000, 0.000000, 0.000000), (0.000000, 0.000000, 2.000000, 0.000000), (0.000000, 0.000000, 0.000000, 2.000000))";
+			auto ms3 = "mat4x4((3.000000, 0.000000, 0.000000, 0.000000), (0.000000, 3.000000, 0.000000, 0.000000), (0.000000, 0.000000, 3.000000, 0.000000), (0.000000, 0.000000, 0.000000, 3.000000))";
+			Assert::IsTrue(ms1 == mDatum.toString(), L"toString invalid on scalar assignment");
+			mDatum = m2;
+			Assert::IsTrue(ms2 == mDatum.toString(), L"toString invalid on scalar assignment");
+			mDatum = m3;
+			Assert::IsTrue(ms3 == mDatum.toString(), L"toString invalid on scalar assignment");
+
+			mDatum.clear();
+			mDatum.pushBack(m1);
+			mDatum.pushBack(m2);
+			mDatum.pushBack(m3);
+			Assert::IsTrue(ms1 == mDatum.toString(0), L"toString invalid with multiple values");
+			Assert::IsTrue(ms2 == mDatum.toString(1), L"toString invalid with multiple values");
+			Assert::IsTrue(ms3 == mDatum.toString(2), L"toString invalid with multiple values");
+
+			mDatum.set(m1, 1);
+			Assert::IsTrue(ms1 == mDatum.toString(1), L"toString invalid after set");
+
+
+			// String
+			sDatum = s1;
+			Assert::IsTrue(s1 == sDatum.toString(), L"toString invalid on scalar assignment");
+			sDatum = s2;
+			Assert::IsTrue(s2 == sDatum.toString(), L"toString invalid on scalar assignment");
+			sDatum = s3;
+			Assert::IsTrue(s3 == sDatum.toString(), L"toString invalid on scalar assignment");
+
+			sDatum.clear();
+			sDatum.pushBack(s1);
+			sDatum.pushBack(s2);
+			sDatum.pushBack(s3);
+			Assert::IsTrue(s1 == sDatum.toString(0), L"toString invalid with multiple values");
+			Assert::IsTrue(s2 == sDatum.toString(1), L"toString invalid with multiple values");
+			Assert::IsTrue(s3 == sDatum.toString(2), L"toString invalid with multiple values");
+
+			sDatum.set(s1, 1);
+			Assert::IsTrue(s1 == sDatum.toString(1), L"toString invalid after set");
 		}
 	};
 }
