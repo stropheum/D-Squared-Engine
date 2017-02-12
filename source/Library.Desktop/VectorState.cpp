@@ -10,6 +10,29 @@ namespace Library
 		TypeState(context)
 	{}
 
+	/// Comparison operator for Datum objects
+	/// @Param rhs: The Datum object being compared against
+	/// @Return: True if type, size, and each element of the Datum objects are equivalent. False otherwise
+	bool VectorState::operator==(const Datum& rhs)
+	{
+		bool result = false;
+
+		if (mContext->mType == rhs.mType && mContext->mSize == rhs.mSize)
+		{
+			result = true;
+			for (std::uint32_t i = 0; i < mContext->mSize; i++)
+			{
+				if (mContext->mData.v[i] != rhs.mData.v[i])
+				{
+					result = false;
+					break;
+				}
+			}
+		}
+
+		return result;
+	}
+
 	/// Scalar assignment operator
 	/// @Param rhs: The vector being set to the only element in the Datum
 	/// @Return: The modified Datum object
@@ -89,9 +112,8 @@ namespace Library
 	/// @Exception: Thrown if attempting to reassign datum type, or if local memory is already used
 	void VectorState::setStorage(glm::vec4* data, std::uint32_t size)
 	{
-		if (mContext->mType != DatumType::Unknown) throw std::exception("Attempting to reassign Datum Type");
-		if (mContext->mType == DatumType::Vector && mContext->mData.v != nullptr)
-			throw std::exception("Attempting to set storage on a non-empty Datum object");
+		if (mContext->mType != DatumType::Vector) throw std::exception("Attempting to reassign Datum Type");
+		if (mContext->mCapacity > 0) throw std::exception("Attempting to set storage on a non-empty Datum object");
 		mContext->mDataIsExternal = true;
 		mContext->mType = DatumType::Vector;
 		mContext->mData.v = data;

@@ -11,6 +11,11 @@ namespace Library
 	public:
 		virtual ~TypeState();
 
+		/// Comparison operator for Datum objects
+		/// @Param rhs: The Datum object being compared against
+		/// @Return: True if type, size, and each element of the Datum objects are equivalent. False otherwise
+		/// @Exception: THrown if called from this context
+		virtual bool operator==(const Datum& rhs);
 		/// Assignment operator
 		/// @Param rhs: The value being assigned to the first element of the array
 		/// @Exception: Thrown if called from this context

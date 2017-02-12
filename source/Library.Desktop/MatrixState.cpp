@@ -10,6 +10,29 @@ namespace Library
 		TypeState(context)
 	{}
 
+	/// Comparison operator for Datum objects
+	/// @Param rhs: The Datum object being compared against
+	/// @Return: True if type, size, and each element of the Datum objects are equivalent. False otherwise
+	bool MatrixState::operator==(const Datum& rhs)
+	{
+		bool result = false;
+
+		if (mContext->mType == rhs.mType && mContext->mSize == rhs.mSize)
+		{
+			result = true;
+			for (std::uint32_t i = 0; i < mContext->mSize; i++)
+			{
+				if (mContext->mData.m[i] != rhs.mData.m[i])
+				{
+					result = false;
+					break;
+				}
+			}
+		}
+
+		return result;
+	}
+
 	/// Scalar assignment operator
 	/// @Param rhs: The matrix being set to the only element in the Datum
 	/// @Return: The modified Datum object

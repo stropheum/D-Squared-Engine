@@ -10,6 +10,12 @@ namespace Library
 	TypeState::~TypeState()
 	{}
 
+	bool TypeState::operator==(const Datum& rhs)
+	{
+		UNREFERENCED_PARAMETER(rhs);
+		throw std::exception("Invalid comparison");
+	}
+
 	Datum& TypeState::operator=(const std::int32_t& rhs)
 	{
 		UNREFERENCED_PARAMETER(rhs);

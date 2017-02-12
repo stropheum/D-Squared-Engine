@@ -10,6 +10,29 @@ namespace Library
 		TypeState(context)
 	{}
 
+	/// Comparison operator for Datum objects
+	/// @Param rhs: The Datum object being compared against
+	/// @Return: True if type, size, and each element of the Datum objects are equivalent. False otherwise
+	bool StringState::operator==(const Datum& rhs)
+	{
+		bool result = false;
+
+		if (mContext->mType == rhs.mType && mContext->mSize == rhs.mSize && mContext->mCapacity == rhs.mCapacity)
+		{
+			result = true;
+			for (std::uint32_t i = 0; i < mContext->mSize; i++)
+			{
+				if (strcmp(mContext->mData.s[i].c_str(), rhs.mData.s[i].c_str()))
+				{
+					result = false;
+					break;
+				}
+			}
+		}
+
+		return result;
+	}
+
 	/// Scalar assignment operator
 	/// @Param rhs: The string being set to the only element in the Datum
 	/// @Return: The modified Datum object

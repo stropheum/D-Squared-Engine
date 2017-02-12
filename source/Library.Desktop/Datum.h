@@ -62,6 +62,7 @@ namespace Library
 		Datum& operator=(const std::string& rhs);
 		Datum& operator=(Library::RTTI* const& rhs);
 
+		bool operator==(const Datum& rhs) const;
 		bool operator==(const DatumType& rhs) const;
 		bool operator==(const std::int32_t& rhs) const;
 		bool operator==(const float& rhs) const;
@@ -70,6 +71,7 @@ namespace Library
 		bool operator==(const std::string& rhs) const;
 		bool operator==(Library::RTTI* const& rhs) const;
 
+		bool operator!=(const Datum& rhs) const;
 		bool operator!=(const DatumType& rhs) const;
 		bool operator!=(const std::int32_t& rhs) const;
 		bool operator!=(const float& rhs) const;

@@ -38,14 +38,14 @@
     <Filter Include="Datum\TypeState\Vector">
       <UniqueIdentifier>{d98ed69f-0f2b-4d53-8efd-fc93f95e7b4d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Datum\TypeState\Matrix">
-      <UniqueIdentifier>{80fefe37-a69f-4083-9987-1bcac7e33841}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Datum\TypeState\String">
       <UniqueIdentifier>{f03fc57d-c3ca-493c-9918-b5e15defcb00}</UniqueIdentifier>
     </Filter>
     <Filter Include="Datum\TypeState\Pointer">
       <UniqueIdentifier>{761dfb5b-de1f-411a-93ea-904e429601c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Datum\TypeState\Matrix">
+      <UniqueIdentifier>{80fefe37-a69f-4083-9987-1bcac7e33841}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

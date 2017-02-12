@@ -11,8 +11,9 @@ namespace Library
 	/// Overloaded constructor
 	/// @Param type: The type of the Datum object
 	Datum::Datum(DatumType type) :
-		mTypeState(nullptr), mType(type), mCapacity(1), mSize(0), mDataIsExternal(false)
+		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
 	{
+		setType(type);
 		reserve(mCapacity);
 	}
 
@@ -30,15 +31,15 @@ namespace Library
 	/// @Param rhs: Datum object being copied
 	/// @Exception: Thrown if attempting to construct a non-existing datum type
 	Datum::Datum(const Datum& rhs) :
-		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(rhs.mCapacity), mSize(0), mDataIsExternal(rhs.mDataIsExternal)
+		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
 	{
-		operator=(rhs);
+		operator=(rhs); // Perform a deep copy of all the data
 	}
 
 	/// Move copy constructor
 	/// @Param rhs: Datum object being copied
 	Datum::Datum(Datum&& rhs) :
-		mTypeState(nullptr), mType(rhs.mType), mCapacity(rhs.mCapacity), mSize(rhs.mSize), mDataIsExternal(rhs.mDataIsExternal)
+		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
 	{
 		operator=(rhs); // Perform a deep copy of all the data
 	}
@@ -240,6 +241,11 @@ namespace Library
 		return mTypeState->operator=(rhs);
 	}
 
+	bool Datum::operator==(const Datum& rhs) const
+	{
+		return mTypeState->operator==(rhs);
+	}
+
 	/// Comparison operator for DatumType value
 	/// @Param rhs: The DatumType being compared against
 	/// @Return: True if the types are the same
@@ -300,6 +306,14 @@ namespace Library
 	{
 		return mType == DatumType::Pointer &&
 			mSize == 1 && mData.r[0] == rhs;
+	}
+
+	/// Inequality operator for Datum
+	/// @Param rhs: The Datum object being compared against
+	/// @Return: True if the Datum objects are not equivalent
+	bool Datum::operator!=(const Datum& rhs) const
+	{
+		return !(mTypeState->operator==(rhs));
 	}
 
 	/// Inequality operator for DatumType
@@ -395,7 +409,6 @@ namespace Library
 			case DatumType::Pointer:
 				mTypeState = new PointerState(this);
 				break;
-			default: throw std::exception("Invalid type assignment");
 		}
 	}
 

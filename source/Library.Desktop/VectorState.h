@@ -11,6 +11,11 @@ namespace Library
 		/// @Param context: The Datum object that the state operates one
 		explicit VectorState(Datum* const context);
 
+		/// Comparison operator for Datum objects
+		/// @Param rhs: The Datum object being compared against
+		/// @Return: True if type, size, and each element of the Datum objects are equivalent. False otherwise
+		bool operator==(const Datum& rhs) override;
+
 		/// Scalar assignment operator
 		/// @Param rhs: The vector being set to the only element in the Datum
 		/// @Return: The modified Datum object
