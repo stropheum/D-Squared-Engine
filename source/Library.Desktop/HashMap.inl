@@ -64,6 +64,7 @@ namespace Library
 		{
 			result = HashMap<TKey, TValue, HashFunctor>::Iterator(this, hashIndex, iter);
 		}
+
 		return result;
 	}
 
@@ -71,6 +72,7 @@ namespace Library
 	typename HashMap<TKey, TValue, HashFunctor>::Iterator HashMap<TKey, TValue, HashFunctor>::insert(const PairType& entry)
 	{
 		auto iter = find(entry.first);
+
 		if (iter == end())
 		{
 			mSize++;
@@ -86,6 +88,7 @@ namespace Library
 	void HashMap<TKey,TValue, HashFunctor>::remove(const TKey& key)
 	{
 		auto iter = find(key);
+
 		if (iter != end())
 		{
 			std::uint32_t hashIndex = mHashFunctor(key) % mBucketCount;
@@ -142,6 +145,7 @@ namespace Library
 		{
 			mBuckets[i].clear();
 		}
+
 		mSize = 0;
 	}
 
