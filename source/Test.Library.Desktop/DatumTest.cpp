@@ -79,8 +79,8 @@ namespace TestLibraryDesktop
 			sDatum.clear();
 			rDatum.clear();
 			r1 = new FooRTTI();
-			r2 = new FooRTTI();
-			r3 = new FooRTTI();
+			r2 = new FooRTTI(2);
+			r3 = new FooRTTI(3);
 		}
 
 		TEST_METHOD_CLEANUP(methodCleanup)
@@ -164,6 +164,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(rDatCopy.type() == Library::DatumType::Pointer);
 			Assert::IsTrue(rDatCopy.size() == 0);
 			Assert::IsTrue(rDatCopy.capacity() == 0);
+			Assert::AreEqual(static_cast<std::uint32_t>(r3->TypeIdInstance()), 0u);
 
 			Library::Datum rDatMove(std::move(rDatCopy));
 			Assert::IsTrue(rDatMove.type() == rDatCopy.type());
@@ -1250,6 +1251,10 @@ namespace TestLibraryDesktop
 			sDatum.setFromString(s3, 1);
 			Assert::IsTrue(sDatum.get<std::string>(0) == s1);
 			Assert::IsTrue(sDatum.get<std::string>(1) == s3);
+
+
+			// Pointer
+			Assert::ExpectException<std::exception>([&] { rDatum.setFromString("Break Me"); }, L"Set from string on pointer type should throw exception");
 		}
 
 		TEST_METHOD(TestToString)
@@ -1358,6 +1363,11 @@ namespace TestLibraryDesktop
 
 			sDatum.set(s1, 1);
 			Assert::IsTrue(s1 == sDatum.toString(1), L"toString invalid after set");
+
+
+			// Pointer
+			Assert::IsTrue("" == rDatum.toString(), L"pointer toString should return an empty string representation");
+			Assert::IsTrue("" == rDatum.toString(0), L"pointer toString should return an empty string representation");
 		}
 	};
 }
