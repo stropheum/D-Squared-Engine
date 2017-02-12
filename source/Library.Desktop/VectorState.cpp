@@ -66,6 +66,9 @@ namespace Library
 		}
 	}
 
+	/// Parses a string value and assigns the specified index of the array to its value
+	/// @Param value: The string value being parsed
+	/// @Param index: The index of the array being assigned to
 	void VectorState::setFromString(const std::string& value, const std::uint32_t& index)
 	{
 		float x, y, z, w;

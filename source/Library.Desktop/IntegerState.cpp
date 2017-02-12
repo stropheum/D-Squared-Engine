@@ -20,8 +20,8 @@ namespace Library
 		return *mContext;
 	}
 
-	/// Reserves the number of integers in the local buffer
-	/// @Param capacity: The current maximum size of the array
+	/// Sets the number of integers in the local buffer
+	/// @Param capacity: The current size of the array
 	void IntegerState::setSize(std::uint32_t size)
 	{
 		if (size > mContext->mCapacity) mContext->mCapacity = size;
@@ -66,6 +66,9 @@ namespace Library
 		}
 	}
 
+	/// Parses a string value and assigns the specified index of the array to its value
+	/// @Param value: The string value being parsed
+	/// @Param index: The index of the array being assigned to
 	void IntegerState::setFromString(const std::string& value, const std::uint32_t& index)
 	{
 		std::int32_t result = std::stoi(value);

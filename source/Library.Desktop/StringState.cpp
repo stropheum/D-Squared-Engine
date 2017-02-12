@@ -21,7 +21,7 @@ namespace Library
 		return *mContext;
 	}
 
-	/// Reserves the number of strings in the local buffer
+	/// Sets the number of strings in the local buffer
 	/// @Param capacity: The current maximum size of the array
 	void StringState::setSize(std::uint32_t size)
 	{
@@ -71,6 +71,9 @@ namespace Library
 		}
 	}
 
+	/// Parses a string value and assigns the specified index of the array to its value
+	/// @Param value: The string value being parsed
+	/// @Param index: The index of the array being assigned to
 	void StringState::setFromString(const std::string& value, const std::uint32_t& index)
 	{   // Strings don't have to be parsed, so they can be passed directly top set
 		mContext->set(value, index); 
