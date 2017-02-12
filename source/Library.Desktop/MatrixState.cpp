@@ -68,8 +68,23 @@ namespace Library
 
 	void MatrixState::setFromString(const std::string& value, const std::uint32_t& index)
 	{
-		UNREFERENCED_PARAMETER(value);
-		UNREFERENCED_PARAMETER(index);
+		float x1, y1, z1, w1;
+		float x2, y2, z2, w2;
+		float x3, y3, z3, w3;
+		float x4, y4, z4, w4;
+
+		sscanf_s(value.c_str(),
+			"mat4x4((%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f))",
+			&x1, &y1, &z1, &w1,
+			&x2, &y2, &z2, &w2, 
+			&x3, &y3, &z3, &w3, 
+			&x4, &y4, &z4, &w4);
+
+		mContext->set(glm::mat4(
+			x1, y1, z1, w1, 
+			x2, y2, z2, w2, 
+			x3, y3, z3, w3, 
+			x4, y4, z4, w4), index);
 	}
 
 	/// Sets external storage on copy

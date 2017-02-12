@@ -68,8 +68,9 @@ namespace Library
 
 	void FloatState::setFromString(const std::string& value, const std::uint32_t& index)
 	{
-		UNREFERENCED_PARAMETER(value);
-		UNREFERENCED_PARAMETER(index);
+		float result;
+		sscanf_s(value.c_str(), "%f", &result);
+		mContext->set(result, index);
 	}
 
 	/// Sets external storage on copy

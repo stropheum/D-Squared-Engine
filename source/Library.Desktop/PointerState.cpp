@@ -69,6 +69,7 @@ namespace Library
 	{
 		UNREFERENCED_PARAMETER(value);
 		UNREFERENCED_PARAMETER(index);
+		throw std::exception("Attempting to set pointer from string");
 	}
 
 	/// Sets external storage on copy

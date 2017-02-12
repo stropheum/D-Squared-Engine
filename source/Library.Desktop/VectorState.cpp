@@ -68,8 +68,9 @@ namespace Library
 
 	void VectorState::setFromString(const std::string& value, const std::uint32_t& index)
 	{
-		UNREFERENCED_PARAMETER(value);
-		UNREFERENCED_PARAMETER(index);
+		float x, y, z, w;
+		sscanf_s(value.c_str(), "vec4(%f, %f, %f, %f)", &x, &y, &z, &w);
+		mContext->set(glm::vec4(x, y, z, w), index);
 	}
 
 	/// Sets external storage on copy

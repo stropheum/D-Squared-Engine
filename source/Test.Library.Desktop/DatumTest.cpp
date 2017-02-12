@@ -818,12 +818,53 @@ namespace TestLibraryDesktop
 
 
 			// Float
+			fDatum.setFromString("1.0f");
+			Assert::IsTrue(fDatum == f1);
+			Assert::IsFalse(fDatum == f2);
+
+			fDatum.setFromString("2.0f", 1);
+			Assert::IsTrue(fDatum.get<float>(0) == f1);
+			Assert::IsTrue(fDatum.get<float>(1) == f2);
+
+			fDatum.setFromString("3.0f", 1);
+			Assert::IsTrue(fDatum.get<float>(0) == f1);
+			Assert::IsTrue(fDatum.get<float>(1) == f3);
 
 
 			// Vector
+			auto vs1 = "vec4(1.000000, 1.000000, 1.000000, 1.000000)";
+			auto vs2 = "vec4(2.000000, 2.000000, 2.000000, 2.000000)";
+			auto vs3 = "vec4(3.000000, 3.000000, 3.000000, 3.000000)";
+
+			vDatum.setFromString(vs1);
+			Assert::IsTrue(vDatum == v1);
+			Assert::IsFalse(vDatum == v2);
+
+			vDatum.setFromString(vs2, 1);
+			Assert::IsTrue(vDatum.get<glm::vec4>(0) == v1);
+			Assert::IsTrue(vDatum.get<glm::vec4>(1) == v2);
+
+			vDatum.setFromString(vs3, 1);
+			Assert::IsTrue(vDatum.get<glm::vec4>(0) == v1);
+			Assert::IsTrue(vDatum.get<glm::vec4>(1) == v3);
 
 
 			// Matrix
+			auto ms1 = "mat4x4((1.000000, 0.000000, 0.000000, 0.000000), (0.000000, 1.000000, 0.000000, 0.000000), (0.000000, 0.000000, 1.000000, 0.000000), (0.000000, 0.000000, 0.000000, 1.000000))";
+			auto ms2 = "mat4x4((2.000000, 0.000000, 0.000000, 0.000000), (0.000000, 2.000000, 0.000000, 0.000000), (0.000000, 0.000000, 2.000000, 0.000000), (0.000000, 0.000000, 0.000000, 2.000000))";
+			auto ms3 = "mat4x4((3.000000, 0.000000, 0.000000, 0.000000), (0.000000, 3.000000, 0.000000, 0.000000), (0.000000, 0.000000, 3.000000, 0.000000), (0.000000, 0.000000, 0.000000, 3.000000))";
+			
+			mDatum.setFromString(ms1);
+			Assert::IsTrue(mDatum == m1);
+			Assert::IsFalse(mDatum == m2);
+
+			mDatum.setFromString(ms2, 1);
+			Assert::IsTrue(mDatum.get<glm::mat4>(0) == m1);
+			Assert::IsTrue(mDatum.get<glm::mat4>(1) == m2);
+
+			mDatum.setFromString(ms3, 1);
+			Assert::IsTrue(mDatum.get<glm::mat4>(0) == m1);
+			Assert::IsTrue(mDatum.get<glm::mat4>(1) == m3);
 
 
 			// String
