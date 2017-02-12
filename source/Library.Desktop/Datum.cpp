@@ -41,7 +41,7 @@ namespace Library
 	Datum::Datum(Datum&& rhs) :
 		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
 	{
-		operator=(rhs); // Perform a deep copy of all the data
+		operator=(std::move(rhs)); // Perform a deep copy of all the data
 	}
 
 	/// Datum assignment operator
@@ -68,31 +68,31 @@ namespace Library
 				case DatumType::Float:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+						pushBack(const_cast<Datum&>(rhs).get<float>(i));
 					}
 					break;
 				case DatumType::Vector:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+						pushBack(const_cast<Datum&>(rhs).get<glm::vec4>(i));
 					}
 					break;
 				case DatumType::Matrix:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+						pushBack(const_cast<Datum&>(rhs).get<glm::mat4>(i));
 					}
 					break;
 				case DatumType::String:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+						pushBack(const_cast<Datum&>(rhs).get<std::string>(i));
 					}
 					break;
 				case DatumType::Pointer:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+						pushBack(const_cast<Datum&>(rhs).get<Library::RTTI*>(i));
 					}
 					break;
 				default:
@@ -150,7 +150,7 @@ namespace Library
 					{
 						pushBack(const_cast<Datum&>(rhs).get<std::string>(i));
 					}
-					if (rhs.mData.s != nullptr) free(rhs.mData.s);
+					if (rhs.mCapacity > 0) free(rhs.mData.s);
 					break;
 				case DatumType::Pointer:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
@@ -187,6 +187,7 @@ namespace Library
 	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
 	Datum& Datum::operator=(const std::int32_t& rhs)
 	{
+		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
 		setType(DatumType::Integer);
 		return mTypeState->operator=(rhs);
 	}
@@ -197,6 +198,7 @@ namespace Library
 	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
 	Datum& Datum::operator=(const float& rhs)
 	{
+		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
 		setType(DatumType::Float);
 		return mTypeState->operator=(rhs);
 	}
@@ -207,6 +209,7 @@ namespace Library
 	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
 	Datum& Datum::operator=(const glm::vec4& rhs)
 	{
+		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
 		setType(DatumType::Vector);
 		return mTypeState->operator=(rhs);
 	}
@@ -217,6 +220,7 @@ namespace Library
 	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
 	Datum& Datum::operator=(const glm::mat4& rhs)
 	{
+		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
 		setType(DatumType::Matrix);
 		return mTypeState->operator=(rhs);
 	}
@@ -227,6 +231,7 @@ namespace Library
 	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
 	Datum& Datum::operator=(const std::string& rhs)
 	{
+		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
 		setType(DatumType::String);
 		return mTypeState->operator=(rhs);
 	}
@@ -237,6 +242,7 @@ namespace Library
 	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
 	Datum& Datum::operator=(Library::RTTI* const& rhs)
 	{
+		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
 		setType(DatumType::Pointer);
 		return mTypeState->operator=(rhs);
 	}
@@ -457,6 +463,7 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(std::int32_t* data, std::uint32_t size)
 	{
+		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
 		setType(DatumType::Integer);
 		mTypeState->setStorage(data, size);
 	}
@@ -467,6 +474,7 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(float* data, std::uint32_t size)
 	{
+		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
 		setType(DatumType::Float);
 		mTypeState->setStorage(data, size);
 	}
@@ -477,6 +485,7 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(glm::vec4* data, std::uint32_t size)
 	{
+		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
 		setType(DatumType::Vector);
 		mTypeState->setStorage(data, size);
 	}
@@ -487,6 +496,7 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(glm::mat4* data, std::uint32_t size)
 	{
+		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
 		setType(DatumType::Matrix);
 		mTypeState->setStorage(data, size);
 	}
@@ -497,6 +507,7 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(std::string* data, std::uint32_t size)
 	{
+		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
 		setType(DatumType::String);
 		mTypeState->setStorage(data, size);
 	}
@@ -507,6 +518,7 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(Library::RTTI** data, std::uint32_t size)
 	{
+		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
 		setType(DatumType::Pointer);
 		mTypeState->setStorage(data, size);
 	}
