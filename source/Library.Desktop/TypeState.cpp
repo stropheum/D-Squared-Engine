@@ -10,12 +10,6 @@ namespace Library
 	TypeState::~TypeState()
 	{}
 
-	bool TypeState::operator==(const Datum& rhs)
-	{
-		UNREFERENCED_PARAMETER(rhs);
-		throw std::exception("Invalid comparison");
-	}
-
 	Datum& TypeState::operator=(const std::int32_t& rhs)
 	{
 		UNREFERENCED_PARAMETER(rhs);
@@ -92,11 +86,5 @@ namespace Library
 		UNREFERENCED_PARAMETER(data);
 		UNREFERENCED_PARAMETER(size);
 		throw std::exception("Attempting to set storage on unknown type");
-	}
-
-	std::string TypeState::toString(std::uint32_t index)
-	{
-		UNREFERENCED_PARAMETER(index);
-		throw std::exception("Attempting to call toString on unknown Datum type");
 	}
 }

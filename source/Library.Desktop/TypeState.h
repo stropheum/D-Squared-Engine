@@ -14,7 +14,7 @@ namespace Library
 		/// @Param rhs: The Datum object being compared against
 		/// @Return: True if type, size, and each element of the Datum objects are equivalent. False otherwise
 		/// @Exception: THrown if called from this context
-		virtual bool operator==(const Datum& rhs);
+		virtual bool operator==(const Datum& rhs)=0;
 		/// Assignment operator
 		/// @Param rhs: The value being assigned to the first element of the array
 		/// @Exception: Thrown if called from this context
@@ -88,7 +88,7 @@ namespace Library
 		/// Generates a string representation of the data at the specified index of the array
 		/// @Param index: The index of the array being translated. Defaulted to 0
 		/// @Exception: Thrown if called from this context
-		virtual std::string toString(std::uint32_t index = 0);
+		virtual std::string toString(std::uint32_t index = 0)=0;
 
 	protected:
 		/// TypeState constructor. Used to generate valid states from children
