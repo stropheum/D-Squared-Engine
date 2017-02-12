@@ -55,14 +55,16 @@ namespace Library
 			if ((*iter).first == key) break;
 		}
 
+		typename HashMap<TKey, TValue, HashFunctor>::Iterator result;
 		if (iter == bucket.end())
 		{
-			return end();
+			result = end();
 		}
 		else
 		{
-			return HashMap<TKey, TValue, HashFunctor>::Iterator(this, hashIndex, iter);
+			result = HashMap<TKey, TValue, HashFunctor>::Iterator(this, hashIndex, iter);
 		}
+		return result;
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
