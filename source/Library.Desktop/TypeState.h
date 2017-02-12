@@ -20,7 +20,6 @@ namespace Library
 		virtual void reserve(std::uint32_t capacity);
 		virtual void clear();
 		virtual void setFromString(const std::string& value, const std::uint32_t& index);
-		
 		virtual void setStorage(const Datum& rhs);
 		virtual void setStorage(std::int32_t* data, std::uint32_t size);
 		virtual void setStorage(float* data, std::uint32_t size);
@@ -28,6 +27,7 @@ namespace Library
 		virtual void setStorage(glm::mat4* data, std::uint32_t size);
 		virtual void setStorage(std::string* data, std::uint32_t size);
 		virtual void setStorage(Library::RTTI** data, std::uint32_t size);
+		virtual std::string toString(std::uint32_t index = 0);
 
 	protected:
 		TypeState(Datum* const context);

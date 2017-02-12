@@ -97,4 +97,9 @@ namespace Library
 		mContext->mData.s = data;
 		mContext->mCapacity = mContext->mSize = size;
 	}
+
+	std::string StringState::toString(std::uint32_t index)
+	{
+		return mContext->get<std::string>(index);
+	}
 }

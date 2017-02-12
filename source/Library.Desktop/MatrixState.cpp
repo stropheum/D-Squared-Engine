@@ -92,4 +92,9 @@ namespace Library
 		mContext->mData.m = data;
 		mContext->mCapacity = mContext->mSize = size;
 	}
+
+	std::string MatrixState::toString(std::uint32_t index)
+	{
+		return glm::to_string(mContext->get<glm::mat4>(index));
+	}
 }

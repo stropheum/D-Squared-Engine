@@ -92,4 +92,11 @@ namespace Library
 		mContext->mData.f = data;
 		mContext->mCapacity = mContext->mSize = size;
 	}
+
+	std::string FloatState::toString(std::uint32_t index)
+	{
+		char value[50];
+		sprintf_s(value, "%f", mContext->get<float>(index));
+		return value;
+	}
 }

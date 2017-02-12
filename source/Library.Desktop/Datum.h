@@ -6,6 +6,7 @@
 #pragma warning(push)
 #pragma warning(disable:4201)
 #include "glm/glm.hpp"
+#include "glm/gtx/string_cast.hpp"
 #pragma warning(pop)
 
 namespace Library
@@ -115,17 +116,23 @@ namespace Library
 		template <typename T> T& get(const std::uint32_t index = 0);
 		
 		void setFromString(const std::string& value, const std::uint32_t& index = 0);
-		std::string toString();
+		std::string toString(std::uint32_t index = 0);
 
 	private:
-		TypeState* mTypeState;
-		DatumType mType;
-		DatumValues mData;
-		std::uint32_t mCapacity;
-		std::uint32_t mSize;
-		bool mDataIsExternal;
+		TypeState* mTypeState; /// State pattern object. Type-specific tasks will be delegated to this
+		DatumType mType; /// The type of the Datum object
+		DatumValues mData; /// The data union of the Datum object. Can be allocated internally or assigned externally
+		std::uint32_t mCapacity; /// The number of elements of the set type that the Datum can hold
+		std::uint32_t mSize; /// The current number of elements in the Datum object
+		bool mDataIsExternal; /// True if data is stored externally of the Datum object
 	};
 
+	/// Template specialization for getting an integer value
+	/// @Param index: The index of the array being retrieved
+	/// @Return: The value of the array at the specified index
+	/// @Exception invalidType: Thrown when calling get on invalid type
+	/// @Exception nullRef: Thrown when attempting call get on uninitialized data
+	/// @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	template<>
 	inline std::int32_t& Datum::get(const std::uint32_t index)
 	{
@@ -135,6 +142,12 @@ namespace Library
 		return mData.i[index];
 	}
 
+	/// Template specialization for getting a float value
+	/// @Param index: The index of the array being retrieved
+	/// @Return: The value of the array at the specified index
+	/// @Exception invalidType: Thrown when calling get on invalid type
+	/// @Exception nullRef: Thrown when attempting call get on uninitialized data
+	/// @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	template<>
 	inline float& Datum::get(const std::uint32_t index)
 	{
@@ -144,6 +157,12 @@ namespace Library
 		return mData.f[index];
 	}
 
+	/// Template specialization for getting a vector value
+	/// @Param index: The index of the array being retrieved
+	/// @Return: The value of the array at the specified index
+	/// @Exception invalidType: Thrown when calling get on invalid type
+	/// @Exception nullRef: Thrown when attempting call get on uninitialized data
+	/// @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	template<>
 	inline glm::vec4& Datum::get(const std::uint32_t index)
 	{
@@ -153,6 +172,12 @@ namespace Library
 		return mData.v[index];
 	}
 
+	/// Template specialization for getting a matrix value
+	/// @Param index: The index of the array being retrieved
+	/// @Return: The value of the array at the specified index
+	/// @Exception invalidType: Thrown when calling get on invalid type
+	/// @Exception nullRef: Thrown when attempting call get on uninitialized data
+	/// @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	template<>
 	inline glm::mat4& Datum::get(const std::uint32_t index)
 	{
@@ -162,6 +187,12 @@ namespace Library
 		return mData.m[index];
 	}
 
+	/// Template specialization for getting a string value
+	/// @Param index: The index of the array being retrieved
+	/// @Return: The value of the array at the specified index
+	/// @Exception invalidType: Thrown when calling get on invalid type
+	/// @Exception nullRef: Thrown when attempting call get on uninitialized data
+	/// @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	template<>
 	inline std::string& Datum::get(const std::uint32_t index)
 	{
@@ -171,6 +202,12 @@ namespace Library
 		return mData.s[index];
 	}
 
+	/// Template specialization for getting an RTTI pointer value
+	/// @Param index: The index of the array being retrieved
+	/// @Return: The value of the array at the specified index
+	/// @Exception invalidType: Thrown when calling get on invalid type
+	/// @Exception nullRef: Thrown when attempting call get on uninitialized data
+	/// @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	template<>
 	inline Library::RTTI*& Datum::get(const std::uint32_t index)
 	{

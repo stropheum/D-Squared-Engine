@@ -47,7 +47,7 @@ namespace Library
 	/// @Param rhs: Datum object being assigned to
 	/// @Return; The newly copied Datum object
 	Datum& Datum::operator=(const Datum& rhs)
-	{	// TODO: Divert copy semantics to a helper function so move semantics and assignment can look cleaner
+	{	
 		setType(rhs.mType); // Must set type in order to instantiate mTypeState
 		if (rhs.mDataIsExternal)
 		{
@@ -106,7 +106,7 @@ namespace Library
 	/// @Param rhs: Datum object being assigned to
 	/// @Return: The newly copied Datum object
 	Datum& Datum::operator=(Datum&& rhs)
-	{	// TODO: Divert copy semantics to a helper function so move semantics and assignment can look cleaner
+	{	
 		setType(rhs.mType); // Must set type in order to instantiate mTypeState
 		if (rhs.mDataIsExternal)
 		{
@@ -635,10 +635,11 @@ namespace Library
 		mTypeState->setFromString(value, index);
 	}
 
-	std::string Datum::toString()
-	{
-		std::string result = "I'm a string hurr durr";
-		// TODO: Implement toString		
-		return result;
+	/// A string representation of a piece of data stored in the Datum object
+	/// @Param index: Optional index of the value being retrieved. Defaulted to first element
+	/// @Exception invalidFormat: Thrown if unable to properly parse string
+	std::string Datum::toString(std::uint32_t index)
+	{	
+		return mTypeState->toString(index);
 	}
 }

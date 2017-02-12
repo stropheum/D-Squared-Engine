@@ -117,4 +117,10 @@ namespace Library
 		UNREFERENCED_PARAMETER(size);
 		throw std::exception("Attempting to set storage on unknown type");
 	}
+
+	std::string TypeState::toString(std::uint32_t index)
+	{
+		UNREFERENCED_PARAMETER(index);
+		throw std::exception("Attempting to call toString on unknown Datum type");
+	}
 }

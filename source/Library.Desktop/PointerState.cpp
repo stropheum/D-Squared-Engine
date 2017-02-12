@@ -91,4 +91,11 @@ namespace Library
 		mContext->mData.r = data;
 		mContext->mCapacity = mContext->mSize = size;
 	}
+
+	std::string PointerState::toString(std::uint32_t index)
+	{
+		char value[50];
+		sprintf_s(value, "%d", reinterpret_cast<size_t>(mContext->get<Library::RTTI*>(index)));
+		return value;
+	}
 }

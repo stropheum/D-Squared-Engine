@@ -93,4 +93,9 @@ namespace Library
 		mContext->mData.v = data;
 		mContext->mCapacity = mContext->mSize = size;
 	}
+
+	std::string VectorState::toString(std::uint32_t index)
+	{
+		return glm::to_string(mContext->get<glm::vec4>(index));
+	}
 }
