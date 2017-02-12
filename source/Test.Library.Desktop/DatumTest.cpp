@@ -282,7 +282,9 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(iDatumCopy1.type() == iDatumCopy2.type());
 			Assert::IsTrue(iDatumCopy1.size() == iDatumCopy2.size());
 			Assert::IsTrue(iDatumCopy1.capacity() == iDatumCopy2.capacity());
+			free(iData);
 
+			// Move semantic assignment
 			iDatum.pushBack(i1);
 			iDatum.pushBack(i2);
 			iDatum.pushBack(i2);
@@ -290,15 +292,21 @@ namespace TestLibraryDesktop
 			iDatumCopy = iDatum;
 			Assert::IsTrue(iDatum == iDatumCopy);
 
-			// Move semantic assignment
-			auto iType = iDatumCopy1.type();
-			auto iSize = iDatumCopy1.size();
-			auto iCapa = iDatumCopy1.capacity();
+			auto iType = iDatumCopy.type();
+			auto iSize = iDatumCopy.size();
+			auto iCapa = iDatumCopy.capacity();
+			Library::Datum iDatumMoveCopy = std::move(iDatumCopy);
+			Assert::IsTrue(iDatumMoveCopy.type() == iType);
+			Assert::IsTrue(iDatumMoveCopy.size() == iSize);
+			Assert::IsTrue(iDatumMoveCopy.capacity() == iCapa);
+
+			iType = iDatumCopy1.type();
+			iSize = iDatumCopy1.size();
+			iCapa = iDatumCopy1.capacity();
 			Library::Datum iDatumCopy3 = std::move(iDatumCopy1);
 			Assert::IsTrue(iDatumCopy3.type() == iType);
 			Assert::IsTrue(iDatumCopy3.size() == iSize);
 			Assert::IsTrue(iDatumCopy3.capacity() == iCapa);
-			free(iData);
 
 
 			// Float
@@ -318,7 +326,9 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(fDatumCopy1.type() == fDatumCopy2.type());
 			Assert::IsTrue(fDatumCopy1.size() == fDatumCopy2.size());
 			Assert::IsTrue(fDatumCopy1.capacity() == fDatumCopy2.capacity());
+			free(fData);
 
+			// Move semantic assignment
 			fDatum.pushBack(f1);
 			fDatum.pushBack(f2);
 			fDatum.pushBack(f2);
@@ -326,15 +336,21 @@ namespace TestLibraryDesktop
 			fDatumCopy = fDatum;
 			Assert::IsTrue(fDatum == fDatumCopy);
 
-			// Move semantic assignment
-			auto fType = fDatumCopy1.type();
-			auto fSize = fDatumCopy1.size();
-			auto fCapa = fDatumCopy1.capacity();
+			auto fType = fDatumCopy.type();
+			auto fSize = fDatumCopy.size();
+			auto fCapa = fDatumCopy.capacity();
+			Library::Datum fDatumMoveCopy = std::move(fDatumCopy);
+			Assert::IsTrue(fDatumMoveCopy.type() == fType);
+			Assert::IsTrue(fDatumMoveCopy.size() == fSize);
+			Assert::IsTrue(fDatumMoveCopy.capacity() == fCapa);
+
+			fType = fDatumCopy1.type();
+			fSize = fDatumCopy1.size();
+			fCapa = fDatumCopy1.capacity();
 			Library::Datum fDatumCopy3 = std::move(fDatumCopy1);
 			Assert::IsTrue(fDatumCopy3.type() == fType);
 			Assert::IsTrue(fDatumCopy3.size() == fSize);
 			Assert::IsTrue(fDatumCopy3.capacity() == fCapa);
-			free(fData);
 
 
 			// Vector
@@ -354,7 +370,9 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(vDatumCopy1.type() == vDatumCopy2.type());
 			Assert::IsTrue(vDatumCopy1.size() == vDatumCopy2.size());
 			Assert::IsTrue(vDatumCopy1.capacity() == vDatumCopy2.capacity());
+			free(vData);
 
+			// Move semantic assignment
 			vDatum.pushBack(v1);
 			vDatum.pushBack(v2);
 			vDatum.pushBack(v2);
@@ -362,15 +380,21 @@ namespace TestLibraryDesktop
 			vDatumCopy = vDatum;
 			Assert::IsTrue(vDatum == vDatumCopy);
 
-			// Move semantic assignment
-			auto vType = vDatumCopy1.type();
-			auto vSize = vDatumCopy1.size();
-			auto vCapa = vDatumCopy1.capacity();
+			auto vType = vDatumCopy.type();
+			auto vSize = vDatumCopy.size();
+			auto vCapa = vDatumCopy.capacity();
+			Library::Datum vDatumMoveCopy = std::move(vDatumCopy);
+			Assert::IsTrue(vDatumMoveCopy.type() == vType);
+			Assert::IsTrue(vDatumMoveCopy.size() == vSize);
+			Assert::IsTrue(vDatumMoveCopy.capacity() == vCapa);
+
+			vType = vDatumCopy1.type();
+			vSize = vDatumCopy1.size();
+			vCapa = vDatumCopy1.capacity();
 			Library::Datum vDatumCopy3 = std::move(vDatumCopy1);
 			Assert::IsTrue(vDatumCopy3.type() == vType);
 			Assert::IsTrue(vDatumCopy3.size() == vSize);
 			Assert::IsTrue(vDatumCopy3.capacity() == vCapa);
-			free(vData);
 
 
 			// Matrix
@@ -390,7 +414,9 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(mDatumCopy1.type() == mDatumCopy2.type());
 			Assert::IsTrue(mDatumCopy1.size() == mDatumCopy2.size());
 			Assert::IsTrue(mDatumCopy1.capacity() == mDatumCopy2.capacity());
+			free(mData);
 
+			// Move semantic assignment
 			mDatum.pushBack(m1);
 			mDatum.pushBack(m2);
 			mDatum.pushBack(m2);
@@ -398,15 +424,21 @@ namespace TestLibraryDesktop
 			mDatumCopy = mDatum;
 			Assert::IsTrue(mDatum == mDatumCopy);
 
-			// Move semantic assignment
-			auto mType = mDatumCopy1.type();
-			auto mSize = mDatumCopy1.size();
-			auto mCapa = mDatumCopy1.capacity();
+			auto mType = mDatumCopy.type();
+			auto mSize = mDatumCopy.size();
+			auto mCapa = mDatumCopy.capacity();
+			Library::Datum mDatumMoveCopy = std::move(mDatumCopy);
+			Assert::IsTrue(mDatumMoveCopy.type() == mType);
+			Assert::IsTrue(mDatumMoveCopy.size() == mSize);
+			Assert::IsTrue(mDatumMoveCopy.capacity() == mCapa);
+
+			mType = mDatumCopy1.type();
+			mSize = mDatumCopy1.size();
+			mCapa = mDatumCopy1.capacity();
 			Library::Datum mDatumCopy3 = std::move(mDatumCopy1);
 			Assert::IsTrue(mDatumCopy3.type() == mType);
 			Assert::IsTrue(mDatumCopy3.size() == mSize);
 			Assert::IsTrue(mDatumCopy3.capacity() == mCapa);
-			free(mData);
 
 
 			// String
@@ -426,7 +458,9 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(sDatumCopy1.type() == sDatumCopy2.type());
 			Assert::IsTrue(sDatumCopy1.size() == sDatumCopy2.size());
 			Assert::IsTrue(sDatumCopy1.capacity() == sDatumCopy2.capacity());
+			free(sData);
 
+			// Move semantic assignment
 			sDatum.pushBack(s1);
 			sDatum.pushBack(s2);
 			sDatum.pushBack(s2);
@@ -434,15 +468,21 @@ namespace TestLibraryDesktop
 			sDatumCopy = sDatum;
 			Assert::IsTrue(sDatum == sDatumCopy);
 
-			// Move semantic assignment
-			auto sType = sDatumCopy1.type();
-			auto sSize = sDatumCopy1.size();
-			auto sCapa = sDatumCopy1.capacity();
+			auto sType = sDatumCopy.type();
+			auto sSize = sDatumCopy.size();
+			auto sCapa = sDatumCopy.capacity();
+			Library::Datum sDatumMoveCopy = std::move(sDatumCopy);
+			Assert::IsTrue(sDatumMoveCopy.type() == sType);
+			Assert::IsTrue(sDatumMoveCopy.size() == sSize);
+			Assert::IsTrue(sDatumMoveCopy.capacity() == sCapa);
+
+			sType = sDatumCopy1.type();
+			sSize = sDatumCopy1.size();
+			sCapa = sDatumCopy1.capacity();
 			Library::Datum sDatumCopy3 = std::move(sDatumCopy1);
 			Assert::IsTrue(sDatumCopy3.type() == sType);
 			Assert::IsTrue(sDatumCopy3.size() == sSize);
 			Assert::IsTrue(sDatumCopy3.capacity() == sCapa);
-			free(sData);
 
 
 			// Pointer
@@ -462,7 +502,9 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(rDatumCopy1.type() == rDatumCopy2.type());
 			Assert::IsTrue(rDatumCopy1.size() == rDatumCopy2.size());
 			Assert::IsTrue(rDatumCopy1.capacity() == rDatumCopy2.capacity());
+			free(rData);
 
+			// Move semantic assignment
 			rDatum.pushBack(r1);
 			rDatum.pushBack(r2);
 			rDatum.pushBack(r2);
@@ -470,15 +512,21 @@ namespace TestLibraryDesktop
 			rDatumCopy = rDatum;
 			Assert::IsTrue(rDatum == rDatumCopy);
 
-			// Move semantic assignment
-			auto rType = rDatumCopy1.type();
-			auto rSize = rDatumCopy1.size();
-			auto rCapa = rDatumCopy1.capacity();
+			auto rType = rDatumCopy.type();
+			auto rSize = rDatumCopy.size();
+			auto rCapa = rDatumCopy.capacity();
+			Library::Datum rDatumMoveCopy = std::move(rDatumCopy);
+			Assert::IsTrue(rDatumMoveCopy.type() == rType);
+			Assert::IsTrue(rDatumMoveCopy.size() == rSize);
+			Assert::IsTrue(rDatumMoveCopy.capacity() == rCapa);
+
+			rType = rDatumCopy1.type();
+			rSize = rDatumCopy1.size();
+			rCapa = rDatumCopy1.capacity();
 			Library::Datum rDatumCopy3 = std::move(rDatumCopy1);
 			Assert::IsTrue(rDatumCopy3.type() == rType);
 			Assert::IsTrue(rDatumCopy3.size() == rSize);
 			Assert::IsTrue(rDatumCopy3.capacity() == rCapa);
-			free(rData);
 		}
 
 		TEST_METHOD(TestEqualityOperator)

@@ -95,8 +95,7 @@ namespace Library
 						pushBack(const_cast<Datum&>(rhs).get<Library::RTTI*>(i));
 					}
 					break;
-				default:
-					throw std::exception("Attempting to push back unknown type");
+				default: break;
 			}
 		}
 
@@ -150,7 +149,11 @@ namespace Library
 					{
 						pushBack(const_cast<Datum&>(rhs).get<std::string>(i));
 					}
-					if (rhs.mCapacity > 0) free(rhs.mData.s);
+					if (rhs.mCapacity > 0)
+					{
+						rhs.setSize(0);
+						rhs.reserve(0);
+					};
 					break;
 				case DatumType::Pointer:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
