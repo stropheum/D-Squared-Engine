@@ -7,9 +7,6 @@ namespace Library
 		mContext(context)
 	{}
 
-	TypeState::~TypeState()
-	{}
-
 	Datum& TypeState::operator=(const std::int32_t& rhs)
 	{
 		UNREFERENCED_PARAMETER(rhs);

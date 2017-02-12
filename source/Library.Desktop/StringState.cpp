@@ -22,7 +22,7 @@ namespace Library
 			result = true;
 			for (std::uint32_t i = 0; i < mContext->mSize; i++)
 			{
-				if (strcmp(mContext->mData.s[i].c_str(), rhs.mData.s[i].c_str()))
+				if (mContext->mData.s[i] != rhs.mData.s[i])
 				{
 					result = false;
 					break;
@@ -65,6 +65,8 @@ namespace Library
 			}
 		}
 
+		if (mContext->mSize > 0) { delete[] temp; }
+
 		mContext->mSize = size;
 	}
 
@@ -80,6 +82,8 @@ namespace Library
 		{
 			mContext->mData.s[i] = temp[i];
 		}
+
+		if (mContext->mCapacity > 0) { delete[] temp; }
 
 		mContext->mCapacity = capacity;
 	}

@@ -549,6 +549,11 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(iDatum == Library::DatumType::String);
 			Assert::IsFalse(iDatum == Library::DatumType::Pointer);
 
+			Library::Datum iDatumOther(Library::DatumType::Integer);
+			iDatumOther.pushBack(i1);
+			iDatumOther.pushBack(i1);
+			Assert::IsFalse(iDatum == iDatumOther);
+
 
 			// Float
 			fDatum.pushBack(f1);
@@ -567,6 +572,11 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(fDatum == Library::DatumType::Matrix);
 			Assert::IsFalse(fDatum == Library::DatumType::String);
 			Assert::IsFalse(fDatum == Library::DatumType::Pointer);
+
+			Library::Datum fDatumOther(Library::DatumType::Float);
+			fDatumOther.pushBack(f1);
+			fDatumOther.pushBack(f1);
+			Assert::IsFalse(fDatum == fDatumOther);
 
 
 			// Vector
@@ -587,6 +597,11 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(vDatum == Library::DatumType::String);
 			Assert::IsFalse(vDatum == Library::DatumType::Pointer);
 
+			Library::Datum vDatumOther(Library::DatumType::Vector);
+			vDatumOther.pushBack(v1);
+			vDatumOther.pushBack(v1);
+			Assert::IsFalse(vDatum == vDatumOther);
+
 
 			// Matrix
 			mDatum.pushBack(m1);
@@ -605,6 +620,11 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(mDatum == Library::DatumType::Vector);
 			Assert::IsFalse(mDatum == Library::DatumType::String);
 			Assert::IsFalse(mDatum == Library::DatumType::Pointer);
+
+			Library::Datum mDatumOther(Library::DatumType::Matrix);
+			mDatumOther.pushBack(m1);
+			mDatumOther.pushBack(m1);
+			Assert::IsFalse(mDatum == mDatumOther);
 
 
 			// String
@@ -625,6 +645,11 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(sDatum == Library::DatumType::Matrix);
 			Assert::IsFalse(sDatum == Library::DatumType::Pointer);
 
+			Library::Datum sDatumOther(Library::DatumType::String);
+			sDatumOther.pushBack(s1);
+			sDatumOther.pushBack(s1);
+			Assert::IsFalse(sDatum == sDatumOther);
+
 
 			// Pointer
 			rDatum.pushBack(r1);
@@ -642,6 +667,11 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(rDatum == Library::DatumType::Vector);
 			Assert::IsFalse(rDatum == Library::DatumType::Matrix);
 			Assert::IsFalse(rDatum == Library::DatumType::String);
+
+			Library::Datum rDatumOther(Library::DatumType::Pointer);
+			rDatumOther.pushBack(r1);
+			rDatumOther.pushBack(r1);
+			Assert::IsFalse(rDatum == rDatumOther);
 		}
 
 		TEST_METHOD(TestInequalityOperator)
