@@ -8,7 +8,7 @@
 /// Items can be added indefinitely, ensured to be of the template type, and are only 
 /// exposed via method calls to front and back, which return references to the data at 
 /// those respective nodes, and dereferencing and iterator object    
-namespace SList
+namespace Library
 {
 	template <class T> class SList
 	{

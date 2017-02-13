@@ -2,7 +2,7 @@
 #include <new>
 #include <cstdint>
 
-namespace Vector
+namespace Library
 {
 	template <typename T>
 	Vector<T>::Vector(bool fixedSize = false) :
@@ -19,8 +19,8 @@ namespace Vector
 	}
 
 	template <typename T>
-	Vector<T>::Vector(const Vector<T>& rhs) :
-		Vector()
+	Vector<T>::Vector(const Vector<T>& rhs):
+		mBuffer(nullptr), mSize(0), mCapacity(rhs.mCapacity), mFixedSize(rhs.mFixedSize)
 	{
 		operator=(rhs);
 	}
@@ -29,8 +29,9 @@ namespace Vector
 	bool Vector<T>::operator==(const Vector<T>& rhs) const
 	{
 		bool result = (mSize == rhs.mSize);
-		try
-		{
+		
+		if (result)
+		{ // If sizes are equal, compare further
 			for (std::uint32_t i = 0; i < mSize; i++)
 			{
 				if (operator[](i) != rhs[i])
@@ -39,23 +40,25 @@ namespace Vector
 				}
 			}
 		}
-		catch (const std::exception&) {}
+
 		return result;
 	}
 
 	template <typename T>
 	Vector<T>& Vector<T>::operator=(const Vector<T>& rhs)
 	{
-		if (mBuffer == nullptr) throw std::exception("Assigning to null pointer");
-		mFixedSize = rhs.mFixedSize;
-		
-		clear();
-		reserve(rhs.mCapacity);
-		if (rhs.mSize > 0)
+		if (this != &rhs)
 		{
-			for (auto iter = rhs.begin(); iter != rhs.end(); ++iter)
+			mFixedSize = rhs.mFixedSize;
+
+			clear();
+			reserve(rhs.mCapacity);
+			if (rhs.mSize > 0)
 			{
-				pushBack(*iter);
+				for (auto iter = rhs.begin(); iter != rhs.end(); ++iter)
+				{
+					pushBack(*iter);
+				}
 			}
 		}
 		return *this;
@@ -86,28 +89,28 @@ namespace Vector
 	template <typename T>
 	T& Vector<T>::front()
 	{
-		if (mBuffer == nullptr || mSize == 0) throw std::exception("Calling front on a null vector");
+		if (mSize == 0) throw std::exception("Calling front on a null vector");
 		return *mBuffer;
 	}
 
 	template <typename T>
 	const T& Vector<T>::front() const
 	{
-		if (mBuffer == nullptr || mSize == 0) throw std::exception("Calling front on a null vector");
+		if (mSize == 0) throw std::exception("Calling front on a null vector");
 		return const_cast<const T&>(*mBuffer);
 	}
 
 	template <typename T>
 	T& Vector<T>::back()
 	{
-		if (mBuffer == nullptr || mSize == 0) throw std::exception("Calling back on null vector");
+		if (mSize == 0) throw std::exception("Calling back on null vector");
 		return *(mBuffer + (mSize - 1));
 	}
 
 	template <typename T>
 	const T& Vector<T>::back() const
 	{
-		if (mBuffer == nullptr || mSize == 0) throw std::exception("Calling back on a null vector");
+		if (mSize == 0) throw std::exception("Calling back on a null vector");
 		return *(mBuffer + (mSize - 1));
 	}
 
@@ -165,13 +168,16 @@ namespace Vector
 	}
 
 	template <typename T>
-	void Vector<T>::pushBack(const T& value)
+	typename Vector<T>::Iterator Vector<T>::pushBack(const T& value)
 	{
+		typename Vector<T>::Iterator iter = end();
 		if (!mFixedSize)
 		{
 			if (mSize >= mCapacity) reserve(mCapacity + CAPACITY_INCREMENT);
 			new(mBuffer + mSize++) T(value);
+			iter = Iterator(this, mSize - 1); // Reassign iter to point to last value pushed back
 		}
+		return iter;
 	}
 
 	template <typename T>
@@ -253,11 +259,13 @@ namespace Vector
 	template <typename T>
 	typename Vector<T>::Iterator& Vector<T>::Iterator::operator++()
 	{
+		if (mOwner == nullptr) throw std::exception("Attempting to dereference nullptr");
+		if (mIndex > mOwner->size()) throw std::exception("Incrementing beyond vector bounds");
 		if (mIndex < mOwner->mSize)
 		{
 			mIndex++;
 		}
-		if (mIndex > mOwner->size()) throw std::exception("Incrementing beyond vector bounds");
+
 		return *this;
 	}
 
@@ -270,7 +278,15 @@ namespace Vector
 	}
 
 	template <typename T>
-	T& Vector<T>::Iterator::operator*() const
+	T& Vector<T>::Iterator::operator*()
+	{
+		if (mOwner == nullptr) throw std::exception("Owner is null");
+		if (mIndex > mOwner->size()) throw std::exception("Vector out of bounds");
+		return const_cast<T&>(mOwner->operator[](mIndex));
+	}
+
+	template <typename T>
+	const T& Vector<T>::Iterator::operator*() const
 	{
 		if (mOwner == nullptr) throw std::exception("Owner is null");
 		if (mIndex > mOwner->size()) throw std::exception("Vector out of bounds");

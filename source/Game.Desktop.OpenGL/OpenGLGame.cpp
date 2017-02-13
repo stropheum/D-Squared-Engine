@@ -5,6 +5,7 @@
 #include "SList.h"
 #include "Vector.h"
 #include "HashMap.h"
+#include "Datum.h"
 
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
@@ -37,30 +38,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	UNREFERENCED_PARAMETER(previousInstance);
 	UNREFERENCED_PARAMETER(commandLine);
 	UNREFERENCED_PARAMETER(showCommand);
-
-	HashMap::HashMap<char*, int> hm(13);
-	char* strings[10];
-	strings[0] = "zero";
-	strings[1] = "one";
-	strings[2] = "two";
-	strings[3] = "three";
-	strings[4] = "four";
-	strings[5] = "five";
-	strings[6] = "six";
-	strings[7] = "seven";
-	strings[8] = "eight";
-	strings[9] = "nine";
-	for (int i = 0; i < 10; i++)
-	{
-		std::pair<char*, int> mypair(strings[i], i);
-		hm.insert(mypair);
-	}
-	for (int i = 0; i < 10; i++)
-	{
-		// Potentially dangerous. not asserting against end. could throw an exception
-		auto dref = *hm.find(strings[i]);
-		auto copy = dref;
-	}
+	
+	Library::Datum mydate;
 
 	// Init GLFW
 	glfwInit();

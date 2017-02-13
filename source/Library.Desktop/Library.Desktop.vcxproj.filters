@@ -1,56 +1,139 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Datum">
+      <UniqueIdentifier>{fed2e44b-7171-4c2e-98e1-9f66e7a11e65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Precompiled Header">
+      <UniqueIdentifier>{393aeed4-31f9-48c2-b621-ff8e80500f18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage">
+      <UniqueIdentifier>{dc64ff8e-29f5-447e-b883-0cb772b19506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage\HashMap">
+      <UniqueIdentifier>{dde02c87-9ee9-4f63-ae9b-138b92a38e22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage\Vector">
+      <UniqueIdentifier>{bb30c127-45e5-4c4c-8bff-acb21212b6e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage\SList">
+      <UniqueIdentifier>{13932c7f-3ebb-482b-b9b4-4a03b46db89b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Datum\TypeState">
+      <UniqueIdentifier>{0866b993-4784-4aef-8d44-e1d6558ca03b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Datum\TypeState\Integer">
+      <UniqueIdentifier>{b282db97-1fa2-4803-a995-02579c7539f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Datum\TypeState\Base Class">
+      <UniqueIdentifier>{67ca90a5-b34c-4dad-9568-e340600042c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Datum\TypeState\Float">
+      <UniqueIdentifier>{76cecd8c-7302-4f5b-a0f4-3c66259f21b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Datum\TypeState\Vector">
+      <UniqueIdentifier>{d98ed69f-0f2b-4d53-8efd-fc93f95e7b4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Datum\TypeState\String">
+      <UniqueIdentifier>{f03fc57d-c3ca-493c-9918-b5e15defcb00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Datum\TypeState\Pointer">
+      <UniqueIdentifier>{761dfb5b-de1f-411a-93ea-904e429601c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Datum\TypeState\Matrix">
+      <UniqueIdentifier>{80fefe37-a69f-4083-9987-1bcac7e33841}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HashMap.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Datum.h">
+      <Filter>Datum</Filter>
     </ClInclude>
     <ClInclude Include="DefaultHash.h">
-      <Filter>Header Files</Filter>
+      <Filter>Storage\HashMap</Filter>
+    </ClInclude>
+    <ClInclude Include="HashMap.h">
+      <Filter>Storage\HashMap</Filter>
+    </ClInclude>
+    <ClInclude Include="RTTI.h">
+      <Filter>Datum</Filter>
+    </ClInclude>
+    <ClInclude Include="SList.h">
+      <Filter>Storage\SList</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Storage\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Precompiled Header</Filter>
+    </ClInclude>
+    <ClInclude Include="IntegerState.h">
+      <Filter>Datum\TypeState\Integer</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeState.h">
+      <Filter>Datum\TypeState\Base Class</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatState.h">
+      <Filter>Datum\TypeState\Float</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorState.h">
+      <Filter>Datum\TypeState\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixState.h">
+      <Filter>Datum\TypeState\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="StringState.h">
+      <Filter>Datum\TypeState\String</Filter>
+    </ClInclude>
+    <ClInclude Include="PointerState.h">
+      <Filter>Datum\TypeState\Pointer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Datum.cpp">
+      <Filter>Datum</Filter>
+    </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Precompiled Header</Filter>
+    </ClCompile>
+    <ClCompile Include="IntegerState.cpp">
+      <Filter>Datum\TypeState\Integer</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeState.cpp">
+      <Filter>Datum\TypeState\Base Class</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatState.cpp">
+      <Filter>Datum\TypeState\Float</Filter>
+    </ClCompile>
+    <ClCompile Include="VectorState.cpp">
+      <Filter>Datum\TypeState\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixState.cpp">
+      <Filter>Datum\TypeState\Matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="StringState.cpp">
+      <Filter>Datum\TypeState\String</Filter>
+    </ClCompile>
+    <ClCompile Include="PointerState.cpp">
+      <Filter>Datum\TypeState\Pointer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="HashMap.inl">
+      <Filter>Storage\HashMap</Filter>
+    </None>
     <None Include="SList.inl">
-      <Filter>Source Files</Filter>
+      <Filter>Storage\SList</Filter>
     </None>
     <None Include="Vector.inl">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="HashMap.inl">
-      <Filter>Source Files</Filter>
+      <Filter>Storage\Vector</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #pragma once
 #include <exception>
 
-namespace SList
+namespace Library
 {
 	template <typename T>
 	SList<T>::SList() :

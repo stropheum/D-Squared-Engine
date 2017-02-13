@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-namespace Vector
+namespace Library
 {
 	/// @Class Vector: A templated dynamically allocated array
 	/// @Author: Dale Diaz
@@ -18,8 +18,6 @@ namespace Vector
 		/// Default constructor
 		/// Allocates memory in mBuffer for a capacity of 10 templated values
 		Vector(bool fixedSize = false);
-
-		explicit Vector(std::uint32_t maxSize, bool fixedSize = false);
 
 		/// Copy constructor
 		/// @Param rhs: The Vector being copied
@@ -91,7 +89,7 @@ namespace Vector
 
 		/// Const version of the index operator
 		/// @Param index: The index being retrieved
-		/// @Retrun: A const reference to the element at the specified index. Throws exception if out of bounds
+		/// @Return: A const reference to the element at the specified index. Throws exception if out of bounds
 		/// @Exception: Thrown if accessing an index greater than or equal to size
 		const T& operator[](const std::uint32_t index) const;
 
@@ -114,7 +112,7 @@ namespace Vector
 		/// Adds an element to the first empty index available
 		/// If there is no available capacity, reserve is called with 10 additional elements
 		/// @Param value: The value being added to the Vector
-		void pushBack(const T& value);
+		Iterator pushBack(const T& value);
 
 		/// Reserves space in the Vector for more elements
 		/// @Param capacity: The new capacity of the Vector
@@ -177,7 +175,9 @@ namespace Vector
 			/// Dereference operator
 			/// @Return: A reference to the value pointed at by the Iterator
 			/// @Exception: Thrown if dereferencing a null value
-			T& operator*() const;
+			T& operator*();
+
+			const T& operator*() const;
 		private:
 			/// Internal Iterator constructor
 			/// @Param owner: The Vector that owns this Iterator object

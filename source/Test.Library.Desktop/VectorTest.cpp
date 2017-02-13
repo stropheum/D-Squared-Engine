@@ -11,9 +11,9 @@ namespace TestLibraryDesktop
 	TEST_CLASS(VectorTest)
 	{
 	public:
-		Vector::Vector<int>  intor;
-		Vector::Vector<int*> pointor;
-		Vector::Vector<Foo>  footor;
+		Library::Vector<int>  intor;
+		Library::Vector<int*> pointor;
+		Library::Vector<Foo>  footor;
 
 		/// Sets up leak detection logic
 		static void initializeLeakDetection()
@@ -54,7 +54,7 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestCopyConstructor)
 		{
 			/// Int vector tests
-			Vector::Vector<int> copyIntor(intor);
+			Library::Vector<int> copyIntor(intor);
 			bool intcompare = intor == copyIntor;
 			Assert::IsTrue(intcompare, L"Copied vector not equivalent to original");
 			
@@ -66,7 +66,7 @@ namespace TestLibraryDesktop
 			intcompare = intor == copyIntor;
 			Assert::IsTrue(intcompare, L"Copied vector not equivalent after pushing identical values");
 
-			Vector::Vector<int*> copyPointor(pointor);
+			Library::Vector<int*> copyPointor(pointor);
 			Assert::IsTrue(pointor == copyPointor, L"Copied pointer vector not equivalent to original");
 			
 
@@ -78,7 +78,7 @@ namespace TestLibraryDesktop
 			copyPointor.pushBack(&x);
 			Assert::IsTrue(pointor == copyPointor, L"Copied vector not equivalent after pushing identical values");
 
-			Vector::Vector<Foo> copyFootor(footor);
+			Library::Vector<Foo> copyFootor(footor);
 			Assert::IsTrue(footor == copyFootor, L"Copied Foo vector not equivalent to original");
 			
 
@@ -96,7 +96,7 @@ namespace TestLibraryDesktop
 			/// Int vector tests
 			Assert::IsTrue(intor == intor, L"Vector not equivalent to itself");
 			
-			Vector::Vector<int> copyIntor(intor);
+			Library::Vector<int> copyIntor(intor);
 			Assert::IsTrue(intor == copyIntor, L"Copy constructor invocation not equivalent");
 			
 			copyIntor = intor;
@@ -109,7 +109,7 @@ namespace TestLibraryDesktop
 			/// Pointer vector tests
 			Assert::IsTrue(pointor == pointor, L"Vector not equivalent to itself");
 
-			Vector::Vector<int*> copyPointor(pointor);
+			Library::Vector<int*> copyPointor(pointor);
 			Assert::IsTrue(pointor == copyPointor, L"Copy constructor invocation not equivalent");
 			
 			copyPointor = pointor;
@@ -122,7 +122,7 @@ namespace TestLibraryDesktop
 			/// Foo vector tests
 			Assert::IsTrue(footor == footor, L"Vector not equivalent to itself");
 
-			Vector::Vector<Foo> copyFootor(footor);
+			Library::Vector<Foo> copyFootor(footor);
 			Assert::IsTrue(footor == copyFootor, L"Copy constructor invocation not equivalent");
 			
 			copyFootor = footor;
@@ -135,19 +135,19 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestAssignmentOperator)
 		{
 			/// Int vector tests
-			Vector::Vector<int> copyIntor;
+			Library::Vector<int> copyIntor;
 			copyIntor = intor;
 			Assert::IsTrue(intor == copyIntor, L"Copied vector not equivalent to original");
 
 
 			/// Pointer vector tests
-			Vector::Vector<int*> copyPointor;
+			Library::Vector<int*> copyPointor;
 			copyPointor = pointor;
 			Assert::IsTrue(pointor == copyPointor, L"Copied pointer vector not equivalent to original");
 
 
 			/// Foo vector tests
-			Vector::Vector<Foo> copyFootor;
+			Library::Vector<Foo> copyFootor;
 			copyFootor = footor;
 			Assert::IsTrue(footor == copyFootor, L"Copied Foo vector not equivalent to original");
 		}
@@ -283,7 +283,7 @@ namespace TestLibraryDesktop
 			/// Int vector tests
 			Assert::IsTrue(intor.begin() == intor.end(), L"End should be equivalent to begin on an empty vector");
 			
-			Vector::Vector<int>::Iterator iter = intor.end();
+			Library::Vector<int>::Iterator iter = intor.end();
 			Assert::IsTrue(iter == intor.end(), L"Iterator assigned to end should be equivalent to end");
 			
 			intor.pushBack(1);
@@ -293,7 +293,7 @@ namespace TestLibraryDesktop
 
 			Assert::IsTrue(pointor.begin() == pointor.end(), L"End should be equivalent to begin on an empty vector");
 			
-			Vector::Vector<int*>::Iterator piter = pointor.end();
+			Library::Vector<int*>::Iterator piter = pointor.end();
 			Assert::IsTrue(piter == pointor.end(), L"Iterator assigned to end should be equivalent to end");
 
 			const auto constIntor(intor);
@@ -310,7 +310,7 @@ namespace TestLibraryDesktop
 
 			Assert::IsTrue(footor.begin() == footor.end(), L"End should be equivalent to begin on an empty vector");
 			
-			Vector::Vector<Foo>::Iterator fooiter = footor.end();
+			Library::Vector<Foo>::Iterator fooiter = footor.end();
 			Assert::IsTrue(fooiter == footor.end(), L"Iterator assigned to end should be equivalent to end");
 			
 			const auto constPointor(pointor);
@@ -343,7 +343,7 @@ namespace TestLibraryDesktop
 			intor.front() = 5;
 			Assert::IsTrue(intor.front() == 5, L"Unable to modify Vector.front()");
 
-			const Vector::Vector<int> constIntVector(intor);
+			const Library::Vector<int> constIntVector(intor);
 //			auto val = constIntVector.front();
 			Assert::IsTrue(constIntVector.front() == intor.front(), L"Front of const copied vector should be equivalent to original");
 
@@ -360,7 +360,7 @@ namespace TestLibraryDesktop
 			pointor.front() = &y;
 			Assert::IsTrue(pointor.front() == &y, L"Unable to modify Vector.front()");
 
-			const Vector::Vector<int*> constPtrVector(pointor);
+			const Library::Vector<int*> constPtrVector(pointor);
 			Assert::IsTrue(constPtrVector.front() == pointor.front(), L"Front of const copied vector should be equivalent to original");
 
 			/// Foo vector tests
@@ -376,7 +376,7 @@ namespace TestLibraryDesktop
 			footor.front() = bar;
 			Assert::IsTrue(footor.front() == bar, L"Unable to modify Vector.front()");
 
-			const Vector::Vector<Foo> constFooVector(footor);
+			const Library::Vector<Foo> constFooVector(footor);
 			Assert::IsTrue(constFooVector.front() == footor.front(), L"Front of constant copied vector not equal to original vector's front");
 			Assert::IsTrue(true);
 		}
@@ -630,7 +630,7 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestCapacity)
 		{
 			/// Int vector tests
-			Vector::Vector<int> newintvector;
+			Library::Vector<int> newintvector;
 			Assert::AreEqual(10U, newintvector.capacity(), L"New Vector should have a capacity of 10");
 			
 			const auto constIntor(newintvector);
@@ -653,7 +653,7 @@ namespace TestLibraryDesktop
 			
 
 			/// Pointer vector tests
-			Vector::Vector<int> newptrvector;
+			Library::Vector<int> newptrvector;
 			Assert::AreEqual(10U, newptrvector.capacity(), L"New Vector should have a capacity of 10");
 			
 			const auto constPointor(newptrvector);
@@ -679,7 +679,7 @@ namespace TestLibraryDesktop
 
 
 			/// Foo vector tests
-			Vector::Vector<int> newfoovector;
+			Library::Vector<int> newfoovector;
 			Assert::AreEqual(10U, newfoovector.capacity(), L"New Vector should have a capacity of 10");
 			
 			const auto constFootor(newfoovector);
@@ -979,7 +979,7 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(iter == intor.end(), L"Iterator assigned to begin should not be equivalent to end on a non-empty vector");
 			Assert::IsFalse(secondIterCopy == intor.end());
 
-			Vector::Vector<int> newintvector;
+			Library::Vector<int> newintvector;
 			auto newiter = newintvector.begin();
 			const auto newIterCopy(newiter);
 			Assert::IsFalse(iter == newiter, L"Iterators with different owners should not be equivalent");
@@ -1001,7 +1001,7 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(piter == pointor.end(), L"Iterator assigned to begin should not be equivalent to end on a non-empty vector");
 			Assert::IsFalse(piterSecondCopy == pointor.end());
 
-			Vector::Vector<int*> newptrvector;
+			Library::Vector<int*> newptrvector;
 			auto newpiter = newptrvector.begin();
 			const auto newpiterCopy(newpiter);
 			Assert::IsFalse(piter == newpiter, L"Iterators with different owners should not be equivalent");
@@ -1023,7 +1023,7 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(fooiter == footor.end(), L"Iterator assigned to begin should not be equivalent to end on a non-empty vector");
 			Assert::IsFalse(fooiterSecondCopy == footor.end());
 
-			Vector::Vector<Foo> newfoovector;
+			Library::Vector<Foo> newfoovector;
 			auto newfooiter = newfoovector.begin();
 			const auto newfooiterCopy(newfooiter);
 			Assert::IsFalse(fooiter == newfooiter, L"Iterators with different owners should not be equivalent");

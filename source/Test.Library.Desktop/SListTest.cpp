@@ -10,9 +10,9 @@ namespace TestLibraryDesktop
 {		
 	TEST_CLASS(SListTest)
 	{
-		SList::SList<int>*  list;
-		SList::SList<int*>* pList;
-		SList::SList<Foo>*  fooList;
+		Library::SList<int>*  list;
+		Library::SList<int*>* pList;
+		Library::SList<Foo>*  fooList;
 	public:
 		/// Sets up leak detection logic
 		static void initializeLeakDetection()
@@ -40,9 +40,9 @@ namespace TestLibraryDesktop
 		TEST_METHOD_INITIALIZE(InitializeMethod)
 		{
 			initializeLeakDetection();
-			list    = new SList::SList<int> ();
-			pList   = new SList::SList<int*>();
-			fooList = new SList::SList<Foo> ();
+			list    = new Library::SList<int> ();
+			pList   = new Library::SList<int*>();
+			fooList = new Library::SList<Foo> ();
 		}
 
 		TEST_METHOD_CLEANUP(CleanupMethod)
@@ -331,7 +331,7 @@ namespace TestLibraryDesktop
 			list->pushFront(2);
 			list->pushFront(3);
 
-			SList::SList<int> newList;
+			Library::SList<int> newList;
 			newList = *list;
 
 			for (std::uint32_t i = 0; i < list->size(); i++)
@@ -348,7 +348,7 @@ namespace TestLibraryDesktop
 			pList->pushFront(&y);
 			pList->pushFront(&z);
 
-			SList::SList<int*> pListCopy;
+			Library::SList<int*> pListCopy;
 			pListCopy = *pList;
 
 			for (std::uint32_t i = 0; i < pList->size(); i++)
@@ -365,7 +365,7 @@ namespace TestLibraryDesktop
 			fooList->pushFront(f2);
 			fooList->pushFront(f3);
 
-			SList::SList<Foo> fooListCopy;
+			Library::SList<Foo> fooListCopy;
 			fooListCopy = *fooList;
 
 			for (std::uint32_t i = 0; i < fooList->size(); i++)
@@ -399,7 +399,7 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestIteratorBeginEndUnique)
 		{
 			list->pushFront(1);
-			SList::SList<int>::Iterator begin = list->begin();
+			Library::SList<int>::Iterator begin = list->begin();
 			auto end = list->end();
 			bool comparison = (begin == end);
 			Assert::IsFalse(comparison, L"Begin and end nodes are identical");
@@ -502,17 +502,17 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestIteratorCopyConstructor)
 		{
 			auto iter = list->begin();
-			SList::SList<int>::Iterator iterCopy(iter);
+			Library::SList<int>::Iterator iterCopy(iter);
 			bool comparison = (iter == iterCopy);
 			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
 
 			auto pIter = pList->begin();
-			SList::SList<int*>::Iterator pIterCopy(pIter);
+			Library::SList<int*>::Iterator pIterCopy(pIter);
 			comparison = (pIter == pIterCopy);
 			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
 
 			auto fooIter = fooList->begin();
-			SList::SList<Foo>::Iterator fooIterCopy(fooIter);
+			Library::SList<Foo>::Iterator fooIterCopy(fooIter);
 			comparison = (fooIter == fooIterCopy);
 			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
 		}
@@ -520,19 +520,19 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestIteratorAssignmentOperator)
 		{
 			auto iter = list->begin();
-			SList::SList<int>::Iterator iterCopy;
+			Library::SList<int>::Iterator iterCopy;
 			iterCopy = iter;
 			bool comparison = (iter == iterCopy);
 			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
 
 			auto pIter = pList->begin();
-			SList::SList<int*>::Iterator pIterCopy;
+			Library::SList<int*>::Iterator pIterCopy;
 			pIterCopy = pIter;
 			comparison = (pIter == pIterCopy);
 			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");
 
 			auto fooIter = fooList->begin();
-			SList::SList<Foo>::Iterator fooIterCopy;
+			Library::SList<Foo>::Iterator fooIterCopy;
 			fooIterCopy = fooIter;
 			comparison = (fooIter == fooIterCopy);
 			Assert::IsTrue(comparison, L"Iterator copy not equivalent to original");

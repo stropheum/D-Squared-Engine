@@ -30,7 +30,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	UNREFERENCED_PARAMETER(previousInstance);
 	UNREFERENCED_PARAMETER(commandLine);
 
-	HashMap::HashMap<int, int> hashMap(10);
+	Library::HashMap<int, int> hashMap(10);
 
 	HWND hWnd; // the handle for the window, filled by a function
 	WNDCLASSEX wc; // this struct holds information for the window class
