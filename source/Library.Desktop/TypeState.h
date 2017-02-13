@@ -9,6 +9,7 @@ namespace Library
 	class TypeState
 	{
 	public:
+		virtual ~TypeState() = default;
 		/// Comparison operator for Datum objects
 		/// @Param rhs: The Datum object being compared against
 		/// @Return: True if type, size, and each element of the Datum objects are equivalent. False otherwise

@@ -250,6 +250,9 @@ namespace Library
 		return mTypeState->operator=(rhs);
 	}
 
+	/// Comparison operator for Datum objects
+	/// @Param rhs: The Datum object being compared against
+	/// @Return: True if the Datum objects are equivalent
 	bool Datum::operator==(const Datum& rhs) const
 	{
 		return mTypeState->operator==(rhs);
