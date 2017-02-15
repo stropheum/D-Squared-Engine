@@ -107,6 +107,11 @@ namespace Library
 		return false;
 	}
 
+	bool Scope::operator!=(const Scope& rhs)
+	{
+		return !(operator==(rhs));
+	}
+
 	std::string Scope::findName(const Scope* scope)
 	{
 		UNREFERENCED_PARAMETER(scope);

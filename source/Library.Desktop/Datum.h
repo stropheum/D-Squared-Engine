@@ -19,7 +19,7 @@ namespace Library
 		Float,   // Single-precision floating-point value
 		Vector,  // 4-vector
 		Matrix,  // 4x4 matrix
-		Table,   // Pointer to a scope
+		Scope,   // Pointer to a scope
 		String,  // STL string
 		Pointer  // Pointer to any RTTI instance
 	};

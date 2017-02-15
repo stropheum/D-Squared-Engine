@@ -40,6 +40,7 @@ namespace Library
 		/*Datum&*/void operator[](const std::string& key);
 		/*Datum&*/void operator[](const std::uint32_t index);
 		bool operator==(const Scope& rhs);
+		bool operator!=(const Scope& rhs);
 		std::string findName(const Scope* scope);
 
 	private:

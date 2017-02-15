@@ -42,9 +42,88 @@ namespace TestLibraryDesktop
 			finalizeLeakDetection();
 		}
 
-		TEST_METHOD(TestMethod1)
+		TEST_METHOD(TestConstructor)
 		{
-			// TODO: Your test code here
+			// TODO: Implement Method
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestCopyConstructor)
+		{
+			// TODO: Implement Method
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestMoveConstructor)
+		{
+			// TODO: Implement Method
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestAssignment)
+		{
+			// TODO: Implement Method
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestMoveAssignment)
+		{
+			// TODO: Implement Method
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestFind)
+		{
+			// TODO: Implement Method
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestSearch)
+		{
+			// TODO: Implement Method
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestAppend)
+		{
+			// TODO: Implement Method
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestAppendScope)
+		{
+			// TODO: Implement Method
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestAdopt)
+		{
+			// TODO: Implement Method
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestGetParent)
+		{
+			// TODO: Implement Method
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestIndexOperator)
+		{
+			// TODO: Implement Method
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestEqualityOperator)
+		{
+			// TODO: Implement Method
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestFindName)
+		{
+			// TODO: Implement Method
+			Assert::Fail(L"Test not implemented");
 		}
 	};
 }
