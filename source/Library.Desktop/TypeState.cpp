@@ -31,6 +31,12 @@ namespace Library
 		throw std::exception("Invalid assignment operation");
 	}
 
+	Datum& TypeState::operator=(Scope* const rhs)
+	{
+		UNREFERENCED_PARAMETER(rhs);
+		throw std::exception("Invalid assignment operation");
+	}
+
 	Datum& TypeState::operator=(const std::string& rhs)
 	{
 		UNREFERENCED_PARAMETER(rhs);
@@ -65,6 +71,13 @@ namespace Library
 	}
 
 	void TypeState::setStorage(glm::mat4* data, std::uint32_t size)
+	{
+		UNREFERENCED_PARAMETER(data);
+		UNREFERENCED_PARAMETER(size);
+		throw std::exception("Attempting to set storage on unknown type");
+	}
+
+	void TypeState::setStorage(Scope** data, std::uint32_t size)
 	{
 		UNREFERENCED_PARAMETER(data);
 		UNREFERENCED_PARAMETER(size);

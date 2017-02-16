@@ -228,6 +228,17 @@ namespace Library
 		return mTypeState->operator=(rhs);
 	}
 
+	/// Assignment operator for Scope
+	/// @Param rhs: Scope being assigned to
+	/// @Return: The newly assigned Datum object
+	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
+	Datum& Datum::operator=(Scope* const rhs)
+	{
+		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
+		setType(DatumType::Scope);
+		return mTypeState->operator=(rhs);
+	}
+
 	/// Assignment operator for std::string
 	/// @Param rhs: String being assigned to
 	/// @Return: The newly assigned Datum object

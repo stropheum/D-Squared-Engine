@@ -32,8 +32,9 @@ namespace Library
 		friend class FloatState;	// Handles float-specific functionality
 		friend class VectorState;	// Handles vector-specific functionality
 		friend class MatrixState;	// Handles matrix-specific functionality
+		friend class ScopeState;	// Handles scope-pointer specific functionality
 		friend class StringState;	// Handles string-specific functionality
-		friend class PointerState;	// Handles RTTI pointer-specific functionality
+		friend class PointerState;	// Handles RTTI-pointer specific functionality
 		
 	public:
 		union DatumValues
@@ -43,7 +44,7 @@ namespace Library
 			float* f;			// Float array pointer
 			glm::vec4* v;		// Vector array pointer
 			glm::mat4* m;		// Matrix array pointer
-			Scope* sc;			// Array pointer for Scope pointers
+			Scope** sc;			// Array pointer for Scope pointers
 			std::string* s;		// String array pointer
 			Library::RTTI** r;	// Array pointer for RTTI pointers
 		};
@@ -106,6 +107,12 @@ namespace Library
 		/// @Return: The newly assigned Datum object
 		/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
 		Datum& operator=(const glm::mat4& rhs);
+
+		/// Assignment operator for Scope
+		/// @Param rhs: Scope being assigned to
+		/// @Return: The newly assigned Datum object
+		/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1  
+		Datum& operator=(Scope* const rhs);
 
 		/// Assignment operator for std::string
 		/// @Param rhs: String being assigned to

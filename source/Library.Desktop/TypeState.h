@@ -33,6 +33,10 @@ namespace Library
 		virtual Datum& operator=(const glm::mat4& rhs);
 		/// Assignment operator
 		/// @Param rhs: The value being assigned to the first element of the array
+		/// @Exception: THrown if called from this context
+		virtual Datum& operator=(Scope* const rhs);
+		/// Assignment operator
+		/// @Param rhs: The value being assigned to the first element of the array
 		/// @Exception: Thrown if called from this context
 		virtual Datum& operator=(const std::string& rhs);
 		/// Assignment operator
@@ -75,6 +79,11 @@ namespace Library
 		/// @Param size: The size of the array
 		/// @Exception: Thrown if called from this context
 		virtual void setStorage(glm::mat4* data, std::uint32_t size);
+		/// Sets the external storage to the specified pointer
+		/// @Param data: The external storage being utilized
+		/// @Pram size: The number of elements in the external storage
+		/// @Exception: Thrown if attempting to reassign datum type, or if local memory is already used
+		virtual void setStorage(Scope** data, std::uint32_t size);
 		/// Sets the external storage of the specified string array
 		/// @Param data: The external storage array
 		/// @Param size: The size of the array

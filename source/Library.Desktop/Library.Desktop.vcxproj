@@ -169,6 +169,7 @@
     <ClInclude Include="PointerState.h" />
     <ClInclude Include="RTTI.h" />
     <ClInclude Include="Scope.h" />
+    <ClInclude Include="ScopeState.h" />
     <ClInclude Include="SList.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="StringState.h" />
@@ -193,6 +194,7 @@
     </ClCompile>
     <ClCompile Include="PointerState.cpp" />
     <ClCompile Include="Scope.cpp" />
+    <ClCompile Include="ScopeState.cpp" />
     <ClCompile Include="StringState.cpp" />
     <ClCompile Include="TypeState.cpp" />
     <ClCompile Include="VectorState.cpp" />
