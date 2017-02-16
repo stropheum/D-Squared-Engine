@@ -97,4 +97,20 @@ namespace Library
 	{
 		setStorage(rhs.mData.sc, rhs.mSize);
 	}
+
+	void ScopeState::setStorage(Scope** data, std::uint32_t size)
+	{
+		if (mContext->mType != DatumType::Scope) throw std::exception("Attempting to reassign Datum Type");
+		if (mContext->mCapacity > 0) throw std::exception("Set storage called on non-empty Datum");
+
+		mContext->mDataIsExternal = true;
+		mContext->mData.sc = data;
+		mContext->mCapacity = mContext->mSize = size;
+	}
+
+	std::string ScopeState::toString(std::uint32_t index)
+	{
+		// TODO: Implement Scope toString method
+		return "I'm a scope";
+	}
 }

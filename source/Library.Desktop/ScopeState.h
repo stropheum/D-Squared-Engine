@@ -32,5 +32,9 @@ namespace Library
 		/// @Pram size: The number of elements in the external storage
 		/// @Exception: Thrown if attempting to reassign datum type, or if local memory is already used
 		void setStorage(Scope** data, std::uint32_t size) override;
+		/// Generates a string representation of the data at the specified index of the array
+		/// @Param index: The index of the array being translated. Defaulted to 0
+		/// @Exception: Thrown if called from this context
+		std::string toString(std::uint32_t index = 0) override;
 	};
 }
