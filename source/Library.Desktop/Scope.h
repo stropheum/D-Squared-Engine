@@ -4,6 +4,7 @@
 
 namespace Library
 {
+	class Datum;
 	class Scope
 	{
 		typedef std::pair<const std::string, Datum> ScopePair;
@@ -33,7 +34,7 @@ namespace Library
 
 		Datum* find(const std::string& key);
 		Datum* search(const std::string& key, Scope** scope);
-		/*Datum&*/void append(const std::string& key);
+		Datum& append(const std::string& key);
 		Scope& appendScope(const std::string& key);
 		void adopt(Scope& child, const std::string& name, std::uint32_t index);
 		Scope* getParent();

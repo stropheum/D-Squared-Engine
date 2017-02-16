@@ -7,6 +7,7 @@
 #pragma warning(disable:4201)
 #include "glm/glm.hpp"
 #include "glm/gtx/string_cast.hpp"
+#include "Scope.h"
 #pragma warning(pop)
 
 namespace Library
@@ -42,6 +43,7 @@ namespace Library
 			float* f;			// Float array pointer
 			glm::vec4* v;		// Vector array pointer
 			glm::mat4* m;		// Matrix array pointer
+			Scope* sc;			// Array pointer for Scope pointers
 			std::string* s;		// String array pointer
 			Library::RTTI** r;	// Array pointer for RTTI pointers
 		};

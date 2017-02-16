@@ -5,16 +5,14 @@
 namespace Library
 {
 #pragma region Constructors/Destructor
-	Scope::Scope(std::uint32_t capacity)
-	{
-		UNREFERENCED_PARAMETER(capacity);
-		// TODO: Implement constructor
-	}
+	Scope::Scope(std::uint32_t capacity):
+		mMap(capacity)
+	{}
 
-	Scope::Scope(const Scope& rhs)
+	Scope::Scope(const Scope& rhs):
+		mMap(rhs.mMap)
 	{
-		UNREFERENCED_PARAMETER(rhs);
-		// TODO: Implement copy constructor
+		// TODO: How to deep copy the hashmap and vector appropriately?
 	}
 
 	Scope::Scope(const Scope&& rhs)
@@ -48,9 +46,9 @@ namespace Library
 #pragma region Public Methods
 	Datum* Scope::find(const std::string& key)
 	{
-		UNREFERENCED_PARAMETER(key);
-		// TODO: Implement find method
-		return nullptr;
+		auto iter = mMap.find(key);
+		Datum* result = (iter != mMap.end()) ? &(*iter).second : nullptr;
+		return result;
 	}
 
 	Datum* Scope::search(const std::string& key, Scope** scope)
@@ -61,10 +59,11 @@ namespace Library
 		return nullptr;
 	}
 
-	/*Datum&*/void Scope::append(const std::string& key)
+	Datum& Scope::append(const std::string& key)
 	{
-		UNREFERENCED_PARAMETER(key);
-		// TODO: Implement append method
+		auto found = mMap.find(key);
+		if (found == mMap.end()) found = mMap.insert(std::pair<std::string, Datum>(key, Datum()));
+		return (*found).second;
 	}
 
 	Scope& Scope::appendScope(const std::string& key)
