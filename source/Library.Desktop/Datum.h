@@ -428,6 +428,21 @@ namespace Library
 		return mData.m[index];
 	}
 
+	/// Template specialization for getting a Scope value
+	/// @Param index: The index of the Scope being retrieved
+	/// @Return: The value of the array at the specified index
+	/// @Exception invalidType: Thrown when calling get on invalid type
+	/// @Exception nullRef: Thrown when attempting call get on uninitialized data
+	/// @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
+	template<>
+	inline Scope*& Datum::get(const std::uint32_t index)
+	{
+		if (mType != DatumType::Scope) throw std::exception("Calling et on invalid type");
+		if (mData.sc == nullptr) throw std::exception("Attempting to dereference nullptr");
+		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
+		return mData.sc[index];
+	}
+
 	/// Template specialization for getting a string value
 	/// @Param index: The index of the array being retrieved
 	/// @Return: The value of the array at the specified index

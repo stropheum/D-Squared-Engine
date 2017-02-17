@@ -111,6 +111,7 @@ namespace Library
 	std::string ScopeState::toString(std::uint32_t index)
 	{
 		// TODO: Implement Scope toString method
+		UNREFERENCED_PARAMETER(index);
 		return "I'm a scope";
 	}
 }
