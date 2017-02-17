@@ -92,10 +92,10 @@ namespace Library
 
 	void Scope::adopt(Scope& child, const std::string& name, std::uint32_t index)
 	{
-		UNREFERENCED_PARAMETER(child);
 		UNREFERENCED_PARAMETER(name);
 		UNREFERENCED_PARAMETER(index);
-		// TODO: Implement adopt method
+		child.mParent = this;
+		// TODO: Figure out what to do with name and index
 	}
 
 	Scope* Scope::getParent()
