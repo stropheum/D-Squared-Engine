@@ -66,6 +66,7 @@ namespace Library
 	{
 		auto found = mMap.find(key);
 		if (found == mMap.end()) found = mMap.insert(std::pair<std::string, Datum>(key, Datum()));
+		mVector.pushBack(&(*found).second);
 		return (*found).second;
 	}
 
@@ -79,7 +80,7 @@ namespace Library
 			Datum* child = &found->get<Scope*>(0)->append(key);
 			child->setType(DatumType::Scope);
 			result = child->get<Scope*>(0);
-			adopt(*result, "lil babby", 0); // TODO: Figure out how to properly call adopt
+			adopt(*result, "lil' babby", 0); // TODO: Figure out how to properly call adopt
 		}
 		else
 		{
@@ -109,7 +110,7 @@ namespace Library
 
 	Datum& Scope::operator[](const std::uint32_t index)
 	{
-		return mVector[index].second;
+		return *mVector[index];
 	}
 
 	bool Scope::operator==(const Scope& rhs) const

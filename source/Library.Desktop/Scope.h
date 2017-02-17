@@ -7,7 +7,6 @@ namespace Library
 	class Datum;
 	class Scope : public RTTI
 	{
-		typedef std::pair<const std::string, Datum> ScopePair;
 	public:
 
 #pragma region Constructors/Destructor
@@ -52,7 +51,7 @@ namespace Library
 		void clear();
 
 		HashMap<std::string, Datum> mMap;
-		Vector<ScopePair> mVector;
+		Vector<Datum*> mVector;
 		Scope* mParent;
 	};
 }
