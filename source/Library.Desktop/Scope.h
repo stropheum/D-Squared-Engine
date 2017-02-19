@@ -51,8 +51,8 @@ namespace Library
 	private:
 		void clear();
 
-		HashMap<std::string, Datum> mMap;
-		Vector<Datum*> mVector;
+		HashMap<const std::string, Datum> mMap;
+		Vector<std::pair<std::string const, Datum>*> mVector;
 		Scope* mParent;
 	};
 }

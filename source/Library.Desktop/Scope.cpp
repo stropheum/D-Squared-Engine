@@ -55,7 +55,7 @@ namespace Library
 	Datum* Scope::search(const std::string& key, Scope** parent)
 	{
 		UNREFERENCED_PARAMETER(parent);
-		// TODO: Is parent necessary if i'm calling it recursively using mParent? Confused
+		// TODO: Is parent necessary if calling it recursively using mParent? Confused
 		auto result = find(key);
 		if (result == nullptr && mParent == nullptr) result = nullptr;
 		if (result == nullptr && mParent != nullptr) result = mParent->search(key);
@@ -65,8 +65,11 @@ namespace Library
 	Datum& Scope::append(const std::string& key)
 	{
 		auto found = mMap.find(key);
-		if (found == mMap.end()) found = mMap.insert(std::pair<std::string, Datum>(key, Datum()));
-		mVector.pushBack(&(*found).second);
+		if (found == mMap.end())
+		{
+			found = mMap.insert(std::pair<std::string, Datum>(key, Datum()));
+		}
+		mVector.pushBack(&(*found));
 		return (*found).second;
 	}
 
@@ -80,7 +83,7 @@ namespace Library
 			Datum* child = &found->get<Scope*>(0)->append(key);
 			child->setType(DatumType::Scope);
 			result = child->get<Scope*>(0);
-			adopt(*result, "lil' babby", 0); // TODO: Figure out how to properly call adopt
+			adopt(*result, key, 0); // TODO: Figure out how to properly call adopt
 		}
 		else
 		{
@@ -110,7 +113,7 @@ namespace Library
 
 	Datum& Scope::operator[](const std::uint32_t index)
 	{
-		return *mVector[index];
+		return mVector[index]->second;
 	}
 
 	bool Scope::operator==(const Scope& rhs) const
