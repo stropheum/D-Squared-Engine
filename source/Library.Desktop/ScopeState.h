@@ -3,6 +3,7 @@
 
 namespace Library
 {
+	class Scope;
 	class ScopeState :
 		public TypeState
 	{

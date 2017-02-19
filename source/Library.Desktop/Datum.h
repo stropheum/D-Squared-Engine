@@ -7,11 +7,11 @@
 #pragma warning(disable:4201)
 #include "glm/glm.hpp"
 #include "glm/gtx/string_cast.hpp"
-#include "Scope.h"
 #pragma warning(pop)
 
 namespace Library
 {
+	class Scope;
 	/// Types of possible Datum
 	enum class DatumType
 	{
@@ -67,6 +67,11 @@ namespace Library
 		/// Move copy constructor
 		/// @Param rhs: Datum object being copied
 		Datum(Datum&& rhs);
+
+		/// Index operator for accessing nested scopes
+		/// @Param index: The scope at the given index
+		/// @Return: The scope at the specified index
+		Scope& operator[](std::uint32_t index);
 		
 		/// Datum assignment operator
 		/// @Param rhs: Datum object being assigned to

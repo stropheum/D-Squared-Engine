@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ScopeState.h"
+#include "Scope.h"
 
 
 namespace Library

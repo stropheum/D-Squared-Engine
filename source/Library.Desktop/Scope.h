@@ -4,7 +4,8 @@
 
 namespace Library
 {
-	class Datum;
+	class Datum; /// forward declaration of Datum class
+
 	class Scope : public RTTI
 	{
 	public:

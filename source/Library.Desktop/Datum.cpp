@@ -44,6 +44,14 @@ namespace Library
 		operator=(std::move(rhs)); // Perform a deep copy of all the data
 	}
 
+	/// Index operator for accessing nested scopes
+	/// @Param index: The scope at the given index
+	/// @Return: The scope at the specified index
+	Scope& Datum::operator[](std::uint32_t index)
+	{
+		return *get<Scope*>(index);
+	}
+
 	/// Datum assignment operator
 	/// @Param rhs: Datum object being assigned to
 	/// @Return; The newly copied Datum object

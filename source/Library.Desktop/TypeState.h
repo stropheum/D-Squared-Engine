@@ -3,6 +3,7 @@
 
 namespace Library
 {
+	class Scope;
 	/// Parent class for all potential type states
 	/// All methods throw exceptions from this context because a generic TypeState should be considered invalid
 	/// Valid states will override the methods considered valid to their state and the rest will still throw exceptions
