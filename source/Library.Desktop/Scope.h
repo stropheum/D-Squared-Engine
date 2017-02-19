@@ -1,16 +1,18 @@
 #pragma once
 #include "Vector.h"
 #include "HashMap.h"
+#include "RTTI.h"
 
 namespace Library
 {
 	class Datum; /// forward declaration of Datum class
-
+	
 	class Scope : public RTTI
 	{
-	public:
+		RTTI_DECLARATIONS(Library::Scope, Library::RTTI);
 
 #pragma region Constructors/Destructor
+	public:
 		/// Constructor
 		/// @Param capacity: Initial capacity of the scope. Defaulted to 1
 		Scope(std::uint32_t capacity = 1);
@@ -42,7 +44,7 @@ namespace Library
 		Datum& operator[](const std::uint32_t index);
 		bool operator==(const Scope& rhs) const;
 		bool operator!=(const Scope& rhs) const;
-		std::string findName(const Scope* scope);
+		std::string findName(Scope* const scope) const;
 
 		/// RTTI methods
 		std::string ToString() const override;

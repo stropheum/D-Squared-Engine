@@ -601,6 +601,19 @@ namespace Library
 	}
 
 	/// Sets a specified index of the array to the specified value
+	/// @Param value: The scope pointer being assigned
+	/// @Param index: The index of the value being assigned to
+	/// @Exception: Thrown if calling set on invalid type
+	/// @Exception: Thrown if attempting to set beyond existing size
+	void Datum::set(Scope* const& value, const std::uint32_t index)
+	{
+		if (mType != DatumType::Scope) throw std::exception("Calling set on invalid type");
+		if (index > mSize) throw std::exception("Attempting to set beyond current size");
+		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
+		new(mData.m + index) Scope*(value);
+	}
+
+	/// Sets a specified index of the array to the specified value
 	/// @Param value: The string being assigned
 	/// @Param index: The index of the value being assigned to
 	/// @Exception: Thrown if calling set on invalid type
@@ -653,6 +666,14 @@ namespace Library
 	/// Pushes an std::int32_t to the back of the array
 	/// @Param value: The value being pushed onto the array
 	void Datum::pushBack(const glm::mat4& value)
+	{
+		setSize(mSize + 1);
+		set(value, mSize - 1);
+	}
+
+	/// Pushes an std::int32_t to the back of the array
+	/// @Param value: The value being pushed onto the array
+	void Datum::pushBack(Scope* const& value)
 	{
 		setSize(mSize + 1);
 		set(value, mSize - 1);

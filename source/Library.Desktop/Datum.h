@@ -305,6 +305,14 @@ namespace Library
 		/// @Exception: Thrown if calling set on invalid type
 		/// @Exception: Thrown if attempting to set beyond existing size
 		void set(const glm::mat4& value, const std::uint32_t index = 0);
+
+		/// Sets a specified index of the array to the specified value
+		/// @Param value: The scope pointer being assigned
+		/// @Param index: The index of the value being assigned to
+		/// @Exception: Thrown if calling set on invalid type
+		/// @Exception: Thrown if attempting to set beyond existing size
+		void set(Scope* const& value, const std::uint32_t index = 0);
+
 		/// Sets a specified index of the array to the specified value
 		/// @Param value: The string being assigned
 		/// @Param index: The index of the value being assigned to
@@ -334,6 +342,10 @@ namespace Library
 		/// Pushes an std::int32_t to the back of the array
 		/// @Param value: The value being pushed onto the array
 		void pushBack(const glm::mat4& value);
+
+		/// Pushes an std::int32_t to the back of the array
+		/// @Param value: The value being pushed onto the array
+		void pushBack(Scope* const& value);
 
 		/// Pushes an std::int32_t to the back of the array
 		/// @Param value: The value being pushed onto the array
