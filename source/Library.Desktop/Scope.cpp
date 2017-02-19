@@ -53,13 +53,20 @@ namespace Library
 		return result;
 	}
 
-	Datum* Scope::search(const std::string& key, Scope** parent)
+	Datum* Scope::search(const std::string& key, Scope** foundScope)
 	{
-		UNREFERENCED_PARAMETER(parent);
-		// TODO: Is parent necessary if calling it recursively using mParent? Confused
 		auto result = find(key);
-		if (result == nullptr && mParent == nullptr) result = nullptr;
-		if (result == nullptr && mParent != nullptr) result = mParent->search(key);
+
+		if(result == nullptr)
+		{	// If we didn't find the key, search in parent if they exist
+			result = (mParent != nullptr) ? mParent->search(key) : nullptr;
+		}
+
+		if (result != nullptr)
+		{	// We found our value
+			*foundScope = this;
+		}
+
 		return result;
 	}
 
@@ -120,7 +127,7 @@ namespace Library
 
 	bool Scope::operator==(const Scope& rhs) const
 	{
-		return mParent == rhs.mParent && mVector == rhs.mVector;
+		return mVector == rhs.mVector;
 	}
 
 	bool Scope::operator!=(const Scope& rhs) const
@@ -163,10 +170,9 @@ namespace Library
 
 	bool Scope::Equals(const RTTI* rhs) const
 	{
-		UNREFERENCED_PARAMETER(rhs);
-		// TODO: Implement equals method
-		return false;
+		return this == rhs;
 	}
+
 #pragma endregion
 
 #pragma region Private Methods
