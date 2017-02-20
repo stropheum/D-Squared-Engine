@@ -72,14 +72,13 @@ namespace Library
 	/// @Return: A reference to the newly created Datum
 	Datum& Scope::append(const std::string& key)
 	{
-		auto found = mMap.find(key);
+		auto found = mMap.insert(std::pair<std::string, Datum>(key, Datum()));
 
-		if (found == mMap.end())
+		if (mVector.find(found) == mVector.end())
 		{
-			found = mMap.insert(std::pair<std::string, Datum>(key, Datum()));
+			mVector.pushBack(found);
 		}
 
-		mVector.pushBack(found);
 		return (*found).second;
 	}
 
@@ -253,6 +252,7 @@ namespace Library
 		auto& parent = *child->getParent();
 		std::string key = parent.findName(child);
 		parent[key] = static_cast<Scope*>(nullptr);
+		// TODO: Use a datum remove method(to be implemented) to remove this more safely
 		child->mParent = nullptr;
 	}
 

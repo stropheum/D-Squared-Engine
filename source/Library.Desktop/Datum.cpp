@@ -1,12 +1,14 @@
 #include "pch.h"
 #include "Datum.h"
+#include "ScopeState.h"
 
 namespace Library
 {
 	/// Constructor
 	Datum::Datum() :
 		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
-	{}
+	{
+	}
 
 	/// Overloaded constructor
 	/// @Param type: The type of the Datum object
@@ -14,7 +16,7 @@ namespace Library
 		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
 	{
 		setType(type);
-		reserve(mCapacity);
+		if (type != DatumType::Unknown) reserve(mCapacity);
 	}
 
 	/// Destructor
@@ -274,6 +276,7 @@ namespace Library
 	/// @Return: True if the Datum objects are equivalent
 	bool Datum::operator==(const Datum& rhs) const
 	{
+		if (mType == DatumType::Unknown && rhs.mType == DatumType::Unknown) return true;
 		return mTypeState->operator==(rhs);
 	}
 
@@ -434,6 +437,9 @@ namespace Library
 			case DatumType::Matrix:
 				mTypeState = new MatrixState(this);
 				break;
+			case DatumType::Scope:
+				mTypeState = new ScopeState(this);
+				break;
 			case DatumType::String:
 				mTypeState = new StringState(this);
 				break;
@@ -471,6 +477,7 @@ namespace Library
 	/// @Exception: Thrown if attempting to resize external storage
 	void Datum::reserve(std::uint32_t capacity)
 	{
+		if (mType == DatumType::Unknown) return;
 		if (mDataIsExternal) throw std::exception("Attempting to resize external storage");
 		mTypeState->reserve(capacity);
 	}

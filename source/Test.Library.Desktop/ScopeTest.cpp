@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "Scope.h"
+#include "Datum.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -44,38 +46,38 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestConstructor)
 		{
-			// TODO: Implement Method
-			Assert::Fail(L"Test not implemented");
+			Library::Scope s1, s2, s3;
+			Assert::IsTrue(s1.getParent() == nullptr);
+			Assert::IsTrue(s1 == s1 && s1 == s2 && s1 == s3, L"Default constructed scopes should be equivalent");
 		}
 
 		TEST_METHOD(TestCopyConstructor)
 		{
-			// TODO: Implement Method
-			Assert::Fail(L"Test not implemented");
-		}
+			Library::Scope s1, s2;
+			s1.append("I'm a new Datum =D");
+			Assert::IsFalse(s1 == s2, L"Scopes with different datums should not be equivalent");
 
-		TEST_METHOD(TestMoveConstructor)
-		{
-			// TODO: Implement Method
-			Assert::Fail(L"Test not implemented");
+			Library::Scope s3(s1);
+			Assert::IsTrue(s1 == s3, L"Scopes with same datum structure should be equivalent");
+			Assert::IsFalse(s1 == s2, L"Copied scope equivalent to empty Scope");
 		}
 
 		TEST_METHOD(TestAssignment)
 		{
-			// TODO: Implement Method
-			Assert::Fail(L"Test not implemented");
-		}
+			Library::Scope s1, s2, s3;
+			Assert::IsTrue(s1 == s2 && s1 == s3);
 
-		TEST_METHOD(TestMoveAssignment)
-		{
-			// TODO: Implement Method
-			Assert::Fail(L"Test not implemented");
+			s1.append("Datum? I hardly knew um");
+			Assert::IsFalse(s1 == s2 || s1 == s3);
 		}
 
 		TEST_METHOD(TestFind)
 		{
-			// TODO: Implement Method
-			Assert::Fail(L"Test not implemented");
+			Library::Scope s1;
+			Library::Datum myDatum(Library::DatumType::String);
+			myDatum = "Bazooka";
+			s1.append("Weapons") = myDatum;
+			Assert::IsTrue(s1["Weapons"] == "Bazooka");
 		}
 
 		TEST_METHOD(TestSearch)
