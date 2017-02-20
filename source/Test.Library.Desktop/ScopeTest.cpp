@@ -79,7 +79,15 @@ namespace TestLibraryDesktop
 			auto& temp = s1.append("Weapons");
 			temp = myDatum;
 			Library::Datum* result = s1.find("Weapons");
-			Assert::IsTrue(result == nullptr || *result == myDatum);
+			Assert::IsTrue(*result == myDatum);
+
+			Library::Scope s2;
+			Library::Datum myIntDatum(Library::DatumType::Integer);
+			myIntDatum = 1337;
+			auto& intTemp = s2.append("Coins");
+			intTemp = myIntDatum;
+			Library::Datum* intResult = s2.find("Coins");
+			Assert::IsTrue(*intResult == myIntDatum);
 		}
 
 		TEST_METHOD(TestSearch)
@@ -96,8 +104,9 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestAppendScope)
 		{
-			// TODO: Implement Method
-			Assert::Fail(L"Test not implemented");
+			Library::Scope s1;
+			auto& scope = s1.appendScope("Scope");
+			auto& datum = scope.append("HandBag");
 		}
 
 		TEST_METHOD(TestAdopt)

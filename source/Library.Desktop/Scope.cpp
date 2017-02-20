@@ -97,7 +97,7 @@ namespace Library
 		else
 		{	
 			// Append a new datum with the key and set its value to this scope (implicit type setting)
-			auto datum = append(key) = this;  
+			auto datum = append(key) = new Scope();  
 			// set result equal to the address of the first scope value in the newly created datum
 			result = &datum[0];
 		}
@@ -243,6 +243,10 @@ namespace Library
 				}
 			}
 		}
+
+		mVector.clear();
+		mMap.clear();
+		mParent = nullptr;
 	}
 
 	/// Removes the reference to the child from the parent, and eliminates the child's reference to its parent

@@ -57,7 +57,7 @@ namespace Library
 		{
 			for (std::uint32_t i = size; i < mContext->mSize; i++)
 			{
-				mContext->mData.sc[i]->~Scope();
+				mContext->mData.sc[i] = nullptr;
 			}
 		}
 
@@ -80,7 +80,7 @@ namespace Library
 	{
 		if (mContext->mSize > 0)
 		{
-			for (std::uint32_t i = 0; i < mContext->mSize; i++) mContext->mData.sc[i]->~Scope();
+			for (std::uint32_t i = 0; i < mContext->mSize; i++) mContext->mData.sc[i] = nullptr;
 			mContext->mSize = 0;
 		}
 	}
