@@ -22,25 +22,17 @@ namespace Library
 	{
 		for (std::uint32_t i = 0; i < rhs.mVector.size(); i++)
 		{	
-			auto& insertedPair = *mMap.insert(*rhs.mVector[i]);
-			mVector.pushBack(&insertedPair);
+//			auto& insertedPair = *mMap.insert(*rhs.mVector[i]);
+//			mVector.pushBack(&insertedPair);
+			auto inserted = mMap.insert(*rhs.mVector[i]);
+			mVector.pushBack(inserted);
 		}
 		return *this;
 	}
 
 	Scope::~Scope()
 	{
-		for (std::uint32_t i = 0; i < mVector.size(); i++)
-		{	// Loop through vector searching for Scope types
-			Datum& datum = mVector[i]->second;
-			if (datum.type() == DatumType::Scope)
-			{	// When a Scope type is found, delete all scopes in the datum
-				for (std::uint32_t j = 0; j < datum.size(); j++)
-				{
-					delete &datum[j];
-				}
-			}
-		}
+		clear();
 	}
 #pragma endregion
 
@@ -87,7 +79,8 @@ namespace Library
 		{
 			found = mMap.insert(std::pair<std::string, Datum>(key, Datum()));
 		}
-		mVector.pushBack(&(*found));
+//		mVector.pushBack(&(*found));
+		mVector.pushBack(found);
 		return (*found).second;
 	}
 
@@ -119,8 +112,9 @@ namespace Library
 	/// @Param key: The key associated with the child
 	void Scope::adopt(Scope& child, const std::string& key)
 	{
-		child.mParent = this;
 		appendScope(key) = child;
+		child.mParent = this;
+		// TODO: Need to remove the Scope's datum from the parent's collection (orphan)
 	}
 
 	/// Accessor method for the parent of the current Scope
@@ -195,12 +189,13 @@ namespace Library
 
 		for (std::uint32_t i = 0; i < mVector.size(); i++)
 		{
-			auto& foundDatum = mVector[i]->second;
+//			auto& foundDatum = mVector[i]->second;
+			auto foundDatum = mVector[i]->second;
 			if (foundDatum.type() == DatumType::Scope)
 			{	
 				for (std::uint32_t j = 0; j < foundDatum.size(); j++)
 				{	
-					if (&foundDatum[j] == scope)
+					if (foundDatum[j] == *scope)
 					{
 						result = mVector[i]->first;
 						break;
@@ -239,9 +234,18 @@ namespace Library
 
 	/// Clears the Vector and HashMap of all values
 	void Scope::clear()
-	{
-		mVector.~Vector();
-		mMap.~HashMap();
+	{	
+		for (std::uint32_t i = 0; i < mVector.size(); i++)
+		{	// Loop through vector searching for Scope types
+			Datum& datum = mVector[i]->second;
+			if (datum.type() == DatumType::Scope)
+			{	// When a Scope type is found, delete all scopes in the datum
+				for (std::uint32_t j = 0; j < datum.size(); j++)
+				{
+					delete &datum[j];
+				}
+			}
+		}
 	}
 
 #pragma endregion
