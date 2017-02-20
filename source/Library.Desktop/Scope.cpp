@@ -112,9 +112,9 @@ namespace Library
 	/// @Param key: The key associated with the child
 	void Scope::adopt(Scope& child, const std::string& key)
 	{
+		orphan(&child);
 		appendScope(key) = child;
 		child.mParent = this;
-		// TODO: Need to remove the Scope's datum from the parent's collection (orphan)
 	}
 
 	/// Accessor method for the parent of the current Scope
