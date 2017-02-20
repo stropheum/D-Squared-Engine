@@ -22,8 +22,6 @@ namespace Library
 	{
 		for (std::uint32_t i = 0; i < rhs.mVector.size(); i++)
 		{	
-//			auto& insertedPair = *mMap.insert(*rhs.mVector[i]);
-//			mVector.pushBack(&insertedPair);
 			auto inserted = mMap.insert(*rhs.mVector[i]);
 			mVector.pushBack(inserted);
 		}
@@ -75,11 +73,12 @@ namespace Library
 	Datum& Scope::append(const std::string& key)
 	{
 		auto found = mMap.find(key);
+
 		if (found == mMap.end())
 		{
 			found = mMap.insert(std::pair<std::string, Datum>(key, Datum()));
 		}
-//		mVector.pushBack(&(*found));
+
 		mVector.pushBack(found);
 		return (*found).second;
 	}
@@ -189,7 +188,6 @@ namespace Library
 
 		for (std::uint32_t i = 0; i < mVector.size(); i++)
 		{
-//			auto& foundDatum = mVector[i]->second;
 			auto foundDatum = mVector[i]->second;
 			if (foundDatum.type() == DatumType::Scope)
 			{	

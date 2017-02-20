@@ -107,9 +107,10 @@ namespace Library
 
 		/// The HashMap that stores the true string, Datum pairs for Scope
 		HashMap<const std::string, Datum> mMap;
+
 		/// The Vector that stores pointers to every inserted pair for easy indexing
-//		Vector<std::pair<std::string const, Datum>*> mVector;
 		Vector<HashMap<const std::string, Datum>::Iterator> mVector;
+
 		/// The parent of this Scope. May be null if this is the top-level Scope
 		Scope* mParent;
 	};
