@@ -6,42 +6,39 @@ namespace Library
 	RTTI_DEFINITIONS(Library::Scope)
 
 #pragma region Constructors/Destructor
-	Scope::Scope(std::uint32_t capacity):
-		mMap(capacity), mParent(nullptr)
+		Scope::Scope(std::uint32_t capacity) :
+		mMap(13), mVector(capacity), mParent(nullptr)
 	{}
 
 	Scope::Scope(const Scope& rhs):
-		mMap(rhs.mMap), mParent(rhs.mParent)
+		mMap(13), mVector(), mParent(nullptr)
 	{
-		// TODO: How to deep copy the HashMap and vector appropriately?
-	}
-
-	Scope::Scope(Scope&& rhs):
-		mMap(rhs.mMap), mVector(rhs.mVector), mParent(rhs.mParent)
-	{
-		rhs.mMap.clear();
-		rhs.mVector.clear();
-		rhs.mParent = nullptr;
+		operator=(rhs);
 	}
 
 	Scope& Scope::operator=(const Scope& rhs)
 	{
-		UNREFERENCED_PARAMETER(rhs);
-		// TODO: Implement assignment operator
-		return *this;
-	}
-
-	Scope& Scope::operator=(Scope&& rhs)
-	{
-		UNREFERENCED_PARAMETER(rhs);
-		// TODO: Implement move assignment operator
-		// TODO: Destroy rhs
+		for (std::uint32_t i = 0; i < rhs.mVector.size(); i++)
+		{	
+			auto& insertedPair = *mMap.insert(*rhs.mVector[i]);
+			mVector.pushBack(&insertedPair);
+		}
 		return *this;
 	}
 
 	Scope::~Scope()
 	{
-		// TODO: Implement destructor
+		for (std::uint32_t i = 0; i < mVector.size(); i++)
+		{	// Loop through vector searching for Scope types
+			Datum& datum = mVector[i]->second;
+			if (datum.type() == DatumType::Scope)
+			{	// When a Scope type is found, delete all scopes in the datum
+				for (std::uint32_t j = 0; j < datum.size(); j++)
+				{
+					delete &datum[j];
+				}
+			}
+		}
 	}
 #pragma endregion
 

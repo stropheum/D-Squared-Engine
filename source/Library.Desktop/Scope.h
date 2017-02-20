@@ -19,17 +19,10 @@ namespace Library
 		/// Copy constructor
 		/// @Param rhs: The Scope being copied
 		Scope(const Scope& rhs);
-		/// Move copy constructor
-		/// @Param rhs: The Scope being copied
-		Scope(Scope&& rhs);
 		/// Assignment operator
 		/// Performs a deep copy of the specified Scope
 		/// @Param rhs: The Scope being copied
 		Scope& operator=(const Scope& rhs);
-		/// Move assignment operator
-		/// Performs a deep copy of the specified Scope
-		/// @Param rhs: The Scope being copied
-		Scope& operator=(Scope&& rhs);
 		/// Destructor
 		~Scope();
 #pragma endregion
