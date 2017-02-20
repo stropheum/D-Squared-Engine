@@ -99,12 +99,10 @@ namespace Library
 		return *result;
 	}
 
-	void Scope::adopt(Scope& child, const std::string& key, std::uint32_t index)
+	void Scope::adopt(Scope& child, const std::string& key)
 	{
-		UNREFERENCED_PARAMETER(key);
-		UNREFERENCED_PARAMETER(index);
 		child.mParent = this;
-		// TODO: Figure out what to do with name and index
+		appendScope(key) = child;
 	}
 
 	Scope* Scope::getParent()

@@ -31,7 +31,7 @@ namespace Library
 		Datum* search(const std::string& key, Scope** scope = nullptr);
 		Datum& append(const std::string& key);
 		Scope& appendScope(const std::string& key);
-		void adopt(Scope& child, const std::string& name, std::uint32_t index);
+		void adopt(Scope& child, const std::string& name);
 		Scope* getParent();
 		Datum& operator[](const std::string& key);
 		Datum& operator[](const std::uint32_t index);
