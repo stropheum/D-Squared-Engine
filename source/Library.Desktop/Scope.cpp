@@ -248,5 +248,15 @@ namespace Library
 		}
 	}
 
+	/// Removes the reference to the child from the parent, and eliminates the child's reference to its parent
+	/// @Param child: The Scope pointer being orphaned
+	void Scope::orphan(Scope* child)
+	{
+		auto& parent = *child->getParent();
+		std::string key = parent.findName(child);
+		parent[key] = static_cast<Scope*>(nullptr);
+		child->mParent = nullptr;
+	}
+
 #pragma endregion
 }
