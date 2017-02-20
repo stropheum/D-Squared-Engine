@@ -76,8 +76,10 @@ namespace TestLibraryDesktop
 			Library::Scope s1;
 			Library::Datum myDatum(Library::DatumType::String);
 			myDatum = "Bazooka";
-			s1.append("Weapons") = myDatum;
-			Assert::IsTrue(s1["Weapons"] == "Bazooka");
+			auto& temp = s1.append("Weapons");
+			temp = myDatum;
+			Library::Datum* result = s1.find("Weapons");
+			Assert::IsTrue(result == nullptr || *result == myDatum);
 		}
 
 		TEST_METHOD(TestSearch)

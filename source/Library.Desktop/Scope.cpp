@@ -78,8 +78,8 @@ namespace Library
 		{
 			mVector.pushBack(found);
 		}
-
-		return (*found).second;
+		auto& result = (*found);
+		return result.second;
 	}
 
 	/// Appends a new scope to the current Scope hierarchy
