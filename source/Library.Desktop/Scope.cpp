@@ -97,8 +97,9 @@ namespace Library
 		else
 		{	
 			// Append a new datum with the key and set its value to this scope (implicit type setting)
-			auto datum = append(key);
+			Library::Datum& datum = append(key);
 			datum = new Scope();
+			datum = Library::DatumType::Scope;
 			// set result equal to the address of the first scope value in the newly created datum
 			result = &datum[0];
 			result->mParent = this;
@@ -113,7 +114,8 @@ namespace Library
 	void Scope::adopt(Scope& child, const std::string& key)
 	{
 		orphan(&child);
-		appendScope(key) = child;
+		auto& appended = appendScope(key);
+		appended = child;
 		child.mParent = this;
 	}
 
@@ -156,7 +158,7 @@ namespace Library
 		{	// If the sizes are not equal, the vectors are not equivalent
 			for (std::uint32_t i = 0; i < mVector.size(); i++)
 			{
-				if (*mVector[i] != *rhs.mVector[i])
+				if (mVector[i]->first != rhs.mVector[i]->first && mVector[i]->second != rhs.mVector[i]->second)
 				{	// If we encounter a bad match, the vectors are not equivalent
 					result = false;
 					break;
@@ -183,22 +185,21 @@ namespace Library
 	/// @Param scope: The Scope being used to search for the associated key
 	/// @Return: The key associated with the Scope
 	/// @Exception: Thrown if the Scope does not exist in the children
-	std::string Scope::findName(Scope* const scope) const
+	std::string Scope::findName(Scope* const scope) 
 	{
 		std::string result = "";
 
 		for (std::uint32_t i = 0; i < mVector.size(); i++)
 		{
-			auto foundDatum = mVector[i]->second;
-			if (foundDatum.type() == DatumType::Scope)
+//			Library::Datum foundDatum = mVector[i]->second;
+			auto& foundPair = mVector[i];
+			if (foundPair->second.type() == DatumType::Scope)
 			{	
-				for (std::uint32_t j = 0; j < foundDatum.size(); j++)
-				{	
-					if (foundDatum[j] == *scope)
-					{
-						result = mVector[i]->first;
-						break;
-					}
+				Scope* foundScope = nullptr;
+				scope->search(foundPair->first, &foundScope);
+				if (foundScope == scope)
+				{
+					result = foundPair->first;
 				}
 			}
 		}
@@ -255,10 +256,9 @@ namespace Library
 	/// @Param child: The Scope pointer being orphaned
 	void Scope::orphan(Scope* child)
 	{
-		auto& parent = *child->getParent();
+		Scope& parent = *child->getParent();
 		std::string key = parent.findName(child);
-		parent[key] = static_cast<Scope*>(nullptr);
-		// TODO: Use a datum remove method(to be implemented) to remove this more safely
+		parent[key].remove(child);
 		child->mParent = nullptr;
 	}
 

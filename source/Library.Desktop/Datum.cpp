@@ -704,6 +704,22 @@ namespace Library
 		set(value, mSize - 1);
 	}
 
+	void Datum::remove(Scope* const scope)
+	{
+		if (mType == DatumType::Scope)
+		{
+			for (std::uint32_t i = 0; i < mSize; i++)
+			{
+				if(mData.sc[i] == scope)
+				{
+					mData.sc[i] = nullptr;
+					memmove(mData.sc[i], mData.sc[i + 1], mSize - i - 1);
+					mSize--;
+				}
+			}
+		}
+	}
+
 	/// Parses a string value and sets the value to the specified index
 	/// @Param value: The string value being parsed
 	/// @Param index: The location being set to. Default is 0

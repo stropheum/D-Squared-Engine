@@ -85,7 +85,7 @@ namespace Library
 		/// @Param scope: The Scope being used to search for the associated key
 		/// @Return: The key associated with the Scope
 		/// @Exception: Thrown if the Scope does not exist in the children
-		std::string findName(Scope* const scope) const;
+		std::string findName(Scope* const scope);
 
 		/// String representation of the RTTI type
 		/// @Return: The word "Scope"

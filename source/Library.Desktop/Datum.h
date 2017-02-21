@@ -356,6 +356,8 @@ namespace Library
 		/// @Exception: Thrown if attempting to push back a null value
 		void pushBack(RTTI* const& value);
 
+		void remove(Scope* const scope);
+
 		
 		/// Parses a string value and sets the value to the specified index
 		/// @Param value: The string value being parsed

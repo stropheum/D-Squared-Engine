@@ -165,26 +165,70 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestAdopt)
 		{
-			// TODO: Implement Method
-			Assert::Fail(L"Test not implemented");
+			Library::Scope scope1, scope2;
+			Library::Scope& childFromScope1 = scope1.appendScope("Scope one is my daddy");
+			Assert::IsTrue(scope1.search("Scope one is my daddy") != nullptr);
+			Assert::IsTrue(scope2.search("Scope one is my daddy") == nullptr);
+			
+			scope2.adopt(childFromScope1, "Scope two is my new daddy");
+			Assert::IsTrue(scope1.find("Scope one is my daddy")->size() == 0);
+			Assert::IsTrue(scope2.find("Scope two is my new daddy") != nullptr);
 		}
 
 		TEST_METHOD(TestGetParent)
 		{
-			// TODO: Implement Method
-			Assert::Fail(L"Test not implemented");
+			Library::Scope scope1;
+			Assert::IsTrue(scope1.getParent() == nullptr);
+			
+			auto& scope2 = scope1.appendScope("scope 2");
+			Assert::IsTrue(scope2.getParent() == &scope1);
+			Assert::IsTrue(scope1.getParent() == nullptr);
+
+			auto& scope3 = scope2.appendScope("scope 3");
+			Assert::IsTrue(scope3.getParent() == &scope2);
+			Assert::IsTrue(scope2.getParent() == &scope1);
+			Assert::IsTrue(scope1.getParent() == nullptr);
+
+			auto& scope2Brother = scope1.appendScope("Scope 2 brother");
+			Assert::IsTrue(scope3.getParent() == &scope2);
+			Assert::IsTrue(scope2.getParent() == &scope1);
+			Assert::IsTrue(scope1.getParent() == nullptr);
+			Assert::IsTrue(scope2Brother.getParent() == &scope1);
 		}
 
 		TEST_METHOD(TestIndexOperator)
 		{
-			// TODO: Implement Method
-			Assert::Fail(L"Test not implemented");
+			Library::Scope scope1;
+			scope1["Eggs"] = Library::DatumType::Integer;
+			Assert::IsTrue(scope1.find("Eggs") != nullptr);
+			scope1["Eggs"] = 5;
+			Assert::IsTrue(scope1["Eggs"] == 5);
+
+			scope1["Sword"] = Library::DatumType::String;
+			Assert::IsTrue(scope1.find("Sword") != nullptr);
+			scope1["Sword"] = "Katana";
+			Assert::IsTrue(scope1["Sword"] == "Katana");
 		}
 
 		TEST_METHOD(TestEqualityOperator)
 		{
-			// TODO: Implement Method
-			Assert::Fail(L"Test not implemented");
+			Library::Scope scope1, scope2;
+			Assert::IsTrue(scope1 == scope2);
+			
+			scope1.appendScope("New child scope");
+			Assert::IsFalse(scope1 == scope2);
+
+			scope2.appendScope("New child scope");
+			Assert::IsTrue(scope1 == scope2);
+
+			scope1.append("Eggs");
+			Assert::IsFalse(scope1 == scope2);
+
+			scope2.append("Eggs");
+			Assert::IsTrue(scope1 == scope2);
+
+			scope1["Eggs"] = Library::DatumType::Integer;
+			Assert::IsFalse(scope1 == scope2);
 		}
 
 		TEST_METHOD(TestFindName)
