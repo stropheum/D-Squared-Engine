@@ -59,7 +59,7 @@ namespace Library
 			result = (mParent != nullptr) ? mParent->search(key) : nullptr;
 		}
 
-		if (result != nullptr)
+		if (result != nullptr && foundScope != nullptr)
 		{	// We found our value
 			*foundScope = this;
 		}
@@ -97,7 +97,8 @@ namespace Library
 		else
 		{	
 			// Append a new datum with the key and set its value to this scope (implicit type setting)
-			auto datum = append(key) = new Scope();  
+			auto datum = append(key);
+			datum = new Scope();
 			// set result equal to the address of the first scope value in the newly created datum
 			result = &datum[0];
 		}

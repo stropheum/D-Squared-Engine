@@ -456,7 +456,7 @@ namespace Library
 	{
 		if (mType != DatumType::Scope) throw std::exception("Calling et on invalid type");
 		if (mData.sc == nullptr) throw std::exception("Attempting to dereference nullptr");
-		if (index > mSize) throw std::exception("Accessing beyond array bounds");
+		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
 		return mData.sc[index];
 	}
 

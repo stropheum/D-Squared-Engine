@@ -109,7 +109,7 @@ namespace TestLibraryDesktop
 			auto& datum = scope.append("HandBag");
 			datum = Library::DatumType::Integer;
 			datum = 5;
-			Assert::IsTrue(s1.search("HandBag") != nullptr);
+			Assert::IsTrue(scope.search("HandBag") != nullptr);
 		}
 
 		TEST_METHOD(TestAdopt)
