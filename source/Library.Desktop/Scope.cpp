@@ -191,7 +191,6 @@ namespace Library
 
 		for (std::uint32_t i = 0; i < mVector.size(); i++)
 		{
-//			Library::Datum foundDatum = mVector[i]->second;
 			auto& foundPair = mVector[i];
 			if (foundPair->second.type() == DatumType::Scope)
 			{	
@@ -225,7 +224,7 @@ namespace Library
 	bool Scope::Equals(const RTTI* rhs) const
 	{
 		Scope* scope = rhs->As<Scope>();
-		return (scope == nullptr) ? operator==(*scope) : false;
+		return (scope != nullptr) ? operator==(*scope) : false;
 	}
 
 #pragma endregion

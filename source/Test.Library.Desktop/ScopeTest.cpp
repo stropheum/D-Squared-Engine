@@ -228,13 +228,30 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(scope1 == scope2);
 
 			scope1["Eggs"] = Library::DatumType::Integer;
-			Assert::IsFalse(scope1 == scope2);
+			scope2["Eggs"] = Library::DatumType::Integer;
+			Assert::IsTrue(scope1 == scope2);
 		}
 
 		TEST_METHOD(TestFindName)
 		{
-			// TODO: Implement Method
-			Assert::Fail(L"Test not implemented");
+			Library::Scope scope1;
+			Assert::ExpectException<std::exception>([&] { scope1.findName(&scope1); });
+
+			auto& scope2 = scope1.appendScope("Bananas");
+			Assert::IsTrue(scope1.findName(&scope2) == "Bananas");
+
+			auto& scope3 = scope2.appendScope("Apples");
+			Assert::IsTrue(scope2.findName(&scope3) == "Apples");
+			Assert::IsTrue(scope1.findName(&scope3) != "Apples");
+		}
+
+		TEST_METHOD(TestRTTI)
+		{
+			Library::Scope scope1, scope2;
+			Assert::IsTrue(scope1.Is(scope2.TypeIdClass()));
+			Assert::IsTrue(scope1.ToString() == "Scope");
+			auto ptr = scope1.QueryInterface(scope1.TypeIdClass());
+			Assert::IsTrue(scope1.Equals(ptr));
 		}
 	};
 }
