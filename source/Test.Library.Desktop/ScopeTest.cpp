@@ -92,8 +92,50 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestSearch)
 		{
-			// TODO: Implement Method
-			Assert::Fail(L"Test not implemented");
+			Library::Scope scope1;
+			auto& scope2 = scope1.appendScope("Child One");
+			auto& scope3 = scope2.appendScope("Child Two");
+			Assert::IsTrue(scope3.search("Child One") != nullptr);
+			Assert::IsTrue(scope2.search("Child One") != nullptr);
+			Assert::IsTrue(scope1.search("Child One") != nullptr);
+
+			auto& datum1 = scope1.append("Eggs");
+			datum1 = Library::DatumType::Integer;
+			datum1 = 10;
+
+			auto& datum2 = scope2.append("Allies");
+			datum2 = Library::DatumType::String;
+			datum2 = "Iron Man";
+
+			auto& datum3 = scope3.append("Velocity");
+			datum3 = Library::DatumType::Float;
+			datum3 = 12.5f;
+
+			Assert::IsTrue(scope1.search("NotInMyDangScope") == nullptr);
+			Assert::IsTrue(scope2.search("NotInMyDangScope") == nullptr);
+			Assert::IsTrue(scope3.search("NotInMyDangScope") == nullptr);
+
+			Assert::IsTrue(scope1.search("Eggs") != nullptr);
+			Assert::IsTrue(scope2.search("Eggs") != nullptr);
+			Assert::IsTrue(scope3.search("Eggs") != nullptr);
+			Assert::IsTrue(scope1.search("Eggs")[0] == 10);
+			Assert::IsTrue(scope2.search("Eggs")[0] == 10);
+			Assert::IsTrue(scope3.search("Eggs")[0] == 10);
+
+			Assert::IsTrue(scope1.search("Allies") == nullptr);
+			Assert::IsTrue(scope2.search("Allies") != nullptr);
+			Assert::IsTrue(scope3.search("Allies") != nullptr);
+			Assert::IsTrue(scope2.search("Allies")[0] == "Iron Man");
+			Assert::IsTrue(scope3.search("Allies")[0] == "Iron Man");
+
+			Assert::IsTrue(scope1.search("Velocity") == nullptr);
+			Assert::IsTrue(scope2.search("Velocity") == nullptr);
+			Assert::IsTrue(scope3.search("Velocity") != nullptr);
+			Assert::IsTrue(scope3.search("Velocity")[0] == 12.5f);
+
+			Assert::IsTrue(scope1["Eggs"] == 10);
+			Assert::IsTrue(scope2["Allies"] == "Iron Man");
+			Assert::IsTrue(scope3["Velocity"] == 12.5f);
 		}
 
 		TEST_METHOD(TestAppend)
