@@ -101,6 +101,7 @@ namespace Library
 			datum = new Scope();
 			// set result equal to the address of the first scope value in the newly created datum
 			result = &datum[0];
+			result->mParent = this;
 		}
 
 		return *result;

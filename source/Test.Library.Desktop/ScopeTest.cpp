@@ -110,6 +110,7 @@ namespace TestLibraryDesktop
 			datum = Library::DatumType::Integer;
 			datum = 5;
 			Assert::IsTrue(scope.search("HandBag") != nullptr);
+			Assert::IsTrue(scope.search("Scope") != nullptr);
 		}
 
 		TEST_METHOD(TestAdopt)
