@@ -15,7 +15,7 @@ namespace Library
 		/// @Param rhs: The Datum object being compared against
 		/// @Return: True if type, size, and each element of the Datum objects are equivalent. False otherwise
 		/// @Exception: THrown if called from this context
-		virtual bool operator==(const Datum& rhs)=0;
+		virtual bool operator==(const Datum& rhs);
 		/// Assignment operator
 		/// @Param rhs: The value being assigned to the first element of the array
 		/// @Exception: Thrown if called from this context
@@ -52,14 +52,14 @@ namespace Library
 		/// @Param: The new potential number of elements in the array
 		virtual void reserve(std::uint32_t capacity)=0;
 		/// Clears all values in the array without changing capacity
-		virtual void clear()=0;
+		virtual void clear();
 		/// Parses a string value and assigns the specified index of the array to its value
 		/// @Param value: The string value being parsed
 		/// @Param index: The index of the array being assigned to
-		virtual void setFromString(const std::string& value, const std::uint32_t& index)=0;
+		virtual void setFromString(const std::string& value, const std::uint32_t& index);
 		/// Sets the external storage of the Datum object being copied
 		/// @Param rhs: The datum object which stores the reference to the external storage
-		virtual void setStorage(const Datum& rhs)=0;
+		virtual void setStorage(const Datum& rhs);
 		/// Sets the external storage of the specified integer array
 		/// @Param data: The external storage array
 		/// @Param size: The size of the array
@@ -98,7 +98,7 @@ namespace Library
 		/// Generates a string representation of the data at the specified index of the array
 		/// @Param index: The index of the array being translated. Defaulted to 0
 		/// @Exception: Thrown if called from this context
-		virtual std::string toString(std::uint32_t index = 0)=0;
+		virtual std::string toString(std::uint32_t index = 0);
 
 	protected:
 		/// TypeState constructor. Used to generate valid states from children

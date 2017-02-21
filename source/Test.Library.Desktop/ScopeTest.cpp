@@ -161,6 +161,10 @@ namespace TestLibraryDesktop
 			datum = 5;
 			Assert::IsTrue(scope.search("HandBag") != nullptr);
 			Assert::IsTrue(scope.search("Scope") != nullptr);
+
+			s1.appendScope("New Scope");
+			Assert::IsTrue(scope.search("HandBag") != nullptr);
+			Assert::IsTrue(scope.search("Scope") != nullptr);
 		}
 
 		TEST_METHOD(TestAdopt)
@@ -208,28 +212,38 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(scope1.find("Sword") != nullptr);
 			scope1["Sword"] = "Katana";
 			Assert::IsTrue(scope1["Sword"] == "Katana");
+
+			Assert::IsTrue(scope1[0] == scope1["Eggs"]);
+			Assert::IsTrue(scope1[1] == scope1["Sword"]);
+			Assert::ExpectException<std::exception>([&] { scope1[10]; });
 		}
 
 		TEST_METHOD(TestEqualityOperator)
 		{
 			Library::Scope scope1, scope2;
 			Assert::IsTrue(scope1 == scope2);
+			Assert::IsFalse(scope1 != scope2);
 			
 			scope1.appendScope("New child scope");
 			Assert::IsFalse(scope1 == scope2);
+			Assert::IsTrue(scope1 != scope2);
 
 			scope2.appendScope("New child scope");
 			Assert::IsTrue(scope1 == scope2);
+			Assert::IsFalse(scope1 != scope2);
 
 			scope1.append("Eggs");
 			Assert::IsFalse(scope1 == scope2);
+			Assert::IsTrue(scope1 != scope2);
 
 			scope2.append("Eggs");
 			Assert::IsTrue(scope1 == scope2);
+			Assert::IsFalse(scope1 != scope2);
 
 			scope1["Eggs"] = Library::DatumType::Integer;
 			scope2["Eggs"] = Library::DatumType::Integer;
 			Assert::IsTrue(scope1 == scope2);
+			Assert::IsFalse(scope1 != scope2);
 		}
 
 		TEST_METHOD(TestFindName)
@@ -243,6 +257,12 @@ namespace TestLibraryDesktop
 			auto& scope3 = scope2.appendScope("Apples");
 			Assert::IsTrue(scope2.findName(&scope3) == "Apples");
 			Assert::IsTrue(scope1.findName(&scope3) != "Apples");
+		}
+
+		TEST_METHOD(TestToString)
+		{
+			Library::Scope scope;
+			Assert::IsTrue(scope.ToString() == "Scope");
 		}
 
 		TEST_METHOD(TestRTTI)
