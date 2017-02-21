@@ -718,6 +718,7 @@ namespace Library
 	/// @Exception invalidFormat: Thrown if unable to properly parse string
 	std::string Datum::toString(std::uint32_t index)
 	{	
+		if (mType == DatumType::Unknown) return "Unknown Type";
 		return mTypeState->toString(index);
 	}
 }

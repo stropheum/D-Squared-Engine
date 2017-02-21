@@ -140,8 +140,16 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestAppend)
 		{
-			// TODO: Implement Method
-			Assert::Fail(L"Test not implemented");
+			Library::Scope scope1;
+			auto& datum1 = scope1.append("New Datum");
+			Assert::IsTrue(datum1 != nullptr);
+			Assert::IsTrue(datum1 == Library::DatumType::Unknown);
+			Assert::IsTrue(datum1.toString() == "Unknown Type");
+
+			auto& datum2 = scope1.append("Another Datum");
+			Assert::IsTrue(datum1 != nullptr);
+			Assert::IsTrue(datum2 != nullptr);
+			Assert::IsTrue(datum2 == Library::DatumType::Unknown);
 		}
 
 		TEST_METHOD(TestAppendScope)
