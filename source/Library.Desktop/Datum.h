@@ -11,6 +11,7 @@
 
 namespace Library
 {
+	class Scope;
 	/// Types of possible Datum
 	enum class DatumType
 	{
@@ -19,7 +20,7 @@ namespace Library
 		Float,   // Single-precision floating-point value
 		Vector,  // 4-vector
 		Matrix,  // 4x4 matrix
-		Table,   // Pointer to a scope
+		Scope,   // Pointer to a scope
 		String,  // STL string
 		Pointer  // Pointer to any RTTI instance
 	};
@@ -31,8 +32,9 @@ namespace Library
 		friend class FloatState;	// Handles float-specific functionality
 		friend class VectorState;	// Handles vector-specific functionality
 		friend class MatrixState;	// Handles matrix-specific functionality
+		friend class ScopeState;	// Handles scope-pointer specific functionality
 		friend class StringState;	// Handles string-specific functionality
-		friend class PointerState;	// Handles RTTI pointer-specific functionality
+		friend class PointerState;	// Handles RTTI-pointer specific functionality
 		
 	public:
 		union DatumValues
@@ -42,6 +44,7 @@ namespace Library
 			float* f;			// Float array pointer
 			glm::vec4* v;		// Vector array pointer
 			glm::mat4* m;		// Matrix array pointer
+			Scope** sc;			// Array pointer for Scope pointers
 			std::string* s;		// String array pointer
 			Library::RTTI** r;	// Array pointer for RTTI pointers
 		};
@@ -64,6 +67,11 @@ namespace Library
 		/// Move copy constructor
 		/// @Param rhs: Datum object being copied
 		Datum(Datum&& rhs);
+
+		/// Index operator for accessing nested scopes
+		/// @Param index: The scope at the given index
+		/// @Return: The scope at the specified index
+		Scope& operator[](std::uint32_t index);
 		
 		/// Datum assignment operator
 		/// @Param rhs: Datum object being assigned to
@@ -104,6 +112,12 @@ namespace Library
 		/// @Return: The newly assigned Datum object
 		/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
 		Datum& operator=(const glm::mat4& rhs);
+
+		/// Assignment operator for Scope
+		/// @Param rhs: Scope being assigned to
+		/// @Return: The newly assigned Datum object
+		/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1  
+		Datum& operator=(Scope* const rhs);
 
 		/// Assignment operator for std::string
 		/// @Param rhs: String being assigned to
@@ -291,6 +305,14 @@ namespace Library
 		/// @Exception: Thrown if calling set on invalid type
 		/// @Exception: Thrown if attempting to set beyond existing size
 		void set(const glm::mat4& value, const std::uint32_t index = 0);
+
+		/// Sets a specified index of the array to the specified value
+		/// @Param value: The scope pointer being assigned
+		/// @Param index: The index of the value being assigned to
+		/// @Exception: Thrown if calling set on invalid type
+		/// @Exception: Thrown if attempting to set beyond existing size
+		void set(Scope* const& value, const std::uint32_t index = 0);
+
 		/// Sets a specified index of the array to the specified value
 		/// @Param value: The string being assigned
 		/// @Param index: The index of the value being assigned to
@@ -323,12 +345,18 @@ namespace Library
 
 		/// Pushes an std::int32_t to the back of the array
 		/// @Param value: The value being pushed onto the array
+		void pushBack(Scope* const& value);
+
+		/// Pushes an std::int32_t to the back of the array
+		/// @Param value: The value being pushed onto the array
 		void pushBack(const std::string& value);
 
 		/// Pushes an std::int32_t to the back of the array
 		/// @Param value: The value being pushed onto the array
 		/// @Exception: Thrown if attempting to push back a null value
 		void pushBack(RTTI* const& value);
+
+		void remove(Scope* const scope);
 
 		
 		/// Parses a string value and sets the value to the specified index
@@ -417,6 +445,21 @@ namespace Library
 		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
 		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
 		return mData.m[index];
+	}
+
+	/// Template specialization for getting a Scope value
+	/// @Param index: The index of the Scope being retrieved
+	/// @Return: The value of the array at the specified index
+	/// @Exception invalidType: Thrown when calling get on invalid type
+	/// @Exception nullRef: Thrown when attempting call get on uninitialized data
+	/// @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
+	template<>
+	inline Scope*& Datum::get(const std::uint32_t index)
+	{
+		if (mType != DatumType::Scope) throw std::exception("Calling et on invalid type");
+		if (mData.sc == nullptr) throw std::exception("Attempting to dereference nullptr");
+		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
+		return mData.sc[index];
 	}
 
 	/// Template specialization for getting a string value

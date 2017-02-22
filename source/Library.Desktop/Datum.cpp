@@ -1,12 +1,14 @@
 #include "pch.h"
 #include "Datum.h"
+#include "ScopeState.h"
 
 namespace Library
 {
 	/// Constructor
 	Datum::Datum() :
 		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
-	{}
+	{
+	}
 
 	/// Overloaded constructor
 	/// @Param type: The type of the Datum object
@@ -14,7 +16,7 @@ namespace Library
 		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
 	{
 		setType(type);
-		reserve(mCapacity);
+		if (type != DatumType::Unknown) reserve(mCapacity);
 	}
 
 	/// Destructor
@@ -42,6 +44,14 @@ namespace Library
 		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
 	{
 		operator=(std::move(rhs)); // Perform a deep copy of all the data
+	}
+
+	/// Index operator for accessing nested scopes
+	/// @Param index: The scope at the given index
+	/// @Return: The scope at the specified index
+	Scope& Datum::operator[](std::uint32_t index)
+	{
+		return *get<Scope*>(index);
 	}
 
 	/// Datum assignment operator
@@ -228,6 +238,17 @@ namespace Library
 		return mTypeState->operator=(rhs);
 	}
 
+	/// Assignment operator for Scope
+	/// @Param rhs: Scope being assigned to
+	/// @Return: The newly assigned Datum object
+	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
+	Datum& Datum::operator=(Scope* const rhs)
+	{
+		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
+		setType(DatumType::Scope);
+		return mTypeState->operator=(rhs);
+	}
+
 	/// Assignment operator for std::string
 	/// @Param rhs: String being assigned to
 	/// @Return: The newly assigned Datum object
@@ -255,6 +276,7 @@ namespace Library
 	/// @Return: True if the Datum objects are equivalent
 	bool Datum::operator==(const Datum& rhs) const
 	{
+		if (mType == DatumType::Unknown && rhs.mType == DatumType::Unknown) return true;
 		return mTypeState->operator==(rhs);
 	}
 
@@ -415,6 +437,9 @@ namespace Library
 			case DatumType::Matrix:
 				mTypeState = new MatrixState(this);
 				break;
+			case DatumType::Scope:
+				mTypeState = new ScopeState(this);
+				break;
 			case DatumType::String:
 				mTypeState = new StringState(this);
 				break;
@@ -452,6 +477,7 @@ namespace Library
 	/// @Exception: Thrown if attempting to resize external storage
 	void Datum::reserve(std::uint32_t capacity)
 	{
+		if (mType == DatumType::Unknown) return;
 		if (mDataIsExternal) throw std::exception("Attempting to resize external storage");
 		mTypeState->reserve(capacity);
 	}
@@ -582,6 +608,19 @@ namespace Library
 	}
 
 	/// Sets a specified index of the array to the specified value
+	/// @Param value: The scope pointer being assigned
+	/// @Param index: The index of the value being assigned to
+	/// @Exception: Thrown if calling set on invalid type
+	/// @Exception: Thrown if attempting to set beyond existing size
+	void Datum::set(Scope* const& value, const std::uint32_t index)
+	{
+		if (mType != DatumType::Scope) throw std::exception("Calling set on invalid type");
+		if (index > mSize) throw std::exception("Attempting to set beyond current size");
+		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
+		new(mData.m + index) Scope*(value);
+	}
+
+	/// Sets a specified index of the array to the specified value
 	/// @Param value: The string being assigned
 	/// @Param index: The index of the value being assigned to
 	/// @Exception: Thrown if calling set on invalid type
@@ -641,6 +680,14 @@ namespace Library
 
 	/// Pushes an std::int32_t to the back of the array
 	/// @Param value: The value being pushed onto the array
+	void Datum::pushBack(Scope* const& value)
+	{
+		setSize(mSize + 1);
+		set(value, mSize - 1);
+	}
+
+	/// Pushes an std::int32_t to the back of the array
+	/// @Param value: The value being pushed onto the array
 	void Datum::pushBack(const std::string& value)
 	{
 		setSize(mSize + 1);
@@ -657,6 +704,22 @@ namespace Library
 		set(value, mSize - 1);
 	}
 
+	void Datum::remove(Scope* const scope)
+	{
+		if (mType == DatumType::Scope)
+		{
+			for (std::uint32_t i = 0; i < mSize; i++)
+			{
+				if(mData.sc[i] == scope)
+				{
+					mData.sc[i] = nullptr;
+					memmove(mData.sc[i], mData.sc[i + 1], mSize - i - 1);
+					mSize--;
+				}
+			}
+		}
+	}
+
 	/// Parses a string value and sets the value to the specified index
 	/// @Param value: The string value being parsed
 	/// @Param index: The location being set to. Default is 0
@@ -671,6 +734,7 @@ namespace Library
 	/// @Exception invalidFormat: Thrown if unable to properly parse string
 	std::string Datum::toString(std::uint32_t index)
 	{	
+		if (mType == DatumType::Unknown) return "Unknown Type";
 		return mTypeState->toString(index);
 	}
 }

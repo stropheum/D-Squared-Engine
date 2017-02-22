@@ -49,6 +49,23 @@ namespace Library
 	};
 
 	template<>
+	class DefaultHash<const std::string>
+	{
+	public:
+		std::uint32_t operator()(const std::string& key) const
+		{
+			std::uint32_t hash = 0;
+
+			for (std::uint32_t i = 0; i < key.length(); i++)
+			{
+				hash += key.at(i);
+			}
+
+			return hash;
+		}
+	};
+
+	template<>
 	class DefaultHash<char*>
 	{
 	public:
