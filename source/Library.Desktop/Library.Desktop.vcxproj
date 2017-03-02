@@ -160,6 +160,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Attributed.h" />
     <ClInclude Include="Datum.h" />
     <ClInclude Include="DefaultHash.h" />
     <ClInclude Include="FloatState.h" />
@@ -178,6 +179,7 @@
     <ClInclude Include="VectorState.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Attributed.cpp" />
     <ClCompile Include="Datum.cpp" />
     <ClCompile Include="FloatState.cpp" />
     <ClCompile Include="IntegerState.cpp" />

@@ -53,6 +53,9 @@
     <Filter Include="Datum\TypeState\Scope">
       <UniqueIdentifier>{854a684e-3f85-458b-b71a-1651f4616008}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Attributed">
+      <UniqueIdentifier>{ab220c37-ca5a-4ede-bd5d-0a2f424a2b09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -106,6 +109,9 @@
     <ClInclude Include="ScopeState.h">
       <Filter>Datum\TypeState\Scope</Filter>
     </ClInclude>
+    <ClInclude Include="Attributed.h">
+      <Filter>Attributed</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Datum.cpp">
@@ -140,6 +146,9 @@
     </ClCompile>
     <ClCompile Include="ScopeState.cpp">
       <Filter>Datum\TypeState\Scope</Filter>
+    </ClCompile>
+    <ClCompile Include="Attributed.cpp">
+      <Filter>Attributed</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
