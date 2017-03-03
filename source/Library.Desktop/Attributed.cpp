@@ -43,7 +43,7 @@ namespace Library
 
 	void Attributed::populate()
 	{
-		// TODO: Implement populate method
+		mScope["this"] = DatumType::Pointer;
 	}
 
 	bool Attributed::isPrescribedAttribute(std::string name) const

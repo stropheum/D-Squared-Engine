@@ -1,4 +1,6 @@
 #pragma once
+#include "Scope.h"
+
 namespace Library
 {
 	class Attributed
@@ -53,6 +55,12 @@ namespace Library
 
 		// TODO: Figure out how to get a signature from a list of signatures
 		Signature& getSignature();
+
+#pragma endregion
+
+#pragma region Private Variables
+
+		Scope mScope;
 
 #pragma endregion
 
