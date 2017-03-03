@@ -35,6 +35,11 @@ namespace Library
 		/// @Return: The Datum associated with the key if it exists. Null pointer otherwise
 		Datum* find(const std::string& key);
 
+		/// Finds the Datum with the associated key in the Scope, if it exists
+		/// @Param key: The key being used to search for the associated Datum
+		/// @Return: The Datum associated with the key if it exists. Null pointer otherwise
+		Datum* const find(const std::string& key) const;
+
 		/// Searches the Scope hierarchy for the specified key, if it exists
 		/// @Param key: The key of the string, Datum pair being searched for
 		/// @Param foundScope: The pointer to the Scope pointer that is found. Optionally included and set to the found scope if it exists
