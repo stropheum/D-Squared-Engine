@@ -3,9 +3,12 @@
 
 namespace Library
 {
-	class Attributed
+	class Attributed : public Scope
 	{
+		RTTI_DECLARATIONS(Attributed, Scope)
+
 	public:
+
 #pragma region Constructors, Copy/Move semantics
 
 		Attributed();
@@ -60,7 +63,8 @@ namespace Library
 
 #pragma region Private Variables
 
-		Scope mScope;
+		Vector<std::string> mPrescribedAttributes;
+		Signature mSignature;
 
 #pragma endregion
 
