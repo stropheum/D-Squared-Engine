@@ -63,7 +63,7 @@ namespace Library
 
 #pragma region Private Variables
 
-		Vector<std::string> mPrescribedAttributes;
+		Vector<Signature> mPrescribedAttributes;
 		Signature mSignature;
 
 #pragma endregion

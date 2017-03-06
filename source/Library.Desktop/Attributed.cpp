@@ -9,7 +9,7 @@ namespace Library
 
 	Attributed::Attributed()
 	{
-		// TODO: Implement constructor
+		(*this)["this"] = this;
 	}
 
 	Attributed::~Attributed()
@@ -19,27 +19,30 @@ namespace Library
 
 	Attributed::Attributed(const  Attributed& rhs)
 	{
-		// TODO: Implement copy constructor
-		UNREFERENCED_PARAMETER(rhs);
+		operator=(rhs);
 	}
 
 	Attributed& Attributed::operator=(const Attributed& rhs)
 	{
-		// TODO: Implement assignment operator
-		UNREFERENCED_PARAMETER(rhs);
+		if (this != &rhs)
+		{
+			(*this)["this"] = this;
+		}
 		return *this;
 	}
 
 	Attributed::Attributed(Attributed&& rhs)
 	{
-		// TODO: Implement move copy constructor
 		UNREFERENCED_PARAMETER(rhs);
+		(*this)["this"] = this;
 	}
 
 	Attributed& Attributed::operator=(Attributed&& rhs)
 	{
-		// TODO: Implement move assignment operator
-		UNREFERENCED_PARAMETER(rhs);
+		if (this != &rhs)
+		{
+			// TODO: Implement move assignment operator		
+		}
 		return *this;
 	}
 
@@ -50,12 +53,51 @@ namespace Library
 	void Attributed::populate()
 	{
 		append("this") = DatumType::Pointer;
-		// TODO: Append all prescribed attributes to the scope somehow
+		for (std::uint32_t i = 0; i < mPrescribedAttributes.size(); i++)
+		{
+			Signature attribute = mPrescribedAttributes[i];
+			auto& appendedScope = append(attribute.Name);
+			appendedScope = attribute.Type;
+
+			switch (attribute.Type)
+			{
+				case DatumType::Unknown: 
+					throw std::exception("Setting storage of unknown type");
+					break;
+				case DatumType::Integer:
+					appendedScope.setStorage(attribute.Storage->i, attribute.Size);
+					break;
+				case DatumType::Float: 
+					appendedScope.setStorage(attribute.Storage->f, attribute.Size);
+					break;
+				case DatumType::Vector: 
+					appendedScope.setStorage(attribute.Storage->v, attribute.Size);
+					break;
+				case DatumType::Matrix: 
+					appendedScope.setStorage(attribute.Storage->m, attribute.Size);
+					break;
+				case DatumType::Scope: 
+					// Scopes don't have storage so do nothing
+					break;
+				case DatumType::String: 
+					appendedScope.setStorage(attribute.Storage->s, attribute.Size);
+					break;
+				case DatumType::Pointer: 
+					break;
+			}
+		}
 	}
 
 	bool Attributed::isPrescribedAttribute(std::string name) const
 	{
-		return mPrescribedAttributes.find(name) != mPrescribedAttributes.end();
+		for (auto iter = mPrescribedAttributes.begin(); iter != mPrescribedAttributes.end(); ++iter)
+		{
+			if ((*iter).Name == name)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	bool Attributed::isAuxiliaryAttribute(std::string name) const
