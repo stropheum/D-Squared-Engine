@@ -33,15 +33,14 @@ namespace Library
 
 	Attributed::Attributed(Attributed&& rhs)
 	{
-		UNREFERENCED_PARAMETER(rhs);
-		(*this)["this"] = this;
+		operator=(rhs);
 	}
 
 	Attributed& Attributed::operator=(Attributed&& rhs)
 	{
 		if (this != &rhs)
 		{
-			// TODO: Implement move assignment operator		
+			(*this)["this"] = this;
 		}
 		return *this;
 	}
@@ -52,7 +51,6 @@ namespace Library
 
 	void Attributed::populate()
 	{
-		append("this") = DatumType::Pointer;
 		for (std::uint32_t i = 0; i < mPrescribedAttributes.size(); i++)
 		{
 			Signature attribute = mPrescribedAttributes[i];
@@ -61,29 +59,56 @@ namespace Library
 
 			switch (attribute.Type)
 			{
-				case DatumType::Unknown: 
-					throw std::exception("Setting storage of unknown type");
-					break;
 				case DatumType::Integer:
 					appendedScope.setStorage(attribute.Storage->i, attribute.Size);
+					for (std::uint32_t j = 0; j < attribute.Size; j++)
+					{
+						appendedScope.set(attribute.InitialValue.i[i]);
+					}
 					break;
+
 				case DatumType::Float: 
 					appendedScope.setStorage(attribute.Storage->f, attribute.Size);
+					for (std::uint32_t j = 0; j < attribute.Size; j++)
+					{
+						appendedScope.set(attribute.InitialValue.f[i]);
+					}
 					break;
+
 				case DatumType::Vector: 
 					appendedScope.setStorage(attribute.Storage->v, attribute.Size);
+					for (std::uint32_t j = 0; j < attribute.Size; j++)
+					{
+						appendedScope.set(attribute.InitialValue.v[i]);
+					}
 					break;
+
 				case DatumType::Matrix: 
 					appendedScope.setStorage(attribute.Storage->m, attribute.Size);
+					for (std::uint32_t j = 0; j < attribute.Size; j++)
+					{
+						appendedScope.set(attribute.InitialValue.m[i]);
+					}
 					break;
+
 				case DatumType::Scope: 
 					// Scopes don't have storage so do nothing
 					break;
+
 				case DatumType::String: 
 					appendedScope.setStorage(attribute.Storage->s, attribute.Size);
+					for (std::uint32_t j = 0; j < attribute.Size; j++)
+					{
+						appendedScope.set(attribute.InitialValue.s[i]);
+					}
 					break;
+
 				case DatumType::Pointer: 
+					// Should we do nothing for RTTI pointers?
 					break;
+
+				default:
+					throw std::exception("Setting storage of invalid/unknown type");
 			}
 		}
 	}
