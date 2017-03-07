@@ -12,7 +12,7 @@ namespace Library
 #pragma region Constructors, Copy/Move semantics
 
 		Attributed();
-		virtual ~Attributed();
+		virtual ~Attributed(){};
 
 		Attributed(const Attributed& rhs);
 		Attributed& operator= (const Attributed& rhs);
@@ -66,7 +66,6 @@ namespace Library
 
 		/// This vector is used for populating auxiliary attributes in children of Attributed
 		Vector<Signature> mAuxiliaryAttributes;
-
 #pragma endregion
 
 	};

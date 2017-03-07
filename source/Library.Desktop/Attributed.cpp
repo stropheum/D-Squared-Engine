@@ -9,12 +9,7 @@ namespace Library
 
 	Attributed::Attributed()
 	{
-		appendScope("this");
-	}
-
-	Attributed::~Attributed()
-	{
-		
+		(*this)["this"] = static_cast<RTTI*>(this);
 	}
 
 	Attributed::Attributed(const  Attributed& rhs)
@@ -26,7 +21,17 @@ namespace Library
 	{
 		if (this != &rhs)
 		{
-			appendScope("this");
+			(*this)["this"] = static_cast<RTTI*>(this);
+			
+			if (rhs.mPrescribedAttributes.size() > 1)
+			{	// We only do a copy if there is more than the "this" pointer stored
+				for (std::uint32_t i = 1; i < rhs.mPrescribedAttributes.size(); i++)
+				{
+					mPrescribedAttributes.pushBack(rhs.mPrescribedAttributes[i]);
+				}
+			}
+
+			mAuxiliaryAttributes = rhs.mAuxiliaryAttributes;
 		}
 		return *this;
 	}
@@ -40,7 +45,18 @@ namespace Library
 	{
 		if (this != &rhs)
 		{
-			appendScope("this");
+			(*this)["this"] = static_cast<RTTI*>(this);
+			
+			if (rhs.mPrescribedAttributes.size() > 1)
+			{	// We only do a copy if there is more than the "this" pointer stored
+				for (std::uint32_t i = 1; i < rhs.mPrescribedAttributes.size(); i++)
+				{
+					mPrescribedAttributes.pushBack(rhs.mPrescribedAttributes[i]);
+				}
+			}
+
+			rhs.mPrescribedAttributes.clear();
+			rhs.mAuxiliaryAttributes.clear();
 		}
 		return *this;
 	}
@@ -51,8 +67,6 @@ namespace Library
 
 	void Attributed::populate()
 	{
-		//(*this)["this"] = this; // Apply the "this" attribute first
-
 		for (std::uint32_t i = 0; i < mPrescribedAttributes.size(); i++)
 		{
 			Signature attribute = mPrescribedAttributes[i];
@@ -185,6 +199,5 @@ namespace Library
 		// we could never hit that exception and would affect code coverage
 		return *result; 
 	}
-
 #pragma endregion
 }

@@ -47,9 +47,44 @@ namespace TestLibraryDesktop
 		{
 			Library::AttributedFoo myFoo;
 			myFoo.populate();
-//			Assert::IsFalse(myFoo.isAttribute("Nothing"));
-//			myFoo.appendAuxiliaryAttribute("Nothing");
-//			Assert::IsTrue(myFoo.isAttribute("Nothing"));
+			Assert::IsFalse(myFoo.isAttribute("Nothing"));
+			myFoo.appendAuxiliaryAttribute("Nothing");
+			Assert::IsTrue(myFoo.isAttribute("Nothing"));
+		}
+
+		TEST_METHOD(TestConstructors)
+		{
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestMoveSemantics)
+		{
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestPopulate)
+		{
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestIsPrescribedAttribute)
+		{
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestIsAuxiliaryAttribute)
+		{
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestIsAttribute)
+		{
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(TestAppendAuxiliaryAttribute)
+		{
+			Assert::Fail(L"Test not implemented");
 		}
 	};
 }
