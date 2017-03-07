@@ -34,8 +34,6 @@ namespace Library
 
 		Datum& appendAuxiliaryAttribute(std::string name);
 
-		std::uint32_t auxiliaryBegin() const;
-
 #pragma endregion
 
 	protected:
@@ -56,15 +54,18 @@ namespace Library
 	private:
 #pragma region Private Methods
 
-		// TODO: Figure out how to get a signature from a list of signatures
-		Signature& getSignature();
+		Signature& getSignature(const std::string& name);
 
 #pragma endregion
 
-#pragma region Private Variables
+	protected:
+#pragma region Protected Variables
 
+		/// This vector is used for populating prescribed attributes in children of attributed
 		Vector<Signature> mPrescribedAttributes;
-		Signature mSignature;
+
+		/// This vector is used for populating auxiliary attributes in children of Attributed
+		Vector<Signature> mAuxiliaryAttributes;
 
 #pragma endregion
 

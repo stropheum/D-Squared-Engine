@@ -9,12 +9,12 @@ namespace Library
 
 	Attributed::Attributed()
 	{
-		(*this)["this"] = this;
+		appendScope("this");
 	}
 
 	Attributed::~Attributed()
 	{
-		// TODO: Implement destructor
+		
 	}
 
 	Attributed::Attributed(const  Attributed& rhs)
@@ -26,7 +26,7 @@ namespace Library
 	{
 		if (this != &rhs)
 		{
-			(*this)["this"] = this;
+			appendScope("this");
 		}
 		return *this;
 	}
@@ -40,7 +40,7 @@ namespace Library
 	{
 		if (this != &rhs)
 		{
-			(*this)["this"] = this;
+			appendScope("this");
 		}
 		return *this;
 	}
@@ -51,6 +51,8 @@ namespace Library
 
 	void Attributed::populate()
 	{
+		//(*this)["this"] = this; // Apply the "this" attribute first
+
 		for (std::uint32_t i = 0; i < mPrescribedAttributes.size(); i++)
 		{
 			Signature attribute = mPrescribedAttributes[i];
@@ -67,7 +69,7 @@ namespace Library
 					}
 					break;
 
-				case DatumType::Float: 
+				case DatumType::Float:
 					appendedScope.setStorage(attribute.Storage->f, attribute.Size);
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
 					{
@@ -75,7 +77,7 @@ namespace Library
 					}
 					break;
 
-				case DatumType::Vector: 
+				case DatumType::Vector:
 					appendedScope.setStorage(attribute.Storage->v, attribute.Size);
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
 					{
@@ -83,7 +85,7 @@ namespace Library
 					}
 					break;
 
-				case DatumType::Matrix: 
+				case DatumType::Matrix:
 					appendedScope.setStorage(attribute.Storage->m, attribute.Size);
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
 					{
@@ -91,11 +93,11 @@ namespace Library
 					}
 					break;
 
-				case DatumType::Scope: 
+				case DatumType::Scope:
 					// Scopes don't have storage so do nothing
 					break;
 
-				case DatumType::String: 
+				case DatumType::String:
 					appendedScope.setStorage(attribute.Storage->s, attribute.Size);
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
 					{
@@ -103,8 +105,12 @@ namespace Library
 					}
 					break;
 
-				case DatumType::Pointer: 
-					// Should we do nothing for RTTI pointers?
+				case DatumType::Pointer:
+					appendedScope.setStorage(attribute.Storage->r, attribute.Size);
+					for (std::uint32_t j = 0; j < attribute.Size; j++)
+					{
+						appendedScope.set(attribute.InitialValue.r[i]);
+					}
 					break;
 
 				default:
@@ -140,20 +146,44 @@ namespace Library
 		return append(name);
 	}
 
-	std::uint32_t Attributed::auxiliaryBegin() const
-	{
-		// TODO: Implement auxiliaryBegin method
-		return 0;
-	}
-
 #pragma endregion
 
 #pragma region Private Methods
 
 	/// Returns The signature of this attributed object
-	Attributed::Signature& Attributed::getSignature()
-	{	// Note: Do not call this in the constructor. Will NOT get polymorphic invocation!!!
-		return mSignature;
+	Attributed::Signature& Attributed::getSignature(const std::string& name)
+	{	
+		Signature* result = nullptr;
+
+		if (!isAttribute(name))
+		{
+			throw std::exception("Attempting to get signature of nonexistent attribute");
+		}
+
+		if (isPrescribedAttribute(name))
+		{
+			for (std::uint32_t i = 0; i < mPrescribedAttributes.size(); i++)
+			{
+				if (mPrescribedAttributes[i].Name == name)
+				{
+					result = &mPrescribedAttributes[i];
+				}
+			}
+		}
+		else
+		{	// We know it's an auxiliary attribute, so we're going to search through those now
+			for (std::uint32_t i = 0; i < mAuxiliaryAttributes.size(); i++)
+			{
+				if (mAuxiliaryAttributes[i].Name == name)
+				{
+					result = &mAuxiliaryAttributes[i];
+				}
+			}
+		}
+
+		// Could potentially return a nullptr reference, but if isAttribute works properly, 
+		// we could never hit that exception and would affect code coverage
+		return *result; 
 	}
 
 #pragma endregion

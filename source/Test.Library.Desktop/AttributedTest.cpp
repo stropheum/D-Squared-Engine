@@ -45,10 +45,11 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestMethod1)
 		{
-			AttributedFoo myFoo;
-			Assert::IsFalse(myFoo.isAttribute("Nothing"));
-			myFoo.appendAuxiliaryAttribute("Nothing");
-			Assert::IsTrue(myFoo.isAttribute("Nothing"));
+			Library::AttributedFoo myFoo;
+			myFoo.populate();
+//			Assert::IsFalse(myFoo.isAttribute("Nothing"));
+//			myFoo.appendAuxiliaryAttribute("Nothing");
+//			Assert::IsTrue(myFoo.isAttribute("Nothing"));
 		}
 	};
 }

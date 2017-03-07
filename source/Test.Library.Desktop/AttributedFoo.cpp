@@ -1,12 +1,16 @@
 #include "pch.h"
 #include "AttributedFoo.h"
+#include <Datum.h>
 
 
-AttributedFoo::AttributedFoo()
+namespace Library
 {
+	AttributedFoo::AttributedFoo() :
+		Attributed()
+	{}
+
+
+	AttributedFoo::~AttributedFoo()
+	{}
 }
 
-
-AttributedFoo::~AttributedFoo()
-{
-}
