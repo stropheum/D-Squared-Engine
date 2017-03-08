@@ -27,7 +27,7 @@ namespace Library
 		std::int32_t* iArray;
 		float* fArray;
 		glm::vec4* vArray;
-		glm::mat4 mArray;
+		glm::mat4* mArray;
 		std::string* sArray;
 	};
 }
