@@ -80,6 +80,13 @@ namespace Library
 				if (storage != nullptr)
 				{
 					Storage.i = storage;
+					if (InitialValue.i != nullptr)
+					{
+						for (std::uint32_t i = 0; i < Size; i++)
+						{
+							Storage.i[i] = InitialValue.i[i];
+						}
+					}
 				}
 			}
 
@@ -98,6 +105,13 @@ namespace Library
 				if (storage != nullptr)
 				{
 					Storage.f = storage;
+					if (InitialValue.f != nullptr)
+					{
+						for (std::uint32_t i = 0; i < Size; i++)
+						{
+							Storage.f[i] = *InitialValue.f;
+						}
+					}
 				}
 			}
 
@@ -116,6 +130,13 @@ namespace Library
 				if (storage != nullptr)
 				{
 					Storage.v = storage;
+					if (InitialValue.v != nullptr)
+					{
+						for (std::uint32_t i = 0; i < Size; i++)
+						{
+							Storage.v[i] = InitialValue.v[i];
+						}
+					}
 				}
 			}
 
@@ -134,6 +155,13 @@ namespace Library
 				if (storage != nullptr)
 				{
 					Storage.m = storage;
+					if (InitialValue.m != nullptr)
+					{
+						for (std::uint32_t i = 0; i < Size; i++)
+						{
+							Storage.m[i] = InitialValue.m[i];
+						}
+					}
 				}
 			}
 
@@ -152,6 +180,13 @@ namespace Library
 				if (storage != nullptr)
 				{
 					Storage.s = storage;
+					if (InitialValue.s != nullptr)
+					{
+						for (std::uint32_t i = 0; i < Size; i++)
+						{
+							Storage.s[i] = InitialValue.s[i];
+						}
+					}
 				}
 			}
 
@@ -170,6 +205,13 @@ namespace Library
 				if (storage != nullptr)
 				{
 					Storage.sc = storage;
+					if (InitialValue.sc != nullptr)
+					{
+						for (std::uint32_t i = 0; i < Size; i++)
+						{
+							Storage.sc[i] = InitialValue.sc[i];
+						}
+					}
 				}
 			}
 
@@ -188,6 +230,13 @@ namespace Library
 				if (storage != nullptr)
 				{
 					Storage.r = storage;
+					if (InitialValue.r != nullptr)
+					{
+						for (std::uint32_t i = 0; i < Size; i++)
+						{
+							Storage.r[i] = InitialValue.r[i];
+						}
+					}
 				}
 			}
 

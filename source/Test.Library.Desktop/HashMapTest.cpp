@@ -48,7 +48,7 @@ namespace TestLibraryDesktop
 		/// Sets up leak detection logic
 		static void initializeLeakDetection()
 		{
-#if _Debug
+#if _DEBUG
 			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
 			_CrtMemCheckpoint(&sStartMemState);
 #endif //_Debug
@@ -57,7 +57,7 @@ namespace TestLibraryDesktop
 		/// Detects if memory state has been corrupted
 		static void finalizeLeakDetection()
 		{
-#if _Debug
+#if _DEBUG
 			_CrtMemState endMemState, diffMemState;
 			_CrtMemCheckpoint(&endMemState);
 			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
@@ -1101,5 +1101,9 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(foo == fooMap.begin()->first, L"Dereferencing iterator does not yield accurate key");
 			Assert::AreEqual(1, fooMap.begin()->second, L"Dereferencing iterator does not yield accurate value");
 		}
+
+		static _CrtMemState sStartMemState;
 	};
+
+	_CrtMemState HashMapTest::sStartMemState;
 }

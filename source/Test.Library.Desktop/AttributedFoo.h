@@ -25,12 +25,12 @@ namespace Library
 
 	public:
 		// Individual members
-		std::int32_t i;
-		float f;
-		glm::vec4 v;
-		glm::mat4 m;
-		std::string s;
-		Scope* sc;
+		std::int32_t mInt;
+		float mFloat;
+		glm::vec4 mVector;
+		glm::mat4 mMatrix;
+		std::string mString;
+		Scope* mScope;
 		
 		// Array members
 		std::int32_t* iArray;
