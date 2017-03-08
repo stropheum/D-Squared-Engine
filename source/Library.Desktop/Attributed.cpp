@@ -49,10 +49,6 @@ namespace Library
 			
 			if (rhs.mPrescribedAttributes.size() > 1)
 			{	// We only do a copy if there is more than the "this" pointer stored
-//				for (std::uint32_t i = 1; i < rhs.mPrescribedAttributes.size(); i++)
-//				{
-//					mPrescribedAttributes.pushBack(rhs.mPrescribedAttributes[i]);
-//				}
 				for (std::uint32_t i = 1; i < rhs.mPrescribedAttributes.size(); i++)
 				{
 					adopt(rhs[i][0], mPrescribedAttributes[i].Name);

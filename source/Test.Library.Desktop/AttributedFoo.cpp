@@ -15,6 +15,52 @@ namespace Library
 	AttributedFoo::~AttributedFoo()
 	{}
 
+	AttributedFoo::AttributedFoo(const AttributedFoo& rhs) :
+		Attributed(rhs)
+	{
+		operator=(rhs);
+	}
+
+	AttributedFoo& AttributedFoo::operator=(const AttributedFoo& rhs)
+	{
+		(*this)["External Integer"].setStorage(&i, 1u);
+		(*this)["External Float"].setStorage(&f, 1u);
+		(*this)["External Vector"].setStorage(&v, 1u);
+		(*this)["External Matrix"].setStorage(&m, 1u);
+		(*this)["External String"].setStorage(&s, 1u);
+
+		i = rhs.i;
+		f = rhs.f;
+		v = rhs.v;
+		m = rhs.m;
+		s = rhs.s;
+
+		return (*this);
+	}
+
+	AttributedFoo::AttributedFoo(const AttributedFoo&& rhs):
+		Attributed::Attributed(std::move(rhs))
+	{
+		operator=(std::move(rhs));
+	}
+
+	AttributedFoo& AttributedFoo::operator=(const AttributedFoo&& rhs)
+	{
+		(*this)["External Integer"].setStorage(&i, 1u);
+		(*this)["External Float"].setStorage(&f, 1u);
+		(*this)["External Vector"].setStorage(&v, 1u);
+		(*this)["External Matrix"].setStorage(&m, 1u);
+		(*this)["External String"].setStorage(&s, 1u);
+
+		i = rhs.i;
+		f = rhs.f;
+		v = rhs.v;
+		m = rhs.m;
+		s = rhs.s;
+
+		return (*this);
+	}
+
 	void AttributedFoo::init()
 	{
 		mPrescribedAttributes.pushBack(

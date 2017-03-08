@@ -13,6 +13,12 @@ namespace Library
 	public:
 		AttributedFoo();
 		~AttributedFoo();
+
+		AttributedFoo(const AttributedFoo& rhs);
+		AttributedFoo& operator=(const AttributedFoo& rhs);
+
+		AttributedFoo(const AttributedFoo&& rhs);
+		AttributedFoo& operator=(const AttributedFoo&& rhs);
 	
 	private:
 		void init();

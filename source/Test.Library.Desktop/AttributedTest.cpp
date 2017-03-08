@@ -61,12 +61,26 @@ namespace TestLibraryDesktop
 			myFoo_OG["External String"] = "10";
 
 			Library::AttributedFoo myFoo_CPY(myFoo_OG);
+			auto& myFooRef = myFoo_CPY["External Integer"];
+			UNREFERENCED_PARAMETER(myFooRef);
+
+			Assert::IsTrue(myFoo_OG["External Integer"] == myFoo_OG.i);
+			Assert::IsTrue(myFoo_OG["External Float"] == myFoo_OG.f);
+			Assert::IsTrue(myFoo_OG["External Vector"] == myFoo_OG.v);
+			Assert::IsTrue(myFoo_OG["External Matrix"] == myFoo_OG.m);
+			Assert::IsTrue(myFoo_OG["External String"] == myFoo_OG.s);
 
 			Assert::IsTrue(myFoo_CPY["External Integer"] == myFoo_OG.i);
 			Assert::IsTrue(myFoo_CPY["External Float"] == myFoo_OG.f);
 			Assert::IsTrue(myFoo_CPY["External Vector"] == myFoo_OG.v);
 			Assert::IsTrue(myFoo_CPY["External Matrix"] == myFoo_OG.m);
 			Assert::IsTrue(myFoo_CPY["External String"] == myFoo_OG.s);
+
+			Assert::IsTrue(myFoo_CPY["External Integer"] == myFoo_OG["External Integer"]);
+			Assert::IsTrue(myFoo_CPY["External Float"] == myFoo_OG["External Float"]);
+			Assert::IsTrue(myFoo_CPY["External Vector"] == myFoo_OG["External Vector"]);
+			Assert::IsTrue(myFoo_CPY["External Matrix"] == myFoo_OG["External Matrix"]);
+			Assert::IsTrue(myFoo_CPY["External String"] == myFoo_OG["External String"]);
 		}
 
 		TEST_METHOD(TestMoveSemantics)
@@ -85,18 +99,12 @@ namespace TestLibraryDesktop
 			myFoo_OG["External Matrix"] = myMat;
 			myFoo_OG["External String"] = myStr;
 
-			Library::AttributedFoo myFoo_CPY(myFoo_OG);
-			Assert::IsFalse(myFoo_CPY["External Integer"] == myInt);
-			Assert::IsFalse(myFoo_CPY["External Float"] == myFloat);
-			Assert::IsFalse(myFoo_CPY["External Vector"] == myVec);
-			Assert::IsFalse(myFoo_CPY["External Matrix"] == myMat);
-			Assert::IsFalse(myFoo_CPY["External String"] == myStr);
-
-			Assert::IsFalse(myFoo_CPY["External Integer"] == myInt);
-			Assert::IsFalse(myFoo_CPY["External Float"] == myFloat);
-			Assert::IsFalse(myFoo_CPY["External Vector"] == myVec);
-			Assert::IsFalse(myFoo_CPY["External Matrix"] == myMat);
-			Assert::IsFalse(myFoo_CPY["External String"] == myStr);
+			Library::AttributedFoo myFoo_CPY(std::move(myFoo_OG));
+			Assert::IsTrue(myFoo_CPY["External Integer"] == myInt);
+			Assert::IsTrue(myFoo_CPY["External Float"] == myFloat);
+			Assert::IsTrue(myFoo_CPY["External Vector"] == myVec);
+			Assert::IsTrue(myFoo_CPY["External Matrix"] == myMat);
+			Assert::IsTrue(myFoo_CPY["External String"] == myStr);
 		}
 
 		TEST_METHOD(TestPopulate)
@@ -116,11 +124,6 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestIsPrescribedAttribute)
 		{
 			Library::AttributedFoo myFoo;
-			Assert::IsFalse(myFoo.isPrescribedAttribute("External Integer"));
-			Assert::IsFalse(myFoo.isPrescribedAttribute("External Float"));
-			Assert::IsFalse(myFoo.isPrescribedAttribute("External Vector"));
-			Assert::IsFalse(myFoo.isPrescribedAttribute("External Matrix"));
-			Assert::IsFalse(myFoo.isPrescribedAttribute("External String"));
 
 			Assert::IsTrue(myFoo.isPrescribedAttribute("External Integer"));
 			Assert::IsTrue(myFoo.isPrescribedAttribute("External Float"));
