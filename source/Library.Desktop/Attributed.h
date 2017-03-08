@@ -72,12 +72,11 @@ namespace Library
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, const std::int32_t initialValue,
+			Signature(const std::string name, const DatumType type, std::int32_t* const initialValue,
 				const std::uint32_t size, std::int32_t* storage):
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t)));
-				*InitialValue.i = initialValue;
+				InitialValue.i = initialValue;
 				if (storage != nullptr)
 				{
 					Storage.i = storage;
@@ -91,12 +90,11 @@ namespace Library
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, const float initialValue,
+			Signature(const std::string name, const DatumType type, float* const initialValue,
 				const std::uint32_t size, float* const storage) :
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.f = static_cast<float*>(malloc(sizeof(float)));
-				*InitialValue.f = initialValue;
+				InitialValue.f = initialValue;
 				if (storage != nullptr)
 				{
 					Storage.f = storage;
@@ -110,12 +108,11 @@ namespace Library
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, const glm::vec4 initialValue,
+			Signature(const std::string name, const DatumType type, glm::vec4* const initialValue,
 				const std::uint32_t size, glm::vec4* const storage) :
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4)));
-				*InitialValue.v= initialValue;
+				InitialValue.v = initialValue;
 				if (storage != nullptr)
 				{
 					Storage.v = storage;
@@ -129,12 +126,11 @@ namespace Library
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, glm::mat4 initialValue,
+			Signature(const std::string name, const DatumType type, glm::mat4* const initialValue,
 				const std::uint32_t size, glm::mat4* const storage) :
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.m = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4)));
-				*InitialValue.m = initialValue;
+				InitialValue.m = initialValue;
 				if (storage != nullptr)
 				{
 					Storage.m = storage;
@@ -148,16 +144,32 @@ namespace Library
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, const std::string initialValue,
+			Signature(const std::string name, const DatumType type, std::string* const initialValue,
 				const std::uint32_t size, std::string* const storage) :
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.s = new std::string[size];
-
-				*InitialValue.s = initialValue;
+				InitialValue.s = initialValue;
 				if (storage != nullptr)
 				{
 					Storage.s = storage;
+				}
+			}
+
+			/// Constructor For the scope signature type
+			/// @Param name: The name of the signature
+			/// @Param type: The type of data being passed in
+			/// @Param initialValue: The initial value of the signature's data
+			/// @Param size: The number of elements in the data
+			/// @Param storage: The pointer to the external storage
+			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
+			Signature(const std::string name, const DatumType type, Scope** const initialValue,
+				const std::uint32_t size, Scope** const storage):
+				Name(name), Type(type), Size(size)
+			{
+				InitialValue.sc = initialValue;
+				if (storage != nullptr)
+				{
+					Storage.sc = storage;
 				}
 			}
 
@@ -168,12 +180,11 @@ namespace Library
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, RTTI* const initialValue,
+			Signature(const std::string name, const DatumType type, Library::RTTI** initialValue,
 				const std::uint32_t size, RTTI** const storage) :
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.r = static_cast<RTTI**>(malloc(sizeof(RTTI*)));
-				*InitialValue.r = initialValue;
+				InitialValue.r = initialValue;
 				if (storage != nullptr)
 				{
 					Storage.r = storage;

@@ -30,6 +30,7 @@ namespace Library
 		glm::vec4 v;
 		glm::mat4 m;
 		std::string s;
+		Scope* sc;
 		
 		// Array members
 		std::int32_t* iArray;

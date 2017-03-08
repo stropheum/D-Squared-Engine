@@ -118,7 +118,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(myFoo["External Matrix"] == myFoo.m);
 			Assert::IsTrue(myFoo["External String"] == myFoo.s);
 
-			Assert::ExpectException<std::exception>([&] { myFoo[6]; });
+			Assert::ExpectException<std::exception>([&] { myFoo[7]; });
 		}
 
 		TEST_METHOD(TestIsPrescribedAttribute)

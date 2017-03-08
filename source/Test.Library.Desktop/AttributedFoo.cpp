@@ -7,7 +7,7 @@ namespace Library
 {
 	Datum::DatumValues* storage;
 	AttributedFoo::AttributedFoo():
-		Attributed(), i(0), f(0.0f), v(0), m(0), s("")
+		Attributed(), i(0), f(0.0f), v(0), m(0), s(""), sc()
 	{
 		init();
 	}
@@ -34,6 +34,7 @@ namespace Library
 		v = rhs.v;
 		m = rhs.m;
 		s = rhs.s;
+		sc = rhs.sc;
 
 		return (*this);
 	}
@@ -57,27 +58,42 @@ namespace Library
 		v = rhs.v;
 		m = rhs.m;
 		s = rhs.s;
+		sc = rhs.sc;
 
 		return (*this);
 	}
 
 	void AttributedFoo::init()
 	{
-		mPrescribedAttributes.pushBack(
-			Signature("External Integer", DatumType::Integer, i, 1u, &i));
+		iArray = new std::int32_t[10];
+		fArray = new float[10];
+		vArray = new glm::vec4[10];
+		mArray = new glm::mat4[10];
+		sArray = new std::string[10];
 
 		mPrescribedAttributes.pushBack(
-			Signature("External Float", DatumType::Float, f, 1u, &f));
+			Signature("External Integer", DatumType::Integer, &i, 1u, &i)
+		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External Vector", DatumType::Vector, v, 1u, &v));
+			Signature("External Float", DatumType::Float, &f, 1u, &f)
+		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External Matrix", DatumType::Matrix, m, 1u, &m));
+			Signature("External Vector", DatumType::Vector, &v, 1u, &v)
+		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External String", DatumType::String, s, 1u, &s));
+			Signature("External Matrix", DatumType::Matrix, &m, 1u, &m)
+		);
 
+		mPrescribedAttributes.pushBack(
+			Signature("External String", DatumType::String, &s, 1u, &s)
+		);
+
+		mPrescribedAttributes.pushBack(
+			Signature("Internal Scope", DatumType::Scope, &sc, 1u, &sc)
+		);
 
 		populate();
 	}
