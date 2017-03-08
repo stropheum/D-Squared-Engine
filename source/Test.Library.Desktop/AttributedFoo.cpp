@@ -19,7 +19,7 @@ namespace Library
 			Signature("Internal Integer", DatumType::Integer, i, 1u, nullptr));
 
 		mPrescribedAttributes.pushBack(
-			Signature("Internal float", DatumType::Float, f, 1u, nullptr));
+			Signature("Internal Float", DatumType::Float, f, 1u, nullptr));
 
 		mPrescribedAttributes.pushBack(
 			Signature("Internal Vector", DatumType::Vector, v, 1u, nullptr));

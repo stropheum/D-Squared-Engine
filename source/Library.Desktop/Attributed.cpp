@@ -9,7 +9,7 @@ namespace Library
 
 	Attributed::Attributed()
 	{
-		(*this)["this"] = static_cast<RTTI*>(this);
+ 		(*this)["this"] = static_cast<RTTI*>(this);
 	}
 
 	Attributed::Attributed(const  Attributed& rhs)
@@ -83,7 +83,7 @@ namespace Library
 					
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
 					{
-						appendedScope.set(attribute.InitialValue.i[i]);
+						appendedScope.set(attribute.InitialValue.i[j]);
 					}
 					break;
 
@@ -95,7 +95,7 @@ namespace Library
 
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
 					{
-						appendedScope.set(attribute.InitialValue.f[i]);
+						appendedScope.set(attribute.InitialValue.f[j]);
 					}
 					break;
 
@@ -107,7 +107,7 @@ namespace Library
 
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
 					{
-						appendedScope.set(attribute.InitialValue.v[i]);
+						appendedScope.set(attribute.InitialValue.v[j]);
 					}
 					break;
 
@@ -119,7 +119,7 @@ namespace Library
 
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
 					{
-						appendedScope.set(attribute.InitialValue.m[i]);
+						appendedScope.set(attribute.InitialValue.m[j]);
 					}
 					break;
 
@@ -135,7 +135,7 @@ namespace Library
 
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
 					{
-						appendedScope.set(attribute.InitialValue.s[i]);
+						appendedScope.set(attribute.InitialValue.s[j]);
 					}
 					break;
 
@@ -147,7 +147,7 @@ namespace Library
 
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
 					{
-						appendedScope.set(attribute.InitialValue.r[i]);
+						appendedScope.set(attribute.InitialValue.r[j]);
 					}
 					break;
 

@@ -15,15 +15,15 @@ namespace Library
 		~AttributedFoo();
 
 		void populate() override;
-	private:
-			// Individual members
-			std::int32_t i;
-			float f;
-			glm::vec4 v;
-			glm::mat4 m;
-			std::string s;
+
+		// Individual members
+		std::int32_t i;
+		float f;
+		glm::vec4 v;
+		glm::mat4 m;
+		std::string s;
 		
-			// Array members
+		// Array members
 //			std::int32_t* iArray;
 //			float* fArray;
 //			glm::vec4* vArray;

@@ -54,7 +54,7 @@ namespace Library
 				Name(name), Type(type), Size(size), Storage(nullptr)
 			{
 				InitialValue.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * Size));
-				InitialValue.i[0] = initialValue;
+				*InitialValue.i = initialValue;
 				if (storage != nullptr)
 				{
 					Storage->i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * Size));
@@ -107,7 +107,7 @@ namespace Library
 			{
 				InitialValue.s = new std::string[size];
 
-				InitialValue.s[0] = initialValue;
+				*InitialValue.s = initialValue;
 				if (storage != nullptr)
 				{
 					Storage->s = static_cast<std::string*>(malloc(sizeof(std::string) * Size));
