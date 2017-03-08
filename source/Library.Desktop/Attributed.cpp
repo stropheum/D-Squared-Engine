@@ -76,7 +76,11 @@ namespace Library
 			switch (attribute.Type)
 			{
 				case DatumType::Integer:
-					appendedScope.setStorage(attribute.Storage->i, attribute.Size);
+					if (attribute.Storage != nullptr)
+					{
+						appendedScope.setStorage(attribute.Storage->i, attribute.Size);
+					}
+					
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
 					{
 						appendedScope.set(attribute.InitialValue.i[i]);
@@ -84,7 +88,11 @@ namespace Library
 					break;
 
 				case DatumType::Float:
-					appendedScope.setStorage(attribute.Storage->f, attribute.Size);
+					if (attribute.Storage != nullptr)
+					{
+						appendedScope.setStorage(attribute.Storage->f, attribute.Size);
+					}
+
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
 					{
 						appendedScope.set(attribute.InitialValue.f[i]);
@@ -92,7 +100,11 @@ namespace Library
 					break;
 
 				case DatumType::Vector:
-					appendedScope.setStorage(attribute.Storage->v, attribute.Size);
+					if (attribute.Storage != nullptr)
+					{
+						appendedScope.setStorage(attribute.Storage->v, attribute.Size);
+					}
+
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
 					{
 						appendedScope.set(attribute.InitialValue.v[i]);
@@ -100,7 +112,11 @@ namespace Library
 					break;
 
 				case DatumType::Matrix:
-					appendedScope.setStorage(attribute.Storage->m, attribute.Size);
+					if (attribute.Storage != nullptr)
+					{
+						appendedScope.setStorage(attribute.Storage->m, attribute.Size);
+					}
+
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
 					{
 						appendedScope.set(attribute.InitialValue.m[i]);
@@ -112,7 +128,11 @@ namespace Library
 					break;
 
 				case DatumType::String:
-					appendedScope.setStorage(attribute.Storage->s, attribute.Size);
+					if (attribute.Storage != nullptr)
+					{
+						appendedScope.setStorage(attribute.Storage->s, attribute.Size);
+					}
+
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
 					{
 						appendedScope.set(attribute.InitialValue.s[i]);
@@ -120,7 +140,11 @@ namespace Library
 					break;
 
 				case DatumType::Pointer:
-					appendedScope.setStorage(attribute.Storage->r, attribute.Size);
+					if (attribute.Storage != nullptr)
+					{
+						appendedScope.setStorage(attribute.Storage->r, attribute.Size);
+					}
+
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
 					{
 						appendedScope.set(attribute.InitialValue.r[i]);
