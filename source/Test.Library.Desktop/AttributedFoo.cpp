@@ -8,12 +8,14 @@ namespace Library
 	Datum::DatumValues* storage;
 	AttributedFoo::AttributedFoo():
 		Attributed(), i(0), f(0.0f), v(0), m(0), s("")
-	{}
+	{
+		init();
+	}
 
 	AttributedFoo::~AttributedFoo()
 	{}
 
-	void AttributedFoo::populate()
+	void AttributedFoo::init()
 	{
 		mPrescribedAttributes.pushBack(
 			Signature("External Integer", DatumType::Integer, i, 1u, &i));
@@ -31,7 +33,7 @@ namespace Library
 			Signature("External String", DatumType::String, s, 1u, &s));
 
 
-		Attributed::populate();
+		populate();
 	}
 }
 

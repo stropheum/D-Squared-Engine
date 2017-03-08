@@ -13,9 +13,11 @@ namespace Library
 	public:
 		AttributedFoo();
 		~AttributedFoo();
+	
+	private:
+		void init();
 
-		void populate() override;
-
+	public:
 		// Individual members
 		std::int32_t i;
 		float f;

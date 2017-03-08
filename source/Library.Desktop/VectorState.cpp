@@ -113,7 +113,10 @@ namespace Library
 	void VectorState::setStorage(glm::vec4* data, std::uint32_t size)
 	{
 		if (mContext->mType != DatumType::Vector) throw std::exception("Attempting to reassign Datum Type");
-		if (mContext->mCapacity > 0) throw std::exception("Attempting to set storage on a non-empty Datum object");
+//		if (mContext->mCapacity > 0) throw std::exception("Attempting to set storage on a non-empty Datum object");
+
+		if (mContext->mCapacity > 0) clear();
+
 		mContext->mDataIsExternal = true;
 		mContext->mType = DatumType::Vector;
 		mContext->mData.v = data;

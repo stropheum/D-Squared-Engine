@@ -112,7 +112,9 @@ namespace Library
 	void PointerState::setStorage(Library::RTTI** data, std::uint32_t size)
 	{
 		if (mContext->mType != DatumType::Pointer) throw std::exception("Attempting to reassign Datum Type");
-		if (mContext->mCapacity > 0) throw std::exception("Set storage called on non-empty Datum");
+//		if (mContext->mCapacity > 0) throw std::exception("Set storage called on non-empty Datum");
+
+		if (mContext->mCapacity > 0) clear();
 
 		mContext->mDataIsExternal = true;
 		mContext->mData.r = data;

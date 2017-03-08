@@ -120,8 +120,10 @@ namespace Library
 	void StringState::setStorage(std::string* data, std::uint32_t size)
 	{
 		if (mContext->mType != DatumType::String) throw std::exception("Attempting to reassign Datum Type");
-		if (mContext->mCapacity > 0) throw std::exception("Set storage called on non-empty Datum");
+//		if (mContext->mCapacity > 0) throw std::exception("Set storage called on non-empty Datum");
 		
+		if (mContext->mCapacity > 0) clear();
+
 		mContext->mDataIsExternal = true;
 		mContext->mData.s = data;
 		mContext->mCapacity = mContext->mSize = size;

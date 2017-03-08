@@ -113,8 +113,10 @@ namespace Library
 	void FloatState::setStorage(float* data, std::uint32_t size)
 	{
 		if (mContext->mType != DatumType::Float) throw std::exception("Attempting to reassign Datum Type");
-		if (mContext->mCapacity > 0) throw std::exception("Set storage called on non-empty Datum");
+//		if (mContext->mCapacity > 0) throw std::exception("Set storage called on non-empty Datum");
 		
+		if (mContext->mCapacity > 0) clear();
+
 		mContext->mDataIsExternal = true;
 		mContext->mData.f = data;
 		mContext->mCapacity = mContext->mSize = size;

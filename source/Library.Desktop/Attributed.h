@@ -35,7 +35,7 @@ namespace Library
 #pragma region Public Methods
 
 		/// Populates the attributes
-		virtual void populate();
+		void populate();
 
 		/// Determines if the specified string is a prescribed attribute
 		/// @Param name: The attribute being checked
@@ -76,7 +76,7 @@ namespace Library
 				const std::uint32_t size, std::int32_t* storage):
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * Size));
+				InitialValue.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t)));
 				*InitialValue.i = initialValue;
 				if (storage != nullptr)
 				{
@@ -95,7 +95,7 @@ namespace Library
 				const std::uint32_t size, float* const storage) :
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.f = static_cast<float*>(malloc(sizeof(float) * Size));
+				InitialValue.f = static_cast<float*>(malloc(sizeof(float)));
 				*InitialValue.f = initialValue;
 				if (storage != nullptr)
 				{
@@ -114,7 +114,7 @@ namespace Library
 				const std::uint32_t size, glm::vec4* const storage) :
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4) * Size));
+				InitialValue.v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4)));
 				*InitialValue.v= initialValue;
 				if (storage != nullptr)
 				{
@@ -133,7 +133,7 @@ namespace Library
 				const std::uint32_t size, glm::mat4* const storage) :
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.m = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4) * Size));
+				InitialValue.m = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4)));
 				*InitialValue.m = initialValue;
 				if (storage != nullptr)
 				{
@@ -172,7 +172,7 @@ namespace Library
 				const std::uint32_t size, RTTI** const storage) :
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.r = static_cast<RTTI**>(malloc(sizeof(RTTI*) * Size));
+				InitialValue.r = static_cast<RTTI**>(malloc(sizeof(RTTI*)));
 				*InitialValue.r = initialValue;
 				if (storage != nullptr)
 				{

@@ -127,8 +127,10 @@ namespace Library
 	void MatrixState::setStorage(glm::mat4* data, std::uint32_t size)
 	{
 		if (mContext->mType != DatumType::Matrix) throw std::exception("Attempting to reassign Datum Type");
-		if (mContext->mCapacity > 0) throw std::exception("Set storage called on non-empty Datum");
+//		if (mContext->mCapacity > 0) throw std::exception("Set storage called on non-empty Datum");
 		
+		if (mContext->mCapacity > 0) clear();
+
 		mContext->mDataIsExternal = true;
 		mContext->mData.m = data;
 		mContext->mCapacity = mContext->mSize = size;

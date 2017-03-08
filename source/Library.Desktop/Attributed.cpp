@@ -82,6 +82,7 @@ namespace Library
 				case DatumType::Integer:
 					if (attribute.Storage.i != nullptr)
 					{
+						appendedScope.setType(DatumType::Integer);
 						appendedScope.setStorage(attribute.Storage.i, attribute.Size);
 					}
 					
@@ -94,6 +95,7 @@ namespace Library
 				case DatumType::Float:
 					if (attribute.Storage.f != nullptr)
 					{
+						appendedScope.setType(DatumType::Float);
 						appendedScope.setStorage(attribute.Storage.f, attribute.Size);
 					}
 
@@ -106,6 +108,7 @@ namespace Library
 				case DatumType::Vector:
 					if (attribute.Storage.v != nullptr)
 					{
+						appendedScope.setType(DatumType::Vector);
 						appendedScope.setStorage(attribute.Storage.v, attribute.Size);
 					}
 
@@ -118,6 +121,7 @@ namespace Library
 				case DatumType::Matrix:
 					if (attribute.Storage.m != nullptr)
 					{
+						appendedScope.setType(DatumType::Matrix);
 						appendedScope.setStorage(attribute.Storage.m, attribute.Size);
 					}
 
@@ -134,6 +138,7 @@ namespace Library
 				case DatumType::String:
 					if (attribute.Storage.s != nullptr)
 					{
+						appendedScope.setType(DatumType::String);
 						appendedScope.setStorage(attribute.Storage.s, attribute.Size);
 					}
 
@@ -146,6 +151,7 @@ namespace Library
 				case DatumType::Pointer:
 					if (attribute.Storage.r != nullptr)
 					{
+						appendedScope.setType(DatumType::Pointer);
 						appendedScope.setStorage(attribute.Storage.r, attribute.Size);
 					}
 
