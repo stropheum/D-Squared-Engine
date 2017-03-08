@@ -49,9 +49,13 @@ namespace Library
 			
 			if (rhs.mPrescribedAttributes.size() > 1)
 			{	// We only do a copy if there is more than the "this" pointer stored
+//				for (std::uint32_t i = 1; i < rhs.mPrescribedAttributes.size(); i++)
+//				{
+//					mPrescribedAttributes.pushBack(rhs.mPrescribedAttributes[i]);
+//				}
 				for (std::uint32_t i = 1; i < rhs.mPrescribedAttributes.size(); i++)
 				{
-					mPrescribedAttributes.pushBack(rhs.mPrescribedAttributes[i]);
+					adopt(rhs[i][0], mPrescribedAttributes[i].Name);
 				}
 			}
 
@@ -76,9 +80,9 @@ namespace Library
 			switch (attribute.Type)
 			{
 				case DatumType::Integer:
-					if (attribute.Storage != nullptr)
+					if (attribute.Storage.i != nullptr)
 					{
-						appendedScope.setStorage(attribute.Storage->i, attribute.Size);
+						appendedScope.setStorage(attribute.Storage.i, attribute.Size);
 					}
 					
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
@@ -88,9 +92,9 @@ namespace Library
 					break;
 
 				case DatumType::Float:
-					if (attribute.Storage != nullptr)
+					if (attribute.Storage.f != nullptr)
 					{
-						appendedScope.setStorage(attribute.Storage->f, attribute.Size);
+						appendedScope.setStorage(attribute.Storage.f, attribute.Size);
 					}
 
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
@@ -100,9 +104,9 @@ namespace Library
 					break;
 
 				case DatumType::Vector:
-					if (attribute.Storage != nullptr)
+					if (attribute.Storage.v != nullptr)
 					{
-						appendedScope.setStorage(attribute.Storage->v, attribute.Size);
+						appendedScope.setStorage(attribute.Storage.v, attribute.Size);
 					}
 
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
@@ -112,9 +116,9 @@ namespace Library
 					break;
 
 				case DatumType::Matrix:
-					if (attribute.Storage != nullptr)
+					if (attribute.Storage.m != nullptr)
 					{
-						appendedScope.setStorage(attribute.Storage->m, attribute.Size);
+						appendedScope.setStorage(attribute.Storage.m, attribute.Size);
 					}
 
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
@@ -128,9 +132,9 @@ namespace Library
 					break;
 
 				case DatumType::String:
-					if (attribute.Storage != nullptr)
+					if (attribute.Storage.s != nullptr)
 					{
-						appendedScope.setStorage(attribute.Storage->s, attribute.Size);
+						appendedScope.setStorage(attribute.Storage.s, attribute.Size);
 					}
 
 					for (std::uint32_t j = 0; j < attribute.Size; j++)
@@ -140,9 +144,9 @@ namespace Library
 					break;
 
 				case DatumType::Pointer:
-					if (attribute.Storage != nullptr)
+					if (attribute.Storage.r != nullptr)
 					{
-						appendedScope.setStorage(attribute.Storage->r, attribute.Size);
+						appendedScope.setStorage(attribute.Storage.r, attribute.Size);
 					}
 
 					for (std::uint32_t j = 0; j < attribute.Size; j++)

@@ -54,25 +54,25 @@ namespace TestLibraryDesktop
 		{
 			Library::AttributedFoo myFoo_OG;
 			myFoo_OG.populate();
-			myFoo_OG["Internal Integer"] = 10;
-			myFoo_OG["Internal Float"] = 10.0f;
-			myFoo_OG["Internal Vector"] = glm::vec4(10);
-			myFoo_OG["Internal Matrix"] = glm::mat4(10);
-			myFoo_OG["Internal String"] = "10";
+			myFoo_OG["External Integer"] = 10;
+			myFoo_OG["External Float"] = 10.0f;
+			myFoo_OG["External Vector"] = glm::vec4(10);
+			myFoo_OG["External Matrix"] = glm::mat4(10);
+			myFoo_OG["External String"] = "10";
 
 			Library::AttributedFoo myFoo_CPY(myFoo_OG);
-			Assert::IsFalse(myFoo_CPY["Internal Integer"] == myFoo_OG.i);
-			Assert::IsFalse(myFoo_CPY["Internal Float"] == myFoo_OG.f);
-			Assert::IsFalse(myFoo_CPY["Internal Vector"] == myFoo_OG.v);
-			Assert::IsFalse(myFoo_CPY["Internal Matrix"] == myFoo_OG.m);
-			Assert::IsFalse(myFoo_CPY["Internal String"] == myFoo_OG.s);
+			Assert::IsFalse(myFoo_CPY["External Integer"] == myFoo_OG.i);
+			Assert::IsFalse(myFoo_CPY["External Float"] == myFoo_OG.f);
+			Assert::IsFalse(myFoo_CPY["External Vector"] == myFoo_OG.v);
+			Assert::IsFalse(myFoo_CPY["External Matrix"] == myFoo_OG.m);
+			Assert::IsFalse(myFoo_CPY["External String"] == myFoo_OG.s);
 
 			myFoo_CPY.populate();
-			Assert::IsTrue(myFoo_CPY["Internal Integer"] == myFoo_OG.i);
-			Assert::IsTrue(myFoo_CPY["Internal Float"] == myFoo_OG.f);
-			Assert::IsTrue(myFoo_CPY["Internal Vector"] == myFoo_OG.v);
-			Assert::IsTrue(myFoo_CPY["Internal Matrix"] == myFoo_OG.m);
-			Assert::IsTrue(myFoo_CPY["Internal String"] == myFoo_OG.s);
+			Assert::IsTrue(myFoo_CPY["External Integer"] == myFoo_OG.i);
+			Assert::IsTrue(myFoo_CPY["External Float"] == myFoo_OG.f);
+			Assert::IsTrue(myFoo_CPY["External Vector"] == myFoo_OG.v);
+			Assert::IsTrue(myFoo_CPY["External Matrix"] == myFoo_OG.m);
+			Assert::IsTrue(myFoo_CPY["External String"] == myFoo_OG.s);
 		}
 
 		TEST_METHOD(TestMoveSemantics)
@@ -85,25 +85,25 @@ namespace TestLibraryDesktop
 
 			Library::AttributedFoo myFoo_OG;
 			myFoo_OG.populate();
-			myFoo_OG["Internal Integer"] = myInt;
-			myFoo_OG["Internal Float"] = myFloat;
-			myFoo_OG["Internal Vector"] = myVec;
-			myFoo_OG["Internal Matrix"] = myMat;
-			myFoo_OG["Internal String"] = myStr;
+			myFoo_OG["External Integer"] = myInt;
+			myFoo_OG["External Float"] = myFloat;
+			myFoo_OG["External Vector"] = myVec;
+			myFoo_OG["External Matrix"] = myMat;
+			myFoo_OG["External String"] = myStr;
 
 			Library::AttributedFoo myFoo_CPY(myFoo_OG);
-			Assert::IsFalse(myFoo_CPY["Internal Integer"] == myInt);
-			Assert::IsFalse(myFoo_CPY["Internal Float"] == myFloat);
-			Assert::IsFalse(myFoo_CPY["Internal Vector"] == myVec);
-			Assert::IsFalse(myFoo_CPY["Internal Matrix"] == myMat);
-			Assert::IsFalse(myFoo_CPY["Internal String"] == myStr);
+			Assert::IsFalse(myFoo_CPY["External Integer"] == myInt);
+			Assert::IsFalse(myFoo_CPY["External Float"] == myFloat);
+			Assert::IsFalse(myFoo_CPY["External Vector"] == myVec);
+			Assert::IsFalse(myFoo_CPY["External Matrix"] == myMat);
+			Assert::IsFalse(myFoo_CPY["External String"] == myStr);
 
 			myFoo_CPY.populate();
-			Assert::IsFalse(myFoo_CPY["Internal Integer"] == myInt);
-			Assert::IsFalse(myFoo_CPY["Internal Float"] == myFloat);
-			Assert::IsFalse(myFoo_CPY["Internal Vector"] == myVec);
-			Assert::IsFalse(myFoo_CPY["Internal Matrix"] == myMat);
-			Assert::IsFalse(myFoo_CPY["Internal String"] == myStr);
+			Assert::IsFalse(myFoo_CPY["External Integer"] == myInt);
+			Assert::IsFalse(myFoo_CPY["External Float"] == myFloat);
+			Assert::IsFalse(myFoo_CPY["External Vector"] == myVec);
+			Assert::IsFalse(myFoo_CPY["External Matrix"] == myMat);
+			Assert::IsFalse(myFoo_CPY["External String"] == myStr);
 		}
 
 		TEST_METHOD(TestPopulate)
@@ -114,11 +114,11 @@ namespace TestLibraryDesktop
 
 			myFoo.populate();
 			Assert::IsTrue(myFoo[0] == myFoo["this"]);
-			Assert::IsTrue(myFoo["Internal Integer"] == myFoo.i);
-			Assert::IsTrue(myFoo["Internal Float"] == myFoo.f);
-			Assert::IsTrue(myFoo["Internal Vector"] == myFoo.v);
-			Assert::IsTrue(myFoo["Internal Matrix"] == myFoo.m);
-			Assert::IsTrue(myFoo["Internal String"] == myFoo.s);
+			Assert::IsTrue(myFoo["External Integer"] == myFoo.i);
+			Assert::IsTrue(myFoo["External Float"] == myFoo.f);
+			Assert::IsTrue(myFoo["External Vector"] == myFoo.v);
+			Assert::IsTrue(myFoo["External Matrix"] == myFoo.m);
+			Assert::IsTrue(myFoo["External String"] == myFoo.s);
 
 			Assert::ExpectException<std::exception>([&] { myFoo[6]; });
 		}
@@ -126,18 +126,18 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestIsPrescribedAttribute)
 		{
 			Library::AttributedFoo myFoo;
-			Assert::IsFalse(myFoo.isPrescribedAttribute("Internal Integer"));
-			Assert::IsFalse(myFoo.isPrescribedAttribute("Internal Float"));
-			Assert::IsFalse(myFoo.isPrescribedAttribute("Internal Vector"));
-			Assert::IsFalse(myFoo.isPrescribedAttribute("Internal Matrix"));
-			Assert::IsFalse(myFoo.isPrescribedAttribute("Internal String"));
+			Assert::IsFalse(myFoo.isPrescribedAttribute("External Integer"));
+			Assert::IsFalse(myFoo.isPrescribedAttribute("External Float"));
+			Assert::IsFalse(myFoo.isPrescribedAttribute("External Vector"));
+			Assert::IsFalse(myFoo.isPrescribedAttribute("External Matrix"));
+			Assert::IsFalse(myFoo.isPrescribedAttribute("External String"));
 
 			myFoo.populate();
-			Assert::IsTrue(myFoo.isPrescribedAttribute("Internal Integer"));
-			Assert::IsTrue(myFoo.isPrescribedAttribute("Internal Float"));
-			Assert::IsTrue(myFoo.isPrescribedAttribute("Internal Vector"));
-			Assert::IsTrue(myFoo.isPrescribedAttribute("Internal Matrix"));
-			Assert::IsTrue(myFoo.isPrescribedAttribute("Internal String"));
+			Assert::IsTrue(myFoo.isPrescribedAttribute("External Integer"));
+			Assert::IsTrue(myFoo.isPrescribedAttribute("External Float"));
+			Assert::IsTrue(myFoo.isPrescribedAttribute("External Vector"));
+			Assert::IsTrue(myFoo.isPrescribedAttribute("External Matrix"));
+			Assert::IsTrue(myFoo.isPrescribedAttribute("External String"));
 		}
 
 		TEST_METHOD(TestIsAuxiliaryAttribute)
@@ -154,21 +154,21 @@ namespace TestLibraryDesktop
 		{
 			Library::AttributedFoo myFoo;
 			Assert::IsTrue(myFoo.isAttribute("this"));
-			Assert::IsFalse(myFoo.isAttribute("Internal Integer"));
-			Assert::IsFalse(myFoo.isAttribute("Internal Float"));
-			Assert::IsFalse(myFoo.isAttribute("Internal Vector"));
-			Assert::IsFalse(myFoo.isAttribute("Internal Matrix"));
-			Assert::IsFalse(myFoo.isAttribute("Internal String"));
+			Assert::IsFalse(myFoo.isAttribute("External Integer"));
+			Assert::IsFalse(myFoo.isAttribute("External Float"));
+			Assert::IsFalse(myFoo.isAttribute("External Vector"));
+			Assert::IsFalse(myFoo.isAttribute("External Matrix"));
+			Assert::IsFalse(myFoo.isAttribute("External String"));
 
 			Assert::IsFalse(myFoo.isAttribute("Nonexistent Garbage"));
 
 			myFoo.populate();
 			Assert::IsTrue(myFoo.isAttribute("this"));
-			Assert::IsTrue(myFoo.isAttribute("Internal Integer"));
-			Assert::IsTrue(myFoo.isAttribute("Internal Float"));
-			Assert::IsTrue(myFoo.isAttribute("Internal Vector"));
-			Assert::IsTrue(myFoo.isAttribute("Internal Matrix"));
-			Assert::IsTrue(myFoo.isAttribute("Internal String"));
+			Assert::IsTrue(myFoo.isAttribute("External Integer"));
+			Assert::IsTrue(myFoo.isAttribute("External Float"));
+			Assert::IsTrue(myFoo.isAttribute("External Vector"));
+			Assert::IsTrue(myFoo.isAttribute("External Matrix"));
+			Assert::IsTrue(myFoo.isAttribute("External String"));
 
 			Assert::IsFalse(myFoo.isAttribute("Nonexistent Garbage"));
 		}

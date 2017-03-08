@@ -24,11 +24,11 @@ namespace Library
 		std::string s;
 		
 		// Array members
-//			std::int32_t* iArray;
-//			float* fArray;
-//			glm::vec4* vArray;
-//			glm::mat4 mArray;
-//			std::string* sArray;
+		std::int32_t* iArray;
+		float* fArray;
+		glm::vec4* vArray;
+		glm::mat4 mArray;
+		std::string* sArray;
 	};
 }
 

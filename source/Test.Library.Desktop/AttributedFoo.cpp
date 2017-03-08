@@ -16,19 +16,19 @@ namespace Library
 	void AttributedFoo::populate()
 	{
 		mPrescribedAttributes.pushBack(
-			Signature("Internal Integer", DatumType::Integer, i, 1u, nullptr));
+			Signature("External Integer", DatumType::Integer, i, 1u, &i));
 
 		mPrescribedAttributes.pushBack(
-			Signature("Internal Float", DatumType::Float, f, 1u, nullptr));
+			Signature("External Float", DatumType::Float, f, 1u, &f));
 
 		mPrescribedAttributes.pushBack(
-			Signature("Internal Vector", DatumType::Vector, v, 1u, nullptr));
+			Signature("External Vector", DatumType::Vector, v, 1u, &v));
 
 		mPrescribedAttributes.pushBack(
-			Signature("Internal Matrix", DatumType::Matrix, m, 1, nullptr));
+			Signature("External Matrix", DatumType::Matrix, m, 1u, &m));
 
 		mPrescribedAttributes.pushBack(
-			Signature("Internal String", DatumType::String, s, 1, nullptr));
+			Signature("External String", DatumType::String, s, 1u, &s));
 
 
 		Attributed::populate();

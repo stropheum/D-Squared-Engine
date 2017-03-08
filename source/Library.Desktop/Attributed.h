@@ -11,27 +11,50 @@ namespace Library
 
 #pragma region Constructors, Copy/Move semantics
 
+		/// Constructor
 		Attributed();
+		/// Virtual destructor to ensure that class is abstract
 		virtual ~Attributed(){};
 
+		/// Copy constructor
+		/// @Param rhs: The Attributed object being copied
 		Attributed(const Attributed& rhs);
-		Attributed& operator= (const Attributed& rhs);
+		/// Assignment Operator
+		/// @Param rhs: The attributed object being assigned to
+		Attributed& operator=(const Attributed& rhs);
 
+		/// Move copy constructor
+		/// @Param rhs: The attributed object being copied
 		Attributed(Attributed&& rhs);
+		/// Move assignment operator
+		/// @Param rhs; The attributed object being assigned to
 		Attributed& operator=(Attributed&& rhs);
 
 #pragma endregion
 
 #pragma region Public Methods
 
+		/// Populates the attributes
 		virtual void populate();
 
+		/// Determines if the specified string is a prescribed attribute
+		/// @Param name: The attribute being checked
+		/// @Return: True if the attribute is a prescribed attribute
 		bool isPrescribedAttribute(std::string name) const;
 
+		/// Determines if the specified string is an auxiliary attribute
+		/// @Param name: The attribute being checked
+		/// @Return: True if the attribute is an auxiliary attribute
 		bool isAuxiliaryAttribute(std::string name) const;
 
+		/// Determines if the specified string is an attribute
+		/// @Param name: The attribute being checked
+		/// @Return: True if the attribute is an attribute
 		bool isAttribute(std::string name) const;
 
+		/// Adds an auxiliary attribute to the current collection
+		/// @Param name: The name of the new auxiliary attribute
+		/// @Return: A reference to the Datum created from the appended attribute
 		Datum& appendAuxiliaryAttribute(std::string name);
 
 #pragma endregion
@@ -42,7 +65,7 @@ namespace Library
 		class Signature
 		{
 		public:
-			/// Constructor For the signature type
+			/// Constructor For the integer signature type
 			/// @Param name: The name of the signature
 			/// @Param type: The type of data being passed in
 			/// @Param initialValue: The initial value of the signature's data
@@ -50,81 +73,110 @@ namespace Library
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
 			Signature(const std::string name, const DatumType type, const std::int32_t initialValue,
-				const std::uint32_t size, std::int32_t* const storage):
-				Name(name), Type(type), Size(size), Storage(nullptr)
+				const std::uint32_t size, std::int32_t* storage):
+				Name(name), Type(type), Size(size)
 			{
 				InitialValue.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * Size));
 				*InitialValue.i = initialValue;
 				if (storage != nullptr)
 				{
-					Storage->i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * Size));
-					Storage->i = storage;
+					Storage.i = storage;
 				}
 			}
 
+			/// Constructor For the float signature type
+			/// @Param name: The name of the signature
+			/// @Param type: The type of data being passed in
+			/// @Param initialValue: The initial value of the signature's data
+			/// @Param size: The number of elements in the data
+			/// @Param storage: The pointer to the external storage
+			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
 			Signature(const std::string name, const DatumType type, const float initialValue,
 				const std::uint32_t size, float* const storage) :
-				Name(name), Type(type), Size(size), Storage(nullptr)
+				Name(name), Type(type), Size(size)
 			{
 				InitialValue.f = static_cast<float*>(malloc(sizeof(float) * Size));
 				*InitialValue.f = initialValue;
 				if (storage != nullptr)
 				{
-					Storage->f = static_cast<float*>(malloc(sizeof(float) * Size));
-					Storage->f = storage;
+					Storage.f = storage;
 				}
 			}
 
+			/// Constructor For the vector signature type
+			/// @Param name: The name of the signature
+			/// @Param type: The type of data being passed in
+			/// @Param initialValue: The initial value of the signature's data
+			/// @Param size: The number of elements in the data
+			/// @Param storage: The pointer to the external storage
+			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
 			Signature(const std::string name, const DatumType type, const glm::vec4 initialValue,
 				const std::uint32_t size, glm::vec4* const storage) :
-				Name(name), Type(type), Size(size), Storage(nullptr)
+				Name(name), Type(type), Size(size)
 			{
 				InitialValue.v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4) * Size));
 				*InitialValue.v= initialValue;
 				if (storage != nullptr)
 				{
-					Storage->v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4) * Size));
-					Storage->v = storage;
+					Storage.v = storage;
 				}
 			}
 
+			/// Constructor For the matrix signature type
+			/// @Param name: The name of the signature
+			/// @Param type: The type of data being passed in
+			/// @Param initialValue: The initial value of the signature's data
+			/// @Param size: The number of elements in the data
+			/// @Param storage: The pointer to the external storage
+			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
 			Signature(const std::string name, const DatumType type, glm::mat4 initialValue,
 				const std::uint32_t size, glm::mat4* const storage) :
-				Name(name), Type(type), Size(size), Storage(nullptr)
+				Name(name), Type(type), Size(size)
 			{
 				InitialValue.m = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4) * Size));
 				*InitialValue.m = initialValue;
 				if (storage != nullptr)
 				{
-					Storage->m = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4) * Size));
-					Storage->m = storage;
+					Storage.m = storage;
 				}
 			}
 
+			/// Constructor For the string signature type
+			/// @Param name: The name of the signature
+			/// @Param type: The type of data being passed in
+			/// @Param initialValue: The initial value of the signature's data
+			/// @Param size: The number of elements in the data
+			/// @Param storage: The pointer to the external storage
+			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
 			Signature(const std::string name, const DatumType type, const std::string initialValue,
 				const std::uint32_t size, std::string* const storage) :
-				Name(name), Type(type), Size(size), Storage(nullptr)
+				Name(name), Type(type), Size(size)
 			{
 				InitialValue.s = new std::string[size];
 
 				*InitialValue.s = initialValue;
 				if (storage != nullptr)
 				{
-					Storage->s = static_cast<std::string*>(malloc(sizeof(std::string) * Size));
-					Storage->s = storage;
+					Storage.s = storage;
 				}
 			}
 
+			/// Constructor For the RTTI pointer signature type
+			/// @Param name: The name of the signature
+			/// @Param type: The type of data being passed in
+			/// @Param initialValue: The initial value of the signature's data
+			/// @Param size: The number of elements in the data
+			/// @Param storage: The pointer to the external storage
+			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
 			Signature(const std::string name, const DatumType type, RTTI* const initialValue,
 				const std::uint32_t size, RTTI** const storage) :
-				Name(name), Type(type), Size(size), Storage(nullptr)
+				Name(name), Type(type), Size(size)
 			{
 				InitialValue.r = static_cast<RTTI**>(malloc(sizeof(RTTI*) * Size));
 				*InitialValue.r = initialValue;
 				if (storage != nullptr)
 				{
-					Storage->r = static_cast<RTTI**>(malloc(sizeof(RTTI*) * Size));
-					Storage->r = storage;
+					Storage.r = storage;
 				}
 			}
 
@@ -132,7 +184,7 @@ namespace Library
 			DatumType Type;
 			Datum::DatumValues InitialValue;
 			std::uint32_t Size;
-			Datum::DatumValues* Storage;
+			Datum::DatumValues Storage;
 		};
 
 #pragma endregion
