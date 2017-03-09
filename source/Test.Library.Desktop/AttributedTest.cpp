@@ -63,6 +63,15 @@ namespace TestLibraryDesktop
 			myFoo_OG["External Matrix"] = glm::mat4(10);
 			myFoo_OG["External String"] = "10";
 
+			for (std::int32_t i = 0; i < 10; i++)
+			{	// Setting all values in the arrays to some default
+				myFoo_OG["External Integer Array"].set(10, i);
+				myFoo_OG["External Float Array"].set(10.0f, i);
+				myFoo_OG["External Vector Array"].set(glm::vec4(10), i);
+				myFoo_OG["External Matrix Array"].set(glm::mat4(10), i);
+				myFoo_OG["External String Array"].set("10", i);
+			}
+
 			Library::AttributedFoo myFoo_CPY(myFoo_OG);
 			auto& myFooRef = myFoo_CPY["External Integer"];
 			UNREFERENCED_PARAMETER(myFooRef);
@@ -84,6 +93,20 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(myFoo_CPY["External Vector"] == myFoo_OG["External Vector"]);
 			Assert::IsTrue(myFoo_CPY["External Matrix"] == myFoo_OG["External Matrix"]);
 			Assert::IsTrue(myFoo_CPY["External String"] == myFoo_OG["External String"]);
+
+			for (std::uint32_t i = 0; i < 10; i++)
+			{
+				Assert::IsTrue(myFoo_CPY["External Integer Array"].get<std::int32_t>(i) 
+					== myFoo_OG["External Integer Array"].get<std::int32_t>(i));
+				Assert::IsTrue(myFoo_CPY["External Float Array"].get<float>(i)
+					== myFoo_OG["External Float Array"].get<float>(i));
+				Assert::IsTrue(myFoo_CPY["External Vector Array"].get<glm::vec4>(i)
+					== myFoo_OG["External Vector Array"].get<glm::vec4>(i));
+				Assert::IsTrue(myFoo_CPY["External Matrix Array"].get<glm::mat4>(i)
+					== myFoo_OG["External Matrix Array"].get<glm::mat4>(i));
+				Assert::IsTrue(myFoo_CPY["External String Array"].get<std::string>(i)
+					== myFoo_OG["External String Array"].get<std::string>(i));
+			}
 		}
 
 		TEST_METHOD(TestMoveSemantics)

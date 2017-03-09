@@ -17,8 +17,8 @@ namespace Library
 		AttributedFoo(const AttributedFoo& rhs);
 		AttributedFoo& operator=(const AttributedFoo& rhs);
 
-		AttributedFoo(const AttributedFoo&& rhs);
-		AttributedFoo& operator=(const AttributedFoo&& rhs);
+		AttributedFoo(AttributedFoo&& rhs);
+		AttributedFoo& operator=(AttributedFoo&& rhs);
 	
 	private:
 		void init();
