@@ -3,6 +3,7 @@
 #include <Vector.h>
 #include "Foo.h"
 #include "implementation.h"
+#include <winnt.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -40,14 +41,19 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD_INITIALIZE(InitializeMethod)
 		{
-			initializeLeakDetection();
 			intor.clear();
 			pointor.clear();
 			footor.clear();
+			initializeLeakDetection();
 		}
 
 		TEST_METHOD_CLEANUP(CleanupMethod)
 		{
+			intor.clear();
+			pointor.clear();
+			footor.clear();
+			// Here is the problem. Because these are class-level, even though they
+			// Destruct safely and are cleared on method initialize, on cleanup they can still have mem allocated
 			finalizeLeakDetection();
 		}
 
@@ -557,7 +563,7 @@ namespace TestLibraryDesktop
 			Assert::AreEqual(2U, intor.size(), L"Vector size not reducing after valid pop back");
 
 
-			/// Pointer vector tests
+//			/// Pointer vector tests
 			auto ptrfunc1 = [this] { pointor.popBack(); };
 			Assert::ExpectException<std::exception>(ptrfunc1, L"PopBack on empty vector should throw an exception");
 			
@@ -587,6 +593,10 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestSize)
 		{
+			intor.reserve(10);
+			intor.reserve(10);
+			intor.pushBack(1);
+			intor.popBack();
 			/// Int vector tests
 			Assert::IsTrue(intor.size() == 0, L"Size not zero on empty vector");
 			

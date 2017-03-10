@@ -187,8 +187,9 @@ namespace Library
 		
 		T* temp = mBuffer;
 		mBuffer = static_cast<T*>(malloc(sizeof(T) * capacity));
-		memcpy_s(mBuffer, sizeof(T) * mSize, temp, sizeof(T) * mSize);
-		
+//		memcpy_s(mBuffer, sizeof(T) * mSize, temp, sizeof(T) * mSize);
+		if (mSize > 0) memcpy(mBuffer, temp, sizeof(T) * mSize);
+
 		free(temp);
 		mCapacity = capacity;
 	}
@@ -215,6 +216,9 @@ namespace Library
 				break;
 			}
 		}
+
+		// Destruct the value that we're about to squish
+		if (firstValue != mSize) mBuffer[firstValue].~T();
 
 		// Shift the entire buffer after the removed value down by 1 and decrement size
 		auto sizeToMove = (mCapacity * sizeof(T)) - (firstValue * sizeof(T));
