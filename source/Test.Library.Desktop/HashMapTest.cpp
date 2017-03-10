@@ -70,12 +70,14 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD_INITIALIZE(methodInitialize)
 		{
-			initializeLeakDetection();
 			intMap.clear();
 			ptrMap.clear();
 			chrMap.clear();
 			strMap.clear();
 			fooMap.clear();
+
+			initializeLeakDetection();
+			
 			x = 1;
 			y = 2;
 			z = 3;
@@ -92,6 +94,12 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD_CLEANUP(methodCleanup)
 		{
+			intMap.clear();
+			ptrMap.clear();
+			chrMap.clear();
+			strMap.clear();
+			fooMap.clear();
+
 			finalizeLeakDetection();
 		}
 
