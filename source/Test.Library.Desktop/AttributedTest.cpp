@@ -18,8 +18,8 @@ namespace TestLibraryDesktop
 			// Note: Everything is showing memory leaks because of fixing the problem Paul mentioned in our last meeting. 
 			// This was submitted same day so the problem still persists for now!
 
-//			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
-//			_CrtMemCheckpoint(&sStartMemState);
+			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
+			_CrtMemCheckpoint(&sStartMemState);
 #endif //_Debug
 		}
 
@@ -27,13 +27,13 @@ namespace TestLibraryDesktop
 		static void finalizeLeakDetection()
 		{
 #if _DEBUG
-//			_CrtMemState endMemState, diffMemState;
-//			_CrtMemCheckpoint(&endMemState);
-//			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
-//			{
-//				_CrtMemDumpStatistics(&diffMemState);
-//				Assert::Fail(L"Memory Leaks!");
-//			}
+			_CrtMemState endMemState, diffMemState;
+			_CrtMemCheckpoint(&endMemState);
+			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
+			{
+				_CrtMemDumpStatistics(&diffMemState);
+				Assert::Fail(L"Memory Leaks!");
+			}
 #endif //_Debug
 		}
 
