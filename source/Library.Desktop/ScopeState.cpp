@@ -9,6 +9,30 @@ namespace Library
 		TypeState(context)
 	{}
 
+	/// Comparison operator for Datum objects
+	/// @Param rhs: The Datum object being compared against
+	/// @Return: True if type, size, and each element of the Datum objects are equivalent. False otherwise
+	/// @Exception: THrown if called from this context
+	bool ScopeState::operator==(const Datum& rhs)
+	{
+		bool result = false;
+
+		if (rhs.type() == DatumType::Scope && mContext->size() == rhs.size())
+		{
+			result = true;
+			for (std::uint32_t i = 0; i < mContext->size(); i++)
+			{
+				if (*mContext->get<Scope*>(i) != *rhs.get<Scope*>(i))
+				{	// If every scope doesn't match, we're done
+					result = false;
+					break;
+				}
+			}
+		}
+
+		return result;
+	}
+
 	Datum& ScopeState::operator=(Scope* const rhs)
 	{
 		if (mContext->mSize > 1) throw std::exception("Invalid assignment invocation");

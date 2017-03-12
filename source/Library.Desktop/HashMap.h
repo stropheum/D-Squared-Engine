@@ -53,6 +53,12 @@ namespace Library
 		/// @Return: An Iterator pointing to the inserted PairType
 		Iterator insert(const PairType& entry);
 
+		/// Inserts a Pairtype into the HashMap
+		/// @Param entry: The PairType being added to the HashMap
+		/// @Param found: Output parameter to determine if the entry was found
+		/// @Return: An Iterator pointing to the inserted PairType
+		Iterator insert(const PairType& entry, bool& found);
+
 		/// Removes a PairType from the HashMap, if it exists. Otherwise does nothing
 		/// @Param key: The key being used to search for the item in the HashMap
 		void remove(const TKey& key);

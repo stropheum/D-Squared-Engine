@@ -321,11 +321,20 @@ namespace Library
 
 	/// Comparison operator for mat4
 	/// @Param rhs: The matrix being  compared against
-	/// @Return: True if the matrices are equivalent. FAlse if size is not 1 or if type is invalid
+	/// @Return: True if the matrices are equivalent. False if size is not 1 or if type is invalid
 	bool Datum::operator==(const glm::mat4& rhs) const
 	{
 		return mType == DatumType::Matrix &&
 			mSize == 1 && mData.m[0] == rhs;
+	}
+
+	/// Comparison operator for Scope
+	/// @Param rhs: The scope being  compared against
+	/// @Return: True if the scopes are equivalent. False if size is not 1 or if type is invalid
+	bool Datum::operator==(const Scope* rhs) const
+	{
+		return mType == DatumType::Scope &&
+			mSize == 1 && mData.sc[0] == rhs;
 	}
 
 	/// Comparison operator for std::string

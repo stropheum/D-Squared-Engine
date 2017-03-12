@@ -22,13 +22,35 @@ namespace Library
 	{
 		if (this != &rhs)
 		{
-			for (std::uint32_t i = 0; i < rhs.mVector.size(); i++)
+			clear();
+
+			mVector.reserve(rhs.mVector.size());
+
+			for (auto& iter : rhs.mVector)
 			{
-				auto inserted = mMap.insert(*rhs.mVector[i]);
-				mVector.pushBack(inserted);
+				auto& existingPair = *iter;
+				Datum& existingDatum = const_cast<Datum&>(existingPair.second);
+				Datum& newDatum = append(existingPair.first);
+
+				if (existingDatum.type() == DatumType::Scope)
+				{
+					newDatum.setType(DatumType::Scope);
+					newDatum.reserve(existingDatum.size());
+
+					for (uint32_t i = 0; i < existingDatum.size(); ++i)
+					{
+						Scope* scope = new Scope(*existingDatum.get<Scope*>(i));
+						scope->mParent = this;
+						newDatum.pushBack(scope);
+					}
+				}
+				else
+				{
+					newDatum = existingDatum;
+				}
 			}
 		}
-		
+
 		return *this;
 	}
 
@@ -86,13 +108,14 @@ namespace Library
 	/// @Return: A reference to the newly created Datum
 	Datum& Scope::append(const std::string& key)
 	{
-		auto found = mMap.insert(std::pair<std::string, Datum>(key, Datum()));
+		bool found = false;
+		auto iter = mMap.insert(std::pair<std::string, Datum>(key, Datum()), found);
 
-		if (mVector.find(found) == mVector.end())
+		if (!found)
 		{
-			mVector.pushBack(found);
+			mVector.pushBack(iter);
 		}
-		auto& result = (*found);
+		auto& result = (*iter);
 		return result.second;
 	}
 
@@ -106,7 +129,9 @@ namespace Library
 
 		if (found != nullptr)
 		{	// We know the scope exists already, so push back another on the same key
-			found->pushBack(new Scope());
+			Scope* scope = new Scope();
+			scope->mParent = this;
+			found->pushBack(scope);
 		}
 		else
 		{	
@@ -166,22 +191,20 @@ namespace Library
 	/// @Return: True if the Scopes are equivalent
 	bool Scope::operator==(const Scope& rhs) const
 	{
-		bool result = true;
+		bool result = false;
 
 		if (mVector.size() == rhs.mVector.size())
 		{	// If the sizes are not equal, the vectors are not equivalent
+			result = true;
+
 			for (std::uint32_t i = 0; i < mVector.size(); i++)
 			{
-				if (mVector[i]->first != rhs.mVector[i]->first && mVector[i]->second != rhs.mVector[i]->second)
+				if (*mVector[i] != *rhs.mVector[i])
 				{	// If we encounter a bad match, the vectors are not equivalent
 					result = false;
 					break;
 				}
 			}
-		}
-		else
-		{
-			result = false;
 		}
 		
 		return result;
@@ -269,10 +292,16 @@ namespace Library
 	/// @Param child: The Scope pointer being orphaned
 	void Scope::orphan(Scope* child)
 	{
-		Scope& parent = *child->getParent();
-		std::string key = parent.findName(child);
-		parent[key].remove(child);
-		child->mParent = nullptr;
+		if (child != nullptr)
+		{
+			Scope& parent = *child->getParent();
+			if (&parent == this)
+			{
+				std::string key = parent.findName(child);
+				parent[key].remove(child);
+				child->mParent = nullptr;
+			}
+		}
 	}
 
 #pragma endregion

@@ -187,7 +187,6 @@ namespace Library
 		
 		T* temp = mBuffer;
 		mBuffer = static_cast<T*>(malloc(sizeof(T) * capacity));
-//		memcpy_s(mBuffer, sizeof(T) * mSize, temp, sizeof(T) * mSize);
 		if (mSize > 0) memcpy(mBuffer, temp, sizeof(T) * mSize);
 
 		free(temp);
