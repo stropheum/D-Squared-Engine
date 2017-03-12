@@ -59,16 +59,18 @@ namespace Library
 	/// @Return; The newly copied Datum object
 	Datum& Datum::operator=(const Datum& rhs)
 	{	
-		setType(rhs.mType); // Must set type in order to instantiate mTypeState
-		if (rhs.mDataIsExternal)
+		if (this != &rhs)
 		{
-			mTypeState->setStorage(rhs);
-		}
-		else
-		{
-			reserve(rhs.mCapacity);
-			switch (rhs.mType)
+			setType(rhs.mType); // Must set type in order to instantiate mTypeState
+			if (rhs.mDataIsExternal)
 			{
+				mTypeState->setStorage(rhs);
+			}
+			else
+			{
+				reserve(rhs.mCapacity);
+				switch (rhs.mType)
+				{
 				case DatumType::Integer:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
@@ -106,8 +108,10 @@ namespace Library
 					}
 					break;
 				default: break;
+				}
 			}
 		}
+		
 
 		return *this;
 	}
