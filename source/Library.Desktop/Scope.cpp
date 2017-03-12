@@ -20,11 +20,15 @@ namespace Library
 
 	Scope& Scope::operator=(const Scope& rhs)
 	{
-		for (std::uint32_t i = 0; i < rhs.mVector.size(); i++)
-		{	
-			auto inserted = mMap.insert(*rhs.mVector[i]);
-			mVector.pushBack(inserted);
+		if (this != &rhs)
+		{
+			for (std::uint32_t i = 0; i < rhs.mVector.size(); i++)
+			{
+				auto inserted = mMap.insert(*rhs.mVector[i]);
+				mVector.pushBack(inserted);
+			}
 		}
+		
 		return *this;
 	}
 
