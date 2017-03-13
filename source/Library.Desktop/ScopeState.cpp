@@ -45,32 +45,24 @@ namespace Library
 	/// @param size: The new number of elements in the array
 	void ScopeState::setSize(std::uint32_t size)
 	{
-		if (size > mContext->mCapacity) mContext->mCapacity = size;
+		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(Scope*) * size);
+		mContext->mCapacity = mContext->mSize = size;
 
-		Scope** temp = mContext->mData.sc;
-		mContext->mData.sc = static_cast<Scope**>(malloc(sizeof(Scope*) * mContext->mCapacity));
-		memcpy_s(mContext->mData.sc, sizeof(Scope*) * mContext->mSize, temp, sizeof(Scope*) * mContext->mSize);
-
-		if (size < mContext->mSize)
+		if (size <mContext->mSize)
 		{
 			for (std::uint32_t i = size; i < mContext->mSize; i++)
 			{
 				mContext->mData.sc[i] = nullptr;
 			}
 		}
-
-		mContext->mSize = size;
 	}
 
 	void ScopeState::reserve(std::uint32_t capacity)
 	{
-		if (capacity < mContext->mSize) throw std::exception("Attempting to clobber occupied data");
-
-		Scope** temp = mContext->mData.sc;
-		mContext->mData.sc = static_cast<Scope**>(malloc(sizeof(Scope*) * capacity));
-		memcpy_s(mContext->mData.sc, sizeof(Scope**) * mContext->mSize, temp, sizeof(Scope*) * mContext->mSize);
-
-		if (mContext->mCapacity > 0) { free(temp); }
-		mContext->mCapacity = capacity;
+		if (capacity > mContext->mCapacity)
+		{
+			mContext->mData.vp = realloc(mContext->mData.vp, sizeof(Scope*) * capacity);
+			mContext->mCapacity = capacity;
+		}
 	}
 }

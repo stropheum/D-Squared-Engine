@@ -47,12 +47,8 @@ namespace Library
 	/// @Param capacity: The current size of the array
 	void IntegerState::setSize(std::uint32_t size)
 	{
-		if (size > mContext->mCapacity) mContext->mCapacity = size;
-
-		std::int32_t* temp = mContext->mData.i;
-		mContext->mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * mContext->mCapacity));
-//		memcpy_s(mContext->mData.i, sizeof(std::int32_t) * mContext->mSize, temp, sizeof(std::int32_t) * mContext->mSize);
-		memcpy(mContext->mData.i, temp, sizeof(std::int32_t) * mContext->mSize);
+		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(std::int32_t) * size);
+		mContext->mCapacity = mContext->mSize = size;
 
 		if (size <mContext->mSize)
 		{
@@ -61,25 +57,17 @@ namespace Library
 				mContext->mData.i[i] = 0;
 			}
 		}
-
-		free(temp);
-
-		mContext->mSize = size;
 	}
 
 	/// Modifies the capacity of the array to any value greater than or equal to current size
 	/// @Param capacity: The new capacity of the array
 	void IntegerState::reserve(std::uint32_t capacity)
 	{
-		if (capacity < mContext->mSize) throw std::exception("Attempting to clobber occupied data");
-		
-
-		std::int32_t* temp= mContext->mData.i;
-		mContext->mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * capacity));
-		memcpy_s(mContext->mData.i, sizeof(std::int32_t) * mContext->mSize, temp, sizeof(std::int32_t) * mContext->mSize);
-		
-		if (mContext->mCapacity > 0) { free(temp); }
-		mContext->mCapacity = capacity;
+		if (capacity > mContext->mCapacity)
+		{
+			mContext->mData.vp = realloc(mContext->mData.vp, sizeof(std::int32_t) * capacity);
+			mContext->mCapacity = capacity;
+		}
 	}
 
 	/// Clears the value of all elements in the array without changing capacity

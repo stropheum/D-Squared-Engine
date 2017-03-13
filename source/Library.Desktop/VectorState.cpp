@@ -48,35 +48,27 @@ namespace Library
 	/// @Param capacity: The current maximum size of the array
 	void VectorState::setSize(std::uint32_t size)
 	{
-		if (size > mContext->mCapacity) mContext->mCapacity = size;
+		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(glm::vec4) * size);
+		mContext->mCapacity = mContext->mSize = size;
 
-		glm::vec4* temp = mContext->mData.v;
-		mContext->mData.v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4) * mContext->mCapacity));
-		memcpy_s(mContext->mData.v, sizeof(glm::vec4) * mContext->mSize, temp, sizeof(glm::vec4) * mContext->mSize);
-
-		if (size < mContext->mSize)
+		if (size <mContext->mSize)
 		{
 			for (std::uint32_t i = size; i < mContext->mSize; i++)
 			{
-				mContext->mData.v[i] = glm::vec4(NULL);
+				mContext->mData.v[i] = glm::vec4(0);
 			}
 		}
-
-		mContext->mSize = size;
 	}
 
 	/// Modifies the capacity of the array to any value greater than or equal to current size
 	/// @Param capacity: The new capacity of the array
 	void VectorState::reserve(std::uint32_t capacity)
 	{
-		if (capacity < mContext->mSize) throw std::exception("Attempting to clobber occupied data");
-
-		glm::vec4* temp = mContext->mData.v;
-		mContext->mData.v = static_cast<glm::vec4*>(malloc(sizeof(glm::vec4) * capacity));
-		memcpy_s(mContext->mData.v, sizeof(glm::vec4) * mContext->mSize, temp, sizeof(glm::vec4) * mContext->mSize);
-
-		if (mContext->mCapacity > 0) { free(temp); }
-		mContext->mCapacity = capacity;
+		if (capacity > mContext->mCapacity)
+		{
+			mContext->mData.vp = realloc(mContext->mData.vp, sizeof(glm::vec4) * capacity);
+			mContext->mCapacity = capacity;
+		}
 	}
 
 	/// Clears the value of all elements in the array without changing capacity

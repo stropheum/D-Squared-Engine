@@ -47,35 +47,27 @@ namespace Library
 	/// @Param capacity: The current maximum size of the array
 	void PointerState::setSize(std::uint32_t size)
 	{
-		if (size > mContext->mCapacity) mContext->mCapacity = size;
+		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(Library::RTTI*) * size);
+		mContext->mCapacity = mContext->mSize = size;
 
-		Library::RTTI** temp = mContext->mData.r;
-		mContext->mData.r = static_cast<Library::RTTI**>(malloc(sizeof(Library::RTTI) * mContext->mCapacity));
-		memcpy_s(mContext->mData.r, sizeof(Library::RTTI) * mContext->mSize, temp, sizeof(Library::RTTI) * mContext->mSize);
-
-		if (size < mContext->mSize)
+		if (size <mContext->mSize)
 		{
 			for (std::uint32_t i = size; i < mContext->mSize; i++)
 			{
 				mContext->mData.r[i] = nullptr;
 			}
 		}
-
-		mContext->mSize = size;
 	}
 
 	/// Modifies the capacity of the array to any value greater than or equal to current size
 	/// @Param capacity: The new capacity of the array
 	void PointerState::reserve(std::uint32_t capacity)
 	{
-		if (capacity < mContext->mSize) throw std::exception("Attempting to clobber occupied data");
-
-		Library::RTTI** temp = mContext->mData.r;
-		mContext->mData.r = static_cast<Library::RTTI**>(malloc(sizeof(Library::RTTI*) * capacity));
-		memcpy_s(mContext->mData.r, sizeof(Library::RTTI) * mContext->mSize, temp, sizeof(Library::RTTI) * mContext->mSize);
-
-		if (mContext->mCapacity > 0) { free(temp); }
-		mContext->mCapacity = capacity;
+		if (capacity > mContext->mCapacity)
+		{
+			mContext->mData.vp = realloc(mContext->mData.vp, sizeof(Library::RTTI*) * capacity);
+			mContext->mCapacity = capacity;
+		}
 	}
 
 	/// Clears the value of all elements in the array without changing capacity

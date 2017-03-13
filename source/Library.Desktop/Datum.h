@@ -39,6 +39,8 @@ namespace Library
 	public:
 		union DatumValues
 		{
+			DatumValues() : vp(nullptr) {}
+
 			void* vp;			// Void pointer member for when type doesn't matter
 			std::int32_t* i;	// Integer array pointer
 			float* f;			// Float array pointer

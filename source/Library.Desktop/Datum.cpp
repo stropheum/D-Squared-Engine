@@ -25,7 +25,7 @@ namespace Library
 		if (mCapacity > 0 && !mDataIsExternal)
 		{	// Don't bother clearing memory if there isn't any reserved space
 			setSize(0); // Remove all elements, allowing us to shrink buffer to zero
-			reserve(0); // Reserve frees the old buffer and allocates new size (of nothing)
+//			reserve(0); // Reserve frees the old buffer and allocates new size (of nothing)
 		}
 
 		delete mTypeState;

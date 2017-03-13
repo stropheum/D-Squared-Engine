@@ -89,7 +89,7 @@ namespace TestLibraryDesktop
 			delete(r1);
 			delete(r2);
 			delete(r3);
-
+//
 //			iDatum.clear();
 //			fDatum.clear();
 //			vDatum.clear();
@@ -1676,7 +1676,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(LeakTest)
 		{
-			Library::Datum leaky;
+			Library::Datum leaky(Library::DatumType::Integer);
 			leaky = 5;
 		}
 

@@ -48,35 +48,27 @@ namespace Library
 	/// @Param capacity: The current maximum size of the array
 	void MatrixState::setSize(std::uint32_t size)
 	{
-		if (size > mContext->mCapacity) mContext->mCapacity = size;
+		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(glm::mat4) * size);
+		mContext->mCapacity = mContext->mSize = size;
 
-		glm::mat4* temp = mContext->mData.m;
-		mContext->mData.m = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4) * mContext->mCapacity));
-		memcpy_s(mContext->mData.m, sizeof(glm::mat4) * mContext->mSize, temp, sizeof(glm::mat4) * mContext->mSize);
-
-		if (size < mContext->mSize)
+		if (size <mContext->mSize)
 		{
 			for (std::uint32_t i = size; i < mContext->mSize; i++)
 			{
-				mContext->mData.m[i] = glm::mat4(NULL);
+				mContext->mData.m[i] = glm::mat4(0);
 			}
 		}
-
-		mContext->mSize = size;
 	}
 
 	/// Reserves the capacity of the array to any value greater than or equal to current size
 	/// @Param capacity: The new capacity of the array
 	void MatrixState::reserve(std::uint32_t capacity)
 	{
-		if (capacity < mContext->mSize) throw std::exception("Attempting to clobber occupied data");
-
-		glm::mat4* temp = mContext->mData.m;
-		mContext->mData.m = static_cast<glm::mat4*>(malloc(sizeof(glm::mat4) * capacity));
-		memcpy_s(mContext->mData.m, sizeof(glm::mat4) * mContext->mSize, temp, sizeof(glm::mat4) * mContext->mSize);
-
-		if (mContext->mCapacity > 0) { free(temp); }
-		mContext->mCapacity = capacity;
+		if (capacity > mContext->mCapacity)
+		{
+			mContext->mData.vp = realloc(mContext->mData.vp, sizeof(glm::mat4) * capacity);
+			mContext->mCapacity = capacity;
+		}
 	}
 
 	/// Clears the value of all elements in the array without changing capacity
@@ -84,7 +76,7 @@ namespace Library
 	{
 		if (mContext->mSize > 0)
 		{
-			for (std::uint32_t i = 0; i <mContext->mSize; i++) mContext->mData.m[i] = glm::mat4(NULL);
+			for (std::uint32_t i = 0; i <mContext->mSize; i++) mContext->mData.m[i] = glm::mat4(0);
 			mContext->mSize = 0;
 		}
 	}
