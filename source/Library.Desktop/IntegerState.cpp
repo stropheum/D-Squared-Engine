@@ -50,7 +50,7 @@ namespace Library
 		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(std::int32_t) * size);
 		mContext->mCapacity = mContext->mSize = size;
 
-		if (size <mContext->mSize)
+		if (size < mContext->mSize)
 		{
 			for (std::uint32_t i = size; i < mContext->mSize; i++)
 			{
@@ -75,7 +75,7 @@ namespace Library
 	{
 		if (mContext->mSize > 0)
 		{
-			for (std::uint32_t i = 0; i < mContext->mSize; i++) mContext->mData.i[i] = NULL;
+			for (std::uint32_t i = 0; i < mContext->mSize; i++) mContext->mData.i[i] = 0;
 			mContext->mSize = 0;
 		}
 	}
