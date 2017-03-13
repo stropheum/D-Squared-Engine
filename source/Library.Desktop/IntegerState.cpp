@@ -51,15 +51,18 @@ namespace Library
 
 		std::int32_t* temp = mContext->mData.i;
 		mContext->mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * mContext->mCapacity));
-		memcpy_s(mContext->mData.i, sizeof(std::int32_t) * mContext->mSize, temp, sizeof(std::int32_t) * mContext->mSize);
+//		memcpy_s(mContext->mData.i, sizeof(std::int32_t) * mContext->mSize, temp, sizeof(std::int32_t) * mContext->mSize);
+		memcpy(mContext->mData.i, temp, sizeof(std::int32_t) * mContext->mSize);
 
 		if (size <mContext->mSize)
 		{
 			for (std::uint32_t i = size; i < mContext->mSize; i++)
 			{
-				mContext->mData.i[i] = NULL;
+				mContext->mData.i[i] = 0;
 			}
 		}
+
+		free(temp);
 
 		mContext->mSize = size;
 	}
@@ -112,7 +115,6 @@ namespace Library
 	void IntegerState::setStorage(std::int32_t* data, std::uint32_t size)
 	{
 		if (mContext->mType != DatumType::Integer) throw std::exception("Attempting to reassign Datum Type");
-//		if (mContext->mCapacity > 0) throw std::exception("Set storage called on non-empty Datum");
 		
 		if (mContext->mCapacity > 0) clear();
 

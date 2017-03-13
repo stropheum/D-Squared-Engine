@@ -27,6 +27,7 @@ namespace Library
 			setSize(0); // Remove all elements, allowing us to shrink buffer to zero
 			reserve(0); // Reserve frees the old buffer and allocates new size (of nothing)
 		}
+
 		delete mTypeState;
 	}
 
@@ -62,6 +63,7 @@ namespace Library
 	{	
 		if (this != &rhs)
 		{
+			
 			setType(rhs.mType); // Must set type in order to instantiate mTypeState
 			if (rhs.mDataIsExternal)
 			{
@@ -75,44 +77,43 @@ namespace Library
 				case DatumType::Integer:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+						pushBack(rhs.get<std::int32_t>(i));
 					}
 					break;
 				case DatumType::Float:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(const_cast<Datum&>(rhs).get<float>(i));
+						pushBack(rhs.get<float>(i));
 					}
 					break;
 				case DatumType::Vector:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(const_cast<Datum&>(rhs).get<glm::vec4>(i));
+						pushBack(rhs.get<glm::vec4>(i));
 					}
 					break;
 				case DatumType::Matrix:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(const_cast<Datum&>(rhs).get<glm::mat4>(i));
+						pushBack(rhs.get<glm::mat4>(i));
 					}
 					break;
 				case DatumType::String:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(const_cast<Datum&>(rhs).get<std::string>(i));
+						pushBack(rhs.get<std::string>(i));
 					}
 					break;
 				case DatumType::Pointer:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(const_cast<Datum&>(rhs).get<Library::RTTI*>(i));
+						pushBack(rhs.get<Library::RTTI*>(i));
 					}
 					break;
 				default: break;
 				}
 			}
 		}
-		
 
 		return *this;
 	}
@@ -181,6 +182,9 @@ namespace Library
 //					break;
 //			}
 			mData = rhs.mData;
+			mType = rhs.mType;
+			mCapacity = rhs.mCapacity;
+			mSize = rhs.mSize;
 		}
 
 		rhs.mType = DatumType::Unknown;
@@ -438,6 +442,11 @@ namespace Library
 		if (mType == DatumType::Unknown) mType = type;
 		else throw std::exception("Attempting to change type on Datum object");
 
+		if (mTypeState != nullptr)
+		{
+			delete mTypeState;
+		}
+
 		switch (mType)
 		{
 			case DatumType::Integer:
@@ -510,8 +519,15 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(std::int32_t* data, std::uint32_t size)
 	{
-		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
-		setType(DatumType::Integer);
+//		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
+//		setType(DatumType::Integer);
+//		mTypeState->setStorage(data, size);
+
+		if (mTypeState == nullptr)
+		{
+			setType(DatumType::Integer);
+		}
+
 		mTypeState->setStorage(data, size);
 	}
 
