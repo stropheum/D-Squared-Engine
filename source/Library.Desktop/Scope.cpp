@@ -119,11 +119,43 @@ namespace Library
 		return result.second;
 	}
 
+	/// Appends a new string, Datum pair to the Scope
+	/// @Param key: The key associated with the new Datum object
+	/// @Param found: Output parameter to determine if the Datum was found
+	/// @Return: A reference to the newly created Datum
+	Datum& Scope::append(const std::string& key, bool& found)
+	{
+		bool datumFound;
+		auto iter = mMap.insert(std::pair<std::string, Datum>(key, Datum()), datumFound);
+		found = datumFound;
+
+		if (!datumFound)
+		{
+			mVector.pushBack(iter);
+		}
+		auto& result = (*iter);
+		return result.second;
+	}
+
 	/// Appends a new scope to the current Scope hierarchy
 	/// @Param key: The key of the new Scope being appended
 	/// @Return: A reference to the newly appended Scope
 	Scope& Scope::appendScope(const std::string& key)
 	{
+//		bool scopeFound;
+//		Datum& datum = append(key, scopeFound);
+//
+//		if (!scopeFound)
+//		{
+//			Scope* scope = new Scope();
+//			scope->mParent = this;
+//			datum = scope;
+//			return *scope;
+//		}
+//		else
+//		{
+//			return datum[0];
+//		}
 		Datum* found = find(key);
 		Scope* result = nullptr;
 

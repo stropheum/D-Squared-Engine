@@ -51,6 +51,12 @@ namespace Library
 		/// @Return: A reference to the newly created Datum
 		Datum& append(const std::string& key);
 
+		/// Appends a new string, Datum pair to the Scope
+		/// @Param key: The key associated with the new Datum object
+		/// @Param found: Output parameter to determine if the Datum was found
+		/// @Return: A reference to the newly created Datum
+		Datum& append(const std::string& key, bool& found);
+
 		/// Appends a new scope to the current Scope hierarchy
 		/// @Param key: The key of the new Scope being appended
 		/// @Return: A reference to the newly appended Scope

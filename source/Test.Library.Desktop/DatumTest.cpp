@@ -71,13 +71,14 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD_INITIALIZE(methodInitialize)
 		{
-			initializeLeakDetection();
 			iDatum.clear();
 			fDatum.clear();
 			vDatum.clear();
 			mDatum.clear();
 			sDatum.clear();
 			rDatum.clear();
+			initializeLeakDetection();
+			
 			r1 = new FooRTTI();
 			r2 = new FooRTTI(2);
 			r3 = new FooRTTI(3);
@@ -88,6 +89,14 @@ namespace TestLibraryDesktop
 			delete(r1);
 			delete(r2);
 			delete(r3);
+
+			iDatum.clear();
+			fDatum.clear();
+			vDatum.clear();
+			mDatum.clear();
+			sDatum.clear();
+			rDatum.clear();
+
 			finalizeLeakDetection();
 		}
 
