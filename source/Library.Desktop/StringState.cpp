@@ -40,7 +40,8 @@ namespace Library
 	{
 		if (mContext->mSize > 1) throw std::exception("Invalid assignment invocation");
 		if (mContext->mSize == 0) mContext->setSize(1);
-		new(mContext->mData.s) std::string(rhs);
+//		new(mContext->mData.s) std::string(rhs);
+		mContext->mData.s[0] = rhs;
 		return *mContext;
 	}
 
@@ -48,8 +49,15 @@ namespace Library
 	/// @Param capacity: The current maximum size of the array
 	void StringState::setSize(std::uint32_t size)
 	{
+		if (size < mContext->mSize)
+		{
+			for (std::uint32_t i = size; i < mContext->mSize; i++)
+			{
+				mContext->mData.s[i].std::string::~string();
+			}
+		}
+
 		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(std::string) * size);
-		mContext->mCapacity = mContext->mSize = size;
 
 		if (size > mContext->mSize)
 		{	// If our new size is larger than before, we need to default construct new strings
@@ -59,13 +67,7 @@ namespace Library
 			}
 		}
 
-		else if (size < mContext->mSize)
-		{
-			for (std::uint32_t i = size; i < mContext->mSize; i++)
-			{
-				mContext->mData.s[i].std::string::~string();
-			}
-		}
+		mContext->mCapacity = mContext->mSize = size;
 	}
 
 	/// Modifies the capacity of the array to any value greater than or equal to current size
@@ -87,8 +89,6 @@ namespace Library
 			for (std::uint32_t i = 0; i < mContext->mSize; i++)
 			{	// Placement new an empty string onto the array
 				mContext->mData.s[i].std::string::~string();
-				new(mContext->mData.s + i) std::string("");
-//				mContext->mData.s[i] = "";
 			}
 			mContext->mSize = 0;
 		}

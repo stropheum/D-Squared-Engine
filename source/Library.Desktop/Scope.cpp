@@ -184,7 +184,7 @@ namespace Library
 	/// @Param key: The key associated with the child
 	void Scope::adopt(Scope& child, const std::string& key)
 	{
-		orphan(&child);
+		child.mParent->orphan(&child);
 		auto& appended = appendScope(key);
 		appended = child;
 		child.mParent = this;

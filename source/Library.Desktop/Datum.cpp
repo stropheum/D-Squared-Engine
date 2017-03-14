@@ -675,7 +675,8 @@ namespace Library
 		if (mType != DatumType::String) throw std::exception("Calling set on invalid type");
 		if (index > mSize) throw std::exception("Attempting to set beyond current size");
 		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
-		new(mData.s + index) std::string(value);
+//		new(mData.s + index) std::string(value);
+		mData.s[index] = value;
 	}
 
 	/// Sets a specified index of the array to the specified value

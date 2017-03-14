@@ -175,7 +175,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(scope2.search("Scope one is my daddy") == nullptr);
 			
 			scope2.adopt(childFromScope1, "Scope two is my new daddy");
-			Assert::IsTrue(scope1.find("Scope one is my daddy")->size() == 0);
+			Assert::IsTrue(scope1.find("Scope one is my daddy") == nullptr);
 			Assert::IsTrue(scope2.find("Scope two is my new daddy") != nullptr);
 		}
 
