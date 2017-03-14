@@ -1308,11 +1308,11 @@ namespace TestLibraryDesktop
 
 			rDatum = r1;
 			rDatum.clear();
-			Assert::AreEqual(10u, rDatum.capacity());
+			Assert::AreEqual(1u, rDatum.capacity());
 			Assert::AreEqual(0u, rDatum.size());
 
 			rDatum.clear();
-			Assert::AreEqual(10u, rDatum.capacity());
+			Assert::AreEqual(1u, rDatum.capacity());
 			Assert::AreEqual(0u, rDatum.size());
 		}
 
@@ -1326,6 +1326,8 @@ namespace TestLibraryDesktop
 			Library::Datum iTemp2;
 			iTemp2.setStorage(iStorage, 10);
 			Assert::IsTrue(iTemp == iTemp2);
+
+			free(iStorage);
 		}
 		TEST_METHOD(TestSetStorage_Float)
 		{
@@ -1337,6 +1339,8 @@ namespace TestLibraryDesktop
 			Library::Datum fTemp2;
 			fTemp2.setStorage(fStorage, 10);
 			Assert::IsTrue(fTemp == fTemp2);
+
+			free(fStorage);
 		}
 		TEST_METHOD(TestSetStorage_Vector)
 		{
@@ -1348,6 +1352,8 @@ namespace TestLibraryDesktop
 			Library::Datum vTemp2;
 			vTemp2.setStorage(vStorage, 10);
 			Assert::IsTrue(vTemp == vTemp2);
+
+			free(vStorage);
 		}
 		TEST_METHOD(TestSetStorage_Matrix)
 		{
@@ -1359,6 +1365,8 @@ namespace TestLibraryDesktop
 			Library::Datum mTemp2;
 			mTemp2.setStorage(mStorage, 10);
 			Assert::IsTrue(mTemp == mTemp2);
+
+			free(mStorage);
 		}
 		TEST_METHOD(TestSetStorage_String)
 		{
@@ -1381,6 +1389,8 @@ namespace TestLibraryDesktop
 			Library::Datum rTemp2;
 			rTemp2.setStorage(rStorage, 10);
 			Assert::IsTrue(rTemp == rTemp2);
+
+			free(rStorage);
 		}
 
 		TEST_METHOD(TestSet_Integer)
