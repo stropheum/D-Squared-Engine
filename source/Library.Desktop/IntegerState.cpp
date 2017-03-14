@@ -102,7 +102,10 @@ namespace Library
 	/// @Exception: Thrown if attempting to reassign datum type, or if local memory is already used
 	void IntegerState::setStorage(std::int32_t* data, std::uint32_t size)
 	{
-		if (mContext->mType != DatumType::Integer) throw std::exception("Attempting to reassign Datum Type");
+		if (mContext->mType != DatumType::Integer)
+		{
+			throw std::exception("Attempting to reassign Datum Type");
+		}
 		
 		if (mContext->mCapacity > 0) clear();
 

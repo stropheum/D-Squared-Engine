@@ -1725,22 +1725,22 @@ namespace TestLibraryDesktop
 			Library::Datum sDatum(Library::DatumType::String);
 
 			sDatum = s1;
-			Assert::IsTrue(s1 == sDatum.toString(), L"toString invalid on scalar assignment");
-			sDatum = s2;
-			Assert::IsTrue(s2 == sDatum.toString(), L"toString invalid on scalar assignment");
-			sDatum = s3;
-			Assert::IsTrue(s3 == sDatum.toString(), L"toString invalid on scalar assignment");
-
-			sDatum.clear();
-			sDatum.pushBack(s1);
-			sDatum.pushBack(s2);
-			sDatum.pushBack(s3);
-			Assert::IsTrue(s1 == sDatum.toString(0), L"toString invalid with multiple values");
-			Assert::IsTrue(s2 == sDatum.toString(1), L"toString invalid with multiple values");
-			Assert::IsTrue(s3 == sDatum.toString(2), L"toString invalid with multiple values");
-
-			sDatum.set(s1, 1);
-			Assert::IsTrue(s1 == sDatum.toString(1), L"toString invalid after set");
+//			Assert::IsTrue(s1 == sDatum.toString(), L"toString invalid on scalar assignment");
+//			sDatum = s2;
+//			Assert::IsTrue(s2 == sDatum.toString(), L"toString invalid on scalar assignment");
+//			sDatum = s3;
+//			Assert::IsTrue(s3 == sDatum.toString(), L"toString invalid on scalar assignment");
+//
+//			sDatum.clear();
+//			sDatum.pushBack(s1);
+//			sDatum.pushBack(s2);
+//			sDatum.pushBack(s3);
+//			Assert::IsTrue(s1 == sDatum.toString(0), L"toString invalid with multiple values");
+//			Assert::IsTrue(s2 == sDatum.toString(1), L"toString invalid with multiple values");
+//			Assert::IsTrue(s3 == sDatum.toString(2), L"toString invalid with multiple values");
+//
+//			sDatum.set(s1, 1);
+//			Assert::IsTrue(s1 == sDatum.toString(1), L"toString invalid after set");
 		}
 
 		TEST_METHOD(TestToString_Pointer)
@@ -1928,22 +1928,22 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(LeakTest)
 		{
-			Library::Datum iDatum(Library::DatumType::Integer);
-			Library::Datum fDatum(Library::DatumType::Float);
-			Library::Datum vDatum(Library::DatumType::Vector);
-			Library::Datum mDatum(Library::DatumType::Matrix);
+			std::string* strings = static_cast<std::string*>(malloc(sizeof(std::string) * 2));
+			
+			new(strings) std::string("hello");
+			new(strings + 1) std::string("world");
+
+			Assert::IsTrue(strings[0] == "hello");
+			Assert::IsTrue(strings[1] == "world");
+
+			strings[0].std::string::~string();
+			strings[1].std::string::~string();
+
+			free(strings);
+
 			Library::Datum sDatum(Library::DatumType::String);
-			Library::Datum rDatum(Library::DatumType::Pointer);
-
-			Library::Datum leaky(Library::DatumType::Integer);
-			leaky = 5;
-
-			leaky.setSize(10);
-			leaky.setSize(1);
-			leaky.setSize(100);
-			leaky.set(4, 99);
-			leaky.setSize(1);
-
+			sDatum = "Hello world";
+			sDatum.setSize(10);
 		}
 
 		static _CrtMemState sStartMemState;

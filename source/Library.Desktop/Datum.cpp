@@ -25,7 +25,6 @@ namespace Library
 		if (mCapacity > 0 && !mDataIsExternal)
 		{	// Don't bother clearing memory if there isn't any reserved space
 			setSize(0); // Remove all elements, allowing us to shrink buffer to zero
-//			reserve(0); // Reserve frees the old buffer and allocates new size (of nothing)
 		}
 
 		delete mTypeState;
@@ -443,7 +442,7 @@ namespace Library
 		else throw std::exception("Attempting to change type on Datum object");
 
 		if (mTypeState != nullptr)
-		{
+		{	// If we've already set state, make sure we delete the old type state
 			delete mTypeState;
 		}
 
@@ -537,8 +536,11 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(float* data, std::uint32_t size)
 	{
-		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
-		setType(DatumType::Float);
+		if (mTypeState == nullptr)
+		{
+			setType(DatumType::Float);
+		}
+
 		mTypeState->setStorage(data, size);
 	}
 
@@ -548,8 +550,11 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(glm::vec4* data, std::uint32_t size)
 	{
-		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
-		setType(DatumType::Vector);
+		if (mTypeState == nullptr)
+		{
+			setType(DatumType::Vector);
+		}
+		
 		mTypeState->setStorage(data, size);
 	}
 
@@ -559,8 +564,11 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(glm::mat4* data, std::uint32_t size)
 	{
-		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
-		setType(DatumType::Matrix);
+		if (mTypeState == nullptr)
+		{
+			setType(DatumType::Matrix);
+		}
+		
 		mTypeState->setStorage(data, size);
 	}
 
@@ -570,8 +578,11 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(std::string* data, std::uint32_t size)
 	{
-		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
-		setType(DatumType::String);
+		if (mTypeState == nullptr)
+		{
+			setType(DatumType::String);
+		}
+		
 		mTypeState->setStorage(data, size);
 	}
 
@@ -581,8 +592,11 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(Library::RTTI** data, std::uint32_t size)
 	{
-		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
-		setType(DatumType::Pointer);
+		if (mTypeState == nullptr)
+		{
+			setType(DatumType::Pointer);
+		}
+		
 		mTypeState->setStorage(data, size);
 	}
 
