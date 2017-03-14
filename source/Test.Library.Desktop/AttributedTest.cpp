@@ -50,7 +50,7 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestConstructor)
 		{
 			Library::AttributedFoo myFoo;
-			Assert::IsTrue(myFoo["this"] == &myFoo);
+			Assert::IsTrue(myFoo["this"] == static_cast<Library::RTTI*>(&myFoo));
 		}
 
 		TEST_METHOD(TestCopySemantics)

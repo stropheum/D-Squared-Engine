@@ -13,7 +13,13 @@ namespace Library
 	}
 
 	AttributedFoo::~AttributedFoo()
-	{}
+	{
+		delete[] iArray;
+		delete[] fArray;
+		delete[] vArray;
+		delete[] mArray;
+		delete[] sArray;
+	}
 
 	AttributedFoo::AttributedFoo(const AttributedFoo& rhs) :
 		Attributed(rhs)
