@@ -47,36 +47,27 @@ namespace Library
 	/// @Param capacity: The current size of the array
 	void IntegerState::setSize(std::uint32_t size)
 	{
-		if (size > mContext->mCapacity) mContext->mCapacity = size;
+		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(std::int32_t) * size);
+		mContext->mCapacity = mContext->mSize = size;
 
-		std::int32_t* temp = mContext->mData.i;
-		mContext->mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * mContext->mCapacity));
-		memcpy_s(mContext->mData.i, sizeof(std::int32_t) * mContext->mSize, temp, sizeof(std::int32_t) * mContext->mSize);
-
-		if (size <mContext->mSize)
+		if (size < mContext->mSize)
 		{
 			for (std::uint32_t i = size; i < mContext->mSize; i++)
 			{
-				mContext->mData.i[i] = NULL;
+				mContext->mData.i[i] = 0;
 			}
 		}
-
-		mContext->mSize = size;
 	}
 
 	/// Modifies the capacity of the array to any value greater than or equal to current size
 	/// @Param capacity: The new capacity of the array
 	void IntegerState::reserve(std::uint32_t capacity)
 	{
-		if (capacity < mContext->mSize) throw std::exception("Attempting to clobber occupied data");
-		
-
-		std::int32_t* temp= mContext->mData.i;
-		mContext->mData.i = static_cast<std::int32_t*>(malloc(sizeof(std::int32_t) * capacity));
-		memcpy_s(mContext->mData.i, sizeof(std::int32_t) * mContext->mSize, temp, sizeof(std::int32_t) * mContext->mSize);
-		
-		if (mContext->mCapacity > 0) { free(temp); }
-		mContext->mCapacity = capacity;
+		if (capacity > mContext->mCapacity)
+		{
+			mContext->mData.vp = realloc(mContext->mData.vp, sizeof(std::int32_t) * capacity);
+			mContext->mCapacity = capacity;
+		}
 	}
 
 	/// Clears the value of all elements in the array without changing capacity
@@ -84,7 +75,7 @@ namespace Library
 	{
 		if (mContext->mSize > 0)
 		{
-			for (std::uint32_t i = 0; i < mContext->mSize; i++) mContext->mData.i[i] = NULL;
+			for (std::uint32_t i = 0; i < mContext->mSize; i++) mContext->mData.i[i] = 0;
 			mContext->mSize = 0;
 		}
 	}
@@ -111,9 +102,13 @@ namespace Library
 	/// @Exception: Thrown if attempting to reassign datum type, or if local memory is already used
 	void IntegerState::setStorage(std::int32_t* data, std::uint32_t size)
 	{
-		if (mContext->mType != DatumType::Integer) throw std::exception("Attempting to reassign Datum Type");
-		if (mContext->mCapacity > 0) throw std::exception("Set storage called on non-empty Datum");
+		if (mContext->mType != DatumType::Integer)
+		{
+			throw std::exception("Attempting to reassign Datum Type");
+		}
 		
+		if (mContext->mCapacity > 0) clear();
+
 		mContext->mDataIsExternal = true;
 		mContext->mData.i = data;
 		mContext->mCapacity = mContext->mSize = size;

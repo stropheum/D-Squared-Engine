@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Datum.h"
 #include "ScopeState.h"
+#include "Scope.h"
 
 namespace Library
 {
@@ -25,8 +26,9 @@ namespace Library
 		if (mCapacity > 0 && !mDataIsExternal)
 		{	// Don't bother clearing memory if there isn't any reserved space
 			setSize(0); // Remove all elements, allowing us to shrink buffer to zero
-			reserve(0); // Reserve frees the old buffer and allocates new size (of nothing)
 		}
+
+		delete mTypeState;
 	}
 
 	/// Copy constructor
@@ -59,53 +61,57 @@ namespace Library
 	/// @Return; The newly copied Datum object
 	Datum& Datum::operator=(const Datum& rhs)
 	{	
-		setType(rhs.mType); // Must set type in order to instantiate mTypeState
-		if (rhs.mDataIsExternal)
+		if (this != &rhs)
 		{
-			mTypeState->setStorage(rhs);
-		}
-		else
-		{
-			reserve(rhs.mCapacity);
-			switch (rhs.mType)
+			
+			setType(rhs.mType); // Must set type in order to instantiate mTypeState
+			if (rhs.mDataIsExternal)
 			{
+				mTypeState->setStorage(rhs);
+			}
+			else
+			{
+				reserve(rhs.mCapacity);
+				switch (rhs.mType)
+				{
 				case DatumType::Integer:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+						pushBack(rhs.get<std::int32_t>(i));
 					}
 					break;
 				case DatumType::Float:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(const_cast<Datum&>(rhs).get<float>(i));
+						pushBack(rhs.get<float>(i));
 					}
 					break;
 				case DatumType::Vector:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(const_cast<Datum&>(rhs).get<glm::vec4>(i));
+						pushBack(rhs.get<glm::vec4>(i));
 					}
 					break;
 				case DatumType::Matrix:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(const_cast<Datum&>(rhs).get<glm::mat4>(i));
+						pushBack(rhs.get<glm::mat4>(i));
 					}
 					break;
 				case DatumType::String:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(const_cast<Datum&>(rhs).get<std::string>(i));
+						pushBack(rhs.get<std::string>(i));
 					}
 					break;
 				case DatumType::Pointer:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(const_cast<Datum&>(rhs).get<Library::RTTI*>(i));
+						pushBack(rhs.get<Library::RTTI*>(i));
 					}
 					break;
 				default: break;
+				}
 			}
 		}
 
@@ -124,57 +130,61 @@ namespace Library
 		}
 		else
 		{
-			switch (rhs.mType)
-			{	// Destroy all the data in rhs
-				case DatumType::Integer:
-					for (std::uint32_t i = 0; i < rhs.mSize; i++)
-					{
-						pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
-					}
-					if (rhs.mData.i != nullptr) free(rhs.mData.i);
-					break;
-				case DatumType::Float:
-					for (std::uint32_t i = 0; i < rhs.mSize; i++)
-					{
-						pushBack(const_cast<Datum&>(rhs).get<float>(i));
-					}
-					if (rhs.mData.f != nullptr) free(rhs.mData.f);
-					break;
-				case DatumType::Vector:
-					for (std::uint32_t i = 0; i < rhs.mSize; i++)
-					{
-						pushBack(const_cast<Datum&>(rhs).get<glm::vec4>(i));
-					}
-					if (rhs.mData.v != nullptr) free(rhs.mData.v);
-					break;
-				case DatumType::Matrix:
-					for (std::uint32_t i = 0; i < rhs.mSize; i++)
-					{
-						pushBack(const_cast<Datum&>(rhs).get<glm::mat4>(i));
-					}
-					if (rhs.mData.m != nullptr) free(rhs.mData.m);
-					break;
-				case DatumType::String:
-					for (std::uint32_t i = 0; i < rhs.mSize; i++)
-					{
-						pushBack(const_cast<Datum&>(rhs).get<std::string>(i));
-					}
-					if (rhs.mCapacity > 0)
-					{
-						rhs.setSize(0);
-						rhs.reserve(0);
-					};
-					break;
-				case DatumType::Pointer:
-					for (std::uint32_t i = 0; i < rhs.mSize; i++)
-					{
-						pushBack(const_cast<Datum&>(rhs).get<Library::RTTI*>(i));
-					}
-					if (rhs.mData.r != nullptr) free(rhs.mData.r);
-					break;
-				default:
-					break;
-			}
+//			switch (rhs.mType)
+//			{	// Destroy all the data in rhs
+//				case DatumType::Integer:
+//					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+//					{
+//						pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
+//					}
+//					if (rhs.mData.i != nullptr) free(rhs.mData.i);
+//					break;
+//				case DatumType::Float:
+//					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+//					{
+//						pushBack(const_cast<Datum&>(rhs).get<float>(i));
+//					}
+//					if (rhs.mData.f != nullptr) free(rhs.mData.f);
+//					break;
+//				case DatumType::Vector:
+//					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+//					{
+//						pushBack(const_cast<Datum&>(rhs).get<glm::vec4>(i));
+//					}
+//					if (rhs.mData.v != nullptr) free(rhs.mData.v);
+//					break;
+//				case DatumType::Matrix:
+//					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+//					{
+//						pushBack(const_cast<Datum&>(rhs).get<glm::mat4>(i));
+//					}
+//					if (rhs.mData.m != nullptr) free(rhs.mData.m);
+//					break;
+//				case DatumType::String:
+//					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+//					{
+//						pushBack(const_cast<Datum&>(rhs).get<std::string>(i));
+//					}
+//					if (rhs.mCapacity > 0)
+//					{
+//						rhs.setSize(0);
+//						rhs.reserve(0);
+//					};
+//					break;
+//				case DatumType::Pointer:
+//					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+//					{
+//						pushBack(const_cast<Datum&>(rhs).get<Library::RTTI*>(i));
+//					}
+//					if (rhs.mData.r != nullptr) free(rhs.mData.r);
+//					break;
+//				default:
+//					break;
+//			}
+			mData = rhs.mData;
+			mType = rhs.mType;
+			mCapacity = rhs.mCapacity;
+			mSize = rhs.mSize;
 		}
 
 		rhs.mType = DatumType::Unknown;
@@ -317,11 +327,20 @@ namespace Library
 
 	/// Comparison operator for mat4
 	/// @Param rhs: The matrix being  compared against
-	/// @Return: True if the matrices are equivalent. FAlse if size is not 1 or if type is invalid
+	/// @Return: True if the matrices are equivalent. False if size is not 1 or if type is invalid
 	bool Datum::operator==(const glm::mat4& rhs) const
 	{
 		return mType == DatumType::Matrix &&
 			mSize == 1 && mData.m[0] == rhs;
+	}
+
+	/// Comparison operator for Scope
+	/// @Param rhs: The scope being  compared against
+	/// @Return: True if the scopes are equivalent. False if size is not 1 or if type is invalid
+	bool Datum::operator==(const Scope* rhs) const
+	{
+		return mType == DatumType::Scope &&
+			mSize == 1 && mData.sc[0] == rhs;
 	}
 
 	/// Comparison operator for std::string
@@ -423,6 +442,11 @@ namespace Library
 		if (mType == DatumType::Unknown) mType = type;
 		else throw std::exception("Attempting to change type on Datum object");
 
+		if (mTypeState != nullptr)
+		{	// If we've already set state, make sure we delete the old type state
+			delete mTypeState;
+		}
+
 		switch (mType)
 		{
 			case DatumType::Integer:
@@ -495,8 +519,15 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(std::int32_t* data, std::uint32_t size)
 	{
-		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
-		setType(DatumType::Integer);
+//		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
+//		setType(DatumType::Integer);
+//		mTypeState->setStorage(data, size);
+
+		if (mTypeState == nullptr)
+		{
+			setType(DatumType::Integer);
+		}
+
 		mTypeState->setStorage(data, size);
 	}
 
@@ -506,8 +537,11 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(float* data, std::uint32_t size)
 	{
-		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
-		setType(DatumType::Float);
+		if (mTypeState == nullptr)
+		{
+			setType(DatumType::Float);
+		}
+
 		mTypeState->setStorage(data, size);
 	}
 
@@ -517,8 +551,11 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(glm::vec4* data, std::uint32_t size)
 	{
-		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
-		setType(DatumType::Vector);
+		if (mTypeState == nullptr)
+		{
+			setType(DatumType::Vector);
+		}
+		
 		mTypeState->setStorage(data, size);
 	}
 
@@ -528,8 +565,11 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(glm::mat4* data, std::uint32_t size)
 	{
-		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
-		setType(DatumType::Matrix);
+		if (mTypeState == nullptr)
+		{
+			setType(DatumType::Matrix);
+		}
+		
 		mTypeState->setStorage(data, size);
 	}
 
@@ -539,8 +579,11 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(std::string* data, std::uint32_t size)
 	{
-		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
-		setType(DatumType::String);
+		if (mTypeState == nullptr)
+		{
+			setType(DatumType::String);
+		}
+		
 		mTypeState->setStorage(data, size);
 	}
 
@@ -550,8 +593,11 @@ namespace Library
 	/// @Param size: The number of elements available in the external storage
 	void Datum::setStorage(Library::RTTI** data, std::uint32_t size)
 	{
-		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
-		setType(DatumType::Pointer);
+		if (mTypeState == nullptr)
+		{
+			setType(DatumType::Pointer);
+		}
+		
 		mTypeState->setStorage(data, size);
 	}
 
@@ -630,7 +676,8 @@ namespace Library
 		if (mType != DatumType::String) throw std::exception("Calling set on invalid type");
 		if (index > mSize) throw std::exception("Attempting to set beyond current size");
 		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
-		new(mData.s + index) std::string(value);
+//		new(mData.s + index) std::string(value);
+		mData.s[index] = value;
 	}
 
 	/// Sets a specified index of the array to the specified value
@@ -712,7 +759,8 @@ namespace Library
 			{
 				if(mData.sc[i] == scope)
 				{
-					mData.sc[i] = nullptr;
+//					mData.sc[i] = nullptr;
+					mData.sc[i]->~Scope();
 					memmove(mData.sc[i], mData.sc[i + 1], mSize - i - 1);
 					mSize--;
 				}

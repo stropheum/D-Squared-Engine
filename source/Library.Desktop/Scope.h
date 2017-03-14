@@ -35,6 +35,11 @@ namespace Library
 		/// @Return: The Datum associated with the key if it exists. Null pointer otherwise
 		Datum* find(const std::string& key);
 
+		/// Finds the Datum with the associated key in the Scope, if it exists
+		/// @Param key: The key being used to search for the associated Datum
+		/// @Return: The Datum associated with the key if it exists. Null pointer otherwise
+		Datum* const find(const std::string& key) const;
+
 		/// Searches the Scope hierarchy for the specified key, if it exists
 		/// @Param key: The key of the string, Datum pair being searched for
 		/// @Param foundScope: The pointer to the Scope pointer that is found. Optionally included and set to the found scope if it exists
@@ -45,6 +50,12 @@ namespace Library
 		/// @Param key: The key associated with the new Datum object
 		/// @Return: A reference to the newly created Datum
 		Datum& append(const std::string& key);
+
+		/// Appends a new string, Datum pair to the Scope
+		/// @Param key: The key associated with the new Datum object
+		/// @Param found: Output parameter to determine if the Datum was found
+		/// @Return: A reference to the newly created Datum
+		Datum& append(const std::string& key, bool& found);
 
 		/// Appends a new scope to the current Scope hierarchy
 		/// @Param key: The key of the new Scope being appended
@@ -101,9 +112,11 @@ namespace Library
 		/// Clears the Vector and HashMap of all values
 		void clear();
 
-		/// Removes the reference to the child from the parent, and eliminates the child's reference to its parent
-		/// @Param child: The Scope pointer being orphaned
-		void orphan(Scope* child);
+//		/// Removes the reference to the child from the parent, and eliminates the child's reference to its parent
+//		/// @Param child: The Scope pointer being orphaned
+//		void orphan(Scope* child);
+
+		void orphan();
 
 		/// The HashMap that stores the true string, Datum pairs for Scope
 		HashMap<const std::string, Datum> mMap;

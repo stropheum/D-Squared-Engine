@@ -85,6 +85,27 @@ namespace Library
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
+	typename HashMap<TKey, TValue, HashFunctor>::Iterator HashMap<TKey, TValue, HashFunctor>::insert(const PairType& entry, bool& found)
+	{
+		auto iter = find(entry.first);
+
+		if (iter == end())
+		{
+			found = false;
+			mSize++;
+			std::uint32_t bucketIndex = mHashFunctor(entry.first) % mBucketCount;
+			auto vIter = mBuckets[bucketIndex].pushBack(entry);
+			iter = HashMap<TKey, TValue>::Iterator(this, bucketIndex, vIter);
+		}
+		else
+		{
+			found = true;
+		}
+
+		return iter;
+	}
+
+	template <typename TKey, typename TValue, typename HashFunctor>
 	void HashMap<TKey,TValue, HashFunctor>::remove(const TKey& key)
 	{
 		auto iter = find(key);

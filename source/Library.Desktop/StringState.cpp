@@ -40,6 +40,7 @@ namespace Library
 	{
 		if (mContext->mSize > 1) throw std::exception("Invalid assignment invocation");
 		if (mContext->mSize == 0) mContext->setSize(1);
+//		new(mContext->mData.s) std::string(rhs);
 		mContext->mData.s[0] = rhs;
 		return *mContext;
 	}
@@ -48,44 +49,36 @@ namespace Library
 	/// @Param capacity: The current maximum size of the array
 	void StringState::setSize(std::uint32_t size)
 	{
-		if (size > mContext->mCapacity) mContext->mCapacity = size;
-
-		std::string* temp = mContext->mData.s;
-		mContext->mData.s = new std::string[mContext->mCapacity];
-		for (std::uint32_t i = 0; i < mContext->mSize; i++)
-		{
-			mContext->mData.s[i] = temp[i];
-		}
-
 		if (size < mContext->mSize)
 		{
 			for (std::uint32_t i = size; i < mContext->mSize; i++)
 			{
-				mContext->mData.s[i] = "";
+				mContext->mData.s[i].std::string::~string();
 			}
 		}
 
-		if (mContext->mSize > 0) { delete[] temp; }
+		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(std::string) * size);
 
-		mContext->mSize = size;
+		if (size > mContext->mSize)
+		{	// If our new size is larger than before, we need to default construct new strings
+			for (std::uint32_t i = mContext->mSize; i < size; i++)
+			{	// Use placement new to construct new strings
+				new(mContext->mData.s + i) std::string("");
+			}
+		}
+
+		mContext->mCapacity = mContext->mSize = size;
 	}
 
 	/// Modifies the capacity of the array to any value greater than or equal to current size
 	/// @Param capacity: The new capacity of the array
 	void StringState::reserve(std::uint32_t capacity)
 	{
-		if (capacity < mContext->mSize) throw std::exception("Attempting to clobber occupied data");
-
-		std::string* temp = mContext->mData.s;
-		mContext->mData.s = new std::string[capacity];
-		for (std::uint32_t i = 0; i < mContext->mSize; i++)
+		if (capacity > mContext->mCapacity)
 		{
-			mContext->mData.s[i] = temp[i];
+			mContext->mData.vp = realloc(mContext->mData.vp, sizeof(std::string) * capacity);
+			mContext->mCapacity = capacity;
 		}
-
-		if (mContext->mCapacity > 0) { delete[] temp; }
-
-		mContext->mCapacity = capacity;
 	}
 
 	/// Clears the value of all elements in the array without changing capacity
@@ -93,7 +86,10 @@ namespace Library
 	{
 		if (mContext->mSize > 0)
 		{
-			for (std::uint32_t i = 0; i < mContext->mSize; i++) mContext->mData.s[i] = "";
+			for (std::uint32_t i = 0; i < mContext->mSize; i++)
+			{	// Placement new an empty string onto the array
+				mContext->mData.s[i].std::string::~string();
+			}
 			mContext->mSize = 0;
 		}
 	}
@@ -102,7 +98,7 @@ namespace Library
 	/// @Param value: The string value being parsed
 	/// @Param index: The index of the array being assigned to
 	void StringState::setFromString(const std::string& value, const std::uint32_t& index)
-	{   // Strings don't have to be parsed, so they can be passed directly top set
+	{   // Strings don't have to be parsed, so they can be passed directly to set
 		mContext->set(value, index); 
 	}
 
@@ -119,9 +115,13 @@ namespace Library
 	/// @Exception: Thrown if attempting to reassign datum type, or if local memory is already used
 	void StringState::setStorage(std::string* data, std::uint32_t size)
 	{
-		if (mContext->mType != DatumType::String) throw std::exception("Attempting to reassign Datum Type");
-		if (mContext->mCapacity > 0) throw std::exception("Set storage called on non-empty Datum");
+		if (mContext->mType != DatumType::String)
+		{
+			throw std::exception("Attempting to reassign Datum Type");
+		}
 		
+		if (mContext->mCapacity > 0) { clear(); }
+
 		mContext->mDataIsExternal = true;
 		mContext->mData.s = data;
 		mContext->mCapacity = mContext->mSize = size;

@@ -39,6 +39,8 @@ namespace Library
 	public:
 		union DatumValues
 		{
+			DatumValues() : vp(nullptr) {}
+
 			void* vp;			// Void pointer member for when type doesn't matter
 			std::int32_t* i;	// Integer array pointer
 			float* f;			// Float array pointer
@@ -158,8 +160,13 @@ namespace Library
 
 		/// Comparison operator for mat4
 		/// @Param rhs: The matrix being  compared against
-		/// @Return: True if the matrices are equivalent. FAlse if size is not 1 or if type is invalid
+		/// @Return: True if the matrices are equivalent. False if size is not 1 or if type is invalid
 		bool operator==(const glm::mat4& rhs) const;
+
+		/// Comparison operator for Scope
+		/// @Param rhs: The scope being  compared against
+		/// @Return: True if the scopes are equivalent. False if size is not 1 or if type is invalid
+		bool operator==(const Scope* rhs) const;
 
 		/// Comparison operator for std::string
 		/// @Param rhs: The string being compared against
@@ -378,6 +385,8 @@ namespace Library
 		/// @Exception: Thrown if index is greater than or equal to current size
 		template <typename T> T& get(const std::uint32_t index = 0);
 
+		template<typename T> T& get(const std::uint32_t index = 0) const;
+
 	private:
 		TypeState* mTypeState; /// State pattern object. Type-specific tasks will be delegated to this
 		DatumType mType; /// The type of the Datum object
@@ -402,6 +411,15 @@ namespace Library
 		return mData.i[index];
 	}
 
+	template<>
+	inline std::int32_t& Datum::get(const std::uint32_t index) const
+	{
+		if (mType != DatumType::Integer) throw std::exception("Calling get on invalid type");
+		if (mData.i == nullptr) throw std::exception("Attempting to dereference nullptr");
+		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
+		return mData.i[index];
+	}
+
 	/// Template specialization for getting a float value
 	/// @Param index: The index of the array being retrieved
 	/// @Return: The value of the array at the specified index
@@ -410,6 +428,15 @@ namespace Library
 	/// @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	template<>
 	inline float& Datum::get(const std::uint32_t index)
+	{
+		if (mType != DatumType::Float) throw std::exception("Calling get on invalid type");
+		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
+		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
+		return mData.f[index];
+	}
+
+	template<>
+	inline float& Datum::get(const std::uint32_t index) const
 	{
 		if (mType != DatumType::Float) throw std::exception("Calling get on invalid type");
 		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
@@ -432,6 +459,15 @@ namespace Library
 		return mData.v[index];
 	}
 
+	template<>
+	inline glm::vec4& Datum::get(const std::uint32_t index) const
+	{
+		if (mType != DatumType::Vector) throw std::exception("Calling get on invalid type");
+		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
+		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
+		return mData.v[index];
+	}
+
 	/// Template specialization for getting a matrix value
 	/// @Param index: The index of the array being retrieved
 	/// @Return: The value of the array at the specified index
@@ -440,6 +476,15 @@ namespace Library
 	/// @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	template<>
 	inline glm::mat4& Datum::get(const std::uint32_t index)
+	{
+		if (mType != DatumType::Matrix) throw std::exception("Calling get on invalid type");
+		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
+		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
+		return mData.m[index];
+	}
+
+	template<>
+	inline glm::mat4& Datum::get(const std::uint32_t index) const
 	{
 		if (mType != DatumType::Matrix) throw std::exception("Calling get on invalid type");
 		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
@@ -462,6 +507,15 @@ namespace Library
 		return mData.sc[index];
 	}
 
+	template<>
+	inline Scope*& Datum::get(const std::uint32_t index) const
+	{
+		if (mType != DatumType::Scope) throw std::exception("Calling et on invalid type");
+		if (mData.sc == nullptr) throw std::exception("Attempting to dereference nullptr");
+		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
+		return mData.sc[index];
+	}
+
 	/// Template specialization for getting a string value
 	/// @Param index: The index of the array being retrieved
 	/// @Return: The value of the array at the specified index
@@ -477,6 +531,15 @@ namespace Library
 		return mData.s[index];
 	}
 
+	template<>
+	inline std::string& Datum::get(const std::uint32_t index) const
+	{
+		if (mType != DatumType::String) throw std::exception("Calling get on invalid type");
+		if (mData.s == nullptr) throw std::exception("Attempting to dereference nullptr");
+		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
+		return mData.s[index];
+	}
+
 	/// Template specialization for getting an RTTI pointer value
 	/// @Param index: The index of the array being retrieved
 	/// @Return: The value of the array at the specified index
@@ -485,6 +548,15 @@ namespace Library
 	/// @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	template<>
 	inline Library::RTTI*& Datum::get(const std::uint32_t index)
+	{
+		if (mType != DatumType::Pointer) throw std::exception("Calling get on invalid type");
+		if (mData.r == nullptr) throw std::exception("Attempting to dereference nullptr");
+		if (index >= mSize) throw std::exception("Accessing beyond array bounds");
+		return mData.r[index];
+	}
+
+	template<>
+	inline Library::RTTI*& Datum::get(const std::uint32_t index) const
 	{
 		if (mType != DatumType::Pointer) throw std::exception("Calling get on invalid type");
 		if (mData.r == nullptr) throw std::exception("Attempting to dereference nullptr");
