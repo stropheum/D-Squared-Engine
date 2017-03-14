@@ -142,20 +142,6 @@ namespace Library
 	/// @Return: A reference to the newly appended Scope
 	Scope& Scope::appendScope(const std::string& key)
 	{
-//		bool scopeFound;
-//		Datum& datum = append(key, scopeFound);
-//
-//		if (!scopeFound)
-//		{
-//			Scope* scope = new Scope();
-//			scope->mParent = this;
-//			datum = scope;
-//			return *scope;
-//		}
-//		else
-//		{
-//			return datum[0];
-//		}
 		Datum* found = find(key);
 		Scope* result = nullptr;
 
@@ -184,12 +170,11 @@ namespace Library
 	/// @Param key: The key associated with the child
 	void Scope::adopt(Scope& child, const std::string& key)
 	{
-//		child.mParent->orphan(&child);
+		Datum& datum = append(key);
+		datum.setType(DatumType::Scope);
 		child.orphan();
-		Scope& appended = appendScope(key);
 		child.mParent = this;
-		appended = child;
-		child.~Scope();
+		datum.pushBack(&child);
 	}
 
 	/// Accessor method for the parent of the current Scope
@@ -322,27 +307,13 @@ namespace Library
 		mParent = nullptr;
 	}
 
-//	/// Removes the reference to the child from the parent, and eliminates the child's reference to its parent
-//	/// @Param child: The Scope pointer being orphaned
-//	void Scope::orphan(Scope* child)
-//	{
-//		if (child != nullptr)
-//		{
-//			Scope& parent = *child->getParent();
-//			if (&parent == this)
-//			{
-//				std::string key = parent.findName(child);
-//				parent[key].remove(child);
-//				child->mParent = nullptr;
-//			}
-//		}
-//	}
-
+	/// Removes the reference to the child from the parent, and eliminates the child's reference to its parent
+	/// @Param child: The Scope pointer being orphaned
 	void Scope::orphan()
 	{
 		Scope* parent = getParent();
 		std::string key = parent->findName(this);
-
+		
 		auto& parentVector = parent->mVector;
 		for (std::uint32_t i = 0; i < parentVector.size(); i++)
 		{	// Search the vector for the index that matches
@@ -350,21 +321,11 @@ namespace Library
 			std::string pKey = parentVector[i]->first;
 			if (pKey == key)
 			{	// we found the index, so we're going to jam everything down
-				for (std::uint32_t j = i; j < parentVector.size() - 1; j++)
-				{
-					parentVector[j] = parentVector[j + 1];
-				}
-				break;
+				parentVector.remove(parentVector[i]);
 			}
 		}
-		// get rid of the last element because it's going to be a duplicate and
-		// give an erroneous size
-		if (parentVector.size() > 0)
-		{
-			parentVector.popBack();
-		}
 
-// Eliminate the key from the hashmap
+		// Eliminate the key from the hashmap
 		parent->mMap.remove(key);
 
 		mParent = nullptr;

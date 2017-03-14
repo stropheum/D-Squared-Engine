@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Datum.h"
 #include "ScopeState.h"
+#include "Scope.h"
 
 namespace Library
 {
@@ -758,7 +759,8 @@ namespace Library
 			{
 				if(mData.sc[i] == scope)
 				{
-					mData.sc[i] = nullptr;
+//					mData.sc[i] = nullptr;
+					mData.sc[i]->~Scope();
 					memmove(mData.sc[i], mData.sc[i + 1], mSize - i - 1);
 					mSize--;
 				}
