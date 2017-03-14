@@ -184,10 +184,12 @@ namespace Library
 	/// @Param key: The key associated with the child
 	void Scope::adopt(Scope& child, const std::string& key)
 	{
-		child.mParent->orphan(&child);
-		auto& appended = appendScope(key);
-		appended = child;
+//		child.mParent->orphan(&child);
+		child.orphan();
+		Scope& appended = appendScope(key);
 		child.mParent = this;
+		appended = child;
+		child.~Scope();
 	}
 
 	/// Accessor method for the parent of the current Scope
@@ -320,20 +322,52 @@ namespace Library
 		mParent = nullptr;
 	}
 
-	/// Removes the reference to the child from the parent, and eliminates the child's reference to its parent
-	/// @Param child: The Scope pointer being orphaned
-	void Scope::orphan(Scope* child)
+//	/// Removes the reference to the child from the parent, and eliminates the child's reference to its parent
+//	/// @Param child: The Scope pointer being orphaned
+//	void Scope::orphan(Scope* child)
+//	{
+//		if (child != nullptr)
+//		{
+//			Scope& parent = *child->getParent();
+//			if (&parent == this)
+//			{
+//				std::string key = parent.findName(child);
+//				parent[key].remove(child);
+//				child->mParent = nullptr;
+//			}
+//		}
+//	}
+
+	void Scope::orphan()
 	{
-		if (child != nullptr)
-		{
-			Scope& parent = *child->getParent();
-			if (&parent == this)
-			{
-				std::string key = parent.findName(child);
-				parent[key].remove(child);
-				child->mParent = nullptr;
+		Scope* parent = getParent();
+		std::string key = parent->findName(this);
+
+		auto& parentVector = parent->mVector;
+		for (std::uint32_t i = 0; i < parentVector.size(); i++)
+		{	// Search the vector for the index that matches
+
+			std::string pKey = parentVector[i]->first;
+			if (pKey == key)
+			{	// we found the index, so we're going to jam everything down
+				for (std::uint32_t j = i; j < parentVector.size() - 1; j++)
+				{
+					parentVector[j] = parentVector[j + 1];
+				}
+				break;
 			}
 		}
+		// get rid of the last element because it's going to be a duplicate and
+		// give an erroneous size
+		if (parentVector.size() > 0)
+		{
+			parentVector.popBack();
+		}
+
+// Eliminate the key from the hashmap
+		parent->mMap.remove(key);
+
+		mParent = nullptr;
 	}
 
 #pragma endregion

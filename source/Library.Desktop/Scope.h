@@ -112,9 +112,11 @@ namespace Library
 		/// Clears the Vector and HashMap of all values
 		void clear();
 
-		/// Removes the reference to the child from the parent, and eliminates the child's reference to its parent
-		/// @Param child: The Scope pointer being orphaned
-		void orphan(Scope* child);
+//		/// Removes the reference to the child from the parent, and eliminates the child's reference to its parent
+//		/// @Param child: The Scope pointer being orphaned
+//		void orphan(Scope* child);
+
+		void orphan();
 
 		/// The HashMap that stores the true string, Datum pairs for Scope
 		HashMap<const std::string, Datum> mMap;

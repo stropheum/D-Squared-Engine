@@ -1284,17 +1284,17 @@ namespace TestLibraryDesktop
 
 			sDatum.setSize(10);
 			sDatum.clear();
-//			Assert::AreEqual(10u, sDatum.capacity());
-//			Assert::AreEqual(0u, sDatum.size());
-//
-//			sDatum = s1;
-//			sDatum.clear();
-//			Assert::AreEqual(1u, sDatum.capacity());
-//			Assert::AreEqual(0u, sDatum.size());
-//
-//			sDatum.clear();
-//			Assert::AreEqual(1u, sDatum.capacity());
-//			Assert::AreEqual(0u, sDatum.size());
+			Assert::AreEqual(10u, sDatum.capacity());
+			Assert::AreEqual(0u, sDatum.size());
+
+			sDatum = s1;
+			sDatum.clear();
+			Assert::AreEqual(1u, sDatum.capacity());
+			Assert::AreEqual(0u, sDatum.size());
+
+			sDatum.clear();
+			Assert::AreEqual(1u, sDatum.capacity());
+			Assert::AreEqual(0u, sDatum.size());
 		}
 
 		TEST_METHOD(TestClear_Pointer)
