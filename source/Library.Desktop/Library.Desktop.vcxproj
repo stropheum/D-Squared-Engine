@@ -166,6 +166,7 @@
     <ClInclude Include="FloatState.h" />
     <ClInclude Include="HashMap.h" />
     <ClInclude Include="IntegerState.h" />
+    <ClInclude Include="IXmlParseHelper.h" />
     <ClInclude Include="MatrixState.h" />
     <ClInclude Include="PointerState.h" />
     <ClInclude Include="RTTI.h" />
@@ -177,12 +178,14 @@
     <ClInclude Include="TypeState.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="VectorState.h" />
+    <ClInclude Include="XmlParseMaster.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Attributed.cpp" />
     <ClCompile Include="Datum.cpp" />
     <ClCompile Include="FloatState.cpp" />
     <ClCompile Include="IntegerState.cpp" />
+    <ClCompile Include="IXmlParseHelper.cpp" />
     <ClCompile Include="MatrixState.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -200,6 +203,7 @@
     <ClCompile Include="StringState.cpp" />
     <ClCompile Include="TypeState.cpp" />
     <ClCompile Include="VectorState.cpp" />
+    <ClCompile Include="XmlParseMaster.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HashMap.inl" />

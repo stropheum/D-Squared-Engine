@@ -56,6 +56,15 @@
     <Filter Include="Attributed">
       <UniqueIdentifier>{ab220c37-ca5a-4ede-bd5d-0a2f424a2b09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="XmlParser">
+      <UniqueIdentifier>{962178d1-b14d-42ba-9a05-71ca9c8e3eea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XmlParser\IXmlParseHelper">
+      <UniqueIdentifier>{7e46eaf5-46c6-4e59-a7e1-28bf125a2dd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XmlParser\XmlParseMaster">
+      <UniqueIdentifier>{6f080fac-7767-40af-ad9a-3cddfcc1d70d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -112,6 +121,12 @@
     <ClInclude Include="Attributed.h">
       <Filter>Attributed</Filter>
     </ClInclude>
+    <ClInclude Include="IXmlParseHelper.h">
+      <Filter>XmlParser\IXmlParseHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlParseMaster.h">
+      <Filter>XmlParser\XmlParseMaster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Datum.cpp">
@@ -149,6 +164,12 @@
     </ClCompile>
     <ClCompile Include="Attributed.cpp">
       <Filter>Attributed</Filter>
+    </ClCompile>
+    <ClCompile Include="IXmlParseHelper.cpp">
+      <Filter>XmlParser\IXmlParseHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="XmlParseMaster.cpp">
+      <Filter>XmlParser\XmlParseMaster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
