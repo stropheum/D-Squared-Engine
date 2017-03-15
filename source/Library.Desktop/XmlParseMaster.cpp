@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "XmlParseMaster.h"
+#include "expat.h"
 
 
 namespace Library
