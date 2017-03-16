@@ -210,6 +210,7 @@
     </ClCompile>
     <ClCompile Include="SListTest.cpp" />
     <ClCompile Include="VectorTest.cpp" />
+    <ClCompile Include="XmlParserTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library.Desktop\Library.Desktop.vcxproj">
