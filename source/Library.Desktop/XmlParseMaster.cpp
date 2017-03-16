@@ -7,9 +7,7 @@ namespace Library
 {
 	XmlParseMaster::XmlParseMaster():
 		mActiveFileName(""), mSharedData(nullptr)
-	{
-		// TODO: Implement constructor
-	}
+	{}
 
 	XmlParseMaster::~XmlParseMaster()
 	{
@@ -22,24 +20,20 @@ namespace Library
 		return this;
 	}
 
-	void XmlParseMaster::addHelper(const IXmlParseHelper& helper)
+	void XmlParseMaster::addHelper(IXmlParseHelper& helper)
 	{
-		UNREFERENCED_PARAMETER(helper);
-		// TODO: Implement method
+		mHelpers.pushBack(&helper);
 	}
 
-	void XmlParseMaster::removeHelper(const IXmlParseHelper& helper)
+	void XmlParseMaster::removeHelper(IXmlParseHelper& helper)
 	{
-		UNREFERENCED_PARAMETER(helper);
-		// TODO: Implement method
+		mHelpers.remove(&helper);
 	}
 
-	void XmlParseMaster::parse(char** xmlData, std::uint32_t length, bool endOfFile)
+	void XmlParseMaster::parse(char* const xmlData, const std::uint32_t length, const bool endOfFile)
 	{
-		UNREFERENCED_PARAMETER(xmlData);
-		UNREFERENCED_PARAMETER(length);
-		UNREFERENCED_PARAMETER(endOfFile);
-		// TODO: Thinly wrap expat's "parse" function
+		// What do I pass in as the XML_Parser argument?
+		XML_Parse(nullptr, xmlData, length, endOfFile);
 	}
 
 	void XmlParseMaster::parseFromFile(std::string fileName)

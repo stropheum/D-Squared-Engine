@@ -1,17 +1,19 @@
 #include "pch.h"
 #include "IXmlParseHelper.h"
+#include "XmlParseMaster.h"
 
 
 namespace Library
 {
-	IXmlParseHelper::IXmlParseHelper()
+	IXmlParseHelper::IXmlParseHelper(XmlParseMaster& xmlParseMaster):
+		mXmlParseMaster(xmlParseMaster)
 	{
-		// TODO: Implement constructor
+		mXmlParseMaster.addHelper(*this);
 	}
 
 	IXmlParseHelper::~IXmlParseHelper()
 	{
-		// TODO: Implement destructor
+		mXmlParseMaster.removeHelper(*this);
 	}
 
 	void IXmlParseHelper::initialize()

@@ -1,4 +1,5 @@
 #pragma once
+#include "Vector.h"
 #include "IXmlParseHelper.h"
 
 
@@ -62,9 +63,9 @@ namespace Library
 		~XmlParseMaster();
 
 		XmlParseMaster* clone();
-		void addHelper(const IXmlParseHelper& helper);
-		void removeHelper(const IXmlParseHelper& helper);
-		void parse(char** xmlData, std::uint32_t length, bool endOfFile);
+		void addHelper(IXmlParseHelper& helper);
+		void removeHelper(IXmlParseHelper& helper);
+		void parse(char* const xmlData, const std::uint32_t length, const bool endOfFile);
 		void parseFromFile(std::string fileName);
 		const std::string& getFileName() const;
 		void setSharedData(SharedData* const sharedData);
@@ -77,6 +78,7 @@ namespace Library
 
 		std::string mActiveFileName;
 		SharedData* mSharedData;
+		Vector<IXmlParseHelper*> mHelpers;
 	};
 }
 
