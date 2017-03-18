@@ -6,7 +6,7 @@
 namespace Library
 {
 	IXmlParseHelper::IXmlParseHelper(XmlParseMaster& xmlParseMaster):
-		mXmlParseMaster(xmlParseMaster)
+		mXmlParseMaster(xmlParseMaster), mValidElementName("")
 	{
 		mXmlParseMaster.addHelper(*this);
 	}
@@ -23,10 +23,14 @@ namespace Library
 
 	bool IXmlParseHelper::startElementHandler(const std::string& element, const HashMap<std::string, std::string> attributes)
 	{
-		UNREFERENCED_PARAMETER(element);
-		UNREFERENCED_PARAMETER(attributes);
-		// TODO: Check if this helper can handle the element
-		return false;
+		bool attributesContainsElement = attributes.containsKey(element);
+
+		if (attributesContainsElement)
+		{
+			// TODO: Handle the element. This should only be done at lower levels though, probably
+		}
+
+		return attributesContainsElement;
 	}
 
 	bool IXmlParseHelper::endElementHandler(const std::string& element)

@@ -7,17 +7,22 @@ namespace Library
 {
 	XmlParseMaster::XmlParseMaster():
 		mActiveFileName(""), mSharedData(nullptr)
-	{}
+	{
+		mXmlParser = XML_ParserCreate(nullptr);
+		XML_SetElementHandler(mXmlParser, startElementHandler, endElementHandler);
+	}
 
 	XmlParseMaster::~XmlParseMaster()
 	{
 		delete mSharedData;
 	}
 
-	XmlParseMaster* XmlParseMaster::clone()
+	XmlParseMaster* XmlParseMaster::clone() const
 	{
-		// TODO: Implement clone method
-		return this;
+		XmlParseMaster* newParseMaster = new XmlParseMaster();
+		newParseMaster->mActiveFileName = mActiveFileName;
+		newParseMaster->mSharedData = mSharedData;
+		return newParseMaster;
 	}
 
 	void XmlParseMaster::addHelper(IXmlParseHelper& helper)
@@ -32,8 +37,7 @@ namespace Library
 
 	void XmlParseMaster::parse(char* const xmlData, const std::uint32_t length, const bool endOfFile)
 	{
-		// What do I pass in as the XML_Parser argument?
-		XML_Parse(nullptr, xmlData, length, endOfFile);
+		XML_Parse(mXmlParser, xmlData, length, endOfFile);
 	}
 
 	void XmlParseMaster::parseFromFile(std::string fileName)
@@ -57,18 +61,27 @@ namespace Library
 		return mSharedData;
 	}
 
-	void XmlParseMaster::startElementHandler()
+	void XmlParseMaster::startElementHandler(void *userData, const XML_Char *name, const XML_Char **atts)
 	{
-		// TODO: Implement method
+		UNREFERENCED_PARAMETER(userData);
+		UNREFERENCED_PARAMETER(name);
+		UNREFERENCED_PARAMETER(atts);
+		// TODO: Do something with start element handler
+		// TODO: Loop through atts and throw out requests for valid handlers and delegate to them
 	}
 
-	void XmlParseMaster::endElementHandler()
+	void XmlParseMaster::endElementHandler(void *userData, const XML_Char *name)
 	{
-		// TODO: Implement method
+		UNREFERENCED_PARAMETER(userData);
+		UNREFERENCED_PARAMETER(name);
+		// TODO: Do something with end element handler
 	}
 
-	void XmlParseMaster::charDataHandler()
+	void XmlParseMaster::charDataHandler(void *userData, const XML_Char *s, int len)
 	{
-		// TODO: Implement method
+		UNREFERENCED_PARAMETER(userData);
+		UNREFERENCED_PARAMETER(s);
+		UNREFERENCED_PARAMETER(len);
+		// TODO: Do something with char data handler
 	}
 }
