@@ -5,9 +5,10 @@
 namespace Library
 {
 	XmlParseMaster::XmlParseMaster():
-		mActiveFileName(""), mSharedData(nullptr)
+		mActiveFileName(""), mSharedData(new SharedData())
 	{
 		mXmlParser = XML_ParserCreate(nullptr);
+		XML_SetUserData(mXmlParser, mSharedData);
 		XML_SetElementHandler(mXmlParser, startElementHandler, endElementHandler);
 	}
 
@@ -62,23 +63,26 @@ namespace Library
 
 	void XmlParseMaster::startElementHandler(void *userData, const XML_Char *name, const XML_Char **atts)
 	{
-		UNREFERENCED_PARAMETER(userData);
+		SharedData* data = static_cast<SharedData*>(userData);
+		UNREFERENCED_PARAMETER(data);
 		UNREFERENCED_PARAMETER(name);
 		UNREFERENCED_PARAMETER(atts);
 		// TODO: Do something with start element handler
 		// TODO: Loop through atts and throw out requests for valid handlers and delegate to them
 	}
 
-	void XmlParseMaster::endElementHandler(void *userData, const XML_Char *name)
+	void XmlParseMaster::endElementHandler(void* userData, const XML_Char* name)
 	{
-		UNREFERENCED_PARAMETER(userData);
+		SharedData* data = static_cast<SharedData*>(userData);
+		UNREFERENCED_PARAMETER(data);
 		UNREFERENCED_PARAMETER(name);
 		// TODO: Do something with end element handler
 	}
 
-	void XmlParseMaster::charDataHandler(void *userData, const XML_Char *s, int len)
+	void XmlParseMaster::charDataHandler(void* userData, const XML_Char* s, int len)
 	{
-		UNREFERENCED_PARAMETER(userData);
+		SharedData* data = static_cast<SharedData*>(userData);
+		UNREFERENCED_PARAMETER(data);
 		UNREFERENCED_PARAMETER(s);
 		UNREFERENCED_PARAMETER(len);
 		// TODO: Do something with char data handler
