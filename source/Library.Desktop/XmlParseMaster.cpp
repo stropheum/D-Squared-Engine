@@ -15,6 +15,7 @@ namespace Library
 	XmlParseMaster::~XmlParseMaster()
 	{
 		delete mSharedData;
+		XML_ParserFree(mXmlParser);
 	}
 
 	XmlParseMaster* XmlParseMaster::clone() const
@@ -37,11 +38,15 @@ namespace Library
 
 	void XmlParseMaster::parse(char* const xmlData, const std::uint32_t length, const bool endOfFile)
 	{
+		UNREFERENCED_PARAMETER(xmlData);
+		UNREFERENCED_PARAMETER(length);
+		UNREFERENCED_PARAMETER(endOfFile);
 		XML_Parse(mXmlParser, xmlData, length, endOfFile);
 	}
 
 	void XmlParseMaster::parseFromFile(std::string fileName)
 	{
+		UNREFERENCED_PARAMETER(fileName);
 		mActiveFileName = fileName;
 		// TODO: Read in file from name and parse it
 	}
