@@ -4,9 +4,12 @@
 
 namespace Library
 {
-	XmlParseMaster::XmlParseMaster():
-		mActiveFileName(""), mSharedData(new SharedData()), mDepth(0)
+	RTTI_DEFINITIONS(XmlParseMaster::SharedData)
+
+	XmlParseMaster::XmlParseMaster(SharedData* const sharedData):
+		mActiveFileName(""), mSharedData(sharedData), mDepth(0), mClonedInstance(false)
 	{
+		// TODO: Move this out of base implementation since shared data won't be instantiable
 		mXmlParser = XML_ParserCreate(nullptr);
 		XML_SetUserData(mXmlParser, mSharedData);
 		XML_SetElementHandler(mXmlParser, startElementHandler, endElementHandler);
@@ -21,7 +24,8 @@ namespace Library
 
 	XmlParseMaster* XmlParseMaster::clone() const
 	{
-		XmlParseMaster* newParseMaster = new XmlParseMaster();
+		XmlParseMaster* newParseMaster = new XmlParseMaster(new SharedData());
+		newParseMaster->mClonedInstance = true;
 		newParseMaster->mActiveFileName = mActiveFileName;
 		newParseMaster->mSharedData = mSharedData;
 		return newParseMaster;
@@ -37,12 +41,12 @@ namespace Library
 		mHelpers.remove(&helper);
 	}
 
-	void XmlParseMaster::parse(char* const xmlData, const std::uint32_t length, const bool endOfFile)
+	void XmlParseMaster::parse(char* const xmlData, const std::uint32_t length, const bool endOfFile) const
 	{
 		XML_Parse(mXmlParser, xmlData, length, endOfFile);
 	}
 
-	void XmlParseMaster::parse(const std::string xmlData, const std::uint32_t length, const bool endOfFile)
+	void XmlParseMaster::parse(const std::string xmlData, const std::uint32_t length, const bool endOfFile) const
 	{
 		char* xml = const_cast<char*>(xmlData.c_str());
 		XML_Parse(mXmlParser, xml, length, endOfFile);
@@ -64,7 +68,7 @@ namespace Library
 		mSharedData = sharedData;
 	}
 
-	XmlParseMaster::SharedData* const XmlParseMaster::getSharedData() const
+	XmlParseMaster::SharedData* XmlParseMaster::getSharedData() const
 	{
 		return mSharedData;
 	}

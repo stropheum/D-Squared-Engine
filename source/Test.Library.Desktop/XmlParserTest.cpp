@@ -46,10 +46,10 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestStub)
 		{
-			Library::XmlParseMaster pm;
-			std::string xmlData = "<Enemy Body='Hot'>";
-			pm.parse(xmlData, xmlData.size(), true);
-//			pm.parse("<Tag>Body</Tag>", 15, true);
+//			Library::XmlParseMaster pm;
+//			std::string xmlData = "<Enemy Body='Hot'>";
+//			pm.parse(xmlData, xmlData.size(), true);
+////			pm.parse("<Tag>Body</Tag>", 15, true);
 		}
 
 		static _CrtMemState sStartMemState;

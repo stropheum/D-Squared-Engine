@@ -11,29 +11,25 @@ namespace Library
 	public:
 
 #pragma region SharedData Implementation
-		class SharedData
+		class SharedData : public RTTI
 		{
+			RTTI_DECLARATIONS(SharedData, RTTI)
 		public:
 			SharedData(): mParseMaster(nullptr), mDepth(0) {}
 			
-			SharedData* clone()
-			{
-				// TODO: Implement clone method
-				return this;
-			}
+			virtual SharedData* clone() { return nullptr; };
 
 			void setXmlParseMaster(XmlParseMaster* const parseMaster)
 			{
-				UNREFERENCED_PARAMETER(parseMaster);
-				// TODO: Implement method
+				mParseMaster = parseMaster;
 			}
 
-			XmlParseMaster* getXmlParseMaster()
+			XmlParseMaster* getXmlParseMaster() const
 			{
 				return mParseMaster;
 			}
 
-			XmlParseMaster* const getXmlParaseMaster() const
+			XmlParseMaster* getXmlParaseMaster() const
 			{
 				return const_cast<XmlParseMaster* const>(mParseMaster);
 			}
@@ -54,24 +50,47 @@ namespace Library
 				return mDepth;
 			}
 
+			std::string ToString() const override
+			{
+				return "Shared Data";
+			}
+
+			bool Equals(const RTTI* rhs) const override
+			{
+				if (this == rhs)
+				{
+					return true;
+				}
+
+				const SharedData* data = rhs->As<SharedData>();
+				bool result = false;
+
+				if (data != nullptr)
+				{
+					result = (this == rhs);
+				}
+
+				return result;
+			}
+
 		private:
 			XmlParseMaster* mParseMaster;
 			std::uint32_t mDepth;
 		};
 #pragma endregion
 
-		XmlParseMaster();
+		explicit XmlParseMaster(SharedData* const sharedData);
 		~XmlParseMaster();
 
-		XmlParseMaster* clone() const;
+		virtual XmlParseMaster* clone() const;
 		void addHelper(IXmlParseHelper& helper);
 		void removeHelper(IXmlParseHelper& helper);
-		void parse(char* const xmlData, const std::uint32_t length, const bool endOfFile);
-		void parse(const std::string xmlData, const std::uint32_t length, const bool endOfFile);
+		void parse(char* const xmlData, const std::uint32_t length, const bool endOfFile) const;
+		void parse(const std::string xmlData, const std::uint32_t length, const bool endOfFile) const;
 		void parseFromFile(std::string fileName);
 		const std::string& getFileName() const;
 		void setSharedData(SharedData* const sharedData);
-		SharedData* const getSharedData() const;
+		SharedData* getSharedData() const;
 
 	private:
 		static void startElementHandler(void *userData, const XML_Char *name, const XML_Char **atts);
@@ -83,6 +102,7 @@ namespace Library
 		SharedData* mSharedData;
 		Vector<IXmlParseHelper*> mHelpers;
 		std::uint32_t mDepth;
+		bool mClonedInstance;
 	};
 }
 
