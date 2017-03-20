@@ -67,6 +67,7 @@ namespace Library
 		void addHelper(IXmlParseHelper& helper);
 		void removeHelper(IXmlParseHelper& helper);
 		void parse(char* const xmlData, const std::uint32_t length, const bool endOfFile);
+		void parse(const std::string xmlData, const std::uint32_t length, const bool endOfFile);
 		void parseFromFile(std::string fileName);
 		const std::string& getFileName() const;
 		void setSharedData(SharedData* const sharedData);
@@ -81,6 +82,7 @@ namespace Library
 		std::string mActiveFileName;
 		SharedData* mSharedData;
 		Vector<IXmlParseHelper*> mHelpers;
+		std::uint32_t mDepth;
 	};
 }
 

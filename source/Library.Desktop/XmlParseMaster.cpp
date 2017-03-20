@@ -5,11 +5,12 @@
 namespace Library
 {
 	XmlParseMaster::XmlParseMaster():
-		mActiveFileName(""), mSharedData(new SharedData())
+		mActiveFileName(""), mSharedData(new SharedData()), mDepth(0)
 	{
 		mXmlParser = XML_ParserCreate(nullptr);
 		XML_SetUserData(mXmlParser, mSharedData);
 		XML_SetElementHandler(mXmlParser, startElementHandler, endElementHandler);
+		XML_SetCharacterDataHandler(mXmlParser, charDataHandler);
 	}
 
 	XmlParseMaster::~XmlParseMaster()
@@ -38,15 +39,17 @@ namespace Library
 
 	void XmlParseMaster::parse(char* const xmlData, const std::uint32_t length, const bool endOfFile)
 	{
-		UNREFERENCED_PARAMETER(xmlData);
-		UNREFERENCED_PARAMETER(length);
-		UNREFERENCED_PARAMETER(endOfFile);
 		XML_Parse(mXmlParser, xmlData, length, endOfFile);
+	}
+
+	void XmlParseMaster::parse(const std::string xmlData, const std::uint32_t length, const bool endOfFile)
+	{
+		char* xml = const_cast<char*>(xmlData.c_str());
+		XML_Parse(mXmlParser, xml, length, endOfFile);
 	}
 
 	void XmlParseMaster::parseFromFile(std::string fileName)
 	{
-		UNREFERENCED_PARAMETER(fileName);
 		mActiveFileName = fileName;
 		// TODO: Read in file from name and parse it
 	}
@@ -66,7 +69,7 @@ namespace Library
 		return mSharedData;
 	}
 
-	void XmlParseMaster::startElementHandler(void *userData, const XML_Char *name, const XML_Char **atts)
+	void XmlParseMaster::startElementHandler(void* userData, const XML_Char* name, const XML_Char** atts)
 	{
 		SharedData* data = static_cast<SharedData*>(userData);
 		UNREFERENCED_PARAMETER(data);
@@ -74,6 +77,7 @@ namespace Library
 		UNREFERENCED_PARAMETER(atts);
 		// TODO: Do something with start element handler
 		// TODO: Loop through atts and throw out requests for valid handlers and delegate to them
+		data->incrementDepth();
 	}
 
 	void XmlParseMaster::endElementHandler(void* userData, const XML_Char* name)
@@ -82,6 +86,7 @@ namespace Library
 		UNREFERENCED_PARAMETER(data);
 		UNREFERENCED_PARAMETER(name);
 		// TODO: Do something with end element handler
+		data->decrementDepth();
 	}
 
 	void XmlParseMaster::charDataHandler(void* userData, const XML_Char* s, int len)

@@ -47,8 +47,9 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestStub)
 		{
 			Library::XmlParseMaster pm;
-//			Assert::Fail(L"Test not implemented");
-//			Assert::IsTrue(true);
+			std::string xmlData = "<Enemy Body='Hot'>";
+			pm.parse(xmlData, xmlData.size(), true);
+//			pm.parse("<Tag>Body</Tag>", 15, true);
 		}
 
 		static _CrtMemState sStartMemState;
