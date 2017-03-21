@@ -18,16 +18,19 @@ namespace Library
 
 	XmlParseMaster::~XmlParseMaster()
 	{
-		delete mSharedData;
+		if (mClonedInstance)
+		{
+			delete mSharedData;
+		}
+		
 		XML_ParserFree(mXmlParser);
 	}
 
 	XmlParseMaster* XmlParseMaster::clone() const
 	{
-		XmlParseMaster* newParseMaster = new XmlParseMaster(new SharedData());
+		XmlParseMaster* newParseMaster = new XmlParseMaster(mSharedData->clone());
 		newParseMaster->mClonedInstance = true;
 		newParseMaster->mActiveFileName = mActiveFileName;
-		newParseMaster->mSharedData = mSharedData;
 		return newParseMaster;
 	}
 

@@ -36,6 +36,12 @@
     <ClInclude Include="AttributedFoo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TestParseHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestSharedData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -69,6 +75,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="XmlParserTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestParseHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestSharedData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -17,7 +17,7 @@ namespace Library
 		public:
 			SharedData(): mParseMaster(nullptr), mDepth(0) {}
 			
-			virtual SharedData* clone() { return nullptr; };
+			virtual SharedData* clone() = 0;
 
 			void setXmlParseMaster(XmlParseMaster* const parseMaster)
 			{
@@ -50,12 +50,12 @@ namespace Library
 				return mDepth;
 			}
 
-			std::string ToString() const override
+			virtual std::string ToString() const override
 			{
 				return "Shared Data";
 			}
 
-			bool Equals(const RTTI* rhs) const override
+			virtual bool Equals(const RTTI* rhs) const override
 			{
 				if (this == rhs)
 				{
@@ -73,14 +73,14 @@ namespace Library
 				return result;
 			}
 
-		private:
+		protected:
 			XmlParseMaster* mParseMaster;
 			std::uint32_t mDepth;
 		};
 #pragma endregion
 
 		explicit XmlParseMaster(SharedData* const sharedData);
-		~XmlParseMaster();
+		virtual ~XmlParseMaster();
 
 		virtual XmlParseMaster* clone() const;
 		void addHelper(IXmlParseHelper& helper);

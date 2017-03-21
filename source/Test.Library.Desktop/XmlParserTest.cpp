@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "XmlParseMaster.h"
+#include "TestParseHelper.h"
+#include "TestSharedData.h"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -46,10 +48,13 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestStub)
 		{
-//			Library::XmlParseMaster pm;
-//			std::string xmlData = "<Enemy Body='Hot'>";
-//			pm.parse(xmlData, xmlData.size(), true);
-////			pm.parse("<Tag>Body</Tag>", 15, true);
+			Library::TestSharedData* sharedData = new Library::TestSharedData();
+			sharedData->clone();
+			Library::XmlParseMaster parseMaster(sharedData);
+			const char* xmlData = "<Enemy Body='Hot'>";
+			parseMaster.parse(xmlData, static_cast<std::uint32_t>(strlen(xmlData)), true);
+
+			delete(sharedData);
 		}
 
 		static _CrtMemState sStartMemState;

@@ -186,6 +186,8 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TestParseHelper.h" />
+    <ClInclude Include="TestSharedData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AttributedFoo.cpp" />
@@ -214,6 +216,8 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="SListTest.cpp" />
+    <ClCompile Include="TestParseHelper.cpp" />
+    <ClCompile Include="TestSharedData.cpp" />
     <ClCompile Include="VectorTest.cpp" />
     <ClCompile Include="XmlParserTest.cpp" />
   </ItemGroup>

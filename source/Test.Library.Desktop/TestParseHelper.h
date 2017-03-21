@@ -1,0 +1,21 @@
+#pragma once
+#include "IXmlParseHelper.h"
+#include "XmlParseMaster.h"
+#include "RTTI.h"
+
+
+namespace Library
+{
+	class TestParseHelper :
+		public IXmlParseHelper
+	{
+	public:
+		explicit TestParseHelper(Library::XmlParseMaster& xmlParseMaster);
+		~TestParseHelper();
+
+		bool startElementHandler(const std::string& element, const Library::HashMap<std::string, std::string> attributes) override;
+		bool endElementHandler(const std::string& element) override;
+		void charDataHandler(const std::string& buffer, const std::uint32_t bufferLength) override;
+		IXmlParseHelper* clone() override = 0;
+	};
+}
