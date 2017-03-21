@@ -50,7 +50,6 @@ namespace Library
 	void XmlParseMaster::addHelper(IXmlParseHelper& helper)
 	{
 		mHelpers.pushBack(&helper);
-		helper.initialize(this); // Ensure that the helper's master is set to this
 	}
 
 	void XmlParseMaster::removeHelper(IXmlParseHelper& helper)
