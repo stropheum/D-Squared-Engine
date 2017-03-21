@@ -4,10 +4,10 @@
 
 namespace Library
 {
-//	RTTI_DEFINITIONS(TestSharedData)
+	RTTI_DEFINITIONS(TestSharedData)
 
 	TestSharedData::TestSharedData():
-		SharedData()
+		SharedData(), mValue(0)
 	{
 	}
 
@@ -23,18 +23,18 @@ namespace Library
 
 	bool TestSharedData::Equals(const Library::RTTI* rhs) const
 	{
-//		if (dynamic_cast<const Library::XmlParseMaster::SharedData*>(this) == rhs)
-//		{
-//			return true;
-//		}
+		if (dynamic_cast<const Library::RTTI*>(this) == rhs)
+		{
+			return true;
+		}
 
-		const SharedData* data = rhs->As<XmlParseMaster::SharedData>();
+		TestSharedData* data = rhs->As<TestSharedData>();
 		bool result = false;
 
-//		if (data != nullptr)
-//		{
-//			result = (this == rhs);
-//		}
+		if (data != nullptr)
+		{
+			result = (mValue == data->mValue);
+		}
 
 		return result;
 	}

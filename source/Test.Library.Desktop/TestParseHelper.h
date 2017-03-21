@@ -1,6 +1,5 @@
 #pragma once
 #include "IXmlParseHelper.h"
-#include "XmlParseMaster.h"
 #include "RTTI.h"
 
 

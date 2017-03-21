@@ -7,7 +7,7 @@ namespace Library
 	class TestSharedData :
 		public XmlParseMaster::SharedData
 	{
-//		RTTI_DECLARATIONS(TestSharedData, XmlParseMaster::SharedData)
+		RTTI_DECLARATIONS(TestSharedData, XmlParseMaster::SharedData)
 	public:
 		TestSharedData();
 		virtual ~TestSharedData() = default;
@@ -17,6 +17,8 @@ namespace Library
 		std::string ToString() const override;
 
 		bool Equals(const Library::RTTI* rhs) const override;
+
+		int mValue;
 	};
 }
 
