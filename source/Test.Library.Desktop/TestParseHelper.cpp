@@ -8,28 +8,26 @@ namespace Library
 {
 	RTTI_DEFINITIONS(TestParseHelper)
 
-	TestParseHelper::TestParseHelper(Library::XmlParseMaster& xmlParseMaster) :
+	TestParseHelper::TestParseHelper(Library::XmlParseMaster* xmlParseMaster) :
 		IXmlParseHelper(xmlParseMaster)
 	{
 	}
 
-	TestParseHelper::~TestParseHelper()
+	void TestParseHelper::initialize(XmlParseMaster* const xmlParseMaster)
 	{
+		mXmlParseMaster = xmlParseMaster;
 	}
 
-	void TestParseHelper::initialize()
+	bool TestParseHelper::startElementHandler(XmlParseMaster::SharedData& sharedData, 
+		const std::string& element, const Library::HashMap<std::string, std::string> attributes)
 	{
-		// TODO: Initialize the parse helper
-	}
+		TestSharedData* data = sharedData.As<TestSharedData>();
 
-	bool TestParseHelper::startElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element, const Library::HashMap<std::string, std::string> attributes)
-	{
-		TestSharedData* data = dynamic_cast<TestSharedData*>(&sharedData);
-		bool castSuccessful = (data != nullptr) && element == "Person";
-
-		if (castSuccessful)
+		if (data != nullptr && element == "Person")
 		{
+			data->mName = (*attributes.find("Name")).second;
 			data->mHealth = std::stoi((*attributes.find("Health")).second);
+			data->mMana = std::stoi((*attributes.find("Mana")).second);
 			return true;
 		}
 		
@@ -39,14 +37,12 @@ namespace Library
 	bool TestParseHelper::endElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element)
 	{
 		UNREFERENCED_PARAMETER(sharedData);
-		// TODO: Implement test start element handler
 		UNREFERENCED_PARAMETER(element);
 		return false;
 	}
 
 	void TestParseHelper::charDataHandler(XmlParseMaster::SharedData& sharedData, const std::string& buffer, const std::uint32_t bufferLength)
 	{
-		// TODO: Implement test start element handler
 		UNREFERENCED_PARAMETER(sharedData);
 		UNREFERENCED_PARAMETER(buffer);
 		UNREFERENCED_PARAMETER(bufferLength);
@@ -54,6 +50,6 @@ namespace Library
 
 	IXmlParseHelper* TestParseHelper::clone()
 	{
-		return this;
+		return new TestParseHelper();
 	}
 }

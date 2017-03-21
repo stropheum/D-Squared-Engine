@@ -7,15 +7,21 @@ namespace Library
 {
 	RTTI_DEFINITIONS(IXmlParseHelper)
 
-	IXmlParseHelper::IXmlParseHelper(XmlParseMaster& xmlParseMaster):
+	IXmlParseHelper::IXmlParseHelper(XmlParseMaster* const xmlParseMaster):
 		mXmlParseMaster(xmlParseMaster), mValidElementName("")
 	{
-		mXmlParseMaster.addHelper(*this);
+		if (mXmlParseMaster != nullptr)
+		{
+			mXmlParseMaster->addHelper(*this);
+		}
 	}
 
 	IXmlParseHelper::~IXmlParseHelper()
 	{
-		mXmlParseMaster.removeHelper(*this);
+		if (mXmlParseMaster != nullptr)
+		{
+			mXmlParseMaster->removeHelper(*this);
+		}
 	}
 
 	bool IXmlParseHelper::startElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element, const HashMap<std::string, std::string> attributes)

@@ -46,16 +46,33 @@ namespace TestLibraryDesktop
 			finalizeLeakDetection();
 		}
 
-		TEST_METHOD(TestStub)
+		TEST_METHOD(TestParse)
 		{
 			Library::TestSharedData sharedData;
 			Library::XmlParseMaster parseMaster(&sharedData);
-			Library::TestParseHelper helper(parseMaster);
+			Library::TestParseHelper helper(&parseMaster);
+			sharedData.setXmlParseMaster(&parseMaster);
+			parseMaster.addHelper(helper);
+		}
+
+		TEST_METHOD(TestParseFromFile)
+		{
+			Library::TestSharedData sharedData;
+			Library::XmlParseMaster parseMaster(&sharedData);
+			Library::TestParseHelper helper(&parseMaster);
 			sharedData.setXmlParseMaster(&parseMaster);
 
 			parseMaster.addHelper(helper);
 			parseMaster.parseFromFile("input.xml");
 			Assert::AreEqual(sharedData.mHealth, 100, L"Health not accurately parsed");
+			Assert::AreEqual(sharedData.depth(), 0u, L"Depth not zero at end of parsing");
+
+			Library::XmlParseMaster* clone = parseMaster.clone();
+			UNREFERENCED_PARAMETER(clone);
+			Library::TestSharedData* data = clone->getSharedData()->As<Library::TestSharedData>();
+			Assert::AreEqual(data->mName, sharedData.mName);
+
+			delete clone;
 		}
 
 		static _CrtMemState sStartMemState;

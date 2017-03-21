@@ -10,9 +10,9 @@ namespace Library
 	{
 		RTTI_DECLARATIONS(IXmlParseHelper, RTTI)
 	public:
-		explicit IXmlParseHelper(XmlParseMaster& xmlParseMaster);
+		explicit IXmlParseHelper(XmlParseMaster* const xmlParseMaster=nullptr);
 		virtual ~IXmlParseHelper();
-		virtual void initialize() = 0;
+		virtual void initialize(XmlParseMaster* const xmlParseMaster) = 0;
 		virtual bool startElementHandler(XmlParseMaster::SharedData& sharedData,  const std::string& element, const HashMap<std::string, std::string> attributes);
 		virtual bool endElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element);
 		virtual void charDataHandler(XmlParseMaster::SharedData& sharedData, const std::string& buffer, const std::uint32_t bufferLength);
@@ -20,8 +20,8 @@ namespace Library
 
 		std::string ToString() const override;
 		bool Equals(const RTTI* rhs) const override;
-	private:
-		XmlParseMaster& mXmlParseMaster;
+	protected:
+		XmlParseMaster* mXmlParseMaster;
 		const std::string mValidElementName;
 	};
 }

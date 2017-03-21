@@ -6,13 +6,17 @@ namespace Library
 	RTTI_DEFINITIONS(TestSharedData)
 
 	TestSharedData::TestSharedData():
-		SharedData(), mHealth(0)
+		SharedData(), mName(""), mHealth(0), mMana(0)
 	{
 	}
 
 	XmlParseMaster::SharedData* TestSharedData::clone()
 	{
-		return this;
+		TestSharedData* clone = new TestSharedData();
+		clone->mName = mName;
+		clone->mHealth = mHealth;
+		clone->mMana = mMana;
+		return clone;
 	}
 
 	std::string TestSharedData::ToString() const
@@ -32,7 +36,10 @@ namespace Library
 
 		if (data != nullptr)
 		{
-			result = (mHealth == data->mHealth);
+			result =
+				(mName == data->mName) &&
+				(mHealth == data->mHealth) &&
+				(mMana == data->mMana);
 		}
 
 		return result;

@@ -9,7 +9,7 @@ namespace Library
 	RTTI_DEFINITIONS(XmlParseMaster::SharedData)
 
 	XmlParseMaster::XmlParseMaster(SharedData* const sharedData):
-		mActiveFileName(""), mSharedData(sharedData), mDepth(0), mClonedInstance(false)
+		mActiveFileName(""), mSharedData(sharedData), mDepth(0), mClonedInstance(false), mHelpersAreInitialized(false)
 	{
 		mXmlParser = XML_ParserCreate(nullptr);
 		XML_SetUserData(mXmlParser, mSharedData);
@@ -22,6 +22,12 @@ namespace Library
 		if (mClonedInstance)
 		{
 			delete mSharedData;
+
+			for (std::uint32_t i = 0; i < mHelpers.size(); i++)
+			{
+				delete mHelpers[i];
+			}
+			mHelpers.clear();
 		}
 		
 		XML_ParserFree(mXmlParser);
@@ -32,12 +38,19 @@ namespace Library
 		XmlParseMaster* newParseMaster = new XmlParseMaster(mSharedData->clone());
 		newParseMaster->mClonedInstance = true;
 		newParseMaster->mActiveFileName = mActiveFileName;
+		
+		for (std::uint32_t i = 0; i < mHelpers.size(); i++)
+		{
+			newParseMaster->mHelpers.pushBack(mHelpers[i]->clone());
+		}
+
 		return newParseMaster;
 	}
 
 	void XmlParseMaster::addHelper(IXmlParseHelper& helper)
 	{
 		mHelpers.pushBack(&helper);
+		helper.initialize(this); // Ensure that the helper's master is set to this
 	}
 
 	void XmlParseMaster::removeHelper(IXmlParseHelper& helper)
@@ -45,19 +58,16 @@ namespace Library
 		mHelpers.remove(&helper);
 	}
 
-	void XmlParseMaster::parse(char* const xmlData, const std::uint32_t length, const bool endOfFile) const
+	void XmlParseMaster::parse(char* const xmlData, const std::uint32_t length, const bool endOfFile)
 	{
+		handleHelperInitialization();
 		XML_Parse(mXmlParser, xmlData, length, endOfFile);
-	}
-
-	void XmlParseMaster::parse(const std::string xmlData, const std::uint32_t length, const bool endOfFile) const
-	{
-		char* xml = const_cast<char*>(xmlData.c_str());
-		XML_Parse(mXmlParser, xml, length, endOfFile);
 	}
 
 	void XmlParseMaster::parseFromFile(std::string fileName)
 	{
+		handleHelperInitialization();
+
 		mActiveFileName = fileName;
 		std::ifstream input;
 		std::int32_t length;
@@ -101,7 +111,7 @@ namespace Library
 			attributes.insert(std::pair<std::string, std::string>(key, value));
 		}
 
-		Vector<IXmlParseHelper*>& helpers = data->getXmlParaseMaster()->mHelpers;
+		Vector<IXmlParseHelper*>& helpers = data->getXmlParseMaster()->mHelpers;
 
 		for (std::uint32_t i = 0; i < helpers.size(); i++)
 		{
@@ -130,5 +140,17 @@ namespace Library
 		UNREFERENCED_PARAMETER(s);
 		UNREFERENCED_PARAMETER(len);
 		// TODO: Do something with char data handler
+	}
+
+	void XmlParseMaster::handleHelperInitialization()
+	{
+		if (!mHelpersAreInitialized)
+		{
+			for (std::uint32_t i = 0; i < mHelpers.size(); i++)
+			{	// Initialize all parse helpers so they reflect the correct parse master
+				mHelpers[i]->initialize(this);
+			}
+			mHelpersAreInitialized = true;
+		}
 	}
 }
