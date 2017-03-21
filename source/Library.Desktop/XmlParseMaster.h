@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector.h"
 #include <expat.h>
+#include "RTTI.h"
 
 
 namespace Library

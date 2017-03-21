@@ -1,6 +1,5 @@
 #pragma once
 #include "IXmlParseHelper.h"
-#include "RTTI.h"
 
 
 namespace Library

@@ -54,8 +54,8 @@ namespace TestLibraryDesktop
 			sharedData.setXmlParseMaster(&parseMaster);
 
 			parseMaster.addHelper(helper);
-			const char* xmlData = "<Person Health='100' />";
-			parseMaster.parse(xmlData, static_cast<std::uint32_t>(strlen(xmlData)), true);
+			parseMaster.parseFromFile("input.xml");
+			Assert::AreEqual(sharedData.mHealth, 100, L"Health not accurately parsed");
 		}
 
 		static _CrtMemState sStartMemState;

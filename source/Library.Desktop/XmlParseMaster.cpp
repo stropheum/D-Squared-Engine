@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "XmlParseMaster.h"
 #include "IXmlParseHelper.h"
+#include "fstream"
 
 
 namespace Library
@@ -10,7 +11,6 @@ namespace Library
 	XmlParseMaster::XmlParseMaster(SharedData* const sharedData):
 		mActiveFileName(""), mSharedData(sharedData), mDepth(0), mClonedInstance(false)
 	{
-		// TODO: Move this out of base implementation since shared data won't be instantiable
 		mXmlParser = XML_ParserCreate(nullptr);
 		XML_SetUserData(mXmlParser, mSharedData);
 		XML_SetElementHandler(mXmlParser, startElementHandler, endElementHandler);
@@ -59,7 +59,18 @@ namespace Library
 	void XmlParseMaster::parseFromFile(std::string fileName)
 	{
 		mActiveFileName = fileName;
-		// TODO: Read in file from name and parse it
+		std::ifstream input;
+		std::int32_t length;
+		input.open(fileName);
+		input.seekg(0, std::ios::end);
+		length = static_cast<std::int32_t>(input.tellg());
+		input.seekg(std::ios::beg);
+
+		char* buffer = new char[length];
+		input.read(buffer, length);
+		input.close();
+		parse(buffer, length, true);
+		delete[] buffer;
 	}
 
 	const std::string& XmlParseMaster::getFileName() const
@@ -82,8 +93,13 @@ namespace Library
 		SharedData* data = static_cast<SharedData*>(userData);
 
 		HashMap<std::string, std::string> attributes;
-		UNREFERENCED_PARAMETER(atts);
-		// TODO: build up the hashmap of the values before delegating to the handlers
+		
+		for (std::uint32_t i = 0; atts[i]; i += 2)
+		{
+			std::string key = atts[i];
+			std::string value = atts[i + 1];
+			attributes.insert(std::pair<std::string, std::string>(key, value));
+		}
 
 		Vector<IXmlParseHelper*>& helpers = data->getXmlParaseMaster()->mHelpers;
 

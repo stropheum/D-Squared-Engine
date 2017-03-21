@@ -1,6 +1,7 @@
 #pragma once
 #include "HashMap.h"
 #include "XmlParseMaster.h"
+#include "RTTI.h"
 
 namespace Library
 {

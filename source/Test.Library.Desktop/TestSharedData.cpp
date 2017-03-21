@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "TestSharedData.h"
-#include "RTTI.h"
 
 namespace Library
 {
