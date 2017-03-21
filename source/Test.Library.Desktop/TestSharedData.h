@@ -15,10 +15,9 @@ namespace Library
 		XmlParseMaster::SharedData* clone() override;
 
 		std::string ToString() const override;
-
 		bool Equals(const Library::RTTI* rhs) const override;
 
-		int mValue;
+		int mHealth;
 	};
 }
 

@@ -7,7 +7,7 @@ namespace Library
 	RTTI_DEFINITIONS(TestSharedData)
 
 	TestSharedData::TestSharedData():
-		SharedData(), mValue(0)
+		SharedData(), mHealth(0)
 	{
 	}
 
@@ -33,7 +33,7 @@ namespace Library
 
 		if (data != nullptr)
 		{
-			result = (mValue == data->mValue);
+			result = (mHealth == data->mHealth);
 		}
 
 		return result;

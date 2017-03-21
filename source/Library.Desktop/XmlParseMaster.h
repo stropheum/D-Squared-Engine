@@ -1,11 +1,11 @@
 #pragma once
 #include "Vector.h"
-#include "IXmlParseHelper.h"
 #include <expat.h>
 
 
 namespace Library
 {
+	class IXmlParseHelper;
 	class XmlParseMaster
 	{
 	public:
@@ -42,7 +42,6 @@ namespace Library
 			void decrementDepth()
 			{
 				mDepth--;
-				assert(mDepth >= 0);
 			}
 
 			std::uint32_t depth() const

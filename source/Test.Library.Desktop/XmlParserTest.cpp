@@ -48,13 +48,14 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestStub)
 		{
-			Library::TestSharedData* sharedData = new Library::TestSharedData();
-			sharedData->clone();
-			Library::XmlParseMaster parseMaster(sharedData);
-			const char* xmlData = "<Enemy Body='Hot'>";
-			parseMaster.parse(xmlData, static_cast<std::uint32_t>(strlen(xmlData)), true);
+			Library::TestSharedData sharedData;
+			Library::XmlParseMaster parseMaster(&sharedData);
+			Library::TestParseHelper helper(parseMaster);
+			sharedData.setXmlParseMaster(&parseMaster);
 
-			delete(sharedData);
+			parseMaster.addHelper(helper);
+			const char* xmlData = "<Person Health='100' />";
+			parseMaster.parse(xmlData, static_cast<std::uint32_t>(strlen(xmlData)), true);
 		}
 
 		static _CrtMemState sStartMemState;

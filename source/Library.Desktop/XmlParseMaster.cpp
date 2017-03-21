@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "XmlParseMaster.h"
+#include "IXmlParseHelper.h"
 
 
 namespace Library
@@ -79,11 +80,21 @@ namespace Library
 	void XmlParseMaster::startElementHandler(void* userData, const XML_Char* name, const XML_Char** atts)
 	{
 		SharedData* data = static_cast<SharedData*>(userData);
-		UNREFERENCED_PARAMETER(data);
-		UNREFERENCED_PARAMETER(name);
+
+		HashMap<std::string, std::string> attributes;
 		UNREFERENCED_PARAMETER(atts);
-		// TODO: Do something with start element handler
-		// TODO: Loop through atts and throw out requests for valid handlers and delegate to them
+		// TODO: build up the hashmap of the values before delegating to the handlers
+
+		Vector<IXmlParseHelper*>& helpers = data->getXmlParaseMaster()->mHelpers;
+
+		for (std::uint32_t i = 0; i < helpers.size(); i++)
+		{
+			if (helpers[i]->startElementHandler(*data, name, attributes))
+			{
+				break;
+			}
+		}
+
 		data->incrementDepth();
 	}
 
