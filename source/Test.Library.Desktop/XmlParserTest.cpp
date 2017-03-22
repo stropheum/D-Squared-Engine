@@ -53,6 +53,8 @@ namespace TestLibraryDesktop
 			Library::TestParseHelper helper(&parseMaster);
 			sharedData.setXmlParseMaster(&parseMaster);
 			parseMaster.addHelper(helper);
+			char* xml = "<Person Name='Dale' Health='100' Mana='80' />";
+			parseMaster.parse(xml, static_cast<std::uint32_t>(strlen(xml)), true);
 		}
 
 		TEST_METHOD(TestParseFromFile)
