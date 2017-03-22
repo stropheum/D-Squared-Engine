@@ -85,6 +85,25 @@ namespace TestLibraryDesktop
 			delete clone;
 		}
 
+		TEST_METHOD(TestRTTI)
+		{
+			Library::IXmlParseHelper* baseHelper = new Library::TestParseHelper();
+			Assert::AreEqual(std::string("IXmlParseHelper"), baseHelper->ToString(), L"ToString yielding improper value");
+			
+			Library::IXmlParseHelper* baseHelper2 = baseHelper;
+			Assert::IsTrue(baseHelper->Equals(baseHelper2));
+
+			Library::IXmlParseHelper* baseHelper3 = new Library::TestParseHelper();
+			Assert::IsFalse(baseHelper->Equals(baseHelper3));
+
+			delete baseHelper;
+			delete baseHelper3;
+			
+
+			Library::TestParseHelper derivedHelper;
+			Assert::AreEqual(std::string("IXmlParseHelper"), derivedHelper.ToString(), L"ToString yielding improper value");
+		}
+
 		static _CrtMemState sStartMemState;
 	};
 	_CrtMemState XmlParserTest::sStartMemState;
