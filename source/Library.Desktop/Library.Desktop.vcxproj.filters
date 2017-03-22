@@ -65,6 +65,9 @@
     <Filter Include="XmlParser\XmlParseMaster">
       <UniqueIdentifier>{6f080fac-7767-40af-ad9a-3cddfcc1d70d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="XmlParser\XmlParseHelperScope">
+      <UniqueIdentifier>{84e678f7-7113-4262-a713-bfe550cdd791}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -127,6 +130,12 @@
     <ClInclude Include="XmlParseMaster.h">
       <Filter>XmlParser\XmlParseMaster</Filter>
     </ClInclude>
+    <ClInclude Include="XmlParseHelperScope.h">
+      <Filter>XmlParser\XmlParseHelperScope</Filter>
+    </ClInclude>
+    <ClInclude Include="SharedDataScope.h">
+      <Filter>XmlParser\XmlParseHelperScope</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Datum.cpp">
@@ -170,6 +179,12 @@
     </ClCompile>
     <ClCompile Include="XmlParseMaster.cpp">
       <Filter>XmlParser\XmlParseMaster</Filter>
+    </ClCompile>
+    <ClCompile Include="XmlParseHelperScope.cpp">
+      <Filter>XmlParser\XmlParseHelperScope</Filter>
+    </ClCompile>
+    <ClCompile Include="SharedDataScope.cpp">
+      <Filter>XmlParser\XmlParseHelperScope</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
