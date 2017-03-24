@@ -26,13 +26,13 @@ namespace Library
 		/// @Param element: The name of the entry being parsed
 		/// @Param attributes: The collection of string,string pairs of attributes associated with the entry
 		/// @Return: True if the helper can handle parsing the data
-		virtual bool startElementHandler(XmlParseMaster::SharedData& sharedData,  const std::string& element, const HashMap<std::string, std::string> attributes);
+		virtual bool startElementHandler(XmlParseMaster::SharedData& sharedData,  const std::string& element, const HashMap<std::string, std::string> attributes) = 0;
 
 		/// Handles elements from the Expat callback with the same name
 		/// @Param sharedData: The shared data object being written to
 		/// @Param element: The name of the entry being parsed
 		/// @Return: True if the helper can handle parsing the data
-		virtual bool endElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element);
+		virtual bool endElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element) = 0;
 
 		/// Handles elements from the Expat callback with the same name
 		/// @Param sharedData: The shared data object being written to

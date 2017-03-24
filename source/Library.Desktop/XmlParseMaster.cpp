@@ -9,9 +9,9 @@ namespace Library
 	RTTI_DEFINITIONS(XmlParseMaster::SharedData)
 
 	XmlParseMaster::XmlParseMaster(SharedData* const sharedData):
-		mActiveFileName(""), mSharedData(sharedData), mDepth(0), mClonedInstance(false), mHelpersAreInitialized(false)
+		mXmlParser(XML_ParserCreate(nullptr)), mActiveFileName(""), mSharedData(sharedData), mDepth(0), mClonedInstance(false), mHelpersAreInitialized(false)
 	{
-		mXmlParser = XML_ParserCreate(nullptr);
+//		mXmlParser = XML_ParserCreate(nullptr);
 		XML_SetUserData(mXmlParser, mSharedData);
 		XML_SetElementHandler(mXmlParser, startElementHandler, endElementHandler);
 		XML_SetCharacterDataHandler(mXmlParser, charDataHandler);
@@ -107,7 +107,7 @@ namespace Library
 		{
 			std::string key = atts[i];
 			std::string value = atts[i + 1];
-			attributes.insert(std::pair<std::string, std::string>(key, value));
+			attributes[key] = value;
 		}
 
 		Vector<IXmlParseHelper*>& helpers = data->getXmlParseMaster()->mHelpers;

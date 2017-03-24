@@ -24,34 +24,11 @@ namespace Library
 		}
 	}
 
-	bool IXmlParseHelper::startElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element, const HashMap<std::string, std::string> attributes)
-	{
-		UNREFERENCED_PARAMETER(sharedData);
-		bool attributesContainsElement = attributes.containsKey(element);
-
-		if (attributesContainsElement)
-		{
-			// TODO: Handle the element. This should only be done at lower levels though, probably
-		}
-
-		return attributesContainsElement;
-	}
-
-	bool IXmlParseHelper::endElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element)
-	{
-		UNREFERENCED_PARAMETER(sharedData);
-		UNREFERENCED_PARAMETER(element);
-		// TODO: Check if this helper can handle the element
-		// Check expat documentation for how to implement
-		return false;
-	}
-
 	void IXmlParseHelper::charDataHandler(XmlParseMaster::SharedData& sharedData, const std::string& buffer, const std::uint32_t bufferLength)
 	{
 		UNREFERENCED_PARAMETER(sharedData);
 		UNREFERENCED_PARAMETER(buffer);
 		UNREFERENCED_PARAMETER(bufferLength);
-		// TODO: Attempt to handle character data
 	}
 
 	std::string IXmlParseHelper::ToString() const

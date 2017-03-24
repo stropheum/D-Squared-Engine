@@ -46,5 +46,7 @@ namespace Library
 			ParsingScope,
 		};
 		State mState;
+		std::uint32_t mMatrixComponentCount;
+		std::string mMatrixComponents[4][4];
 	};
 }

@@ -8,8 +8,15 @@
 namespace Library
 {
 	XmlParseHelperScope::XmlParseHelperScope():
-		mState(State::NotParsing)
+		mState(State::NotParsing), mMatrixComponentCount(0)
 	{
+		for (std::uint32_t i = 0; i < 4; i++)
+		{
+			for (std::uint32_t j = 0; j < 4; j++)
+			{
+				mMatrixComponents[i][j] = "";
+			}
+		}
 	}
 
 	void XmlParseHelperScope::initialize(XmlParseMaster* const xmlParseMaster)
@@ -42,18 +49,32 @@ namespace Library
 		else if (element == "Vector")
 		{
 			mState = (mState == State::ParsingMatrix) ? State::ParsingMatrix : State::ParsingVector;
-			Datum& datum = scope->append(element);
-			datum.setType(DatumType::Vector);
-			
+
 			std::string x, y, z, w;
 			x = attributes.find("X")->second;
 			y = attributes.find("Y")->second;
 			z = attributes.find("Z")->second;
 			w = attributes.find("W")->second;
-			
-			std::stringstream ss;
-			ss << "vec4(" << x << "," << y << "," << z << "," << w << ")";
-			datum.setFromString(ss.str());
+
+			if (mState == State::ParsingVector)
+			{
+				Datum& datum = scope->append(element);
+				datum.setType(DatumType::Vector);
+
+				std::stringstream ss;
+				ss << "vec4(" << x << "," << y << "," << z << "," << w << ")";
+				datum.setFromString(ss.str());
+			}
+			else if (mState == State::ParsingMatrix)
+			{
+				mMatrixComponents[mMatrixComponentCount][0] = x;
+				mMatrixComponents[mMatrixComponentCount][1] = y;
+				mMatrixComponents[mMatrixComponentCount][2] = z;
+				mMatrixComponents[mMatrixComponentCount][3] = w;
+				
+				mMatrixComponentCount++;
+				assert(mMatrixComponentCount <= 4);
+			}
 		}
 		else if (element == "Matrix")
 		{
@@ -72,7 +93,6 @@ namespace Library
 		}
 		else if (element == "Scope")
 		{
-			// TODO: Track scope depth and when ending scope, check if depth is greater than zero, set state back to parsing scope
 			mState = State::ParsingScope;
 			Scope& newScope = scope->appendScope(element);
 			data->mScope = &newScope; // Scope becomes the newly appended scope until we're done adding to it
@@ -86,10 +106,24 @@ namespace Library
 		SharedDataScope* data = sharedData.As<SharedDataScope>();
 		if (data == nullptr) { return false; }
 		
+		if (element == "Matrix")
+		{
+			mMatrixComponentCount = 0;
+		}
+
 		if (element == "Scope")
 		{	// We're done at this level, so jump up one
 			assert(data->mScope->getParent() != nullptr);
 			data->mScope = data->mScope->getParent();
+
+			if (data->depth() > 0)
+			{
+				mState = State::ParsingScope;
+			}
+			else
+			{
+				mState = State::NotParsing;
+			}
 		}
 
 		mState = State::NotParsing;
