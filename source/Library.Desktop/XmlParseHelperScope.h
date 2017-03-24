@@ -43,6 +43,7 @@ namespace Library
 			ParsingScope,
 		};
 		State mState;
+		std::string mMatrixName;
 		std::uint32_t mMatrixComponentCount;
 		std::string mMatrixComponents[4][4];
 		bool mScopeHasBeenInitialized;

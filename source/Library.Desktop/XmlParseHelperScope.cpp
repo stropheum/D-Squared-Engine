@@ -8,7 +8,7 @@
 namespace Library
 {
 	XmlParseHelperScope::XmlParseHelperScope():
-		mState(State::NotParsing), mMatrixComponentCount(0), mScopeHasBeenInitialized(false)
+		mState(State::NotParsing), mMatrixName(""), mMatrixComponentCount(0), mScopeHasBeenInitialized(false)
 	{
 		for (std::uint32_t i = 0; i < 4; i++)
 		{
@@ -96,6 +96,7 @@ namespace Library
 		else if (element == "Matrix")
 		{
 			mState = State::ParsingMatrix;
+			mMatrixName = attributes.find("Name")->second;
 			// Only use this to set state to start grabbing component vectors
 			// TODO: possibly migrate the append call here so we have access to the name we need to create with
 		}
@@ -183,7 +184,7 @@ namespace Library
 			}
 			ss << ")";
 
-			Datum& datum = data->mScope->append(element);
+			Datum& datum = data->mScope->append(mMatrixName);
 			datum.setType(DatumType::Matrix);
 			datum.setFromString(ss.str());
 

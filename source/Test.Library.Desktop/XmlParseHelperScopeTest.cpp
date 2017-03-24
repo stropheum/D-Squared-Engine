@@ -67,20 +67,14 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(scope["Health"] == 10);
 			Assert::IsTrue(scope["Power"] == 57.3f);
 			Assert::IsTrue(scope["Position"] == glm::vec4(1.0f, 2.0f, 3.0f, 4.0f));
+			
 			glm::mat4 expectedMatrix(
-				1.0f, 2.0f, 3.0f, 4.0f,
-				5.0f, 6.0f, 7.0f, 8.0f,
-				9.0f, 10.0f, 11.0f, 12.0f,
+				1.0f,  2.0f,  3.0f,  4.0f,
+				5.0f,  6.0f,  7.0f,  8.0f,
+				9.0f,  10.0f, 11.0f, 12.0f,
 				13.0f, 14.0f, 15.0f, 16.0f
 			);
-			Assert::IsTrue(scope["Matrix"] == expectedMatrix);
-			// TODO: Fix the way name of matrix is being parsed
-
-//			Assert::AreEqual(static_cast<std::string>("Dale"), sharedData.mName, L"Name not accurately parsed");
-//			Assert::AreEqual(sharedData.mHealth, 100, L"Health not accurately parsed");
-//			Assert::AreEqual(sharedData.mMana, 80, L"Mana value not accurately parsed");
-//			Assert::AreEqual(sharedData.depth(), 0u, L"Depth not zero at end of parsing");
-//			delete sharedData.mScope;
+			Assert::IsTrue(scope["MyMatrix"] == expectedMatrix);
 		}
 
 		static _CrtMemState sStartMemState;
