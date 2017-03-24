@@ -14,6 +14,10 @@ namespace Library
 		/// @Param xmlParseMaster: The parse master that will be associated with this helper
 		void initialize(XmlParseMaster* const xmlParseMaster) override;
 
+		/// Method used for copying instances of parse helpers
+		/// @Return: Pointer to the freshly allocated parse helper
+		IXmlParseHelper* clone() override;
+
 		/// Handles elements from the Expat callback with the same name
 		/// @Param sharedData: The shared data object being written to
 		/// @Param element: The name of the entry being parsed
@@ -26,13 +30,6 @@ namespace Library
 		/// @Param element: The name of the entry being parsed
 		/// @Return: True if the helper can handle parsing the data
 		bool endElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element) override;
-
-		/// Handles elements from the Expat callback with the same name
-		/// @Param sharedData: The shared data object being written to
-		/// @Param buffer: The character data being parsed
-		/// @Param bufferLength: The number of characters in the buffer
-		/// @Return: True if the helper can handle parsing the data
-		void charDataHandler(XmlParseMaster::SharedData& sharedData, const std::string& buffer, const std::uint32_t bufferLength) override;
 
 	private:
 		enum State
@@ -48,5 +45,6 @@ namespace Library
 		State mState;
 		std::uint32_t mMatrixComponentCount;
 		std::string mMatrixComponents[4][4];
+		bool mScopeHasBeenInitialized;
 	};
 }

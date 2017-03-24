@@ -11,7 +11,6 @@ namespace Library
 	XmlParseMaster::XmlParseMaster(SharedData* const sharedData):
 		mXmlParser(XML_ParserCreate(nullptr)), mActiveFileName(""), mSharedData(sharedData), mDepth(0), mClonedInstance(false), mHelpersAreInitialized(false)
 	{
-//		mXmlParser = XML_ParserCreate(nullptr);
 		XML_SetUserData(mXmlParser, mSharedData);
 		XML_SetElementHandler(mXmlParser, startElementHandler, endElementHandler);
 		XML_SetCharacterDataHandler(mXmlParser, charDataHandler);
@@ -70,7 +69,7 @@ namespace Library
 		mActiveFileName = fileName;
 		std::ifstream input;
 		std::int32_t length;
-		input.open(fileName);
+		input.open(fileName, std::ios::binary);
 		input.seekg(0, std::ios::end);
 		length = static_cast<std::int32_t>(input.tellg());
 		input.seekg(std::ios::beg);
@@ -126,9 +125,16 @@ namespace Library
 	void XmlParseMaster::endElementHandler(void* userData, const XML_Char* name)
 	{
 		SharedData* data = static_cast<SharedData*>(userData);
-		UNREFERENCED_PARAMETER(data);
-		UNREFERENCED_PARAMETER(name);
-		// TODO: Do something with end element handler
+		Vector<IXmlParseHelper*>& helpers = data->getXmlParseMaster()->mHelpers;
+
+		for (std::uint32_t i = 0; i < helpers.size(); i++)
+		{
+			if (helpers[i]->endElementHandler(*data, name))
+			{
+				break;
+			}
+		}
+
 		data->decrementDepth();
 	}
 

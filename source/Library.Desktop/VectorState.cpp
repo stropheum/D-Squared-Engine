@@ -86,7 +86,10 @@ namespace Library
 	/// @Param index: The index of the array being assigned to
 	void VectorState::setFromString(const std::string& value, const std::uint32_t& index)
 	{
-		float x, y, z, w;
+		float x;
+		float y;
+		float z;
+		float w;
 		sscanf_s(value.c_str(), "vec4(%f, %f, %f, %f)", &x, &y, &z, &w);
 		mContext->set(glm::vec4(x, y, z, w), index);
 	}

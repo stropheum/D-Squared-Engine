@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Scope.h"
+#include "Vector.h"
 
 namespace Library
 {

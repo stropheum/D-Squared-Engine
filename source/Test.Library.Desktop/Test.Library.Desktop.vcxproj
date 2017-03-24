@@ -225,6 +225,7 @@
     <ClCompile Include="TestParseHelper.cpp" />
     <ClCompile Include="TestSharedData.cpp" />
     <ClCompile Include="VectorTest.cpp" />
+    <ClCompile Include="XmlParseHelperScopeTest.cpp" />
     <ClCompile Include="XmlParserTest.cpp" />
   </ItemGroup>
   <ItemGroup>

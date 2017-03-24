@@ -66,7 +66,7 @@ namespace TestLibraryDesktop
 
 			parseMaster.addHelper(helper);
 			parseMaster.parseFromFile("input.xml");
-			Assert::AreEqual(sharedData.mName, static_cast<std::string>("Dale"), L"Name not accurately parsed");
+			Assert::AreEqual(static_cast<std::string>("Dale"), sharedData.mName, L"Name not accurately parsed");
 			Assert::AreEqual(sharedData.mHealth, 100, L"Health not accurately parsed");
 			Assert::AreEqual(sharedData.mMana, 80, L"Mana value not accurately parsed");
 			Assert::AreEqual(sharedData.depth(), 0u, L"Depth not zero at end of parsing");
