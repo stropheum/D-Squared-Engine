@@ -3,7 +3,6 @@
 #include "SharedDataScope.h"
 #include "Scope.h"
 #include <sstream>
-//#include "RTTI.h"
 
 
 namespace Library
@@ -217,12 +216,12 @@ namespace Library
 		return true;
 	}
 
-	std::string XmlParseHelperScope::ToString()
+	std::string XmlParseHelperScope::ToString() const
 	{
 		return "Xml Parse Helper Scope";
 	}
 
-	bool XmlParseHelperScope::Equals(const RTTI* rhs)
+	bool XmlParseHelperScope::Equals(const RTTI* rhs) const
 	{
 		if (this == rhs) { return true; }
 		if (rhs == nullptr) { return false; }

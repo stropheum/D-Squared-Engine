@@ -1,15 +1,23 @@
 #pragma once
 #include "XmlParseMaster.h"
-
+#include "RTTI.h"
 
 namespace Library
 {
 	class SharedDataScope :
 		public XmlParseMaster::SharedData
 	{
+		RTTI_DECLARATIONS(SharedDataScope, XmlParseMaster::SharedData)
+
 	public:
+		/// Constructor
 		SharedDataScope();
+
+		/// Destructor
 		~SharedDataScope();
+
+		/// Clones a copy of the current SharedData object and returns a newly allocated one
+		/// @Return: A freshly heap-allocated SharedData instance with the same state as this
 		SharedData* clone() override;
 
 		/// RTTI ToString representation of the shared data class
@@ -21,7 +29,7 @@ namespace Library
 		/// @Return: True if the objects are shared data and identical pointers
 		bool Equals(const RTTI* rhs) const override;
 
-		Scope* mScope;
+		Scope* mScope; /// The scope data of this object
 	};
 }
 

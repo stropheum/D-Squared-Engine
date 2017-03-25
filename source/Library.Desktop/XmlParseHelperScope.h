@@ -35,9 +35,9 @@ namespace Library
 		/// @Return: True if the helper can handle parsing the data
 		bool endElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element) override;
 
-		std::string ToString() override;
+		std::string ToString() const override;
 
-		bool Equals(const RTTI* rhs) override;
+		bool Equals(const RTTI* rhs) const override;
 
 		bool operator==(const XmlParseHelperScope& rhs) const;
 

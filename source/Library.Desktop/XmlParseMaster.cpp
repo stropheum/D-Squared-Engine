@@ -144,7 +144,6 @@ namespace Library
 		UNREFERENCED_PARAMETER(data);
 		UNREFERENCED_PARAMETER(s);
 		UNREFERENCED_PARAMETER(len);
-		// TODO: Do something with char data handler
 	}
 
 	void XmlParseMaster::handleHelperInitialization()
