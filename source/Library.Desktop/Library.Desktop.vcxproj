@@ -96,11 +96,18 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(SolutionDir)packages;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)packages;$(ProjectDir)..\..\external\Expat\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
     </Link>
+    <Lib>
+      <AdditionalDependencies>Expat.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\lib\$(PlatformName)\$(Configuration)\</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>xcopy "$(ProjectDir)..\..\external\Expat\lib\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(Platform)\" /Y /I</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -112,11 +119,18 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(SolutionDir)packages;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)packages;$(ProjectDir)..\..\external\Expat\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
     </Link>
+    <Lib>
+      <AdditionalDependencies>Expat.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\lib\$(PlatformName)\$(Configuration)\</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>xcopy "$(ProjectDir)..\..\external\Expat\lib\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(Platform)\" /Y /I</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -129,13 +143,22 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(SolutionDir)packages;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)packages;$(ProjectDir)..\..\external\Expat\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalDependencies>Expat.lib</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\lib\$(PlatformName)\$(Configuration)\</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>xcopy "$(ProjectDir)..\..\external\Expat\lib\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(Platform)\" /Y /I</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -148,13 +171,20 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(SolutionDir)packages;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)packages;$(ProjectDir)..\..\external\Expat\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalDependencies>Expat.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\lib\$(PlatformName)\$(Configuration)\</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>xcopy "$(ProjectDir)..\..\external\Expat\lib\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(Platform)\" /Y /I</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -166,23 +196,28 @@
     <ClInclude Include="FloatState.h" />
     <ClInclude Include="HashMap.h" />
     <ClInclude Include="IntegerState.h" />
+    <ClInclude Include="IXmlParseHelper.h" />
     <ClInclude Include="MatrixState.h" />
     <ClInclude Include="PointerState.h" />
     <ClInclude Include="RTTI.h" />
     <ClInclude Include="Scope.h" />
     <ClInclude Include="ScopeState.h" />
+    <ClInclude Include="SharedDataScope.h" />
     <ClInclude Include="SList.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="StringState.h" />
     <ClInclude Include="TypeState.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="VectorState.h" />
+    <ClInclude Include="XmlParseHelperScope.h" />
+    <ClInclude Include="XmlParseMaster.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Attributed.cpp" />
     <ClCompile Include="Datum.cpp" />
     <ClCompile Include="FloatState.cpp" />
     <ClCompile Include="IntegerState.cpp" />
+    <ClCompile Include="IXmlParseHelper.cpp" />
     <ClCompile Include="MatrixState.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -197,9 +232,12 @@
     <ClCompile Include="PointerState.cpp" />
     <ClCompile Include="Scope.cpp" />
     <ClCompile Include="ScopeState.cpp" />
+    <ClCompile Include="SharedDataScope.cpp" />
     <ClCompile Include="StringState.cpp" />
     <ClCompile Include="TypeState.cpp" />
     <ClCompile Include="VectorState.cpp" />
+    <ClCompile Include="XmlParseHelperScope.cpp" />
+    <ClCompile Include="XmlParseMaster.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HashMap.inl" />

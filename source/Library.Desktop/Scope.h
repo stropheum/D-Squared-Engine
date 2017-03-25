@@ -9,7 +9,7 @@ namespace Library
 	
 	class Scope : public RTTI
 	{
-		RTTI_DECLARATIONS(Library::Scope, Library::RTTI);
+		RTTI_DECLARATIONS(Library::Scope, Library::RTTI)
 
 #pragma region Constructors/Destructor
 	public:
