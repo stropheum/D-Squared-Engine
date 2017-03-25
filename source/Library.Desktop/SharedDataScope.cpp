@@ -38,6 +38,11 @@ namespace Library
 	{
 		if (this == rhs) { return true; }
 		const SharedDataScope* data = rhs->As<SharedDataScope>();
-		return (data != nullptr) && (mScope == data->mScope);
+		if (data == nullptr) { return false; }
+		return
+			(mScope == data->mScope) ||
+			(mScope != nullptr) && 
+			(data->mScope != nullptr) &&
+			(*mScope == *data->mScope);
 	}
 }

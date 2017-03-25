@@ -244,9 +244,9 @@ namespace Library
 			}
 		}
 
-		return mState == rhs.mState && 
+		return	mXmlParseMaster == rhs.mXmlParseMaster &&
+			mState == rhs.mState && 
 			matricesEquivalent && 
 			mScopeHasBeenInitialized == rhs.mScopeHasBeenInitialized;
-			
 	}
 }

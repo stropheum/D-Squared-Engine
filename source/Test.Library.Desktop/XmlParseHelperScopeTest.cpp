@@ -80,6 +80,93 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(pets["Dog"] == "Dozer");
 		}
 
+		TEST_METHOD(TestHelperRTTI)
+		{
+			Library::SharedDataScope data;
+			Library::XmlParseHelperScope helper1, helper2;
+			Assert::IsTrue(helper1.Equals(&helper2));
+			Assert::IsTrue(helper1 == helper1);
+
+			Library::XmlParseMaster master(&data);
+			helper1.initialize(&master);
+			Assert::IsFalse(helper1.Equals(&helper2));
+
+			helper2.initialize(&master);
+			Assert::IsTrue(helper1.Equals(&helper2));
+
+			Assert::IsTrue(helper1.ToString() == helper2.ToString() &&
+				helper1.ToString() == "Xml Parse Helper Scope");
+		}
+
+		TEST_METHOD(TestHelperClone)
+		{
+			Library::XmlParseHelperScope helperOG;
+			Library::IXmlParseHelper* helperClone = nullptr;
+			Assert::IsFalse(helperOG.Equals(helperClone));
+
+			helperClone = helperOG.clone();
+			Assert::IsTrue(helperOG.Equals(helperClone));
+
+			Library::SharedDataScope sharedData;
+			Library::XmlParseMaster parseMaster(&sharedData);
+			sharedData.setXmlParseMaster(&parseMaster);
+			parseMaster.addHelper(helperOG);
+
+			parseMaster.parseFromFile("Grammar.xml");
+
+			Assert::IsFalse(helperOG.Equals(helperClone));
+
+			delete helperClone;
+		}
+
+		TEST_METHOD(TestDataClone)
+		{
+			Library::XmlParseHelperScope helper;
+			Library::IXmlParseHelper* helperClone = nullptr;
+			Assert::IsFalse(helper.Equals(helperClone));
+
+			helperClone = helper.clone();
+			Assert::IsTrue(helper.Equals(helperClone));
+
+			Library::SharedDataScope sharedData;
+			Library::XmlParseMaster parseMaster(&sharedData);
+			sharedData.setXmlParseMaster(&parseMaster);
+			parseMaster.addHelper(helper);
+
+			parseMaster.parseFromFile("Grammar.xml");
+			Assert::IsFalse(helper.Equals(helperClone));
+
+			delete helperClone;
+		}
+
+		TEST_METHOD(TestDataRTTI)
+		{
+			Library::SharedDataScope data1, data2;
+			Assert::IsTrue(data1.Equals(&data1) && data2.Equals(&data2));
+			Assert::IsTrue(data1.Equals(&data2));
+			Assert::IsTrue(data1.ToString() == "Shared Data Scope" &&
+				data1.ToString() == data2.ToString());
+
+			Library::XmlParseMaster parseMaster(&data1);
+			Library::XmlParseHelperScope helper;
+			data1.setXmlParseMaster(&parseMaster);
+			parseMaster.addHelper(helper);
+
+			parseMaster.parseFromFile("Grammar.xml");
+			Assert::IsFalse(data1.Equals(&data2));
+
+			Library::XmlParseMaster parseMaster2(&data2);
+			Library::XmlParseHelperScope helper2;
+			data2.setXmlParseMaster(&parseMaster2);
+			parseMaster2.addHelper(helper2);
+
+			parseMaster2.parseFromFile("Grammar.xml");
+			Assert::IsTrue(data1.Equals(&data2));
+			
+			Library::Scope& scope1 = *data1.mScope;
+			Library::Scope& scope2 = *data2.mScope;
+			Assert::IsTrue(scope1["Name"] == "Dale" && scope2["Name"] == "Dale");
+		}
 		static _CrtMemState sStartMemState;
 	};
 	_CrtMemState XmlParseHelperScopeTest::sStartMemState;
