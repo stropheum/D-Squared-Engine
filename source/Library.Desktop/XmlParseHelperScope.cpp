@@ -3,10 +3,13 @@
 #include "SharedDataScope.h"
 #include "Scope.h"
 #include <sstream>
+//#include "RTTI.h"
 
 
 namespace Library
 {
+	RTTI_DEFINITIONS(XmlParseHelperScope)
+
 	XmlParseHelperScope::XmlParseHelperScope():
 		mState(State::NotParsing), mMatrixName(""), mMatrixComponentCount(0), mScopeHasBeenInitialized(false)
 	{
@@ -193,6 +196,12 @@ namespace Library
 			mState = (data->depth() > 0) ? State::ParsingScope : State::NotParsing;
 		}
 
+		else if(element == "String")
+		{
+			assert(mState == State::ParsingString);
+			mState = (data->depth() > 0) ? State::ParsingScope : State::NotParsing;
+		}
+
 		else if (element == "Scope")
 		{	// We're done at this level, so jump up one
 			if (data->depth() > 1)
@@ -201,10 +210,44 @@ namespace Library
 			}
 
 			assert(mState == State::ParsingScope);
-			mState = (data->depth() > 0) ? State::ParsingScope : State::NotParsing;
+			mState = (data->depth() > 1) ? State::ParsingScope : State::NotParsing;
 		}
 
 		if (data->depth() == 0) mState = State::NotParsing;
 		return true;
+	}
+
+	std::string XmlParseHelperScope::ToString()
+	{
+		return "Xml Parse Helper Scope";
+	}
+
+	bool XmlParseHelperScope::Equals(const RTTI* rhs)
+	{
+		if (this == rhs) { return true; }
+		if (rhs == nullptr) { return false; }
+
+		XmlParseHelperScope* rhsConverted = rhs->As<XmlParseHelperScope>();
+		return (rhsConverted != nullptr) ? operator==(*rhsConverted) : false;
+	}
+
+	bool XmlParseHelperScope::operator==(const XmlParseHelperScope& rhs) const
+	{
+		bool matricesEquivalent = true;
+		for (std::uint32_t i = 0; i < 4; i++)
+		{
+			for (std::uint32_t j = 0; j < 4; j++)
+			{
+				if (mMatrixComponents[i][j] != rhs.mMatrixComponents[i][j])
+				{
+					matricesEquivalent = false;
+				}
+			}
+		}
+
+		return mState == rhs.mState && 
+			matricesEquivalent && 
+			mScopeHasBeenInitialized == rhs.mScopeHasBeenInitialized;
+			
 	}
 }

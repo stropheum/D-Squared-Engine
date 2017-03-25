@@ -75,6 +75,9 @@ namespace TestLibraryDesktop
 				13.0f, 14.0f, 15.0f, 16.0f
 			);
 			Assert::IsTrue(scope["MyMatrix"] == expectedMatrix);
+
+			Library::Scope& pets = *scope["Pets"].get<Library::Scope*>(0);
+			Assert::IsTrue(pets["Dog"] == "Dozer");
 		}
 
 		static _CrtMemState sStartMemState;

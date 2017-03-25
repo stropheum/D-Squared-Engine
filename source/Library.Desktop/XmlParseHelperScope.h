@@ -1,11 +1,15 @@
 #pragma once
 #include "IXmlParseHelper.h"
+#include "RTTI.h"
+
 
 namespace Library
 {
 	class XmlParseHelperScope :
 		public IXmlParseHelper
 	{
+		RTTI_DECLARATIONS(XmlParseHelperScope, IXmlParseHelper)
+
 	public:
 		/// Constructor for xml parse helper scope
 		XmlParseHelperScope();
@@ -30,6 +34,12 @@ namespace Library
 		/// @Param element: The name of the entry being parsed
 		/// @Return: True if the helper can handle parsing the data
 		bool endElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element) override;
+
+		std::string ToString() override;
+
+		bool Equals(const RTTI* rhs) override;
+
+		bool operator==(const XmlParseHelperScope& rhs) const;
 
 	private:
 		enum State
