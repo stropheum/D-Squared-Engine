@@ -20,7 +20,10 @@ namespace Library
 	XmlParseMaster::SharedData* SharedDataScope::clone()
 	{
 		SharedDataScope* clone = new SharedDataScope();
-		clone->mScope = mScope;
+		if (mScope != nullptr)
+		{
+			clone->mScope = new Scope(*mScope);
+		}
 		return clone;
 	}
 
@@ -37,7 +40,8 @@ namespace Library
 	bool SharedDataScope::Equals(const RTTI* rhs) const
 	{
 		if (this == rhs) { return true; }
-		const SharedDataScope* data = rhs->As<SharedDataScope>();
+		if (rhs == nullptr) { return false; }
+		SharedDataScope* data = rhs->As<SharedDataScope>();
 		if (data == nullptr) { return false; }
 		return
 			(mScope == data->mScope) ||

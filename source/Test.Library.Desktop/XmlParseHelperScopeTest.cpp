@@ -122,21 +122,25 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestDataClone)
 		{
 			Library::XmlParseHelperScope helper;
-			Library::IXmlParseHelper* helperClone = nullptr;
-			Assert::IsFalse(helper.Equals(helperClone));
-
-			helperClone = helper.clone();
-			Assert::IsTrue(helper.Equals(helperClone));
 
 			Library::SharedDataScope sharedData;
+			Library::XmlParseMaster::SharedData* sharedDataClone = nullptr;
+			Assert::IsFalse(sharedData.Equals(sharedDataClone));
+
+			sharedDataClone = sharedData.clone();
+			Assert::IsTrue(sharedData.Equals(sharedDataClone));
+
 			Library::XmlParseMaster parseMaster(&sharedData);
 			sharedData.setXmlParseMaster(&parseMaster);
 			parseMaster.addHelper(helper);
 
 			parseMaster.parseFromFile("Grammar.xml");
-			Assert::IsFalse(helper.Equals(helperClone));
+			Assert::IsFalse(sharedData.Equals(sharedDataClone));
 
-			delete helperClone;
+			delete sharedDataClone;
+			sharedDataClone = sharedData.clone();
+			Assert::IsTrue(sharedData.Equals(sharedDataClone));
+			delete sharedDataClone;
 		}
 
 		TEST_METHOD(TestDataRTTI)
