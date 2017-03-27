@@ -186,7 +186,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AttributedFoo.h" />
+    <ClInclude Include="FooProductFactory.h" />
     <ClInclude Include="Foo.h" />
+    <ClInclude Include="FooProduct.h" />
     <ClInclude Include="FooRTTI.h" />
     <ClInclude Include="Implementation.h" />
     <ClInclude Include="pch.h" />
@@ -205,7 +207,9 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="FactoryTest.cpp" />
     <ClCompile Include="Foo.cpp" />
+    <ClCompile Include="FooProduct.cpp" />
     <ClCompile Include="FooRTTI.cpp" />
     <ClCompile Include="HashMapTest.cpp">
       <SubType>
