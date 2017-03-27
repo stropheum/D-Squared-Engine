@@ -33,4 +33,35 @@ namespace Library
 
 		return operator==(*data);
 	}
+
+	RTTI_DEFINITIONS(BarProduct)
+
+		BarProduct::BarProduct()
+	{
+	}
+
+	BarProduct::~BarProduct()
+	{
+	}
+
+	bool BarProduct::operator==(const BarProduct& rhs) const
+	{
+		return ToString() == rhs.ToString();
+	}
+
+	std::string BarProduct::ToString() const
+	{
+		return "Bar Product";
+	}
+
+	bool BarProduct::Equals(const RTTI* rhs) const
+	{
+		if (this == rhs) { return true; }
+		if (rhs == nullptr) { return false; }
+
+		BarProduct* data = rhs->As<BarProduct>();
+		if (data == nullptr) { return false; }
+
+		return operator==(*data);
+	}
 }
