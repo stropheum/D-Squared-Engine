@@ -127,12 +127,12 @@ namespace Library
 		}
 
 	private:
+		/// The hashmap of string, factory pointer pairs of all factories currently subscribed to the abstract factory
 		static HashMap<std::string, Factory<AbstractProduct>*> sFactoryMap;
 
 #pragma endregion
 	};
 
-	/// The hashmap of string, factory pointer pairs of all factories currently subscribed to the abstract factory
 	template <class AbstractProduct>
 	HashMap<std::string, Factory<AbstractProduct>*> Factory<AbstractProduct>::sFactoryMap;
 }
