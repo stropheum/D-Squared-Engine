@@ -193,6 +193,7 @@
     <ClInclude Include="Attributed.h" />
     <ClInclude Include="Datum.h" />
     <ClInclude Include="DefaultHash.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="FloatState.h" />
     <ClInclude Include="HashMap.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="RTTI.h" />
     <ClInclude Include="Scope.h" />
     <ClInclude Include="ScopeState.h" />
+    <ClInclude Include="Sector.h" />
     <ClInclude Include="SharedDataScope.h" />
     <ClInclude Include="SList.h" />
     <ClInclude Include="pch.h" />
@@ -216,6 +218,7 @@
   <ItemGroup>
     <ClCompile Include="Attributed.cpp" />
     <ClCompile Include="Datum.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FloatState.cpp" />
     <ClCompile Include="IntegerState.cpp" />
     <ClCompile Include="IXmlParseHelper.cpp" />
@@ -233,6 +236,7 @@
     <ClCompile Include="PointerState.cpp" />
     <ClCompile Include="Scope.cpp" />
     <ClCompile Include="ScopeState.cpp" />
+    <ClCompile Include="Sector.cpp" />
     <ClCompile Include="SharedDataScope.cpp" />
     <ClCompile Include="StringState.cpp" />
     <ClCompile Include="TypeState.cpp" />
