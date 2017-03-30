@@ -193,6 +193,7 @@
     <ClInclude Include="Attributed.h" />
     <ClInclude Include="Datum.h" />
     <ClInclude Include="DefaultHash.h" />
+    <ClInclude Include="Factory.h" />
     <ClInclude Include="FloatState.h" />
     <ClInclude Include="HashMap.h" />
     <ClInclude Include="IntegerState.h" />

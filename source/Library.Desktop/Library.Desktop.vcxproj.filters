@@ -68,6 +68,9 @@
     <Filter Include="XmlParser\XmlParseHelperScope">
       <UniqueIdentifier>{84e678f7-7113-4262-a713-bfe550cdd791}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Factory">
+      <UniqueIdentifier>{fe1138b4-3753-4663-a380-1fbb27bdeaf6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -135,6 +138,9 @@
     </ClInclude>
     <ClInclude Include="SharedDataScope.h">
       <Filter>XmlParser\XmlParseHelperScope</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory.h">
+      <Filter>Factory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

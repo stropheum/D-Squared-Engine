@@ -186,9 +186,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AttributedFoo.h" />
+    <ClInclude Include="FooProductFactory.h" />
     <ClInclude Include="Foo.h" />
+    <ClInclude Include="FooProduct.h" />
     <ClInclude Include="FooRTTI.h" />
     <ClInclude Include="Implementation.h" />
+    <ClInclude Include="MacroGeneratedProduct.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="targetver.h" />
@@ -205,12 +208,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="FactoryTest.cpp" />
     <ClCompile Include="Foo.cpp" />
+    <ClCompile Include="FooProduct.cpp" />
     <ClCompile Include="FooRTTI.cpp" />
     <ClCompile Include="HashMapTest.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="MacroGeneratedProduct.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
