@@ -4,36 +4,37 @@
 
 namespace Library
 {
+	RTTI_DEFINITIONS(Entity)
+
 	Entity::Entity()
 	{
+		(*this)["Name"].setStorage(&mName, 1);
 	}
 
-	Entity::~Entity()
+	std::string Entity::name() const
 	{
-	}
-
-	std::string Entity::name()
-	{
-		// TODO: implement name method
-		return "name";
+		return mName;
 	}
 
 	void Entity::setName(const std::string& name)
 	{
-		UNREFERENCED_PARAMETER(name);
+		(*this)["Name"] = name;
 	}
 
 	Sector* Entity::getSector()
 	{
-		return nullptr;
+		assert(getParent()->Is(Sector::TypeIdClass()));
+		return getParent()->As<Sector>();
 	}
 
-	void Entity::setSector(const Sector& sector)
+	void Entity::setSector(Sector& sector)
 	{
-		UNREFERENCED_PARAMETER(sector);
+		sector.adopt(*this, name());
 	}
 
-	void Entity::update()
+	void Entity::update(WorldState& worldState)
 	{
+		UNREFERENCED_PARAMETER(worldState);
+		// Currently do nothing. Update will be called on all actions within this entity
 	}
 }

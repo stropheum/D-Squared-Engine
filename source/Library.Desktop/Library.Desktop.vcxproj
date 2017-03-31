@@ -196,6 +196,8 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="FloatState.h" />
+    <ClInclude Include="GameClock.h" />
+    <ClInclude Include="GameTime.h" />
     <ClInclude Include="HashMap.h" />
     <ClInclude Include="IntegerState.h" />
     <ClInclude Include="IXmlParseHelper.h" />
@@ -212,6 +214,8 @@
     <ClInclude Include="TypeState.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="VectorState.h" />
+    <ClInclude Include="World.h" />
+    <ClInclude Include="WorldState.h" />
     <ClInclude Include="XmlParseHelperScope.h" />
     <ClInclude Include="XmlParseMaster.h" />
   </ItemGroup>
@@ -220,6 +224,8 @@
     <ClCompile Include="Datum.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FloatState.cpp" />
+    <ClCompile Include="GameClock.cpp" />
+    <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="IntegerState.cpp" />
     <ClCompile Include="IXmlParseHelper.cpp" />
     <ClCompile Include="MatrixState.cpp" />
@@ -241,6 +247,8 @@
     <ClCompile Include="StringState.cpp" />
     <ClCompile Include="TypeState.cpp" />
     <ClCompile Include="VectorState.cpp" />
+    <ClCompile Include="World.cpp" />
+    <ClCompile Include="WorldState.cpp" />
     <ClCompile Include="XmlParseHelperScope.cpp" />
     <ClCompile Include="XmlParseMaster.cpp" />
   </ItemGroup>

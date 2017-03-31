@@ -24,7 +24,7 @@ namespace Library
 			return #ConcreteProduct;									\
 		}																\
 																		\
-		virtual Library::RTTI* create() override						\
+		virtual AbstractProduct* create() override						\
 		{																\
 			AbstractProduct* product = new ConcreteProduct();			\
 			assert(product != nullptr);									\

@@ -1,6 +1,7 @@
 #pragma once
 #include "Scope.h"
 
+
 namespace Library
 {
 	class Attributed : public Scope
