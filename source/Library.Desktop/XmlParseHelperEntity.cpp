@@ -115,8 +115,8 @@ namespace Library
 			mState = State::ParsingMatrix;
 			mMatrixName = attributes.find("Name")->second;
 			// Only use this to set state to start grabbing component vectors
-			// TODO: possibly migrate the append call here so we have access to the name we need to create with
 		}
+
 		else if (element == "String")
 		{
 			mState = State::ParsingString;
@@ -124,6 +124,7 @@ namespace Library
 			datum.setType(DatumType::String);
 			datum.set(attributes.find("Value")->second);
 		}
+
 		else if (element == "World")
 		{
 			if (mState != State::NotParsing || mScopeHasBeenInitialized)
@@ -131,9 +132,12 @@ namespace Library
 				throw std::exception("Already parsing while attempting to parse a world");
 			}
 
+			mState = State::ParsingWorld;
 			data->mScope = new World();
+			data->mScope->As<World>()->setName(attributes.find("Name")->second);
 			mScopeHasBeenInitialized = true;
 		}
+
 		else if(element == "Sector" || !mScopeHasBeenInitialized)
 		{
 			assert(data->mScope->Is(World::TypeIdClass()));
@@ -142,8 +146,13 @@ namespace Library
 				throw std::exception("Attempting to parse a sector when not in a world");
 			}
 
-			data->mScope = data->mScope->As<World>()->createSector(attributes.find("Name")->second);
+			mState = State::ParsingSector;
+
+			World* world = data->mScope->As<World>();
+			Sector* sector = world->createSector(attributes.find("Name")->second);
+			data->mScope = sector;
 		}
+
 		else if (element == "Entity" || !mScopeHasBeenInitialized)
 		{
 			assert(data->mScope->Is(Sector::TypeIdClass()));
@@ -152,12 +161,14 @@ namespace Library
 				throw std::exception("Attempting to parse an entity when not in a sector");
 			}
 
+			mState = State::ParsingEntity;
 			std::string className = attributes.find("ClassName")->second;
 			std::string instanceName = attributes.find("InstanceName")->second;
 
 			Sector* sector = data->mScope->As<Sector>();
 			Entity* entity = sector->createEntity(className, instanceName);
 
+			data->mScope = entity;
 		}
 
 		return true;
@@ -224,9 +235,30 @@ namespace Library
 			assert(mState == State::ParsingString);
 		}
 
-
+		else if (element == "World")
+		{
+			mPreviousState = State::NotParsing;
+			assert(mState == State::ParsingWorld);
+			assert(data->mScope->getParent() == nullptr);
 		}
 
+		else if (element == "Sector")
+		{
+			mPreviousState = State::ParsingWorld;
+			assert(mState == State::ParsingSector);
+			assert(data->mScope->getParent() != nullptr);
+			data->mScope = data->mScope->getParent();
+		}
+
+		else if (element == "Entity")
+		{
+			mPreviousState = State::ParsingSector;
+			assert(mState == State::ParsingEntity);
+			assert(data->mScope->getParent() != nullptr);
+			data->mScope = data->mScope->getParent();
+		}
+
+		mState = mPreviousState;
 		if (data->depth() == 0) mState = State::NotParsing;
 		return true;
 	}
