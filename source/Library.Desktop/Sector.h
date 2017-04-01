@@ -25,7 +25,7 @@ namespace Library
 		std::string name() const;
 		void setName(const std::string& name);
 		Datum& entities();
-		class Entity* createEntity(const std::string& className, const std::string& instanceName) const;
+		class Entity* createEntity(const std::string& className, const std::string& instanceName);
 		void setWorld(World& world);
 		World& getWorld();
 		void update(class WorldState& worldState);

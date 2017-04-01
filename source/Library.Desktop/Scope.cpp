@@ -173,7 +173,10 @@ namespace Library
 	{
 		Datum& datum = append(key);
 		datum.setType(DatumType::Scope);
-		child.orphan();
+		if (child.mParent != nullptr)
+		{
+			child.orphan();
+		}
 		child.mParent = this;
 		datum.pushBack(&child);
 	}

@@ -29,10 +29,12 @@ namespace Library
 		return (*this)["Entities"];
 	}
 
-	Entity* Sector::createEntity(const std::string& className, const std::string& instanceName) const
+	Entity* Sector::createEntity(const std::string& className, const std::string& instanceName)
 	{
-		Entity* instance = Factory<RTTI>::create(className)->As<Entity>();
-		instance->name() = instanceName;
+		Entity* instance = Factory<Entity>::create(className);
+		assert(instance != nullptr);
+		instance->setName(instanceName);
+		adopt(*instance, instanceName);
 		return instance;
 	}
 

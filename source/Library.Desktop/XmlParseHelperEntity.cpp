@@ -13,7 +13,7 @@ namespace Library
 	RTTI_DEFINITIONS(XmlParseHelperEntity)
 
 		XmlParseHelperEntity::XmlParseHelperEntity() :
-		mState(State::NotParsing), mMatrixName(""), mMatrixComponentCount(0), mScopeHasBeenInitialized(false)
+		mState(State::NotParsing), mPreviousState(State::NotParsing), mMatrixName(""), mMatrixComponentCount(0), mScopeHasBeenInitialized(false)
 	{
 		for (std::uint32_t i = 0; i < 4; i++)
 		{
@@ -52,7 +52,7 @@ namespace Library
 	{
 		// Store off state to revert once the end element handler has been met
 		mPreviousState = 
-			(mState == State::ParsingWorld || mState == State::ParsingSector || mState == State::ParsingEntity) 
+			(mState == State::NotParsing ||mState == State::ParsingWorld || mState == State::ParsingSector || mState == State::ParsingEntity) 
 			? mState 
 			: mPreviousState; 
 
@@ -67,6 +67,7 @@ namespace Library
 			datum.setType(DatumType::Integer);
 			datum.setFromString(attributes.find("Value")->second);
 		}
+
 		else if (element == "Float")
 		{
 			mState = State::ParsingFloat;
@@ -74,6 +75,7 @@ namespace Library
 			datum.setType(DatumType::Float);
 			datum.setFromString(attributes.find("Value")->second);
 		}
+
 		else if (element == "Vector")
 		{
 			mState = (mState == State::ParsingMatrix) ? State::ParsingMatrix : State::ParsingVector;
@@ -86,6 +88,8 @@ namespace Library
 
 			if (mState == State::ParsingVector)
 			{
+				assert(attributes.find("Name") != attributes.end());
+				std::pair<std::string, std::string> pair = *attributes.find("Name");
 				Datum& datum = scope->append(attributes.find("Name")->second);
 				datum.setType(DatumType::Vector);
 
@@ -93,6 +97,7 @@ namespace Library
 				ss << "vec4(" << x << ", " << y << ", " << z << ", " << w << ")";
 				datum.setFromString(ss.str());
 			}
+
 			else if (mState == State::ParsingMatrix)
 			{
 				mMatrixComponents[mMatrixComponentCount][0] = x;
@@ -104,6 +109,7 @@ namespace Library
 				assert(mMatrixComponentCount <= 4);
 			}
 		}
+
 		else if (element == "Matrix")
 		{
 			mState = State::ParsingMatrix;
@@ -118,21 +124,6 @@ namespace Library
 			datum.setType(DatumType::String);
 			datum.set(attributes.find("Value")->second);
 		}
-//		else if (element == "Scope")
-//		{
-//			mState = State::ParsingScope;
-//
-//			if (!mScopeHasBeenInitialized)
-//			{
-//				data->mScope = new Scope();
-//				mScopeHasBeenInitialized = true;
-//			}
-//			else
-//			{
-//				Scope& newScope = scope->appendScope(attributes.find("Name")->second);
-//				data->mScope = &newScope; // Scope becomes the newly appended scope until we're done adding to it
-//			}
-//		}
 		else if (element == "World")
 		{
 			if (mState != State::NotParsing || mScopeHasBeenInitialized)
@@ -167,7 +158,6 @@ namespace Library
 			Sector* sector = data->mScope->As<Sector>();
 			Entity* entity = sector->createEntity(className, instanceName);
 
-			data->mScope = 
 		}
 
 		return true;
@@ -183,25 +173,16 @@ namespace Library
 		if (element == "Integer")
 		{
 			assert(mState == State::ParsingInteger);
-			mState = (data->depth() > 0) ? State::ParsingScope : State::NotParsing;
 		}
 
 		else if (element == "Float")
 		{
 			assert(mState == State::ParsingFloat);
-			mState = (data->depth() > 0) ? State::ParsingScope : State::NotParsing;
 		}
 
 		else if (element == "Vector")
 		{
 			assert(mState == State::ParsingVector || mState == State::ParsingMatrix);
-			if (data->depth() > 0)
-			{
-				if (mState != State::ParsingMatrix)
-				{
-					mState = (data->depth() > 0) ? State::ParsingScope : State::NotParsing;
-				}
-			}
 		}
 
 		else if (element == "Matrix")
@@ -236,24 +217,14 @@ namespace Library
 
 			mMatrixComponentCount = 0;
 			assert(mState == State::ParsingMatrix);
-			mState = (data->depth() > 0) ? State::ParsingScope : State::NotParsing;
 		}
 
 		else if (element == "String")
 		{
 			assert(mState == State::ParsingString);
-			mState = (data->depth() > 0) ? State::ParsingScope : State::NotParsing;
 		}
 
-		else if (element == "Scope")
-		{	// We're done at this level, so jump up one
-			if (data->depth() > 1)
-			{
-				data->mScope = data->mScope->getParent();
-			}
 
-			assert(mState == State::ParsingScope);
-			mState = (data->depth() > 1) ? State::ParsingScope : State::NotParsing;
 		}
 
 		if (data->depth() == 0) mState = State::NotParsing;

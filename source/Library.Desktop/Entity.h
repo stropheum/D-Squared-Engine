@@ -31,5 +31,5 @@ namespace Library
 		std::string mName;
 	};
 
-	ConcreteFactory(Scope, Entity)										
+	ConcreteFactory(Entity, Entity)										
 }
