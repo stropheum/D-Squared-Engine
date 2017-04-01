@@ -71,9 +71,6 @@
     <Filter Include="Factory">
       <UniqueIdentifier>{fe1138b4-3753-4663-a380-1fbb27bdeaf6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Secor">
-      <UniqueIdentifier>{d3d57e6b-659e-4a78-9e2e-9739aef9c301}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Entity">
       <UniqueIdentifier>{66c3a046-d85b-48f0-8f60-0749b7fa12bf}</UniqueIdentifier>
     </Filter>
@@ -85,6 +82,12 @@
     </Filter>
     <Filter Include="GameTime">
       <UniqueIdentifier>{5c04cb7b-08f4-4de2-96db-02169c856534}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XmlParser\XmlParseHelperEntity">
+      <UniqueIdentifier>{b691f31c-b224-4aa3-9c78-d7f46094a687}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sector">
+      <UniqueIdentifier>{d3d57e6b-659e-4a78-9e2e-9739aef9c301}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -158,7 +161,7 @@
       <Filter>Factory</Filter>
     </ClInclude>
     <ClInclude Include="Sector.h">
-      <Filter>Secor</Filter>
+      <Filter>Sector</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Entity</Filter>
@@ -174,6 +177,9 @@
     </ClInclude>
     <ClInclude Include="GameTime.h">
       <Filter>GameTime</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlParseHelperEntity.h">
+      <Filter>XmlParser\XmlParseHelperEntity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -226,7 +232,7 @@
       <Filter>XmlParser\XmlParseHelperScope</Filter>
     </ClCompile>
     <ClCompile Include="Sector.cpp">
-      <Filter>Secor</Filter>
+      <Filter>Sector</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Entity</Filter>
@@ -242,6 +248,9 @@
     </ClCompile>
     <ClCompile Include="GameTime.cpp">
       <Filter>GameTime</Filter>
+    </ClCompile>
+    <ClCompile Include="XmlParseHelperEntity.cpp">
+      <Filter>XmlParser\XmlParseHelperEntity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

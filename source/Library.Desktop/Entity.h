@@ -23,8 +23,8 @@ namespace Library
 
 		std::string name() const;
 		void setName(const std::string& name);
-		Sector* getSector();
 		void setSector(Sector& sector);
+		Sector* getSector();
 		void update(class WorldState& worldState);
 
 	private:

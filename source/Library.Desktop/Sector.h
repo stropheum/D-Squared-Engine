@@ -5,6 +5,8 @@
 
 namespace Library
 {
+	class World;
+
 	class Sector final :
 		public Attributed
 	{
@@ -23,12 +25,13 @@ namespace Library
 		std::string name() const;
 		void setName(const std::string& name);
 		Datum& entities();
-		class Entity* createEntity(const std::string& className, const std::string& instanceName);
+		class Entity* createEntity(const std::string& className, const std::string& instanceName) const;
+		void setWorld(World& world);
+		World& getWorld();
+		void update(class WorldState& worldState);
 
 	private:
 		std::string mName;
 	};
-
-	ConcreteFactory(Attributed, Sector)
 }
 

@@ -12,7 +12,6 @@ namespace Library
 
 	public:
 		World();
-		~World();
 
 		World* operator=(const World& rhs) = delete;
 		World(const World& rhs) = delete;
@@ -20,11 +19,14 @@ namespace Library
 		World* operator=(World&& rhs) = delete;
 		World(World&& rhs) = delete;
 
-		std::string name();
+		std::string name() const;
 		void setName(const std::string& name);
-		// sectors method
-		Sector* createSector();
+		Datum& sectors();
+		Sector* createSector(const std::string& name);
 		void update(class WorldState& worldState, class GameTime& gameTime);
+
+	private:
+		std::string mName;
 	};
 }
 

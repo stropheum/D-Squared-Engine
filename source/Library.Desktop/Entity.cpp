@@ -21,15 +21,15 @@ namespace Library
 		(*this)["Name"] = name;
 	}
 
+	void Entity::setSector(Sector& sector)
+	{
+		sector.adopt(*this, mName);
+	}
+
 	Sector* Entity::getSector()
 	{
 		assert(getParent()->Is(Sector::TypeIdClass()));
 		return getParent()->As<Sector>();
-	}
-
-	void Entity::setSector(Sector& sector)
-	{
-		sector.adopt(*this, name());
 	}
 
 	void Entity::update(WorldState& worldState)

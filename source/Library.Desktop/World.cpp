@@ -9,22 +9,13 @@ namespace Library
 
 	World::World()
 	{
+		(*this)["Name"].setStorage(&mName, 1);
+		(*this)["Sectors"].setType(DatumType::Scope);
 	}
 
-	World::~World()
+	std::string World::name() const
 	{
-	}
-
-	std::string World::name()
-	{
-		std::string result = "";
-
-		if (find("Name") != nullptr)
-		{
-			result = (*this)["Name"].get<std::string>(0);
-		}
-
-		return result;
+		return mName;
 	}
 
 	void World::setName(const std::string& name)
@@ -32,10 +23,15 @@ namespace Library
 		(*this)["Name"] = name;
 	}
 
-	Sector* World::createSector()
+	Datum& World::sectors()
 	{
-		Sector* sector = Factory<RTTI>::create("Sector")->As<Sector>();
-		adopt(*sector, "Sector");
+		return (*this)["Sectors"];
+	}
+
+	Sector* World::createSector(const std::string& name)
+	{
+		Sector* sector = new Sector();
+		adopt(*sector, name);
 		return sector;
 	}
 

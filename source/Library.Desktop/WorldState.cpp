@@ -4,7 +4,8 @@
 
 namespace Library
 {
-	WorldState::WorldState()
+	WorldState::WorldState() :
+		world(nullptr), sector(nullptr), entity(nullptr), gameTime(nullptr)
 	{
 	}
 
@@ -12,13 +13,17 @@ namespace Library
 	{
 	}
 
-	std::uint32_t WorldState::getgameTime()
+	GameTime& WorldState::getgameTime() const
 	{
-		return 0;
+		if (gameTime == nullptr)
+		{
+			throw std::exception("Attempting to get gametime before setting");
+		}
+		return *gameTime;
 	}
 
-	void WorldState::setGameTime(std::uint32_t time)
+	void WorldState::setGameTime(GameTime& newGameTime)
 	{
-		UNREFERENCED_PARAMETER(time);
+		gameTime = &newGameTime;
 	}
 }
