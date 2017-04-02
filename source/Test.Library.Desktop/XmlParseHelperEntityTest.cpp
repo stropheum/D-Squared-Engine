@@ -1,9 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "XmlParseMaster.h"
-#include "TestParseHelper.h"
 #include "TestSharedData.h"
-#include "XmlParseHelperScope.h"
 #include "SharedDataScope.h"
 #include "Scope.h"
 #include "Datum.h"
@@ -13,6 +11,7 @@
 #include "Entity.h"
 #include "World.h"
 #include "Sector.h"
+#include "GameTime.h"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -32,7 +31,7 @@ namespace TestLibraryDesktop
 #if _DEBUG
 			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
 			_CrtMemCheckpoint(&sStartMemState);
-#endif //_Debug
+#endif //_DEBUG
 		}
 
 		/// Detects if memory state has been corrupted
@@ -46,17 +45,17 @@ namespace TestLibraryDesktop
 				_CrtMemDumpStatistics(&diffMemState);
 				Assert::Fail(L"Memory Leaks!");
 			}
-#endif //_Debug
+#endif //_DEBUG
 		}
 
 		TEST_METHOD_INITIALIZE(methodInitialize)
 		{
-//			initializeLeakDetection();
+			initializeLeakDetection();
 		}
 
 		TEST_METHOD_CLEANUP(methodCleanup)
 		{
-//			finalizeLeakDetection();
+			finalizeLeakDetection();
 		}
 
 		TEST_METHOD(TestParse)
@@ -73,44 +72,167 @@ namespace TestLibraryDesktop
 			World* world = scope->As<World>();
 			std::string name = world != nullptr ? world->name() : "";
 
-//			Assert::IsTrue(scope.As<World>()->name() == "Dales World");
+			Assert::IsTrue(name == "Dales World");
 
-//			Assert::IsTrue(scope["Name"] == "Dale");
-//			Assert::IsTrue(scope["Health"] == 10);
-//			Assert::IsTrue(scope["Power"] == 57.3f);
-//			Assert::IsTrue(scope["Position"] == glm::vec4(1.0f, 2.0f, 3.0f, 4.0f));
-//
-//			glm::mat4 expectedMatrix(
-//				1.0f, 2.0f, 3.0f, 4.0f,
-//				5.0f, 6.0f, 7.0f, 8.0f,
-//				9.0f, 10.0f, 11.0f, 12.0f,
-//				13.0f, 14.0f, 15.0f, 16.0f
-//			);
-//			Assert::IsTrue(scope["MyMatrix"] == expectedMatrix);
-//
-//			Library::Scope& pets = *scope["Pets"].get<Library::Scope*>(0);
-//			Assert::IsTrue(pets["Dog"] == "Dozer");
-		}
+			Assert::IsTrue(world->sectors()[0].As<Sector>() != nullptr);
+			Sector* sector = world->sectors()[0].As<Sector>();
+			Assert::IsTrue(sector->name() == "Dales Sector");
+			Assert::IsTrue(sector->getParent() == world);
 
-		TEST_METHOD(TestHelperRTTI)
-		{
+			Entity* entity = sector->entities()[0].As<Entity>();
+			Assert::IsTrue(entity != nullptr);
+			Assert::IsTrue(entity->name() == "Dale");
 			
+			Entity& entityRef = *entity;
+			Assert::IsTrue(entityRef["Health"] == 100);
+			Assert::IsTrue(entityRef["Power"] == 12.34f);
+			Assert::IsTrue(entityRef["Position"] == glm::vec4(1, 2, 3, 4));
 		}
 
-		TEST_METHOD(TestHelperClone)
+		TEST_METHOD(TestWorldName)
 		{
+			World* world = new World();
+
+			Assert::IsTrue(world->name() == "");
 			
+			world->setName("NewName");
+			Assert::IsTrue(world->name() == "NewName");
+
+			delete world;
 		}
 
-		TEST_METHOD(TestDataClone)
+		TEST_METHOD(TestSectorName)
 		{
-			
+			Sector* sector = new Sector();
+
+			Assert::IsTrue(sector->name() == "");
+
+			sector->setName("NewName");
+			Assert::IsTrue(sector->name() == "NewName");
+
+			delete sector;
 		}
 
-		TEST_METHOD(TestDataRTTI)
+		TEST_METHOD(TestEntityName)
 		{
-			
+			Entity* entity = new Entity();
+
+			Assert::IsTrue(entity->name() == "");
+
+			entity->setName("NewName");
+			Assert::IsTrue(entity->name() == "NewName");
+
+			delete entity;
 		}
+
+		TEST_METHOD(TestCreateSector)
+		{
+			World* world = new World();
+
+			Assert::IsTrue(world->sectors().size() == 0);
+
+			world->createSector("NewSector");
+			Assert::IsTrue(world->sectors().size() == 1);
+
+			delete world;
+		}
+
+		TEST_METHOD(TestCreateEntity)
+		{
+			Sector* sector = new Sector();
+
+			Assert::IsTrue(sector->entities().size() == 0);
+
+			sector->createEntity("Entity", "Dale");
+			Assert::IsTrue(sector->entities().size() == 1);
+
+			delete sector;
+		}
+
+		TEST_METHOD(TestCloneLeaks)
+		{
+			/// Clone for leak detection. Cloning functioality already tests in other test class
+			Library::SharedDataScope sharedData;
+			Library::XmlParseMaster parseMaster(&sharedData);
+			Library::XmlParseHelperEntity helper;
+			sharedData.setXmlParseMaster(&parseMaster);
+			parseMaster.addHelper(helper);
+			XmlParseMaster* clone = parseMaster.clone();
+			delete clone;
+			Assert::IsTrue(true);
+		}
+
+		TEST_METHOD(Testupdate)
+		{
+			/// Update has no current functionality, so test currently exists for coverage and leak detection
+			World* world = new World();
+			WorldState worldState;
+			GameTime gameTime;
+			world->update(worldState, gameTime);
+
+			delete world;
+		}
+
+		TEST_METHOD(TestGetWorld)
+		{
+			World* world = new World();
+
+			Sector* sector = world->createSector("NewSector");
+			Assert::IsTrue(sector->getWorld() == *world);
+
+			World* wrongWorld = new World();
+			Assert::IsFalse(sector->getWorld() == *wrongWorld);
+
+			delete world;
+			delete wrongWorld;
+		}
+
+		TEST_METHOD(TestGetSector)
+		{
+			Sector* sector = new Sector();
+
+			Entity* entity = sector->createEntity("Entity", "Dale");
+			Assert::IsTrue(entity->getSector() == *sector);
+
+			Sector* wrongSector = new Sector();
+			Assert::IsFalse(entity->getSector() == *wrongSector);
+
+			delete sector;
+			delete wrongSector;
+		}
+
+		TEST_METHOD(TestSetWorld)
+		{
+			World* world1 = new World();
+			Sector* sector = world1->createSector("sector");
+
+			Assert::IsTrue(sector->getWorld() == *world1);
+
+			World* world2 = new World();
+			sector->setWorld(*world2);
+			Assert::IsTrue(sector->getWorld() == *world2);
+			Assert::IsFalse(sector->getWorld() == *world1);
+
+			delete world1;
+			delete world2;
+		}
+
+		TEST_METHOD(TestSetSector)
+		{
+			Sector* sector1 = new Sector();
+			Entity* entity = sector1->createEntity("Entity", "Dale");
+
+			Assert::IsTrue(entity->getSector() == *sector1);
+
+			Sector* sector2 = new Sector();
+			entity->setSector(*sector2);
+			Assert::IsTrue(entity->getSector() == *sector2);
+			Assert::IsFalse(entity->getSector() == *sector1);
+
+			delete sector1;
+			delete sector2;
+		}
+
 		static _CrtMemState sStartMemState;
 	};
 	_CrtMemState XmlParseHelperEntityTest::sStartMemState;

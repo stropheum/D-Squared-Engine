@@ -34,7 +34,7 @@ namespace Library
 		Entity* instance = Factory<Entity>::create(className);
 		assert(instance != nullptr);
 		instance->setName(instanceName);
-		adopt(*instance, instanceName);
+		adopt(*instance, "Entities");
 		return instance;
 	}
 
@@ -45,13 +45,20 @@ namespace Library
 
 	World& Sector::getWorld()
 	{
+		if (getParent() == nullptr)
+		{
+			throw std::exception("Parent is null");
+		}
 		assert(getParent()->Is(World::TypeIdClass()));
 		return *getParent()->As<World>();
 	}
 
 	void Sector::update(WorldState& worldState)
 	{
-		UNREFERENCED_PARAMETER(worldState);
-		// TODO: Implement update method
+		for (std::uint32_t i = 0; i < entities().size(); i++)
+		{
+			assert(entities()[i].Is(Entity::TypeIdClass()));
+			entities()[i].As<Entity>()->update(worldState);
+		}
 	}
 }

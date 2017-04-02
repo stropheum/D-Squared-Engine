@@ -31,14 +31,19 @@ namespace Library
 	Sector* World::createSector(const std::string& name)
 	{
 		Sector* sector = new Sector();
-		adopt(*sector, name);
+		sector->setName(name);
+		adopt(*sector, "Sectors");
 		return sector;
 	}
 
 	void World::update(WorldState& worldState, GameTime& gameTime)
 	{
-		UNREFERENCED_PARAMETER(worldState);
 		UNREFERENCED_PARAMETER(gameTime);
+		for (std::uint32_t i = 0; i < sectors().size(); i++)
+		{
+			assert(sectors()[i].Is(Sector::TypeIdClass()));
+			sectors()[i].As<Sector>()->update(worldState);
+		}
 	}
 }
 

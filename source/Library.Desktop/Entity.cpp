@@ -26,15 +26,18 @@ namespace Library
 		sector.adopt(*this, mName);
 	}
 
-	Sector* Entity::getSector()
+	Sector& Entity::getSector()
 	{
+		if (getParent() == nullptr)
+		{
+			throw std::exception("Parent is null");
+		}
 		assert(getParent()->Is(Sector::TypeIdClass()));
-		return getParent()->As<Sector>();
+		return *getParent()->As<Sector>();
 	}
 
 	void Entity::update(WorldState& worldState)
 	{
 		UNREFERENCED_PARAMETER(worldState);
-		// Currently do nothing. Update will be called on all actions within this entity
 	}
 }

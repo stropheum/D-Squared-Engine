@@ -35,10 +35,15 @@ namespace Library
 		/// @Return: True if the helper can handle parsing the data
 		bool endElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element) override;
 
+		/// RTTI method for having a string representation of the parse helper
 		std::string ToString() const override;
 
+		/// RTTI method for comparing one parse helper to the other
 		bool Equals(const RTTI* rhs) const override;
 
+		/// Comparison operator
+		/// @Param rhs: The parse helper beign compared against
+		/// @Return: true if the parse helpers are equivalent
 		bool operator==(const XmlParseHelperEntity& rhs) const;
 
 	private:
