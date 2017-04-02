@@ -1,6 +1,7 @@
 #pragma once
 #include "XmlParseMaster.h"
 #include "RTTI.h"
+#include "WorldState.h"
 
 namespace Library
 {
@@ -30,6 +31,7 @@ namespace Library
 		bool Equals(const RTTI* rhs) const override;
 
 		Scope* mScope; /// The scope data of this object
+		WorldState mWorldState;
 	};
 }
 
