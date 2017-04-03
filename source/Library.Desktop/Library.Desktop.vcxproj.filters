@@ -89,6 +89,9 @@
     <Filter Include="Sector">
       <UniqueIdentifier>{d3d57e6b-659e-4a78-9e2e-9739aef9c301}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Action">
+      <UniqueIdentifier>{ccaff320-2049-4e9b-b25f-5f70bd530b3b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -181,6 +184,12 @@
     <ClInclude Include="XmlParseHelperEntity.h">
       <Filter>XmlParser\XmlParseHelperEntity</Filter>
     </ClInclude>
+    <ClInclude Include="Action.h">
+      <Filter>Action</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionList.h">
+      <Filter>Action</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Datum.cpp">
@@ -251,6 +260,12 @@
     </ClCompile>
     <ClCompile Include="XmlParseHelperEntity.cpp">
       <Filter>XmlParser\XmlParseHelperEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="Action.cpp">
+      <Filter>Action</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionList.cpp">
+      <Filter>Action</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
