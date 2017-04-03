@@ -6,8 +6,6 @@
 
 namespace Library
 {
-#define EntityFactory(ConcreteEntity) ConcreteFactory(Entity, ConcreteEntity)
-
 	class Entity :
 		public Attributed
 	{
@@ -56,5 +54,6 @@ namespace Library
 		std::string mName; /// The name of the entity
 	};
 		
+#define EntityFactory(ConcreteEntity) ConcreteFactory(Entity, ConcreteEntity)
 	EntityFactory(Entity)
 }

@@ -4,8 +4,6 @@
 
 namespace Library
 {
-#define ActionFactory(ConcreteAction) ConcreteFactory(Action, ConcreteAction)
-
 	class Action :
 		public Library::Attributed
 	{
@@ -34,6 +32,8 @@ namespace Library
 	protected:
 		std::string mName; /// The name of the action
 	};
+
+#define ActionFactory(ConcreteAction) ConcreteFactory(Action, ConcreteAction)
 }
 
 
