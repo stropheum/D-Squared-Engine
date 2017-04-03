@@ -10,10 +10,6 @@ namespace Library
 	{
 	}
 
-	Action::~Action()
-	{
-	}
-
 	std::string Action::name() const
 	{
 		return mName;

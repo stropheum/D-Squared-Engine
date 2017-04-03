@@ -92,6 +92,15 @@
     <Filter Include="Action">
       <UniqueIdentifier>{ccaff320-2049-4e9b-b25f-5f70bd530b3b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Action\CreateAction">
+      <UniqueIdentifier>{fdcbb1a3-f68a-403e-92e0-e2da8773b6de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Action\DestrtoyAction">
+      <UniqueIdentifier>{329127d5-3dba-4cb5-abbf-65d904d80cb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Action\ActionList">
+      <UniqueIdentifier>{a4a7eec7-ba6c-4c76-a5fd-87b29934423b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -187,8 +196,14 @@
     <ClInclude Include="Action.h">
       <Filter>Action</Filter>
     </ClInclude>
+    <ClInclude Include="ActionCreateAction.h">
+      <Filter>Action\CreateAction</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionDestroyAction.h">
+      <Filter>Action\DestrtoyAction</Filter>
+    </ClInclude>
     <ClInclude Include="ActionList.h">
-      <Filter>Action</Filter>
+      <Filter>Action\ActionList</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -264,8 +279,14 @@
     <ClCompile Include="Action.cpp">
       <Filter>Action</Filter>
     </ClCompile>
+    <ClCompile Include="ActionCreateAction.cpp">
+      <Filter>Action\CreateAction</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionDestroyAction.cpp">
+      <Filter>Action\DestrtoyAction</Filter>
+    </ClCompile>
     <ClCompile Include="ActionList.cpp">
-      <Filter>Action</Filter>
+      <Filter>Action\ActionList</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
