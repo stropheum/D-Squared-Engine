@@ -11,6 +11,9 @@
 #include "Action.h"
 #include "ActionList.h"
 #include "WorldState.h"
+#include "ActionCreateAction.h"
+#include "Scope.h"
+#include "Datum.h"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -25,6 +28,7 @@ namespace TestLibraryDesktop
 
 		ActionListFactory mActionListFactory;
 		EntityFactory mEntityFactory;
+		ActionCreateActionFactory mActionCreateActionFactory;
 
 		/// Sets up leak detection logic
 		static void initializeLeakDetection()
@@ -89,6 +93,31 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(actionList.name() == "");
 			actionList.setName("Dale");
 			Assert::IsTrue(actionList.name() == "Dale");
+		}
+
+		TEST_METHOD(TestActionCreateAction)
+		{
+			WorldState worldState;
+
+//			ActionList* actionList = new ActionList();
+//			actionList->createAction("ActionCreateAction", "ActionCreateActionGeneric");
+//
+//			ActionCreateAction* aca = (*actionList)["Actions"].get<Scope*>(0)->As<ActionCreateAction>();
+//			Assert::IsTrue(aca != nullptr);
+//			aca->mPrototype = "ActionList";
+//			aca->setName("MyActionList");
+//			actionList->update(worldState);
+//
+//			delete actionList;
+
+			ActionList aList;
+			aList.createAction("ActionCreateAction", "ActionCreateActionGenerically");
+
+			ActionCreateAction* aca1 = aList["Actions"].get<Scope*>(0)->As<ActionCreateAction>();
+			Assert::IsTrue(aca1 != nullptr);
+			aca1->mPrototype = "ActionList";
+			aca1->setName("MyActionList");
+			aList.update(worldState);
 		}
 
 		static _CrtMemState sStartMemState;

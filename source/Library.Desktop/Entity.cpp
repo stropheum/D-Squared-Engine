@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Entity.h"
 #include "Action.h"
+#include "WorldState.h"
 
 
 namespace Library
@@ -54,6 +55,8 @@ namespace Library
 
 	void Entity::update(WorldState& worldState)
 	{
+		worldState.entity = this;
+
 		for (std::uint32_t i = 0; i < (*this)["Actions"].size(); i++)
 		{
 			Scope* scope = (*this)["Actions"].get<Scope*>(i);
@@ -62,5 +65,7 @@ namespace Library
 			assert(action != nullptr);
 			action->update(worldState);
 		}
+
+		worldState.entity = nullptr;
 	}
 }

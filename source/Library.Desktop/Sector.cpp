@@ -2,6 +2,7 @@
 #include "Sector.h"
 #include "Entity.h"
 #include "World.h"
+#include "WorldState.h"
 
 
 namespace Library
@@ -55,10 +56,14 @@ namespace Library
 
 	void Sector::update(WorldState& worldState)
 	{
+		worldState.sector = this;
+
 		for (std::uint32_t i = 0; i < entities().size(); i++)
 		{
 			assert(entities()[i].Is(Entity::TypeIdClass()));
 			entities()[i].As<Entity>()->update(worldState);
 		}
+
+		worldState.sector = nullptr;
 	}
 }

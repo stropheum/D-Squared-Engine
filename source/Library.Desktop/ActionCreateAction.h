@@ -9,7 +9,12 @@ namespace Library
 	{
 	public:
 		ActionCreateAction();
-		~ActionCreateAction();
+		~ActionCreateAction() = default;
+		virtual void update(WorldState& worldState) override;
+		
+		std::string mPrototype;
 	};
+
+	ActionFactory(ActionCreateAction)
 }
 
