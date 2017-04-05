@@ -14,6 +14,9 @@
 #include "Scope.h"
 #include "ActionDestroyAction.h"
 #include "ActionListIf.h"
+#include "SharedDataScope.h"
+#include "XmlParseHelperEntity.h"
+#include "ActionIncrement.h"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -31,6 +34,7 @@ namespace TestLibraryDesktop
 		ActionCreateActionFactory mActionCreateActionFactory;
 		ActionDestroyActionFactory mActionDestroyActionFactory;
 		ActionListIfFactory mActionListIfFactory;
+		ActionIncrementFactory mActionIncrementFactory;
 
 		std::string xmlGrammar = 
 			"<world Name='Dales World>"
@@ -153,6 +157,46 @@ namespace TestLibraryDesktop
 			actionList.update(worldState);
 			ifList->setCondition(false);
 			actionList.update(worldState);
+		}
+
+		TEST_METHOD(TestParse)
+		{
+			WorldState state;
+			GameTime time;
+			Library::SharedDataScope sharedData;
+			Library::XmlParseMaster parseMaster(&sharedData);
+			Library::XmlParseHelperEntity helper;
+			sharedData.setXmlParseMaster(&parseMaster);
+			parseMaster.addHelper(helper);
+
+			parseMaster.parseFromFile("ActionGrammar.xml");
+
+			World* world = sharedData.mScope->As<World>();
+			Assert::IsTrue(world != nullptr);
+			Assert::IsTrue(world->name() == "Dales World");
+
+			Sector* sector = world->sectors().get<Scope*>(0)->As<Sector>();
+			Assert::IsTrue(sector != nullptr);
+			Assert::IsTrue(sector->name() == "Dales Sector");
+
+			Entity* entity = sector->entities().get<Scope*>(0)->As<Entity>();
+			Assert::IsTrue(entity != nullptr);
+			Assert::IsTrue(entity->name() == "Dale");
+
+			Action* action = entity->actions().get<Scope*>(0)->As<Action>();
+			Assert::IsTrue(action != nullptr);
+			Assert::IsTrue(action->name() == "MyList");
+			Assert::IsTrue(action->Is(ActionListIf::TypeIdClass()));
+
+			Action* then = (*action->As<ActionList>())["Then"].get<Scope*>(0)->As<Action>();
+			Assert::IsTrue(then != nullptr);
+
+			Assert::IsTrue(then->Is(ActionIncrement::TypeIdClass()));
+			
+			Assert::AreEqual(then->As<ActionIncrement>()->getIncrementCount(), 0);
+			world->update(state, time);
+
+			Assert::AreEqual(then->As<ActionIncrement>()->getIncrementCount(), 1);
 		}
 
 		static _CrtMemState sStartMemState;

@@ -101,6 +101,12 @@
     <Filter Include="Action\ActionList">
       <UniqueIdentifier>{a4a7eec7-ba6c-4c76-a5fd-87b29934423b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Action\ActionListIf">
+      <UniqueIdentifier>{69058d5f-240c-49db-9e6d-61377daf715b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Action\ActionIncrement">
+      <UniqueIdentifier>{6f8821b1-cbcc-49e5-a07e-44f17b3420c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -205,7 +211,10 @@
     <ClInclude Include="ActionList.h">
       <Filter>Action\ActionList</Filter>
     </ClInclude>
-    <ClInclude Include="ActionListIf.h" />
+    <ClInclude Include="ActionListIf.h">
+      <Filter>Action\ActionListIf</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionIncrement.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Datum.cpp">
@@ -289,7 +298,10 @@
     <ClCompile Include="ActionList.cpp">
       <Filter>Action\ActionList</Filter>
     </ClCompile>
-    <ClCompile Include="ActionListIf.cpp" />
+    <ClCompile Include="ActionListIf.cpp">
+      <Filter>Action\ActionListIf</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionIncrement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -6,6 +6,8 @@
 #include "World.h"
 #include "Sector.h"
 #include "Entity.h"
+#include "Action.h"
+#include "ActionListIf.h"
 
 
 namespace Library
@@ -171,6 +173,60 @@ namespace Library
 			data->mScope = entity;
 		}
 
+		else if (element == "Action")
+		{
+			assert(data->mScope->Is(Entity::TypeIdClass()) || data->mScope->Is(Action::TypeIdClass()));
+			if (mState != State::ParsingEntity && mState != State::ParsingAction)
+			{
+				throw std::exception("Attempting to parse an action when not in an entity");
+			}
+
+			mState = State::ParsingAction;
+			std::string className = attributes.find("ClassName")->second;
+			std::string instanceName = attributes.find("InstanceName")->second;
+
+			Action* action = nullptr;
+
+			if (data->mScope->Is(Entity::TypeIdClass()))
+			{
+				mPreviousState = State::ParsingEntity;
+				Entity* entity = data->mScope->As<Entity>();
+				action = entity->createAction(className, instanceName);
+
+				if (action->Is(ActionListIf::TypeIdClass()))
+				{
+					ActionListIf* actionList = action->As<ActionListIf>();
+					assert(actionList != nullptr);
+					std::string condition = attributes.find("Condition")->second;
+					actionList->setCondition(std::stoi(condition));
+				}
+			}
+			
+			else if (data->mScope->Is(Action::TypeIdClass()))
+			{
+				mPreviousState = State::ParsingAction;
+				Action* parent = data->mScope->As<Action>();
+				if (parent->Is(ActionListIf::TypeIdClass()))
+				{
+					if (instanceName == "Then")
+					{
+						action = parent->As<ActionListIf>()->createThenAction(className, instanceName);
+					}
+					else if (instanceName == "Else")
+					{
+						action = parent->As<ActionListIf>()->createElseAction(className, instanceName);
+					}
+				}
+
+				else if (parent->Is(ActionList::TypeIdClass()))
+				{
+					action = parent->As<ActionList>()->createAction(className, instanceName);
+				}
+			}
+
+			data->mScope = action;
+		}
+
 		return true;
 	}
 
@@ -255,6 +311,25 @@ namespace Library
 			mPreviousState = State::ParsingSector;
 			assert(mState == State::ParsingEntity);
 			assert(data->mScope->getParent() != nullptr);
+			data->mScope = data->mScope->getParent();
+		}
+
+		else if (element == "Action")
+		{
+			assert(mState == State::ParsingAction || mState == State::ParsingEntity);
+			assert(data->mScope->getParent() != nullptr);
+			if (data->mScope->getParent()->Is(Action::TypeIdClass()))
+			{
+				mPreviousState = State::ParsingAction;
+			}
+			else if(data->mScope->getParent()->Is(Entity::TypeIdClass()))
+			{
+				mPreviousState = State::ParsingEntity;
+			}
+			else
+			{
+				throw std::exception("Attempting to enter an invalid state after parsing action");
+			}
 			data->mScope = data->mScope->getParent();
 		}
 

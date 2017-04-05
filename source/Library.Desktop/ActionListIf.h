@@ -26,6 +26,9 @@ namespace Library
 		/// @Return: The condition for the if statement
 		std::int32_t getCondition() const;
 
+		Action* createThenAction(const std::string& className, const std::string& instanceName);
+		Action* createElseAction(const std::string& className, const std::string& instanceName);
+
 	private:
 		std::int32_t mCondition; /// The condition to determine which set of action will be executed
 	};

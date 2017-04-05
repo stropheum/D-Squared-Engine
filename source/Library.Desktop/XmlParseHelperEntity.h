@@ -57,10 +57,19 @@ namespace Library
 			ParsingString,
 			ParsingWorld,
 			ParsingSector,
-			ParsingEntity
+			ParsingEntity,
+			ParsingAction
+		};
+		enum ActionType
+		{
+			GenericAction,
+			IfAction,
+			CreateAction,
+			DestroyAction
 		};
 		State mState;
 		State mPreviousState;
+		ActionType mActionSubType;
 		std::string mMatrixName;
 		std::uint32_t mMatrixComponentCount;
 		std::string mMatrixComponents[4][4];

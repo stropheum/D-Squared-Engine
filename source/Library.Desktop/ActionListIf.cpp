@@ -40,6 +40,24 @@ namespace Library
 	{
 		return mCondition;
 	}
+
+	Action* ActionListIf::createThenAction(const std::string& className, const std::string& instanceName)
+	{
+		Action* instance = Factory<Action>::create(className);
+		assert(instance != nullptr);
+		instance->setName(instanceName);
+		adopt(*instance, "Then");
+		return instance;
+	}
+
+	Action* ActionListIf::createElseAction(const std::string& className, const std::string& instanceName)
+	{
+		Action* instance = Factory<Action>::create(className);
+		assert(instance != nullptr);
+		instance->setName(instanceName);
+		adopt(*instance, "Else");
+		return instance;
+	}
 }
 
 
