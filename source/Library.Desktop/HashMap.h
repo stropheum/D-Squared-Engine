@@ -30,16 +30,16 @@ namespace Library
 		/// @Param rhs: Constant reference to the HashMap being copied
 		HashMap(const HashMap<TKey, TValue, HashFunctor>& rhs);
 
-		/// Move copy constructor (disabled);
-		HashMap(HashMap<TKey, TValue, HashFunctor>&& rhs) = delete;
+		/// Move copy constructor;
+		HashMap(HashMap<TKey, TValue, HashFunctor>&& rhs);
 
 		/// Assignment operator
 		/// @Param rhs: Constant reference to the HAshMap being copied
 		/// @Return: A deep copy of the right-hand HashMap 
 		HashMap<TKey, TValue, HashFunctor>& operator=(const HashMap<TKey, TValue, HashFunctor>& rhs);
 
-		/// Move assignment operator (disabled)
-		HashMap<TKey, TValue, HashFunctor>& operator=(const HashMap<TKey, TValue, HashFunctor>&& rhs) = delete;
+		/// Move assignment operator
+		HashMap<TKey, TValue, HashFunctor>& operator=(const HashMap<TKey, TValue, HashFunctor>&& rhs) ;
 
 
 		/// Finds an instance of a key in the HashMap and returns its associated value
