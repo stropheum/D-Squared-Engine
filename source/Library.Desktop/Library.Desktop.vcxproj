@@ -194,6 +194,7 @@
     <ClInclude Include="ActionCreateAction.h" />
     <ClInclude Include="ActionDestroyAction.h" />
     <ClInclude Include="ActionList.h" />
+    <ClInclude Include="ActionListIf.h" />
     <ClInclude Include="Attributed.h" />
     <ClInclude Include="Datum.h" />
     <ClInclude Include="DefaultHash.h" />
@@ -229,6 +230,7 @@
     <ClCompile Include="ActionCreateAction.cpp" />
     <ClCompile Include="ActionDestroyAction.cpp" />
     <ClCompile Include="ActionList.cpp" />
+    <ClCompile Include="ActionListIf.cpp" />
     <ClCompile Include="Attributed.cpp" />
     <ClCompile Include="Datum.cpp" />
     <ClCompile Include="Entity.cpp" />

@@ -10,8 +10,15 @@ namespace Library
 		RTTI_DECLARATIONS(ActionList, Action)
 
 	public:
+
+		/// Constructor
 		ActionList();
+
+		/// Destructor(defaulted)
 		~ActionList() = default;
+
+		/// Updates the actions contained in the action list
+		/// @Param worldState: The world state object that holds the current world state
 		virtual void update(WorldState& worldState) override;
 
 		/// Method for adding actions to the action list

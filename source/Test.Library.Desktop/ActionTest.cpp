@@ -2,7 +2,6 @@
 #include "CppUnitTest.h"
 #include "TestSharedData.h"
 #include "Datum.h"
-#include "XmlParseHelperEntity.h"
 #include "GameTime.h"
 #include "Factory.h"
 #include "World.h"
@@ -13,7 +12,8 @@
 #include "WorldState.h"
 #include "ActionCreateAction.h"
 #include "Scope.h"
-#include "Datum.h"
+#include "ActionDestroyAction.h"
+#include "ActionListIf.h"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -26,9 +26,23 @@ namespace TestLibraryDesktop
 	{
 	public:
 
-		ActionListFactory mActionListFactory;
 		EntityFactory mEntityFactory;
+		ActionListFactory mActionListFactory;
 		ActionCreateActionFactory mActionCreateActionFactory;
+		ActionDestroyActionFactory mActionDestroyActionFactory;
+		ActionListIfFactory mActionListIfFactory;
+
+		std::string xmlGrammar = 
+			"<world Name='Dales World>"
+				"<Sector Name='Dales Sector'>"
+					"<Entity ClassName='Entity' InstanceName='Dale'>"
+						"<Integer Name='Health' value='100' />"
+						"<Float Name='Power' Value='12.34 />"
+						"<Vector Name='Position' X='1.0' Y='2.0' Z='3.0' W='4.0' />"
+					"</Entity>"
+				"</Sector>"
+			"</World>"
+		;
 
 		/// Sets up leak detection logic
 		static void initializeLeakDetection()
@@ -99,25 +113,46 @@ namespace TestLibraryDesktop
 		{
 			WorldState worldState;
 
-//			ActionList* actionList = new ActionList();
-//			actionList->createAction("ActionCreateAction", "ActionCreateActionGeneric");
-//
-//			ActionCreateAction* aca = (*actionList)["Actions"].get<Scope*>(0)->As<ActionCreateAction>();
-//			Assert::IsTrue(aca != nullptr);
-//			aca->mPrototype = "ActionList";
-//			aca->setName("MyActionList");
-//			actionList->update(worldState);
-//
-//			delete actionList;
-
 			ActionList aList;
 			aList.createAction("ActionCreateAction", "ActionCreateActionGenerically");
 
 			ActionCreateAction* aca1 = aList["Actions"].get<Scope*>(0)->As<ActionCreateAction>();
 			Assert::IsTrue(aca1 != nullptr);
-			aca1->mPrototype = "ActionList";
+			aca1->setPrototype("ActionList");
 			aca1->setName("MyActionList");
 			aList.update(worldState);
+
+			Assert::IsTrue(aList["Actions"].get<Scope*>(1)->Is(ActionList::TypeIdClass()));
+		}
+
+		TEST_METHOD(TestActionDestroyAction)
+		{
+			WorldState worldState;
+
+			ActionList actionList;
+			actionList.createAction("ActionList", "MyActionList");
+
+			ActionList* childActionList = actionList["Actions"].get<Scope*>(0)->As<ActionList>();
+			Assert::IsTrue(childActionList != nullptr);
+
+			ActionDestroyAction* destroyAction = 
+				childActionList->createAction("ActionDestroyAction", "MyDestroyAction")->As<ActionDestroyAction>();
+			destroyAction->setActionInstanceName("MyActionList");
+
+			actionList.update(worldState);
+		}
+
+		TEST_METHOD(TestActionListIf)
+		{
+			WorldState worldState;
+
+			ActionList actionList;
+			ActionListIf* ifList = actionList.createAction("ActionListIf", "MyIf")->As<ActionListIf>();
+
+			ifList->setCondition(true);
+			actionList.update(worldState);
+			ifList->setCondition(false);
+			actionList.update(worldState);
 		}
 
 		static _CrtMemState sStartMemState;

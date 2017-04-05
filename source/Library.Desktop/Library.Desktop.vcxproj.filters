@@ -205,6 +205,7 @@
     <ClInclude Include="ActionList.h">
       <Filter>Action\ActionList</Filter>
     </ClInclude>
+    <ClInclude Include="ActionListIf.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Datum.cpp">
@@ -288,6 +289,7 @@
     <ClCompile Include="ActionList.cpp">
       <Filter>Action\ActionList</Filter>
     </ClCompile>
+    <ClCompile Include="ActionListIf.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

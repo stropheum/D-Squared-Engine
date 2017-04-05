@@ -31,4 +31,14 @@ namespace Library
 
 		worldState.action = nullptr;
 	}
+
+	void ActionCreateAction::setPrototype(const std::string& name)
+	{
+		(*this)["Prototype"] = name;
+	}
+
+	std::string ActionCreateAction::getPrototype() const
+	{
+		return mPrototype;
+	}
 }
