@@ -171,7 +171,8 @@ namespace Library
 	/// @Param key: The key associated with the child
 	void Scope::adopt(Scope& child, const std::string& key)
 	{
-		Datum& datum = append(key);
+		bool found;
+		Datum& datum = append(key, found);
 		datum.setType(DatumType::Scope);
 		if (child.mParent != nullptr)
 		{

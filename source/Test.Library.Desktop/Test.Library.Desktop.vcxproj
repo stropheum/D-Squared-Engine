@@ -199,6 +199,7 @@
     <ClInclude Include="TestSharedData.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActionTest.cpp" />
     <ClCompile Include="AttributedFoo.cpp" />
     <ClCompile Include="AttributedTest.cpp">
       <SubType>

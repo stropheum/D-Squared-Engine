@@ -36,6 +36,10 @@ namespace Library
 		/// Clears each value stored in the vector and then frees the buffer that they were stored on
 		~Vector();
 
+		Vector(Vector<T>&& rhs) noexcept;
+
+		Vector<T>& operator=(Vector<T>&& rhs) noexcept;
+
 		/// Finds a value in the Vector, if it exists
 		/// @Param value: Value being searched for
 		/// @Return: An iterator pointing to the value if it exists, end() otherwise

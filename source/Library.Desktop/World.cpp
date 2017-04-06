@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "World.h"
 #include "Factory.h"
+#include "WorldState.h"
 
 
 namespace Library
@@ -39,11 +40,15 @@ namespace Library
 	void World::update(WorldState& worldState, GameTime& gameTime)
 	{
 		UNREFERENCED_PARAMETER(gameTime);
+		worldState.world = this;
+
 		for (std::uint32_t i = 0; i < sectors().size(); i++)
 		{
 			assert(sectors()[i].Is(Sector::TypeIdClass()));
 			sectors()[i].As<Sector>()->update(worldState);
 		}
+
+		worldState.world = nullptr;
 	}
 }
 

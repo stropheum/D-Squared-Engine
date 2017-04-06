@@ -663,7 +663,7 @@ namespace Library
 		if (mType != DatumType::Scope) throw std::exception("Calling set on invalid type");
 		if (index > mSize) throw std::exception("Attempting to set beyond current size");
 		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
-		new(mData.m + index) Scope*(value);
+		new(mData.sc + index) Scope*(value);
 	}
 
 	/// Sets a specified index of the array to the specified value
@@ -759,7 +759,6 @@ namespace Library
 			{
 				if(mData.sc[i] == scope)
 				{
-//					mData.sc[i] = nullptr;
 					mData.sc[i]->~Scope();
 					memmove(mData.sc[i], mData.sc[i + 1], mSize - i - 1);
 					mSize--;

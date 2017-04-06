@@ -25,6 +25,27 @@ namespace Library
 		operator=(rhs);
 	}
 
+	template <class T>
+	Vector<T>::Vector(Vector<T>&& rhs) noexcept
+	{
+		operator=(std::move(rhs));
+	}
+
+	template <class T>
+	Vector<T>& Vector<T>::operator=(Vector<T>&& rhs) noexcept
+	{
+		mBuffer = rhs.mBuffer;
+		mSize = rhs.mSize;
+		mCapacity = rhs.mCapacity;
+		mFixedSize = rhs.mFixedSize;
+
+		rhs.mBuffer = nullptr;
+		rhs.mSize = 0;
+		rhs.mCapacity = 0;
+
+		return *this;
+	}
+
 	template <typename T>
 	bool Vector<T>::operator==(const Vector<T>& rhs) const
 	{

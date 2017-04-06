@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Entity.h"
+#include "Action.h"
+#include "WorldState.h"
 
 
 namespace Library
@@ -9,6 +11,7 @@ namespace Library
 	Entity::Entity()
 	{
 		(*this)["Name"].setStorage(&mName, 1);
+		(*this)["Actions"].setType(DatumType::Scope);
 	}
 
 	std::string Entity::name() const
@@ -19,6 +22,20 @@ namespace Library
 	void Entity::setName(const std::string& name)
 	{
 		(*this)["Name"] = name;
+	}
+
+	Datum& Entity::actions()
+	{
+		return (*this)["Actions"];
+	}
+
+	Action* Entity::createAction(const std::string& className, const std::string& instanceName)
+	{
+		Action* instance = Factory<Action>::create(className);
+		assert(instance != nullptr);
+		instance->setName(instanceName);
+		adopt(*instance, "Actions");
+		return instance;
 	}
 
 	void Entity::setSector(Sector& sector)
@@ -38,6 +55,17 @@ namespace Library
 
 	void Entity::update(WorldState& worldState)
 	{
-		UNREFERENCED_PARAMETER(worldState);
+		worldState.entity = this;
+
+		for (std::uint32_t i = 0; i < (*this)["Actions"].size(); i++)
+		{
+			Scope* scope = (*this)["Actions"].get<Scope*>(i);
+			assert(scope != nullptr);
+			Action* action = scope->As<Action>();
+			assert(action != nullptr);
+			action->update(worldState);
+		}
+
+		worldState.entity = nullptr;
 	}
 }

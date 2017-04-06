@@ -38,6 +38,16 @@ namespace Library
 		/// @Param name: the new name of the entity
 		void setName(const std::string& name);
 
+		/// Accessor method for the actions datum in the entity
+		/// @Return: A datum reference of the collection of actions in the entity
+		Datum& actions();
+
+		/// Method for adding actions to the entity
+		/// @Param className: The name of the base class being instantiated
+		/// @Param instanceName: The name that the action will be instantiated with
+		/// @Return: A freshly instantiated action object
+		class Action* createAction(const std::string& className, const std::string& instanceName);
+
 		/// Mutator method for the parent sector
 		/// @Param sector: The new sector that will own this entity
 		void setSector(Sector& sector);
@@ -53,6 +63,7 @@ namespace Library
 	private:
 		std::string mName; /// The name of the entity
 	};
-
-	ConcreteFactory(Entity, Entity)										
+		
+#define EntityFactory(ConcreteEntity) ConcreteFactory(Entity, ConcreteEntity)
+	EntityFactory(Entity)
 }
