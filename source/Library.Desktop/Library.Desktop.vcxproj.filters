@@ -107,6 +107,18 @@
     <Filter Include="Action\ActionIncrement">
       <UniqueIdentifier>{6f8821b1-cbcc-49e5-a07e-44f17b3420c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Event">
+      <UniqueIdentifier>{880776c1-3dd5-4450-91d8-6207d0101851}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\Event Template">
+      <UniqueIdentifier>{3a6936bb-ab0a-4eb2-b14c-a4913631c3ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\Event Subscriber">
+      <UniqueIdentifier>{053b266f-41b3-407c-9762-2bec4b846459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\Event Queue">
+      <UniqueIdentifier>{53e3f77c-4d1c-47a2-8c11-c6b9fcc52940}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -214,7 +226,15 @@
     <ClInclude Include="ActionListIf.h">
       <Filter>Action\ActionListIf</Filter>
     </ClInclude>
-    <ClInclude Include="ActionIncrement.h" />
+    <ClInclude Include="ActionIncrement.h">
+      <Filter>Action\ActionIncrement</Filter>
+    </ClInclude>
+    <ClInclude Include="EventSubscriber.h">
+      <Filter>Event\Event Subscriber</Filter>
+    </ClInclude>
+    <ClInclude Include="EventQueue.h">
+      <Filter>Event\Event Queue</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Datum.cpp">
@@ -301,7 +321,15 @@
     <ClCompile Include="ActionListIf.cpp">
       <Filter>Action\ActionListIf</Filter>
     </ClCompile>
-    <ClCompile Include="ActionIncrement.cpp" />
+    <ClCompile Include="ActionIncrement.cpp">
+      <Filter>Action\ActionIncrement</Filter>
+    </ClCompile>
+    <ClCompile Include="EventSubscriber.cpp">
+      <Filter>Event\Event Subscriber</Filter>
+    </ClCompile>
+    <ClCompile Include="EventQueue.cpp">
+      <Filter>Event\Event Queue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

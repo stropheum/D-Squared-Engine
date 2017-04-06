@@ -36,18 +36,6 @@ namespace TestLibraryDesktop
 		ActionListIfFactory mActionListIfFactory;
 		ActionIncrementFactory mActionIncrementFactory;
 
-		std::string xmlGrammar = 
-			"<world Name='Dales World>"
-				"<Sector Name='Dales Sector'>"
-					"<Entity ClassName='Entity' InstanceName='Dale'>"
-						"<Integer Name='Health' value='100' />"
-						"<Float Name='Power' Value='12.34 />"
-						"<Vector Name='Position' X='1.0' Y='2.0' Z='3.0' W='4.0' />"
-					"</Entity>"
-				"</Sector>"
-			"</World>"
-		;
-
 		/// Sets up leak detection logic
 		static void initializeLeakDetection()
 		{

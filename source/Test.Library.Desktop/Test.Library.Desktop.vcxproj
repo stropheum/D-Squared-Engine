@@ -209,6 +209,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="EventTest.cpp" />
     <ClCompile Include="FactoryTest.cpp" />
     <ClCompile Include="Foo.cpp" />
     <ClCompile Include="FooProduct.cpp" />
