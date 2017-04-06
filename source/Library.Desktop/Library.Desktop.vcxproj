@@ -200,6 +200,7 @@
     <ClInclude Include="Datum.h" />
     <ClInclude Include="DefaultHash.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Event.h" />
     <ClInclude Include="EventPublisher.h" />
     <ClInclude Include="EventQueue.h" />
     <ClInclude Include="EventSubscriber.h" />
@@ -273,6 +274,7 @@
     <ClCompile Include="XmlParseMaster.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Event.inl" />
     <None Include="HashMap.inl" />
     <None Include="packages.config" />
     <None Include="SList.inl" />

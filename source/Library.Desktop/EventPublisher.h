@@ -14,11 +14,9 @@ namespace Library
 		EventPublisher();
 		~EventPublisher() = default;
 		
-		// Copy semantics
 		EventPublisher(const EventPublisher& rhs);
 		EventPublisher& operator=(const EventPublisher& rhs);
 
-		// Move semantics
 		EventPublisher(EventPublisher&& rhs);
 		EventPublisher& operator=(EventPublisher&& rhs);
 
