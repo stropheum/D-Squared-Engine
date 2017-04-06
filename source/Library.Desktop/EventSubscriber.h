@@ -7,7 +7,8 @@ namespace Library
 	{
 	public:
 		EventSubscriber();
-		~EventSubscriber();
+		~EventSubscriber() = default;
+		void notify(class Event* event);
 	};
 }
 

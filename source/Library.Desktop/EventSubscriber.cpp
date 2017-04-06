@@ -8,7 +8,8 @@ namespace Library
 	{
 	}
 
-	EventSubscriber::~EventSubscriber()
+	void EventSubscriber::notify(Event* event)
 	{
+		UNREFERENCED_PARAMETER(event);
 	}
 }

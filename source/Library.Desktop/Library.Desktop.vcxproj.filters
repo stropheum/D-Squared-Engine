@@ -119,6 +119,9 @@
     <Filter Include="Event\Event Queue">
       <UniqueIdentifier>{53e3f77c-4d1c-47a2-8c11-c6b9fcc52940}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Event\Event Publisher">
+      <UniqueIdentifier>{8fccde22-b027-46f0-90bf-ee197145ffa7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -235,6 +238,7 @@
     <ClInclude Include="EventQueue.h">
       <Filter>Event\Event Queue</Filter>
     </ClInclude>
+    <ClInclude Include="EventPublisher.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Datum.cpp">
@@ -330,6 +334,7 @@
     <ClCompile Include="EventQueue.cpp">
       <Filter>Event\Event Queue</Filter>
     </ClCompile>
+    <ClCompile Include="EventPublisher.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

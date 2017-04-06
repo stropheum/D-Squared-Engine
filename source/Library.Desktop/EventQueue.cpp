@@ -7,8 +7,4 @@ namespace Library
 	EventQueue::EventQueue()
 	{
 	}
-
-	EventQueue::~EventQueue()
-	{
-	}
 }

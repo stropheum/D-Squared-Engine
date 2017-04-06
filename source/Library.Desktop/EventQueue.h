@@ -7,7 +7,7 @@ namespace Library
 	{
 	public:
 		EventQueue();
-		~EventQueue();
+		~EventQueue() = default;
 	};
 }
 

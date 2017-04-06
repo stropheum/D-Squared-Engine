@@ -47,7 +47,7 @@ namespace TestLibraryDesktop
 			finalizeLeakDetection();
 		}
 
-		TEST_METHOD(UpdateLeakTest)
+		TEST_METHOD(TestStub)
 		{
 			
 		}
