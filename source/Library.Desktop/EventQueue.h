@@ -1,4 +1,5 @@
 #pragma once
+#include "Vector.h"
 
 
 namespace Library
@@ -16,6 +17,9 @@ namespace Library
 		void clear();
 		bool isEmpty() const;
 		std::uint32_t size() const;
+		
+	private:
+		Vector<EventPublisher*> mQueue;
 	};
 }
 
