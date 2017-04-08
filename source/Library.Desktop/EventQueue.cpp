@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "EventQueue.h"
+#include "EventPublisher.h"
+#include <algorithm>
 
 
 namespace Library
@@ -18,30 +20,48 @@ namespace Library
 
 	void EventQueue::send(EventPublisher& eventPublisher)
 	{
-		UNREFERENCED_PARAMETER(eventPublisher);
-		//TODO: Implement send
+		eventPublisher.deliver();
 	}
 
 	void EventQueue::update(GameTime& gameTime)
 	{
-		UNREFERENCED_PARAMETER(gameTime);
-		//TODO: Implement update
+		std::uint32_t expiredEventCount = 0;
+
+		for (std::uint32_t i = 0; i < mQueue.size(); i++)
+		{
+			if (mQueue[i]->isExpired())
+			{
+				mQueue[i]->deliver();
+				expiredEventCount++;
+			}
+		}
+
+		partitionEventQueue();
+
+		for (std::uint32_t i = 0; i < expiredEventCount; i++)
+		{	// Pop off all expired values
+			mQueue.popBack();
+		}
 	}
 
 	void EventQueue::clear()
 	{
-		//TODO: Implement clear
+		mQueue.clear();
 	}
 
 	bool EventQueue::isEmpty() const
 	{
-		//TODO: Implement isEmpty
-		return false;
+		return mQueue.size() == 0;
 	}
 
 	std::uint32_t EventQueue::size() const
 	{
-		//TODO: Implement size
-		return 0;
+		return mQueue.size();
+	}
+
+	void EventQueue::partitionEventQueue()
+	{
+		auto iter = mQueue.begin();
+		std::partition(iter, mQueue.end(), [&]() { !(*iter)->isExpired(); });
 	}
 }

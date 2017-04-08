@@ -20,12 +20,17 @@ namespace Library
 		EventPublisher(EventPublisher&& rhs);
 		EventPublisher& operator=(EventPublisher&& rhs);
 
-		void setTime(const std::chrono::high_resolution_clock::time_point& timePoint, std::uint32_t millisecondDelay = 0);
+		void setTime(const std::chrono::high_resolution_clock::time_point& timePoint, std::chrono::milliseconds millisecondDelay = std::chrono::milliseconds(0));
 		std::chrono::high_resolution_clock::time_point timeEnqueued() const;
-		std::int32_t delay() const;
+		std::chrono::milliseconds delay() const;
 		bool isExpired() const;
 		void deliver();
 		bool deleteAfterPublishing() const;
+
+	private:
+		std::chrono::high_resolution_clock::time_point mTimeEnqueued;
+		std::chrono::milliseconds mMillisecondDelay;
+		bool mDeleteAfterPublishing;
 	};
 }
 

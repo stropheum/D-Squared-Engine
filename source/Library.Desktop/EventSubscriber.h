@@ -1,4 +1,5 @@
 #pragma once
+#include "EventPublisher.h"
 
 
 namespace Library
@@ -8,7 +9,7 @@ namespace Library
 	public:
 		EventSubscriber();
 		~EventSubscriber() = default;
-		void notify(class Event* event);
+		void notify(const EventPublisher& event);
 	};
 }
 

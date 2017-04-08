@@ -1,5 +1,6 @@
 #pragma once
 #include "EventPublisher.h"
+#include "Vector.h"
 
 
 namespace Library
@@ -22,9 +23,11 @@ namespace Library
 		static void subscribe(class EventSubscriber& eventSubscriber);
 		static void unsubscribeAll();
 		Payload& message();
-	};
 
-	
+	private:
+		Payload mPayload;
+		static Vector<EventSubscriber> mSubscriberList;
+	};
 }
 
 #include "Event.inl"

@@ -333,9 +333,6 @@
     <ClCompile Include="ActionIncrement.cpp">
       <Filter>Action\ActionIncrement</Filter>
     </ClCompile>
-    <ClCompile Include="EventSubscriber.cpp">
-      <Filter>Event\Event Subscriber</Filter>
-    </ClCompile>
     <ClCompile Include="EventQueue.cpp">
       <Filter>Event\Event Queue</Filter>
     </ClCompile>

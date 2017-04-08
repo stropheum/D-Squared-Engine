@@ -1,5 +1,6 @@
 #pragma once
 #include "Event.h"
+#include "EventSubscriber.h"
 
 
 namespace Library
@@ -45,20 +46,19 @@ namespace Library
 	template <typename Payload>
 	void Event<Payload>::subscribe(EventSubscriber& eventSubscriber)
 	{
-		UNREFERENCED_PARAMETER(eventSubscriber);
-		//TODO: Implement subscribe method
+		mSubscriberList.pushBack(eventSubscriber);
 	}
 
 	template <typename Payload>
 	void Event<Payload>::unsubscribeAll()
 	{
-		//TDOO: Implement unsubscribeAll
+		mSubscriberList.clear();
 	}
 
 	template <typename Payload>
 	Payload& Event<Payload>::message()
 	{
 		//TODO: Implement message method. should return the member payload
-		return Payload();
+		return mPayload;
 	}
 }

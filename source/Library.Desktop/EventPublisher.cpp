@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "EventPublisher.h"
+#include "EventSubscriber.h"
 
 
 using namespace std::chrono;
@@ -8,59 +9,58 @@ namespace Library
 {
 	RTTI_DEFINITIONS(EventPublisher)
 
-	EventPublisher::EventPublisher()
+	EventPublisher::EventPublisher():
+		mTimeEnqueued(), mMillisecondDelay(0), mDeleteAfterPublishing(false)
 	{
 	}
 
-	EventPublisher::EventPublisher(const EventPublisher& rhs)
+	EventPublisher::EventPublisher(const EventPublisher& rhs):
+		mTimeEnqueued(rhs.mTimeEnqueued), mMillisecondDelay(rhs.mMillisecondDelay), mDeleteAfterPublishing(rhs.mDeleteAfterPublishing)
 	{
-		UNREFERENCED_PARAMETER(rhs);
-		//TODO: Implement copy constructor
 	}
 
 	EventPublisher& EventPublisher::operator=(const EventPublisher& rhs)
 	{
-		UNREFERENCED_PARAMETER(rhs);
-		//TODO: Implement assignment operator
+		mTimeEnqueued = rhs.mTimeEnqueued;
+		mMillisecondDelay = rhs.mMillisecondDelay;
 		return *this;
 	}
 
-	EventPublisher::EventPublisher(EventPublisher&& rhs)
+	EventPublisher::EventPublisher(EventPublisher&& rhs):
+		mTimeEnqueued(rhs.mTimeEnqueued), mMillisecondDelay(rhs.mMillisecondDelay), mDeleteAfterPublishing(rhs.mDeleteAfterPublishing)
 	{
-		UNREFERENCED_PARAMETER(rhs);
-		//TODO: Implement move copy constructor
+		rhs.mMillisecondDelay = milliseconds(0);
 	}
 
 	EventPublisher& EventPublisher::operator=(EventPublisher&& rhs)
 	{
-		UNREFERENCED_PARAMETER(rhs);
-		//TODO: Implement move assignment operator)
+		mTimeEnqueued = rhs.mTimeEnqueued;
+		mMillisecondDelay = rhs.mMillisecondDelay;
+
+		rhs.mMillisecondDelay = milliseconds(0);
+
 		return *this;
 	}
 
-	void EventPublisher::setTime(const std::chrono::high_resolution_clock::time_point& timePoint, std::uint32_t millisecondDelay)
+	void EventPublisher::setTime(const high_resolution_clock::time_point& timePoint, milliseconds millisecondDelay)
 	{
-		UNREFERENCED_PARAMETER(timePoint);
-		UNREFERENCED_PARAMETER(millisecondDelay);
-		//TODO: Implement setTime method
+		mTimeEnqueued = timePoint;
+		mMillisecondDelay = millisecondDelay;
 	}
 
 	high_resolution_clock::time_point EventPublisher::timeEnqueued() const
 	{
-		//TODO: Implement timeEnqueued method
-		return high_resolution_clock::time_point();
+		return mTimeEnqueued;
 	}
 
-	std::int32_t EventPublisher::delay() const
+	std::chrono::milliseconds EventPublisher::delay() const
 	{
-		//TODO: Implement delay method. return the amount of time after being enqueued that this event expires
-		return 0;
+		return mMillisecondDelay;
 	}
 
 	bool EventPublisher::isExpired() const
 	{
-		//TODO: Implement isExpired
-		return false;
+		return high_resolution_clock::now() > (mTimeEnqueued + mMillisecondDelay);
 	}
 
 	void EventPublisher::deliver()
@@ -70,8 +70,7 @@ namespace Library
 
 	bool EventPublisher::deleteAfterPublishing() const
 	{
-		//TODO: Implement deleteAfterPublishing. Return whether this event should be deleted after it is published
-		return false;
+		return mDeleteAfterPublishing;
 	}
 }
 

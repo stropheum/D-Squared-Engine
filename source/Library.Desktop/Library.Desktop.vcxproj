@@ -242,7 +242,6 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EventPublisher.cpp" />
     <ClCompile Include="EventQueue.cpp" />
-    <ClCompile Include="EventSubscriber.cpp" />
     <ClCompile Include="FloatState.cpp" />
     <ClCompile Include="GameClock.cpp" />
     <ClCompile Include="GameTime.cpp" />
