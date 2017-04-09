@@ -19,8 +19,6 @@ namespace Library
 		std::uint32_t size() const;
 		
 	private:
-		void partitionEventQueue();
-
 		Vector<EventPublisher*> mQueue;
 	};
 }

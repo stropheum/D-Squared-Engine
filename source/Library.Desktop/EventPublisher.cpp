@@ -9,13 +9,14 @@ namespace Library
 {
 	RTTI_DEFINITIONS(EventPublisher)
 
-	EventPublisher::EventPublisher():
-		mTimeEnqueued(), mMillisecondDelay(0), mDeleteAfterPublishing(false)
+	EventPublisher::EventPublisher(Vector<EventSubscriber*>* subscriberList):
+		mTimeEnqueued(), mMillisecondDelay(0), mDeleteAfterPublishing(false), mSubscriberList(subscriberList)
 	{
 	}
 
 	EventPublisher::EventPublisher(const EventPublisher& rhs):
-		mTimeEnqueued(rhs.mTimeEnqueued), mMillisecondDelay(rhs.mMillisecondDelay), mDeleteAfterPublishing(rhs.mDeleteAfterPublishing)
+		mTimeEnqueued(rhs.mTimeEnqueued), mMillisecondDelay(rhs.mMillisecondDelay), 
+		mDeleteAfterPublishing(rhs.mDeleteAfterPublishing), mSubscriberList(rhs.mSubscriberList)
 	{
 	}
 
@@ -23,21 +24,26 @@ namespace Library
 	{
 		mTimeEnqueued = rhs.mTimeEnqueued;
 		mMillisecondDelay = rhs.mMillisecondDelay;
+		mSubscriberList = rhs.mSubscriberList;
 		return *this;
 	}
 
 	EventPublisher::EventPublisher(EventPublisher&& rhs):
-		mTimeEnqueued(rhs.mTimeEnqueued), mMillisecondDelay(rhs.mMillisecondDelay), mDeleteAfterPublishing(rhs.mDeleteAfterPublishing)
+		mTimeEnqueued(rhs.mTimeEnqueued), mMillisecondDelay(rhs.mMillisecondDelay), 
+		mDeleteAfterPublishing(rhs.mDeleteAfterPublishing), mSubscriberList(rhs.mSubscriberList)
 	{
 		rhs.mMillisecondDelay = milliseconds(0);
+		rhs.mSubscriberList = nullptr;
 	}
 
 	EventPublisher& EventPublisher::operator=(EventPublisher&& rhs)
 	{
 		mTimeEnqueued = rhs.mTimeEnqueued;
 		mMillisecondDelay = rhs.mMillisecondDelay;
+		mSubscriberList = rhs.mSubscriberList;
 
 		rhs.mMillisecondDelay = milliseconds(0);
+		rhs.mSubscriberList = nullptr;
 
 		return *this;
 	}
@@ -66,6 +72,10 @@ namespace Library
 	void EventPublisher::deliver()
 	{
 		// TODO: Implement deliver. Notify all subscribers of this event
+		for (auto iter = mSubscriberList->begin(); iter != mSubscriberList->end(); ++iter)
+		{
+			(*iter)->notify(*this);
+		}
 	}
 
 	bool EventPublisher::deleteAfterPublishing() const

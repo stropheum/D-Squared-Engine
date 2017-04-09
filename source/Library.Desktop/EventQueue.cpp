@@ -25,22 +25,30 @@ namespace Library
 
 	void EventQueue::update(GameTime& gameTime)
 	{
+		UNREFERENCED_PARAMETER(gameTime);
+		
 		std::uint32_t expiredEventCount = 0;
-
-		for (std::uint32_t i = 0; i < mQueue.size(); i++)
+		bool elementHasBeenMoved = true;
+		while (elementHasBeenMoved)
 		{
-			if (mQueue[i]->isExpired())
+			elementHasBeenMoved = false;
+
+			for (std::uint32_t i = 0; i < mQueue.size() - expiredEventCount; i++)
 			{
-				mQueue[i]->deliver();
-				expiredEventCount++;
+				if (mQueue[i]->isExpired())
+				{
+					EventPublisher* expiredEvent = mQueue[i];
+					mQueue.remove(expiredEvent);
+					mQueue.pushBack(expiredEvent);
+					elementHasBeenMoved = true;
+					expiredEventCount++;
+				}
 			}
-		}
 
-		partitionEventQueue();
-
-		for (std::uint32_t i = 0; i < expiredEventCount; i++)
-		{	// Pop off all expired values
-			mQueue.popBack();
+			for (std::uint32_t i = 0; i < expiredEventCount; i++)
+			{
+				mQueue.popBack();
+			}
 		}
 	}
 
@@ -59,9 +67,4 @@ namespace Library
 		return mQueue.size();
 	}
 
-	void EventQueue::partitionEventQueue()
-	{
-		auto iter = mQueue.begin();
-		std::partition(iter, mQueue.end(), [&]() { !(*iter)->isExpired(); });
-	}
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "RTTI.h"
 #include <chrono>
+#include "Vector.h"
 
 
 namespace Library
@@ -11,7 +12,7 @@ namespace Library
 		RTTI_DECLARATIONS(EventPublisher, RTTI)
 
 	public:
-		EventPublisher();
+		explicit EventPublisher(Vector<class EventSubscriber*>* subscriberList);
 		~EventPublisher() = default;
 		
 		EventPublisher(const EventPublisher& rhs);
@@ -31,6 +32,7 @@ namespace Library
 		std::chrono::high_resolution_clock::time_point mTimeEnqueued;
 		std::chrono::milliseconds mMillisecondDelay;
 		bool mDeleteAfterPublishing;
+		Vector<class EventSubscriber*>* mSubscriberList;
 	};
 }
 

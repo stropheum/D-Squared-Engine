@@ -7,9 +7,9 @@ namespace Library
 	class EventSubscriber
 	{
 	public:
-		EventSubscriber();
-		~EventSubscriber() = default;
-		void notify(const EventPublisher& event);
+		EventSubscriber() = default;
+		virtual ~EventSubscriber() = default;
+		virtual void notify(const EventPublisher& event) = 0;
 	};
 }
 
