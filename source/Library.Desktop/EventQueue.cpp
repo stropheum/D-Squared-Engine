@@ -2,7 +2,11 @@
 #include "EventQueue.h"
 #include "EventPublisher.h"
 #include <algorithm>
+#include "GameTime.h"
 
+
+using namespace std;
+using namespace std::chrono;
 
 namespace Library
 {
@@ -10,12 +14,10 @@ namespace Library
 	{
 	}
 
-	void EventQueue::enqueue(EventPublisher& eventPublisher, GameTime& gameTime, std::uint32_t delay)
+	void EventQueue::enqueue(EventPublisher& eventPublisher, GameTime& gameTime, std::chrono::milliseconds delay)
 	{
-		UNREFERENCED_PARAMETER(eventPublisher);
-		UNREFERENCED_PARAMETER(gameTime);
-		UNREFERENCED_PARAMETER(delay);
-		//TODO: Implement enqueue
+		eventPublisher.setTime(gameTime.CurrentTime(), delay);
+		mQueue.pushBack(&eventPublisher);
 	}
 
 	void EventQueue::send(EventPublisher& eventPublisher)
@@ -25,31 +27,21 @@ namespace Library
 
 	void EventQueue::update(GameTime& gameTime)
 	{
-		UNREFERENCED_PARAMETER(gameTime);
-		
-		std::uint32_t expiredEventCount = 0;
-		bool elementHasBeenMoved = true;
-		while (elementHasBeenMoved)
+		Vector<EventPublisher*> nonExpiredEvents;
+
+		for (uint32_t i = 0; i < mQueue.size(); i++)
 		{
-			elementHasBeenMoved = false;
-
-			for (std::uint32_t i = 0; i < mQueue.size() - expiredEventCount; i++)
+			if (mQueue[i]->isExpired(gameTime.CurrentTime()))
 			{
-				if (mQueue[i]->isExpired())
-				{
-					EventPublisher* expiredEvent = mQueue[i];
-					mQueue.remove(expiredEvent);
-					mQueue.pushBack(expiredEvent);
-					elementHasBeenMoved = true;
-					expiredEventCount++;
-				}
+				mQueue[i]->deliver();
 			}
-
-			for (std::uint32_t i = 0; i < expiredEventCount; i++)
+			else
 			{
-				mQueue.popBack();
+				nonExpiredEvents.pushBack(mQueue[i]);
 			}
 		}
+
+		mQueue = nonExpiredEvents;
 	}
 
 	void EventQueue::clear()
@@ -62,7 +54,7 @@ namespace Library
 		return mQueue.size() == 0;
 	}
 
-	std::uint32_t EventQueue::size() const
+	uint32_t EventQueue::size() const
 	{
 		return mQueue.size();
 	}

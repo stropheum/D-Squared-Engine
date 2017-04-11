@@ -9,15 +9,18 @@ namespace Library
 	RTTI_DEFINITIONS(Event<Payload>)
 
 	template <typename Payload>
-	Event<Payload>::Event()
+	Vector<class EventSubscriber*> Event<Payload>::sSubscriberList;
+
+	template <typename Payload>
+	Event<Payload>::Event(const Payload& payload):
+		EventPublisher(&sSubscriberList), mPayload(payload)
 	{
 	}
 
 	template <typename Payload>
-	Event<Payload>::Event(const Event<Payload>& rhs)
+	Event<Payload>::Event(const Event<Payload>& rhs):
+		EventPublisher(rhs.sSubscriberList), mPayload(rhs.mPayload)
 	{
-		UNREFERENCED_PARAMETER(rhs);
-		//TODO: Implement copy constructor
 	}
 
 	template <typename Payload>
@@ -29,10 +32,10 @@ namespace Library
 	}
 
 	template <typename Payload>
-	Event<Payload>::Event(Event<Payload>&& rhs)
+	Event<Payload>::Event(Event<Payload>&& rhs):
+		EventPublisher(rhs.sSubscriberList), mPayload(rhs.mPayload)
 	{
-		UNREFERENCED_PARAMETER(rhs);
-		//TODO: Implement move coopy constructor
+		//TODO: Implement move copy constructor
 	}
 
 	template <typename Payload>
@@ -46,19 +49,24 @@ namespace Library
 	template <typename Payload>
 	void Event<Payload>::subscribe(EventSubscriber& eventSubscriber)
 	{
-		mSubscriberList.pushBack(eventSubscriber);
+		sSubscriberList.pushBack(&eventSubscriber);
+	}
+
+	template <typename Payload>
+	void Event<Payload>::unsubscribe(EventSubscriber& eventSubscriber)
+	{
+		sSubscriberList.remove(&eventSubscriber);
 	}
 
 	template <typename Payload>
 	void Event<Payload>::unsubscribeAll()
 	{
-		mSubscriberList.clear();
+		sSubscriberList.clear();
 	}
 
 	template <typename Payload>
-	Payload& Event<Payload>::message()
+	const Payload& Event<Payload>::message()
 	{
-		//TODO: Implement message method. should return the member payload
 		return mPayload;
 	}
 }

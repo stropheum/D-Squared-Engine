@@ -6,7 +6,7 @@
 
 namespace Library
 {
-	class EventPublisher :
+	class EventPublisher abstract :
 		public RTTI
 	{
 		RTTI_DECLARATIONS(EventPublisher, RTTI)
@@ -24,7 +24,7 @@ namespace Library
 		void setTime(const std::chrono::high_resolution_clock::time_point& timePoint, std::chrono::milliseconds millisecondDelay = std::chrono::milliseconds(0));
 		std::chrono::high_resolution_clock::time_point timeEnqueued() const;
 		std::chrono::milliseconds delay() const;
-		bool isExpired() const;
+		bool isExpired(const std::chrono::high_resolution_clock::time_point& timePoint) const;
 		void deliver();
 		bool deleteAfterPublishing() const;
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Vector.h"
+#include <chrono>
 
 
 namespace Library
@@ -11,7 +12,7 @@ namespace Library
 		~EventQueue() = default;
 
 		void enqueue(class EventPublisher& eventPublisher, 
-			class GameTime& gameTime, std::uint32_t delay = 0);
+			class GameTime& gameTime, std::chrono::milliseconds delay = std::chrono::milliseconds(0));
 		void send(class EventPublisher& eventPublisher);
 		void update(class GameTime& gameTime);
 		void clear();
@@ -22,5 +23,3 @@ namespace Library
 		Vector<EventPublisher*> mQueue;
 	};
 }
-
-

@@ -5,13 +5,13 @@
 
 namespace Library
 {
-	template <typename Payload> class Event :
+	template <typename Payload> class Event final :
 		public EventPublisher
 	{
 		RTTI_DECLARATIONS(Event, EventPublisher)
 
 	public:
-		Event();
+		Event(const Payload& payload);
 		~Event() = default;
 
 		Event(const Event<Payload>& rhs);
@@ -21,12 +21,13 @@ namespace Library
 		Event<Payload>& operator=(Event<Payload>&& rhs);
 
 		static void subscribe(class EventSubscriber& eventSubscriber);
+		static void unsubscribe(class EventSubscriber& eventSubscriber);
 		static void unsubscribeAll();
-		Payload& message();
+		const Payload& message();
 
 	private:
 		Payload mPayload;
-		static Vector<EventSubscriber> mSubscriberList;
+		static Vector<class EventSubscriber*> sSubscriberList;
 	};
 }
 

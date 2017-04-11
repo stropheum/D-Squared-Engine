@@ -64,14 +64,13 @@ namespace Library
 		return mMillisecondDelay;
 	}
 
-	bool EventPublisher::isExpired() const
+	bool EventPublisher::isExpired(const std::chrono::high_resolution_clock::time_point& timePoint) const
 	{
-		return high_resolution_clock::now() > (mTimeEnqueued + mMillisecondDelay);
+		return timePoint > (mTimeEnqueued + mMillisecondDelay);
 	}
 
 	void EventPublisher::deliver()
 	{
-		// TODO: Implement deliver. Notify all subscribers of this event
 		for (auto iter = mSubscriberList->begin(); iter != mSubscriberList->end(); ++iter)
 		{
 			(*iter)->notify(*this);

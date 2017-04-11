@@ -34,15 +34,20 @@ namespace Library
 	template <class T>
 	Vector<T>& Vector<T>::operator=(Vector<T>&& rhs) noexcept
 	{
-		mBuffer = rhs.mBuffer;
-		mSize = rhs.mSize;
-		mCapacity = rhs.mCapacity;
-		mFixedSize = rhs.mFixedSize;
+		if (this != &rhs)
+		{
+			clear();
 
-		rhs.mBuffer = nullptr;
-		rhs.mSize = 0;
-		rhs.mCapacity = 0;
+			mBuffer = rhs.mBuffer;
+			mSize = rhs.mSize;
+			mCapacity = rhs.mCapacity;
+			mFixedSize = rhs.mFixedSize;
 
+			rhs.mBuffer = nullptr;
+			rhs.mSize = 0;
+			rhs.mCapacity = 0;
+		}
+		
 		return *this;
 	}
 
@@ -217,9 +222,12 @@ namespace Library
 	template <typename T>
 	void Vector<T>::clear()
 	{
-		while (mSize > 0)
+		if (!isEmpty())
 		{
-			popBack();
+			while (mSize > 0)
+			{
+				popBack();
+			}
 		}
 		shrinkToFit();
 	}
