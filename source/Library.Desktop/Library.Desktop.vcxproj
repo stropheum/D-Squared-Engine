@@ -200,6 +200,8 @@
     <ClInclude Include="Datum.h" />
     <ClInclude Include="DefaultHash.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="EventPublisher.h" />
     <ClInclude Include="EventQueue.h" />
     <ClInclude Include="EventSubscriber.h" />
     <ClInclude Include="Factory.h" />
@@ -238,8 +240,8 @@
     <ClCompile Include="Attributed.cpp" />
     <ClCompile Include="Datum.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EventPublisher.cpp" />
     <ClCompile Include="EventQueue.cpp" />
-    <ClCompile Include="EventSubscriber.cpp" />
     <ClCompile Include="FloatState.cpp" />
     <ClCompile Include="GameClock.cpp" />
     <ClCompile Include="GameTime.cpp" />
@@ -271,6 +273,7 @@
     <ClCompile Include="XmlParseMaster.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Event.inl" />
     <None Include="HashMap.inl" />
     <None Include="packages.config" />
     <None Include="SList.inl" />

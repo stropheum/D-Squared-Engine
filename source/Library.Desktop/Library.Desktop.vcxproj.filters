@@ -110,14 +110,17 @@
     <Filter Include="Event">
       <UniqueIdentifier>{880776c1-3dd5-4450-91d8-6207d0101851}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Event\Event Template">
-      <UniqueIdentifier>{3a6936bb-ab0a-4eb2-b14c-a4913631c3ce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Event\Event Subscriber">
       <UniqueIdentifier>{053b266f-41b3-407c-9762-2bec4b846459}</UniqueIdentifier>
     </Filter>
     <Filter Include="Event\Event Queue">
       <UniqueIdentifier>{53e3f77c-4d1c-47a2-8c11-c6b9fcc52940}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\Event Publisher">
+      <UniqueIdentifier>{8fccde22-b027-46f0-90bf-ee197145ffa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\Event">
+      <UniqueIdentifier>{3a6936bb-ab0a-4eb2-b14c-a4913631c3ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -235,6 +238,12 @@
     <ClInclude Include="EventQueue.h">
       <Filter>Event\Event Queue</Filter>
     </ClInclude>
+    <ClInclude Include="EventPublisher.h">
+      <Filter>Event\Event Publisher</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Event\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Datum.cpp">
@@ -324,11 +333,11 @@
     <ClCompile Include="ActionIncrement.cpp">
       <Filter>Action\ActionIncrement</Filter>
     </ClCompile>
-    <ClCompile Include="EventSubscriber.cpp">
-      <Filter>Event\Event Subscriber</Filter>
-    </ClCompile>
     <ClCompile Include="EventQueue.cpp">
       <Filter>Event\Event Queue</Filter>
+    </ClCompile>
+    <ClCompile Include="EventPublisher.cpp">
+      <Filter>Event\Event Publisher</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -341,6 +350,9 @@
     </None>
     <None Include="Vector.inl">
       <Filter>Storage\Vector</Filter>
+    </None>
+    <None Include="Event.inl">
+      <Filter>Event\Event</Filter>
     </None>
   </ItemGroup>
 </Project>
