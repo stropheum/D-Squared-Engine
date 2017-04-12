@@ -26,8 +26,10 @@ namespace Library
 	template <typename Payload>
 	Event<Payload>& Event<Payload>::operator=(const Event<Payload>& rhs)
 	{
-		UNREFERENCED_PARAMETER(rhs);
-		//TODO: Implement assignment operator
+		if (this != &rhs)
+		{
+			mPayload = rhs.mPayload;
+		}
 		return *this;
 	}
 
@@ -35,14 +37,15 @@ namespace Library
 	Event<Payload>::Event(Event<Payload>&& rhs):
 		EventPublisher(rhs.sSubscriberList), mPayload(rhs.mPayload)
 	{
-		//TODO: Implement move copy constructor
 	}
 
 	template <typename Payload>
 	Event<Payload>& Event<Payload>::operator=(Event<Payload>&& rhs)
 	{
-		UNREFERENCED_PARAMETER(rhs);
-		//TODO: Implement move assignment operator
+		if (this != &rhs)
+		{
+			mPayload = rhs.mPayload;
+		}
 		return *this;
 	}
 
@@ -61,7 +64,10 @@ namespace Library
 	template <typename Payload>
 	void Event<Payload>::unsubscribeAll()
 	{
-		sSubscriberList.clear();
+		if (!sSubscriberList.isEmpty())
+		{
+			sSubscriberList.clear();
+		}
 	}
 
 	template <typename Payload>

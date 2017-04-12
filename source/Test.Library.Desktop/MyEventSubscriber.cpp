@@ -8,17 +8,17 @@ namespace Library
 	MyEventSubscriber::MyEventSubscriber():
 		mValue(0)
 	{
-		Event<std::int32_t>::subscribe(*this);
+		Event<Foo>::subscribe(*this);
 	}
 
 	MyEventSubscriber::~MyEventSubscriber()
 	{
-		Event<std::int32_t>::unsubscribe(*this);
+		Event<Foo>::unsubscribe(*this);
 	}
 
 	void MyEventSubscriber::notify(const EventPublisher& event)
 	{
-		Event<std::int32_t>* myEvent = event.As<Event<std::int32_t>>();
+		Event<Foo>* myEvent = event.As<Event<Foo>>();
 		if (myEvent != nullptr)
 		{
 			mValue = myEvent->message();

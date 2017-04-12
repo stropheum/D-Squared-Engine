@@ -5,6 +5,7 @@
 #include "Event.h"
 #include "EventQueue.h"
 #include "MyEventSubscriber.h"
+#include "Foo.h"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -49,17 +50,18 @@ namespace TestLibraryDesktop
 		TEST_METHOD_CLEANUP(methodCleanup)
 		{
 			finalizeLeakDetection();
+			Event<Foo>::unsubscribeAll();
 		}
 
 		TEST_METHOD(TestSubscriberNotify)
 		{
-			std::int32_t i = 1;
-			Event<std::int32_t> myEvent(i);
+			Foo foo(1);
+			Event<Foo> myEvent(foo);
 			MyEventSubscriber subscriber;
 
-			Assert::AreNotEqual(1, subscriber.mValue);
+			Assert::IsFalse(foo == subscriber.mValue);
 			subscriber.notify(myEvent);
-			Assert::AreEqual(1, subscriber.mValue);
+			Assert::IsTrue(foo == subscriber.mValue);
 		}
 
 		TEST_METHOD(TestEventQueue)
@@ -67,14 +69,14 @@ namespace TestLibraryDesktop
 			GameTime gameTime;
 			EventQueue eq;
 
-			std::int32_t i = 5;
-			Event<std::int32_t> myEvent(i);
+			Foo foo(5);
+			Event<Foo> myEvent(foo);
 			eq.enqueue(myEvent, gameTime);
 
 			eq.update(gameTime);
 			Assert::IsFalse(eq.isEmpty());
 
-			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(1000)));
+			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(1)));
 			eq.update(gameTime);
 			Assert::IsTrue(eq.isEmpty());
 
@@ -87,34 +89,68 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(eq.isEmpty());
 
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(1000)));
-			Assert::AreNotEqual(i, subscriber.mValue);
-			Assert::AreNotEqual(myEvent.message(), subscriber.mValue);
+			Assert::IsFalse(foo == subscriber.mValue);
+			Assert::IsFalse(myEvent.message() == subscriber.mValue);
 			
 			eq.update(gameTime);
 			Assert::IsTrue(eq.isEmpty());
-			Assert::AreEqual(i, subscriber.mValue);
-			Assert::AreEqual(myEvent.message(), subscriber.mValue);
+			Assert::IsTrue(foo == subscriber.mValue);
+			Assert::IsTrue(myEvent.message() == subscriber.mValue);
 		}
 
 		TEST_METHOD(TestSubscribe)
 		{
 			GameTime gameTime;
 
-			int i = 5;
-			Event<std::int32_t> myevent(i);
+			Foo foo(5);
+			Event<Foo> myevent(foo);
 
 			MyEventSubscriber subscriber;
-			Assert::IsFalse(subscriber.mValue == i);
+			Assert::IsFalse(subscriber.mValue == foo);
 			
 			myevent.deliver();
-			Assert::IsTrue(subscriber.mValue == i);
+			Assert::IsTrue(subscriber.mValue == foo);
 
 			myevent.setTime(gameTime.CurrentTime(), milliseconds(10));
-			subscriber.mValue = 0;
-			Assert::IsFalse(subscriber.mValue == i);
+			subscriber.mValue = Foo(0);
+			Assert::IsFalse(subscriber.mValue == foo);
 
 			myevent.deliver();
-			Assert::IsTrue(subscriber.mValue == i);
+			Assert::IsTrue(subscriber.mValue == foo);
+		}
+
+		TEST_METHOD(TestQueueDelay)
+		{
+			GameTime gameTime;
+
+			Foo foo(5);
+			Event<Foo> myEvent(foo);
+
+			MyEventSubscriber subscriber;
+			Assert::IsFalse(subscriber.mValue == foo);
+
+			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(0)));
+			myEvent.setTime(gameTime.CurrentTime(), milliseconds(100));
+
+			EventQueue queue;
+			queue.enqueue(myEvent, gameTime, myEvent.delay());
+
+			Assert::IsFalse(queue.isEmpty());
+			Assert::IsFalse(subscriber.mValue == foo);
+
+			queue.update(gameTime);
+			Assert::IsFalse(queue.isEmpty());
+			Assert::IsFalse(subscriber.mValue == foo);
+
+			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(99)));
+			queue.update(gameTime);
+			Assert::IsFalse(queue.isEmpty());
+			Assert::IsFalse(subscriber.mValue == foo);
+
+			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(101)));
+			queue.update(gameTime);
+			Assert::IsTrue(queue.isEmpty());
+			Assert::IsTrue(subscriber.mValue == foo);
 		}
 
 		static _CrtMemState sStartMemState;

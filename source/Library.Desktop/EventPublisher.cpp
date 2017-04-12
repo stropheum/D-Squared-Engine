@@ -22,9 +22,12 @@ namespace Library
 
 	EventPublisher& EventPublisher::operator=(const EventPublisher& rhs)
 	{
-		mTimeEnqueued = rhs.mTimeEnqueued;
-		mMillisecondDelay = rhs.mMillisecondDelay;
-		mSubscriberList = rhs.mSubscriberList;
+		if (this != &rhs)
+		{
+			mTimeEnqueued = rhs.mTimeEnqueued;
+			mMillisecondDelay = rhs.mMillisecondDelay;
+			mSubscriberList = rhs.mSubscriberList;
+		}
 		return *this;
 	}
 
@@ -38,12 +41,15 @@ namespace Library
 
 	EventPublisher& EventPublisher::operator=(EventPublisher&& rhs)
 	{
-		mTimeEnqueued = rhs.mTimeEnqueued;
-		mMillisecondDelay = rhs.mMillisecondDelay;
-		mSubscriberList = rhs.mSubscriberList;
+		if (this != &rhs)
+		{
+			mTimeEnqueued = rhs.mTimeEnqueued;
+			mMillisecondDelay = rhs.mMillisecondDelay;
+			mSubscriberList = rhs.mSubscriberList;
 
-		rhs.mMillisecondDelay = milliseconds(0);
-		rhs.mSubscriberList = nullptr;
+			rhs.mMillisecondDelay = milliseconds(0);
+			rhs.mSubscriberList = nullptr;
+		}
 
 		return *this;
 	}
