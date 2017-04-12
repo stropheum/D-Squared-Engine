@@ -10,10 +10,6 @@ using namespace std::chrono;
 
 namespace Library
 {
-	EventQueue::EventQueue()
-	{
-	}
-
 	void EventQueue::enqueue(EventPublisher& eventPublisher, GameTime& gameTime, std::chrono::milliseconds delay)
 	{
 		eventPublisher.setTime(gameTime.CurrentTime(), delay);
