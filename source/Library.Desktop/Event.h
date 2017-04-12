@@ -14,7 +14,8 @@ namespace Library
 
 		/// Constructor
 		/// @Param paylod: The payload that this event will carry to its destination
-		Event(const Payload& payload);
+		/// @Param deleteAfterPublishing: Value to determine if the event queue should delete this after when delivered
+		Event(const Payload& payload, bool deleteAfterPublishing = false);
 
 		/// Default destructor
 		~Event() = default;

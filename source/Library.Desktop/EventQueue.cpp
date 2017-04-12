@@ -10,15 +10,37 @@ using namespace std::chrono;
 
 namespace Library
 {
+	EventQueue::~EventQueue()
+	{
+		if (!mQueue.isEmpty())
+		{
+			for (uint32_t i = 0; i < mQueue.size(); i++)
+			{
+				if (mQueue[i]->deleteAfterPublishing())
+				{
+					delete mQueue[i];
+				}
+			}
+			mQueue.clear();
+		}
+	}
+
 	void EventQueue::enqueue(EventPublisher& eventPublisher, GameTime& gameTime, std::chrono::milliseconds delay)
 	{
-		eventPublisher.setTime(gameTime.CurrentTime(), delay);
-		mQueue.pushBack(&eventPublisher);
+		if (mQueue.find(&eventPublisher) == mQueue.end())
+		{
+			eventPublisher.setTime(gameTime.CurrentTime(), delay);
+			mQueue.pushBack(&eventPublisher);
+		}
 	}
 
 	void EventQueue::send(EventPublisher& eventPublisher)
 	{
 		eventPublisher.deliver();
+		if (eventPublisher.deleteAfterPublishing())
+		{
+			delete &eventPublisher;
+		}
 	}
 
 	void EventQueue::update(GameTime& gameTime)
@@ -30,6 +52,10 @@ namespace Library
 			if (mQueue[i]->isExpired(gameTime.CurrentTime()))
 			{
 				mQueue[i]->deliver();
+				if (mQueue[i]->deleteAfterPublishing())
+				{
+					delete mQueue[i];
+				}
 			}
 			else
 			{

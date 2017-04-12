@@ -12,8 +12,8 @@ namespace Library
 		/// Default constructor
 		EventQueue() = default;
 
-		/// Default destructor
-		~EventQueue() = default;
+		/// Destructor
+		~EventQueue();
 
 		/// Adds an event to the queue at a specified time
 		/// @Param eventPublisher: The event being added to the queue

@@ -15,7 +15,8 @@ namespace Library
 
 		/// Constructor
 		/// @Param subscriberList: The static list of subscribers for a given type
-		explicit EventPublisher(Vector<class EventSubscriber*>* subscriberList);
+		/// @Param deleteAfterPublishing: Bool to determine if the event queue should delete this when delivered
+		explicit EventPublisher(Vector<class EventSubscriber*>* subscriberList, bool deleteAfterPublishing = false);
 
 		/// Default destructor
 		~EventPublisher() = default;
@@ -63,10 +64,12 @@ namespace Library
 		/// @Return: True if this event is deleted after publishing
 		bool deleteAfterPublishing() const;
 
+	protected:
+		bool mDeleteAfterPublishing; /// Boolean to determine if this event is deleted after being published
+
 	private:
 		std::chrono::high_resolution_clock::time_point mTimeEnqueued; /// The time point when this event was queued
 		std::chrono::milliseconds mMillisecondDelay; /// The amount of delay assigned for this event
-		bool mDeleteAfterPublishing; /// Boolean to determine if this event is deleted after being published
 		Vector<class EventSubscriber*>* mSubscriberList; /// The list of subscribers to notify of This event type
 	};
 }

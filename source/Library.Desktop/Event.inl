@@ -12,14 +12,14 @@ namespace Library
 	Vector<class EventSubscriber*> Event<Payload>::sSubscriberList;
 
 	template <typename Payload>
-	Event<Payload>::Event(const Payload& payload):
-		EventPublisher(&sSubscriberList), mPayload(payload)
+	Event<Payload>::Event(const Payload& payload, bool deleteAfterPublishing):
+		EventPublisher(&sSubscriberList, deleteAfterPublishing), mPayload(payload)
 	{
 	}
 
 	template <typename Payload>
 	Event<Payload>::Event(const Event<Payload>& rhs):
-		EventPublisher(rhs.sSubscriberList), mPayload(rhs.mPayload)
+		EventPublisher(&rhs.sSubscriberList, rhs.mDeleteAfterPublishing), mPayload(rhs.mPayload)
 	{
 	}
 
@@ -29,13 +29,14 @@ namespace Library
 		if (this != &rhs)
 		{
 			mPayload = rhs.mPayload;
+			mDeleteAfterPublishing = rhs.mDeleteAfterPublishing;
 		}
 		return *this;
 	}
 
 	template <typename Payload>
 	Event<Payload>::Event(Event<Payload>&& rhs):
-		EventPublisher(rhs.sSubscriberList), mPayload(rhs.mPayload)
+		EventPublisher(&rhs.sSubscriberList, rhs.mDeleteAfterPublishing), mPayload(rhs.mPayload)
 	{
 	}
 
@@ -45,6 +46,7 @@ namespace Library
 		if (this != &rhs)
 		{
 			mPayload = rhs.mPayload;
+			mDeleteAfterPublishing = rhs.mDeleteAfterPublishing;
 		}
 		return *this;
 	}
