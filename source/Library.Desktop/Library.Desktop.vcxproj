@@ -201,6 +201,7 @@
     <ClInclude Include="DefaultHash.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="EventMessageAttributed.h" />
     <ClInclude Include="EventPublisher.h" />
     <ClInclude Include="EventQueue.h" />
     <ClInclude Include="EventSubscriber.h" />
@@ -213,6 +214,8 @@
     <ClInclude Include="IXmlParseHelper.h" />
     <ClInclude Include="MatrixState.h" />
     <ClInclude Include="PointerState.h" />
+    <ClInclude Include="Reaction.h" />
+    <ClInclude Include="ReactionAttributed.h" />
     <ClInclude Include="RTTI.h" />
     <ClInclude Include="Scope.h" />
     <ClInclude Include="ScopeState.h" />
@@ -240,6 +243,7 @@
     <ClCompile Include="Attributed.cpp" />
     <ClCompile Include="Datum.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EventMessageAttributed.cpp" />
     <ClCompile Include="EventPublisher.cpp" />
     <ClCompile Include="EventQueue.cpp" />
     <ClCompile Include="FloatState.cpp" />
@@ -259,6 +263,8 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="PointerState.cpp" />
+    <ClCompile Include="Reaction.cpp" />
+    <ClCompile Include="ReactionAttributed.cpp" />
     <ClCompile Include="Scope.cpp" />
     <ClCompile Include="ScopeState.cpp" />
     <ClCompile Include="Sector.cpp" />

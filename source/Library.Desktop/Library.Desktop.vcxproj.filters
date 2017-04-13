@@ -122,6 +122,18 @@
     <Filter Include="Event\Event">
       <UniqueIdentifier>{3a6936bb-ab0a-4eb2-b14c-a4913631c3ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Reaction">
+      <UniqueIdentifier>{1ca3f5ec-2eb3-4ebb-8ad3-9d6a4976b510}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Reaction\Base">
+      <UniqueIdentifier>{e0e35659-d468-4083-8607-1fe0e5bb4440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Reaction\EventMessageAttributed">
+      <UniqueIdentifier>{6fb32fb3-fcb7-40a2-827b-ffd44213ecff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Reaction\ReactionAttributed">
+      <UniqueIdentifier>{cd3784de-cdc0-4c62-a450-7385341df8c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -244,6 +256,13 @@
     <ClInclude Include="Event.h">
       <Filter>Event\Event</Filter>
     </ClInclude>
+    <ClInclude Include="Reaction.h">
+      <Filter>Reaction\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="EventMessageAttributed.h">
+      <Filter>Reaction\EventMessageAttributed</Filter>
+    </ClInclude>
+    <ClInclude Include="ReactionAttributed.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Datum.cpp">
@@ -339,6 +358,13 @@
     <ClCompile Include="EventPublisher.cpp">
       <Filter>Event\Event Publisher</Filter>
     </ClCompile>
+    <ClCompile Include="Reaction.cpp">
+      <Filter>Reaction\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="EventMessageAttributed.cpp">
+      <Filter>Reaction\EventMessageAttributed</Filter>
+    </ClCompile>
+    <ClCompile Include="ReactionAttributed.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
