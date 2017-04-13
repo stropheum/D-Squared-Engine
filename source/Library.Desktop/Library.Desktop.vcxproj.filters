@@ -262,7 +262,9 @@
     <ClInclude Include="EventMessageAttributed.h">
       <Filter>Reaction\EventMessageAttributed</Filter>
     </ClInclude>
-    <ClInclude Include="ReactionAttributed.h" />
+    <ClInclude Include="ReactionAttributed.h">
+      <Filter>Reaction\ReactionAttributed</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Datum.cpp">
@@ -364,7 +366,9 @@
     <ClCompile Include="EventMessageAttributed.cpp">
       <Filter>Reaction\EventMessageAttributed</Filter>
     </ClCompile>
-    <ClCompile Include="ReactionAttributed.cpp" />
+    <ClCompile Include="ReactionAttributed.cpp">
+      <Filter>Reaction\ReactionAttributed</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
