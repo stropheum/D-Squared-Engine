@@ -1,0 +1,15 @@
+<Scope Name='Level 1'>
+	<String Name='Name' Value='Dale' />
+	<Integer Name='Health' Value='10' />
+	<Float Name='Power' Value='57.3f' />
+	<Vector Name='Position' X='1.0' Y='2.0' Z='3.0' W='4.0' />
+	<Matrix Name='MyMatrix'>
+    	<Vector X='1.0'  Y='2.0'  Z='3.0'  W='4.0' />
+    	<Vector X='5.0'  Y='6.0'  Z='7.0'  W='8.0' />
+    	<Vector X='9.0'  Y='10.0' Z='11.0' W='12.0' />
+    	<Vector X='13.0' Y='14.0' Z='15.0' W='16.0' />
+    </Matrix>
+	<Scope Name='Pets'>
+		<String Name='Dog' Value='Dozer' />
+	</Scope>
+</Scope>

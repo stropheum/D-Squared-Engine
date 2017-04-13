@@ -114,6 +114,12 @@
       <Profile>false</Profile>
       <OptimizeReferences>false</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(ProjectDir)Grammar.xml" "$(TargetDir)" /Y /I
+xcopy "$(ProjectDir)ActionGrammar.xml" "$(TargetDir)" /Y /I
+xcopy "$(ProjectDir)EntityGrammar.xml" "$(TargetDir)" /Y /I
+xcopy "$(ProjectDir)input.xml" "$(TargetDir)" /Y /I</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -135,6 +141,12 @@
       <Profile>false</Profile>
       <OptimizeReferences>false</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(ProjectDir)Grammar.xml" "$(TargetDir)" /Y /I
+xcopy "$(ProjectDir)ActionGrammar.xml" "$(TargetDir)" /Y /I
+xcopy "$(ProjectDir)EntityGrammar.xml" "$(TargetDir)" /Y /I
+xcopy "$(ProjectDir)input.xml" "$(TargetDir)" /Y /I</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -159,6 +171,12 @@
       <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <Profile>true</Profile>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(ProjectDir)Grammar.xml" "$(TargetDir)" /Y /I
+xcopy "$(ProjectDir)ActionGrammar.xml" "$(TargetDir)" /Y /I
+xcopy "$(ProjectDir)EntityGrammar.xml" "$(TargetDir)" /Y /I
+xcopy "$(ProjectDir)input.xml" "$(TargetDir)" /Y /I</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -183,6 +201,12 @@
       <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <Profile>true</Profile>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(ProjectDir)Grammar.xml" "$(TargetDir)" /Y /I
+xcopy "$(ProjectDir)ActionGrammar.xml" "$(TargetDir)" /Y /I
+xcopy "$(ProjectDir)EntityGrammar.xml" "$(TargetDir)" /Y /I
+xcopy "$(ProjectDir)input.xml" "$(TargetDir)" /Y /I</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AttributedFoo.h" />
