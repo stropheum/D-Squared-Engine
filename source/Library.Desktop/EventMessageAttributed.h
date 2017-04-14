@@ -4,7 +4,7 @@
 
 namespace Library
 {
-	class EventMessageAttributed :
+	class EventMessageAttributed final:
 		public Attributed
 	{
 		class World;

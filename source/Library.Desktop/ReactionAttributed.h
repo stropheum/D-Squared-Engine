@@ -4,13 +4,14 @@
 
 namespace Library
 {
-	class ReactionAttributed :
+	class ReactionAttributed final:
 		public Reaction
 	{
 	public:
 		ReactionAttributed();
-		~ReactionAttributed();
+		~ReactionAttributed() = default;
 		virtual void notify(const EventPublisher& event) override;
+		const std::string& getSubType();
 	};
 
 	ReactionFactory(ReactionAttributed)

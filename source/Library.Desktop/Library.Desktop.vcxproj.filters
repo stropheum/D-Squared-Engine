@@ -134,6 +134,9 @@
     <Filter Include="Reaction\ReactionAttributed">
       <UniqueIdentifier>{cd3784de-cdc0-4c62-a450-7385341df8c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Reaction\ActionEvent">
+      <UniqueIdentifier>{4a9d6455-6e78-47fe-801e-e851b7e2ee4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -265,6 +268,9 @@
     <ClInclude Include="ReactionAttributed.h">
       <Filter>Reaction\ReactionAttributed</Filter>
     </ClInclude>
+    <ClInclude Include="ActionEvent.h">
+      <Filter>Reaction\ActionEvent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Datum.cpp">
@@ -368,6 +374,9 @@
     </ClCompile>
     <ClCompile Include="ReactionAttributed.cpp">
       <Filter>Reaction\ReactionAttributed</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionEvent.cpp">
+      <Filter>Reaction\ActionEvent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

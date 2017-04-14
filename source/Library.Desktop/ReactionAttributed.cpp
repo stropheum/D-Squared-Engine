@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "ReactionAttributed.h"
+#include "Event.h"
+#include "EventMessageAttributed.h"
 
 
 namespace Library
@@ -9,13 +11,19 @@ namespace Library
 		(*this)["Subtype"].setType(DatumType::String);
 	}
 
-	ReactionAttributed::~ReactionAttributed()
-	{
-	}
-
 	void ReactionAttributed::notify(const EventPublisher& event)
 	{
-		//TODO: implement notify method for reaction attributed
-		UNREFERENCED_PARAMETER(event);
+		assert(event.Is(Event<EventMessageAttributed>::TypeIdClass()));
+
+		auto castEvent = event.As<Event<EventMessageAttributed>>();
+		if (castEvent->message().getSubtype() == getSubType())
+		{
+			// TODO: Copy the attribute "arguments" to this instance of reaction attributed, then execute ActionList::Update
+		}
+	}
+
+	const std::string& ReactionAttributed::getSubType()
+	{
+		return (*this)["SubType"].get<std::string>();
 	}
 }

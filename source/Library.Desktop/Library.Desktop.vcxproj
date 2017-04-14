@@ -193,6 +193,7 @@
     <ClInclude Include="Action.h" />
     <ClInclude Include="ActionCreateAction.h" />
     <ClInclude Include="ActionDestroyAction.h" />
+    <ClInclude Include="ActionEvent.h" />
     <ClInclude Include="ActionIncrement.h" />
     <ClInclude Include="ActionList.h" />
     <ClInclude Include="ActionListIf.h" />
@@ -237,6 +238,7 @@
     <ClCompile Include="Action.cpp" />
     <ClCompile Include="ActionCreateAction.cpp" />
     <ClCompile Include="ActionDestroyAction.cpp" />
+    <ClCompile Include="ActionEvent.cpp" />
     <ClCompile Include="ActionIncrement.cpp" />
     <ClCompile Include="ActionList.cpp" />
     <ClCompile Include="ActionListIf.cpp" />
