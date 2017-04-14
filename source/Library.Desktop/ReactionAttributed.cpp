@@ -2,6 +2,7 @@
 #include "ReactionAttributed.h"
 #include "Event.h"
 #include "EventMessageAttributed.h"
+#include "World.h"
 
 
 namespace Library
@@ -9,6 +10,12 @@ namespace Library
 	ReactionAttributed::ReactionAttributed()
 	{
 		(*this)["Subtype"].setType(DatumType::String);
+		Event<EventMessageAttributed>::subscribe(*this);
+	}
+
+	ReactionAttributed::~ReactionAttributed()
+	{
+		Event<EventMessageAttributed>::unsubscribe(*this);
 	}
 
 	void ReactionAttributed::notify(const EventPublisher& event)
@@ -18,7 +25,18 @@ namespace Library
 		auto castEvent = event.As<Event<EventMessageAttributed>>();
 		if (castEvent->message().getSubtype() == getSubType())
 		{
-			// TODO: Copy the attribute "arguments" to this instance of reaction attributed, then execute ActionList::Update
+			auto auxAttributes = getAuxilliaryAttributes();
+			for (auto iter = auxAttributes.begin(); iter != auxAttributes.end(); ++iter)
+			{
+				Datum& appendedDatum = appendAuxiliaryAttribute((*iter).first);
+				appendedDatum = (*iter).second;
+			}
+
+			auto worldState = castEvent->message().getWorldState();
+			if (worldState != nullptr)
+			{
+				update(*worldState);
+			}
 		}
 	}
 

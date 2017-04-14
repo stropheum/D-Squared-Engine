@@ -4,11 +4,11 @@
 
 namespace Library
 {
+	class WorldState;
+
 	class EventMessageAttributed final:
 		public Attributed
 	{
-		class World;
-
 	public:
 		EventMessageAttributed();
 		~EventMessageAttributed() = default;
@@ -16,11 +16,11 @@ namespace Library
 		const std::string& getSubtype() const;
 		void setSubType(const std::string& subtype);
 
-		World* getWorld() const;
-		void setWorld(World* const world);
+		WorldState* getWorldState() const;
+		void setWorldState(WorldState& worldState);
 
 	private:
 		std::string mSubtype;
-		World* mWorld;
+		WorldState* mWorldState;
 	};
 }

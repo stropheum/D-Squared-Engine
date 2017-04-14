@@ -190,6 +190,24 @@ namespace Library
 		return append(name);
 	}
 
+	Vector<std::pair<std::string, Datum>> Attributed::getAuxilliaryAttributes() const
+	{
+		Vector<std::pair<std::string, Datum>> auxAttributes;
+
+		for (auto iter = mVector.begin(); iter != mVector.end(); ++iter)
+		{
+			if (isAuxiliaryAttribute((*iter)->first))
+			{
+				std::pair<std::string, Datum> pair;
+				pair.first = (*iter)->first;
+				pair.second = (*iter)->second;
+				auxAttributes.pushBack(pair);
+			}
+		}
+
+		return auxAttributes;
+	}
+
 #pragma endregion
 
 #pragma region Private Methods

@@ -50,5 +50,10 @@ namespace Library
 
 		worldState.world = nullptr;
 	}
+
+	EventQueue& World::getEventQueue()
+	{
+		return mEventQueue;
+	}
 }
 

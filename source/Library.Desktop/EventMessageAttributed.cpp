@@ -5,7 +5,7 @@
 namespace Library
 {
 	EventMessageAttributed::EventMessageAttributed() :
-		mSubtype(""), mWorld(nullptr)
+		mSubtype(""), mWorldState(nullptr)
 	{}
 
 	const std::string& EventMessageAttributed::getSubtype() const
@@ -18,13 +18,13 @@ namespace Library
 		mSubtype = subtype;
 	}
 
-	EventMessageAttributed::World* EventMessageAttributed::getWorld() const
+	WorldState* EventMessageAttributed::getWorldState() const
 	{
-		return mWorld;
+		return mWorldState;
 	}
 
-	void EventMessageAttributed::setWorld(World* const world)
+	void EventMessageAttributed::setWorldState(WorldState& worldState)
 	{
-		mWorld = world;
+		mWorldState = &worldState;
 	}
 }

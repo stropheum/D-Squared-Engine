@@ -95,9 +95,6 @@
     <Filter Include="Action\CreateAction">
       <UniqueIdentifier>{fdcbb1a3-f68a-403e-92e0-e2da8773b6de}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Action\DestrtoyAction">
-      <UniqueIdentifier>{329127d5-3dba-4cb5-abbf-65d904d80cb0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Action\ActionList">
       <UniqueIdentifier>{a4a7eec7-ba6c-4c76-a5fd-87b29934423b}</UniqueIdentifier>
     </Filter>
@@ -136,6 +133,9 @@
     </Filter>
     <Filter Include="Reaction\ActionEvent">
       <UniqueIdentifier>{4a9d6455-6e78-47fe-801e-e851b7e2ee4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Action\DestroyAction">
+      <UniqueIdentifier>{329127d5-3dba-4cb5-abbf-65d904d80cb0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -236,7 +236,7 @@
       <Filter>Action\CreateAction</Filter>
     </ClInclude>
     <ClInclude Include="ActionDestroyAction.h">
-      <Filter>Action\DestrtoyAction</Filter>
+      <Filter>Action\DestroyAction</Filter>
     </ClInclude>
     <ClInclude Include="ActionList.h">
       <Filter>Action\ActionList</Filter>
@@ -349,7 +349,7 @@
       <Filter>Action\CreateAction</Filter>
     </ClCompile>
     <ClCompile Include="ActionDestroyAction.cpp">
-      <Filter>Action\DestrtoyAction</Filter>
+      <Filter>Action\DestroyAction</Filter>
     </ClCompile>
     <ClCompile Include="ActionList.cpp">
       <Filter>Action\ActionList</Filter>

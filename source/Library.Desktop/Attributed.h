@@ -58,6 +58,8 @@ namespace Library
 		/// @Return: A reference to the Datum created from the appended attribute
 		Datum& appendAuxiliaryAttribute(std::string name);
 
+		Vector<std::pair<std::string, Datum>> getAuxilliaryAttributes() const;
+
 #pragma endregion
 
 	protected:

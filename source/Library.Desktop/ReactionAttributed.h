@@ -9,7 +9,7 @@ namespace Library
 	{
 	public:
 		ReactionAttributed();
-		~ReactionAttributed() = default;
+		~ReactionAttributed();
 		virtual void notify(const EventPublisher& event) override;
 		const std::string& getSubType();
 	};

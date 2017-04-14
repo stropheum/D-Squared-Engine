@@ -1,6 +1,13 @@
 #include "pch.h"
 #include "ActionEvent.h"
+#include "EventMessageAttributed.h"
+#include "WorldState.h"
+#include "World.h"
+#include "Event.h"
+#include "GameTime.h"
 
+
+using namespace std::chrono;
 
 namespace Library
 {
@@ -12,7 +19,18 @@ namespace Library
 
 	void ActionEvent::update(WorldState& worldState)
 	{
-		UNREFERENCED_PARAMETER(worldState);
-		// TODO: Create an attributed event, assign its world and subtype, copy all aux params into the event and queue it with the given delay
+		EventMessageAttributed ema;
+		ema.setWorldState(worldState);
+
+		auto auxAttributes = getAuxilliaryAttributes();
+		for (auto iter = auxAttributes.begin(); iter != auxAttributes.end(); ++iter)
+		{
+			Datum& auxDatum = ema.appendAuxiliaryAttribute((*iter).first);
+			auxDatum = (*iter).second;
+		}
+
+		Event<EventMessageAttributed> event(ema);
+		auto delay = (*this)["Delay"].get<std::int32_t>();
+		worldState.world->getEventQueue().enqueue(event, worldState.getgameTime(), milliseconds(delay));
 	}
 }

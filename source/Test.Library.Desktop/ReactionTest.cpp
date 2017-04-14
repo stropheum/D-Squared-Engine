@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 #include "TestSharedData.h"
 #include "GameTime.h"
+#include "World.h"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -49,6 +50,8 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestStub)
 		{
+			World world;
+			Assert::IsTrue(&world != nullptr);
 		}
 
 		static _CrtMemState sStartMemState;
