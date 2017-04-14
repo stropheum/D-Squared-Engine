@@ -3,9 +3,18 @@
 #include "TestSharedData.h"
 #include "GameTime.h"
 #include "World.h"
+#include "Sector.h"
+#include "Entity.h"
+#include "ActionList.h"
+#include "ActionCreateAction.h"
+#include "ActionDestroyAction.h"
+#include "ActionListIf.h"
+#include "ActionIncrement.h"
+#include "ActionEvent.h"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using namespace std::chrono;
 using namespace Library;
 
 
@@ -14,6 +23,14 @@ namespace TestLibraryDesktop
 	TEST_CLASS(ReactionTest)
 	{
 	public:
+
+		EntityFactory mEntityFactory;
+		ActionListFactory mActionListFactory;
+		ActionEventFactory mActionEventFactory;
+		ActionCreateActionFactory mActionCreateActionFactory;
+		ActionDestroyActionFactory mActionDestroyActionFactory;
+		ActionListIfFactory mActionListIfFactory;
+		ActionIncrementFactory mActionIncrementFactory;
 
 		/// Sets up leak detection logic
 		static void initializeLeakDetection()
@@ -50,8 +67,25 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestStub)
 		{
-			World world;
-			Assert::IsTrue(&world != nullptr);
+			WorldState worldState;
+			GameTime gameTime;
+			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(0)));
+			worldState.setGameTime(gameTime);
+
+			World* world = new World();
+			Sector* sector = world->createSector("Dale Sector");
+			Entity* entity = sector->createEntity("Entity", "Dale");
+			entity->createAction("ActionEvent", "MyActionEvenqt");
+			
+			world->update(worldState, gameTime);
+			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(1)));
+			world->update(worldState, gameTime);
+			delete world;
+		}
+
+		TEST_METHOD(TestActionEvent)
+		{
+			ActionEvent actionEvent;
 		}
 
 		static _CrtMemState sStartMemState;

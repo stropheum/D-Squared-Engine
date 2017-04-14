@@ -15,6 +15,7 @@ namespace Library
 	{
 		(*this)["Subtype"].setType(DatumType::String);
 		(*this)["Delay"].setType(DatumType::Integer);
+		(*this)["Delay"] = 0;
 	}
 
 	void ActionEvent::update(WorldState& worldState)
@@ -29,8 +30,8 @@ namespace Library
 			auxDatum = (*iter).second;
 		}
 
-		Event<EventMessageAttributed> event(ema);
+		Event<EventMessageAttributed> event(ema, true);
 		auto delay = (*this)["Delay"].get<std::int32_t>();
-		worldState.world->getEventQueue().enqueue(event, worldState.getgameTime(), milliseconds(delay));
+		worldState.world->getEventQueue().enqueue(event, worldState.getGameTime(), milliseconds(delay));
 	}
 }

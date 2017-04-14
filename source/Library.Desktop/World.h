@@ -2,6 +2,7 @@
 #include "Attributed.h"
 #include "Sector.h"
 #include "EventQueue.h"
+#include "WorldState.h"
 
 
 namespace Library
