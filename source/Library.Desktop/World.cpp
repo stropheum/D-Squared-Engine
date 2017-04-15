@@ -40,13 +40,14 @@ namespace Library
 	void World::update(WorldState& worldState, GameTime& gameTime)
 	{
 		worldState.world = this;
-		mEventQueue.update(gameTime);
 
 		for (std::uint32_t i = 0; i < sectors().size(); i++)
 		{
 			assert(sectors()[i].Is(Sector::TypeIdClass()));
 			sectors()[i].As<Sector>()->update(worldState);
 		}
+
+		mEventQueue.update(gameTime);
 
 		worldState.world = nullptr;
 	}

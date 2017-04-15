@@ -1,5 +1,5 @@
 #pragma once
-#include "Attributed.h"
+#include "Scope.h"
 
 
 namespace Library
@@ -7,11 +7,11 @@ namespace Library
 	class WorldState;
 
 	class EventMessageAttributed final:
-		public Attributed
+		public Scope
 	{
 	public:
 		EventMessageAttributed();
-		~EventMessageAttributed() = default;
+		virtual ~EventMessageAttributed() = default;
 
 		const std::string& getSubtype() const;
 		void setSubType(const std::string& subtype);

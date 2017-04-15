@@ -3,6 +3,7 @@
 #include "Event.h"
 #include "EventMessageAttributed.h"
 #include "World.h"
+#include "Scope.h"
 
 
 namespace Library
@@ -10,6 +11,7 @@ namespace Library
 	ReactionAttributed::ReactionAttributed()
 	{
 		(*this)["Subtype"].setType(DatumType::String);
+//		mPrescribedAttributes.pushBack(Signature("Subtype", DatumType::String, "", 1u, static_cast<std::string*>(nullptr)));
 		Event<EventMessageAttributed>::subscribe(*this);
 	}
 
@@ -23,20 +25,29 @@ namespace Library
 		assert(event.Is(Event<EventMessageAttributed>::TypeIdClass()));
 
 		auto castEvent = event.As<Event<EventMessageAttributed>>();
-		if (castEvent->message().getSubtype() == getSubType())
+		
+		assert(castEvent->message().Is(EventMessageAttributed::TypeIdClass()));
+		auto message = castEvent->message().As<EventMessageAttributed>();
+
+		if (message->getSubtype() == getSubType())
 		{
-			auto auxAttributes = getAuxilliaryAttributes();
-			for (auto iter = auxAttributes.begin(); iter != auxAttributes.end(); ++iter)
+			for (auto iter = message->begin(); iter != message->end(); ++iter)
 			{
-				Datum& appendedDatum = appendAuxiliaryAttribute((*iter).first);
-				appendedDatum = (*iter).second;
+				auto& datum = appendAuxiliaryAttribute((*iter).first);
+				datum = (*iter).second;
 			}
 
-			auto worldState = castEvent->message().getWorldState();
-			if (worldState != nullptr)
-			{
-				update(*worldState);
-			}
+//			for (auto iter = auxAttributes.begin(); iter != auxAttributes.end(); ++iter)
+//			{
+//				Datum& appendedDatum = appendAuxiliaryAttribute((*iter).first);
+//				appendedDatum = *(*iter).second;
+//			}
+//
+//			auto worldState = castEvent->message().getWorldState();
+//			if (worldState != nullptr)
+//			{
+//				update(*worldState);
+//			}
 		}
 	}
 

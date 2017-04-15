@@ -11,6 +11,7 @@
 #include "ActionListIf.h"
 #include "ActionIncrement.h"
 #include "ActionEvent.h"
+#include "ReactionAttributed.h"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -67,25 +68,38 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestStub)
 		{
-			WorldState worldState;
-			GameTime gameTime;
-			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(0)));
-			worldState.setGameTime(gameTime);
-
-			World* world = new World();
-			Sector* sector = world->createSector("Dale Sector");
-			Entity* entity = sector->createEntity("Entity", "Dale");
-			entity->createAction("ActionEvent", "MyActionEvenqt");
-			
-			world->update(worldState, gameTime);
-			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(1)));
-			world->update(worldState, gameTime);
-			delete world;
+//			WorldState worldState;
+//			GameTime gameTime;
+//			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(0)));
+//			worldState.setGameTime(gameTime);
+//
+//			World* world = new World();
+//			Sector* sector = world->createSector("Dale Sector");
+//			Entity* entity = sector->createEntity("Entity", "Dale");
+//			entity->createAction("ActionEvent", "MyActionEvenqt");
+//			
+//			ReactionAttributed myReactionAttributed;
+//
+//			world->update(worldState, gameTime);
+//			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(100)));
+//			world->update(worldState, gameTime);
+//
+//			delete world;
 		}
 
 		TEST_METHOD(TestActionEvent)
 		{
+			World* myworld = new World();
+			WorldState worldState;
+			worldState.world = myworld;
+			GameTime gameTime;
+			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(0)));
+			worldState.setGameTime(gameTime);
+
 			ActionEvent actionEvent;
+			actionEvent.update(worldState);
+
+			delete myworld;
 		}
 
 		static _CrtMemState sStartMemState;

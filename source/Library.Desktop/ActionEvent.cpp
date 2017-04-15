@@ -23,15 +23,17 @@ namespace Library
 		EventMessageAttributed ema;
 		ema.setWorldState(worldState);
 
-		auto auxAttributes = getAuxilliaryAttributes();
-		for (auto iter = auxAttributes.begin(); iter != auxAttributes.end(); ++iter)
+		for (auto iter = begin(); iter != end(); ++iter)
 		{
-			Datum& auxDatum = ema.appendAuxiliaryAttribute((*iter).first);
-			auxDatum = (*iter).second;
+			if (isAuxiliaryAttribute((*iter).first))
+			{
+				Datum& auxDatum = ema.append((*iter).first);
+				auxDatum = (*iter).second;
+			}
 		}
 
 		Event<EventMessageAttributed> event(ema, true);
-		auto delay = (*this)["Delay"].get<std::int32_t>();
+		auto& delay = (*this)["Delay"].get<std::int32_t>(0);
 		worldState.world->getEventQueue().enqueue(event, worldState.getGameTime(), milliseconds(delay));
 	}
 }

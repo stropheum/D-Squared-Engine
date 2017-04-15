@@ -288,6 +288,16 @@ namespace Library
 		return (scope != nullptr) ? operator==(*scope) : false;
 	}
 
+	HashMap<const std::string, Datum>::Iterator Scope::begin()
+	{
+		return mMap.begin();
+	}
+
+	HashMap<const std::string, Datum>::Iterator Scope::end()
+	{
+		return mMap.end();
+	}
+
 #pragma endregion
 
 #pragma region Private Methods

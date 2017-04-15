@@ -75,11 +75,10 @@ namespace Library
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, std::int32_t* const initialValue,
+			Signature(const std::string name, const DatumType type, const std::int32_t& initialValue,
 				const std::uint32_t size, std::int32_t* storage):
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.i = initialValue;
 				if (storage != nullptr)
 				{
 					Storage.i = storage;
@@ -87,7 +86,7 @@ namespace Library
 					{
 						for (std::uint32_t i = 0; i < Size; i++)
 						{
-							Storage.i[i] = InitialValue.i[i];
+							Storage.i[i] = initialValue;
 						}
 					}
 				}
@@ -100,20 +99,19 @@ namespace Library
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, float* const initialValue,
+			Signature(const std::string name, const DatumType type, const float& initialValue,
 				const std::uint32_t size, float* const storage) :
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.f = initialValue;
 				if (storage != nullptr)
 				{
 					Storage.f = storage;
-					if (InitialValue.f != nullptr)
+				}
+				else
+				{
+					for (std::uint32_t i = 0; i < Size; i++)
 					{
-						for (std::uint32_t i = 0; i < Size; i++)
-						{
-							Storage.f[i] = *InitialValue.f;
-						}
+						Storage.f[i] = initialValue;
 					}
 				}
 			}
@@ -125,20 +123,19 @@ namespace Library
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, glm::vec4* const initialValue,
+			Signature(const std::string name, const DatumType type, const glm::vec4& initialValue,
 				const std::uint32_t size, glm::vec4* const storage) :
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.v = initialValue;
 				if (storage != nullptr)
 				{
 					Storage.v = storage;
-					if (InitialValue.v != nullptr)
+				}
+				else
+				{
+					for (std::uint32_t i = 0; i < Size; i++)
 					{
-						for (std::uint32_t i = 0; i < Size; i++)
-						{
-							Storage.v[i] = InitialValue.v[i];
-						}
+						Storage.v[i] = initialValue;
 					}
 				}
 			}
@@ -150,20 +147,19 @@ namespace Library
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, glm::mat4* const initialValue,
+			Signature(const std::string name, const DatumType type, const glm::mat4& initialValue,
 				const std::uint32_t size, glm::mat4* const storage) :
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.m = initialValue;
 				if (storage != nullptr)
 				{
 					Storage.m = storage;
-					if (InitialValue.m != nullptr)
+				}
+				else
+				{
+					for (std::uint32_t i = 0; i < Size; i++)
 					{
-						for (std::uint32_t i = 0; i < Size; i++)
-						{
-							Storage.m[i] = InitialValue.m[i];
-						}
+						Storage.m[i] = initialValue;
 					}
 				}
 			}
@@ -175,20 +171,19 @@ namespace Library
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, std::string* const initialValue,
+			Signature(const std::string name, const DatumType type, const std::string& initialValue,
 				const std::uint32_t size, std::string* const storage) :
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.s = initialValue;
 				if (storage != nullptr)
 				{
 					Storage.s = storage;
-					if (InitialValue.s != nullptr)
+				}
+				else
+				{
+					for (std::uint32_t i = 0; i < Size; i++)
 					{
-						for (std::uint32_t i = 0; i < Size; i++)
-						{
-							Storage.s[i] = InitialValue.s[i];
-						}
+						Storage.s[i] = initialValue;
 					}
 				}
 			}
@@ -196,24 +191,22 @@ namespace Library
 			/// Constructor For the scope signature type
 			/// @Param name: The name of the signature
 			/// @Param type: The type of data being passed in
-			/// @Param initialValue: The initial value of the signature's data
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, Scope** const initialValue,
+			Signature(const std::string name, const DatumType type,
 				const std::uint32_t size, Scope** const storage):
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.sc = initialValue;
 				if (storage != nullptr)
 				{
 					Storage.sc = storage;
-					if (InitialValue.sc != nullptr)
+				}
+				else
+				{
+					for (std::uint32_t i = 0; i < Size; i++)
 					{
-						for (std::uint32_t i = 0; i < Size; i++)
-						{
-							Storage.sc[i] = InitialValue.sc[i];
-						}
+						Storage.sc[i] = nullptr;
 					}
 				}
 			}
@@ -221,32 +214,30 @@ namespace Library
 			/// Constructor For the RTTI pointer signature type
 			/// @Param name: The name of the signature
 			/// @Param type: The type of data being passed in
-			/// @Param initialValue: The initial value of the signature's data
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, Library::RTTI** initialValue,
+			Signature(const std::string name, const DatumType type,
 				const std::uint32_t size, RTTI** const storage) :
 				Name(name), Type(type), Size(size)
 			{
-				InitialValue.r = initialValue;
 				if (storage != nullptr)
 				{
 					Storage.r = storage;
-					if (InitialValue.r != nullptr)
+				}
+				else
+				{
+					for (std::uint32_t i = 0; i < Size; i++)
 					{
-						for (std::uint32_t i = 0; i < Size; i++)
-						{
-							Storage.r[i] = InitialValue.r[i];
-						}
+						Storage.r[i] = nullptr;
 					}
 				}
 			}
 
 			std::string Name;
 			DatumType Type;
-			Datum::DatumValues InitialValue;
 			std::uint32_t Size;
+			Datum::DatumValues InitialValue;
 			Datum::DatumValues Storage;
 		};
 
