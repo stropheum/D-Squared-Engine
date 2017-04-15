@@ -14,6 +14,7 @@ namespace Library
 	ActionEvent::ActionEvent()
 	{
 		(*this)["Subtype"].setType(DatumType::String);
+		(*this)["Subtype"] = "";
 		(*this)["Delay"].setType(DatumType::Integer);
 		(*this)["Delay"] = 0;
 
@@ -27,6 +28,7 @@ namespace Library
 	{
 		EventMessageAttributed ema;
 		ema.setWorldState(worldState);
+		ema.setSubtype(getSubtype());
 
 		for (auto iter = begin(); iter != end(); ++iter)
 		{
@@ -37,8 +39,28 @@ namespace Library
 			}
 		}
 
-		Event<EventMessageAttributed> event(ema, true);
+		Event<EventMessageAttributed>* event = new Event<EventMessageAttributed>(ema, true);
 		auto& delay = (*this)["Delay"].get<std::int32_t>(0);
-		worldState.world->getEventQueue().enqueue(event, worldState.getGameTime(), milliseconds(delay));
+		worldState.world->getEventQueue().enqueue(*event, worldState.getGameTime(), milliseconds(delay));
+	}
+
+	std::string ActionEvent::getSubtype()
+	{
+		return (*this)["Subtype"].get<std::string>(0);
+	}
+
+	void ActionEvent::setSubtype(const std::string& subtype)
+	{
+		(*this)["Subtype"] = subtype;
+	}
+
+	const std::int32_t& ActionEvent::getDelay()
+	{
+		return (*this)["Delay"].get<std::int32_t>(0);
+	}
+
+	void ActionEvent::setDelay(const std::int32_t delay)
+	{
+		(*this)["Delay"] = delay;
 	}
 }

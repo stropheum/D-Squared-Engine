@@ -11,6 +11,7 @@ namespace Library
 	ReactionAttributed::ReactionAttributed()
 	{
 		(*this)["Subtype"].setType(DatumType::String);
+		(*this)["Subtype"] = "";
 		mPrescribedAttributes.pushBack(
 			Signature("Subtype", DatumType::String, 1u, static_cast<std::string*>(nullptr)));
 		Event<EventMessageAttributed>::subscribe(*this);
@@ -30,30 +31,23 @@ namespace Library
 		assert(castEvent->message().Is(EventMessageAttributed::TypeIdClass()));
 		auto message = castEvent->message().As<EventMessageAttributed>();
 
-		if (message->getSubtype() == getSubType())
+		if (message->getSubtype() == getSubtype())
 		{
 			for (auto iter = message->begin(); iter != message->end(); ++iter)
 			{
 				auto& datum = appendAuxiliaryAttribute((*iter).first);
 				datum = (*iter).second;
 			}
-
-//			for (auto iter = auxAttributes.begin(); iter != auxAttributes.end(); ++iter)
-//			{
-//				Datum& appendedDatum = appendAuxiliaryAttribute((*iter).first);
-//				appendedDatum = *(*iter).second;
-//			}
-//
-//			auto worldState = castEvent->message().getWorldState();
-//			if (worldState != nullptr)
-//			{
-//				update(*worldState);
-//			}
 		}
 	}
 
-	const std::string& ReactionAttributed::getSubType()
+	std::string ReactionAttributed::getSubtype()
 	{
-		return (*this)["SubType"].get<std::string>();
+		return (*this)["Subtype"].get<std::string>(0);
+	}
+
+	void ReactionAttributed::setSubtype(const std::string& subtype)
+	{
+		(*this)["Subtype"] = subtype;
 	}
 }

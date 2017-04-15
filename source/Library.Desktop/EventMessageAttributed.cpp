@@ -13,7 +13,7 @@ namespace Library
 		return mSubtype;
 	}
 
-	void EventMessageAttributed::setSubType(const std::string& subtype)
+	void EventMessageAttributed::setSubtype(const std::string& subtype)
 	{
 		mSubtype = subtype;
 	}
