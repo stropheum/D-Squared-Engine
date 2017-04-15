@@ -16,6 +16,11 @@ namespace Library
 		(*this)["Subtype"].setType(DatumType::String);
 		(*this)["Delay"].setType(DatumType::Integer);
 		(*this)["Delay"] = 0;
+
+		mPrescribedAttributes.pushBack(
+			Signature("Subtype", DatumType::String, 1u, static_cast<std::string*>(nullptr)));
+		mPrescribedAttributes.pushBack(
+			Signature("Delay", DatumType::Integer, 1u, static_cast<std::int32_t*>(nullptr)));
 	}
 
 	void ActionEvent::update(WorldState& worldState)

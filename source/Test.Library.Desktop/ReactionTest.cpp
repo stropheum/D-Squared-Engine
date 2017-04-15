@@ -97,6 +97,7 @@ namespace TestLibraryDesktop
 			worldState.setGameTime(gameTime);
 
 			ActionEvent actionEvent;
+
 			actionEvent.update(worldState);
 
 			delete myworld;

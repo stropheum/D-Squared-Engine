@@ -114,23 +114,23 @@ namespace Library
 	void AttributedFoo::init()
 	{
 		mPrescribedAttributes.pushBack(
-			Signature("External Integer", DatumType::Integer, 0, 1u, &mInt)
+			Signature("External Integer", DatumType::Integer, 1u, &mInt)
 		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External Float", DatumType::Float, 0.0f, 1u, &mFloat)
+			Signature("External Float", DatumType::Float, 1u, &mFloat)
 		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External Vector", DatumType::Vector, glm::vec4(0), 1u, &mVector)
+			Signature("External Vector", DatumType::Vector, 1u, &mVector)
 		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External Matrix", DatumType::Matrix, glm::mat4(0), 1u, &mMatrix)
+			Signature("External Matrix", DatumType::Matrix, 1u, &mMatrix)
 		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External String", DatumType::String, "", 1u, &mString)
+			Signature("External String", DatumType::String, 1u, &mString)
 		);
 
 		mPrescribedAttributes.pushBack(
@@ -150,23 +150,23 @@ namespace Library
 		}
 
 		mPrescribedAttributes.pushBack(
-			Signature("External Integer Array", DatumType::Integer, 0, 10u, iArray)
+			Signature("External Integer Array", DatumType::Integer, 10u, iArray)
 		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External Float Array", DatumType::Float, 0.0f, 10u, fArray)
+			Signature("External Float Array", DatumType::Float, 10u, fArray)
 		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External Vector Array", DatumType::Vector, glm::vec4(0), 10u, vArray)
+			Signature("External Vector Array", DatumType::Vector, 10u, vArray)
 		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External Matrix Array", DatumType::Matrix, glm::mat4(0), 10u, mArray)
+			Signature("External Matrix Array", DatumType::Matrix, 10u, mArray)
 		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External String Array", DatumType::String, "", 10u, sArray)
+			Signature("External String Array", DatumType::String, 10u, sArray)
 		);
 
 		populate();

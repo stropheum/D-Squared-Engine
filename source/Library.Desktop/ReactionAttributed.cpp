@@ -11,7 +11,8 @@ namespace Library
 	ReactionAttributed::ReactionAttributed()
 	{
 		(*this)["Subtype"].setType(DatumType::String);
-//		mPrescribedAttributes.pushBack(Signature("Subtype", DatumType::String, "", 1u, static_cast<std::string*>(nullptr)));
+		mPrescribedAttributes.pushBack(
+			Signature("Subtype", DatumType::String, 1u, static_cast<std::string*>(nullptr)));
 		Event<EventMessageAttributed>::subscribe(*this);
 	}
 

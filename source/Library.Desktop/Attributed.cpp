@@ -10,6 +10,13 @@ namespace Library
 	Attributed::Attributed()
 	{
  		(*this)["this"] = static_cast<RTTI*>(this);
+		mPrescribedAttributes.pushBack(
+			Signature("this", DatumType::Pointer, 1u, static_cast<RTTI**>(nullptr)));
+	}
+
+	Attributed::~Attributed()
+	{
+		mPrescribedAttributes.clear();
 	}
 
 	Attributed::Attributed(const  Attributed& rhs)

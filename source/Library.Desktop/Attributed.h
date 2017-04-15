@@ -15,7 +15,7 @@ namespace Library
 		/// Constructor
 		Attributed();
 		/// Virtual destructor to ensure that class is abstract
-		virtual ~Attributed(){};
+		virtual ~Attributed();
 
 		/// Copy constructor
 		/// @Param rhs: The Attributed object being copied
@@ -75,21 +75,21 @@ namespace Library
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, const std::int32_t& initialValue,
+			Signature(const std::string name, const DatumType type,
 				const std::uint32_t size, std::int32_t* storage):
 				Name(name), Type(type), Size(size)
 			{
 				if (storage != nullptr)
 				{
 					Storage.i = storage;
-					if (InitialValue.i != nullptr)
-					{
-						for (std::uint32_t i = 0; i < Size; i++)
-						{
-							Storage.i[i] = initialValue;
-						}
-					}
 				}
+//				else
+//				{
+//					for (std::uint32_t i = 0; i < Size; i++)
+//					{
+//						Storage.i[i] = initialValue;
+//					}
+//				}
 			}
 
 			/// Constructor For the float signature type
@@ -99,7 +99,7 @@ namespace Library
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, const float& initialValue,
+			Signature(const std::string name, const DatumType type,
 				const std::uint32_t size, float* const storage) :
 				Name(name), Type(type), Size(size)
 			{
@@ -107,13 +107,13 @@ namespace Library
 				{
 					Storage.f = storage;
 				}
-				else
-				{
-					for (std::uint32_t i = 0; i < Size; i++)
-					{
-						Storage.f[i] = initialValue;
-					}
-				}
+//				else
+//				{
+//					for (std::uint32_t i = 0; i < Size; i++)
+//					{
+//						Storage.f[i] = initialValue;
+//					}
+//				}
 			}
 
 			/// Constructor For the vector signature type
@@ -123,7 +123,7 @@ namespace Library
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, const glm::vec4& initialValue,
+			Signature(const std::string name, const DatumType type,
 				const std::uint32_t size, glm::vec4* const storage) :
 				Name(name), Type(type), Size(size)
 			{
@@ -131,13 +131,13 @@ namespace Library
 				{
 					Storage.v = storage;
 				}
-				else
-				{
-					for (std::uint32_t i = 0; i < Size; i++)
-					{
-						Storage.v[i] = initialValue;
-					}
-				}
+//				else
+//				{
+//					for (std::uint32_t i = 0; i < Size; i++)
+//					{
+//						Storage.v[i] = initialValue;
+//					}
+//				}
 			}
 
 			/// Constructor For the matrix signature type
@@ -147,7 +147,7 @@ namespace Library
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, const glm::mat4& initialValue,
+			Signature(const std::string name, const DatumType type,
 				const std::uint32_t size, glm::mat4* const storage) :
 				Name(name), Type(type), Size(size)
 			{
@@ -155,13 +155,13 @@ namespace Library
 				{
 					Storage.m = storage;
 				}
-				else
-				{
-					for (std::uint32_t i = 0; i < Size; i++)
-					{
-						Storage.m[i] = initialValue;
-					}
-				}
+//				else
+//				{
+//					for (std::uint32_t i = 0; i < Size; i++)
+//					{
+//						Storage.m[i] = initialValue;
+//					}
+//				}
 			}
 
 			/// Constructor For the string signature type
@@ -171,7 +171,7 @@ namespace Library
 			/// @Param size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
 			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
-			Signature(const std::string name, const DatumType type, const std::string& initialValue,
+			Signature(const std::string name, const DatumType type,
 				const std::uint32_t size, std::string* const storage) :
 				Name(name), Type(type), Size(size)
 			{
@@ -179,13 +179,13 @@ namespace Library
 				{
 					Storage.s = storage;
 				}
-				else
-				{
-					for (std::uint32_t i = 0; i < Size; i++)
-					{
-						Storage.s[i] = initialValue;
-					}
-				}
+//				else
+//				{
+//					for (std::uint32_t i = 0; i < Size; i++)
+//					{
+//						Storage.s[i] = initialValue;
+//					}
+//				}
 			}
 
 			/// Constructor For the scope signature type
@@ -202,13 +202,6 @@ namespace Library
 				{
 					Storage.sc = storage;
 				}
-				else
-				{
-					for (std::uint32_t i = 0; i < Size; i++)
-					{
-						Storage.sc[i] = nullptr;
-					}
-				}
 			}
 
 			/// Constructor For the RTTI pointer signature type
@@ -224,13 +217,6 @@ namespace Library
 				if (storage != nullptr)
 				{
 					Storage.r = storage;
-				}
-				else
-				{
-					for (std::uint32_t i = 0; i < Size; i++)
-					{
-						Storage.r[i] = nullptr;
-					}
 				}
 			}
 
