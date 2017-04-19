@@ -39,7 +39,6 @@ namespace Library
 
 	void World::update(WorldState& worldState, GameTime& gameTime)
 	{
-		UNREFERENCED_PARAMETER(gameTime);
 		worldState.world = this;
 
 		for (std::uint32_t i = 0; i < sectors().size(); i++)
@@ -48,7 +47,14 @@ namespace Library
 			sectors()[i].As<Sector>()->update(worldState);
 		}
 
+		mEventQueue.update(gameTime);
+
 		worldState.world = nullptr;
+	}
+
+	EventQueue& World::getEventQueue()
+	{
+		return mEventQueue;
 	}
 }
 

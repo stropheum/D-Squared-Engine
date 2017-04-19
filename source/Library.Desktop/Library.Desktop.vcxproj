@@ -193,6 +193,7 @@
     <ClInclude Include="Action.h" />
     <ClInclude Include="ActionCreateAction.h" />
     <ClInclude Include="ActionDestroyAction.h" />
+    <ClInclude Include="ActionEvent.h" />
     <ClInclude Include="ActionIncrement.h" />
     <ClInclude Include="ActionList.h" />
     <ClInclude Include="ActionListIf.h" />
@@ -201,6 +202,7 @@
     <ClInclude Include="DefaultHash.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="EventMessageAttributed.h" />
     <ClInclude Include="EventPublisher.h" />
     <ClInclude Include="EventQueue.h" />
     <ClInclude Include="EventSubscriber.h" />
@@ -213,6 +215,8 @@
     <ClInclude Include="IXmlParseHelper.h" />
     <ClInclude Include="MatrixState.h" />
     <ClInclude Include="PointerState.h" />
+    <ClInclude Include="Reaction.h" />
+    <ClInclude Include="ReactionAttributed.h" />
     <ClInclude Include="RTTI.h" />
     <ClInclude Include="Scope.h" />
     <ClInclude Include="ScopeState.h" />
@@ -234,12 +238,14 @@
     <ClCompile Include="Action.cpp" />
     <ClCompile Include="ActionCreateAction.cpp" />
     <ClCompile Include="ActionDestroyAction.cpp" />
+    <ClCompile Include="ActionEvent.cpp" />
     <ClCompile Include="ActionIncrement.cpp" />
     <ClCompile Include="ActionList.cpp" />
     <ClCompile Include="ActionListIf.cpp" />
     <ClCompile Include="Attributed.cpp" />
     <ClCompile Include="Datum.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EventMessageAttributed.cpp" />
     <ClCompile Include="EventPublisher.cpp" />
     <ClCompile Include="EventQueue.cpp" />
     <ClCompile Include="FloatState.cpp" />
@@ -259,6 +265,8 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="PointerState.cpp" />
+    <ClCompile Include="Reaction.cpp" />
+    <ClCompile Include="ReactionAttributed.cpp" />
     <ClCompile Include="Scope.cpp" />
     <ClCompile Include="ScopeState.cpp" />
     <ClCompile Include="Sector.cpp" />

@@ -13,7 +13,7 @@ namespace Library
 	{
 	}
 
-	GameTime& WorldState::getgameTime() const
+	GameTime& WorldState::getGameTime() const
 	{
 		if (gameTime == nullptr)
 		{

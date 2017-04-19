@@ -3,6 +3,8 @@
 #include "EventPublisher.h"
 #include <algorithm>
 #include "GameTime.h"
+#include "EventMessageAttributed.h"
+#include "Event.h"
 
 
 using namespace std;

@@ -10,6 +10,13 @@ namespace Library
 	Attributed::Attributed()
 	{
  		(*this)["this"] = static_cast<RTTI*>(this);
+		mPrescribedAttributes.pushBack(
+			Signature("this", DatumType::Pointer, 1u, static_cast<RTTI**>(nullptr)));
+	}
+
+	Attributed::~Attributed()
+	{
+		mPrescribedAttributes.clear();
 	}
 
 	Attributed::Attributed(const  Attributed& rhs)
@@ -81,11 +88,6 @@ namespace Library
 						appendedScope.setType(DatumType::Integer);
 						appendedScope.setStorage(attribute.Storage.i, attribute.Size);
 					}
-					
-					for (std::uint32_t j = 0; j < attribute.Size; j++)
-					{
-						appendedScope.set(attribute.InitialValue.i[j]);
-					}
 					break;
 
 				case DatumType::Float:
@@ -93,11 +95,6 @@ namespace Library
 					{
 						appendedScope.setType(DatumType::Float);
 						appendedScope.setStorage(attribute.Storage.f, attribute.Size);
-					}
-
-					for (std::uint32_t j = 0; j < attribute.Size; j++)
-					{
-						appendedScope.set(attribute.InitialValue.f[j]);
 					}
 					break;
 
@@ -107,11 +104,6 @@ namespace Library
 						appendedScope.setType(DatumType::Vector);
 						appendedScope.setStorage(attribute.Storage.v, attribute.Size);
 					}
-
-					for (std::uint32_t j = 0; j < attribute.Size; j++)
-					{
-						appendedScope.set(attribute.InitialValue.v[j]);
-					}
 					break;
 
 				case DatumType::Matrix:
@@ -119,11 +111,6 @@ namespace Library
 					{
 						appendedScope.setType(DatumType::Matrix);
 						appendedScope.setStorage(attribute.Storage.m, attribute.Size);
-					}
-
-					for (std::uint32_t j = 0; j < attribute.Size; j++)
-					{
-						appendedScope.set(attribute.InitialValue.m[j]);
 					}
 					break;
 
@@ -137,11 +124,6 @@ namespace Library
 						appendedScope.setType(DatumType::String);
 						appendedScope.setStorage(attribute.Storage.s, attribute.Size);
 					}
-
-					for (std::uint32_t j = 0; j < attribute.Size; j++)
-					{
-						appendedScope.set(attribute.InitialValue.s[j]);
-					}
 					break;
 
 				case DatumType::Pointer:
@@ -149,11 +131,6 @@ namespace Library
 					{
 						appendedScope.setType(DatumType::Pointer);
 						appendedScope.setStorage(attribute.Storage.r, attribute.Size);
-					}
-
-					for (std::uint32_t j = 0; j < attribute.Size; j++)
-					{
-						appendedScope.set(attribute.InitialValue.r[j]);
 					}
 					break;
 
@@ -165,11 +142,14 @@ namespace Library
 
 	bool Attributed::isPrescribedAttribute(std::string name) const
 	{
-		for (auto iter = mPrescribedAttributes.begin(); iter != mPrescribedAttributes.end(); ++iter)
+		if (isAttribute(name))
 		{
-			if ((*iter).Name == name)
+			for (auto iter = mPrescribedAttributes.begin(); iter != mPrescribedAttributes.end(); ++iter)
 			{
-				return true;
+				if ((*iter).Name == name)
+				{
+					return true;
+				}
 			}
 		}
 		return false;

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "AttributedFoo.h"
 #include <Datum.h>
+#include "glm/vec4.hpp"
+#include "glm/mat4x4.hpp"
 
 
 namespace Library
@@ -112,27 +114,27 @@ namespace Library
 	void AttributedFoo::init()
 	{
 		mPrescribedAttributes.pushBack(
-			Signature("External Integer", DatumType::Integer, &mInt, 1u, &mInt)
+			Signature("External Integer", DatumType::Integer, 1u, &mInt)
 		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External Float", DatumType::Float, &mFloat, 1u, &mFloat)
+			Signature("External Float", DatumType::Float, 1u, &mFloat)
 		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External Vector", DatumType::Vector, &mVector, 1u, &mVector)
+			Signature("External Vector", DatumType::Vector, 1u, &mVector)
 		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External Matrix", DatumType::Matrix, &mMatrix, 1u, &mMatrix)
+			Signature("External Matrix", DatumType::Matrix, 1u, &mMatrix)
 		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External String", DatumType::String, &mString, 1u, &mString)
+			Signature("External String", DatumType::String, 1u, &mString)
 		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("Internal Scope", DatumType::Scope, &mScope, 1u, &mScope)
+			Signature("Internal Scope", DatumType::Scope, 1u, &mScope)
 		);
 
 		iArray = new std::int32_t[10];
@@ -148,23 +150,23 @@ namespace Library
 		}
 
 		mPrescribedAttributes.pushBack(
-			Signature("External Integer Array", DatumType::Integer, iArray, 10u, iArray)
+			Signature("External Integer Array", DatumType::Integer, 10u, iArray)
 		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External Float Array", DatumType::Float, fArray, 10u, fArray)
+			Signature("External Float Array", DatumType::Float, 10u, fArray)
 		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External Vector Array", DatumType::Vector, vArray, 10u, vArray)
+			Signature("External Vector Array", DatumType::Vector, 10u, vArray)
 		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External Matrix Array", DatumType::Matrix, mArray, 10u, mArray)
+			Signature("External Matrix Array", DatumType::Matrix, 10u, mArray)
 		);
 
 		mPrescribedAttributes.pushBack(
-			Signature("External String Array", DatumType::String, sArray, 10u, sArray)
+			Signature("External String Array", DatumType::String, 10u, sArray)
 		);
 
 		populate();

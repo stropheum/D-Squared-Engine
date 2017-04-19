@@ -107,17 +107,23 @@ namespace Library
 		/// @Return: True if the RTTI pointers are equivalent
 		bool Equals(const RTTI* rhs) const override;
 
+		/// Accesses the begin iterator for the undrlying hashmap
+		/// @Return: An iterator pointing to the beginning of the hashmap
+		HashMap<const std::string, Datum>::Iterator begin();
+
+		/// Accesses the end iterator for the undrlying hashmap
+		/// @Return: An iterator pointing to the end of the hashmap
+		HashMap<const std::string, Datum>::Iterator end();
+
 	private:
 
 		/// Clears the Vector and HashMap of all values
 		void clear();
 
-//		/// Removes the reference to the child from the parent, and eliminates the child's reference to its parent
-//		/// @Param child: The Scope pointer being orphaned
-//		void orphan(Scope* child);
-
+		/// Removes the reference to the child from the parent, and eliminates the child's reference to its parent
 		void orphan();
 
+	protected:
 		/// The HashMap that stores the true string, Datum pairs for Scope
 		HashMap<const std::string, Datum> mMap;
 

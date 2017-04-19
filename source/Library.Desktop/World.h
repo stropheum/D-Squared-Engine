@@ -1,6 +1,8 @@
 #pragma once
 #include "Attributed.h"
 #include "Sector.h"
+#include "EventQueue.h"
+#include "WorldState.h"
 
 
 namespace Library
@@ -47,8 +49,13 @@ namespace Library
 		/// @param gameTime: The GameTime instance for the game
 		void update(class WorldState& worldState, class GameTime& gameTime);
 
+		/// Accessor method for the event queue
+		/// @Return: A reference to the event queue associated with this world
+		EventQueue& getEventQueue();
+
 	private:
 		std::string mName; /// The name of the world
+		EventQueue mEventQueue;
 	};
 }
 
