@@ -40,31 +40,25 @@ namespace Library
 	void EventQueue::send(EventPublisher& eventPublisher)
 	{
 		eventPublisher.deliver();
-		if (eventPublisher.deleteAfterPublishing())
-		{
-			delete &eventPublisher;
-		}
 	}
 
 	void EventQueue::update(GameTime& gameTime)
 	{
 		Vector<EventPublisher*> nonExpiredEvents;
+		vector<future<void>> futures;
+		Vector<EventPublisher*> queueCopy(mQueue);
 
 		{
-			lock_guard<mutex> guard(mQueueMutex);
-			vector<future<void>> futures;
-
-			auto queueCopy = mQueue;
+			lock_guard<mutex> guard(mQueueMutex);	
 
 			for (uint32_t i = 0; i < queueCopy.size(); i++)
 			{
 				if (queueCopy[i]->isExpired(gameTime.CurrentTime()))
 				{
-					queueCopy[i]->deliver();
-					if (queueCopy[i]->deleteAfterPublishing())
+					futures.emplace_back(async([&queueCopy, i]
 					{
-						delete queueCopy[i];
-					}
+						queueCopy[i]->deliver();
+					}));
 				}
 				else
 				{
@@ -73,7 +67,16 @@ namespace Library
 			}
 		}
 
-		mQueue = nonExpiredEvents;
+		for (auto& future : futures)
+		{
+			future.get();
+		}
+
+		{
+			lock_guard<mutex> assignmentGuard(mQueueMutex);
+			mQueue = nonExpiredEvents;
+		}
+		
 	}
 
 	void EventQueue::clear()

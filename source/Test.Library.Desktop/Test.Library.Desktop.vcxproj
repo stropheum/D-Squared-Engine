@@ -225,6 +225,7 @@ xcopy "$(ProjectDir)input.xml" "$(TargetDir)" /Y /I</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActionTest.cpp" />
+    <ClCompile Include="AsyncTest.cpp" />
     <ClCompile Include="AttributedFoo.cpp" />
     <ClCompile Include="AttributedTest.cpp">
       <SubType>

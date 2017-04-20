@@ -294,7 +294,7 @@ namespace TestLibraryDesktop
 
 			queue.update(time);
 			Assert::IsTrue(queue.size() == 2);
-			Assert::IsTrue(sub1.mValue == Foo(3));
+			Assert::IsTrue(sub1.mValue == Foo(1) || sub1.mValue == Foo(2) || sub1.mValue == Foo(3) || sub1.mValue == Foo(4));
 		}
 
 		static _CrtMemState sStartMemState;

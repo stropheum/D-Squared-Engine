@@ -16,6 +16,8 @@ namespace Library
 		/// Notifies the subscriber that an event has been triggered
 		/// @Param event: The event that the subscriber is being notified of
 		virtual void notify(const EventPublisher& event) = 0;
+
+		std::mutex mNotifyMutex;
 	};
 }
 
