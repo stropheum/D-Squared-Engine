@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector.h"
 #include <chrono>
+#include <mutex>
 
 
 namespace Library
@@ -43,5 +44,6 @@ namespace Library
 		
 	private:
 		Vector<EventPublisher*> mQueue; /// The queue of events
+		std::mutex mQueueMutex;
 	};
 }

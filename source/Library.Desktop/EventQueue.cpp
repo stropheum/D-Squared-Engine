@@ -5,6 +5,7 @@
 #include "GameTime.h"
 #include "EventMessageAttributed.h"
 #include "Event.h"
+#include <future>
 
 
 using namespace std;
@@ -49,19 +50,26 @@ namespace Library
 	{
 		Vector<EventPublisher*> nonExpiredEvents;
 
-		for (uint32_t i = 0; i < mQueue.size(); i++)
 		{
-			if (mQueue[i]->isExpired(gameTime.CurrentTime()))
+			lock_guard<mutex> guard(mQueueMutex);
+			vector<future<void>> futures;
+
+			auto queueCopy = mQueue;
+
+			for (uint32_t i = 0; i < queueCopy.size(); i++)
 			{
-				mQueue[i]->deliver();
-				if (mQueue[i]->deleteAfterPublishing())
+				if (queueCopy[i]->isExpired(gameTime.CurrentTime()))
 				{
-					delete mQueue[i];
+					queueCopy[i]->deliver();
+					if (queueCopy[i]->deleteAfterPublishing())
+					{
+						delete queueCopy[i];
+					}
 				}
-			}
-			else
-			{
-				nonExpiredEvents.pushBack(mQueue[i]);
+				else
+				{
+					nonExpiredEvents.pushBack(mQueue[i]);
+				}
 			}
 		}
 
