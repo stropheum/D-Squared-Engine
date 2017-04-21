@@ -85,13 +85,10 @@ namespace Library
 		{
 			std::lock_guard<std::mutex> guard(*mSubscriberListMutex);
 			Vector<EventSubscriber*> subListCopy(*mSubscriberList);
-			for (auto iter = subListCopy.begin(); iter != subListCopy.end(); ++iter)
+			for (std::uint32_t i = 0; i < subListCopy.size(); i++)
 			{
-				EventSubscriber* subscriber = *iter;
-				futures.emplace_back(std::async(std::launch::async, [&]
-				{
-					subscriber->notify(*this);
-				}));
+				EventSubscriber* subscriber = subListCopy[i];
+				futures.emplace_back(std::async(&EventSubscriber::notify, subscriber, std::cref(*this)));
 			}
 		}
 

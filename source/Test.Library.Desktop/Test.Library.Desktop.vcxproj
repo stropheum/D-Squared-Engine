@@ -215,6 +215,7 @@ xcopy "$(ProjectDir)input.xml" "$(TargetDir)" /Y /I</Command>
     <ClInclude Include="FooProduct.h" />
     <ClInclude Include="FooRTTI.h" />
     <ClInclude Include="Implementation.h" />
+    <ClInclude Include="IntEventSubscriber.h" />
     <ClInclude Include="MacroGeneratedProduct.h" />
     <ClInclude Include="MyEventSubscriber.h" />
     <ClInclude Include="pch.h" />
@@ -244,6 +245,7 @@ xcopy "$(ProjectDir)input.xml" "$(TargetDir)" /Y /I</Command>
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="IntEventSubscriber.cpp" />
     <ClCompile Include="MacroGeneratedProduct.cpp" />
     <ClCompile Include="MyEventSubscriber.cpp" />
     <ClCompile Include="pch.cpp">

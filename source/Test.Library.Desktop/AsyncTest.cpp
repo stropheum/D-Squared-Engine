@@ -20,6 +20,7 @@
 #include "Event.h"
 #include "Foo.h"
 #include "MyEventSubscriber.h"
+#include "IntEventSubscriber.h"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -102,36 +103,33 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestMultipleSubscribers)
 		{
 			EventQueue queue;
-			Event<Foo> event(Foo(10));
+			Event<std::int32_t> event(10);
 			GameTime time;
 			queue.enqueue(event, time, milliseconds(0));
 
 			time.SetCurrentTime(high_resolution_clock::time_point(milliseconds(500000)));
 			Assert::AreEqual(1u, queue.size());
 
-			MyEventSubscriber sub1, sub2, sub3, sub4, sub5;
+			IntEventSubscriber sub1;
+			IntEventSubscriber sub2;
+			IntEventSubscriber sub3;
+			IntEventSubscriber sub4; 
+			IntEventSubscriber sub5;
 
 			queue.update(time);
 			Assert::AreEqual(0u, queue.size());
 
-			std::int32_t val1 = sub1.mValue.getData();
-			std::int32_t val2 = sub2.mValue.getData();
-			std::int32_t val3 = sub3.mValue.getData();
-			std::int32_t val4 = sub4.mValue.getData();
-			std::int32_t val5 = sub5.mValue.getData();
-
-			UNREFERENCED_PARAMETER(val1);
-			UNREFERENCED_PARAMETER(val2);
-			UNREFERENCED_PARAMETER(val3);
-			UNREFERENCED_PARAMETER(val4);
-
-			bool result = 
-//				(val1 == 10) &&
-//				(val2 == 10) &&
-//				(val3 == 10) &&
-//				(val4 == 10) &&
-				(val5 == 10);
-			Assert::IsTrue(result);
+			bool notified1 = sub1.mNotified;
+			bool notified2 = sub2.mNotified;
+			bool notified3 = sub3.mNotified;
+			bool notified4 = sub4.mNotified;
+			bool notified5 = sub5.mNotified;
+				 
+			Assert::AreEqual(true, notified1);
+			Assert::AreEqual(true, notified2);
+			Assert::AreEqual(true, notified3);
+			Assert::AreEqual(true, notified4);
+			Assert::AreEqual(true, notified5);
 		}
 
 		static _CrtMemState sStartMemState;

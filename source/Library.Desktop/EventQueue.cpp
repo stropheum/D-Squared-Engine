@@ -55,7 +55,7 @@ namespace Library
 			{
 				if (queueCopy[i]->isExpired(gameTime.CurrentTime()))
 				{
-					futures.emplace_back(async([&queueCopy, i]
+					futures.emplace_back(async(std::launch::async, [&queueCopy, i]
 					{
 						queueCopy[i]->deliver();
 					}));
@@ -81,6 +81,7 @@ namespace Library
 
 	void EventQueue::clear()
 	{
+		lock_guard<mutex> guard(mQueueMutex);
 		mQueue.clear();
 	}
 
