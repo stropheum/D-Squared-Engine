@@ -70,6 +70,7 @@ namespace Library
 	template <typename Payload>
 	void Event<Payload>::unsubscribeAll()
 	{
+		std::lock_guard<std::mutex> guard(sSubscriberListMutex);
 		if (!sSubscriberList.isEmpty())
 		{
 			sSubscriberList.clear();

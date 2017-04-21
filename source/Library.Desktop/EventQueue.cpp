@@ -30,6 +30,7 @@ namespace Library
 
 	void EventQueue::enqueue(EventPublisher& eventPublisher, GameTime& gameTime, std::chrono::milliseconds delay)
 	{
+		lock_guard<mutex> guard(mQueueMutex);
 		if (mQueue.find(&eventPublisher) == mQueue.end())
 		{
 			eventPublisher.setTime(gameTime.CurrentTime(), delay);
@@ -39,6 +40,7 @@ namespace Library
 
 	void EventQueue::send(EventPublisher& eventPublisher)
 	{
+		lock_guard<mutex> guard(mQueueMutex);
 		eventPublisher.deliver();
 	}
 
