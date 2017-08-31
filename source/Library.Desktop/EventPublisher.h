@@ -2,6 +2,7 @@
 #include "RTTI.h"
 #include <chrono>
 #include "Vector.h"
+#include <mutex>
 
 
 namespace Library
@@ -16,10 +17,10 @@ namespace Library
 		/// Constructor
 		/// @Param subscriberList: The static list of subscribers for a given type
 		/// @Param deleteAfterPublishing: Bool to determine if the event queue should delete this when delivered
-		explicit EventPublisher(Vector<class EventSubscriber*>* subscriberList, bool deleteAfterPublishing = false);
+		explicit EventPublisher(Vector<class EventSubscriber*>* subscriberList, std::mutex& subscriberListMutex, bool deleteAfterPublishing = false);
 
 		/// Default destructor
-		~EventPublisher() = default;
+		virtual ~EventPublisher() = default;
 		
 		/// Copy constructor
 		/// @Param rhs: The event publisher being copied
@@ -71,6 +72,7 @@ namespace Library
 		std::chrono::high_resolution_clock::time_point mTimeEnqueued; /// The time point when this event was queued
 		std::chrono::milliseconds mMillisecondDelay; /// The amount of delay assigned for this event
 		Vector<class EventSubscriber*>* mSubscriberList; /// The list of subscribers to notify of This event type
+		std::mutex* mSubscriberListMutex;	/// Mutex to prevent concurrent access to the subscriber list on deliver
 	};
 }
 

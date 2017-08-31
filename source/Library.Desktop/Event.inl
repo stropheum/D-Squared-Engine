@@ -1,6 +1,7 @@
 #pragma once
 #include "Event.h"
 #include "EventSubscriber.h"
+#include <mutex>
 
 
 namespace Library
@@ -12,14 +13,17 @@ namespace Library
 	Vector<class EventSubscriber*> Event<Payload>::sSubscriberList;
 
 	template <typename Payload>
+	std::mutex Event<Payload>::sSubscriberListMutex;
+
+	template <typename Payload>
 	Event<Payload>::Event(const Payload& payload, bool deleteAfterPublishing):
-		EventPublisher(&sSubscriberList, deleteAfterPublishing), mPayload(payload)
+		EventPublisher(&sSubscriberList, sSubscriberListMutex, deleteAfterPublishing), mPayload(payload)
 	{
 	}
 
 	template <typename Payload>
 	Event<Payload>::Event(const Event<Payload>& rhs):
-		EventPublisher(&rhs.sSubscriberList, rhs.mDeleteAfterPublishing), mPayload(rhs.mPayload)
+		EventPublisher(&rhs.sSubscriberList, sSubscriberListMutex, rhs.mDeleteAfterPublishing), mPayload(rhs.mPayload)
 	{
 	}
 
@@ -36,7 +40,7 @@ namespace Library
 
 	template <typename Payload>
 	Event<Payload>::Event(Event<Payload>&& rhs):
-		EventPublisher(&rhs.sSubscriberList, rhs.mDeleteAfterPublishing), mPayload(rhs.mPayload)
+		EventPublisher(&rhs.sSubscriberList, sSubscriberListMutex, rhs.mDeleteAfterPublishing), mPayload(rhs.mPayload)
 	{
 	}
 
@@ -66,6 +70,7 @@ namespace Library
 	template <typename Payload>
 	void Event<Payload>::unsubscribeAll()
 	{
+		std::lock_guard<std::mutex> guard(sSubscriberListMutex);
 		if (!sSubscriberList.isEmpty())
 		{
 			sSubscriberList.clear();

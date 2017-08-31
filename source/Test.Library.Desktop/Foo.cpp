@@ -34,8 +34,7 @@ Foo::~Foo()
  */
 Foo& Foo::operator=(const Foo& rhs)
 {
-	delete(mData);
-	mData = new int(*rhs.mData);
+	*mData = *rhs.mData;
 	return *this;
 }
 

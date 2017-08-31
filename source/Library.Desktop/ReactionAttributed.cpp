@@ -29,13 +29,17 @@ namespace Library
 		auto castEvent = event.As<Event<EventMessageAttributed>>();
 		
 		assert(castEvent->message().Is(EventMessageAttributed::TypeIdClass()));
-		auto message = castEvent->message().As<EventMessageAttributed>();
+		EventMessageAttributed* message = castEvent->message().As<EventMessageAttributed>();
 
-		if (message->getSubtype() == getSubtype())
+		auto lhs = message->getSubtype();
+		auto rhs = getSubtype();
+//		if (message->getSubtype() == getSubtype())
+		if (lhs == rhs)
 		{
 			for (auto iter = message->begin(); iter != message->end(); ++iter)
 			{
 				auto& datum = appendAuxiliaryAttribute((*iter).first);
+				datum.setType((*iter).second.type());
 				datum = (*iter).second;
 			}
 		}

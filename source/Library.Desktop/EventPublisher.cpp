@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "EventPublisher.h"
 #include "EventSubscriber.h"
+#include <vector>
+#include <future>
 
 
 using namespace std::chrono;
@@ -9,14 +11,14 @@ namespace Library
 {
 	RTTI_DEFINITIONS(EventPublisher)
 
-	EventPublisher::EventPublisher(Vector<EventSubscriber*>* subscriberList, bool deleteAfterPublishing):
-		mDeleteAfterPublishing(deleteAfterPublishing), mTimeEnqueued(), mMillisecondDelay(0), mSubscriberList(subscriberList)
+	EventPublisher::EventPublisher(Vector<EventSubscriber*>* subscriberList, std::mutex& subscriberListMutex, bool deleteAfterPublishing):
+		mDeleteAfterPublishing(deleteAfterPublishing), mTimeEnqueued(), mMillisecondDelay(0), mSubscriberList(subscriberList), mSubscriberListMutex(&subscriberListMutex)
 	{
 	}
 
 	EventPublisher::EventPublisher(const EventPublisher& rhs):
 		mDeleteAfterPublishing(rhs.mDeleteAfterPublishing), mTimeEnqueued(rhs.mTimeEnqueued), 
-		mMillisecondDelay(rhs.mMillisecondDelay), mSubscriberList(rhs.mSubscriberList)
+		mMillisecondDelay(rhs.mMillisecondDelay), mSubscriberList(rhs.mSubscriberList), mSubscriberListMutex(rhs.mSubscriberListMutex)
 	{
 	}
 
@@ -27,13 +29,14 @@ namespace Library
 			mTimeEnqueued = rhs.mTimeEnqueued;
 			mMillisecondDelay = rhs.mMillisecondDelay;
 			mSubscriberList = rhs.mSubscriberList;
+			mSubscriberListMutex = rhs.mSubscriberListMutex;
 		}
 		return *this;
 	}
 
 	EventPublisher::EventPublisher(EventPublisher&& rhs):
 		mDeleteAfterPublishing(rhs.mDeleteAfterPublishing), mTimeEnqueued(rhs.mTimeEnqueued), 
-		mMillisecondDelay(rhs.mMillisecondDelay), mSubscriberList(rhs.mSubscriberList)
+		mMillisecondDelay(rhs.mMillisecondDelay), mSubscriberList(rhs.mSubscriberList), mSubscriberListMutex(rhs.mSubscriberListMutex)
 	{
 		rhs.mMillisecondDelay = milliseconds(0);
 		rhs.mSubscriberList = nullptr;
@@ -46,6 +49,7 @@ namespace Library
 			mTimeEnqueued = rhs.mTimeEnqueued;
 			mMillisecondDelay = rhs.mMillisecondDelay;
 			mSubscriberList = rhs.mSubscriberList;
+			mSubscriberListMutex = rhs.mSubscriberListMutex;
 
 			rhs.mMillisecondDelay = milliseconds(0);
 			rhs.mSubscriberList = nullptr;
@@ -77,9 +81,25 @@ namespace Library
 
 	void EventPublisher::deliver()
 	{
-		for (auto iter = mSubscriberList->begin(); iter != mSubscriberList->end(); ++iter)
+		std::vector<std::future<void>> futures;
 		{
-			(*iter)->notify(*this);
+			std::lock_guard<std::mutex> guard(*mSubscriberListMutex);
+			Vector<EventSubscriber*> subListCopy(*mSubscriberList);
+			for (std::uint32_t i = 0; i < subListCopy.size(); i++)
+			{
+				EventSubscriber* subscriber = subListCopy[i];
+				futures.emplace_back(std::async(&EventSubscriber::notify, subscriber, std::cref(*this)));
+			}
+		}
+
+		for (auto& future : futures)
+		{	// Synchronize the threads before attempting to delete this event publisher
+			future.get();
+		}
+
+		if (deleteAfterPublishing())
+		{	// If the publisher is marked for delete, delete it now 
+			delete this;
 		}
 	}
 
