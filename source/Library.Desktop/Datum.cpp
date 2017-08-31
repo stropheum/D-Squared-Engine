@@ -130,57 +130,6 @@ namespace Library
 		}
 		else
 		{
-//			switch (rhs.mType)
-//			{	// Destroy all the data in rhs
-//				case DatumType::Integer:
-//					for (std::uint32_t i = 0; i < rhs.mSize; i++)
-//					{
-//						pushBack(const_cast<Datum&>(rhs).get<std::int32_t>(i));
-//					}
-//					if (rhs.mData.i != nullptr) free(rhs.mData.i);
-//					break;
-//				case DatumType::Float:
-//					for (std::uint32_t i = 0; i < rhs.mSize; i++)
-//					{
-//						pushBack(const_cast<Datum&>(rhs).get<float>(i));
-//					}
-//					if (rhs.mData.f != nullptr) free(rhs.mData.f);
-//					break;
-//				case DatumType::Vector:
-//					for (std::uint32_t i = 0; i < rhs.mSize; i++)
-//					{
-//						pushBack(const_cast<Datum&>(rhs).get<glm::vec4>(i));
-//					}
-//					if (rhs.mData.v != nullptr) free(rhs.mData.v);
-//					break;
-//				case DatumType::Matrix:
-//					for (std::uint32_t i = 0; i < rhs.mSize; i++)
-//					{
-//						pushBack(const_cast<Datum&>(rhs).get<glm::mat4>(i));
-//					}
-//					if (rhs.mData.m != nullptr) free(rhs.mData.m);
-//					break;
-//				case DatumType::String:
-//					for (std::uint32_t i = 0; i < rhs.mSize; i++)
-//					{
-//						pushBack(const_cast<Datum&>(rhs).get<std::string>(i));
-//					}
-//					if (rhs.mCapacity > 0)
-//					{
-//						rhs.setSize(0);
-//						rhs.reserve(0);
-//					};
-//					break;
-//				case DatumType::Pointer:
-//					for (std::uint32_t i = 0; i < rhs.mSize; i++)
-//					{
-//						pushBack(const_cast<Datum&>(rhs).get<Library::RTTI*>(i));
-//					}
-//					if (rhs.mData.r != nullptr) free(rhs.mData.r);
-//					break;
-//				default:
-//					break;
-//			}
 			mData = rhs.mData;
 			mType = rhs.mType;
 			mCapacity = rhs.mCapacity;

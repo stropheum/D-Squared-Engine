@@ -5,7 +5,7 @@
 namespace Library
 {
 	template <typename TKey, typename TValue, typename HashFunctor>
-	HashMap<TKey, TValue, HashFunctor>::HashMap(std::uint32_t bucketCount = defaultBucketCount):
+	HashMap<TKey, TValue, HashFunctor>::HashMap(std::uint32_t bucketCount):
 		mBucketCount(bucketCount), mBuckets(), mSize(0)
 	{	// HashMaps need to be constructed with at least one bucket, or nothing will be able to be stored
 		if (mBucketCount == 0) throw std::exception("HashMap constructed with an invalid amount of buckets");
