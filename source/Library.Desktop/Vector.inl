@@ -5,7 +5,7 @@
 namespace Library
 {
 	template <typename T>
-	Vector<T>::Vector(bool fixedSize = false) :
+	Vector<T>::Vector(bool fixedSize) :
 		mBuffer(nullptr), mSize(0), mCapacity(CAPACITY_INCREMENT), mFixedSize(fixedSize)
 	{
 		reserve(mCapacity);
