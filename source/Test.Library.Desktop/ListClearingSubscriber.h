@@ -6,6 +6,6 @@ class ListClearingSubscriber :
 public:
 	ListClearingSubscriber();
 	~ListClearingSubscriber();
-	virtual void notify(const Library::EventPublisher& event) override;
+	virtual void Notify(const Library::EventPublisher& event) override;
 };
 

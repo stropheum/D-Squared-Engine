@@ -73,31 +73,31 @@ namespace TestLibraryDesktop
 			WorldState worldState;
 			GameTime gameTime;
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(0)));
-			worldState.setGameTime(gameTime);
+			worldState.SetGameTime(gameTime);
 
 			World* world = new World();
-			Sector* sector = world->createSector("Dale Sector");
-			Entity* entity = sector->createEntity("Entity", "Dale");
-			Action* actionEvent = entity->createAction("ActionEvent", "First Action");
-			actionEvent->As<ActionEvent>()->setSubtype("Physical Attack");
+			Sector* sector = world->CreateSector("Dale Sector");
+			Entity* entity = sector->CreateEntity("Entity", "Dale");
+			Action* actionEvent = entity->CreateAction("ActionEvent", "First Action");
+			actionEvent->As<ActionEvent>()->SetSubtype("Physical Attack");
 			
 			(*actionEvent)["Power"] = 100;
 			
 			ReactionAttributed physicalReaction , magicalReaction;
-			physicalReaction.setSubtype("Physical Attack");
-			magicalReaction.setSubtype("Magical Attack");
+			physicalReaction.SetSubtype("Physical Attack");
+			magicalReaction.SetSubtype("Magical Attack");
 
-			Assert::IsTrue(physicalReaction["Power"].type() == DatumType::Unknown);
-			Assert::IsTrue(magicalReaction["Power"].type() == DatumType::Unknown);
+			Assert::IsTrue(physicalReaction["Power"].Type() == DatumType::Unknown);
+			Assert::IsTrue(magicalReaction["Power"].Type() == DatumType::Unknown);
 
-			world->update(worldState, gameTime);
+			world->Update(worldState, gameTime);
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(100)));
-			world->update(worldState, gameTime);
+			world->Update(worldState, gameTime);
 
 //			Assert::IsTrue(physicalReaction["Power"].type() == DatumType::Integer);
-//			std::int32_t power = physicalReaction["Power"].get<std::int32_t>(0);
+//			std::int32_t power = physicalReaction["Power"].Get<std::int32_t>(0);
 //			Assert::AreEqual(power, 100);
-//			Assert::IsFalse(magicalReaction["Power"].type() == DatumType::Integer);
+//			Assert::IsFalse(magicalReaction["Power"].Type() == DatumType::Integer);
 
 			delete world;
 		}
@@ -107,31 +107,31 @@ namespace TestLibraryDesktop
 			WorldState worldState;
 			GameTime gameTime;
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(0)));
-			worldState.setGameTime(gameTime);
+			worldState.SetGameTime(gameTime);
 
 			World* world = new World();
-			Sector* sector = world->createSector("Dale Sector");
-			Entity* entity = sector->createEntity("Entity", "Dale");
+			Sector* sector = world->CreateSector("Dale Sector");
+			Entity* entity = sector->CreateEntity("Entity", "Dale");
 
-			Action* actionEvent1 = entity->createAction("ActionEvent", "First Action");
-			actionEvent1->As<ActionEvent>()->setSubtype("Physical Attack");
+			Action* actionEvent1 = entity->CreateAction("ActionEvent", "First Action");
+			actionEvent1->As<ActionEvent>()->SetSubtype("Physical Attack");
 			(*actionEvent1)["Power"] = 100;
 
 			ReactionAttributed reaction1, reaction2;
-			reaction1.setSubtype("Physical Attack");
-			reaction2.setSubtype("Physical Attack");
+			reaction1.SetSubtype("Physical Attack");
+			reaction2.SetSubtype("Physical Attack");
 
-			Assert::IsTrue(reaction1["Power"].type() == DatumType::Unknown);
-			Assert::IsTrue(reaction2["Power"].type() == DatumType::Unknown);
+			Assert::IsTrue(reaction1["Power"].Type() == DatumType::Unknown);
+			Assert::IsTrue(reaction2["Power"].Type() == DatumType::Unknown);
 
-			world->update(worldState, gameTime);
+			world->Update(worldState, gameTime);
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(100)));
-			world->update(worldState, gameTime);
+			world->Update(worldState, gameTime);
 
-//			Assert::IsTrue(reaction1["Power"].type() == DatumType::Integer);
-//			Assert::AreEqual(reaction1["Power"].get<std::int32_t>(0), 100);
-//			Assert::IsTrue(reaction2["Power"].type() == DatumType::Integer);
-//			Assert::AreEqual(reaction2["Power"].get<std::int32_t>(0), 100);
+//			Assert::IsTrue(reaction1["Power"].Type() == DatumType::Integer);
+//			Assert::AreEqual(reaction1["Power"].Get<std::int32_t>(0), 100);
+//			Assert::IsTrue(reaction2["Power"].Type() == DatumType::Integer);
+//			Assert::AreEqual(reaction2["Power"].Get<std::int32_t>(0), 100);
 
 			delete world;
 		}
@@ -141,35 +141,35 @@ namespace TestLibraryDesktop
 			WorldState worldState;
 			GameTime gameTime;
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(0)));
-			worldState.setGameTime(gameTime);
+			worldState.SetGameTime(gameTime);
 
 			World* world = new World();
-			Sector* sector = world->createSector("Dale Sector");
-			Entity* entity = sector->createEntity("Entity", "Dale");
+			Sector* sector = world->CreateSector("Dale Sector");
+			Entity* entity = sector->CreateEntity("Entity", "Dale");
 
-			Action* actionEvent1 = entity->createAction("ActionEvent", "First Action");
-			actionEvent1->As<ActionEvent>()->setSubtype("Physical Attack");
+			Action* actionEvent1 = entity->CreateAction("ActionEvent", "First Action");
+			actionEvent1->As<ActionEvent>()->SetSubtype("Physical Attack");
 			(*actionEvent1)["Power"] = 100;
 
-			Action* actionEvent2 = entity->createAction("ActionEvent", "First Action");
-			actionEvent2->As<ActionEvent>()->setSubtype("Magical Attack");
+			Action* actionEvent2 = entity->CreateAction("ActionEvent", "First Action");
+			actionEvent2->As<ActionEvent>()->SetSubtype("Magical Attack");
 			(*actionEvent2)["Power"] = 200;
 
 			ReactionAttributed reaction1, reaction2;
-			reaction1.setSubtype("Physical Attack");
-			reaction2.setSubtype("Magical Attack");
+			reaction1.SetSubtype("Physical Attack");
+			reaction2.SetSubtype("Magical Attack");
 
-			Assert::IsTrue(reaction1["Power"].type() == DatumType::Unknown);
-			Assert::IsTrue(reaction2["Power"].type() == DatumType::Unknown);
+			Assert::IsTrue(reaction1["Power"].Type() == DatumType::Unknown);
+			Assert::IsTrue(reaction2["Power"].Type() == DatumType::Unknown);
 
-			world->update(worldState, gameTime);
+			world->Update(worldState, gameTime);
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(100)));
-			world->update(worldState, gameTime);
+			world->Update(worldState, gameTime);
 
-//			Assert::IsTrue(reaction1["Power"].type() == DatumType::Integer);
-//			Assert::AreEqual(reaction1["Power"].get<std::int32_t>(0), 100);
-//			Assert::IsTrue(reaction2["Power"].type() == DatumType::Integer);
-//			Assert::AreEqual(reaction2["Power"].get<std::int32_t>(0), 200);
+//			Assert::IsTrue(reaction1["Power"].Type() == DatumType::Integer);
+//			Assert::AreEqual(reaction1["Power"].Get<std::int32_t>(0), 100);
+//			Assert::IsTrue(reaction2["Power"].Type() == DatumType::Integer);
+//			Assert::AreEqual(reaction2["Power"].Get<std::int32_t>(0), 200);
 
 			delete world;
 		}
@@ -181,10 +181,10 @@ namespace TestLibraryDesktop
 			worldState.world = myworld;
 			GameTime gameTime;
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(0)));
-			worldState.setGameTime(gameTime);
+			worldState.SetGameTime(gameTime);
 
 			ActionEvent actionEvent;
-			actionEvent.update(worldState);
+			actionEvent.Update(worldState);
 
 			delete myworld;
 		}
@@ -192,22 +192,22 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestSubtype)
 		{
 			ReactionAttributed ra1, ra2, ra3;
-			ra1.setSubtype("PersonAction");
-			ra2.setSubtype("AlienAction");
-			ra3.setSubtype("PersonAction");
+			ra1.SetSubtype("PersonAction");
+			ra2.SetSubtype("AlienAction");
+			ra3.SetSubtype("PersonAction");
 
-			Assert::AreNotEqual(ra1.getSubtype(), ra2.getSubtype());
-			Assert::AreNotEqual(ra3.getSubtype(), ra2.getSubtype());
-			Assert::AreEqual(ra1.getSubtype(), ra3.getSubtype());
+			Assert::AreNotEqual(ra1.GetSubtype(), ra2.GetSubtype());
+			Assert::AreNotEqual(ra3.GetSubtype(), ra2.GetSubtype());
+			Assert::AreEqual(ra1.GetSubtype(), ra3.GetSubtype());
 
 			EventMessageAttributed ema1, ema2, ema3;
-			ema1.setSubtype("PersonAction");
-			ema2.setSubtype("AlienAction");
-			ema3.setSubtype("PersonAction");
+			ema1.SetSubtype("PersonAction");
+			ema2.SetSubtype("AlienAction");
+			ema3.SetSubtype("PersonAction");
 
-			Assert::AreNotEqual(ema1.getSubtype(), ema2.getSubtype());
-			Assert::AreNotEqual(ema3.getSubtype(), ema2.getSubtype());
-			Assert::AreEqual(ema1.getSubtype(), ema3.getSubtype());
+			Assert::AreNotEqual(ema1.GetSubtype(), ema2.GetSubtype());
+			Assert::AreNotEqual(ema3.GetSubtype(), ema2.GetSubtype());
+			Assert::AreEqual(ema1.GetSubtype(), ema3.GetSubtype());
 		}
 
 		TEST_METHOD(RTTI_Test)

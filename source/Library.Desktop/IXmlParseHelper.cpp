@@ -12,7 +12,7 @@ namespace Library
 	{
 		if (mXmlParseMaster != nullptr)
 		{
-			mXmlParseMaster->addHelper(*this);
+			mXmlParseMaster->AddHelper(*this);
 		}
 	}
 
@@ -20,11 +20,11 @@ namespace Library
 	{
 		if (mXmlParseMaster != nullptr)
 		{
-			mXmlParseMaster->removeHelper(*this);
+			mXmlParseMaster->RemoveHelper(*this);
 		}
 	}
 
-	void IXmlParseHelper::charDataHandler(XmlParseMaster::SharedData& sharedData, const std::string& buffer, const std::uint32_t bufferLength)
+	void IXmlParseHelper::CharDataHandler(XmlParseMaster::SharedData& sharedData, const std::string& buffer, const std::uint32_t bufferLength)
 	{
 		UNREFERENCED_PARAMETER(sharedData);
 		UNREFERENCED_PARAMETER(buffer);

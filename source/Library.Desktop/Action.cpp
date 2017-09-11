@@ -10,12 +10,12 @@ namespace Library
 	{
 	}
 
-	std::string Action::name() const
+	std::string Action::Name() const
 	{
 		return mName;
 	}
 
-	void Action::setName(const std::string& name)
+	void Action::SetName(const std::string& name)
 	{
 		mName = name;
 	}

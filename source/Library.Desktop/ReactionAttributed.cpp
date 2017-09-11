@@ -10,47 +10,47 @@ namespace Library
 {
 	ReactionAttributed::ReactionAttributed()
 	{
-		(*this)["Subtype"].setType(DatumType::String);
+		(*this)["Subtype"].SetType(DatumType::String);
 		(*this)["Subtype"] = "";
-		mPrescribedAttributes.pushBack(
+		mPrescribedAttributes.PushBack(
 			Signature("Subtype", DatumType::String, 1u, static_cast<std::string*>(nullptr)));
-		Event<EventMessageAttributed>::subscribe(*this);
+		Event<EventMessageAttributed>::Subscribe(*this);
 	}
 
 	ReactionAttributed::~ReactionAttributed()
 	{
-		Event<EventMessageAttributed>::unsubscribe(*this);
+		Event<EventMessageAttributed>::Unsubscribe(*this);
 	}
 
-	void ReactionAttributed::notify(const EventPublisher& event)
+	void ReactionAttributed::Notify(const EventPublisher& event)
 	{
 		assert(event.Is(Event<EventMessageAttributed>::TypeIdClass()));
 
 		auto castEvent = event.As<Event<EventMessageAttributed>>();
 		
-		assert(castEvent->message().Is(EventMessageAttributed::TypeIdClass()));
-		EventMessageAttributed* message = castEvent->message().As<EventMessageAttributed>();
+		assert(castEvent->Message().Is(EventMessageAttributed::TypeIdClass()));
+		EventMessageAttributed* message = castEvent->Message().As<EventMessageAttributed>();
 
-		auto lhs = message->getSubtype();
-		auto rhs = getSubtype();
-//		if (message->getSubtype() == getSubtype())
+		auto lhs = message->GetSubtype();
+		auto rhs = GetSubtype();
+//		if (Message->GetSubtype() == GetSubtype())
 		if (lhs == rhs)
 		{
-			for (auto iter = message->begin(); iter != message->end(); ++iter)
+			for (auto iter = message->Begin(); iter != message->End(); ++iter)
 			{
-				auto& datum = appendAuxiliaryAttribute((*iter).first);
-				datum.setType((*iter).second.type());
+				auto& datum = AppendAuxiliaryAttribute((*iter).first);
+				datum.SetType((*iter).second.Type());
 				datum = (*iter).second;
 			}
 		}
 	}
 
-	std::string ReactionAttributed::getSubtype()
+	std::string ReactionAttributed::GetSubtype()
 	{
-		return (*this)["Subtype"].get<std::string>(0);
+		return (*this)["Subtype"].Get<std::string>(0);
 	}
 
-	void ReactionAttributed::setSubtype(const std::string& subtype)
+	void ReactionAttributed::SetSubtype(const std::string& subtype)
 	{
 		(*this)["Subtype"] = subtype;
 	}

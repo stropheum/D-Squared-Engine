@@ -58,37 +58,37 @@ namespace Library
 		return *this;
 	}
 
-	void EventPublisher::setTime(const high_resolution_clock::time_point& timePoint, milliseconds millisecondDelay)
+	void EventPublisher::SetTime(const high_resolution_clock::time_point& timePoint, milliseconds millisecondDelay)
 	{
 		mTimeEnqueued = timePoint;
 		mMillisecondDelay = millisecondDelay;
 	}
 
-	high_resolution_clock::time_point EventPublisher::timeEnqueued() const
+	high_resolution_clock::time_point EventPublisher::TimeEnqueued() const
 	{
 		return mTimeEnqueued;
 	}
 
-	std::chrono::milliseconds EventPublisher::delay() const
+	std::chrono::milliseconds EventPublisher::Delay() const
 	{
 		return mMillisecondDelay;
 	}
 
-	bool EventPublisher::isExpired(const std::chrono::high_resolution_clock::time_point& timePoint) const
+	bool EventPublisher::IsExpired(const std::chrono::high_resolution_clock::time_point& timePoint) const
 	{
 		return timePoint > (mTimeEnqueued + mMillisecondDelay);
 	}
 
-	void EventPublisher::deliver()
+	void EventPublisher::Deliver()
 	{
 		std::vector<std::future<void>> futures;
 		{
 			std::lock_guard<std::mutex> guard(*mSubscriberListMutex);
 			Vector<EventSubscriber*> subListCopy(*mSubscriberList);
-			for (std::uint32_t i = 0; i < subListCopy.size(); i++)
+			for (std::uint32_t i = 0; i < subListCopy.Size(); i++)
 			{
 				EventSubscriber* subscriber = subListCopy[i];
-				futures.emplace_back(std::async(&EventSubscriber::notify, subscriber, std::cref(*this)));
+				futures.emplace_back(std::async(&EventSubscriber::Notify, subscriber, std::cref(*this)));
 			}
 		}
 
@@ -97,13 +97,13 @@ namespace Library
 			future.get();
 		}
 
-		if (deleteAfterPublishing())
+		if (DeleteAfterPublishing())
 		{	// If the publisher is marked for delete, delete it now 
 			delete this;
 		}
 	}
 
-	bool EventPublisher::deleteAfterPublishing() const
+	bool EventPublisher::DeleteAfterPublishing() const
 	{
 		return mDeleteAfterPublishing;
 	}

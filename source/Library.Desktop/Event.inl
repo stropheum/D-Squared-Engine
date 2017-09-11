@@ -56,29 +56,29 @@ namespace Library
 	}
 
 	template <typename Payload>
-	void Event<Payload>::subscribe(EventSubscriber& eventSubscriber)
+	void Event<Payload>::Subscribe(EventSubscriber& eventSubscriber)
 	{
-		sSubscriberList.pushBack(&eventSubscriber);
+		sSubscriberList.PushBack(&eventSubscriber);
 	}
 
 	template <typename Payload>
-	void Event<Payload>::unsubscribe(EventSubscriber& eventSubscriber)
+	void Event<Payload>::Unsubscribe(EventSubscriber& eventSubscriber)
 	{
-		sSubscriberList.remove(&eventSubscriber);
+		sSubscriberList.Remove(&eventSubscriber);
 	}
 
 	template <typename Payload>
-	void Event<Payload>::unsubscribeAll()
+	void Event<Payload>::UnsubscribeAll()
 	{
 		std::lock_guard<std::mutex> guard(sSubscriberListMutex);
-		if (!sSubscriberList.isEmpty())
+		if (!sSubscriberList.IsEmpty())
 		{
-			sSubscriberList.clear();
+			sSubscriberList.Clear();
 		}
 	}
 
 	template <typename Payload>
-	const Payload& Event<Payload>::message()
+	const Payload& Event<Payload>::Message()
 	{
 		return mPayload;
 	}

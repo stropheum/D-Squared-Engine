@@ -8,22 +8,22 @@ namespace Library
 		mSubtype(""), mWorldState(nullptr)
 	{}
 
-	const std::string& EventMessageAttributed::getSubtype() const
+	const std::string& EventMessageAttributed::GetSubtype() const
 	{
 		return mSubtype;
 	}
 
-	void EventMessageAttributed::setSubtype(const std::string& subtype)
+	void EventMessageAttributed::SetSubtype(const std::string& subtype)
 	{
 		mSubtype = subtype;
 	}
 
-	WorldState* EventMessageAttributed::getWorldState() const
+	WorldState* EventMessageAttributed::GetWorldState() const
 	{
 		return mWorldState;
 	}
 
-	void EventMessageAttributed::setWorldState(WorldState& worldState)
+	void EventMessageAttributed::SetWorldState(WorldState& worldState)
 	{
 		mWorldState = &worldState;
 	}

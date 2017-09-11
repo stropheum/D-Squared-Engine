@@ -34,7 +34,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 
 	HWND hWnd; // the handle for the window, filled by a function
 	WNDCLASSEX wc; // this struct holds information for the window class
-	ZeroMemory(&wc, sizeof(WNDCLASSEX)); // clear out the window class for use
+	ZeroMemory(&wc, sizeof(WNDCLASSEX)); // Clear out the window class for use
 
 	// fill in the struct with the needed information
 	wc.cbSize = sizeof(WNDCLASSEX);
@@ -46,9 +46,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 	wc.lpszClassName = L"WindowClass1";
 
 	RegisterClassEx(&wc); // register the window class
-	// create the window and use the result as the handle
+	// Create the window and use the result as the handle
 	hWnd = CreateWindowEx(NULL,
-		L"WindowClass1",		// name of the window class
+		L"WindowClass1",		// Name of the window class
 		L"Simple DirectX Game", // title of the window
 		WS_OVERLAPPEDWINDOW,    // window style
 		560,					// x-position of the window
@@ -70,24 +70,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE previousInstance, LPSTR comman
 		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg); // translate keystroke messages into the right format
-			DispatchMessage(&msg); // send the message to the WindowProc function
+			DispatchMessage(&msg); // Send the Message to the WindowProc function
 		}
 
-		if (msg.message == WM_QUIT) break; // If the message is WM_QUOT, exit the while loop
+		if (msg.message == WM_QUIT) break; // If the Message is WM_QUOT, exit the while loop
 		render_frame(); // Run game code here
 	}
 
 	cleanD3D();
-	return static_cast<std::uint32_t>(msg.wParam); // return this part of the WM_QUIT message to Windows
+	return static_cast<std::uint32_t>(msg.wParam); // return this part of the WM_QUIT Message to Windows
 }
 
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	// sort through and find what code to run for the message given
+	// sort through and Find what code to run for the Message given
 	switch (message)
 	{
-		// this message is read when the window is closed
+		// this Message is read when the window is closed
 		case WM_DESTROY:
 		{
 			// close the application entirely
@@ -106,19 +106,19 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 /// This function initializes and prepares Direct3D for use
 void initD3D(HWND hWnd)
 {
-	d3d = Direct3DCreate9(D3D_SDK_VERSION);	// create the Direct3D interface
+	d3d = Direct3DCreate9(D3D_SDK_VERSION);	// Create the Direct3D interface
 
-	D3DPRESENT_PARAMETERS d3dpp;			// create a struct to hold various device information
+	D3DPRESENT_PARAMETERS d3dpp;			// Create a struct to hold various device information
 
-	ZeroMemory(&d3dpp, sizeof(d3dpp));		// clear out the struct for use
+	ZeroMemory(&d3dpp, sizeof(d3dpp));		// Clear out the struct for use
 	d3dpp.Windowed = true;					// program windowed, not full screen
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD; // Discard old frames
-	d3dpp.hDeviceWindow = hWnd;				// set the window to be used by Direct3D
+	d3dpp.hDeviceWindow = hWnd;				// Set the window to be used by Direct3D
 	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
 	d3dpp.BackBufferWidth = SCREEN_WIDTH;
 	d3dpp.BackBufferHeight = SCREEN_HEIGHT;
 
-	// create a device class using this information and information from the d3dpp struct
+	// Create a device class using this information and information from the d3dpp struct
 	d3d->CreateDevice(
 		D3DADAPTER_DEFAULT,
 		D3DDEVTYPE_HAL,
@@ -128,13 +128,13 @@ void initD3D(HWND hWnd)
 		&d3ddev
 	);
 
-	init_graphics(); // call the function to initialize the triangle
+	init_graphics(); // call the function to Initialize the triangle
 }
 
 /// This is the function used to render a single frame
 void render_frame(void)
 {
-	// clear the window to a deep blue
+	// Clear the window to a deep blue
 	d3ddev->Clear(0, nullptr, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 40, 100), 1.0f, 0);
 	d3ddev->BeginScene();	// begins the 3D scene	
 
@@ -142,10 +142,10 @@ void render_frame(void)
 	d3ddev->SetFVF(CUSTOMFVF);
 	// select the vertex buffer to display
 	d3ddev->SetStreamSource(0, v_buffer, 0, sizeof(CUSTOMVERTEX));
-	// copy the vertex buffer to the back buffer
+	// copy the vertex buffer to the Back buffer
 	d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
 
-	// do 3D rendering on the back buffer here
+	// do 3D rendering on the Back buffer here
 	d3ddev->EndScene();		// ends the 3D scene
 	d3ddev->Present(nullptr, nullptr, nullptr, nullptr); // displays the created frame
 }
@@ -161,7 +161,7 @@ void cleanD3D(void)
 /// This is the function that puts the 3D models into the video RAM
 void init_graphics(void)
 {
-	// create the vertices using the CUSTOMVERTEX struct
+	// Create the vertices using the CUSTOMVERTEX struct
 	CUSTOMVERTEX vertices[] =
 	{
 		{ 400.0f, 62.5f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 0, 255) },

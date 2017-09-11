@@ -12,7 +12,7 @@ namespace Library
 
 	/// Comparison operator for Datum objects
 	/// @Param rhs: The Datum object being compared against
-	/// @Return: True if type, size, and each element of the Datum objects are equivalent. False otherwise
+	/// @Return: True if Type, Size, and each element of the Datum objects are equivalent. False otherwise
 	bool MatrixState::operator==(const Datum& rhs)
 	{
 		bool result = false;
@@ -34,19 +34,19 @@ namespace Library
 	}
 
 	/// Scalar assignment operator
-	/// @Param rhs: The matrix being set to the only element in the Datum
+	/// @Param rhs: The matrix being Set to the only element in the Datum
 	/// @Return: The modified Datum object
 	Datum& MatrixState::operator=(const glm::mat4& rhs)
 	{
 		if (mContext->mSize > 1) throw std::exception("Invalid assignment invocation");
-		if (mContext->mSize == 0) mContext->setSize(1);
+		if (mContext->mSize == 0) mContext->SetSize(1);
 		mContext->mData.m[0] = rhs;
 		return *mContext;
 	}
 
 	/// Sets the number of matrices in the local buffer
-	/// @Param capacity: The current maximum size of the array
-	void MatrixState::setSize(std::uint32_t size)
+	/// @Param Capacity: The current maximum Size of the array
+	void MatrixState::SetSize(std::uint32_t size)
 	{
 		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(glm::mat4) * size);
 		mContext->mCapacity = mContext->mSize = size;
@@ -60,9 +60,9 @@ namespace Library
 		}
 	}
 
-	/// Reserves the capacity of the array to any value greater than or equal to current size
-	/// @Param capacity: The new capacity of the array
-	void MatrixState::reserve(std::uint32_t capacity)
+	/// Reserves the Capacity of the array to any value greater than or equal to current Size
+	/// @Param Capacity: The new Capacity of the array
+	void MatrixState::Reserve(std::uint32_t capacity)
 	{
 		if (capacity > mContext->mCapacity)
 		{
@@ -71,8 +71,8 @@ namespace Library
 		}
 	}
 
-	/// Clears the value of all elements in the array without changing capacity
-	void MatrixState::clear()
+	/// Clears the value of all elements in the array without changing Capacity
+	void MatrixState::Clear()
 	{
 		if (mContext->mSize > 0)
 		{
@@ -84,7 +84,7 @@ namespace Library
 	/// Parses a string value and assigns the specified index of the array to its value
 	/// @Param value: The string value being parsed
 	/// @Param index: The index of the array being assigned to
-	void MatrixState::setFromString(const std::string& value, const std::uint32_t& index)
+	void MatrixState::SetFromString(const std::string& value, const std::uint32_t& index)
 	{
 		float x1, y1, z1, w1;
 		float x2, y2, z2, w2;
@@ -98,7 +98,7 @@ namespace Library
 			&x3, &y3, &z3, &w3, 
 			&x4, &y4, &z4, &w4);
 
-		mContext->set(glm::mat4(
+		mContext->Set(glm::mat4(
 			x1, y1, z1, w1, 
 			x2, y2, z2, w2, 
 			x3, y3, z3, w3, 
@@ -107,21 +107,21 @@ namespace Library
 
 	/// Sets external storage on copy
 	/// @Param rhs: The Datum object that the storage reference is being taken from
-	void MatrixState::setStorage(const Datum& rhs)
+	void MatrixState::SetStorage(const Datum& rhs)
 	{
-		setStorage(rhs.mData.m, rhs.mSize);
+		SetStorage(rhs.mData.m, rhs.mSize);
 	}
 
 	/// Sets the external storage to the specified pointer
 	/// @Param data: The external storage being utilized
-	/// @Pram size: The number of elements in the external storage
-	/// @Exception: Thrown if attempting to reassign datum type, or if local memory is already used
-	void MatrixState::setStorage(glm::mat4* data, std::uint32_t size)
+	/// @Pram Size: The number of elements in the external storage
+	/// @Exception: Thrown if attempting to reassign datum Type, or if local memory is already used
+	void MatrixState::SetStorage(glm::mat4* data, std::uint32_t size)
 	{
 		if (mContext->mType != DatumType::Matrix) throw std::exception("Attempting to reassign Datum Type");
 //		if (mContext->mCapacity > 0) throw std::exception("Set storage called on non-empty Datum");
 		
-		if (mContext->mCapacity > 0) clear();
+		if (mContext->mCapacity > 0) Clear();
 
 		mContext->mDataIsExternal = true;
 		mContext->mData.m = data;
@@ -130,8 +130,8 @@ namespace Library
 
 	/// A string representation of a piece of data stored in the Datum object
 	/// @Param index: Optional index of the value being retrieved. Defaulted to first element
-	std::string MatrixState::toString(std::uint32_t index)
+	std::string MatrixState::ToString(std::uint32_t index)
 	{
-		return glm::to_string(mContext->get<glm::mat4>(index));
+		return glm::to_string(mContext->Get<glm::mat4>(index));
 	}
 }

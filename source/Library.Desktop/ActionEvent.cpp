@@ -13,53 +13,53 @@ namespace Library
 {
 	ActionEvent::ActionEvent()
 	{
-		(*this)["Subtype"].setType(DatumType::String);
+		(*this)["Subtype"].SetType(DatumType::String);
 		(*this)["Subtype"] = "";
-		(*this)["Delay"].setType(DatumType::Integer);
+		(*this)["Delay"].SetType(DatumType::Integer);
 		(*this)["Delay"] = 0;
 
-		mPrescribedAttributes.pushBack(
+		mPrescribedAttributes.PushBack(
 			Signature("Subtype", DatumType::String, 1u, static_cast<std::string*>(nullptr)));
-		mPrescribedAttributes.pushBack(
+		mPrescribedAttributes.PushBack(
 			Signature("Delay", DatumType::Integer, 1u, static_cast<std::int32_t*>(nullptr)));
 	}
 
-	void ActionEvent::update(WorldState& worldState)
+	void ActionEvent::Update(WorldState& worldState)
 	{
 		EventMessageAttributed ema;
-		ema.setWorldState(worldState);
-		ema.setSubtype(getSubtype());
+		ema.SetWorldState(worldState);
+		ema.SetSubtype(GetSubtype());
 
-		for (auto iter = begin(); iter != end(); ++iter)
+		for (auto iter = Begin(); iter != End(); ++iter)
 		{
-			if (isAuxiliaryAttribute((*iter).first))
+			if (IsAuxiliaryAttribute((*iter).first))
 			{
-				Datum& auxDatum = ema.append((*iter).first);
+				Datum& auxDatum = ema.Append((*iter).first);
 				auxDatum = (*iter).second;
 			}
 		}
 
 		Event<EventMessageAttributed>* event = new Event<EventMessageAttributed>(ema, true);
-		auto& delay = (*this)["Delay"].get<std::int32_t>(0);
-		worldState.world->getEventQueue().enqueue(*event, worldState.getGameTime(), milliseconds(delay));
+		auto& delay = (*this)["Delay"].Get<std::int32_t>(0);
+		worldState.world->GetEventQueue().Enqueue(*event, worldState.GetGameTime(), milliseconds(delay));
 	}
 
-	std::string ActionEvent::getSubtype()
+	std::string ActionEvent::GetSubtype()
 	{
-		return (*this)["Subtype"].get<std::string>(0);
+		return (*this)["Subtype"].Get<std::string>(0);
 	}
 
-	void ActionEvent::setSubtype(const std::string& subtype)
+	void ActionEvent::SetSubtype(const std::string& subtype)
 	{
 		(*this)["Subtype"] = subtype;
 	}
 
-	const std::int32_t& ActionEvent::getDelay()
+	const std::int32_t& ActionEvent::GetDelay()
 	{
-		return (*this)["Delay"].get<std::int32_t>(0);
+		return (*this)["Delay"].Get<std::int32_t>(0);
 	}
 
-	void ActionEvent::setDelay(const std::int32_t delay)
+	void ActionEvent::SetDelay(const std::int32_t delay)
 	{
 		(*this)["Delay"] = delay;
 	}

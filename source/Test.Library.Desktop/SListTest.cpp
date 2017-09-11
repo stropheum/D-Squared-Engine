@@ -59,34 +59,34 @@ namespace TestLibraryDesktop
 
 			for (int i = 0; i < iterations; i++)
 			{
-				list->pushFront(i);
+				list->PushFront(i);
 			}
 
 			for (int i = iterations-1; i >= 0; i--)
 			{
-				Assert::AreEqual(i, list->popFront(), L"Integer list values not equal");
+				Assert::AreEqual(i, list->PopFront(), L"Integer list values not equal");
 			}
 
 			int values[iterations];
 			for (int i = 0; i < iterations; i++)
 			{
 				values[i] = i;
-				pList->pushBack(&values[i]);
+				pList->PushBack(&values[i]);
 			}
 			for (int i = 0; i < iterations; i++)
 			{
-				Assert::AreEqual(i, *pList->popFront(), L"Pointer list values not equal");
+				Assert::AreEqual(i, *pList->PopFront(), L"Pointer list values not equal");
 			}
 
 			for (int i = 0; i < iterations; i++)
 			{
 				Foo foo(i);
-				fooList->pushBack(foo);
+				fooList->PushBack(foo);
 			}
 			for (int i = 0; i < iterations; i++)
 			{
 				Foo foo(i);
-				Assert::AreEqual(foo, fooList->popFront(), L"Foo list values not equal");
+				Assert::AreEqual(foo, fooList->PopFront(), L"Foo list values not equal");
 			}
 		}
 
@@ -96,188 +96,188 @@ namespace TestLibraryDesktop
 
 			for (int i = 0; i < iterations; i++)
 			{
-				list->pushBack(i);
+				list->PushBack(i);
 			}
 
 			for (int i = 0; i < iterations; i++)
 			{
-				Assert::AreEqual(i, list->popFront(), L"Integer list values not equal");
+				Assert::AreEqual(i, list->PopFront(), L"Integer list values not equal");
 			}
 
 			int values[iterations];
 			for (int i = 0; i < iterations; i++)
 			{
 				values[i] = i;
-				pList->pushBack(&values[i]);
+				pList->PushBack(&values[i]);
 			}
 			for (int i = 0; i < iterations; i++)
 			{
-				Assert::AreEqual(i, *pList->popFront(), L"Pointer list values not equal");
+				Assert::AreEqual(i, *pList->PopFront(), L"Pointer list values not equal");
 			}
 
 			for (int i = 0; i < iterations; i++)
 			{
 				Foo foo(i);
-				fooList->pushBack(foo);
+				fooList->PushBack(foo);
 			}
 			for (int i = 0; i < iterations; i++)
 			{
 				Foo foo(i);
-				Assert::AreEqual(foo, fooList->popFront(), L"Foo list values not equal");
+				Assert::AreEqual(foo, fooList->PopFront(), L"Foo list values not equal");
 			}
 		}
 
 		TEST_METHOD(TestIsEmptyAfterPop)
 		{
-			Assert::IsTrue(list->isEmpty(), L"Integer list is not empty on initialization");
+			Assert::IsTrue(list->IsEmpty(), L"Integer list is not empty on initialization");
 
-			list->pushFront(1);
-			list->popFront();
-			Assert::IsTrue(list->isEmpty(), L"Integer list is not empty after popping last value");
+			list->PushFront(1);
+			list->PopFront();
+			Assert::IsTrue(list->IsEmpty(), L"Integer list is not empty after popping last value");
 
-			Assert::IsTrue(pList->isEmpty(), L"Pointer list is not empty on initialization");
+			Assert::IsTrue(pList->IsEmpty(), L"Pointer list is not empty on initialization");
 
 			int x = 1;
-			pList->pushFront(&x);
-			pList->popFront();
-			Assert::IsTrue(pList->isEmpty(), L"Pointer list is not empty after popping last value");
+			pList->PushFront(&x);
+			pList->PopFront();
+			Assert::IsTrue(pList->IsEmpty(), L"Pointer list is not empty after popping last value");
 
 			Foo foo(1);
-			fooList->pushFront(foo);
-			fooList->popFront();
-			Assert::IsTrue(fooList->isEmpty(), L"Foo list is not empty after popping last value");
+			fooList->PushFront(foo);
+			fooList->PopFront();
+			Assert::IsTrue(fooList->IsEmpty(), L"Foo list is not empty after popping last value");
 		}
 
 		TEST_METHOD(TestFront)
 		{
-			list->pushFront(1);
-			Assert::AreEqual(1, list->front(), L"First item pushed is not equal to front value");
+			list->PushFront(1);
+			Assert::AreEqual(1, list->Front(), L"First item pushed is not equal to Front value");
 
-			list->pushBack(2);
-			Assert::AreEqual(1, list->front(), L"Front item changed after push back called");
+			list->PushBack(2);
+			Assert::AreEqual(1, list->Front(), L"Front item changed after push Back called");
 			
-			list->popFront();
-			Assert::AreEqual(2, list->front(), L"Front item incorrect after calling pop front");
+			list->PopFront();
+			Assert::AreEqual(2, list->Front(), L"Front item incorrect after calling pop Front");
 			
-			list->front() = 5;
-			Assert::AreEqual(5, list->front(), L"Error attempting to change list.front()");
+			list->Front() = 5;
+			Assert::AreEqual(5, list->Front(), L"Error attempting to change list.Front()");
 
 			int x = 1; 
 			int y = 2; 
 			int z = 3;
-			pList->pushFront(&x);
-			Assert::AreEqual(&x, pList->front(), L"Conflicting addresses on front after push front");
-			Assert::AreEqual(1, *pList->front(), L"Conflicting values on front after push front");
+			pList->PushFront(&x);
+			Assert::AreEqual(&x, pList->Front(), L"Conflicting addresses on Front after push Front");
+			Assert::AreEqual(1, *pList->Front(), L"Conflicting values on Front after push Front");
 
-			pList->pushBack(&y);
-			Assert::AreEqual(&x, pList->front(), L"Conflicting addresses on front after push back");
-			Assert::AreEqual(1, *pList->front(), L"Conflicting values on front after push back");
+			pList->PushBack(&y);
+			Assert::AreEqual(&x, pList->Front(), L"Conflicting addresses on Front after push Back");
+			Assert::AreEqual(1, *pList->Front(), L"Conflicting values on Front after push Back");
 
-			pList->front() = &z;
-			Assert::AreEqual(&z, pList->front(), L"Conflicting addresses on front after changing front directly");
-			Assert::AreEqual(3, *pList->front(), L"Conflicting values on front after changing front directly");
+			pList->Front() = &z;
+			Assert::AreEqual(&z, pList->Front(), L"Conflicting addresses on Front after changing Front directly");
+			Assert::AreEqual(3, *pList->Front(), L"Conflicting values on Front after changing Front directly");
 
 			Foo f1(1);
 			Foo f2(2);
 			Foo f3(3);
-			fooList->pushFront(f1);
-			Assert::AreEqual(f1, fooList->front(), L"Front of Foo list does not match value pushed");
-			fooList->pushBack(f2);
-			Assert::AreEqual(f1, fooList->front(), L"Front of Foo list changed after push back");
-			fooList->front() = f3;
-			Assert::AreEqual(f3, fooList->front(), L"Error changing front of Foo list directly");
+			fooList->PushFront(f1);
+			Assert::AreEqual(f1, fooList->Front(), L"Front of Foo list does not match value pushed");
+			fooList->PushBack(f2);
+			Assert::AreEqual(f1, fooList->Front(), L"Front of Foo list changed after push Back");
+			fooList->Front() = f3;
+			Assert::AreEqual(f3, fooList->Front(), L"Error changing Front of Foo list directly");
 		}
 
 		TEST_METHOD(TestBack)
 		{
-			list->pushFront(1);
-			Assert::AreEqual(1, list->back(), L"Conflicting back values after push front");
+			list->PushFront(1);
+			Assert::AreEqual(1, list->Back(), L"Conflicting Back values after push Front");
 
-			list->pushBack(2);
-			Assert::AreEqual(2, list->back(), L"Conflicting back values after push back");
+			list->PushBack(2);
+			Assert::AreEqual(2, list->Back(), L"Conflicting Back values after push Back");
 
-			list->back() = 5;
-			Assert::AreEqual(5, list->back(), L"Error attempting to change list.back()");
+			list->Back() = 5;
+			Assert::AreEqual(5, list->Back(), L"Error attempting to change list.Back()");
 
 			int x = 1;
 			int y = 2;
 			int z = 3;
 
-			pList->pushFront(&x);
-			Assert::AreEqual(&x, pList->back(), L"Conflicting back values after push front");
-			Assert::AreEqual(x, *pList->back(), L"Value changed after pushing address to list");
+			pList->PushFront(&x);
+			Assert::AreEqual(&x, pList->Back(), L"Conflicting Back values after push Front");
+			Assert::AreEqual(x, *pList->Back(), L"Value changed after pushing address to list");
 
-			pList->pushBack(&y);
-			Assert::AreEqual(&y, pList->back(), L"Conflicting back values after push back");
-			Assert::AreEqual(y, *pList->back(), L"Back value changed after pushing back");
+			pList->PushBack(&y);
+			Assert::AreEqual(&y, pList->Back(), L"Conflicting Back values after push Back");
+			Assert::AreEqual(y, *pList->Back(), L"Back value changed after pushing Back");
 
-			pList->back() = &z;
-			Assert::AreEqual(&z, pList->back(), L"Back pointer not changed after assigning directly");
-			Assert::AreEqual(z, *pList->back(), L"Value corrupted after assigning back address directly");
+			pList->Back() = &z;
+			Assert::AreEqual(&z, pList->Back(), L"Back pointer not changed after assigning directly");
+			Assert::AreEqual(z, *pList->Back(), L"Value corrupted after assigning Back address directly");
 
 			Foo f1(1);
 			Foo f2(2);
 			Foo f3(3);
 
-			fooList->pushFront(f1);
-			Assert::AreEqual(f1, fooList->back(), L"Conflicting back values after push front Foo list");
+			fooList->PushFront(f1);
+			Assert::AreEqual(f1, fooList->Back(), L"Conflicting Back values after push Front Foo list");
 
-			fooList->pushBack(f2);
-			Assert::AreEqual(f2, fooList->back(), L"Back of Foo list does not match value pushed to back");
+			fooList->PushBack(f2);
+			Assert::AreEqual(f2, fooList->Back(), L"Back of Foo list does not match value pushed to Back");
 
-			fooList->back() = f3;
-			Assert::AreEqual(f3, fooList->back(), L"Back value of Foo list not set properly");
+			fooList->Back() = f3;
+			Assert::AreEqual(f3, fooList->Back(), L"Back value of Foo list not set properly");
 		}
 
 		TEST_METHOD(TestSize)
 		{
-			Assert::AreEqual(0U, list->size(), L"List size not zero on initialization");
+			Assert::AreEqual(0U, list->Size(), L"List Size not zero on initialization");
 
-			list->pushFront(1);
-			Assert::AreEqual(1U, list->size(), L"List size not accurate after pushing front");
+			list->PushFront(1);
+			Assert::AreEqual(1U, list->Size(), L"List Size not accurate after pushing Front");
 			
-			list->pushBack(2);
-			Assert::AreEqual(2U, list->size(), L"List size not accurate after pushing back");
+			list->PushBack(2);
+			Assert::AreEqual(2U, list->Size(), L"List Size not accurate after pushing Back");
 			
-			list->popFront();
-			Assert::AreEqual(1U, list->size(), L"List size not accurate after popping front");
+			list->PopFront();
+			Assert::AreEqual(1U, list->Size(), L"List Size not accurate after popping Front");
 			
-			list->popFront();
-			Assert::AreEqual(0U, list->size(), L"List size not accurate after popping last value");
+			list->PopFront();
+			Assert::AreEqual(0U, list->Size(), L"List Size not accurate after popping last value");
 
 			int x = 1;
 			int y = 2;
 
-			Assert::AreEqual(0U, pList->size(), L"List size not zero on initialization");
+			Assert::AreEqual(0U, pList->Size(), L"List Size not zero on initialization");
 			
-			pList->pushFront(&x);
-			Assert::AreEqual(1U, pList->size(), L"List size not accurate after pushing front");
+			pList->PushFront(&x);
+			Assert::AreEqual(1U, pList->Size(), L"List Size not accurate after pushing Front");
 			
-			pList->pushBack(&y);
-			Assert::AreEqual(2U, pList->size(), L"List size not accurate after pushing back");
+			pList->PushBack(&y);
+			Assert::AreEqual(2U, pList->Size(), L"List Size not accurate after pushing Back");
 			
-			pList->popFront();
-			Assert::AreEqual(1U, pList->size(), L"List size not accurate after popping front");
+			pList->PopFront();
+			Assert::AreEqual(1U, pList->Size(), L"List Size not accurate after popping Front");
 			
-			pList->popFront();
-			Assert::AreEqual(0U, pList->size(), L"List size not accurate after popping last value");
+			pList->PopFront();
+			Assert::AreEqual(0U, pList->Size(), L"List Size not accurate after popping last value");
 
 			Foo f1(1);
 			Foo f2(2);
 
-			Assert::AreEqual(0U, fooList->size(), L"Foo list size not zero on initialization");
+			Assert::AreEqual(0U, fooList->Size(), L"Foo list Size not zero on initialization");
 			
-			fooList->pushFront(f1);
-			Assert::AreEqual(1U, fooList->size(), L"Foo list not accurate after pushing front");
+			fooList->PushFront(f1);
+			Assert::AreEqual(1U, fooList->Size(), L"Foo list not accurate after pushing Front");
 			
-			fooList->pushBack(f2);
-			Assert::AreEqual(2U, fooList->size(), L"Foo list size not accurate after pushing back");
+			fooList->PushBack(f2);
+			Assert::AreEqual(2U, fooList->Size(), L"Foo list Size not accurate after pushing Back");
 			
-			fooList->popFront();
-			Assert::AreEqual(1U, fooList->size(), L"Foo list size not accurate after popping front");
+			fooList->PopFront();
+			Assert::AreEqual(1U, fooList->Size(), L"Foo list Size not accurate after popping Front");
 			
-			fooList->popFront();
-			Assert::AreEqual(0U, fooList->size(), L"Foo list size not accurate after popping last value");
+			fooList->PopFront();
+			Assert::AreEqual(0U, fooList->Size(), L"Foo list Size not accurate after popping last value");
 		}
 
 		TEST_METHOD(TestCopy)
@@ -286,13 +286,13 @@ namespace TestLibraryDesktop
 
 			for (int i = 0; i < iterations; i++)
 			{
-				list->pushBack(i);
+				list->PushBack(i);
 			}
 			auto listCopy(*list);
-			while (!list->isEmpty())
+			while (!list->IsEmpty())
 			{
-				auto expected = list->popFront();
-				auto actual = listCopy.popFront();
+				auto expected = list->PopFront();
+				auto actual = listCopy.PopFront();
 				Assert::AreEqual(expected, actual, L"Copied list contains different values from original");
 			}
 
@@ -300,26 +300,26 @@ namespace TestLibraryDesktop
 			for (int i = 0; i < iterations; i++)
 			{
 				values[i] = i;
-				pList->pushBack(&values[i]);
+				pList->PushBack(&values[i]);
 			}
 			auto pListCopy(*pList);
-			while (!pList->isEmpty())
+			while (!pList->IsEmpty())
 			{
-				auto expected = pList->popFront();
-				auto actual = pListCopy.popFront();
+				auto expected = pList->PopFront();
+				auto actual = pListCopy.PopFront();
 				Assert::AreEqual(expected, actual, L"Copied list contains different pointer values from original");
 			}
 
 			for (int i = 0; i < iterations; i++)
 			{
 				Foo f(i);
-				fooList->pushBack(f);
+				fooList->PushBack(f);
 			}
 			auto fooListCopy(*fooList);
-			while (!fooList->isEmpty())
+			while (!fooList->IsEmpty())
 			{
-				auto expected = fooList->popFront();
-				auto actual = fooListCopy.popFront();
+				auto expected = fooList->PopFront();
+				auto actual = fooListCopy.PopFront();
 				Assert::AreEqual(expected, actual, L"Foo list copied values do not match original");
 			}
 
@@ -327,120 +327,120 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestAssignmentOperator)
 		{
-			list->pushFront(1);
-			list->pushFront(2);
-			list->pushFront(3);
+			list->PushFront(1);
+			list->PushFront(2);
+			list->PushFront(3);
 
 			Library::SList<int> newList;
 			newList = *list;
 
-			for (std::uint32_t i = 0; i < list->size(); i++)
+			for (std::uint32_t i = 0; i < list->Size(); i++)
 			{
-				auto expected = list->popFront();
-				auto result = newList.popFront();
+				auto expected = list->PopFront();
+				auto result = newList.PopFront();
 				Assert::AreEqual(expected, result, L"List values do not match");
 			}
 
 			int x = 1;
 			int y = 2;
 			int z = 3;
-			pList->pushFront(&x);
-			pList->pushFront(&y);
-			pList->pushFront(&z);
+			pList->PushFront(&x);
+			pList->PushFront(&y);
+			pList->PushFront(&z);
 
 			Library::SList<int*> pListCopy;
 			pListCopy = *pList;
 
-			for (std::uint32_t i = 0; i < pList->size(); i++)
+			for (std::uint32_t i = 0; i < pList->Size(); i++)
 			{
-				auto expected = pList->popFront();
-				auto actual = pListCopy.popFront();
+				auto expected = pList->PopFront();
+				auto actual = pListCopy.PopFront();
 				Assert::AreEqual(expected, actual, L"List values do not match");
 			}
 
 			Foo f1(1);
 			Foo f2(2);
 			Foo f3(3);
-			fooList->pushFront(f1);
-			fooList->pushFront(f2);
-			fooList->pushFront(f3);
+			fooList->PushFront(f1);
+			fooList->PushFront(f2);
+			fooList->PushFront(f3);
 
 			Library::SList<Foo> fooListCopy;
 			fooListCopy = *fooList;
 
-			for (std::uint32_t i = 0; i < fooList->size(); i++)
+			for (std::uint32_t i = 0; i < fooList->Size(); i++)
 			{
-				auto expected = fooList->popFront();
-				auto actual = fooListCopy.popFront();
+				auto expected = fooList->PopFront();
+				auto actual = fooListCopy.PopFront();
 				Assert::AreEqual(expected, actual, L"Foo list values do not match");
 			}
 		}
 
 		TEST_METHOD(TestClear)
 		{
-			list->pushFront(1);
-			list->clear();
+			list->PushFront(1);
+			list->Clear();
 
-			Assert::AreEqual(0U, list->size(), L"List size non-zero after clear");
+			Assert::AreEqual(0U, list->Size(), L"List Size non-zero after Clear");
 
 			int x = 1;
-			pList->pushFront(&x);
-			pList->clear();
+			pList->PushFront(&x);
+			pList->Clear();
 
-			Assert::AreEqual(0U, pList->size(), L"List size non-zero after clear");
+			Assert::AreEqual(0U, pList->Size(), L"List Size non-zero after Clear");
 
 			Foo foo(1);
-			fooList->pushFront(foo);
-			fooList->clear();
+			fooList->PushFront(foo);
+			fooList->Clear();
 
-			Assert::AreEqual(0U, fooList->size(), L"List size non-zero after clear");
+			Assert::AreEqual(0U, fooList->Size(), L"List Size non-zero after Clear");
 		}
 
 		TEST_METHOD(TestIteratorBeginEndUnique)
 		{
-			list->pushFront(1);
+			list->PushFront(1);
 			Library::SList<int>::Iterator begin = list->begin();
 			auto end = list->end();
 			bool comparison = (begin == end);
-			Assert::IsFalse(comparison, L"Begin and end nodes are identical");
+			Assert::IsFalse(comparison, L"begin and end nodes are identical");
 
 			int x = 1;
-			pList->pushFront(&x);
+			pList->PushFront(&x);
 			auto pListBegin = pList->begin();
 			auto pListEnd = pList->end();
 			comparison = (pListBegin == pListEnd);
-			Assert::IsFalse(comparison, L"Begin and end nodes are identical");
+			Assert::IsFalse(comparison, L"begin and end nodes are identical");
 
 			Foo foo(1);
-			fooList->pushFront(foo);
+			fooList->PushFront(foo);
 			auto fooBegin = fooList->begin();
 			auto fooEnd = fooList->end();
 			comparison = (fooBegin == fooEnd);
-			Assert::IsFalse(comparison, L"Begin and end nodes are identical");
+			Assert::IsFalse(comparison, L"begin and end nodes are identical");
 		}
 
 		TEST_METHOD(TestIteratorDereference)
 		{
-			list->pushFront(1);
+			list->PushFront(1);
 			auto iter = list->begin();
 			Assert::AreEqual(1, *iter, L"Dereferenced value does not reflect value in node");
 
 			int x = 1;
 			int* xptr = &x;
-			pList->pushFront(xptr);
+			pList->PushFront(xptr);
 			auto pIter = pList->begin();
 			Assert::AreEqual(xptr, *pIter, L"Dereferenced pointer does not reflect value in node");
 
 			Foo foo(1);
-			fooList->pushFront(foo);
+			fooList->PushFront(foo);
 			auto fooIter = fooList->begin();
 			Assert::AreEqual(foo, *fooIter, L"Dereferenced foo does not reflect value in node");
 		}
 
 		TEST_METHOD(TestIteratorPreIncrement)
 		{
-			list->pushFront(2);
-			list->pushFront(1);
+			list->PushFront(2);
+			list->PushFront(1);
 			auto iter = list->begin();
 			Assert::AreEqual(1, *iter, L"Front value not accurate");
 			
@@ -449,8 +449,8 @@ namespace TestLibraryDesktop
 
 			int x = 1;
 			int y = 2;
-			pList->pushFront(&x);
-			pList->pushFront(&y);
+			pList->PushFront(&x);
+			pList->PushFront(&y);
 			auto pIter = pList->begin();
 			Assert::AreEqual(&y, *pIter, L"Front pointer not accurate");
 			
@@ -459,8 +459,8 @@ namespace TestLibraryDesktop
 
 			Foo foo(1);
 			Foo bar(2);
-			fooList->pushFront(foo);
-			fooList->pushFront(bar);
+			fooList->PushFront(foo);
+			fooList->PushFront(bar);
 			auto fooIter = fooList->begin();
 			Assert::AreEqual(bar, *fooIter, L"Front foo not accurate");
 			
@@ -470,8 +470,8 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestIteratorPostIncrement)
 		{
-			list->pushFront(2);
-			list->pushFront(1);
+			list->PushFront(2);
+			list->PushFront(1);
 			auto iter = list->begin();
 			Assert::AreEqual(1, *iter, L"Front value not accurate");
 			
@@ -480,8 +480,8 @@ namespace TestLibraryDesktop
 
 			int x = 1;
 			int y = 2;
-			pList->pushFront(&x);
-			pList->pushFront(&y);
+			pList->PushFront(&x);
+			pList->PushFront(&y);
 			auto pIter = pList->begin();
 			Assert::AreEqual(&y, *pIter, L"Front pointer not accuarate");
 			
@@ -490,8 +490,8 @@ namespace TestLibraryDesktop
 
 			Foo foo(1);
 			Foo bar(2);
-			fooList->pushFront(foo);
-			fooList->pushFront(bar);
+			fooList->PushFront(foo);
+			fooList->PushFront(bar);
 			auto fooIter = fooList->begin();
 			Assert::AreEqual(bar, *fooIter, L"Front foo not accurate");
 			
@@ -546,7 +546,7 @@ namespace TestLibraryDesktop
 			bool comparison = (iterBegin == iterEnd);
 			Assert::IsTrue(comparison, L"Iterators who share a null parent should be equivalent");
 			
-			list->pushFront(1);
+			list->PushFront(1);
 			iterBegin = list->begin();
 			iterEnd = list->end();
 			
@@ -563,7 +563,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(comparison, L"Iterators who share a null parent should be equivalent");
 
 			int x = 1;
-			pList->pushFront(&x);
+			pList->PushFront(&x);
 			pIterBegin = pList->begin();
 			pIterEnd = pList->end();
 
@@ -580,7 +580,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(comparison, L"Iterators who share a null parent should be equivalent");
 
 			Foo foo(1);
-			fooList->pushFront(foo);
+			fooList->PushFront(foo);
 			fooIterBegin = fooList->begin();
 			fooIterEnd = fooList->end();
 
@@ -594,11 +594,11 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestInsertAfter)
 		{
 			// Int tests
-			list->insertAfter(1, list->end());
+			list->InsertAfter(1, list->end());
 			auto iter = list->begin();
 			Assert::AreEqual(1, *iter, L"Front of list not accurate after insert after on empty list");
 
-			list->insertAfter(2, list->begin());
+			list->InsertAfter(2, list->begin());
 			iter = list->begin();
 			Assert::AreEqual(1, *iter, L"Front of list not accurate after insert after on non-empty list");
 			
@@ -608,11 +608,11 @@ namespace TestLibraryDesktop
 			// Int pointer tests
 			int x = 1;
 			int y = 2;
-			pList->insertAfter(&x, pList->end());
+			pList->InsertAfter(&x, pList->end());
 			auto pIter = pList->begin();
 			Assert::AreEqual(&x, *pIter, L"Front of list not accurate after insert after on empty list");
 
-			pList->insertAfter(&y, pList->begin());
+			pList->InsertAfter(&y, pList->begin());
 			pIter = pList->begin();
 			Assert::AreEqual(&x, *pIter, L"Front of list not accurate after insert after on non-empty list");
 			
@@ -622,11 +622,11 @@ namespace TestLibraryDesktop
 			// Foo tests
 			Foo foo(1);
 			Foo bar(2);
-			fooList->insertAfter(foo, fooList->end());
+			fooList->InsertAfter(foo, fooList->end());
 			auto fooIter = fooList->begin();
 			Assert::AreEqual(foo, *fooIter, L"Front of list not accurate after insert after on empty list");
 
-			fooList->insertAfter(bar, fooList->begin());
+			fooList->InsertAfter(bar, fooList->begin());
 			fooIter = fooList->begin();
 			Assert::AreEqual(foo, *fooIter, L"Front of list not accurate after insert after on non-empty list");
 			
@@ -638,13 +638,13 @@ namespace TestLibraryDesktop
 		{
 			for (int i = 0; i < 3; i++)
 			{
-				list->pushFront(i);
+				list->PushFront(i);
 			}
 			auto iter = list->begin();
 			Assert::AreEqual(2, *iter, L"Front of list not accurate after pushing multiple values");
-			list->remove(0);
+			list->Remove(0);
 			iter = list->begin();
-			Assert::AreEqual(2, *iter, L"Front of list not accurate after removing back value");
+			Assert::AreEqual(2, *iter, L"Front of list not accurate after removing Back value");
 			
 			++iter;
 			Assert::AreEqual(1, *iter, L"Erroneous value after incrementing iterator");
@@ -652,15 +652,15 @@ namespace TestLibraryDesktop
 			int x = 1;
 			int y = 2;
 			int z = 3;
-			pList->pushFront(&x);
-			pList->pushFront(&y);
-			pList->pushFront(&z);
+			pList->PushFront(&x);
+			pList->PushFront(&y);
+			pList->PushFront(&z);
 			auto pIter = pList->begin();
 			Assert::AreEqual(&z, *pIter, L"Front of list not accurate after pushing multiple values");
 			
-			pList->remove(&x);
+			pList->Remove(&x);
 			pIter = pList->begin();
-			Assert::AreEqual(&z, *pIter, L"Front of list not accurate after removing back value");
+			Assert::AreEqual(&z, *pIter, L"Front of list not accurate after removing Back value");
 			
 			++pIter;
 			Assert::AreEqual(&y, *pIter, L"Erroneous value after incrementing iterator");
@@ -668,15 +668,15 @@ namespace TestLibraryDesktop
 			Foo foo(1);
 			Foo bar(2);
 			Foo gar(3);
-			fooList->pushFront(foo);
-			fooList->pushFront(bar);
-			fooList->pushFront(gar);
+			fooList->PushFront(foo);
+			fooList->PushFront(bar);
+			fooList->PushFront(gar);
 			auto fooIter = fooList->begin();
 			Assert::AreEqual(gar, *fooIter, L"Front of list not accurate after pushing multiple values");
 			
-			fooList->remove(foo);
+			fooList->Remove(foo);
 			fooIter = fooList->begin();
-			Assert::AreEqual(gar, *fooIter, L"Front of list not accurate after removing back value");
+			Assert::AreEqual(gar, *fooIter, L"Front of list not accurate after removing Back value");
 			
 			++fooIter;
 			Assert::AreEqual(bar, *fooIter, L"Erroneous value after incrementing iterator");
@@ -684,11 +684,11 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestIteratorFind)
 		{
-			list->pushFront(1);
-			list->pushFront(2);
-			list->pushFront(3);
+			list->PushFront(1);
+			list->PushFront(2);
+			list->PushFront(3);
 
-			auto location = list->find(2);
+			auto location = list->Find(2);
 			auto iter = list->begin();
 			bool compare = (location != iter);
 			Assert::IsTrue(compare, L"Find called on middle equivalent with begin");
@@ -704,11 +704,11 @@ namespace TestLibraryDesktop
 			int x = 1;
 			int y = 2;
 			int z = 3;
-			pList->pushFront(&x);
-			pList->pushFront(&y);
-			pList->pushFront(&z);
+			pList->PushFront(&x);
+			pList->PushFront(&y);
+			pList->PushFront(&z);
 
-			auto pLocation = pList->find(&y);
+			auto pLocation = pList->Find(&y);
 			auto pIter = pList->begin();
 			bool pCompare = (pLocation != pIter);
 			Assert::IsTrue(pCompare, L"Find called on middle equivalent with begin");
@@ -724,11 +724,11 @@ namespace TestLibraryDesktop
 			Foo foo(1);
 			Foo bar(2);
 			Foo gar(3);
-			fooList->pushFront(foo);
-			fooList->pushFront(bar);
-			fooList->pushFront(gar);
+			fooList->PushFront(foo);
+			fooList->PushFront(bar);
+			fooList->PushFront(gar);
 
-			auto fooLocation = fooList->find(bar);
+			auto fooLocation = fooList->Find(bar);
 			auto fooIter = fooList->begin();
 			bool fooCompare = (fooLocation != fooIter);
 			Assert::IsTrue(fooCompare, L"Find called on middle equivalent with begin");

@@ -7,8 +7,8 @@ namespace Library
 	/// @Author: Dale Diaz
 	///
 	/// An implementation of vector which lazily loads memory as needed. Default
-	/// capacity is 10 elements, but can be resized manually and shrunk to fit 
-	/// the current data set. Iterators are used to increment over the data without
+	/// Capacity is 10 elements, but can be resized manually and shrunk to fit 
+	/// the current data Set. Iterators are used to increment over the data without
 	/// causing any memory corruption
 	template <class T> class Vector
 	{
@@ -16,7 +16,7 @@ namespace Library
 		class Iterator; /// Forward declaration of Iterator class
 		
 		/// Default constructor
-		/// Allocates memory in mBuffer for a capacity of 10 templated values
+		/// Allocates memory in mBuffer for a Capacity of 10 templated values
 		Vector(bool fixedSize = false);
 
 		/// Copy constructor
@@ -43,9 +43,9 @@ namespace Library
 		/// Finds a value in the Vector, if it exists
 		/// @Param value: Value being searched for
 		/// @Return: An iterator pointing to the value if it exists, end() otherwise
-		Iterator find(const T& value) const;
+		Iterator Find(const T& value) const;
 
-		/// Begins iterating over the vector's data, starting at the first index
+		/// Begins iterating over the vector's data, starting At the first index
 		/// @Return: An iterator pointing to the first element in the Vector
 		Iterator begin() const;
 
@@ -53,94 +53,95 @@ namespace Library
 		/// @return: An iterator pointing past the last element in the Vector
 		Iterator end() const;
 
-		/// The front value in the Vector
+		/// The Front value in the Vector
 		/// @Return: A reference to the first element in the Vector
-		/// @Exception: Thrown if calling front on an empty Vector
-		T& front();
+		/// @Exception: Thrown if calling Front on an empty Vector
+		T& Front();
 
-		/// The front value in the Vector
+		/// The Front value in the Vector
 		/// @Return: A const reference to the first element in the Vector
-		/// @Exception: Thrown if calling front on an empty Vector
-		const T& front() const;
+		/// @Exception: Thrown if calling Front on an empty Vector
+		const T& Front() const;
 
-		/// The back value in the Vector
+		/// The Back value in the Vector
 		/// @Return: A reference to the last element in the Vector
-		/// @Exception: Thrown if calling back on an empty Vector
-		T& back();
+		/// @Exception: Thrown if calling Back on an empty Vector
+		T& Back();
 
-		/// The back value in the Vector
+		/// The Back value in the Vector
 		/// @Return: A const reference to the last element in the Vector
-		/// @Exception: Thrown if calling back on an empty Vector
-		const T& back() const;
+		/// @Exception: Thrown if calling Back on an empty Vector
+		const T& Back() const;
 
 		/// Searches for an element in the Vector by index
 		/// @Param index: The index being retrieved
-		/// @Return: A reference to the element at the specified index
-		/// @Exception: Thrown if index is greater than or equal to size
-		T& at(const std::uint32_t index);
+		/// @Return: A reference to the element At the specified index
+		/// @Exception: Thrown if index is greater than or equal to Size
+		T& At(const std::uint32_t index);
 
 		/// Searches for an element in the vector by index
 		/// @Param index: The index being retrieved
-		/// @Return: A const reference to the element at the specified index
-		/// @Exception: Thrown if index is greater than or equal to size
-		const T& at(const std::uint32_t index) const;
+		/// @Return: A const reference to the element At the specified index
+		/// @Exception: Thrown if index is greater than or equal to Size
+		const T& At(const std::uint32_t index) const;
 
 		/// Searches for an element in the Vector by index
 		/// @Param index: The index being retrieved
-		/// @Return: A reference to the element at the specified index. Throws exception if out of bounds
-		/// @Exception: Thrown if accessing an index greater than or equal to size
+		/// @Return: A reference to the element At the specified index. Throws exception if out of bounds
+		/// @Exception: Thrown if accessing an index greater than or equal to Size
 		T& operator[](const std::uint32_t index);
 
 		/// Const version of the index operator
 		/// @Param index: The index being retrieved
-		/// @Return: A const reference to the element at the specified index. Throws exception if out of bounds
-		/// @Exception: Thrown if accessing an index greater than or equal to size
+		/// @Return: A const reference to the element At the specified index. Throws exception if out of bounds
+		/// @Exception: Thrown if accessing an index greater than or equal to Size
 		const T& operator[](const std::uint32_t index) const;
 
-		/// removes the last element pushed to the back of the Vector
-		/// @Exception: Thrown if calling pop back on an empty Vector
-		void popBack();
+		/// removes the last element pushed to the Back of the Vector
+		/// @Exception: Thrown if calling pop Back on an empty Vector
+		void PopBack();
 
 		/// The current number of elements in the Vector
 		/// @Return: The current number of elements in the Vector
-		std::uint32_t size() const;
+		std::uint32_t Size() const;
 
 		/// The current number of spaces in the Vector that memory has been allocated for
 		/// @Return: The current number of allocated positions for data
-		std::uint32_t capacity() const;
+		std::uint32_t Capacity() const;
 
 		/// Method to assert if the Vector has zero elements in it
 		/// @Return: True if there are zero elements in Vector
-		bool isEmpty() const;
+		bool IsEmpty() const;
 
 		/// Adds an element to the first empty index available
-		/// If there is no available capacity, reserve is called with 10 additional elements
+		/// If there is no available Capacity, Reserve is called with 10 additional elements
 		/// @Param value: The value being added to the Vector
-		Iterator pushBack(const T& value);
+		Iterator PushBack(const T& value);
 
 		/// Reserves space in the Vector for more elements
-		/// @Param capacity: The new capacity of the Vector
-		/// If capacity is less then current capacity, capacity is shrunk to the new size
-		/// If capacity is less than current size, capacity is clamped to size
-		void reserve(std::uint32_t capacity);
+		/// @Param Capacity: The new Capacity of the Vector
+		/// If Capacity is less then current Capacity, Capacity is shrunk to the new Size
+		/// If Capacity is less than current Size, Capacity is clamped to Size
+		void Reserve(std::uint32_t capacity);
 
-		/// Removes all elements from the Vector, sets size and capacity to zero and frees all memory
-		void clear();
+		/// Removes all elements from the Vector, sets Size and Capacity to zero and frees all memory
+		void Clear();
 
 		/// Removes the first instance of a value from the Vector
 		/// @Param value: The value being removed from the Vector
 		/// If value does not exist, nothing happens
-		void remove(const T& value);
+		void Remove(const T& value);
 
-		/// Clamps the capacity to the Vector's current number of elements
-		void shrinkToFit();
+		/// Clamps the Capacity to the Vector's current number of elements
+		void ShrinkToFit();
 
 	private:
 		T* mBuffer; /// The space where elements will be stored
 		std::uint32_t mSize; /// The number of elements in the Vector
 		std::uint32_t mCapacity; /// The number of elements memory has been allocated for
 		bool mFixedSize; /// Value to determine if the vector can be resized
-		static const std::uint32_t CAPACITY_INCREMENT = 10; /// Standard reserve value increment
+		static const std::uint32_t CAPACITY_INCREMENT = 10; /// Standard Reserve value increment
+
 	public:
 		class Iterator
 		{
@@ -177,16 +178,19 @@ namespace Library
 			Iterator operator++(int);
 
 			/// Dereference operator
-			/// @Return: A reference to the value pointed at by the Iterator
+			/// @Return: A reference to the value pointed At by the Iterator
 			/// @Exception: Thrown if dereferencing a null value
 			T& operator*();
 
 			const T& operator*() const;
+
 		private:
+
 			/// Internal Iterator constructor
 			/// @Param owner: The Vector that owns this Iterator object
 			/// @Param index: The location that this iterator points to
 			Iterator(const Vector<T>* owner, const std::uint32_t index);
+			
 			const Vector<T>* mOwner; /// The vector that owns this Iterator
 			std::uint32_t mIndex; /// The location that this iterator points to
 		};

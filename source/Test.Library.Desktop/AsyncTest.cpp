@@ -88,16 +88,16 @@ namespace TestLibraryDesktop
 				Event<Foo> event4(Foo(4));
 
 				GameTime time;
-				queue.enqueue(event2, time, milliseconds(10));
-				queue.enqueue(event3, time, milliseconds(0));
-				queue.enqueue(event4, time, milliseconds(10));
+				queue.Enqueue(event2, time, milliseconds(10));
+				queue.Enqueue(event3, time, milliseconds(0));
+				queue.Enqueue(event4, time, milliseconds(10));
 
 				MyEventSubscriber sub1;
 
 				time.SetCurrentTime(high_resolution_clock::time_point(milliseconds(10000000)));
-				Assert::AreEqual(3u, queue.size());
+				Assert::AreEqual(3u, queue.Size());
 
-				queue.update(time);
+				queue.Update(time);
 				std::int32_t data = sub1.mValue.getData();
 				Assert::IsTrue(data == 2 || data == 3 || data == 4);
 			}
@@ -108,10 +108,10 @@ namespace TestLibraryDesktop
 			EventQueue queue;
 			Event<std::int32_t> event(10);
 			GameTime time;
-			queue.enqueue(event, time, milliseconds(0));
+			queue.Enqueue(event, time, milliseconds(0));
 
 			time.SetCurrentTime(high_resolution_clock::time_point(milliseconds(500000)));
-			Assert::AreEqual(1u, queue.size());
+			Assert::AreEqual(1u, queue.Size());
 
 			IntEventSubscriber sub1;
 			IntEventSubscriber sub2;
@@ -119,8 +119,8 @@ namespace TestLibraryDesktop
 			IntEventSubscriber sub4; 
 			IntEventSubscriber sub5;
 
-			queue.update(time);
-			Assert::AreEqual(0u, queue.size());
+			queue.Update(time);
+			Assert::AreEqual(0u, queue.Size());
 
 			bool notified1 = sub1.mNotified;
 			bool notified2 = sub2.mNotified;
@@ -155,17 +155,17 @@ namespace TestLibraryDesktop
 			Event<Foo> event3(Foo(10));
 
 			GameTime time;
-			queue.enqueue(event1, time, milliseconds(0));
-			queue.enqueue(event2, time, milliseconds(0));
-			queue.enqueue(event3, time, milliseconds(0));
+			queue.Enqueue(event1, time, milliseconds(0));
+			queue.Enqueue(event2, time, milliseconds(0));
+			queue.Enqueue(event3, time, milliseconds(0));
 
 			time.SetCurrentTime(high_resolution_clock::time_point(milliseconds(500000)));
-			Assert::AreEqual(3u, queue.size());
+			Assert::AreEqual(3u, queue.Size());
 
 			MyEventSubscriber eventSub;
 			ListClearingSubscriber clearSub;
-			queue.update(time);
-			Assert::AreEqual(0u, queue.size());
+			queue.Update(time);
+			Assert::AreEqual(0u, queue.Size());
 		}
 
 		TEST_METHOD(TestEnqueueEvent)
@@ -173,12 +173,12 @@ namespace TestLibraryDesktop
 			EventQueue queue;
 			Event<std::int32_t> event1(10);
 			GameTime time;
-			queue.enqueue(event1, time, milliseconds(0));
+			queue.Enqueue(event1, time, milliseconds(0));
 			time.SetCurrentTime(high_resolution_clock::time_point(milliseconds(50000)));
 			EnqueueSubscriber sub(queue, time, milliseconds(0));
-			Assert::AreEqual(1u, queue.size());
-			queue.update(time);
-			Assert::AreEqual(0u, queue.size());
+			Assert::AreEqual(1u, queue.Size());
+			queue.Update(time);
+			Assert::AreEqual(0u, queue.Size());
 		}
 
 		TEST_METHOD(TestClearQueue)
@@ -191,18 +191,18 @@ namespace TestLibraryDesktop
 			Event<Foo> event5(Foo(10));
 
 			GameTime time;
-			queue.enqueue(event1, time, milliseconds(0));
-			queue.enqueue(event2, time, milliseconds(0));
-			queue.enqueue(event3, time, milliseconds(0));
-			queue.enqueue(event4, time, milliseconds(0));
-			queue.enqueue(event5, time, milliseconds(0));
+			queue.Enqueue(event1, time, milliseconds(0));
+			queue.Enqueue(event2, time, milliseconds(0));
+			queue.Enqueue(event3, time, milliseconds(0));
+			queue.Enqueue(event4, time, milliseconds(0));
+			queue.Enqueue(event5, time, milliseconds(0));
 
 			time.SetCurrentTime(high_resolution_clock::time_point(milliseconds(50000)));
 
 			QueueClearSubscriber sub(queue);
-			Assert::AreEqual(5u, queue.size());
-			queue.update(time);
-			Assert::AreEqual(0u, queue.size());
+			Assert::AreEqual(5u, queue.Size());
+			queue.Update(time);
+			Assert::AreEqual(0u, queue.Size());
 		}
 
 		TEST_METHOD(TestHugeNumbers)
@@ -212,7 +212,7 @@ namespace TestLibraryDesktop
 			Vector<Event<Foo>> events;
 			for (std::uint32_t i = 0; i < 500; i++)
 			{
-				events.pushBack(Event<Foo>(Foo(i)));
+				events.PushBack(Event<Foo>(Foo(i)));
 			}
 
 			MyEventSubscriber sub1;
@@ -227,16 +227,16 @@ namespace TestLibraryDesktop
 
 			GameTime time;
 			
-			for (std::uint32_t i = 0; i < events.size(); i++)
+			for (std::uint32_t i = 0; i < events.Size(); i++)
 			{
-				queue.enqueue(events[i], time, milliseconds(0));
+				queue.Enqueue(events[i], time, milliseconds(0));
 			}
 
 			time.SetCurrentTime(high_resolution_clock::time_point(milliseconds(50000)));
 
-			Assert::AreEqual(500u, queue.size());
-			queue.update(time);
-			Assert::AreEqual(0u, queue.size());
+			Assert::AreEqual(500u, queue.Size());
+			queue.Update(time);
+			Assert::AreEqual(0u, queue.Size());
 		}
 
 		static _CrtMemState sStartMemState;

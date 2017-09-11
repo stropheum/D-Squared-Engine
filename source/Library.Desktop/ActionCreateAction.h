@@ -17,18 +17,18 @@ namespace Library
 
 		/// Creates an action
 		/// @Param worldState: The world state object that stores the current world state
-		virtual void update(WorldState& worldState) override;
+		virtual void Update(WorldState& worldState) override;
 		
 		/// Mutator method for the action being created
-		/// @Param name: The name of the action being created
-		void setPrototype(const std::string& name);
+		/// @Param Name: The Name of the action being created
+		void SetPrototype(const std::string& name);
 
 		/// Accessor method for the action being created
-		/// @Return: The name of the action being created
-		std::string getPrototype() const;
+		/// @Return: The Name of the action being created
+		std::string GetPrototype() const;
 
 	private:
-		std::string mPrototype; /// The type of class being constructed
+		std::string mPrototype; /// The Type of class being constructed
 	};
 
 	ActionFactory(ActionCreateAction)

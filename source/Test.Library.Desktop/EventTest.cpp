@@ -50,7 +50,7 @@ namespace TestLibraryDesktop
 		TEST_METHOD_CLEANUP(methodCleanup)
 		{
 			finalizeLeakDetection();
-			Event<Foo>::unsubscribeAll();
+			Event<Foo>::UnsubscribeAll();
 		}
 
 		TEST_METHOD(TestSubscriberNotify)
@@ -60,7 +60,7 @@ namespace TestLibraryDesktop
 			MyEventSubscriber subscriber;
 
 			Assert::IsFalse(foo == subscriber.mValue);
-			subscriber.notify(myEvent);
+			subscriber.Notify(myEvent);
 			Assert::IsTrue(foo == subscriber.mValue);
 		}
 
@@ -71,31 +71,31 @@ namespace TestLibraryDesktop
 
 			Foo foo(5);
 			Event<Foo> myEvent(foo);
-			eq.enqueue(myEvent, gameTime);
+			eq.Enqueue(myEvent, gameTime);
 
-			eq.update(gameTime);
-			Assert::IsFalse(eq.isEmpty());
+			eq.Update(gameTime);
+			Assert::IsFalse(eq.IsEmpty());
 
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(1)));
-			eq.update(gameTime);
-			Assert::IsTrue(eq.isEmpty());
+			eq.Update(gameTime);
+			Assert::IsTrue(eq.IsEmpty());
 
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(0)));
-			myEvent.setTime(gameTime.CurrentTime(), milliseconds(100));
-			eq.enqueue(myEvent, gameTime);
+			myEvent.SetTime(gameTime.CurrentTime(), milliseconds(100));
+			eq.Enqueue(myEvent, gameTime);
 
 			MyEventSubscriber subscriber;
-			eq.update(gameTime);
-			Assert::IsFalse(eq.isEmpty());
+			eq.Update(gameTime);
+			Assert::IsFalse(eq.IsEmpty());
 
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(1000)));
 			Assert::IsFalse(foo == subscriber.mValue);
-			Assert::IsFalse(myEvent.message() == subscriber.mValue);
+			Assert::IsFalse(myEvent.Message() == subscriber.mValue);
 			
-			eq.update(gameTime);
-			Assert::IsTrue(eq.isEmpty());
+			eq.Update(gameTime);
+			Assert::IsTrue(eq.IsEmpty());
 			Assert::IsTrue(foo == subscriber.mValue);
-			Assert::IsTrue(myEvent.message() == subscriber.mValue);
+			Assert::IsTrue(myEvent.Message() == subscriber.mValue);
 		}
 
 		TEST_METHOD(TestSubscribe)
@@ -108,14 +108,14 @@ namespace TestLibraryDesktop
 			MyEventSubscriber subscriber;
 			Assert::IsFalse(subscriber.mValue == foo);
 			
-			myevent.deliver();
+			myevent.Deliver();
 			Assert::IsTrue(subscriber.mValue == foo);
 
-			myevent.setTime(gameTime.CurrentTime(), milliseconds(10));
+			myevent.SetTime(gameTime.CurrentTime(), milliseconds(10));
 			subscriber.mValue = Foo(0);
 			Assert::IsFalse(subscriber.mValue == foo);
 
-			myevent.deliver();
+			myevent.Deliver();
 			Assert::IsTrue(subscriber.mValue == foo);
 		}
 
@@ -130,26 +130,26 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(subscriber.mValue == foo);
 
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(0)));
-			myEvent.setTime(gameTime.CurrentTime(), milliseconds(100));
+			myEvent.SetTime(gameTime.CurrentTime(), milliseconds(100));
 
 			EventQueue queue;
-			queue.enqueue(myEvent, gameTime, myEvent.delay());
+			queue.Enqueue(myEvent, gameTime, myEvent.Delay());
 
-			Assert::IsFalse(queue.isEmpty());
+			Assert::IsFalse(queue.IsEmpty());
 			Assert::IsFalse(subscriber.mValue == foo);
 
-			queue.update(gameTime);
-			Assert::IsFalse(queue.isEmpty());
+			queue.Update(gameTime);
+			Assert::IsFalse(queue.IsEmpty());
 			Assert::IsFalse(subscriber.mValue == foo);
 
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(99)));
-			queue.update(gameTime);
-			Assert::IsFalse(queue.isEmpty());
+			queue.Update(gameTime);
+			Assert::IsFalse(queue.IsEmpty());
 			Assert::IsFalse(subscriber.mValue == foo);
 
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(101)));
-			queue.update(gameTime);
-			Assert::IsTrue(queue.isEmpty());
+			queue.Update(gameTime);
+			Assert::IsTrue(queue.IsEmpty());
 			Assert::IsTrue(subscriber.mValue == foo);
 		}
 
@@ -162,70 +162,70 @@ namespace TestLibraryDesktop
 			Event<Foo> myEvent(foo);
 
 			Assert::IsFalse(subscriber.mValue == foo);
-			Assert::IsFalse(myEvent.message() == subscriber.mValue);
+			Assert::IsFalse(myEvent.Message() == subscriber.mValue);
 
-			queue.send(myEvent);
+			queue.Send(myEvent);
 			Assert::IsTrue(subscriber.mValue == foo);
-			Assert::IsTrue(myEvent.message() == subscriber.mValue);
+			Assert::IsTrue(myEvent.Message() == subscriber.mValue);
 		}
 
 		TEST_METHOD(TestEventQueueClear)
 		{
 			EventQueue queue;
-			Assert::IsTrue(queue.isEmpty());
+			Assert::IsTrue(queue.IsEmpty());
 
 			Event<Foo> event(Foo(5));
 			GameTime gameTime;
-			queue.enqueue(event, gameTime, milliseconds(0));
-			Assert::IsFalse(queue.isEmpty());
+			queue.Enqueue(event, gameTime, milliseconds(0));
+			Assert::IsFalse(queue.IsEmpty());
 
-			queue.clear();
-			Assert::IsTrue(queue.isEmpty());
+			queue.Clear();
+			Assert::IsTrue(queue.IsEmpty());
 
-			queue.clear();
-			Assert::IsTrue(queue.isEmpty());
+			queue.Clear();
+			Assert::IsTrue(queue.IsEmpty());
 
-			queue.enqueue(event, gameTime, milliseconds(0));
-			Assert::IsFalse(queue.isEmpty());
+			queue.Enqueue(event, gameTime, milliseconds(0));
+			Assert::IsFalse(queue.IsEmpty());
 
-			queue.clear();
-			Assert::IsTrue(queue.isEmpty());
+			queue.Clear();
+			Assert::IsTrue(queue.IsEmpty());
 		}
 
 		TEST_METHOD(TestEventQueueSize)
 		{
 			EventQueue queue;
-			Assert::AreEqual(0u, queue.size());
+			Assert::AreEqual(0u, queue.Size());
 
 			Event<Foo> event(Foo(5));
 			GameTime gameTime;
-			queue.enqueue(event, gameTime, milliseconds(0));
-			Assert::AreEqual(1u, queue.size());
+			queue.Enqueue(event, gameTime, milliseconds(0));
+			Assert::AreEqual(1u, queue.Size());
 
-			queue.enqueue(event, gameTime, milliseconds(0));
-			Assert::AreEqual(1u, queue.size());
+			queue.Enqueue(event, gameTime, milliseconds(0));
+			Assert::AreEqual(1u, queue.Size());
 		}
 
 		TEST_METHOD(TestDeleteAfterPublishing)
 		{
 			Event<Foo>* event = new Event<Foo>(Foo(5), true);
-			Assert::IsTrue(event->deleteAfterPublishing());
+			Assert::IsTrue(event->DeleteAfterPublishing());
 			EventQueue queue;
 			GameTime gameTime;
-			queue.enqueue(*event, gameTime, milliseconds(0));
+			queue.Enqueue(*event, gameTime, milliseconds(0));
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(1)));
-			queue.update(gameTime);
-			Assert::IsTrue(queue.isEmpty());
+			queue.Update(gameTime);
+			Assert::IsTrue(queue.IsEmpty());
 
 			Event<Foo>* hangingEvent = new Event<Foo>(Foo(5), true);
-			Assert::IsTrue(hangingEvent->deleteAfterPublishing());
-			queue.enqueue(*hangingEvent, gameTime, milliseconds(0));
-			Assert::IsFalse(queue.isEmpty());
+			Assert::IsTrue(hangingEvent->DeleteAfterPublishing());
+			queue.Enqueue(*hangingEvent, gameTime, milliseconds(0));
+			Assert::IsFalse(queue.IsEmpty());
 
 			Event<Foo> dontDeleteMeBro(Foo(5));
 			Event<Foo> dontDeleteMeExplicit(Foo(5), false);
-			Assert::IsFalse(dontDeleteMeBro.deleteAfterPublishing());
-			Assert::IsFalse(dontDeleteMeExplicit.deleteAfterPublishing());
+			Assert::IsFalse(dontDeleteMeBro.DeleteAfterPublishing());
+			Assert::IsFalse(dontDeleteMeExplicit.DeleteAfterPublishing());
 		}
 
 		TEST_METHOD(TestTimeEnqueuedAndDelay)
@@ -235,42 +235,42 @@ namespace TestLibraryDesktop
 			GameTime time;
 			time.SetCurrentTime(high_resolution_clock::time_point(milliseconds(10)));
 
-			Assert::IsFalse(time.CurrentTime() == event.timeEnqueued());
-			Assert::IsTrue(event.delay() == milliseconds(0));
+			Assert::IsFalse(time.CurrentTime() == event.TimeEnqueued());
+			Assert::IsTrue(event.Delay() == milliseconds(0));
 
-			queue.enqueue(event, time, milliseconds(10));
-			Assert::IsTrue(time.CurrentTime() == event.timeEnqueued());
-			Assert::IsTrue(event.delay() == milliseconds(10));
+			queue.Enqueue(event, time, milliseconds(10));
+			Assert::IsTrue(time.CurrentTime() == event.TimeEnqueued());
+			Assert::IsTrue(event.Delay() == milliseconds(10));
 			
 			time.SetCurrentTime(high_resolution_clock::time_point(milliseconds(500)));
-			Assert::IsFalse(time.CurrentTime() == event.timeEnqueued());
-			Assert::IsTrue(event.delay() == milliseconds(10));
+			Assert::IsFalse(time.CurrentTime() == event.TimeEnqueued());
+			Assert::IsTrue(event.Delay() == milliseconds(10));
 		}
 
 		TEST_METHOD(TestCopySemantics)
 		{
 			Event<Foo> eventOG(Foo(5));
 			Event<Foo> eventCopy(Foo(1));
-			Assert::IsFalse(eventOG.message() == eventCopy.message());
+			Assert::IsFalse(eventOG.Message() == eventCopy.Message());
 
 			eventCopy = eventOG;
-			Assert::IsTrue(eventOG.message() == eventCopy.message());
+			Assert::IsTrue(eventOG.Message() == eventCopy.Message());
 
 			Event<Foo> eventCopy2(eventOG);
-			Assert::IsTrue(eventOG.message() == eventCopy2.message());
+			Assert::IsTrue(eventOG.Message() == eventCopy2.Message());
 
 			Event<Foo> movedEvent = std::move(eventOG);
-			Assert::IsTrue(movedEvent.message() == Foo(5));
+			Assert::IsTrue(movedEvent.Message() == Foo(5));
 
 			Event<Foo> movedCopyEvent(std::move(movedEvent));
-			Assert::IsTrue(movedCopyEvent.message() == Foo(5));
+			Assert::IsTrue(movedCopyEvent.Message() == Foo(5));
 
 			Event<Foo> selfAssignmentEvent(Foo(15));
 			selfAssignmentEvent = selfAssignmentEvent;
-			Assert::IsTrue(selfAssignmentEvent.message() == Foo(15));
+			Assert::IsTrue(selfAssignmentEvent.Message() == Foo(15));
 
 			selfAssignmentEvent = std::move(selfAssignmentEvent);
-			Assert::IsTrue(selfAssignmentEvent.message() == Foo(15));
+			Assert::IsTrue(selfAssignmentEvent.Message() == Foo(15));
 		}
 
 		TEST_METHOD(TestPartitioning)
@@ -282,18 +282,18 @@ namespace TestLibraryDesktop
 			Event<Foo> event4(Foo(4));
 
 			GameTime time;
-			queue.enqueue(event1, time, milliseconds(0));
-			queue.enqueue(event2, time, milliseconds(10));
-			queue.enqueue(event3, time, milliseconds(0));
-			queue.enqueue(event4, time, milliseconds(10));
+			queue.Enqueue(event1, time, milliseconds(0));
+			queue.Enqueue(event2, time, milliseconds(10));
+			queue.Enqueue(event3, time, milliseconds(0));
+			queue.Enqueue(event4, time, milliseconds(10));
 
 			MyEventSubscriber sub1;
 
 			time.SetCurrentTime(high_resolution_clock::time_point(milliseconds(1)));
-			Assert::IsTrue(queue.size() == 4);
+			Assert::IsTrue(queue.Size() == 4);
 
-			queue.update(time);
-			Assert::IsTrue(queue.size() == 2);
+			queue.Update(time);
+			Assert::IsTrue(queue.Size() == 2);
 			Assert::IsTrue(sub1.mValue == Foo(1) || sub1.mValue == Foo(2) || sub1.mValue == Foo(3) || sub1.mValue == Foo(4));
 		}
 

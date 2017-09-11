@@ -17,7 +17,7 @@ namespace Library
 		delete mScope;
 	}
 
-	XmlParseMaster::SharedData* SharedDataScope::clone()
+	XmlParseMaster::SharedData* SharedDataScope::Clone()
 	{
 		SharedDataScope* clone = new SharedDataScope();
 		if (mScope != nullptr)
@@ -28,7 +28,7 @@ namespace Library
 	}
 
 	/// RTTI ToString representation of the shared data class
-	/// @Return: A string representation of the class name
+	/// @Return: A string representation of the class Name
 	std::string SharedDataScope::ToString() const
 	{
 		return "Shared Data Scope";

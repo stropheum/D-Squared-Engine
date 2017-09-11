@@ -19,10 +19,10 @@ namespace Library
 
 		/// Clones a copy of the current SharedData object and returns a newly allocated one
 		/// @Return: A freshly heap-allocated SharedData instance with the same state as this
-		SharedData* clone() override;
+		SharedData* Clone() override;
 
 		/// RTTI ToString representation of the shared data class
-		/// @Return: A string representation of the class name
+		/// @Return: A string representation of the class Name
 		std::string ToString() const override;
 
 		/// RTTI Equals comparison

@@ -5,8 +5,8 @@
 /// @Author: Dale Diaz
 ///
 /// An implementation of linked list which allows for dynamic adding of template items 
-/// Items can be added indefinitely, ensured to be of the template type, and are only 
-/// exposed via method calls to front and back, which return references to the data at 
+/// Items can be added indefinitely, ensured to be of the template Type, and are only 
+/// exposed via method calls to Front and Back, which return references to the data At 
 /// those respective nodes, and dereferencing and iterator object    
 namespace Library
 {
@@ -30,60 +30,60 @@ namespace Library
 		/// Destructor which De-allocates every object in the list individually
 		~SList();
 
-		/// Push an object to the front of the list
-		/// @Param data: The data being pushed to the front of the list
-		/// @Return: Iterator pointing to the front of the list
-		Iterator pushFront(const T& data);
+		/// Push an object to the Front of the list
+		/// @Param data: The data being pushed to the Front of the list
+		/// @Return: Iterator pointing to the Front of the list
+		Iterator PushFront(const T& data);
 
-		/// Push an object to the back of the list
-		/// @Param data: The data being pushed to the back of the list
-		/// @Return: Iterator pointing to the back of the list
-		Iterator pushBack(const T& data);
+		/// Push an object to the Back of the list
+		/// @Param data: The data being pushed to the Back of the list
+		/// @Return: Iterator pointing to the Back of the list
+		Iterator PushBack(const T& data);
 
 		/// Removes all items in the list
-		void clear();
+		void Clear();
 
-		/// @Return: The value at the front of the list
-		T popFront();
+		/// @Return: The value At the Front of the list
+		T PopFront();
 
-		/// @Return: The template item at the front of the list
-		T& front();
+		/// @Return: The template item At the Front of the list
+		T& Front();
 
-		/// @Return: A const reference to the template item at the front of the list
-		const T& front() const;
+		/// @Return: A const reference to the template item At the Front of the list
+		const T& Front() const;
 
-		/// @Return: The templated item at the back of the list
-		T& back();
+		/// @Return: The templated item At the Back of the list
+		T& Back();
 
-		/// @Return: A const reference to the templated item at the back of the list
-		const T& back() const;
+		/// @Return: A const reference to the templated item At the Back of the list
+		const T& Back() const;
 
 		/// @Return: True if the list does not contain any elements
-		bool isEmpty() const;
+		bool IsEmpty() const;
 
-		/// @Return: The size of the list
-		std::uint32_t size() const;
+		/// @Return: The Size of the list
+		std::uint32_t Size() const;
 
-		/// @Return: An iterator that points to the front node
+		/// @Return: An iterator that points to the Front node
 		Iterator begin();
 
-		/// @Return:  an iterator that points to the mNext node of the back node
+		/// @Return:  an iterator that points to the mNext node of the Back node
 		Iterator end();
 
 		/// Inserts a value after the value in a given iterator
 		/// @Param value: The value being inserted into the list
 		/// @Param location: The point where the value is being inserted after
 		/// @Return: An Iterator to the location of the inserted value
-		Iterator insertAfter(const T& value, const Iterator& location);
+		Iterator InsertAfter(const T& value, const Iterator& location);
 
 		/// Finds an item in the list
 		/// @Param value: The value being found from the list
 		/// @Return: An iterator pointing to the value if it exists in the list, end otherwise
-		Iterator find(const T& value);
+		Iterator Find(const T& value);
 
 		/// Removes the first instance of a value from the list
 		/// @Param value: The value being removed from the list
-		void remove(T value);
+		void Remove(T value);
 
 		class Iterator
 		{
@@ -119,7 +119,9 @@ namespace Library
 			/// Dereference operator
 			/// @Return: A reference to the T member that the iterator's node points to
 			T& operator*();
+
 		private:
+			
 			/// Constructor
 			/// @Param owner: The owner container of the iterator object
 			/// @Param node: The member node that the iterator refers to
@@ -133,6 +135,7 @@ namespace Library
 		class Node
 		{
 		public:
+			
 			/// Constructor
 			/// @Param data: The value contained in the node
 			Node(T data) : mData(data), mNext(nullptr) {}

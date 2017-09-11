@@ -47,14 +47,14 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestConstructor)
 		{
 			Library::Scope s1, s2, s3;
-			Assert::IsTrue(s1.getParent() == nullptr);
+			Assert::IsTrue(s1.GetParent() == nullptr);
 			Assert::IsTrue(s1 == s1 && s1 == s2 && s1 == s3, L"Default constructed scopes should be equivalent");
 		}
 
 		TEST_METHOD(TestCopyConstructor)
 		{
 			Library::Scope s1, s2;
-			s1.append("I'm a new Datum =D");
+			s1.Append("I'm a new Datum =D");
 			Assert::IsFalse(s1 == s2, L"Scopes with different datums should not be equivalent");
 
 			Library::Scope s3(s1);
@@ -67,7 +67,7 @@ namespace TestLibraryDesktop
 			Library::Scope s1, s2, s3;
 			Assert::IsTrue(s1 == s2 && s1 == s3);
 
-			s1.append("Datum? I hardly knew um");
+			s1.Append("Datum? I hardly knew um");
 			Assert::IsFalse(s1 == s2 || s1 == s3);
 		}
 
@@ -76,62 +76,62 @@ namespace TestLibraryDesktop
 			Library::Scope s1;
 			Library::Datum myDatum(Library::DatumType::String);
 			myDatum = "Bazooka";
-			auto& temp = s1.append("Weapons");
+			auto& temp = s1.Append("Weapons");
 			temp = myDatum;
-			Library::Datum* result = s1.find("Weapons");
+			Library::Datum* result = s1.Find("Weapons");
 			Assert::IsTrue(*result == myDatum);
 
 			Library::Scope s2;
 			Library::Datum myIntDatum(Library::DatumType::Integer);
 			myIntDatum = 1337;
-			auto& intTemp = s2.append("Coins");
+			auto& intTemp = s2.Append("Coins");
 			intTemp = myIntDatum;
-			Library::Datum* intResult = s2.find("Coins");
+			Library::Datum* intResult = s2.Find("Coins");
 			Assert::IsTrue(*intResult == myIntDatum);
 		}
 
 		TEST_METHOD(TestSearch)
 		{
 			Library::Scope scope1;
-			auto& scope2 = scope1.appendScope("Child One");
-			auto& scope3 = scope2.appendScope("Child Two");
-			Assert::IsTrue(scope3.search("Child One") != nullptr);
-			Assert::IsTrue(scope2.search("Child One") != nullptr);
-			Assert::IsTrue(scope1.search("Child One") != nullptr);
+			auto& scope2 = scope1.AppendScope("Child One");
+			auto& scope3 = scope2.AppendScope("Child Two");
+			Assert::IsTrue(scope3.Search("Child One") != nullptr);
+			Assert::IsTrue(scope2.Search("Child One") != nullptr);
+			Assert::IsTrue(scope1.Search("Child One") != nullptr);
 
-			auto& datum1 = scope1.append("Eggs");
+			auto& datum1 = scope1.Append("Eggs");
 			datum1 = Library::DatumType::Integer;
 			datum1 = 10;
 
-			auto& datum2 = scope2.append("Allies");
+			auto& datum2 = scope2.Append("Allies");
 			datum2 = Library::DatumType::String;
 			datum2 = "Iron Man";
 
-			auto& datum3 = scope3.append("Velocity");
+			auto& datum3 = scope3.Append("Velocity");
 			datum3 = Library::DatumType::Float;
 			datum3 = 12.5f;
 
-			Assert::IsTrue(scope1.search("NotInMyDangScope") == nullptr);
-			Assert::IsTrue(scope2.search("NotInMyDangScope") == nullptr);
-			Assert::IsTrue(scope3.search("NotInMyDangScope") == nullptr);
+			Assert::IsTrue(scope1.Search("NotInMyDangScope") == nullptr);
+			Assert::IsTrue(scope2.Search("NotInMyDangScope") == nullptr);
+			Assert::IsTrue(scope3.Search("NotInMyDangScope") == nullptr);
 
-			Assert::IsTrue(scope1.search("Eggs") != nullptr);
-			Assert::IsTrue(scope2.search("Eggs") != nullptr);
-			Assert::IsTrue(scope3.search("Eggs") != nullptr);
-			Assert::IsTrue(scope1.search("Eggs")[0] == 10);
-			Assert::IsTrue(scope2.search("Eggs")[0] == 10);
-			Assert::IsTrue(scope3.search("Eggs")[0] == 10);
+			Assert::IsTrue(scope1.Search("Eggs") != nullptr);
+			Assert::IsTrue(scope2.Search("Eggs") != nullptr);
+			Assert::IsTrue(scope3.Search("Eggs") != nullptr);
+			Assert::IsTrue(scope1.Search("Eggs")[0] == 10);
+			Assert::IsTrue(scope2.Search("Eggs")[0] == 10);
+			Assert::IsTrue(scope3.Search("Eggs")[0] == 10);
 
-			Assert::IsTrue(scope1.search("Allies") == nullptr);
-			Assert::IsTrue(scope2.search("Allies") != nullptr);
-			Assert::IsTrue(scope3.search("Allies") != nullptr);
-			Assert::IsTrue(scope2.search("Allies")[0] == "Iron Man");
-			Assert::IsTrue(scope3.search("Allies")[0] == "Iron Man");
+			Assert::IsTrue(scope1.Search("Allies") == nullptr);
+			Assert::IsTrue(scope2.Search("Allies") != nullptr);
+			Assert::IsTrue(scope3.Search("Allies") != nullptr);
+			Assert::IsTrue(scope2.Search("Allies")[0] == "Iron Man");
+			Assert::IsTrue(scope3.Search("Allies")[0] == "Iron Man");
 
-			Assert::IsTrue(scope1.search("Velocity") == nullptr);
-			Assert::IsTrue(scope2.search("Velocity") == nullptr);
-			Assert::IsTrue(scope3.search("Velocity") != nullptr);
-			Assert::IsTrue(scope3.search("Velocity")[0] == 12.5f);
+			Assert::IsTrue(scope1.Search("Velocity") == nullptr);
+			Assert::IsTrue(scope2.Search("Velocity") == nullptr);
+			Assert::IsTrue(scope3.Search("Velocity") != nullptr);
+			Assert::IsTrue(scope3.Search("Velocity")[0] == 12.5f);
 
 			Assert::IsTrue(scope1["Eggs"] == 10);
 			Assert::IsTrue(scope2["Allies"] == "Iron Man");
@@ -141,12 +141,12 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestAppend)
 		{
 			Library::Scope scope1;
-			auto& datum1 = scope1.append("New Datum");
+			auto& datum1 = scope1.Append("New Datum");
 			Assert::IsTrue(datum1 != nullptr);
 			Assert::IsTrue(datum1 == Library::DatumType::Unknown);
-			Assert::IsTrue(datum1.toString() == "Unknown Type");
+			Assert::IsTrue(datum1.ToString() == "Unknown Type");
 
-			auto& datum2 = scope1.append("Another Datum");
+			auto& datum2 = scope1.Append("Another Datum");
 			Assert::IsTrue(datum1 != nullptr);
 			Assert::IsTrue(datum2 != nullptr);
 			Assert::IsTrue(datum2 == Library::DatumType::Unknown);
@@ -155,61 +155,61 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestAppendScope)
 		{
 			Library::Scope s1;
-			auto& scope = s1.appendScope("Scope");
-			auto& datum = scope.append("HandBag");
+			auto& scope = s1.AppendScope("Scope");
+			auto& datum = scope.Append("HandBag");
 			datum = Library::DatumType::Integer;
 			datum = 5;
-			Assert::IsTrue(scope.search("HandBag") != nullptr);
-			Assert::IsTrue(scope.search("Scope") != nullptr);
+			Assert::IsTrue(scope.Search("HandBag") != nullptr);
+			Assert::IsTrue(scope.Search("Scope") != nullptr);
 
-			s1.appendScope("New Scope");
-			Assert::IsTrue(scope.search("HandBag") != nullptr);
-			Assert::IsTrue(scope.search("Scope") != nullptr);
+			s1.AppendScope("New Scope");
+			Assert::IsTrue(scope.Search("HandBag") != nullptr);
+			Assert::IsTrue(scope.Search("Scope") != nullptr);
 		}
 
 		TEST_METHOD(TestAdopt)
 		{
 			Library::Scope scope1, scope2;
-			Library::Scope& childFromScope1 = scope1.appendScope("Scope one is my daddy");
-			Assert::IsTrue(scope1.search("Scope one is my daddy") != nullptr);
-			Assert::IsTrue(scope2.search("Scope one is my daddy") == nullptr);
+			Library::Scope& childFromScope1 = scope1.AppendScope("Scope one is my daddy");
+			Assert::IsTrue(scope1.Search("Scope one is my daddy") != nullptr);
+			Assert::IsTrue(scope2.Search("Scope one is my daddy") == nullptr);
 			
-			scope2.adopt(childFromScope1, "Scope two is my new daddy");
-			Assert::IsTrue(scope1.find("Scope one is my daddy") == nullptr);
-			Assert::IsTrue(scope2.find("Scope two is my new daddy") != nullptr);
+			scope2.Adopt(childFromScope1, "Scope two is my new daddy");
+			Assert::IsTrue(scope1.Find("Scope one is my daddy") == nullptr);
+			Assert::IsTrue(scope2.Find("Scope two is my new daddy") != nullptr);
 		}
 
 		TEST_METHOD(TestGetParent)
 		{
 			Library::Scope scope1;
-			Assert::IsTrue(scope1.getParent() == nullptr);
+			Assert::IsTrue(scope1.GetParent() == nullptr);
 			
-			auto& scope2 = scope1.appendScope("scope 2");
-			Assert::IsTrue(scope2.getParent() == &scope1);
-			Assert::IsTrue(scope1.getParent() == nullptr);
+			auto& scope2 = scope1.AppendScope("scope 2");
+			Assert::IsTrue(scope2.GetParent() == &scope1);
+			Assert::IsTrue(scope1.GetParent() == nullptr);
 
-			auto& scope3 = scope2.appendScope("scope 3");
-			Assert::IsTrue(scope3.getParent() == &scope2);
-			Assert::IsTrue(scope2.getParent() == &scope1);
-			Assert::IsTrue(scope1.getParent() == nullptr);
+			auto& scope3 = scope2.AppendScope("scope 3");
+			Assert::IsTrue(scope3.GetParent() == &scope2);
+			Assert::IsTrue(scope2.GetParent() == &scope1);
+			Assert::IsTrue(scope1.GetParent() == nullptr);
 
-			auto& scope2Brother = scope1.appendScope("Scope 2 brother");
-			Assert::IsTrue(scope3.getParent() == &scope2);
-			Assert::IsTrue(scope2.getParent() == &scope1);
-			Assert::IsTrue(scope1.getParent() == nullptr);
-			Assert::IsTrue(scope2Brother.getParent() == &scope1);
+			auto& scope2Brother = scope1.AppendScope("Scope 2 brother");
+			Assert::IsTrue(scope3.GetParent() == &scope2);
+			Assert::IsTrue(scope2.GetParent() == &scope1);
+			Assert::IsTrue(scope1.GetParent() == nullptr);
+			Assert::IsTrue(scope2Brother.GetParent() == &scope1);
 		}
 
 		TEST_METHOD(TestIndexOperator)
 		{
 			Library::Scope scope1;
 			scope1["Eggs"] = Library::DatumType::Integer;
-			Assert::IsTrue(scope1.find("Eggs") != nullptr);
+			Assert::IsTrue(scope1.Find("Eggs") != nullptr);
 			scope1["Eggs"] = 5;
 			Assert::IsTrue(scope1["Eggs"] == 5);
 
 			scope1["Sword"] = Library::DatumType::String;
-			Assert::IsTrue(scope1.find("Sword") != nullptr);
+			Assert::IsTrue(scope1.Find("Sword") != nullptr);
 			scope1["Sword"] = "Katana";
 			Assert::IsTrue(scope1["Sword"] == "Katana");
 
@@ -224,19 +224,19 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(scope1 == scope2);
 			Assert::IsFalse(scope1 != scope2);
 			
-			scope1.appendScope("New child scope");
+			scope1.AppendScope("New child scope");
 			Assert::IsFalse(scope1 == scope2);
 			Assert::IsTrue(scope1 != scope2);
 
-			scope2.appendScope("New child scope");
+			scope2.AppendScope("New child scope");
 			Assert::IsTrue(scope1 == scope2);
 			Assert::IsFalse(scope1 != scope2);
 
-			scope1.append("Eggs");
+			scope1.Append("Eggs");
 			Assert::IsFalse(scope1 == scope2);
 			Assert::IsTrue(scope1 != scope2);
 
-			scope2.append("Eggs");
+			scope2.Append("Eggs");
 			Assert::IsTrue(scope1 == scope2);
 			Assert::IsFalse(scope1 != scope2);
 
@@ -249,14 +249,14 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestFindName)
 		{
 			Library::Scope scope1;
-			Assert::ExpectException<std::exception>([&] { scope1.findName(&scope1); });
+			Assert::ExpectException<std::exception>([&] { scope1.FindName(&scope1); });
 
-			auto& scope2 = scope1.appendScope("Bananas");
-			Assert::IsTrue(scope1.findName(&scope2) == "Bananas");
+			auto& scope2 = scope1.AppendScope("Bananas");
+			Assert::IsTrue(scope1.FindName(&scope2) == "Bananas");
 
-			auto& scope3 = scope2.appendScope("Apples");
-			Assert::IsTrue(scope2.findName(&scope3) == "Apples");
-			Assert::IsTrue(scope1.findName(&scope3) != "Apples");
+			auto& scope3 = scope2.AppendScope("Apples");
+			Assert::IsTrue(scope2.FindName(&scope3) == "Apples");
+			Assert::IsTrue(scope1.FindName(&scope3) != "Apples");
 		}
 
 		TEST_METHOD(TestToString)

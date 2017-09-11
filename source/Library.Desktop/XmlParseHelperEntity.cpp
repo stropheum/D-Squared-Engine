@@ -26,12 +26,12 @@ namespace Library
 		}
 	}
 
-	void XmlParseHelperEntity::initialize(XmlParseMaster* const xmlParseMaster)
+	void XmlParseHelperEntity::Initialize(XmlParseMaster* const xmlParseMaster)
 	{
 		mXmlParseMaster = xmlParseMaster;
 	}
 
-	IXmlParseHelper* XmlParseHelperEntity::clone()
+	IXmlParseHelper* XmlParseHelperEntity::Clone()
 	{
 		XmlParseHelperEntity* clone = new XmlParseHelperEntity();
 
@@ -48,7 +48,7 @@ namespace Library
 		return clone;
 	}
 
-	bool XmlParseHelperEntity::startElementHandler(
+	bool XmlParseHelperEntity::StartElementHandler(
 		XmlParseMaster::SharedData& sharedData, const std::string& element,
 		const HashMap<std::string, std::string> attributes)
 	{
@@ -65,17 +65,17 @@ namespace Library
 		if (element == "Integer")
 		{
 			mState = State::ParsingInteger;
-			Datum& datum = scope->append(attributes.find("Name")->second);
-			datum.setType(DatumType::Integer);
-			datum.setFromString(attributes.find("Value")->second);
+			Datum& datum = scope->Append(attributes.Find("Name")->second);
+			datum.SetType(DatumType::Integer);
+			datum.SetFromString(attributes.Find("Value")->second);
 		}
 
 		else if (element == "Float")
 		{
 			mState = State::ParsingFloat;
-			Datum& datum = scope->append(attributes.find("Name")->second);
-			datum.setType(DatumType::Float);
-			datum.setFromString(attributes.find("Value")->second);
+			Datum& datum = scope->Append(attributes.Find("Name")->second);
+			datum.SetType(DatumType::Float);
+			datum.SetFromString(attributes.Find("Value")->second);
 		}
 
 		else if (element == "Vector")
@@ -83,21 +83,21 @@ namespace Library
 			mState = (mState == State::ParsingMatrix) ? State::ParsingMatrix : State::ParsingVector;
 
 			std::string x, y, z, w;
-			x = attributes.find("X")->second;
-			y = attributes.find("Y")->second;
-			z = attributes.find("Z")->second;
-			w = attributes.find("W")->second;
+			x = attributes.Find("X")->second;
+			y = attributes.Find("Y")->second;
+			z = attributes.Find("Z")->second;
+			w = attributes.Find("W")->second;
 
 			if (mState == State::ParsingVector)
 			{
-				assert(attributes.find("Name") != attributes.end());
-				std::pair<std::string, std::string> pair = *attributes.find("Name");
-				Datum& datum = scope->append(attributes.find("Name")->second);
-				datum.setType(DatumType::Vector);
+				assert(attributes.Find("Name") != attributes.end());
+				std::pair<std::string, std::string> pair = *attributes.Find("Name");
+				Datum& datum = scope->Append(attributes.Find("Name")->second);
+				datum.SetType(DatumType::Vector);
 
 				std::stringstream ss;
 				ss << "vec4(" << x << ", " << y << ", " << z << ", " << w << ")";
-				datum.setFromString(ss.str());
+				datum.SetFromString(ss.str());
 			}
 
 			else if (mState == State::ParsingMatrix)
@@ -115,16 +115,16 @@ namespace Library
 		else if (element == "Matrix")
 		{
 			mState = State::ParsingMatrix;
-			mMatrixName = attributes.find("Name")->second;
-			// Only use this to set state to start grabbing component vectors
+			mMatrixName = attributes.Find("Name")->second;
+			// Only use this to Set state to start grabbing component vectors
 		}
 
 		else if (element == "String")
 		{
 			mState = State::ParsingString;
-			Datum& datum = scope->append(attributes.find("Name")->second);
-			datum.setType(DatumType::String);
-			datum.set(attributes.find("Value")->second);
+			Datum& datum = scope->Append(attributes.Find("Name")->second);
+			datum.SetType(DatumType::String);
+			datum.Set(attributes.Find("Value")->second);
 		}
 
 		else if (element == "World")
@@ -136,7 +136,7 @@ namespace Library
 
 			mState = State::ParsingWorld;
 			data->mScope = new World();
-			data->mScope->As<World>()->setName(attributes.find("Name")->second);
+			data->mScope->As<World>()->SetName(attributes.Find("Name")->second);
 			mScopeHasBeenInitialized = true;
 		}
 
@@ -151,7 +151,7 @@ namespace Library
 			mState = State::ParsingSector;
 
 			World* world = data->mScope->As<World>();
-			Sector* sector = world->createSector(attributes.find("Name")->second);
+			Sector* sector = world->CreateSector(attributes.Find("Name")->second);
 			data->mScope = sector;
 		}
 
@@ -164,11 +164,11 @@ namespace Library
 			}
 
 			mState = State::ParsingEntity;
-			std::string className = attributes.find("ClassName")->second;
-			std::string instanceName = attributes.find("InstanceName")->second;
+			std::string className = attributes.Find("ClassName")->second;
+			std::string instanceName = attributes.Find("InstanceName")->second;
 
 			Sector* sector = data->mScope->As<Sector>();
-			Entity* entity = sector->createEntity(className, instanceName);
+			Entity* entity = sector->CreateEntity(className, instanceName);
 
 			data->mScope = entity;
 		}
@@ -182,8 +182,8 @@ namespace Library
 			}
 
 			mState = State::ParsingAction;
-			std::string className = attributes.find("ClassName")->second;
-			std::string instanceName = attributes.find("InstanceName")->second;
+			std::string className = attributes.Find("ClassName")->second;
+			std::string instanceName = attributes.Find("InstanceName")->second;
 
 			Action* action = nullptr;
 
@@ -191,14 +191,14 @@ namespace Library
 			{
 				mPreviousState = State::ParsingEntity;
 				Entity* entity = data->mScope->As<Entity>();
-				action = entity->createAction(className, instanceName);
+				action = entity->CreateAction(className, instanceName);
 
 				if (action->Is(ActionListIf::TypeIdClass()))
 				{
 					ActionListIf* actionList = action->As<ActionListIf>();
 					assert(actionList != nullptr);
-					std::string condition = attributes.find("Condition")->second;
-					actionList->setCondition(std::stoi(condition));
+					std::string condition = attributes.Find("Condition")->second;
+					actionList->SetCondition(std::stoi(condition));
 				}
 			}
 			
@@ -210,17 +210,17 @@ namespace Library
 				{
 					if (instanceName == "Then")
 					{
-						action = parent->As<ActionListIf>()->createThenAction(className, instanceName);
+						action = parent->As<ActionListIf>()->CreateThenAction(className, instanceName);
 					}
 					else if (instanceName == "Else")
 					{
-						action = parent->As<ActionListIf>()->createElseAction(className, instanceName);
+						action = parent->As<ActionListIf>()->CreateElseAction(className, instanceName);
 					}
 				}
 
 				else if (parent->Is(ActionList::TypeIdClass()))
 				{
-					action = parent->As<ActionList>()->createAction(className, instanceName);
+					action = parent->As<ActionList>()->CreateAction(className, instanceName);
 				}
 			}
 
@@ -230,11 +230,11 @@ namespace Library
 		return true;
 	}
 
-	bool XmlParseHelperEntity::endElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element)
+	bool XmlParseHelperEntity::EndElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element)
 	{
 		SharedDataScope* data = sharedData.As<SharedDataScope>();
 
-		assert(data->depth() > 0);
+		assert(data->Depth() > 0);
 		if (data == nullptr) { return false; }
 
 		if (element == "Integer")
@@ -278,9 +278,9 @@ namespace Library
 			}
 			ss << ")";
 
-			Datum& datum = data->mScope->append(mMatrixName);
-			datum.setType(DatumType::Matrix);
-			datum.setFromString(ss.str());
+			Datum& datum = data->mScope->Append(mMatrixName);
+			datum.SetType(DatumType::Matrix);
+			datum.SetFromString(ss.str());
 
 			mMatrixComponentCount = 0;
 			assert(mState == State::ParsingMatrix);
@@ -295,34 +295,34 @@ namespace Library
 		{
 			mPreviousState = State::NotParsing;
 			assert(mState == State::ParsingWorld);
-			assert(data->mScope->getParent() == nullptr);
+			assert(data->mScope->GetParent() == nullptr);
 		}
 
 		else if (element == "Sector")
 		{
 			mPreviousState = State::ParsingWorld;
 			assert(mState == State::ParsingSector);
-			assert(data->mScope->getParent() != nullptr);
-			data->mScope = data->mScope->getParent();
+			assert(data->mScope->GetParent() != nullptr);
+			data->mScope = data->mScope->GetParent();
 		}
 
 		else if (element == "Entity")
 		{
 			mPreviousState = State::ParsingSector;
 			assert(mState == State::ParsingEntity);
-			assert(data->mScope->getParent() != nullptr);
-			data->mScope = data->mScope->getParent();
+			assert(data->mScope->GetParent() != nullptr);
+			data->mScope = data->mScope->GetParent();
 		}
 
 		else if (element == "Action")
 		{
 			assert(mState == State::ParsingAction || mState == State::ParsingEntity);
-			assert(data->mScope->getParent() != nullptr);
-			if (data->mScope->getParent()->Is(Action::TypeIdClass()))
+			assert(data->mScope->GetParent() != nullptr);
+			if (data->mScope->GetParent()->Is(Action::TypeIdClass()))
 			{
 				mPreviousState = State::ParsingAction;
 			}
-			else if(data->mScope->getParent()->Is(Entity::TypeIdClass()))
+			else if(data->mScope->GetParent()->Is(Entity::TypeIdClass()))
 			{
 				mPreviousState = State::ParsingEntity;
 			}
@@ -330,11 +330,11 @@ namespace Library
 			{
 				throw std::exception("Attempting to enter an invalid state after parsing action");
 			}
-			data->mScope = data->mScope->getParent();
+			data->mScope = data->mScope->GetParent();
 		}
 
 		mState = mPreviousState;
-		if (data->depth() == 0) mState = State::NotParsing;
+		if (data->Depth() == 0) mState = State::NotParsing;
 		return true;
 	}
 

@@ -36,29 +36,29 @@ namespace Library
 #pragma region Public Methods
 
 		/// Populates the attributes
-		void populate();
+		void Populate();
 
 		/// Determines if the specified string is a prescribed attribute
-		/// @Param name: The attribute being checked
+		/// @Param Name: The attribute being checked
 		/// @Return: True if the attribute is a prescribed attribute
-		bool isPrescribedAttribute(std::string name) const;
+		bool IsPrescribedAttribute(std::string name) const;
 
 		/// Determines if the specified string is an auxiliary attribute
-		/// @Param name: The attribute being checked
+		/// @Param Name: The attribute being checked
 		/// @Return: True if the attribute is an auxiliary attribute
-		bool isAuxiliaryAttribute(std::string name) const;
+		bool IsAuxiliaryAttribute(std::string name) const;
 
 		/// Determines if the specified string is an attribute
-		/// @Param name: The attribute being checked
+		/// @Param Name: The attribute being checked
 		/// @Return: True if the attribute is an attribute
-		bool isAttribute(std::string name) const;
+		bool IsAttribute(std::string name) const;
 
 		/// Adds an auxiliary attribute to the current collection
-		/// @Param name: The name of the new auxiliary attribute
+		/// @Param Name: The Name of the new auxiliary attribute
 		/// @Return: A reference to the Datum created from the appended attribute
-		Datum& appendAuxiliaryAttribute(std::string name);
+		Datum& AppendAuxiliaryAttribute(std::string name);
 
-		Vector<std::pair<std::string, Datum>> getAuxilliaryAttributes() const;
+		Vector<std::pair<std::string, Datum>> GetAuxilliaryAttributes() const;
 
 #pragma endregion
 
@@ -68,13 +68,13 @@ namespace Library
 		class Signature
 		{
 		public:
-			/// Constructor For the integer signature type
-			/// @Param name: The name of the signature
-			/// @Param type: The type of data being passed in
+			/// Constructor For the integer signature Type
+			/// @Param Name: The Name of the signature
+			/// @Param Type: The Type of data being passed in
 			/// @Param initialValue: The initial value of the signature's data
-			/// @Param size: The number of elements in the data
+			/// @Param Size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
-			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
+			/// There are constructor overloads for each Type of data, where InitialValue and storage will be Set uniquely
 			Signature(const std::string name, const DatumType type,
 				const std::uint32_t size, std::int32_t* storage):
 				Name(name), Type(type), Size(size)
@@ -83,22 +83,15 @@ namespace Library
 				{
 					Storage.i = storage;
 				}
-//				else
-//				{
-//					for (std::uint32_t i = 0; i < Size; i++)
-//					{
-//						Storage.i[i] = initialValue;
-//					}
-//				}
 			}
 
-			/// Constructor For the float signature type
-			/// @Param name: The name of the signature
-			/// @Param type: The type of data being passed in
+			/// Constructor For the float signature Type
+			/// @Param Name: The Name of the signature
+			/// @Param Type: The Type of data being passed in
 			/// @Param initialValue: The initial value of the signature's data
-			/// @Param size: The number of elements in the data
+			/// @Param Size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
-			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
+			/// There are constructor overloads for each Type of data, where InitialValue and storage will be Set uniquely
 			Signature(const std::string name, const DatumType type,
 				const std::uint32_t size, float* const storage) :
 				Name(name), Type(type), Size(size)
@@ -107,22 +100,15 @@ namespace Library
 				{
 					Storage.f = storage;
 				}
-//				else
-//				{
-//					for (std::uint32_t i = 0; i < Size; i++)
-//					{
-//						Storage.f[i] = initialValue;
-//					}
-//				}
 			}
 
-			/// Constructor For the vector signature type
-			/// @Param name: The name of the signature
-			/// @Param type: The type of data being passed in
+			/// Constructor For the vector signature Type
+			/// @Param Name: The Name of the signature
+			/// @Param Type: The Type of data being passed in
 			/// @Param initialValue: The initial value of the signature's data
-			/// @Param size: The number of elements in the data
+			/// @Param Size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
-			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
+			/// There are constructor overloads for each Type of data, where InitialValue and storage will be Set uniquely
 			Signature(const std::string name, const DatumType type,
 				const std::uint32_t size, glm::vec4* const storage) :
 				Name(name), Type(type), Size(size)
@@ -131,22 +117,15 @@ namespace Library
 				{
 					Storage.v = storage;
 				}
-//				else
-//				{
-//					for (std::uint32_t i = 0; i < Size; i++)
-//					{
-//						Storage.v[i] = initialValue;
-//					}
-//				}
 			}
 
-			/// Constructor For the matrix signature type
-			/// @Param name: The name of the signature
-			/// @Param type: The type of data being passed in
+			/// Constructor For the matrix signature Type
+			/// @Param Name: The Name of the signature
+			/// @Param Type: The Type of data being passed in
 			/// @Param initialValue: The initial value of the signature's data
-			/// @Param size: The number of elements in the data
+			/// @Param Size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
-			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
+			/// There are constructor overloads for each Type of data, where InitialValue and storage will be Set uniquely
 			Signature(const std::string name, const DatumType type,
 				const std::uint32_t size, glm::mat4* const storage) :
 				Name(name), Type(type), Size(size)
@@ -155,22 +134,15 @@ namespace Library
 				{
 					Storage.m = storage;
 				}
-//				else
-//				{
-//					for (std::uint32_t i = 0; i < Size; i++)
-//					{
-//						Storage.m[i] = initialValue;
-//					}
-//				}
 			}
 
-			/// Constructor For the string signature type
-			/// @Param name: The name of the signature
-			/// @Param type: The type of data being passed in
+			/// Constructor For the string signature Type
+			/// @Param Name: The Name of the signature
+			/// @Param Type: The Type of data being passed in
 			/// @Param initialValue: The initial value of the signature's data
-			/// @Param size: The number of elements in the data
+			/// @Param Size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
-			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
+			/// There are constructor overloads for each Type of data, where InitialValue and storage will be Set uniquely
 			Signature(const std::string name, const DatumType type,
 				const std::uint32_t size, std::string* const storage) :
 				Name(name), Type(type), Size(size)
@@ -179,21 +151,14 @@ namespace Library
 				{
 					Storage.s = storage;
 				}
-//				else
-//				{
-//					for (std::uint32_t i = 0; i < Size; i++)
-//					{
-//						Storage.s[i] = initialValue;
-//					}
-//				}
 			}
 
-			/// Constructor For the scope signature type
-			/// @Param name: The name of the signature
-			/// @Param type: The type of data being passed in
-			/// @Param size: The number of elements in the data
+			/// Constructor For the scope signature Type
+			/// @Param Name: The Name of the signature
+			/// @Param type: The Type of data being passed in
+			/// @Param Size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
-			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
+			/// There are constructor overloads for each Type of data, where InitialValue and storage will be Set uniquely
 			Signature(const std::string name, const DatumType type,
 				const std::uint32_t size, Scope** const storage):
 				Name(name), Type(type), Size(size)
@@ -204,12 +169,12 @@ namespace Library
 				}
 			}
 
-			/// Constructor For the RTTI pointer signature type
-			/// @Param name: The name of the signature
-			/// @Param type: The type of data being passed in
-			/// @Param size: The number of elements in the data
+			/// Constructor For the RTTI pointer signature Type
+			/// @Param Name: The Name of the signature
+			/// @Param Type: The Type of data being passed in
+			/// @Param Size: The number of elements in the data
 			/// @Param storage: The pointer to the external storage
-			/// There are constructor overloads for each type of data, where InitialValue and storage will be set uniquely
+			/// There are constructor overloads for each Type of data, where InitialValue and storage will be Set uniquely
 			Signature(const std::string name, const DatumType type,
 				const std::uint32_t size, RTTI** const storage) :
 				Name(name), Type(type), Size(size)
@@ -232,7 +197,7 @@ namespace Library
 	private:
 #pragma region Private Methods
 
-		Signature& getSignature(const std::string& name);
+		Signature& GetSignature(const std::string& name);
 
 #pragma endregion
 

@@ -10,8 +10,8 @@ namespace Library
 		WorldState();
 		~WorldState();
 
-		GameTime& getGameTime() const;
-		void setGameTime(GameTime& gameTime);
+		GameTime& GetGameTime() const;
+		void SetGameTime(GameTime& gameTime);
 
 		class World* world;
 		class Sector* sector;

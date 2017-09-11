@@ -72,14 +72,14 @@ namespace TestLibraryDesktop
 		TEST_METHOD(UpdateLeakTest)
 		{
 			World* world = new World();
-			Sector* sector = world->createSector("Dales Sector");
-			Entity* entity = sector->createEntity("Entity", "Dale");
-			Action* action = entity->createAction("ActionList", "DoThing");
+			Sector* sector = world->CreateSector("Dales Sector");
+			Entity* entity = sector->CreateEntity("Entity", "Dale");
+			Action* action = entity->CreateAction("ActionList", "DoThing");
 
 			WorldState worldState;
 			GameTime gameTime;
 
-			world->update(worldState, gameTime);
+			world->Update(worldState, gameTime);
 			Assert::IsTrue(world != nullptr && sector != nullptr && entity != nullptr && action != nullptr);
 
 			delete world;
@@ -88,7 +88,7 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestCreateAction)
 		{
 			Entity* entity = new Entity();
-			Action* action = entity->createAction("ActionList", "newAction");
+			Action* action = entity->CreateAction("ActionList", "newAction");
 			Assert::IsTrue(action != nullptr);
 			delete entity;
 		}
@@ -96,9 +96,9 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestName)
 		{
 			ActionList actionList;
-			Assert::IsTrue(actionList.name() == "");
-			actionList.setName("Dale");
-			Assert::IsTrue(actionList.name() == "Dale");
+			Assert::IsTrue(actionList.Name() == "");
+			actionList.SetName("Dale");
+			Assert::IsTrue(actionList.Name() == "Dale");
 		}
 
 		TEST_METHOD(TestActionCreateAction)
@@ -106,15 +106,15 @@ namespace TestLibraryDesktop
 			WorldState worldState;
 
 			ActionList aList;
-			aList.createAction("ActionCreateAction", "ActionCreateActionGenerically");
+			aList.CreateAction("ActionCreateAction", "ActionCreateActionGenerically");
 
-			ActionCreateAction* aca1 = aList["Actions"].get<Scope*>(0)->As<ActionCreateAction>();
+			ActionCreateAction* aca1 = aList["Actions"].Get<Scope*>(0)->As<ActionCreateAction>();
 			Assert::IsTrue(aca1 != nullptr);
-			aca1->setPrototype("ActionList");
-			aca1->setName("MyActionList");
-			aList.update(worldState);
+			aca1->SetPrototype("ActionList");
+			aca1->SetName("MyActionList");
+			aList.Update(worldState);
 
-			Assert::IsTrue(aList["Actions"].get<Scope*>(1)->Is(ActionList::TypeIdClass()));
+			Assert::IsTrue(aList["Actions"].Get<Scope*>(1)->Is(ActionList::TypeIdClass()));
 		}
 
 		TEST_METHOD(TestActionDestroyAction)
@@ -122,16 +122,16 @@ namespace TestLibraryDesktop
 			WorldState worldState;
 
 			ActionList actionList;
-			actionList.createAction("ActionList", "MyActionList");
+			actionList.CreateAction("ActionList", "MyActionList");
 
-			ActionList* childActionList = actionList["Actions"].get<Scope*>(0)->As<ActionList>();
+			ActionList* childActionList = actionList["Actions"].Get<Scope*>(0)->As<ActionList>();
 			Assert::IsTrue(childActionList != nullptr);
 
 			ActionDestroyAction* destroyAction = 
-				childActionList->createAction("ActionDestroyAction", "MyDestroyAction")->As<ActionDestroyAction>();
-			destroyAction->setActionInstanceName("MyActionList");
+				childActionList->CreateAction("ActionDestroyAction", "MyDestroyAction")->As<ActionDestroyAction>();
+			destroyAction->SetActionInstanceName("MyActionList");
 
-			actionList.update(worldState);
+			actionList.Update(worldState);
 		}
 
 		TEST_METHOD(TestActionListIf)
@@ -139,12 +139,12 @@ namespace TestLibraryDesktop
 			WorldState worldState;
 
 			ActionList actionList;
-			ActionListIf* ifList = actionList.createAction("ActionListIf", "MyIf")->As<ActionListIf>();
+			ActionListIf* ifList = actionList.CreateAction("ActionListIf", "MyIf")->As<ActionListIf>();
 
-			ifList->setCondition(true);
-			actionList.update(worldState);
-			ifList->setCondition(false);
-			actionList.update(worldState);
+			ifList->SetCondition(true);
+			actionList.Update(worldState);
+			ifList->SetCondition(false);
+			actionList.Update(worldState);
 		}
 
 		TEST_METHOD(TestParse)
@@ -154,37 +154,37 @@ namespace TestLibraryDesktop
 			Library::SharedDataScope sharedData;
 			Library::XmlParseMaster parseMaster(&sharedData);
 			Library::XmlParseHelperEntity helper;
-			sharedData.setXmlParseMaster(&parseMaster);
-			parseMaster.addHelper(helper);
+			sharedData.SetXmlParseMaster(&parseMaster);
+			parseMaster.AddHelper(helper);
 
-			parseMaster.parseFromFile("ActionGrammar.xml");
+			parseMaster.ParseFromFile("ActionGrammar.xml");
 
 			World* world = sharedData.mScope->As<World>();
 			Assert::IsTrue(world != nullptr);
-			Assert::IsTrue(world->name() == "Dales World");
+			Assert::IsTrue(world->Name() == "Dales World");
 
-			Sector* sector = world->sectors().get<Scope*>(0)->As<Sector>();
+			Sector* sector = world->Sectors().Get<Scope*>(0)->As<Sector>();
 			Assert::IsTrue(sector != nullptr);
-			Assert::IsTrue(sector->name() == "Dales Sector");
+			Assert::IsTrue(sector->Name() == "Dales Sector");
 
-			Entity* entity = sector->entities().get<Scope*>(0)->As<Entity>();
+			Entity* entity = sector->Entities().Get<Scope*>(0)->As<Entity>();
 			Assert::IsTrue(entity != nullptr);
-			Assert::IsTrue(entity->name() == "Dale");
+			Assert::IsTrue(entity->Name() == "Dale");
 
-			Action* action = entity->actions().get<Scope*>(0)->As<Action>();
+			Action* action = entity->Actions().Get<Scope*>(0)->As<Action>();
 			Assert::IsTrue(action != nullptr);
-			Assert::IsTrue(action->name() == "MyList");
+			Assert::IsTrue(action->Name() == "MyList");
 			Assert::IsTrue(action->Is(ActionListIf::TypeIdClass()));
 
-			Action* then = (*action->As<ActionList>())["Then"].get<Scope*>(0)->As<Action>();
+			Action* then = (*action->As<ActionList>())["Then"].Get<Scope*>(0)->As<Action>();
 			Assert::IsTrue(then != nullptr);
 
 			Assert::IsTrue(then->Is(ActionIncrement::TypeIdClass()));
 			
-			Assert::AreEqual(then->As<ActionIncrement>()->getIncrementCount(), 0);
-			world->update(state, time);
+			Assert::AreEqual(then->As<ActionIncrement>()->GetIncrementCount(), 0);
+			world->Update(state, time);
 
-			Assert::AreEqual(then->As<ActionIncrement>()->getIncrementCount(), 1);
+			Assert::AreEqual(then->As<ActionIncrement>()->GetIncrementCount(), 1);
 		}
 
 		static _CrtMemState sStartMemState;

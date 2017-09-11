@@ -7,9 +7,9 @@ namespace Library
 	template <typename TKey, typename TValue, typename HashFunctor>
 	HashMap<TKey, TValue, HashFunctor>::HashMap(std::uint32_t bucketCount):
 		mBucketCount(bucketCount), mBuckets(), mSize(0)
-	{	// HashMaps need to be constructed with at least one bucket, or nothing will be able to be stored
+	{	// HashMaps need to be constructed with At least one bucket, or nothing will be able to be stored
 		if (mBucketCount == 0) throw std::exception("HashMap constructed with an invalid amount of buckets");
-		initializeBuckets();
+		InitializeBuckets();
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
@@ -52,20 +52,20 @@ namespace Library
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
-	void HashMap<TKey, TValue, HashFunctor>::initializeBuckets()
+	void HashMap<TKey, TValue, HashFunctor>::InitializeBuckets()
 	{
 		mSize = 0;
 		for (std::uint32_t i = 0; i < mBucketCount; i++)
 		{	// Create a vector to represent each "bucket:
-			mBuckets.pushBack(BucketType());
+			mBuckets.PushBack(BucketType());
 		}
-		mBuckets.shrinkToFit();
+		mBuckets.ShrinkToFit();
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
-	typename HashMap<TKey, TValue, HashFunctor>::Iterator HashMap<TKey, TValue, HashFunctor>::find(const TKey& key) const
+	typename HashMap<TKey, TValue, HashFunctor>::Iterator HashMap<TKey, TValue, HashFunctor>::Find(const TKey& key) const
 	{
-		if (mBuckets.isEmpty()) throw std::exception("Buckets are null");
+		if (mBuckets.IsEmpty()) throw std::exception("Buckets are null");
 		std::uint32_t hashIndex = mHashFunctor(key) % mBucketCount;
 		auto& bucket = mBuckets[hashIndex];
 
@@ -89,15 +89,15 @@ namespace Library
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
-	typename HashMap<TKey, TValue, HashFunctor>::Iterator HashMap<TKey, TValue, HashFunctor>::insert(const PairType& entry)
+	typename HashMap<TKey, TValue, HashFunctor>::Iterator HashMap<TKey, TValue, HashFunctor>::Insert(const PairType& entry)
 	{
-		auto iter = find(entry.first);
+		auto iter = Find(entry.first);
 
 		if (iter == end())
 		{
 			mSize++;
 			std::uint32_t bucketIndex = mHashFunctor(entry.first) % mBucketCount;
-			auto vIter = mBuckets[bucketIndex].pushBack(entry);
+			auto vIter = mBuckets[bucketIndex].PushBack(entry);
 			iter = HashMap<TKey, TValue>::Iterator(this, bucketIndex, vIter);
 		}
 
@@ -105,16 +105,16 @@ namespace Library
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
-	typename HashMap<TKey, TValue, HashFunctor>::Iterator HashMap<TKey, TValue, HashFunctor>::insert(const PairType& entry, bool& found)
+	typename HashMap<TKey, TValue, HashFunctor>::Iterator HashMap<TKey, TValue, HashFunctor>::Insert(const PairType& entry, bool& found)
 	{
-		auto iter = find(entry.first);
+		auto iter = Find(entry.first);
 
 		if (iter == end())
 		{
 			found = false;
 			mSize++;
 			std::uint32_t bucketIndex = mHashFunctor(entry.first) % mBucketCount;
-			auto vIter = mBuckets[bucketIndex].pushBack(entry);
+			auto vIter = mBuckets[bucketIndex].PushBack(entry);
 			iter = HashMap<TKey, TValue>::Iterator(this, bucketIndex, vIter);
 		}
 		else
@@ -126,14 +126,14 @@ namespace Library
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
-	void HashMap<TKey,TValue, HashFunctor>::remove(const TKey& key)
+	void HashMap<TKey,TValue, HashFunctor>::Remove(const TKey& key)
 	{
-		auto iter = find(key);
+		auto iter = Find(key);
 
 		if (iter != end())
 		{
 			std::uint32_t hashIndex = mHashFunctor(key) % mBucketCount;
-			mBuckets[hashIndex].remove(*iter);
+			mBuckets[hashIndex].Remove(*iter);
 			mSize--;
 		}
 	}
@@ -142,14 +142,14 @@ namespace Library
 	TValue& HashMap<TKey, TValue, HashFunctor>::operator[](const TKey& key)
 	{
 		PairType newPair(key, TValue());
-		auto iter = insert(newPair);
+		auto iter = Insert(newPair);
 		return iter->second;
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
 	const TValue& HashMap<TKey, TValue, HashFunctor>::operator[](const TKey& key) const
 	{
-		auto iter = find(key);
+		auto iter = Find(key);
 		if (iter == end()) throw std::exception("Indexing out of bounds on const HashMap");
 		return iter->second;
 	}
@@ -180,11 +180,11 @@ namespace Library
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
-	void HashMap<TKey, TValue, HashFunctor>::clear()
+	void HashMap<TKey, TValue, HashFunctor>::Clear()
 	{
 		for (std::uint32_t i = 0; i < mBucketCount; i++)
 		{
-			mBuckets[i].clear();
+			mBuckets[i].Clear();
 		}
 
 		mSize = 0;
@@ -197,9 +197,9 @@ namespace Library
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
-	bool HashMap<TKey, TValue, HashFunctor>::containsKey(const TKey& key) const
+	bool HashMap<TKey, TValue, HashFunctor>::ContainsKey(const TKey& key) const
 	{
-		auto iter = find(key);
+		auto iter = Find(key);
 		return iter != end();
 	}
 

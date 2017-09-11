@@ -33,17 +33,17 @@ namespace Library
 	{
 		init();
 
-		(*this)["External Integer"].setStorage(&mInt, 1u);
-		(*this)["External Float"].setStorage(&mFloat, 1u);
-		(*this)["External Vector"].setStorage(&mVector, 1u);
-		(*this)["External Matrix"].setStorage(&mMatrix, 1u);
-		(*this)["External String"].setStorage(&mString, 1u);
+		(*this)["External Integer"].SetStorage(&mInt, 1u);
+		(*this)["External Float"].SetStorage(&mFloat, 1u);
+		(*this)["External Vector"].SetStorage(&mVector, 1u);
+		(*this)["External Matrix"].SetStorage(&mMatrix, 1u);
+		(*this)["External String"].SetStorage(&mString, 1u);
 
-		(*this)["External Integer Array"].setStorage(iArray, 10u);
-		(*this)["External Float Array"].setStorage(fArray, 10u);
-		(*this)["External Vector Array"].setStorage(vArray, 10u);
-		(*this)["External Matrix Array"].setStorage(mArray, 10u);
-		(*this)["External String Array"].setStorage(sArray, 10u);
+		(*this)["External Integer Array"].SetStorage(iArray, 10u);
+		(*this)["External Float Array"].SetStorage(fArray, 10u);
+		(*this)["External Vector Array"].SetStorage(vArray, 10u);
+		(*this)["External Matrix Array"].SetStorage(mArray, 10u);
+		(*this)["External String Array"].SetStorage(sArray, 10u);
 
 		mInt = rhs.mInt;
 		mFloat = rhs.mFloat;
@@ -72,17 +72,17 @@ namespace Library
 
 	AttributedFoo& AttributedFoo::operator=(AttributedFoo&& rhs)
 	{
-		(*this)["External Integer"].setStorage(&mInt, 1u);
-		(*this)["External Float"].setStorage(&mFloat, 1u);
-		(*this)["External Vector"].setStorage(&mVector, 1u);
-		(*this)["External Matrix"].setStorage(&mMatrix, 1u);
-		(*this)["External String"].setStorage(&mString, 1u);
+		(*this)["External Integer"].SetStorage(&mInt, 1u);
+		(*this)["External Float"].SetStorage(&mFloat, 1u);
+		(*this)["External Vector"].SetStorage(&mVector, 1u);
+		(*this)["External Matrix"].SetStorage(&mMatrix, 1u);
+		(*this)["External String"].SetStorage(&mString, 1u);
 
-		(*this)["External Integer Array"].setStorage(iArray, 10u);
-		(*this)["External Float Array"].setStorage(fArray, 10u);
-		(*this)["External Vector Array"].setStorage(vArray, 10u);
-		(*this)["External Matrix Array"].setStorage(mArray, 10u);
-		(*this)["External String Array"].setStorage(sArray, 10u);
+		(*this)["External Integer Array"].SetStorage(iArray, 10u);
+		(*this)["External Float Array"].SetStorage(fArray, 10u);
+		(*this)["External Vector Array"].SetStorage(vArray, 10u);
+		(*this)["External Matrix Array"].SetStorage(mArray, 10u);
+		(*this)["External String Array"].SetStorage(sArray, 10u);
 
 		mInt = rhs.mInt;
 		mFloat = rhs.mFloat;
@@ -113,27 +113,27 @@ namespace Library
 
 	void AttributedFoo::init()
 	{
-		mPrescribedAttributes.pushBack(
+		mPrescribedAttributes.PushBack(
 			Signature("External Integer", DatumType::Integer, 1u, &mInt)
 		);
 
-		mPrescribedAttributes.pushBack(
+		mPrescribedAttributes.PushBack(
 			Signature("External Float", DatumType::Float, 1u, &mFloat)
 		);
 
-		mPrescribedAttributes.pushBack(
+		mPrescribedAttributes.PushBack(
 			Signature("External Vector", DatumType::Vector, 1u, &mVector)
 		);
 
-		mPrescribedAttributes.pushBack(
+		mPrescribedAttributes.PushBack(
 			Signature("External Matrix", DatumType::Matrix, 1u, &mMatrix)
 		);
 
-		mPrescribedAttributes.pushBack(
+		mPrescribedAttributes.PushBack(
 			Signature("External String", DatumType::String, 1u, &mString)
 		);
 
-		mPrescribedAttributes.pushBack(
+		mPrescribedAttributes.PushBack(
 			Signature("Internal Scope", DatumType::Scope, 1u, &mScope)
 		);
 
@@ -149,27 +149,27 @@ namespace Library
 			fArray[i] = 10.0f;
 		}
 
-		mPrescribedAttributes.pushBack(
+		mPrescribedAttributes.PushBack(
 			Signature("External Integer Array", DatumType::Integer, 10u, iArray)
 		);
 
-		mPrescribedAttributes.pushBack(
+		mPrescribedAttributes.PushBack(
 			Signature("External Float Array", DatumType::Float, 10u, fArray)
 		);
 
-		mPrescribedAttributes.pushBack(
+		mPrescribedAttributes.PushBack(
 			Signature("External Vector Array", DatumType::Vector, 10u, vArray)
 		);
 
-		mPrescribedAttributes.pushBack(
+		mPrescribedAttributes.PushBack(
 			Signature("External Matrix Array", DatumType::Matrix, 10u, mArray)
 		);
 
-		mPrescribedAttributes.pushBack(
+		mPrescribedAttributes.PushBack(
 			Signature("External String Array", DatumType::String, 10u, sArray)
 		);
 
-		populate();
+		Populate();
 	}
 }
 

@@ -17,24 +17,24 @@ namespace Library
 		/// Default destructor
 		virtual ~EventMessageAttributed() = default;
 
-		/// Accessor for the event message attributed subtype
-		/// @Return: The subtype of the event message attributed
-		const std::string& getSubtype() const;
+		/// Accessor for the event Message attributed subtype
+		/// @Return: The subtype of the event Message attributed
+		const std::string& GetSubtype() const;
 
-		/// Mutator for the event message attributed subtype
-		/// @Param subtype: The subtype of the event message attributed
-		void setSubtype(const std::string& subtype);
+		/// Mutator for the event Message attributed subtype
+		/// @Param subtype: The subtype of the event Message attributed
+		void SetSubtype(const std::string& subtype);
 
 		/// Accessor for the world state
 		/// @Return: A pointer to the world state
-		WorldState* getWorldState() const;
+		WorldState* GetWorldState() const;
 
 		/// Mutator for the world state poitner
 		/// @Param worldState: the world state
-		void setWorldState(WorldState& worldState);
+		void SetWorldState(WorldState& worldState);
 
 	private:
-		std::string mSubtype; /// The subtype of the event message attributed
+		std::string mSubtype; /// The subtype of the event Message attributed
 		WorldState* mWorldState; /// The world state object
 	};
 }

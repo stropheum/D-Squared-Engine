@@ -14,7 +14,7 @@ namespace Library
 
 		/// Constructor
 		/// @Param paylod: The payload that this event will carry to its destination
-		/// @Param deleteAfterPublishing: Value to determine if the event queue should delete this after when delivered
+		/// @Param DeleteAfterPublishing: Value to determine if the event queue should delete this after when delivered
 		Event(const Payload& payload, bool deleteAfterPublishing = false);
 
 		/// Default destructor
@@ -40,22 +40,22 @@ namespace Library
 
 		/// Adds the event subscriber to the static list of event subscribers
 		/// @Param eventSubscriber: Event Subscriber being added to the list
-		static void subscribe(class EventSubscriber& eventSubscriber);
+		static void Subscribe(class EventSubscriber& eventSubscriber);
 
 		/// Removes the event subscriber to the staitc list of event subscribers
 		/// @Param eventSubscriber: Event Subscriber being removed from the list
-		static void unsubscribe(class EventSubscriber& eventSubscriber);
+		static void Unsubscribe(class EventSubscriber& eventSubscriber);
 
-		/// Removes all event subscribers from the static list of event subscribers of this type
-		static void unsubscribeAll();
+		/// Removes all event subscribers from the static list of event subscribers of this Type
+		static void UnsubscribeAll();
 
 		/// Accessor method for the payload that the event is carrying
 		/// @Return: A constant reference to the payload of the event
-		const Payload& message();
+		const Payload& Message();
 
 	private:
-		Payload mPayload; /// The object that will be carried to the event subscribers for this type
-		static Vector<class EventSubscriber*> sSubscriberList; /// The static list of event subscribers for this event type
+		Payload mPayload; /// The object that will be carried to the event subscribers for this Type
+		static Vector<class EventSubscriber*> sSubscriberList; /// The static list of event subscribers for this event Type
 		static std::mutex sSubscriberListMutex;
 	};
 }

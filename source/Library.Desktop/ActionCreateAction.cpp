@@ -9,35 +9,35 @@ namespace Library
 {
 	ActionCreateAction::ActionCreateAction()
 	{
-		(*this)["Prototype"].setStorage(&mPrototype, 1);
-		(*this)["Name"].setStorage(&mName, 1);
+		(*this)["Prototype"].SetStorage(&mPrototype, 1);
+		(*this)["Name"].SetStorage(&mName, 1);
 	}
 
-	void ActionCreateAction::update(WorldState& worldState)
+	void ActionCreateAction::Update(WorldState& worldState)
 	{
 		worldState.action = this;
 
-		assert(getParent()->Is(Entity::TypeIdClass()) || getParent()->Is(ActionList::TypeIdClass()));
+		assert(GetParent()->Is(Entity::TypeIdClass()) || GetParent()->Is(ActionList::TypeIdClass()));
 
-		if (getParent()->Is(Entity::TypeIdClass()))
+		if (GetParent()->Is(Entity::TypeIdClass()))
 		{
-			getParent()->As<Entity>()->createAction(mPrototype, mName);
+			GetParent()->As<Entity>()->CreateAction(mPrototype, mName);
 		}
 		
-		else if (getParent()->Is(ActionList::TypeIdClass()))
+		else if (GetParent()->Is(ActionList::TypeIdClass()))
 		{
-			getParent()->As<ActionList>()->createAction(mPrototype, mName);
+			GetParent()->As<ActionList>()->CreateAction(mPrototype, mName);
 		}
 
 		worldState.action = nullptr;
 	}
 
-	void ActionCreateAction::setPrototype(const std::string& name)
+	void ActionCreateAction::SetPrototype(const std::string& name)
 	{
 		(*this)["Prototype"] = name;
 	}
 
-	std::string ActionCreateAction::getPrototype() const
+	std::string ActionCreateAction::GetPrototype() const
 	{
 		return mPrototype;
 	}

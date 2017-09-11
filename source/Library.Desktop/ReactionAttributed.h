@@ -17,15 +17,15 @@ namespace Library
 
 		/// Notifies the subscriber that an event has been triggered
 		/// @Param event: The event that the subscriber is being notified of
-		virtual void notify(const EventPublisher& event) override;
+		virtual void Notify(const EventPublisher& event) override;
 
 		/// Accessor method for the subtype of the reaction
 		/// @Return: String representation of the subtype
-		std::string getSubtype();
+		std::string GetSubtype();
 
 		/// Mutator method for the subtype of the reaction
 		/// @Param subtype: The subtype of the reaction
-		void setSubtype(const std::string& subtype);
+		void SetSubtype(const std::string& subtype);
 	};
 
 	ReactionFactory(ReactionAttributed)

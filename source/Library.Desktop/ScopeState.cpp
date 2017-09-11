@@ -11,18 +11,18 @@ namespace Library
 
 	/// Comparison operator for Datum objects
 	/// @Param rhs: The Datum object being compared against
-	/// @Return: True if type, size, and each element of the Datum objects are equivalent. False otherwise
+	/// @Return: True if Type, Size, and each element of the Datum objects are equivalent. False otherwise
 	/// @Exception: THrown if called from this context
 	bool ScopeState::operator==(const Datum& rhs)
 	{
 		bool result = false;
 
-		if (rhs.type() == DatumType::Scope && mContext->size() == rhs.size())
+		if (rhs.Type() == DatumType::Scope && mContext->Size() == rhs.Size())
 		{
 			result = true;
-			for (std::uint32_t i = 0; i < mContext->size(); i++)
+			for (std::uint32_t i = 0; i < mContext->Size(); i++)
 			{
-				if (*mContext->get<Scope*>(i) != *rhs.get<Scope*>(i))
+				if (*mContext->Get<Scope*>(i) != *rhs.Get<Scope*>(i))
 				{	// If every scope doesn't match, we're done
 					result = false;
 					break;
@@ -36,14 +36,14 @@ namespace Library
 	Datum& ScopeState::operator=(Scope* const rhs)
 	{
 		if (mContext->mSize > 1) throw std::exception("Invalid assignment invocation");
-		if (mContext->mSize == 0) mContext->setSize(1);
+		if (mContext->mSize == 0) mContext->SetSize(1);
 		mContext->mData.sc[0] = rhs;
 		return *mContext;
 	}
 
 	/// Sets the number of elements in the array
-	/// @param size: The new number of elements in the array
-	void ScopeState::setSize(std::uint32_t size)
+	/// @param Size: The new number of elements in the array
+	void ScopeState::SetSize(std::uint32_t size)
 	{
 		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(Scope*) * size);
 		mContext->mCapacity = mContext->mSize = size;
@@ -57,7 +57,7 @@ namespace Library
 		}
 	}
 
-	void ScopeState::reserve(std::uint32_t capacity)
+	void ScopeState::Reserve(std::uint32_t capacity)
 	{
 		if (capacity > mContext->mCapacity)
 		{
