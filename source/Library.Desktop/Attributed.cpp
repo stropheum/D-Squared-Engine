@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "Attributed.h"
 
+
+using namespace std;
+
 namespace Library
 {
 	RTTI_DEFINITIONS(Attributed)
@@ -32,7 +35,7 @@ namespace Library
 			
 			if (rhs.mPrescribedAttributes.Size() > 1)
 			{	// We only do a copy if there is more than the "this" pointer stored
-				for (std::uint32_t i = 1; i < rhs.mPrescribedAttributes.Size(); i++)
+				for (uint32_t i = 1; i < rhs.mPrescribedAttributes.Size(); i++)
 				{
 					mPrescribedAttributes.PushBack(rhs.mPrescribedAttributes[i]);
 				}
@@ -43,12 +46,12 @@ namespace Library
 		return *this;
 	}
 
-	Attributed::Attributed(Attributed&& rhs)
+	Attributed::Attributed(Attributed&& rhs) noexcept
 	{
 		operator=(rhs);
 	}
 
-	Attributed& Attributed::operator=(Attributed&& rhs)
+	Attributed& Attributed::operator=(Attributed&& rhs) noexcept
 	{
 		if (this != &rhs)
 		{
@@ -56,7 +59,7 @@ namespace Library
 			
 			if (rhs.mPrescribedAttributes.Size() > 1)
 			{	// We only do a copy if there is more than the "this" pointer stored
-				for (std::uint32_t i = 1; i < rhs.mPrescribedAttributes.Size(); i++)
+				for (uint32_t i = 1; i < rhs.mPrescribedAttributes.Size(); i++)
 				{
 					Adopt(rhs[i][0], mPrescribedAttributes[i].Name);
 				}
@@ -74,7 +77,7 @@ namespace Library
 
 	void Attributed::Populate()
 	{
-		for (std::uint32_t i = 0; i < mPrescribedAttributes.Size(); i++)
+		for (uint32_t i = 0; i < mPrescribedAttributes.Size(); i++)
 		{
 			Signature attribute = mPrescribedAttributes[i];
 			auto& appendedScope = Append(attribute.Name);
@@ -135,12 +138,12 @@ namespace Library
 					break;
 
 				default:
-					throw std::exception("Setting storage of invalid/unknown type");
+					throw exception("Setting storage of invalid/unknown type");
 			}
 		}
 	}
 
-	bool Attributed::IsPrescribedAttribute(std::string name) const
+	bool Attributed::IsPrescribedAttribute(const string& name) const
 	{
 		if (IsAttribute(name))
 		{
@@ -155,17 +158,17 @@ namespace Library
 		return false;
 	}
 
-	bool Attributed::IsAuxiliaryAttribute(std::string name) const
+	bool Attributed::IsAuxiliaryAttribute(const string& name) const
 	{
 		return !IsPrescribedAttribute(name);
 	}
 
-	bool Attributed::IsAttribute(std::string name) const
+	bool Attributed::IsAttribute(const string& name) const
 	{
 		return Find(name) != nullptr;
 	}
 
-	Datum& Attributed::AppendAuxiliaryAttribute(std::string name)
+	Datum& Attributed::AppendAuxiliaryAttribute(const string& name)
 	{
 		return Append(name);
 	}
@@ -174,19 +177,19 @@ namespace Library
 
 #pragma region Private Methods
 
-	/// Returns The signature of this attributed object
-	Attributed::Signature& Attributed::GetSignature(const std::string& name)
+	// Returns The signature of this attributed object
+	Attributed::Signature& Attributed::GetSignature(const string& name)
 	{	
 		Signature* result = nullptr;
 
 		if (!IsAttribute(name))
 		{
-			throw std::exception("Attempting to get signature of nonexistent attribute");
+			throw exception("Attempting to get signature of nonexistent attribute");
 		}
 
 		if (IsPrescribedAttribute(name))
 		{
-			for (std::uint32_t i = 0; i < mPrescribedAttributes.Size(); i++)
+			for (uint32_t i = 0; i < mPrescribedAttributes.Size(); i++)
 			{
 				if (mPrescribedAttributes[i].Name == name)
 				{
@@ -196,7 +199,7 @@ namespace Library
 		}
 		else
 		{	// We know it's an auxiliary attribute, so we're going to Search through those now
-			for (std::uint32_t i = 0; i < mAuxiliaryAttributes.Size(); i++)
+			for (uint32_t i = 0; i < mAuxiliaryAttributes.Size(); i++)
 			{
 				if (mAuxiliaryAttributes[i].Name == name)
 				{

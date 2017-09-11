@@ -2,6 +2,8 @@
 #include "ActionListIf.h"
 
 
+using namespace std;
+
 namespace Library
 {
 	ActionListIf::ActionListIf()
@@ -15,7 +17,7 @@ namespace Library
 	{
 		if (mCondition != 0)
 		{
-			for (std::uint32_t i = 0; i < (*this)["Then"].Size(); i++)
+			for (uint32_t i = 0; i < (*this)["Then"].Size(); i++)
 			{
 				assert((*this)["Then"].Get<Scope*>(i)->Is(Action::TypeIdClass()));
 				(*this)["Then"].Get<Scope*>(i)->As<Action>()->Update(worldState);
@@ -23,7 +25,7 @@ namespace Library
 		}
 		else
 		{
-			for (std::uint32_t i = 0; i < (*this)["Else"].Size(); i++)
+			for (uint32_t i = 0; i < (*this)["Else"].Size(); i++)
 			{
 				assert((*this)["Else"].Get<Scope*>(i)->Is(Action::TypeIdClass()));
 				(*this)["Else"].Get<Scope*>(i)->As<Action>()->Update(worldState);
@@ -31,17 +33,17 @@ namespace Library
 		}
 	}
 
-	void ActionListIf::SetCondition(std::int32_t condition)
+	void ActionListIf::SetCondition(const int32_t& condition)
 	{
 		mCondition = condition;
 	}
 
-	std::int32_t ActionListIf::GetCondition() const
+	int32_t ActionListIf::GetCondition() const
 	{
 		return mCondition;
 	}
 
-	Action* ActionListIf::CreateThenAction(const std::string& className, const std::string& instanceName)
+	Action* ActionListIf::CreateThenAction(const string& className, const string& instanceName)
 	{
 		Action* instance = Factory<Action>::Create(className);
 		assert(instance != nullptr);
@@ -50,7 +52,7 @@ namespace Library
 		return instance;
 	}
 
-	Action* ActionListIf::CreateElseAction(const std::string& className, const std::string& instanceName)
+	Action* ActionListIf::CreateElseAction(const string& className, const string& instanceName)
 	{
 		Action* instance = Factory<Action>::Create(className);
 		assert(instance != nullptr);

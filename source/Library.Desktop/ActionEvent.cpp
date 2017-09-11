@@ -1,13 +1,9 @@
 #include "pch.h"
 #include "ActionEvent.h"
-#include "EventMessageAttributed.h"
-#include "WorldState.h"
-#include "World.h"
-#include "Event.h"
-#include "GameTime.h"
 
 
-using namespace std::chrono;
+using namespace std;
+using namespace chrono;
 
 namespace Library
 {
@@ -19,9 +15,9 @@ namespace Library
 		(*this)["Delay"] = 0;
 
 		mPrescribedAttributes.PushBack(
-			Signature("Subtype", DatumType::String, 1u, static_cast<std::string*>(nullptr)));
+			Signature("Subtype", DatumType::String, 1u, static_cast<string*>(nullptr)));
 		mPrescribedAttributes.PushBack(
-			Signature("Delay", DatumType::Integer, 1u, static_cast<std::int32_t*>(nullptr)));
+			Signature("Delay", DatumType::Integer, 1u, static_cast<int32_t*>(nullptr)));
 	}
 
 	void ActionEvent::Update(WorldState& worldState)
@@ -30,7 +26,7 @@ namespace Library
 		ema.SetWorldState(worldState);
 		ema.SetSubtype(GetSubtype());
 
-		for (auto iter = Begin(); iter != End(); ++iter)
+		for (auto iter = begin(); iter != end(); ++iter)
 		{
 			if (IsAuxiliaryAttribute((*iter).first))
 			{
@@ -40,26 +36,26 @@ namespace Library
 		}
 
 		Event<EventMessageAttributed>* event = new Event<EventMessageAttributed>(ema, true);
-		auto& delay = (*this)["Delay"].Get<std::int32_t>(0);
+		auto& delay = (*this)["Delay"].Get<int32_t>(0);
 		worldState.world->GetEventQueue().Enqueue(*event, worldState.GetGameTime(), milliseconds(delay));
 	}
 
-	std::string ActionEvent::GetSubtype()
+	string ActionEvent::GetSubtype()
 	{
-		return (*this)["Subtype"].Get<std::string>(0);
+		return (*this)["Subtype"].Get<string>(0);
 	}
 
-	void ActionEvent::SetSubtype(const std::string& subtype)
+	void ActionEvent::SetSubtype(const string& subtype)
 	{
 		(*this)["Subtype"] = subtype;
 	}
 
-	const std::int32_t& ActionEvent::GetDelay()
+	const int32_t& ActionEvent::GetDelay()
 	{
-		return (*this)["Delay"].Get<std::int32_t>(0);
+		return (*this)["Delay"].Get<int32_t>(0);
 	}
 
-	void ActionEvent::SetDelay(const std::int32_t delay)
+	void ActionEvent::SetDelay(const int32_t& delay)
 	{
 		(*this)["Delay"] = delay;
 	}

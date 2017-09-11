@@ -88,7 +88,7 @@ namespace Library
 		void Update(class WorldState& worldState);
 
 	private:
-		std::string mName; /// The Name of the entity
+		std::string mName; // The Name of the entity
 	};
 		
 #define EntityFactory(ConcreteEntity) ConcreteFactory(Entity, ConcreteEntity)

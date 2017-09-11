@@ -1,9 +1,8 @@
 #include "pch.h"
 #include "ActionCreateAction.h"
-#include "Entity.h"
-#include "ActionList.h"
-#include "WorldState.h"
 
+
+using namespace std;
 
 namespace Library
 {
@@ -32,12 +31,12 @@ namespace Library
 		worldState.action = nullptr;
 	}
 
-	void ActionCreateAction::SetPrototype(const std::string& name)
+	void ActionCreateAction::SetPrototype(const string& name)
 	{
 		(*this)["Prototype"] = name;
 	}
 
-	std::string ActionCreateAction::GetPrototype() const
+	string ActionCreateAction::GetPrototype() const
 	{
 		return mPrototype;
 	}

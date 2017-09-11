@@ -18,7 +18,7 @@ namespace Library
 		 * Constructor
 		 * @Param Capacity: Initial Capacity of the scope. Defaulted to 1
 		 */
-		Scope(std::uint32_t capacity = 1);
+		Scope(const std::uint32_t& capacity = 1);
 
 		/**
 		 * Copy constructor
@@ -110,7 +110,7 @@ namespace Library
 		 * @Return: A reference to the Datum found with the associated index
 		 * @Exception: Thrown if accessing beyond the vector's bounds
 		 */
-		Datum& operator[](const std::uint32_t index);
+		Datum& operator[](const std::uint32_t& index);
 
 		/**
 		 * Equality operator
@@ -151,13 +151,13 @@ namespace Library
 		 * Accesses the begin iterator for the undrlying hashmap
 		 * @Return: An iterator pointing to the beginning of the hashmap
 		 */
-		HashMap<const std::string, Datum>::Iterator Begin();
+		HashMap<const std::string, Datum>::Iterator begin() const;
 
 		/**
 		 * Accesses the end iterator for the undrlying hashmap
 		 * @Return: An iterator pointing to the end of the hashmap
 		 */
-		HashMap<const std::string, Datum>::Iterator End();
+		HashMap<const std::string, Datum>::Iterator end() const;
 
 	private:
 

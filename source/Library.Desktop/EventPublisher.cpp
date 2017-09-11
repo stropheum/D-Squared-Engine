@@ -1,17 +1,15 @@
 #include "pch.h"
 #include "EventPublisher.h"
-#include "EventSubscriber.h"
-#include <vector>
-#include <future>
 
 
-using namespace std::chrono;
+using namespace std;
+using namespace chrono;
 
 namespace Library
 {
 	RTTI_DEFINITIONS(EventPublisher)
 
-	EventPublisher::EventPublisher(Vector<EventSubscriber*>* subscriberList, std::mutex& subscriberListMutex, bool deleteAfterPublishing):
+	EventPublisher::EventPublisher(Vector<EventSubscriber*>* subscriberList, mutex& subscriberListMutex, bool deleteAfterPublishing):
 		mDeleteAfterPublishing(deleteAfterPublishing), mTimeEnqueued(), mMillisecondDelay(0), mSubscriberList(subscriberList), mSubscriberListMutex(&subscriberListMutex)
 	{
 	}
@@ -34,7 +32,7 @@ namespace Library
 		return *this;
 	}
 
-	EventPublisher::EventPublisher(EventPublisher&& rhs):
+	EventPublisher::EventPublisher(EventPublisher&& rhs) noexcept:
 		mDeleteAfterPublishing(rhs.mDeleteAfterPublishing), mTimeEnqueued(rhs.mTimeEnqueued), 
 		mMillisecondDelay(rhs.mMillisecondDelay), mSubscriberList(rhs.mSubscriberList), mSubscriberListMutex(rhs.mSubscriberListMutex)
 	{
@@ -42,7 +40,7 @@ namespace Library
 		rhs.mSubscriberList = nullptr;
 	}
 
-	EventPublisher& EventPublisher::operator=(EventPublisher&& rhs)
+	EventPublisher& EventPublisher::operator=(EventPublisher&& rhs) noexcept
 	{
 		if (this != &rhs)
 		{
@@ -58,7 +56,7 @@ namespace Library
 		return *this;
 	}
 
-	void EventPublisher::SetTime(const high_resolution_clock::time_point& timePoint, milliseconds millisecondDelay)
+	void EventPublisher::SetTime(const high_resolution_clock::time_point& timePoint, const milliseconds& millisecondDelay)
 	{
 		mTimeEnqueued = timePoint;
 		mMillisecondDelay = millisecondDelay;
@@ -69,26 +67,26 @@ namespace Library
 		return mTimeEnqueued;
 	}
 
-	std::chrono::milliseconds EventPublisher::Delay() const
+	chrono::milliseconds EventPublisher::Delay() const
 	{
 		return mMillisecondDelay;
 	}
 
-	bool EventPublisher::IsExpired(const std::chrono::high_resolution_clock::time_point& timePoint) const
+	bool EventPublisher::IsExpired(const chrono::high_resolution_clock::time_point& timePoint) const
 	{
 		return timePoint > (mTimeEnqueued + mMillisecondDelay);
 	}
 
-	void EventPublisher::Deliver()
+	void EventPublisher::Deliver() const
 	{
-		std::vector<std::future<void>> futures;
+		vector<future<void>> futures;
 		{
-			std::lock_guard<std::mutex> guard(*mSubscriberListMutex);
+			lock_guard<mutex> guard(*mSubscriberListMutex);
 			Vector<EventSubscriber*> subListCopy(*mSubscriberList);
-			for (std::uint32_t i = 0; i < subListCopy.Size(); i++)
+			for (uint32_t i = 0; i < subListCopy.Size(); i++)
 			{
 				EventSubscriber* subscriber = subListCopy[i];
-				futures.emplace_back(std::async(&EventSubscriber::Notify, subscriber, std::cref(*this)));
+				futures.emplace_back(async(&EventSubscriber::Notify, subscriber, cref(*this)));
 			}
 		}
 

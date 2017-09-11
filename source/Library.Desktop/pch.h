@@ -1,22 +1,23 @@
-// pch.h : include file for standard system include files,
-// or project specific include files that are used frequently, but
-// are changed infrequently
-//
-
 #pragma once
-//#include "targetver.h"
+
 #include <SDKDDKVer.h>
-#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
+#define WIN32_LEAN_AND_MEAN
 
-
-/// Include headers
-#include "windows.h"
+/////////////////////////////
+//  Project Dependencies  //
+///////////////////////////
 #include <cstdint>
 #include <cstdlib>
 #include <exception>
 #include <string>
-#include "RTTI.h"
+#include <vector>
+#include <future>
+#include <sstream>
 
+//////////////////////////
+//  Local Dependencies //
+////////////////////////
+#include "RTTI.h"
 #include "TypeState.h"
 #include "IntegerState.h"
 #include "FloatState.h"
@@ -24,6 +25,23 @@
 #include "MatrixState.h"
 #include "StringState.h"
 #include "PointerState.h"
+#include "WorldState.h"
+#include "ActionList.h"
+#include "Entity.h"
+#include "ScopeState.h"
+#include "Scope.h"
+#include "Action.h"
+#include "EventSubscriber.h"
+#include "EventPublisher.h"
+#include "GameTime.h"
+#include "Event.h"
+#include "World.h"
+#include "EventMessageAttributed.h"
+#include "Vector.h"
+#include "SharedDataScope.h"
+#include "ActionListIf.h"
+#include "IXmlParseHelper.h"
+
 
 #define CLM_FORCE_CXX98
 #pragma warning(push)

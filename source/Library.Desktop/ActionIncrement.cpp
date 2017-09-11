@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "ActionIncrement.h"
-#include "WorldState.h"
 
+
+using namespace std;
 
 namespace Library
 {
@@ -18,7 +19,7 @@ namespace Library
 		worldState.action = nullptr;
 	}
 
-	std::int32_t ActionIncrement::GetIncrementCount() const
+	int32_t ActionIncrement::GetIncrementCount() const
 	{
 		return mIncrementCount;
 	}

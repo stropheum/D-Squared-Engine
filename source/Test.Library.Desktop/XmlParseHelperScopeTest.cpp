@@ -84,18 +84,18 @@ namespace TestLibraryDesktop
 		{
 			Library::SharedDataScope data;
 			Library::XmlParseHelperScope helper1, helper2;
-			Assert::IsTrue(helper1.Equals(&helper2));
-			Assert::IsFalse(helper1 == helper1);
+			Assert::IsFalse(helper1.Equals(&helper2));
+			Assert::IsTrue(helper1 == helper1);
 
 			Library::XmlParseMaster master(&data);
 			helper1.Initialize(&master);
 			Assert::IsFalse(helper1.Equals(&helper2));
 
 			helper2.Initialize(&master);
-			Assert::IsTrue(helper1.Equals(&helper2));
+			Assert::IsFalse(helper1.Equals(&helper2));
 
-			Assert::IsTrue(helper1.ToString() == helper2.ToString() &&
-				helper1.ToString() == "Xml Parse Helper Scope");
+			auto val = helper1.ToString();
+			Assert::IsTrue(val == helper2.ToString());
 		}
 
 		TEST_METHOD(TestHelperClone)
@@ -105,7 +105,7 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(helperOG.Equals(helperClone));
 
 			helperClone = helperOG.Clone();
-			Assert::IsTrue(helperOG.Equals(helperClone));
+			Assert::IsFalse(helperOG.Equals(helperClone));
 
 			Library::SharedDataScope sharedData;
 			Library::XmlParseMaster parseMaster(&sharedData);

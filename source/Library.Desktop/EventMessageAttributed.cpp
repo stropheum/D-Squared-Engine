@@ -2,18 +2,20 @@
 #include "EventMessageAttributed.h"
 
 
+using namespace std;
+
 namespace Library
 {
 	EventMessageAttributed::EventMessageAttributed() :
 		mSubtype(""), mWorldState(nullptr)
 	{}
 
-	const std::string& EventMessageAttributed::GetSubtype() const
+	const string& EventMessageAttributed::GetSubtype() const
 	{
 		return mSubtype;
 	}
 
-	void EventMessageAttributed::SetSubtype(const std::string& subtype)
+	void EventMessageAttributed::SetSubtype(const string& subtype)
 	{
 		mSubtype = subtype;
 	}

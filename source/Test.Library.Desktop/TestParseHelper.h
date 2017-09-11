@@ -35,7 +35,7 @@ namespace Library
 		/// @Param buffer: The character data being parsed
 		/// @Param bufferLength: The number of characters in the buffer
 		/// @Return: True if the helper can handle parsing the data
-		void CharDataHandler(XmlParseMaster::SharedData& sharedData, const std::string& buffer, const std::uint32_t bufferLength) override;
+		void CharDataHandler(XmlParseMaster::SharedData& sharedData, const std::string& buffer, const std::uint32_t& bufferLength) override;
 
 		/// Method used for copying instances of Parse helpers
 		/// @Return: Pointer to the freshly allocated Parse helper

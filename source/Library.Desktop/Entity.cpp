@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "Entity.h"
-#include "Action.h"
-#include "WorldState.h"
 
+
+using namespace std;
 
 namespace Library
 {
@@ -14,12 +14,12 @@ namespace Library
 		(*this)["Actions"].SetType(DatumType::Scope);
 	}
 
-	std::string Entity::Name() const
+	string Entity::Name() const
 	{
 		return mName;
 	}
 
-	void Entity::SetName(const std::string& name)
+	void Entity::SetName(const string& name)
 	{
 		(*this)["Name"] = name;
 	}
@@ -29,7 +29,7 @@ namespace Library
 		return (*this)["Actions"];
 	}
 
-	Action* Entity::CreateAction(const std::string& className, const std::string& instanceName)
+	Action* Entity::CreateAction(const string& className, const string& instanceName)
 	{
 		Action* instance = Factory<Action>::Create(className);
 		assert(instance != nullptr);
@@ -47,7 +47,7 @@ namespace Library
 	{
 		if (GetParent() == nullptr)
 		{
-			throw std::exception("Parent is null");
+			throw exception("Parent is null");
 		}
 		assert(GetParent()->Is(Sector::TypeIdClass()));
 		return *GetParent()->As<Sector>();
@@ -57,7 +57,7 @@ namespace Library
 	{
 		worldState.entity = this;
 
-		for (std::uint32_t i = 0; i < (*this)["Actions"].Size(); i++)
+		for (uint32_t i = 0; i < (*this)["Actions"].Size(); i++)
 		{
 			Scope* scope = (*this)["Actions"].Get<Scope*>(i);
 			assert(scope != nullptr);

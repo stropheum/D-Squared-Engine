@@ -144,13 +144,13 @@ namespace Library
 		 * @Param length: The number of characters in the xml data
 		 * @Param endOfFile: Value used to determine if parsing has reached the end of the data. Used if chunking is utilized
 		 */
-		void Parse(char* const xmlData, const std::uint32_t length, const bool endOfFile);
+		void Parse(char* const xmlData, const std::uint32_t& length, const bool endOfFile);
 
 		/**
 		 * Parses all xml data in the current file
 		 * @Param fileName: The path of the file being parsed
 		 */
-		void ParseFromFile(std::string fileName);
+		void ParseFromFile(const std::string& fileName);
 
 		/**
 		 * Accessor method for the Name of the file currently being parsed

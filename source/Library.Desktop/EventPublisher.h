@@ -43,21 +43,21 @@ namespace Library
 		 * Move copy constructor
 		 * @Param rhs: The event publisher being copied
 		 */
-		EventPublisher(EventPublisher&& rhs);
+		EventPublisher(EventPublisher&& rhs) noexcept;
 
 		/**
 		 * Move assignment operator
 		 * @Param rhs: The event publisher being copied
 		 * @Return: A reference to the newly copied event publisher
 		 */
-		EventPublisher& operator=(EventPublisher&& rhs);
+		EventPublisher& operator=(EventPublisher&& rhs) noexcept;
 
 		/**
 		 * Sets the time point and Delay of the event publisher
 		 * @Param timePoint: The current time point of the event publisher
 		 * @Param millisecondDelay: The Delay before the event gets delivered
 		 */
-		void SetTime(const std::chrono::high_resolution_clock::time_point& timePoint, std::chrono::milliseconds millisecondDelay = std::chrono::milliseconds(0));
+		void SetTime(const std::chrono::high_resolution_clock::time_point& timePoint, const std::chrono::milliseconds& millisecondDelay = std::chrono::milliseconds(0));
 
 		/**
 		 * Accessor method for the time that the event was queued
@@ -81,7 +81,7 @@ namespace Library
 		/**
 		 * Delivers the event to any subscribers listening for it
 		 */
-		void Deliver();
+		void Deliver() const;
 
 		/**
 		 * Accessor method for whether this event is deleted after it is published
@@ -90,9 +90,11 @@ namespace Library
 		bool DeleteAfterPublishing() const;
 
 	protected:
+
 		bool mDeleteAfterPublishing; // Boolean to determine if this event is deleted after being published
 
 	private:
+
 		std::chrono::high_resolution_clock::time_point mTimeEnqueued;	// The time point when this event was queued
 		std::chrono::milliseconds mMillisecondDelay;	// The amount of Delay assigned for this event
 		Vector<class EventSubscriber*>* mSubscriberList;	// The list of subscribers to Notify of This event Type

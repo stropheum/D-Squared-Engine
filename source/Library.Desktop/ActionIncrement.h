@@ -32,6 +32,7 @@ namespace Library
 		std::int32_t GetIncrementCount() const;
 
 	private:
+
 		std::int32_t mIncrementCount;
 	};
 

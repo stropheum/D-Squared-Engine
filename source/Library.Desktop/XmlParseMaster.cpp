@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "XmlParseMaster.h"
-#include "IXmlParseHelper.h"
 #include "fstream"
 
+
+using namespace std;
 
 namespace Library
 {
@@ -22,7 +23,7 @@ namespace Library
 		{
 			delete mSharedData;
 
-			for (std::uint32_t i = 0; i < mHelpers.Size(); i++)
+			for (uint32_t i = 0; i < mHelpers.Size(); i++)
 			{
 				delete mHelpers[i];
 			}
@@ -38,7 +39,7 @@ namespace Library
 		newParseMaster->mClonedInstance = true;
 		newParseMaster->mActiveFileName = mActiveFileName;
 		
-		for (std::uint32_t i = 0; i < mHelpers.Size(); i++)
+		for (uint32_t i = 0; i < mHelpers.Size(); i++)
 		{
 			newParseMaster->mHelpers.PushBack(mHelpers[i]->Clone());
 		}
@@ -56,23 +57,22 @@ namespace Library
 		mHelpers.Remove(&helper);
 	}
 
-	void XmlParseMaster::Parse(char* const xmlData, const std::uint32_t length, const bool endOfFile)
+	void XmlParseMaster::Parse(char* const xmlData, const uint32_t& length, const bool endOfFile)
 	{
 		HandleHelperInitialization();
 		XML_Parse(mXmlParser, xmlData, length, endOfFile);
 	}
 
-	void XmlParseMaster::ParseFromFile(std::string fileName)
+	void XmlParseMaster::ParseFromFile(const string& fileName)
 	{
 		HandleHelperInitialization();
 
 		mActiveFileName = fileName;
-		std::ifstream input;
-		std::int32_t length;
-		input.open(fileName, std::ios::binary);
-		input.seekg(0, std::ios::end);
-		length = static_cast<std::int32_t>(input.tellg());
-		input.seekg(std::ios::beg);
+		ifstream input;
+		input.open(fileName, ios::binary);
+		input.seekg(0, ios::end);
+		int32_t length = static_cast<int32_t>(input.tellg());
+		input.seekg(ios::beg);
 
 		char* buffer = new char[length];
 		input.read(buffer, length);
@@ -81,7 +81,7 @@ namespace Library
 		delete[] buffer;
 	}
 
-	const std::string& XmlParseMaster::GetFileName() const
+	const string& XmlParseMaster::GetFileName() const
 	{
 		return mActiveFileName;
 	}
@@ -100,18 +100,18 @@ namespace Library
 	{
 		SharedData* data = static_cast<SharedData*>(userData);
 
-		HashMap<std::string, std::string> attributes;
+		HashMap<string, string> attributes;
 		
-		for (std::uint32_t i = 0; atts[i]; i += 2)
+		for (uint32_t i = 0; atts[i]; i += 2)
 		{
-			std::string key = atts[i];
-			std::string value = atts[i + 1];
+			string key = atts[i];
+			string value = atts[i + 1];
 			attributes[key] = value;
 		}
 
 		Vector<IXmlParseHelper*>& helpers = data->GetXmlParseMaster()->mHelpers;
 
-		for (std::uint32_t i = 0; i < helpers.Size(); i++)
+		for (uint32_t i = 0; i < helpers.Size(); i++)
 		{
 			if (helpers[i]->StartElementHandler(*data, name, attributes))
 			{
@@ -127,7 +127,7 @@ namespace Library
 		SharedData* data = static_cast<SharedData*>(userData);
 		Vector<IXmlParseHelper*>& helpers = data->GetXmlParseMaster()->mHelpers;
 
-		for (std::uint32_t i = 0; i < helpers.Size(); i++)
+		for (uint32_t i = 0; i < helpers.Size(); i++)
 		{
 			if (helpers[i]->EndElementHandler(*data, name))
 			{
@@ -150,7 +150,7 @@ namespace Library
 	{
 		if (!mHelpersAreInitialized)
 		{
-			for (std::uint32_t i = 0; i < mHelpers.Size(); i++)
+			for (uint32_t i = 0; i < mHelpers.Size(); i++)
 			{	// Initialize all Parse helpers so they reflect the correct Parse master
 				mHelpers[i]->Initialize(this);
 			}

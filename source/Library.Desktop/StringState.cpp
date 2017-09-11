@@ -2,17 +2,14 @@
 #include "StringState.h"
 
 
+using namespace std;
+
 namespace Library
 {
-	/// Constructor
-	/// @Param context: The Datum object that the state operates one
 	StringState::StringState(Datum* const context):
 		TypeState(context)
 	{}
 
-	/// Comparison operator for Datum objects
-	/// @Param rhs: The Datum object being compared against
-	/// @Return: True if type, Size, and each element of the Datum objects are equivalent. False otherwise
 	bool StringState::operator==(const Datum& rhs)
 	{
 		bool result = false;
@@ -20,7 +17,7 @@ namespace Library
 		if (mContext->mType == rhs.mType && mContext->mSize == rhs.mSize && mContext->mCapacity == rhs.mCapacity)
 		{
 			result = true;
-			for (std::uint32_t i = 0; i < mContext->mSize; i++)
+			for (uint32_t i = 0; i < mContext->mSize; i++)
 			{
 				if (mContext->mData.s[i] != rhs.mData.s[i])
 				{
@@ -33,91 +30,73 @@ namespace Library
 		return result;
 	}
 
-	/// Scalar assignment operator
-	/// @Param rhs: The string being Set to the only element in the Datum
-	/// @Return: The modified Datum object
-	Datum& StringState::operator=(const std::string& rhs)
+	Datum& StringState::operator=(const string& rhs)
 	{
-		if (mContext->mSize > 1) throw std::exception("Invalid assignment invocation");
+		if (mContext->mSize > 1) throw exception("Invalid assignment invocation");
 		if (mContext->mSize == 0) mContext->SetSize(1);
-//		new(mContext->mData.s) std::string(rhs);
 		mContext->mData.s[0] = rhs;
 		return *mContext;
 	}
 
-	/// Sets the number of strings in the local buffer
-	/// @Param Capacity: The current maximum Size of the array
-	void StringState::SetSize(std::uint32_t size)
+	void StringState::SetSize(const uint32_t& size)
 	{
 		if (size < mContext->mSize)
 		{
-			for (std::uint32_t i = size; i < mContext->mSize; i++)
+			for (uint32_t i = size; i < mContext->mSize; i++)
 			{
-				mContext->mData.s[i].std::string::~string();
+				mContext->mData.s[i].string::~string();
 			}
 		}
 
-		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(std::string) * size);
+		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(string) * size);
 
 		if (size > mContext->mSize)
 		{	// If our new Size is larger than before, we need to default construct new strings
-			for (std::uint32_t i = mContext->mSize; i < size; i++)
+			for (uint32_t i = mContext->mSize; i < size; i++)
 			{	// Use placement new to construct new strings
-				new(mContext->mData.s + i) std::string("");
+				new(mContext->mData.s + i) string("");
 			}
 		}
 
 		mContext->mCapacity = mContext->mSize = size;
 	}
 
-	/// Modifies the Capacity of the array to any value greater than or equal to current Size
-	/// @Param Capacity: The new Capacity of the array
-	void StringState::Reserve(std::uint32_t capacity)
+	void StringState::Reserve(const uint32_t& capacity)
 	{
 		if (capacity > mContext->mCapacity)
 		{
-			mContext->mData.vp = realloc(mContext->mData.vp, sizeof(std::string) * capacity);
+			mContext->mData.vp = realloc(mContext->mData.vp, sizeof(string) * capacity);
 			mContext->mCapacity = capacity;
 		}
 	}
 
-	/// Clears the value of all elements in the array without changing Capacity
 	void StringState::Clear()
 	{
 		if (mContext->mSize > 0)
 		{
-			for (std::uint32_t i = 0; i < mContext->mSize; i++)
+			for (uint32_t i = 0; i < mContext->mSize; i++)
 			{	// Placement new an empty string onto the array
-				mContext->mData.s[i].std::string::~string();
+				mContext->mData.s[i].string::~string();
 			}
 			mContext->mSize = 0;
 		}
 	}
 
-	/// Parses a string value and assigns the specified index of the array to its value
-	/// @Param value: The string value being parsed
-	/// @Param index: The index of the array being assigned to
-	void StringState::SetFromString(const std::string& value, const std::uint32_t& index)
+	void StringState::SetFromString(const string& value, const uint32_t& index)
 	{   // Strings don't have to be parsed, so they can be passed directly to Set
 		mContext->Set(value, index); 
 	}
 
-	/// Sets external storage on copy
-	/// @Param rhs: The Datum object that the storage reference is being taken from
 	void StringState::SetStorage(const Datum& rhs)
 	{
 		SetStorage(rhs.mData.s, rhs.mSize);
 	}
 
-	/// Sets the external storage to the specified pointer
-	/// @Param data: The external storage being utilized
-	/// @Pram Size: The number of elements in the external storage
-	/// @Exception: Thrown if attempting to reassign datum Type, or if local memory is already used
-	void StringState::SetStorage(std::string* data, std::uint32_t size)
+	void StringState::SetStorage(string* data, const uint32_t& size)
 	{
 		if (mContext->mType != DatumType::String)
 		{
-			throw std::exception("Attempting to reassign Datum Type");
+			throw exception("Attempting to reassign Datum Type");
 		}
 		
 		if (mContext->mCapacity > 0) { Clear(); }
@@ -127,10 +106,8 @@ namespace Library
 		mContext->mCapacity = mContext->mSize = size;
 	}
 
-	/// A string representation of a piece of data stored in the Datum object
-	/// @Param index: Optional index of the value being retrieved. Defaulted to first element
-	std::string StringState::ToString(std::uint32_t index)
+	string StringState::ToString(const uint32_t& index)
 	{
-		return mContext->Get<std::string>(index);
+		return mContext->Get<string>(index);
 	}
 }

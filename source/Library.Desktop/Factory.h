@@ -9,9 +9,11 @@ namespace Library
 
 #pragma region ConcreteFactory Macro
 
-// Macro used to generate factories for concrete products. 
-// This macro should be put in the header file of any class 
-// that wishes to have an associated factory
+/**
+ * Macro used to generate factories for concrete products. 
+ * This macro should be put in the header file of any class 
+ * that wishes to have an associated factory
+ */
 #define ConcreteFactory(AbstractProduct, ConcreteProduct)				\
 	class ConcreteProduct##Factory : public Factory<AbstractProduct>	\
 	{																	\
@@ -71,7 +73,7 @@ namespace Library
 		 * @Param ClassName: The Name of the factory in question
 		 * @Return: A pointer to the factory if it exists, nullptr otherwise
 		 */
-		static Factory<AbstractProduct>* Find(const std::string className)
+		static Factory<AbstractProduct>* Find(const std::string& className)
 		{
 			Factory<AbstractProduct>* result = nullptr;
 
@@ -89,7 +91,7 @@ namespace Library
 		 * @Param ClassName: The Name of the product being created
 		 * @Return: A pointr to the created product if a factory exists to Create one. Nullptr otherwise
 		 */
-		static AbstractProduct* Create(const std::string className)
+		static AbstractProduct* Create(const std::string& className)
 		{
 			AbstractProduct* result = nullptr;
 

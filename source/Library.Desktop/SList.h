@@ -133,7 +133,7 @@ namespace Library
 		 * Removes the first instance of a value from the list
 		 * @Param value: The value being removed from the list
 		 */
-		void Remove(T value);
+		void Remove(const T& value);
 
 		class Iterator
 		{
@@ -201,6 +201,7 @@ namespace Library
 		};
 
 	private:
+
 		class Node
 		{
 		public:
@@ -209,7 +210,7 @@ namespace Library
 			 *Constructor
 			 *@Param data: The value contained in the node
 			 */
-			Node(T data) : mData(data), mNext(nullptr) {}
+			explicit Node(T data) : mData(data), mNext(nullptr) {}
 
 			/**
 			 * Node destructor

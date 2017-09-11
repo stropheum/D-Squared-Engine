@@ -41,14 +41,14 @@ namespace Library
 		 * Move copy constructor
 		 * @Param rhs: The event being moved to this object
 		 */
-		Event(Event<Payload>&& rhs);
+		Event(Event<Payload>&& rhs) noexcept;
 
 		/**
 		 * Move assignment operator
 		 * @Param rhs: The event being moved
 		 * @Return: The newly moved event
 		 */
-		Event<Payload>& operator=(Event<Payload>&& rhs);
+		Event<Payload>& operator=(Event<Payload>&& rhs) noexcept;
 
 		/**
 		 * Adds the event subscriber to the static list of event subscribers
@@ -74,8 +74,9 @@ namespace Library
 		const Payload& Message();
 
 	private:
+
 		Payload mPayload; // The object that will be carried to the event subscribers for this Type
-		static Vector<class EventSubscriber*> sSubscriberList; /// The static list of event subscribers for this event Type
+		static Vector<class EventSubscriber*> sSubscriberList; // The static list of event subscribers for this event Type
 		static std::mutex sSubscriberListMutex;
 	};
 }

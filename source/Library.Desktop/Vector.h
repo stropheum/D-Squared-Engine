@@ -21,7 +21,7 @@ namespace Library
 		 * Default constructor
 		 * Allocates memory in mBuffer for a Capacity of 10 templated values
 		 */
-		Vector(bool fixedSize = false);
+		explicit Vector(bool fixedSize = false);
 
 		/**
 		 * Copy constructor
@@ -114,7 +114,7 @@ namespace Library
 		 * @Return: A reference to the element At the specified index
 		 * @Exception: Thrown if index is greater than or equal to Size
 		 */
-		T& At(const std::uint32_t index);
+		T& At(const std::uint32_t& index);
 
 		/**
 		 * Searches for an element in the vector by index
@@ -122,7 +122,7 @@ namespace Library
 		 * @Return: A const reference to the element At the specified index
 		 * @Exception: Thrown if index is greater than or equal to Size
 		 */
-		const T& At(const std::uint32_t index) const;
+		const T& At(const std::uint32_t& index) const;
 
 		/**
 		 * Searches for an element in the Vector by index
@@ -130,7 +130,7 @@ namespace Library
 		 * @Return: A reference to the element At the specified index. Throws exception if out of bounds
 		 * @Exception: Thrown if accessing an index greater than or equal to Size
 		 */
-		T& operator[](const std::uint32_t index);
+		T& operator[](const std::uint32_t& index);
 
 		/**
 		 * Const version of the index operator
@@ -138,7 +138,7 @@ namespace Library
 		 * @Return: A const reference to the element At the specified index. Throws exception if out of bounds
 		 * @Exception: Thrown if accessing an index greater than or equal to Size
 		 */
-		const T& operator[](const std::uint32_t index) const;
+		const T& operator[](const std::uint32_t& index) const;
 
 		/**
 		 * removes the last element pushed to the Back of the Vector
@@ -269,7 +269,7 @@ namespace Library
 			 * @Param owner: The Vector that owns this Iterator object
 			 * @Param index: The location that this iterator points to
 			 */
-			Iterator(const Vector<T>* owner, const std::uint32_t index);
+			Iterator(const Vector<T>* owner, const std::uint32_t& index);
 			
 			const Vector<T>* mOwner; // The vector that owns this Iterator
 			std::uint32_t mIndex; // The location that this iterator points to

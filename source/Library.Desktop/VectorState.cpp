@@ -2,17 +2,14 @@
 #include "VectorState.h"
 
 
+using namespace std;
+
 namespace Library
 {
-	/// Constructor
-	/// @Param context: The Datum object that the state operates one
 	VectorState::VectorState(Datum* const context):
 		TypeState(context)
 	{}
 
-	/// Comparison operator for Datum objects
-	/// @Param rhs: The Datum object being compared against
-	/// @Return: True if type, Size, and each element of the Datum objects are equivalent. False otherwise
 	bool VectorState::operator==(const Datum& rhs)
 	{
 		bool result = false;
@@ -20,7 +17,7 @@ namespace Library
 		if (mContext->mType == rhs.mType && mContext->mSize == rhs.mSize)
 		{
 			result = true;
-			for (std::uint32_t i = 0; i < mContext->mSize; i++)
+			for (uint32_t i = 0; i < mContext->mSize; i++)
 			{
 				if (mContext->mData.v[i] != rhs.mData.v[i])
 				{
@@ -33,36 +30,29 @@ namespace Library
 		return result;
 	}
 
-	/// Scalar assignment operator
-	/// @Param rhs: The vector being set to the only element in the Datum
-	/// @Return: The modified Datum object
 	Datum& VectorState::operator=(const glm::vec4& rhs)
 	{
-		if (mContext->mSize > 1) throw std::exception("Invalid assignment invocation");
+		if (mContext->mSize > 1) throw exception("Invalid assignment invocation");
 		if (mContext->mSize == 0) mContext->SetSize(1);
 		mContext->mData.v[0] = rhs;
 		return *mContext;
 	}
 
-	/// Reserves the number of vectors in the local buffer
-	/// @Param Capacity: The current maximum Size of the array
-	void VectorState::SetSize(std::uint32_t size)
+	void VectorState::SetSize(const uint32_t& size)
 	{
 		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(glm::vec4) * size);
 		mContext->mCapacity = mContext->mSize = size;
 
 		if (size <mContext->mSize)
 		{
-			for (std::uint32_t i = size; i < mContext->mSize; i++)
+			for (uint32_t i = size; i < mContext->mSize; i++)
 			{
 				mContext->mData.v[i] = glm::vec4(0);
 			}
 		}
 	}
 
-	/// Modifies the Capacity of the array to any value greater than or equal to current Size
-	/// @Param Capacity: The new Capacity of the array
-	void VectorState::Reserve(std::uint32_t capacity)
+	void VectorState::Reserve(const uint32_t& capacity)
 	{
 		if (capacity > mContext->mCapacity)
 		{
@@ -71,20 +61,16 @@ namespace Library
 		}
 	}
 
-	/// Clears the value of all elements in the array without changing Capacity
 	void VectorState::Clear()
 	{
 		if (mContext->mSize > 0)
 		{
-			for (std::uint32_t i = 0; i < mContext->mSize; i++) mContext->mData.v[i] = glm::vec4(NULL);
+			for (uint32_t i = 0; i < mContext->mSize; i++) mContext->mData.v[i] = glm::vec4(NULL);
 			mContext->mSize = 0;
 		}
 	}
 
-	/// Parses a string value and assigns the specified index of the array to its value
-	/// @Param value: The string value being parsed
-	/// @Param index: The index of the array being assigned to
-	void VectorState::SetFromString(const std::string& value, const std::uint32_t& index)
+	void VectorState::SetFromString(const string& value, const uint32_t& index)
 	{
 		float x;
 		float y;
@@ -94,21 +80,14 @@ namespace Library
 		mContext->Set(glm::vec4(x, y, z, w), index);
 	}
 
-	/// Sets external storage on copy
-	/// @Param rhs: The Datum object that the storage reference is being taken from
 	void VectorState::SetStorage(const Datum& rhs)
 	{
 		SetStorage(rhs.mData.v, rhs.mSize);
 	}
 
-	/// Sets the external storage to the specified pointer
-	/// @Param data: The external storage being utilized
-	/// @Pram Size: The number of elements in the external storage
-	/// @Exception: Thrown if attempting to reassign datum Type, or if local memory is already used
-	void VectorState::SetStorage(glm::vec4* data, std::uint32_t size)
+	void VectorState::SetStorage(glm::vec4* data, const uint32_t& size)
 	{
-		if (mContext->mType != DatumType::Vector) throw std::exception("Attempting to reassign Datum Type");
-//		if (mContext->mCapacity > 0) throw std::exception("Attempting to Set storage on a non-empty Datum object");
+		if (mContext->mType != DatumType::Vector) { throw exception("Attempting to reassign Datum Type"); }
 
 		if (mContext->mCapacity > 0) Clear();
 
@@ -118,9 +97,7 @@ namespace Library
 		mContext->mCapacity = mContext->mSize = size;
 	}
 
-	/// A string representation of a piece of data stored in the Datum object
-	/// @Param index: Optional index of the value being retrieved. Defaulted to first element
-	std::string VectorState::ToString(std::uint32_t index)
+	string VectorState::ToString(const uint32_t& index)
 	{
 		return glm::to_string(mContext->Get<glm::vec4>(index));
 	}

@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "World.h"
-#include "Factory.h"
-#include "WorldState.h"
 
+
+using namespace std;
 
 namespace Library
 {
@@ -14,12 +14,12 @@ namespace Library
 		(*this)["Sectors"].SetType(DatumType::Scope);
 	}
 
-	std::string World::Name() const
+	string World::Name() const
 	{
 		return mName;
 	}
 
-	void World::SetName(const std::string& name)
+	void World::SetName(const string& name)
 	{
 		(*this)["Name"] = name;
 	}
@@ -29,7 +29,7 @@ namespace Library
 		return (*this)["Sectors"];
 	}
 
-	Sector* World::CreateSector(const std::string& name)
+	Sector* World::CreateSector(const string& name)
 	{
 		Sector* sector = new Sector();
 		sector->SetName(name);
@@ -41,7 +41,7 @@ namespace Library
 	{
 		worldState.world = this;
 
-		for (std::uint32_t i = 0; i < Sectors().Size(); i++)
+		for (uint32_t i = 0; i < Sectors().Size(); i++)
 		{
 			assert(Sectors()[i].Is(Sector::TypeIdClass()));
 			Sectors()[i].As<Sector>()->Update(worldState);

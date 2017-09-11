@@ -1,10 +1,8 @@
 #include "pch.h"
 #include "ReactionAttributed.h"
-#include "Event.h"
-#include "EventMessageAttributed.h"
-#include "World.h"
-#include "Scope.h"
 
+
+using namespace std;
 
 namespace Library
 {
@@ -13,7 +11,7 @@ namespace Library
 		(*this)["Subtype"].SetType(DatumType::String);
 		(*this)["Subtype"] = "";
 		mPrescribedAttributes.PushBack(
-			Signature("Subtype", DatumType::String, 1u, static_cast<std::string*>(nullptr)));
+			Signature("Subtype", DatumType::String, 1u, static_cast<string*>(nullptr)));
 		Event<EventMessageAttributed>::Subscribe(*this);
 	}
 
@@ -33,10 +31,10 @@ namespace Library
 
 		auto lhs = message->GetSubtype();
 		auto rhs = GetSubtype();
-//		if (Message->GetSubtype() == GetSubtype())
+
 		if (lhs == rhs)
 		{
-			for (auto iter = message->Begin(); iter != message->End(); ++iter)
+			for (auto iter = message->begin(); iter != message->end(); ++iter)
 			{
 				auto& datum = AppendAuxiliaryAttribute((*iter).first);
 				datum.SetType((*iter).second.Type());
@@ -45,12 +43,12 @@ namespace Library
 		}
 	}
 
-	std::string ReactionAttributed::GetSubtype()
+	string ReactionAttributed::GetSubtype()
 	{
-		return (*this)["Subtype"].Get<std::string>(0);
+		return (*this)["Subtype"].Get<string>(0);
 	}
 
-	void ReactionAttributed::SetSubtype(const std::string& subtype)
+	void ReactionAttributed::SetSubtype(const string& subtype)
 	{
 		(*this)["Subtype"] = subtype;
 	}

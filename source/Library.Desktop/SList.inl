@@ -210,7 +210,7 @@ namespace Library
 	}
 
 	template <typename T>
-	void SList<T>::Remove(T value)
+	void SList<T>::Remove(const T& value)
 	{
 		if (mFront->mData == value)
 		{
@@ -236,9 +236,6 @@ namespace Library
 		}
 	}
 
-	/// /////////////////////////////// ///
-	///  SList Iterator implementation  ///
-	/// /////////////////////////////// ///
 
 	template <typename T>
 	SList<T>::Iterator::Iterator(SList<T>* owner, Node* node) :

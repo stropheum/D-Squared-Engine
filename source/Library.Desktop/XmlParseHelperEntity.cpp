@@ -1,25 +1,19 @@
 #include "pch.h"
 #include "XmlParseHelperEntity.h"
-#include "SharedDataScope.h"
-#include "Scope.h"
-#include <sstream>
-#include "World.h"
-#include "Sector.h"
-#include "Entity.h"
-#include "Action.h"
-#include "ActionListIf.h"
 
+
+using namespace std;
 
 namespace Library
 {
 	RTTI_DEFINITIONS(XmlParseHelperEntity)
 
 		XmlParseHelperEntity::XmlParseHelperEntity() :
-		mState(State::NotParsing), mPreviousState(State::NotParsing), mMatrixName(""), mMatrixComponentCount(0), mScopeHasBeenInitialized(false)
+		mState(State::NotParsing), mPreviousState(State::NotParsing), mActionSubType(), mMatrixName(""), mMatrixComponentCount(0), mScopeHasBeenInitialized(false)
 	{
-		for (std::uint32_t i = 0; i < 4; i++)
+		for (uint32_t i = 0; i < 4; i++)
 		{
-			for (std::uint32_t j = 0; j < 4; j++)
+			for (uint32_t j = 0; j < 4; j++)
 			{
 				mMatrixComponents[i][j] = "";
 			}
@@ -37,9 +31,9 @@ namespace Library
 
 		clone->mState = mState;
 		clone->mMatrixComponentCount = mMatrixComponentCount;
-		for (std::uint32_t i = 0; i < 4; i++)
+		for (uint32_t i = 0; i < 4; i++)
 		{
-			for (std::uint32_t j = 0; j < 4; j++)
+			for (uint32_t j = 0; j < 4; j++)
 			{
 				clone->mMatrixComponents[i][j] = mMatrixComponents[i][j];
 			}
@@ -49,8 +43,8 @@ namespace Library
 	}
 
 	bool XmlParseHelperEntity::StartElementHandler(
-		XmlParseMaster::SharedData& sharedData, const std::string& element,
-		const HashMap<std::string, std::string> attributes)
+		XmlParseMaster::SharedData& sharedData, const string& element,
+		const HashMap<string, string> attributes)
 	{
 		// Store off state to revert once the end element handler has been met
 		mPreviousState = 
@@ -82,7 +76,7 @@ namespace Library
 		{
 			mState = (mState == State::ParsingMatrix) ? State::ParsingMatrix : State::ParsingVector;
 
-			std::string x, y, z, w;
+			string x, y, z, w;
 			x = attributes.Find("X")->second;
 			y = attributes.Find("Y")->second;
 			z = attributes.Find("Z")->second;
@@ -91,11 +85,11 @@ namespace Library
 			if (mState == State::ParsingVector)
 			{
 				assert(attributes.Find("Name") != attributes.end());
-				std::pair<std::string, std::string> pair = *attributes.Find("Name");
+				pair<string, string> pair = *attributes.Find("Name");
 				Datum& datum = scope->Append(attributes.Find("Name")->second);
 				datum.SetType(DatumType::Vector);
 
-				std::stringstream ss;
+				stringstream ss;
 				ss << "vec4(" << x << ", " << y << ", " << z << ", " << w << ")";
 				datum.SetFromString(ss.str());
 			}
@@ -131,7 +125,7 @@ namespace Library
 		{
 			if (mState != State::NotParsing || mScopeHasBeenInitialized)
 			{
-				throw std::exception("Already parsing while attempting to parse a world");
+				throw exception("Already parsing while attempting to parse a world");
 			}
 
 			mState = State::ParsingWorld;
@@ -145,7 +139,7 @@ namespace Library
 			assert(data->mScope->Is(World::TypeIdClass()));
 			if (mState != State::ParsingWorld)
 			{
-				throw std::exception("Attempting to parse a sector when not in a world");
+				throw exception("Attempting to parse a sector when not in a world");
 			}
 
 			mState = State::ParsingSector;
@@ -160,12 +154,12 @@ namespace Library
 			assert(data->mScope->Is(Sector::TypeIdClass()));
 			if(mState != State::ParsingSector)
 			{
-				throw std::exception("Attempting to parse an entity when not in a sector");
+				throw exception("Attempting to parse an entity when not in a sector");
 			}
 
 			mState = State::ParsingEntity;
-			std::string className = attributes.Find("ClassName")->second;
-			std::string instanceName = attributes.Find("InstanceName")->second;
+			string className = attributes.Find("ClassName")->second;
+			string instanceName = attributes.Find("InstanceName")->second;
 
 			Sector* sector = data->mScope->As<Sector>();
 			Entity* entity = sector->CreateEntity(className, instanceName);
@@ -178,12 +172,12 @@ namespace Library
 			assert(data->mScope->Is(Entity::TypeIdClass()) || data->mScope->Is(Action::TypeIdClass()));
 			if (mState != State::ParsingEntity && mState != State::ParsingAction)
 			{
-				throw std::exception("Attempting to parse an action when not in an entity");
+				throw exception("Attempting to parse an action when not in an entity");
 			}
 
 			mState = State::ParsingAction;
-			std::string className = attributes.Find("ClassName")->second;
-			std::string instanceName = attributes.Find("InstanceName")->second;
+			string className = attributes.Find("ClassName")->second;
+			string instanceName = attributes.Find("InstanceName")->second;
 
 			Action* action = nullptr;
 
@@ -197,8 +191,8 @@ namespace Library
 				{
 					ActionListIf* actionList = action->As<ActionListIf>();
 					assert(actionList != nullptr);
-					std::string condition = attributes.Find("Condition")->second;
-					actionList->SetCondition(std::stoi(condition));
+					string condition = attributes.Find("Condition")->second;
+					actionList->SetCondition(stoi(condition));
 				}
 			}
 			
@@ -230,7 +224,7 @@ namespace Library
 		return true;
 	}
 
-	bool XmlParseHelperEntity::EndElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element)
+	bool XmlParseHelperEntity::EndElementHandler(XmlParseMaster::SharedData& sharedData, const string& element)
 	{
 		SharedDataScope* data = sharedData.As<SharedDataScope>();
 
@@ -255,14 +249,14 @@ namespace Library
 		else if (element == "Matrix")
 		{
 			assert(mMatrixComponentCount == 4);
-			std::stringstream ss;
+			stringstream ss;
 
 			// String format: mat4x4((%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f))
 			ss << "mat4x4(";
-			for (std::uint32_t i = 0; i < 4; i++)
+			for (uint32_t i = 0; i < 4; i++)
 			{
 				ss << "(";
-				for (std::uint32_t j = 0; j < 4; j++)
+				for (uint32_t j = 0; j < 4; j++)
 				{
 					ss << mMatrixComponents[i][j];
 					if (j < 3)
@@ -328,7 +322,7 @@ namespace Library
 			}
 			else
 			{
-				throw std::exception("Attempting to enter an invalid state after parsing action");
+				throw exception("Attempting to enter an invalid state after parsing action");
 			}
 			data->mScope = data->mScope->GetParent();
 		}
@@ -338,7 +332,7 @@ namespace Library
 		return true;
 	}
 
-	std::string XmlParseHelperEntity::ToString() const
+	string XmlParseHelperEntity::ToString() const
 	{
 		return "Xml Parse Helper Scope";
 	}
@@ -355,9 +349,9 @@ namespace Library
 	bool XmlParseHelperEntity::operator==(const XmlParseHelperEntity& rhs) const
 	{
 		bool matricesEquivalent = true;
-		for (std::uint32_t i = 0; i < 4; i++)
+		for (uint32_t i = 0; i < 4; i++)
 		{
-			for (std::uint32_t j = 0; j < 4; j++)
+			for (uint32_t j = 0; j < 4; j++)
 			{
 				if (mMatrixComponents[i][j] != rhs.mMatrixComponents[i][j])
 				{

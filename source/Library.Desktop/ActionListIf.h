@@ -29,7 +29,7 @@ namespace Library
 		 * Mutator method for the if statement's condition
 		 * @Param condition: The new condition for the if statement
 		 */
-		void SetCondition(std::int32_t condition);
+		void SetCondition(const std::int32_t& condition);
 
 		/**
 		 * Accessor method for the if statement's condition
@@ -37,10 +37,24 @@ namespace Library
 		 */
 		std::int32_t GetCondition() const;
 
+		/**
+		 * Creates a "then" action as the consequence of the if being true
+		 * @Param className: The name of the class being created
+		 * @Param instanceName: The name of the instance of the class being created
+		 * @Return: A pointer to the newly instantiated action
+		 */
 		Action* CreateThenAction(const std::string& className, const std::string& instanceName);
+
+		/**
+		* Creates an "else" action as the consequence of the if being false
+		* @Param className: The name of the class being created
+		* @Param instanceName: The name of the instance of the class being created
+		* @Return: A pointer to the newly instantiated action
+		*/
 		Action* CreateElseAction(const std::string& className, const std::string& instanceName);
 
 	private:
+
 		std::int32_t mCondition; /// The condition to determine which Set of action will be executed
 	};
 

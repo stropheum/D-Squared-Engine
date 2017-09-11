@@ -1,13 +1,16 @@
 #include "pch.h"
 #include "Scope.h"
-#include "Vector.h"
+
+
+using namespace std;
 
 namespace Library
 {
 	RTTI_DEFINITIONS(Library::Scope)
 
 #pragma region Constructors/Destructor
-		Scope::Scope(std::uint32_t capacity) :
+
+	Scope::Scope(const uint32_t& capacity) :
 		mMap(13), mVector(), mParent(nullptr)
 	{
 		mVector.Reserve(capacity);
@@ -59,35 +62,26 @@ namespace Library
 	{
 		Clear();
 	}
+
 #pragma endregion
 
 #pragma region Public Methods
 
-	/// Finds the Datum with the associated key in the Scope, if it exists
-	/// @Param key: The key being used to Search for the associated Datum
-	/// @Return: The Datum associated with the key if it exists. Null pointer otherwise
-	Datum* Scope::Find(const std::string& key)
+	Datum* Scope::Find(const string& key)
 	{
 		auto iter = mMap.Find(key);
 		Datum* result = (iter != mMap.end()) ? &(*iter).second : nullptr;
 		return result;
 	}
 
-	/// Finds the Datum with the associated key in the Scope, if it exists
-	/// @Param key: The key being used to Search for the associated Datum
-	/// @Return: The Datum associated with the key if it exists. Null pointer otherwise
-	Datum* const Scope::Find(const std::string& key) const
+	Datum* const Scope::Find(const string& key) const
 	{
 		auto iter = mMap.Find(key);
 		Datum* const result = (iter != mMap.end()) ? &(*iter).second : nullptr;
 		return result;
 	}
 
-	/// Searches the Scope hierarchy for the specified key, if it exists
-	/// @Param key: The key of the string, Datum pair being searched for
-	/// @Param foundScope: The pointer to the Scope pointer that is found. Optionally included and Set to the found scope if it exists
-	/// @Return: A pointer to the Datum being searched for
-	Datum* Scope::Search(const std::string& key, Scope** foundScope)
+	Datum* Scope::Search(const string& key, Scope** foundScope)
 	{
 		auto result = Find(key);
 
@@ -104,13 +98,10 @@ namespace Library
 		return result;
 	}
 
-	/// Appends a new string, Datum pair to the Scope
-	/// @Param key: The key associated with the new Datum object
-	/// @Return: A reference to the newly created Datum
-	Datum& Scope::Append(const std::string& key)
+	Datum& Scope::Append(const string& key)
 	{
 		bool found = false;
-		auto iter = mMap.Insert(std::pair<std::string, Datum>(key, Datum()), found);
+		auto iter = mMap.Insert(pair<string, Datum>(key, Datum()), found);
 
 		if (!found)
 		{
@@ -120,14 +111,10 @@ namespace Library
 		return result.second;
 	}
 
-	/// Appends a new string, Datum pair to the Scope
-	/// @Param key: The key associated with the new Datum object
-	/// @Param found: Output parameter to determine if the Datum was found
-	/// @Return: A reference to the newly created Datum
-	Datum& Scope::Append(const std::string& key, bool& found)
+	Datum& Scope::Append(const string& key, bool& found)
 	{
 		bool datumFound;
-		auto iter = mMap.Insert(std::pair<std::string, Datum>(key, Datum()), datumFound);
+		auto iter = mMap.Insert(pair<string, Datum>(key, Datum()), datumFound);
 		found = datumFound;
 
 		if (!datumFound)
@@ -138,10 +125,7 @@ namespace Library
 		return result.second;
 	}
 
-	/// Appends a new scope to the current Scope hierarchy
-	/// @Param key: The key of the new Scope being appended
-	/// @Return: A reference to the newly appended Scope
-	Scope& Scope::AppendScope(const std::string& key)
+	Scope& Scope::AppendScope(const string& key)
 	{
 		Datum* found = Find(key);
 		Scope* result = nullptr;
@@ -166,10 +150,7 @@ namespace Library
 		return *result;
 	}
 
-	/// Adopts a Scope as a child of the current Scope
-	/// @Param child: The Scope being adopted
-	/// @Param key: The key associated with the child
-	void Scope::Adopt(Scope& child, const std::string& key)
+	void Scope::Adopt(Scope& child, const string& key)
 	{
 		bool found;
 		Datum& datum = Append(key, found);
@@ -182,37 +163,25 @@ namespace Library
 		datum.PushBack(&child);
 	}
 
-	/// Accessor method for the parent of the current Scope
-	/// @Return: A pointer to the parent of this Scope
 	Scope* Scope::GetParent()
 	{
 		return mParent;
 	}
 
-	/// Index operator
-	/// @Param key: The key being searched for. If the key isn't found, a new Datum is appended with that key
-	/// @Return: A reference to the Datum found or appended with the associated key
-	Datum& Scope::operator[](const std::string& key)
+	Datum& Scope::operator[](const string& key)
 	{
 		return Append(key);
 	}
 
-	/// Index operator
-	/// @Param index: The index into the Vector of inserted pair pointers
-	/// @Return: A reference to the Datum found with the associated index
-	/// @Exception: Thrown if accessing beyond the vector's bounds
-	Datum& Scope::operator[](const std::uint32_t index)
+	Datum& Scope::operator[](const uint32_t& index)
 	{
 		if (index >= mVector.Size())
 		{
-			throw std::exception("Index out of bounds");
+			throw exception("Index out of bounds");
 		}
 		return mVector[index]->second;
 	}
 
-	/// Equality operator
-	/// @Param rhs: The Scope object being compared against
-	/// @Return: True if the Scopes are equivalent
 	bool Scope::operator==(const Scope& rhs) const
 	{
 		bool result = false;
@@ -221,7 +190,7 @@ namespace Library
 		{	// If the sizes are not equal, the vectors are not equivalent
 			result = true;
 
-			for (std::uint32_t i = 0; i < mVector.Size(); i++)
+			for (uint32_t i = 0; i < mVector.Size(); i++)
 			{
 				if (*mVector[i] != *rhs.mVector[i])
 				{	// If we encounter a bad match, the vectors are not equivalent
@@ -234,23 +203,16 @@ namespace Library
 		return result;
 	}
 
-	/// Inequality operator
-	/// @Param rhs: The Scope object being compared against
-	/// @Return: True if the Scopes are not equivalent
 	bool Scope::operator!=(const Scope& rhs) const
 	{
 		return !(operator==(rhs));
 	}
 
-	/// Finds the key associated with a Scope
-	/// @Param scope: The Scope being used to Search for the associated key
-	/// @Return: The key associated with the Scope
-	/// @Exception: Thrown if the Scope does not exist in the children
-	std::string Scope::FindName(Scope* const scope) 
+	string Scope::FindName(Scope* const scope) 
 	{
-		std::string result = "";
+		string result = "";
 
-		for (std::uint32_t i = 0; i < mVector.Size(); i++)
+		for (uint32_t i = 0; i < mVector.Size(); i++)
 		{
 			auto& foundPair = mVector[i];
 			if (foundPair->second.Type() == DatumType::Scope)
@@ -266,34 +228,29 @@ namespace Library
 
 		if (!result.compare(""))
 		{
-			throw std::exception("Child not found in the specified scope");
+			throw exception("Child not found in the specified scope");
 		}
 
 		return result;
 	}
 
-	/// String representation of the RTTI Type
-	/// @Return: The word "Scope"
-	std::string Scope::ToString() const
+	string Scope::ToString() const
 	{
 		return "Scope";
 	}
 
-	/// Comparison for RTTI pointers
-	/// @Param rhs: The RTTI pointer being compared against
-	/// @Return: True if the RTTI pointers are equivalent
 	bool Scope::Equals(const RTTI* rhs) const
 	{
 		Scope* scope = rhs->As<Scope>();
 		return (scope != nullptr) ? operator==(*scope) : false;
 	}
 
-	HashMap<const std::string, Datum>::Iterator Scope::Begin()
+	HashMap<const string, Datum>::Iterator Scope::begin() const
 	{
 		return mMap.begin();
 	}
 
-	HashMap<const std::string, Datum>::Iterator Scope::End()
+	HashMap<const string, Datum>::Iterator Scope::end() const
 	{
 		return mMap.end();
 	}
@@ -302,15 +259,14 @@ namespace Library
 
 #pragma region Private Methods
 
-	/// Clears the Vector and HashMap of all values
 	void Scope::Clear()
 	{	
-		for (std::uint32_t i = 0; i < mVector.Size(); i++)
+		for (uint32_t i = 0; i < mVector.Size(); i++)
 		{	// Loop through vector searching for Scope types
 			Datum& datum = mVector[i]->second;
 			if (datum.Type() == DatumType::Scope)
 			{	// When a Scope Type is found, delete all scopes in the datum
-				for (std::uint32_t j = 0; j < datum.Size(); j++)
+				for (uint32_t j = 0; j < datum.Size(); j++)
 				{
 					delete &datum[j];
 				}
@@ -322,18 +278,16 @@ namespace Library
 		mParent = nullptr;
 	}
 
-	/// Removes the reference to the child from the parent, and eliminates the child's reference to its parent
-	/// @Param child: The Scope pointer being orphaned
 	void Scope::Orphan()
 	{
 		Scope* parent = GetParent();
-		std::string key = parent->FindName(this);
+		string key = parent->FindName(this);
 		
 		auto& parentVector = parent->mVector;
-		for (std::uint32_t i = 0; i < parentVector.Size(); i++)
+		for (uint32_t i = 0; i < parentVector.Size(); i++)
 		{	// Search the vector for the index that matches
 
-			std::string pKey = parentVector[i]->first;
+			string pKey = parentVector[i]->first;
 			if (pKey == key)
 			{	// we found the index, so we're going to jam everything down
 				parentVector.Remove(parentVector[i]);

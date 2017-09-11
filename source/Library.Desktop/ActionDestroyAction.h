@@ -38,6 +38,7 @@ namespace Library
 		std::string GetActionInstanceName() const;
 
 	private:
+
 		std::string mActionInstanceName; // The Name of the action being destroyed
 	};
 

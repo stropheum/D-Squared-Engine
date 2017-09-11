@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "ActionDestroyAction.h"
-#include "WorldState.h"
 
+
+using namespace std;
 
 namespace Library
 {
@@ -17,7 +18,7 @@ namespace Library
 		Datum* actions = GetParent()->Search("Actions");
 		assert(actions != nullptr);
 
-		for (std::uint32_t i = 0; i < actions->Size(); i++)
+		for (uint32_t i = 0; i < actions->Size(); i++)
 		{
 			assert((*actions)[i].Is(Action::TypeIdClass()));
 			Action* action = (*actions)[i].As<Action>();
@@ -32,12 +33,12 @@ namespace Library
 		worldState.action = nullptr;
 	}
 
-	void ActionDestroyAction::SetActionInstanceName(const std::string& name)
+	void ActionDestroyAction::SetActionInstanceName(const string& name)
 	{
 		(*this)["ActionInstanceName"] = name;
 	}
 
-	std::string ActionDestroyAction::GetActionInstanceName() const
+	string ActionDestroyAction::GetActionInstanceName() const
 	{
 		return mActionInstanceName;
 	}

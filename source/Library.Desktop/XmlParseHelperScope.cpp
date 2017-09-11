@@ -1,9 +1,8 @@
 #include "pch.h"
 #include "XmlParseHelperScope.h"
-#include "SharedDataScope.h"
-#include "Scope.h"
-#include <sstream>
 
+
+using namespace std;
 
 namespace Library
 {
@@ -12,9 +11,9 @@ namespace Library
 	XmlParseHelperScope::XmlParseHelperScope():
 		mState(State::NotParsing), mMatrixName(""), mMatrixComponentCount(0), mScopeHasBeenInitialized(false)
 	{
-		for (std::uint32_t i = 0; i < 4; i++)
+		for (uint32_t i = 0; i < 4; i++)
 		{
-			for (std::uint32_t j = 0; j < 4; j++)
+			for (uint32_t j = 0; j < 4; j++)
 			{
 				mMatrixComponents[i][j] = "";
 			}
@@ -32,9 +31,9 @@ namespace Library
 
 		clone->mState = mState;
 		clone->mMatrixComponentCount = mMatrixComponentCount;
-		for (std::uint32_t i = 0; i < 4; i++)
+		for (uint32_t i = 0; i < 4; i++)
 		{
-			for (std::uint32_t j = 0; j < 4; j++)
+			for (uint32_t j = 0; j < 4; j++)
 			{
 				clone->mMatrixComponents[i][j] = mMatrixComponents[i][j];
 			}
@@ -44,8 +43,8 @@ namespace Library
 	}
 
 	bool XmlParseHelperScope::StartElementHandler(
-		XmlParseMaster::SharedData& sharedData, const std::string& element, 
-		const HashMap<std::string, std::string> attributes)
+		XmlParseMaster::SharedData& sharedData, const string& element, 
+		const HashMap<string, string> attributes)
 	{
 		SharedDataScope* data = sharedData.As<SharedDataScope>();
 		if (data == nullptr) { return false; }
@@ -69,18 +68,17 @@ namespace Library
 		{
 			mState = (mState == State::ParsingMatrix) ? State::ParsingMatrix : State::ParsingVector;
 
-			std::string x, y, z, w;
-			x = attributes.Find("X")->second;
-			y = attributes.Find("Y")->second;
-			z = attributes.Find("Z")->second;
-			w = attributes.Find("W")->second;
+			string x = attributes.Find("X")->second;
+			string y = attributes.Find("Y")->second;
+			string z = attributes.Find("Z")->second;
+			string w = attributes.Find("W")->second;
 
 			if (mState == State::ParsingVector)
 			{
 				Datum& datum = scope->Append(attributes.Find("Name")->second);
 				datum.SetType(DatumType::Vector);
 
-				std::stringstream ss;
+				stringstream ss;
 				ss << "vec4(" << x << ", " << y << ", " << z << ", " << w << ")";
 				datum.SetFromString(ss.str());
 			}
@@ -129,7 +127,7 @@ namespace Library
 		return true;
 	}
 
-	bool XmlParseHelperScope::EndElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element)
+	bool XmlParseHelperScope::EndElementHandler(XmlParseMaster::SharedData& sharedData, const string& element)
 	{
 		SharedDataScope* data = sharedData.As<SharedDataScope>();
 
@@ -163,14 +161,14 @@ namespace Library
 		else if (element == "Matrix")
 		{
 			assert(mMatrixComponentCount == 4);
-			std::stringstream ss;
+			stringstream ss;
 
 			// String format: mat4x4((%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f))
 			ss << "mat4x4(";
-			for (std::uint32_t i = 0; i < 4; i++)
+			for (uint32_t i = 0; i < 4; i++)
 			{
 				ss << "(";
-				for (std::uint32_t j = 0; j < 4; j++)
+				for (uint32_t j = 0; j < 4; j++)
 				{
 					ss << mMatrixComponents[i][j];
 					if (j < 3)
@@ -219,9 +217,9 @@ namespace Library
 	bool XmlParseHelperScope::operator==(const XmlParseHelperScope& rhs) const
 	{
 		bool matricesEquivalent = true;
-		for (std::uint32_t i = 0; i < 4; i++)
+		for (uint32_t i = 0; i < 4; i++)
 		{
-			for (std::uint32_t j = 0; j < 4; j++)
+			for (uint32_t j = 0; j < 4; j++)
 			{
 				if (mMatrixComponents[i][j] != rhs.mMatrixComponents[i][j])
 				{

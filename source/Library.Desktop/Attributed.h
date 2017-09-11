@@ -38,13 +38,13 @@ namespace Library
 		 * Move copy constructor
 		 * @Param rhs: The attributed object being copied
 		 */
-		Attributed(Attributed&& rhs);
+		Attributed(Attributed&& rhs) noexcept;
 
 		/**
 		 * Move assignment operator
 		 * @Param rhs; The attributed object being assigned to
 		 */
-		Attributed& operator=(Attributed&& rhs);
+		Attributed& operator=(Attributed&& rhs) noexcept;
 
 #pragma endregion
 
@@ -60,28 +60,28 @@ namespace Library
 		 * @Param Name: The attribute being checked
 		 * @Return: True if the attribute is a prescribed attribute
 		 */
-		bool IsPrescribedAttribute(std::string name) const;
+		bool IsPrescribedAttribute(const std::string& name) const;
 
 		/**
 		 * Determines if the specified string is an auxiliary attribute
 		 * @Param Name: The attribute being checked
 		 * @Return: True if the attribute is an auxiliary attribute
 		 */
-		bool IsAuxiliaryAttribute(std::string name) const;
+		bool IsAuxiliaryAttribute(const std::string& name) const;
 
 		/**
 		 * Determines if the specified string is an attribute
 		 * @Param Name: The attribute being checked
 		 * @Return: True if the attribute is an attribute
 		 */
-		bool IsAttribute(std::string name) const;
+		bool IsAttribute(const std::string& name) const;
 
 		/**
 		 * Adds an auxiliary attribute to the current collection
 		 * @Param Name: The Name of the new auxiliary attribute
 		 * @Return: A reference to the Datum created from the appended attribute
 		 */
-		Datum& AppendAuxiliaryAttribute(std::string name);
+		Datum& AppendAuxiliaryAttribute(const std::string& name);
 
 		Vector<std::pair<std::string, Datum>> GetAuxilliaryAttributes() const;
 

@@ -27,7 +27,7 @@ namespace Library
 		 *@Param Delay: The Delay after which the event will be delivered
 		 */
 		void Enqueue(class EventPublisher& eventPublisher, 
-			class GameTime& gameTime, std::chrono::milliseconds delay = std::chrono::milliseconds(0));
+			class GameTime& gameTime, const std::chrono::milliseconds& delay = std::chrono::milliseconds(0));
 
 		/**
 		 * Immediately sends the event without posting to the queue
@@ -59,6 +59,7 @@ namespace Library
 		std::uint32_t Size() const;
 		
 	private:
+
 		Vector<EventPublisher*> mQueue; // The queue of events
 		std::mutex mQueueMutex;
 	};
