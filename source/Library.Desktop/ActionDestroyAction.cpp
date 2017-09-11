@@ -7,24 +7,24 @@ namespace Library
 {
 	ActionDestroyAction::ActionDestroyAction()
 	{
-		(*this)["ActionInstanceName"].setStorage(&mActionInstanceName, 1);
+		(*this)["ActionInstanceName"].SetStorage(&mActionInstanceName, 1);
 	}
 
-	void ActionDestroyAction::update(WorldState& worldState)
+	void ActionDestroyAction::Update(WorldState& worldState)
 	{
 		worldState.action = this;
 
-		Datum* actions = getParent()->search("Actions");
+		Datum* actions = GetParent()->Search("Actions");
 		assert(actions != nullptr);
 
-		for (std::uint32_t i = 0; i < actions->size(); i++)
+		for (std::uint32_t i = 0; i < actions->Size(); i++)
 		{
 			assert((*actions)[i].Is(Action::TypeIdClass()));
 			Action* action = (*actions)[i].As<Action>();
 
-			if (action->name() == mActionInstanceName)
+			if (action->Name() == mActionInstanceName)
 			{
-				actions->remove(action);
+				actions->Remove(action);
 				break;
 			}
 		}
@@ -32,12 +32,12 @@ namespace Library
 		worldState.action = nullptr;
 	}
 
-	void ActionDestroyAction::setActionInstanceName(const std::string& name)
+	void ActionDestroyAction::SetActionInstanceName(const std::string& name)
 	{
 		(*this)["ActionInstanceName"] = name;
 	}
 
-	std::string ActionDestroyAction::getActionInstanceName() const
+	std::string ActionDestroyAction::GetActionInstanceName() const
 	{
 		return mActionInstanceName;
 	}

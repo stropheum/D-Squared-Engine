@@ -8,10 +8,29 @@ namespace Library
 		public Action
 	{
 	public:
+
+		/**
+		 * Constructor
+		 */
 		ActionIncrement();
+
+		/**
+		 * Default Destrutor
+		 */
 		~ActionIncrement() = default;
-		virtual void update(WorldState& worldState) override;
-		std::int32_t getIncrementCount() const;
+
+		/**
+		 * Updates the action based on the current world state
+		 * @Param worldState: The current world state
+		 */
+		virtual void Update(WorldState& worldState) override;
+
+		/**
+		 * Accessor for the current increment count
+		 * @Return: The number of times the action has been incremented
+		 */
+		std::int32_t GetIncrementCount() const;
+
 	private:
 		std::int32_t mIncrementCount;
 	};

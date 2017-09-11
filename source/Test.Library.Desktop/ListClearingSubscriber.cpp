@@ -7,20 +7,20 @@
 
 ListClearingSubscriber::ListClearingSubscriber()
 {
-	Library::Event<Foo>::subscribe(*this);
+	Library::Event<Foo>::Subscribe(*this);
 }
 
 
 ListClearingSubscriber::~ListClearingSubscriber()
 {
-//	Library::Event<Foo>::unsubscribe(*this);
+//	Library::Event<Foo>::Unsubscribe(*this);
 }
 
-void ListClearingSubscriber::notify(const Library::EventPublisher& event)
+void ListClearingSubscriber::Notify(const Library::EventPublisher& event)
 {
 	std::lock_guard<std::mutex> guard(mNotifyMutex);
 	if (event.Is(Library::Event<Foo>::TypeIdClass()))
 	{
-		Library::Event<Foo>::unsubscribe(*this);
+		Library::Event<Foo>::Unsubscribe(*this);
 	}
 }

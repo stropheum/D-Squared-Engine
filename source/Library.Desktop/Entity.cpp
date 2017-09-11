@@ -10,60 +10,60 @@ namespace Library
 
 	Entity::Entity()
 	{
-		(*this)["Name"].setStorage(&mName, 1);
-		(*this)["Actions"].setType(DatumType::Scope);
+		(*this)["Name"].SetStorage(&mName, 1);
+		(*this)["Actions"].SetType(DatumType::Scope);
 	}
 
-	std::string Entity::name() const
+	std::string Entity::Name() const
 	{
 		return mName;
 	}
 
-	void Entity::setName(const std::string& name)
+	void Entity::SetName(const std::string& name)
 	{
 		(*this)["Name"] = name;
 	}
 
-	Datum& Entity::actions()
+	Datum& Entity::Actions()
 	{
 		return (*this)["Actions"];
 	}
 
-	Action* Entity::createAction(const std::string& className, const std::string& instanceName)
+	Action* Entity::CreateAction(const std::string& className, const std::string& instanceName)
 	{
-		Action* instance = Factory<Action>::create(className);
+		Action* instance = Factory<Action>::Create(className);
 		assert(instance != nullptr);
-		instance->setName(instanceName);
-		adopt(*instance, "Actions");
+		instance->SetName(instanceName);
+		Adopt(*instance, "Actions");
 		return instance;
 	}
 
-	void Entity::setSector(Sector& sector)
+	void Entity::SetSector(Sector& sector)
 	{
-		sector.adopt(*this, mName);
+		sector.Adopt(*this, mName);
 	}
 
-	Sector& Entity::getSector()
+	Sector& Entity::GetSector()
 	{
-		if (getParent() == nullptr)
+		if (GetParent() == nullptr)
 		{
 			throw std::exception("Parent is null");
 		}
-		assert(getParent()->Is(Sector::TypeIdClass()));
-		return *getParent()->As<Sector>();
+		assert(GetParent()->Is(Sector::TypeIdClass()));
+		return *GetParent()->As<Sector>();
 	}
 
-	void Entity::update(WorldState& worldState)
+	void Entity::Update(WorldState& worldState)
 	{
 		worldState.entity = this;
 
-		for (std::uint32_t i = 0; i < (*this)["Actions"].size(); i++)
+		for (std::uint32_t i = 0; i < (*this)["Actions"].Size(); i++)
 		{
-			Scope* scope = (*this)["Actions"].get<Scope*>(i);
+			Scope* scope = (*this)["Actions"].Get<Scope*>(i);
 			assert(scope != nullptr);
 			Action* action = scope->As<Action>();
 			assert(action != nullptr);
-			action->update(worldState);
+			action->Update(worldState);
 		}
 
 		worldState.entity = nullptr;

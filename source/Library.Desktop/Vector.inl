@@ -8,13 +8,13 @@ namespace Library
 	Vector<T>::Vector(bool fixedSize) :
 		mBuffer(nullptr), mSize(0), mCapacity(CAPACITY_INCREMENT), mFixedSize(fixedSize)
 	{
-		reserve(mCapacity);
+		Reserve(mCapacity);
 	}
 
 	template <typename T>
 	Vector<T>::~Vector()
 	{
-		clear();
+		Clear();
 		free(mBuffer);
 	}
 
@@ -36,7 +36,7 @@ namespace Library
 	{
 		if (this != &rhs)
 		{
-			clear();
+			Clear();
 
 			mBuffer = rhs.mBuffer;
 			mSize = rhs.mSize;
@@ -77,13 +77,13 @@ namespace Library
 		{
 			mFixedSize = rhs.mFixedSize;
 
-			clear();
-			reserve(rhs.mCapacity);
+			Clear();
+			Reserve(rhs.mCapacity);
 			if (rhs.mSize > 0)
 			{
 				for (auto iter = rhs.begin(); iter != rhs.end(); ++iter)
 				{
-					pushBack(*iter);
+					PushBack(*iter);
 				}
 			}
 		}
@@ -91,7 +91,7 @@ namespace Library
 	}
 
 	template <typename T>
-	typename Vector<T>::Iterator Vector<T>::find(const T& value) const
+	typename Vector<T>::Iterator Vector<T>::Find(const T& value) const
 	{
 		for (Iterator iter = begin(); iter != end(); ++iter)
 		{
@@ -113,41 +113,41 @@ namespace Library
 	}
 
 	template <typename T>
-	T& Vector<T>::front()
+	T& Vector<T>::Front()
 	{
-		if (mSize == 0) throw std::exception("Calling front on a null vector");
+		if (mSize == 0) throw std::exception("Calling Front on a null vector");
 		return *mBuffer;
 	}
 
 	template <typename T>
-	const T& Vector<T>::front() const
+	const T& Vector<T>::Front() const
 	{
-		if (mSize == 0) throw std::exception("Calling front on a null vector");
+		if (mSize == 0) throw std::exception("Calling Front on a null vector");
 		return const_cast<const T&>(*mBuffer);
 	}
 
 	template <typename T>
-	T& Vector<T>::back()
+	T& Vector<T>::Back()
 	{
-		if (mSize == 0) throw std::exception("Calling back on null vector");
+		if (mSize == 0) throw std::exception("Calling Back on null vector");
 		return *(mBuffer + (mSize - 1));
 	}
 
 	template <typename T>
-	const T& Vector<T>::back() const
+	const T& Vector<T>::Back() const
 	{
-		if (mSize == 0) throw std::exception("Calling back on a null vector");
+		if (mSize == 0) throw std::exception("Calling Back on a null vector");
 		return *(mBuffer + (mSize - 1));
 	}
 
 	template <typename T>
-	T& Vector<T>::at(const std::uint32_t index)
+	T& Vector<T>::At(const std::uint32_t index)
 	{
 		return operator[](index);
 	}
 
 	template <typename T>
-	const T& Vector<T>::at(const std::uint32_t index) const
+	const T& Vector<T>::At(const std::uint32_t index) const
 	{
 		return const_cast<const T&>(operator[](index));
 	}
@@ -168,46 +168,46 @@ namespace Library
 	}
 
 	template <typename T>
-	void Vector<T>::popBack()
+	void Vector<T>::PopBack()
 	{
-		if (mBuffer == nullptr || mSize == 0) throw std::exception("Calling pop back on an empty vector");
+		if (mBuffer == nullptr || mSize == 0) throw std::exception("Calling pop Back on an empty vector");
 		mBuffer[mSize-1].~T();
 		--mSize;
 	}
 
 	template <typename T>
-	std::uint32_t Vector<T>::size() const
+	std::uint32_t Vector<T>::Size() const
 	{
 		return mSize;
 	}
 
 	template <typename T>
-	std::uint32_t Vector<T>::capacity() const
+	std::uint32_t Vector<T>::Capacity() const
 	{
 		return mCapacity;
 	}
 
 	template <typename T>
-	bool Vector<T>::isEmpty() const
+	bool Vector<T>::IsEmpty() const
 	{
 		return mSize == 0;
 	}
 
 	template <typename T>
-	typename Vector<T>::Iterator Vector<T>::pushBack(const T& value)
+	typename Vector<T>::Iterator Vector<T>::PushBack(const T& value)
 	{
 		typename Vector<T>::Iterator iter = end();
 		if (!mFixedSize)
 		{
-			if (mSize >= mCapacity) reserve(mCapacity + CAPACITY_INCREMENT);
+			if (mSize >= mCapacity) Reserve(mCapacity + CAPACITY_INCREMENT);
 			new(mBuffer + mSize++) T(value);
-			iter = Iterator(this, mSize - 1); // Reassign iter to point to last value pushed back
+			iter = Iterator(this, mSize - 1); // Reassign iter to point to last value pushed Back
 		}
 		return iter;
 	}
 
 	template <typename T>
-	void Vector<T>::reserve(std::uint32_t capacity)
+	void Vector<T>::Reserve(std::uint32_t capacity)
 	{
 		if (capacity < mSize) capacity = mSize;
 		
@@ -220,20 +220,20 @@ namespace Library
 	}
 
 	template <typename T>
-	void Vector<T>::clear()
+	void Vector<T>::Clear()
 	{
-		if (!isEmpty())
+		if (!IsEmpty())
 		{
 			while (mSize > 0)
 			{
-				popBack();
+				PopBack();
 			}
 		}
-		shrinkToFit();
+		ShrinkToFit();
 	}
 
 	template <typename T>
-	void Vector<T>::remove(const T& value)
+	void Vector<T>::Remove(const T& value)
 	{
 		std::uint32_t firstValue = mSize;
 		for (std::uint32_t i = 0; i < mSize; i++)
@@ -248,7 +248,7 @@ namespace Library
 		// Destruct the value that we're about to squish
 		if (firstValue != mSize) mBuffer[firstValue].~T();
 
-		// Shift the entire buffer after the removed value down by 1 and decrement size
+		// Shift the entire buffer after the removed value down by 1 and decrement Size
 		auto sizeToMove = (mCapacity * sizeof(T)) - (firstValue * sizeof(T));
 		memmove(mBuffer + firstValue, mBuffer + firstValue + 1, sizeToMove);
 		
@@ -256,9 +256,9 @@ namespace Library
 	}
 
 	template <class T>
-	void Vector<T>::shrinkToFit()
+	void Vector<T>::ShrinkToFit()
 	{
-		if (!mFixedSize) reserve(mSize);
+		if (!mFixedSize) Reserve(mSize);
 	}
 
 	/// //////////////////////////////// ///
@@ -292,7 +292,7 @@ namespace Library
 	typename Vector<T>::Iterator& Vector<T>::Iterator::operator++()
 	{
 		if (mOwner == nullptr) throw std::exception("Attempting to dereference nullptr");
-		if (mIndex > mOwner->size()) throw std::exception("Incrementing beyond vector bounds");
+		if (mIndex > mOwner->Size()) throw std::exception("Incrementing beyond vector bounds");
 		if (mIndex < mOwner->mSize)
 		{
 			mIndex++;
@@ -313,7 +313,7 @@ namespace Library
 	T& Vector<T>::Iterator::operator*()
 	{
 		if (mOwner == nullptr) throw std::exception("Owner is null");
-		if (mIndex > mOwner->size()) throw std::exception("Vector out of bounds");
+		if (mIndex > mOwner->Size()) throw std::exception("Vector out of bounds");
 		return const_cast<T&>(mOwner->operator[](mIndex));
 	}
 
@@ -321,7 +321,7 @@ namespace Library
 	const T& Vector<T>::Iterator::operator*() const
 	{
 		if (mOwner == nullptr) throw std::exception("Owner is null");
-		if (mIndex > mOwner->size()) throw std::exception("Vector out of bounds");
+		if (mIndex > mOwner->Size()) throw std::exception("Vector out of bounds");
 		return const_cast<T&>(mOwner->operator[](mIndex));
 	}
 

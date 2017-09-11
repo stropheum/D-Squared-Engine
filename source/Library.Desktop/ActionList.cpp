@@ -9,31 +9,31 @@ namespace Library
 
 	ActionList::ActionList()
 	{
-		(*this)["Actions"].setType(DatumType::Scope);
+		(*this)["Actions"].SetType(DatumType::Scope);
 	}
 
-	void ActionList::update(WorldState& worldState)
+	void ActionList::Update(WorldState& worldState)
 	{
 		worldState.action = this;
 
-		for (std::uint32_t i = 0; i < (*this)["Actions"].size(); i++)
+		for (std::uint32_t i = 0; i < (*this)["Actions"].Size(); i++)
 		{
-			Scope* scope = (*this)["Actions"].get<Scope*>(i);
+			Scope* scope = (*this)["Actions"].Get<Scope*>(i);
 			assert(scope != nullptr);
 			Action* action = scope->As<Action>();
 			assert(action != nullptr);
-			action->update(worldState);
+			action->Update(worldState);
 		}
 
 		worldState.action = nullptr;
 	}
 
-	Action* ActionList::createAction(const std::string& className, const std::string& instanceName)
+	Action* ActionList::CreateAction(const std::string& className, const std::string& instanceName)
 	{
-		Action* instance = Factory<Action>::create(className);
+		Action* instance = Factory<Action>::Create(className);
 		assert(instance != nullptr);
-		instance->setName(instanceName);
-		adopt(*instance, "Actions");
+		instance->SetName(instanceName);
+		Adopt(*instance, "Actions");
 		return instance;
 	}
 }

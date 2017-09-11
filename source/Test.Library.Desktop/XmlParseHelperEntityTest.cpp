@@ -63,25 +63,25 @@ namespace TestLibraryDesktop
 			Library::SharedDataScope sharedData;
 			Library::XmlParseMaster parseMaster(&sharedData);
 			Library::XmlParseHelperEntity helper;
-			sharedData.setXmlParseMaster(&parseMaster);
-			parseMaster.addHelper(helper);
+			sharedData.SetXmlParseMaster(&parseMaster);
+			parseMaster.AddHelper(helper);
 
-			parseMaster.parseFromFile("EntityGrammar.xml");
+			parseMaster.ParseFromFile("EntityGrammar.xml");
 
 			Library::Scope* scope = sharedData.mScope;
 			World* world = scope->As<World>();
-			std::string name = world != nullptr ? world->name() : "";
+			std::string name = world != nullptr ? world->Name() : "";
 
 			Assert::IsTrue(name == "Dales World");
 
-			Assert::IsTrue(world->sectors()[0].As<Sector>() != nullptr);
-			Sector* sector = world->sectors()[0].As<Sector>();
-			Assert::IsTrue(sector->name() == "Dales Sector");
-			Assert::IsTrue(sector->getParent() == world);
+			Assert::IsTrue(world->Sectors()[0].As<Sector>() != nullptr);
+			Sector* sector = world->Sectors()[0].As<Sector>();
+			Assert::IsTrue(sector->Name() == "Dales Sector");
+			Assert::IsTrue(sector->GetParent() == world);
 
-			Entity* entity = sector->entities()[0].As<Entity>();
+			Entity* entity = sector->Entities()[0].As<Entity>();
 			Assert::IsTrue(entity != nullptr);
-			Assert::IsTrue(entity->name() == "Dale");
+			Assert::IsTrue(entity->Name() == "Dale");
 			
 			Entity& entityRef = *entity;
 			Assert::IsTrue(entityRef["Health"] == 100);
@@ -93,10 +93,10 @@ namespace TestLibraryDesktop
 		{
 			World* world = new World();
 
-			Assert::IsTrue(world->name() == "");
+			Assert::IsTrue(world->Name() == "");
 			
-			world->setName("NewName");
-			Assert::IsTrue(world->name() == "NewName");
+			world->SetName("NewName");
+			Assert::IsTrue(world->Name() == "NewName");
 
 			delete world;
 		}
@@ -105,10 +105,10 @@ namespace TestLibraryDesktop
 		{
 			Sector* sector = new Sector();
 
-			Assert::IsTrue(sector->name() == "");
+			Assert::IsTrue(sector->Name() == "");
 
-			sector->setName("NewName");
-			Assert::IsTrue(sector->name() == "NewName");
+			sector->SetName("NewName");
+			Assert::IsTrue(sector->Name() == "NewName");
 
 			delete sector;
 		}
@@ -117,10 +117,10 @@ namespace TestLibraryDesktop
 		{
 			Entity* entity = new Entity();
 
-			Assert::IsTrue(entity->name() == "");
+			Assert::IsTrue(entity->Name() == "");
 
-			entity->setName("NewName");
-			Assert::IsTrue(entity->name() == "NewName");
+			entity->SetName("NewName");
+			Assert::IsTrue(entity->Name() == "NewName");
 
 			delete entity;
 		}
@@ -129,10 +129,10 @@ namespace TestLibraryDesktop
 		{
 			World* world = new World();
 
-			Assert::IsTrue(world->sectors().size() == 0);
+			Assert::IsTrue(world->Sectors().Size() == 0);
 
-			world->createSector("NewSector");
-			Assert::IsTrue(world->sectors().size() == 1);
+			world->CreateSector("NewSector");
+			Assert::IsTrue(world->Sectors().Size() == 1);
 
 			delete world;
 		}
@@ -141,10 +141,10 @@ namespace TestLibraryDesktop
 		{
 			Sector* sector = new Sector();
 
-			Assert::IsTrue(sector->entities().size() == 0);
+			Assert::IsTrue(sector->Entities().Size() == 0);
 
-			sector->createEntity("Entity", "Dale");
-			Assert::IsTrue(sector->entities().size() == 1);
+			sector->CreateEntity("Entity", "Dale");
+			Assert::IsTrue(sector->Entities().Size() == 1);
 
 			delete sector;
 		}
@@ -155,9 +155,9 @@ namespace TestLibraryDesktop
 			Library::SharedDataScope sharedData;
 			Library::XmlParseMaster parseMaster(&sharedData);
 			Library::XmlParseHelperEntity helper;
-			sharedData.setXmlParseMaster(&parseMaster);
-			parseMaster.addHelper(helper);
-			XmlParseMaster* clone = parseMaster.clone();
+			sharedData.SetXmlParseMaster(&parseMaster);
+			parseMaster.AddHelper(helper);
+			XmlParseMaster* clone = parseMaster.Clone();
 			delete clone;
 			Assert::IsTrue(true);
 		}
@@ -168,7 +168,7 @@ namespace TestLibraryDesktop
 			World* world = new World();
 			WorldState worldState;
 			GameTime gameTime;
-			world->update(worldState, gameTime);
+			world->Update(worldState, gameTime);
 
 			delete world;
 		}
@@ -177,11 +177,11 @@ namespace TestLibraryDesktop
 		{
 			World* world = new World();
 
-			Sector* sector = world->createSector("NewSector");
-			Assert::IsTrue(sector->getWorld() == *world);
+			Sector* sector = world->CreateSector("NewSector");
+			Assert::IsTrue(sector->GetWorld() == *world);
 
 			World* wrongWorld = new World();
-			Assert::IsFalse(sector->getWorld() == *wrongWorld);
+			Assert::IsFalse(sector->GetWorld() == *wrongWorld);
 
 			delete world;
 			delete wrongWorld;
@@ -191,11 +191,11 @@ namespace TestLibraryDesktop
 		{
 			Sector* sector = new Sector();
 
-			Entity* entity = sector->createEntity("Entity", "Dale");
-			Assert::IsTrue(entity->getSector() == *sector);
+			Entity* entity = sector->CreateEntity("Entity", "Dale");
+			Assert::IsTrue(entity->GetSector() == *sector);
 
 			Sector* wrongSector = new Sector();
-			Assert::IsFalse(entity->getSector() == *wrongSector);
+			Assert::IsFalse(entity->GetSector() == *wrongSector);
 
 			delete sector;
 			delete wrongSector;
@@ -204,14 +204,14 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestSetWorld)
 		{
 			World* world1 = new World();
-			Sector* sector = world1->createSector("sector");
+			Sector* sector = world1->CreateSector("sector");
 
-			Assert::IsTrue(sector->getWorld() == *world1);
+			Assert::IsTrue(sector->GetWorld() == *world1);
 
 			World* world2 = new World();
-			sector->setWorld(*world2);
-			Assert::IsTrue(sector->getWorld() == *world2);
-			Assert::IsFalse(sector->getWorld() == *world1);
+			sector->SetWorld(*world2);
+			Assert::IsTrue(sector->GetWorld() == *world2);
+			Assert::IsFalse(sector->GetWorld() == *world1);
 
 			delete world1;
 			delete world2;
@@ -220,14 +220,14 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestSetSector)
 		{
 			Sector* sector1 = new Sector();
-			Entity* entity = sector1->createEntity("Entity", "Dale");
+			Entity* entity = sector1->CreateEntity("Entity", "Dale");
 
-			Assert::IsTrue(entity->getSector() == *sector1);
+			Assert::IsTrue(entity->GetSector() == *sector1);
 
 			Sector* sector2 = new Sector();
-			entity->setSector(*sector2);
-			Assert::IsTrue(entity->getSector() == *sector2);
-			Assert::IsFalse(entity->getSector() == *sector1);
+			entity->SetSector(*sector2);
+			Assert::IsTrue(entity->GetSector() == *sector2);
+			Assert::IsFalse(entity->GetSector() == *sector1);
 
 			delete sector1;
 			delete sector2;

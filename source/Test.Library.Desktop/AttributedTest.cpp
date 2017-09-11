@@ -62,11 +62,11 @@ namespace TestLibraryDesktop
 
 			for (std::int32_t i = 0; i < 10; i++)
 			{	// Setting all values in the arrays to some default
-				myFoo_OG["External Integer Array"].set(10, i);
-				myFoo_OG["External Float Array"].set(10.0f, i);
-				myFoo_OG["External Vector Array"].set(glm::vec4(10), i);
-				myFoo_OG["External Matrix Array"].set(glm::mat4(10), i);
-				myFoo_OG["External String Array"].set("10", i);
+				myFoo_OG["External Integer Array"].Set(10, i);
+				myFoo_OG["External Float Array"].Set(10.0f, i);
+				myFoo_OG["External Vector Array"].Set(glm::vec4(10), i);
+				myFoo_OG["External Matrix Array"].Set(glm::mat4(10), i);
+				myFoo_OG["External String Array"].Set("10", i);
 			}
 
 			Library::AttributedFoo myFoo_CPY(myFoo_OG);
@@ -93,16 +93,16 @@ namespace TestLibraryDesktop
 
 			for (std::uint32_t i = 0; i < 10; i++)
 			{
-				Assert::IsTrue(myFoo_CPY["External Integer Array"].get<std::int32_t>(i) 
-					== myFoo_OG["External Integer Array"].get<std::int32_t>(i));
-				Assert::IsTrue(myFoo_CPY["External Float Array"].get<float>(i)
-					== myFoo_OG["External Float Array"].get<float>(i));
-				Assert::IsTrue(myFoo_CPY["External Vector Array"].get<glm::vec4>(i)
-					== myFoo_OG["External Vector Array"].get<glm::vec4>(i));
-				Assert::IsTrue(myFoo_CPY["External Matrix Array"].get<glm::mat4>(i)
-					== myFoo_OG["External Matrix Array"].get<glm::mat4>(i));
-				Assert::IsTrue(myFoo_CPY["External String Array"].get<std::string>(i)
-					== myFoo_OG["External String Array"].get<std::string>(i));
+				Assert::IsTrue(myFoo_CPY["External Integer Array"].Get<std::int32_t>(i) 
+					== myFoo_OG["External Integer Array"].Get<std::int32_t>(i));
+				Assert::IsTrue(myFoo_CPY["External Float Array"].Get<float>(i)
+					== myFoo_OG["External Float Array"].Get<float>(i));
+				Assert::IsTrue(myFoo_CPY["External Vector Array"].Get<glm::vec4>(i)
+					== myFoo_OG["External Vector Array"].Get<glm::vec4>(i));
+				Assert::IsTrue(myFoo_CPY["External Matrix Array"].Get<glm::mat4>(i)
+					== myFoo_OG["External Matrix Array"].Get<glm::mat4>(i));
+				Assert::IsTrue(myFoo_CPY["External String Array"].Get<std::string>(i)
+					== myFoo_OG["External String Array"].Get<std::string>(i));
 			}
 		}
 
@@ -148,42 +148,42 @@ namespace TestLibraryDesktop
 		{
 			Library::AttributedFoo myFoo;
 
-			Assert::IsTrue(myFoo.isPrescribedAttribute("External Integer"));
-			Assert::IsTrue(myFoo.isPrescribedAttribute("External Float"));
-			Assert::IsTrue(myFoo.isPrescribedAttribute("External Vector"));
-			Assert::IsTrue(myFoo.isPrescribedAttribute("External Matrix"));
-			Assert::IsTrue(myFoo.isPrescribedAttribute("External String"));
+			Assert::IsTrue(myFoo.IsPrescribedAttribute("External Integer"));
+			Assert::IsTrue(myFoo.IsPrescribedAttribute("External Float"));
+			Assert::IsTrue(myFoo.IsPrescribedAttribute("External Vector"));
+			Assert::IsTrue(myFoo.IsPrescribedAttribute("External Matrix"));
+			Assert::IsTrue(myFoo.IsPrescribedAttribute("External String"));
 		}
 
 		TEST_METHOD(TestIsAuxiliaryAttribute)
 		{
 			Library::AttributedFoo myFoo;
-			Assert::IsFalse(myFoo.isAttribute("Nothing"));
-			myFoo.appendAuxiliaryAttribute("Nothing");
-			Assert::IsTrue(myFoo.isAttribute("Nothing"));
-			Assert::IsTrue(myFoo.isAuxiliaryAttribute("Nothing"));
+			Assert::IsFalse(myFoo.IsAttribute("Nothing"));
+			myFoo.AppendAuxiliaryAttribute("Nothing");
+			Assert::IsTrue(myFoo.IsAttribute("Nothing"));
+			Assert::IsTrue(myFoo.IsAuxiliaryAttribute("Nothing"));
 		}
 
 		TEST_METHOD(TestIsAttribute)
 		{
 			Library::AttributedFoo myFoo;
-			Assert::IsTrue(myFoo.isAttribute("this"));
-			Assert::IsTrue(myFoo.isAttribute("External Integer"));
-			Assert::IsTrue(myFoo.isAttribute("External Float"));
-			Assert::IsTrue(myFoo.isAttribute("External Vector"));
-			Assert::IsTrue(myFoo.isAttribute("External Matrix"));
-			Assert::IsTrue(myFoo.isAttribute("External String"));
+			Assert::IsTrue(myFoo.IsAttribute("this"));
+			Assert::IsTrue(myFoo.IsAttribute("External Integer"));
+			Assert::IsTrue(myFoo.IsAttribute("External Float"));
+			Assert::IsTrue(myFoo.IsAttribute("External Vector"));
+			Assert::IsTrue(myFoo.IsAttribute("External Matrix"));
+			Assert::IsTrue(myFoo.IsAttribute("External String"));
 
-			Assert::IsFalse(myFoo.isAttribute("Nonexistent Garbage"));
+			Assert::IsFalse(myFoo.IsAttribute("Nonexistent Garbage"));
 		}
 
 		TEST_METHOD(TestAppendAuxiliaryAttribute)
 		{
 			Library::AttributedFoo myFoo;
-			Assert::IsFalse(myFoo.isAttribute("new"));
+			Assert::IsFalse(myFoo.IsAttribute("new"));
 
-			myFoo.appendAuxiliaryAttribute("new");
-			Assert::IsTrue(myFoo.isAttribute("new"));
+			myFoo.AppendAuxiliaryAttribute("new");
+			Assert::IsTrue(myFoo.IsAttribute("new"));
 		}
 
 		private:

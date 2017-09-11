@@ -13,7 +13,7 @@ namespace Library
 	{
 	}
 
-	GameTime& WorldState::getGameTime() const
+	GameTime& WorldState::GetGameTime() const
 	{
 		if (gameTime == nullptr)
 		{
@@ -22,7 +22,7 @@ namespace Library
 		return *gameTime;
 	}
 
-	void WorldState::setGameTime(GameTime& newGameTime)
+	void WorldState::SetGameTime(GameTime& newGameTime)
 	{
 		gameTime = &newGameTime;
 	}

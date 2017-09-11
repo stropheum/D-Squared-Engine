@@ -11,19 +11,19 @@ using namespace std;
 QueueClearSubscriber::QueueClearSubscriber(EventQueue& eventQueue):
 	mEventQueue(&eventQueue)
 {
-	Event<Foo>::subscribe(*this);
+	Event<Foo>::Subscribe(*this);
 }
 
 
 QueueClearSubscriber::~QueueClearSubscriber()
 {
-	Event<Foo>::unsubscribe(*this);
+	Event<Foo>::Unsubscribe(*this);
 }
 
-void QueueClearSubscriber::notify(const Library::EventPublisher& event)
+void QueueClearSubscriber::Notify(const Library::EventPublisher& event)
 {
 	if (event.Is(Event<Foo>::TypeIdClass()))
 	{
-		mEventQueue->clear();
+		mEventQueue->Clear();
 	}
 }

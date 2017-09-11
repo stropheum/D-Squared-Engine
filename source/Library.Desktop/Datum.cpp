@@ -12,12 +12,12 @@ namespace Library
 	}
 
 	/// Overloaded constructor
-	/// @Param type: The type of the Datum object
+	/// @Param Type: The Type of the Datum object
 	Datum::Datum(DatumType type) :
 		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
 	{
-		setType(type);
-		if (type != DatumType::Unknown) reserve(mCapacity);
+		SetType(type);
+		if (type != DatumType::Unknown) Reserve(mCapacity);
 	}
 
 	/// Destructor
@@ -25,7 +25,7 @@ namespace Library
 	{
 		if (mCapacity > 0 && !mDataIsExternal)
 		{	// Don't bother clearing memory if there isn't any reserved space
-			setSize(0); // Remove all elements, allowing us to shrink buffer to zero
+			SetSize(0); // Remove all elements, allowing us to shrink buffer to zero
 		}
 
 		delete mTypeState;
@@ -33,7 +33,7 @@ namespace Library
 
 	/// Copy constructor
 	/// @Param rhs: Datum object being copied
-	/// @Exception: Thrown if attempting to construct a non-existing datum type
+	/// @Exception: Thrown if attempting to construct a non-existing datum Type
 	Datum::Datum(const Datum& rhs) :
 		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
 	{
@@ -49,11 +49,11 @@ namespace Library
 	}
 
 	/// Index operator for accessing nested scopes
-	/// @Param index: The scope at the given index
-	/// @Return: The scope at the specified index
+	/// @Param index: The scope At the given index
+	/// @Return: The scope At the specified index
 	Scope& Datum::operator[](std::uint32_t index)
 	{
-		return *get<Scope*>(index);
+		return *Get<Scope*>(index);
 	}
 
 	/// Datum assignment operator
@@ -64,50 +64,50 @@ namespace Library
 		if (this != &rhs)
 		{
 			
-			setType(rhs.mType); // Must set type in order to instantiate mTypeState
+			SetType(rhs.mType); // Must Set Type in order to instantiate mTypeState
 			if (rhs.mDataIsExternal)
 			{
-				mTypeState->setStorage(rhs);
+				mTypeState->SetStorage(rhs);
 			}
 			else
 			{
-				reserve(rhs.mCapacity);
+				Reserve(rhs.mCapacity);
 				switch (rhs.mType)
 				{
 				case DatumType::Integer:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(rhs.get<std::int32_t>(i));
+						PushBack(rhs.Get<std::int32_t>(i));
 					}
 					break;
 				case DatumType::Float:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(rhs.get<float>(i));
+						PushBack(rhs.Get<float>(i));
 					}
 					break;
 				case DatumType::Vector:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(rhs.get<glm::vec4>(i));
+						PushBack(rhs.Get<glm::vec4>(i));
 					}
 					break;
 				case DatumType::Matrix:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(rhs.get<glm::mat4>(i));
+						PushBack(rhs.Get<glm::mat4>(i));
 					}
 					break;
 				case DatumType::String:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(rhs.get<std::string>(i));
+						PushBack(rhs.Get<std::string>(i));
 					}
 					break;
 				case DatumType::Pointer:
 					for (std::uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						pushBack(rhs.get<Library::RTTI*>(i));
+						PushBack(rhs.Get<Library::RTTI*>(i));
 					}
 					break;
 				default: break;
@@ -123,10 +123,10 @@ namespace Library
 	/// @Return: The newly copied Datum object
 	Datum& Datum::operator=(Datum&& rhs)
 	{	
-		setType(rhs.mType); // Must set type in order to instantiate mTypeState
+		SetType(rhs.mType); // Must Set Type in order to instantiate mTypeState
 		if (rhs.mDataIsExternal)
 		{
-			mTypeState->setStorage(rhs);
+			mTypeState->SetStorage(rhs);
 		}
 		else
 		{
@@ -146,87 +146,87 @@ namespace Library
 	/// Type assignment operator
 	/// @Param rhs: DatumType being assigned to
 	/// @Return: The newly assigned Datum object
-	/// @Exception: Thrown if attempting to reassign a new type to a Datum object
+	/// @Exception: Thrown if attempting to reassign a new Type to a Datum object
 	Datum& Datum::operator=(const DatumType& rhs)
 	{
-		setType(rhs);
+		SetType(rhs);
 		return *this;
 	}
 
 	/// Assignment operator for std::int32_t
 	/// @Param rhs: Integer being assigned to
 	/// @Return: The newly assigned Datum object
-	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
+	/// @Exception: Thrown if attempting to assign to invalid Datum Type or if Size is greater than 1
 	Datum& Datum::operator=(const std::int32_t& rhs)
 	{
 		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
-		setType(DatumType::Integer);
+		SetType(DatumType::Integer);
 		return mTypeState->operator=(rhs);
 	}
 
 	/// Assignment operator for float
 	/// @Param rhs: Float being assigned to
 	/// @Return: The newly assigned Datum object
-	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
+	/// @Exception: Thrown if attempting to assign to invalid Datum Type or if Size is greater than 1
 	Datum& Datum::operator=(const float& rhs)
 	{
 		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
-		setType(DatumType::Float);
+		SetType(DatumType::Float);
 		return mTypeState->operator=(rhs);
 	}
 
 	/// Assignment operator for vec4
 	/// @Param rhs: Vector being assigned to
 	/// @Return: The newly assigned Datum object
-	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
+	/// @Exception: Thrown if attempting to assign to invalid Datum Type or if Size is greater than 1
 	Datum& Datum::operator=(const glm::vec4& rhs)
 	{
 		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
-		setType(DatumType::Vector);
+		SetType(DatumType::Vector);
 		return mTypeState->operator=(rhs);
 	}
 
 	/// Assignment operator for mat4
 	/// @Param rhs: Matrix being assigned to
 	/// @Return: The newly assigned Datum object
-	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
+	/// @Exception: Thrown if attempting to assign to invalid Datum Type or if Size is greater than 1
 	Datum& Datum::operator=(const glm::mat4& rhs)
 	{
 		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
-		setType(DatumType::Matrix);
+		SetType(DatumType::Matrix);
 		return mTypeState->operator=(rhs);
 	}
 
 	/// Assignment operator for Scope
 	/// @Param rhs: Scope being assigned to
 	/// @Return: The newly assigned Datum object
-	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
+	/// @Exception: Thrown if attempting to assign to invalid Datum Type or if Size is greater than 1
 	Datum& Datum::operator=(Scope* const rhs)
 	{
 		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
-		setType(DatumType::Scope);
+		SetType(DatumType::Scope);
 		return mTypeState->operator=(rhs);
 	}
 
 	/// Assignment operator for std::string
 	/// @Param rhs: String being assigned to
 	/// @Return: The newly assigned Datum object
-	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
+	/// @Exception: Thrown if attempting to assign to invalid Datum Type or if Size is greater than 1
 	Datum& Datum::operator=(const std::string& rhs)
 	{
 		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
-		setType(DatumType::String);
+		SetType(DatumType::String);
 		return mTypeState->operator=(rhs);
 	}
 
 	/// Assignment operator for float
 	/// @Param rhs: Float being assigned to
 	/// @Return: The newly assigned Datum object
-	/// @Exception: Thrown if attempting to assign to invalid Datum type or if size is greater than 1
+	/// @Exception: Thrown if attempting to assign to invalid Datum Type or if Size is greater than 1
 	Datum& Datum::operator=(Library::RTTI* const& rhs)
 	{
 		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
-		setType(DatumType::Pointer);
+		SetType(DatumType::Pointer);
 		return mTypeState->operator=(rhs);
 	}
 
@@ -249,7 +249,7 @@ namespace Library
 
 	/// Comparison operator for std::int32_t
 	/// @Param rhs: The signed integer being compared against
-	/// @Return: True if the integer values are the same. False if size is not 1 or if type is invalid
+	/// @Return: True if the integer values are the same. False if Size is not 1 or if Type is invalid
 	bool Datum::operator==(const std::int32_t& rhs) const
 	{
 		return mType == DatumType::Integer &&
@@ -258,7 +258,7 @@ namespace Library
 
 	/// Comparison operator for float
 	/// @Param rhs: The float being compared against
-	/// @Return: True if the float values are the same. False if size is not 1 or if type is invalid
+	/// @Return: True if the float values are the same. False if Size is not 1 or if Type is invalid
 	bool Datum::operator==(const float& rhs) const
 	{
 		return mType == DatumType::Float &&
@@ -267,7 +267,7 @@ namespace Library
 
 	/// Comparison operator for v3c4
 	/// @Param rhs: The vector being compared against
-	/// @Return: True if the vectors are equivalent. False if size is not 1 or if type is invalid
+	/// @Return: True if the vectors are equivalent. False if Size is not 1 or if Type is invalid
 	bool Datum::operator==(const glm::vec4& rhs) const
 	{
 		return mType == DatumType::Vector &&
@@ -276,7 +276,7 @@ namespace Library
 
 	/// Comparison operator for mat4
 	/// @Param rhs: The matrix being  compared against
-	/// @Return: True if the matrices are equivalent. False if size is not 1 or if type is invalid
+	/// @Return: True if the matrices are equivalent. False if Size is not 1 or if Type is invalid
 	bool Datum::operator==(const glm::mat4& rhs) const
 	{
 		return mType == DatumType::Matrix &&
@@ -285,7 +285,7 @@ namespace Library
 
 	/// Comparison operator for Scope
 	/// @Param rhs: The scope being  compared against
-	/// @Return: True if the scopes are equivalent. False if size is not 1 or if type is invalid
+	/// @Return: True if the scopes are equivalent. False if Size is not 1 or if Type is invalid
 	bool Datum::operator==(const Scope* rhs) const
 	{
 		return mType == DatumType::Scope &&
@@ -294,7 +294,7 @@ namespace Library
 
 	/// Comparison operator for std::string
 	/// @Param rhs: The string being compared against
-	/// @Return: True if the string values are the same. False if size is not 1 or if type is invalid
+	/// @Return: True if the string values are the same. False if Size is not 1 or if Type is invalid
 	bool Datum::operator==(const std::string& rhs) const
 	{
 		return mType == DatumType::String &&
@@ -303,7 +303,7 @@ namespace Library
 
 	/// Comparison operator for RTTI pointers
 	/// @Param rhs: The RTTI pointer being compared against
-	/// @Return: True if the pointers are the same. False if size is not 1 or if type is invalid
+	/// @Return: True if the pointers are the same. False if Size is not 1 or if Type is invalid
 	bool Datum::operator==(Library::RTTI* const& rhs) const
 	{
 		return mType == DatumType::Pointer &&
@@ -374,25 +374,25 @@ namespace Library
 		return !(operator==(rhs));
 	}
 
-	/// The type associated with this object
+	/// The Type associated with this object
 	/// @Return: The DatumType of this Datum object
-	DatumType Datum::type() const
+	DatumType Datum::Type() const
 	{
 		return mType;
 	}
 
 	/// Set the DatumType of the Datum object
-	/// @Param type: The new type of the Datum object
-	/// @Exception: Thrown if attempting to reassign a new type to a Datum object
-	void Datum::setType(const DatumType& type)
+	/// @Param Type: The new Type of the Datum object
+	/// @Exception: Thrown if attempting to reassign a new Type to a Datum object
+	void Datum::SetType(const DatumType& type)
 	{
 		if (mType == type) return; // Avoid double instantiation of state without throwing an exception
 
 		if (mType == DatumType::Unknown) mType = type;
-		else throw std::exception("Attempting to change type on Datum object");
+		else throw std::exception("Attempting to change Type on Datum object");
 
 		if (mTypeState != nullptr)
-		{	// If we've already set state, make sure we delete the old type state
+		{	// If we've already Set state, make sure we delete the old Type state
 			delete mTypeState;
 		}
 
@@ -424,207 +424,207 @@ namespace Library
 
 	/// The number of values in the Datum object
 	/// @Return: The number of items associated with this Datum object
-	std::uint32_t Datum::size() const
+	std::uint32_t Datum::Size() const
 	{
 		return mSize;
 	}
 
 	/// The number of potential values in the Datum object
 	/// @Return: The number of objects that can currently be stored in the Datum object
-	std::uint32_t Datum::capacity() const
+	std::uint32_t Datum::Capacity() const
 	{
 		return mCapacity;
 	}
 
-	/// Set number of values and reserve memory if needed
-	/// @Param size: the new number of values
+	/// Set number of values and Reserve memory if needed
+	/// @Param Size: the new number of values
 	/// @Exception: Thrown if attempting to resize external data
-	void Datum::setSize(std::uint32_t size)
+	void Datum::SetSize(std::uint32_t size)
 	{
 		if (mDataIsExternal) throw std::exception("Attempting to resize external storage");
-		mTypeState->setSize(size);
+		mTypeState->SetSize(size);
 	}
 
-	/// Reserve additional capacity for uninitialized values
-	/// @Param capacity: The number of possible elements that the array will be able to hold
+	/// Reserve additional Capacity for uninitialized values
+	/// @Param Capacity: The number of possible elements that the array will be able to hold
 	/// @Exception: Thrown if attempting to resize external storage
-	void Datum::reserve(std::uint32_t capacity)
+	void Datum::Reserve(std::uint32_t capacity)
 	{
 		if (mType == DatumType::Unknown) return;
 		if (mDataIsExternal) throw std::exception("Attempting to resize external storage");
-		mTypeState->reserve(capacity);
+		mTypeState->Reserve(capacity);
 	}
 
-	/// Clear the array without shrinking the capacity
-	/// @Exception: Thrown if trying to clear with an invalid type set
-	void Datum::clear()
+	/// Clear the array without shrinking the Capacity
+	/// @Exception: Thrown if trying to Clear with an invalid Type Set
+	void Datum::Clear()
 	{
-		mTypeState->clear();
+		mTypeState->Clear();
 	}
 
 	/// Sets the external storage to the specified int32_t*
 	/// Note: Size on external storage is considered static
 	/// @Param data: The specified external storage
-	/// @Param size: The number of elements available in the external storage
-	void Datum::setStorage(std::int32_t* data, std::uint32_t size)
+	/// @Param Size: The number of elements available in the external storage
+	void Datum::SetStorage(std::int32_t* data, std::uint32_t size)
 	{
-//		if (mTypeState != nullptr) return mTypeState->setStorage(data, size);
-//		setType(DatumType::Integer);
-//		mTypeState->setStorage(data, size);
+//		if (mTypeState != nullptr) return mTypeState->SetStorage(data, Size);
+//		SetType(DatumType::Integer);
+//		mTypeState->SetStorage(data, Size);
 
 		if (mTypeState == nullptr)
 		{
-			setType(DatumType::Integer);
+			SetType(DatumType::Integer);
 		}
 
-		mTypeState->setStorage(data, size);
+		mTypeState->SetStorage(data, size);
 	}
 
 	/// Sets the external storage to the specified float*
 	/// Note: Size on external storage is considered static
 	/// @Param data: The specified external storage
-	/// @Param size: The number of elements available in the external storage
-	void Datum::setStorage(float* data, std::uint32_t size)
+	/// @Param Size: The number of elements available in the external storage
+	void Datum::SetStorage(float* data, std::uint32_t size)
 	{
 		if (mTypeState == nullptr)
 		{
-			setType(DatumType::Float);
+			SetType(DatumType::Float);
 		}
 
-		mTypeState->setStorage(data, size);
+		mTypeState->SetStorage(data, size);
 	}
 
 	/// Sets the external storage to the specified glm::vec4*
 	/// Note: Size on external storage is considered static
 	/// @Param data: The specified external storage
-	/// @Param size: The number of elements available in the external storage
-	void Datum::setStorage(glm::vec4* data, std::uint32_t size)
+	/// @Param Size: The number of elements available in the external storage
+	void Datum::SetStorage(glm::vec4* data, std::uint32_t size)
 	{
 		if (mTypeState == nullptr)
 		{
-			setType(DatumType::Vector);
+			SetType(DatumType::Vector);
 		}
 		
-		mTypeState->setStorage(data, size);
+		mTypeState->SetStorage(data, size);
 	}
 
 	/// Sets the external storage to the specified glm::mat4*
 	/// Note: Size on external storage is considered static
 	/// @Param data: The specified external storage
-	/// @Param size: The number of elements available in the external storage
-	void Datum::setStorage(glm::mat4* data, std::uint32_t size)
+	/// @Param Size: The number of elements available in the external storage
+	void Datum::SetStorage(glm::mat4* data, std::uint32_t size)
 	{
 		if (mTypeState == nullptr)
 		{
-			setType(DatumType::Matrix);
+			SetType(DatumType::Matrix);
 		}
 		
-		mTypeState->setStorage(data, size);
+		mTypeState->SetStorage(data, size);
 	}
 
 	/// Sets the external storage to the specified std::string*
 	/// Note: Size on external storage is considered static
 	/// @Param data: The specified external storage
-	/// @Param size: The number of elements available in the external storage
-	void Datum::setStorage(std::string* data, std::uint32_t size)
+	/// @Param Size: The number of elements available in the external storage
+	void Datum::SetStorage(std::string* data, std::uint32_t size)
 	{
 		if (mTypeState == nullptr)
 		{
-			setType(DatumType::String);
+			SetType(DatumType::String);
 		}
 		
-		mTypeState->setStorage(data, size);
+		mTypeState->SetStorage(data, size);
 	}
 
 	/// Sets the external storage to the specified RTTI**
 	/// Note: Size on external storage is considered static
 	/// @Param data: The specified external storage
-	/// @Param size: The number of elements available in the external storage
-	void Datum::setStorage(Library::RTTI** data, std::uint32_t size)
+	/// @Param Size: The number of elements available in the external storage
+	void Datum::SetStorage(Library::RTTI** data, std::uint32_t size)
 	{
 		if (mTypeState == nullptr)
 		{
-			setType(DatumType::Pointer);
+			SetType(DatumType::Pointer);
 		}
 		
-		mTypeState->setStorage(data, size);
+		mTypeState->SetStorage(data, size);
 	}
 
 	/// Sets a specified index of the array to the specified value
 	/// @Param value: The int32_t being assigned
 	/// @Param index: The index of the value being assigned to
-	/// @Exception invalidType: Thrown if calling set on invalid type
-	/// @Exception indexOutObBounds: Thrown if attempting to set beyond existing size
-	void Datum::set(const std::int32_t& value, const std::uint32_t index)
+	/// @Exception invalidType: Thrown if calling Set on invalid Type
+	/// @Exception indexOutObBounds: Thrown if attempting to Set beyond existing Size
+	void Datum::Set(const std::int32_t& value, const std::uint32_t index)
 	{
-		if (mType != DatumType::Integer) throw std::exception("Calling set on invalid type");
-		if (index > mSize) throw std::exception("Attempting to set beyond current size");
-		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
+		if (mType != DatumType::Integer) throw std::exception("Calling Set on invalid Type");
+		if (index > mSize) throw std::exception("Attempting to Set beyond current Size");
+		if (index == mSize) PushBack(value); // If setting end, divert functionality to a push Back
 		new(mData.i + index) std::int32_t(value);
 	}
 
 	/// Sets a specified index of the array to the specified value
 	/// @Param value: The float being assigned
 	/// @Param index: The index of the value being assigned to
-	/// @Exception: Thrown if calling set on invalid type
-	/// @Exception: Thrown if attempting to set beyond existing size
-	void Datum::set(const float& value, const std::uint32_t index)
+	/// @Exception: Thrown if calling Set on invalid Type
+	/// @Exception: Thrown if attempting to Set beyond existing Size
+	void Datum::Set(const float& value, const std::uint32_t index)
 	{
-		if (mType != DatumType::Float) throw std::exception("Calling set on invalid type");
-		if (index > mSize) throw std::exception("Attempting to set beyond current size");
-		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
+		if (mType != DatumType::Float) throw std::exception("Calling Set on invalid Type");
+		if (index > mSize) throw std::exception("Attempting to Set beyond current Size");
+		if (index == mSize) PushBack(value); // If setting end, divert functionality to a push Back
 		new(mData.f + index) float(value);
 	}
 
 	/// Sets a specified index of the array to the specified value
 	/// @Param value: The vec4 being assigned
 	/// @Param index: The index of the value being assigned to
-	/// @Exception: Thrown if calling set on invalid type
-	/// @Exception: Thrown if attempting to set beyond existing size
-	void Datum::set(const glm::vec4& value, const std::uint32_t index)
+	/// @Exception: Thrown if calling Set on invalid Type
+	/// @Exception: Thrown if attempting to Set beyond existing Size
+	void Datum::Set(const glm::vec4& value, const std::uint32_t index)
 	{
-		if (mType != DatumType::Vector) throw std::exception("Calling set on invalid type");
-		if (index > mSize) throw std::exception("Attempting to set beyond current size");
-		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
+		if (mType != DatumType::Vector) throw std::exception("Calling Set on invalid Type");
+		if (index > mSize) throw std::exception("Attempting to Set beyond current Size");
+		if (index == mSize) PushBack(value); // If setting end, divert functionality to a push Back
 		new(mData.v + index) glm::vec4(value);
 	}
 
 	/// Sets a specified index of the array to the specified value
 	/// @Param value: The mat4 being assigned
 	/// @Param index: The index of the value being assigned to
-	/// @Exception: Thrown if calling set on invalid type
-	/// @Exception: Thrown if attempting to set beyond existing size
-	void Datum::set(const glm::mat4& value, const std::uint32_t index)
+	/// @Exception: Thrown if calling Set on invalid Type
+	/// @Exception: Thrown if attempting to Set beyond existing Size
+	void Datum::Set(const glm::mat4& value, const std::uint32_t index)
 	{
-		if (mType != DatumType::Matrix) throw std::exception("Calling set on invalid type");
-		if (index > mSize) throw std::exception("Attempting to set beyond current size");
-		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
+		if (mType != DatumType::Matrix) throw std::exception("Calling Set on invalid Type");
+		if (index > mSize) throw std::exception("Attempting to Set beyond current Size");
+		if (index == mSize) PushBack(value); // If setting end, divert functionality to a push Back
 		new(mData.m + index) glm::mat4(value);
 	}
 
 	/// Sets a specified index of the array to the specified value
 	/// @Param value: The scope pointer being assigned
 	/// @Param index: The index of the value being assigned to
-	/// @Exception: Thrown if calling set on invalid type
-	/// @Exception: Thrown if attempting to set beyond existing size
-	void Datum::set(Scope* const& value, const std::uint32_t index)
+	/// @Exception: Thrown if calling Set on invalid Type
+	/// @Exception: Thrown if attempting to Set beyond existing Size
+	void Datum::Set(Scope* const& value, const std::uint32_t index)
 	{
-		if (mType != DatumType::Scope) throw std::exception("Calling set on invalid type");
-		if (index > mSize) throw std::exception("Attempting to set beyond current size");
-		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
+		if (mType != DatumType::Scope) throw std::exception("Calling Set on invalid Type");
+		if (index > mSize) throw std::exception("Attempting to Set beyond current Size");
+		if (index == mSize) PushBack(value); // If setting end, divert functionality to a push Back
 		new(mData.sc + index) Scope*(value);
 	}
 
 	/// Sets a specified index of the array to the specified value
 	/// @Param value: The string being assigned
 	/// @Param index: The index of the value being assigned to
-	/// @Exception: Thrown if calling set on invalid type
-	/// @Exception: Thrown if attempting to set beyond existing size
-	void Datum::set(const std::string& value, const std::uint32_t index)
+	/// @Exception: Thrown if calling Set on invalid Type
+	/// @Exception: Thrown if attempting to Set beyond existing Size
+	void Datum::Set(const std::string& value, const std::uint32_t index)
 	{
-		if (mType != DatumType::String) throw std::exception("Calling set on invalid type");
-		if (index > mSize) throw std::exception("Attempting to set beyond current size");
-		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
+		if (mType != DatumType::String) throw std::exception("Calling Set on invalid Type");
+		if (index > mSize) throw std::exception("Attempting to Set beyond current Size");
+		if (index == mSize) PushBack(value); // If setting end, divert functionality to a push Back
 //		new(mData.s + index) std::string(value);
 		mData.s[index] = value;
 	}
@@ -632,75 +632,75 @@ namespace Library
 	/// Sets a specified index of the array to the specified value
 	/// @Param value: The RTTI* being assigned
 	/// @Param index: The index of the value being assigned to
-	/// @Exception: Thrown if calling set on invalid type
-	/// @Exception: Thrown if attempting to set beyond existing size
-	void Datum::set(Library::RTTI* const& value, const std::uint32_t index)
+	/// @Exception: Thrown if calling Set on invalid Type
+	/// @Exception: Thrown if attempting to Set beyond existing Size
+	void Datum::Set(Library::RTTI* const& value, const std::uint32_t index)
 	{
-		if (mType != DatumType::Pointer) throw std::exception("Calling set on invalid type");
-		if (index > mSize) throw std::exception("Attempting to set beyond current size");
-		if (index == mSize) pushBack(value); // If setting end, divert functionality to a push back
+		if (mType != DatumType::Pointer) throw std::exception("Calling Set on invalid Type");
+		if (index > mSize) throw std::exception("Attempting to Set beyond current Size");
+		if (index == mSize) PushBack(value); // If setting end, divert functionality to a push Back
 		new(mData.r + index) RTTI*(value);
 	}
 
-	/// Pushes an std::int32_t to the back of the array
+	/// Pushes an std::int32_t to the Back of the array
 	/// @Param value: The value being pushed onto the array
-	void Datum::pushBack(const std::int32_t& value)
+	void Datum::PushBack(const std::int32_t& value)
 	{
-		setSize(mSize + 1);
-		set(value, mSize - 1);
+		SetSize(mSize + 1);
+		Set(value, mSize - 1);
 	}
 
-	/// Pushes an std::int32_t to the back of the array
+	/// Pushes an std::int32_t to the Back of the array
 	/// @Param value: The value being pushed onto the array
-	void Datum::pushBack(const float& value)
+	void Datum::PushBack(const float& value)
 	{
-		setSize(mSize + 1);
-		set(value, mSize - 1);
+		SetSize(mSize + 1);
+		Set(value, mSize - 1);
 	}
 
-	/// Pushes an std::int32_t to the back of the array
+	/// Pushes an std::int32_t to the Back of the array
 	/// @Param value: The value being pushed onto the array
-	void Datum::pushBack(const glm::vec4& value)
+	void Datum::PushBack(const glm::vec4& value)
 	{
-		setSize(mSize + 1);
-		set(value, mSize - 1);
+		SetSize(mSize + 1);
+		Set(value, mSize - 1);
 	}
 
-	/// Pushes an std::int32_t to the back of the array
+	/// Pushes an std::int32_t to the Back of the array
 	/// @Param value: The value being pushed onto the array
-	void Datum::pushBack(const glm::mat4& value)
+	void Datum::PushBack(const glm::mat4& value)
 	{
-		setSize(mSize + 1);
-		set(value, mSize - 1);
+		SetSize(mSize + 1);
+		Set(value, mSize - 1);
 	}
 
-	/// Pushes an std::int32_t to the back of the array
+	/// Pushes an std::int32_t to the Back of the array
 	/// @Param value: The value being pushed onto the array
-	void Datum::pushBack(Scope* const& value)
+	void Datum::PushBack(Scope* const& value)
 	{
-		setSize(mSize + 1);
-		set(value, mSize - 1);
+		SetSize(mSize + 1);
+		Set(value, mSize - 1);
 	}
 
-	/// Pushes an std::int32_t to the back of the array
+	/// Pushes an std::int32_t to the Back of the array
 	/// @Param value: The value being pushed onto the array
-	void Datum::pushBack(const std::string& value)
+	void Datum::PushBack(const std::string& value)
 	{
-		setSize(mSize + 1);
-		set(value, mSize - 1);
+		SetSize(mSize + 1);
+		Set(value, mSize - 1);
 	}
 
-	/// Pushes an std::int32_t to the back of the array
+	/// Pushes an std::int32_t to the Back of the array
 	/// @Param value: The value being pushed onto the array
-	/// @Exception: Thrown if attempting to push back a null value
-	void Datum::pushBack(RTTI* const& value)
+	/// @Exception: Thrown if attempting to push Back a null value
+	void Datum::PushBack(RTTI* const& value)
 	{
-		if (value == nullptr) throw std::exception("Attempting to push back nullptr");
-		setSize(mSize + 1);
-		set(value, mSize - 1);
+		if (value == nullptr) throw std::exception("Attempting to push Back nullptr");
+		SetSize(mSize + 1);
+		Set(value, mSize - 1);
 	}
 
-	void Datum::remove(Scope* const scope)
+	void Datum::Remove(Scope* const scope)
 	{
 		if (mType == DatumType::Scope)
 		{
@@ -718,19 +718,19 @@ namespace Library
 
 	/// Parses a string value and sets the value to the specified index
 	/// @Param value: The string value being parsed
-	/// @Param index: The location being set to. Default is 0
+	/// @Param index: The location being Set to. Default is 0
 	/// @Exception: Thrown if syntax is invalid
-	void Datum::setFromString(const std::string& value, const std::uint32_t& index)
+	void Datum::SetFromString(const std::string& value, const std::uint32_t& index)
 	{
-		mTypeState->setFromString(value, index);
+		mTypeState->SetFromString(value, index);
 	}
 
 	/// A string representation of a piece of data stored in the Datum object
 	/// @Param index: Optional index of the value being retrieved. Defaulted to first element
-	/// @Exception invalidFormat: Thrown if unable to properly parse string
-	std::string Datum::toString(std::uint32_t index)
+	/// @Exception invalidFormat: Thrown if unable to properly Parse string
+	std::string Datum::ToString(std::uint32_t index)
 	{	
 		if (mType == DatumType::Unknown) return "Unknown Type";
-		return mTypeState->toString(index);
+		return mTypeState->ToString(index);
 	}
 }

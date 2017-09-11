@@ -12,7 +12,7 @@ namespace Library
 
 	/// Comparison operator for Datum objects
 	/// @Param rhs: The Datum object being compared against
-	/// @Return: True if type, size, and each element of the Datum objects are equivalent. False otherwise
+	/// @Return: True if type, Size, and each element of the Datum objects are equivalent. False otherwise
 	bool StringState::operator==(const Datum& rhs)
 	{
 		bool result = false;
@@ -34,20 +34,20 @@ namespace Library
 	}
 
 	/// Scalar assignment operator
-	/// @Param rhs: The string being set to the only element in the Datum
+	/// @Param rhs: The string being Set to the only element in the Datum
 	/// @Return: The modified Datum object
 	Datum& StringState::operator=(const std::string& rhs)
 	{
 		if (mContext->mSize > 1) throw std::exception("Invalid assignment invocation");
-		if (mContext->mSize == 0) mContext->setSize(1);
+		if (mContext->mSize == 0) mContext->SetSize(1);
 //		new(mContext->mData.s) std::string(rhs);
 		mContext->mData.s[0] = rhs;
 		return *mContext;
 	}
 
 	/// Sets the number of strings in the local buffer
-	/// @Param capacity: The current maximum size of the array
-	void StringState::setSize(std::uint32_t size)
+	/// @Param Capacity: The current maximum Size of the array
+	void StringState::SetSize(std::uint32_t size)
 	{
 		if (size < mContext->mSize)
 		{
@@ -60,7 +60,7 @@ namespace Library
 		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(std::string) * size);
 
 		if (size > mContext->mSize)
-		{	// If our new size is larger than before, we need to default construct new strings
+		{	// If our new Size is larger than before, we need to default construct new strings
 			for (std::uint32_t i = mContext->mSize; i < size; i++)
 			{	// Use placement new to construct new strings
 				new(mContext->mData.s + i) std::string("");
@@ -70,9 +70,9 @@ namespace Library
 		mContext->mCapacity = mContext->mSize = size;
 	}
 
-	/// Modifies the capacity of the array to any value greater than or equal to current size
-	/// @Param capacity: The new capacity of the array
-	void StringState::reserve(std::uint32_t capacity)
+	/// Modifies the Capacity of the array to any value greater than or equal to current Size
+	/// @Param Capacity: The new Capacity of the array
+	void StringState::Reserve(std::uint32_t capacity)
 	{
 		if (capacity > mContext->mCapacity)
 		{
@@ -81,8 +81,8 @@ namespace Library
 		}
 	}
 
-	/// Clears the value of all elements in the array without changing capacity
-	void StringState::clear()
+	/// Clears the value of all elements in the array without changing Capacity
+	void StringState::Clear()
 	{
 		if (mContext->mSize > 0)
 		{
@@ -97,30 +97,30 @@ namespace Library
 	/// Parses a string value and assigns the specified index of the array to its value
 	/// @Param value: The string value being parsed
 	/// @Param index: The index of the array being assigned to
-	void StringState::setFromString(const std::string& value, const std::uint32_t& index)
-	{   // Strings don't have to be parsed, so they can be passed directly to set
-		mContext->set(value, index); 
+	void StringState::SetFromString(const std::string& value, const std::uint32_t& index)
+	{   // Strings don't have to be parsed, so they can be passed directly to Set
+		mContext->Set(value, index); 
 	}
 
 	/// Sets external storage on copy
 	/// @Param rhs: The Datum object that the storage reference is being taken from
-	void StringState::setStorage(const Datum& rhs)
+	void StringState::SetStorage(const Datum& rhs)
 	{
-		setStorage(rhs.mData.s, rhs.mSize);
+		SetStorage(rhs.mData.s, rhs.mSize);
 	}
 
 	/// Sets the external storage to the specified pointer
 	/// @Param data: The external storage being utilized
-	/// @Pram size: The number of elements in the external storage
-	/// @Exception: Thrown if attempting to reassign datum type, or if local memory is already used
-	void StringState::setStorage(std::string* data, std::uint32_t size)
+	/// @Pram Size: The number of elements in the external storage
+	/// @Exception: Thrown if attempting to reassign datum Type, or if local memory is already used
+	void StringState::SetStorage(std::string* data, std::uint32_t size)
 	{
 		if (mContext->mType != DatumType::String)
 		{
 			throw std::exception("Attempting to reassign Datum Type");
 		}
 		
-		if (mContext->mCapacity > 0) { clear(); }
+		if (mContext->mCapacity > 0) { Clear(); }
 
 		mContext->mDataIsExternal = true;
 		mContext->mData.s = data;
@@ -129,8 +129,8 @@ namespace Library
 
 	/// A string representation of a piece of data stored in the Datum object
 	/// @Param index: Optional index of the value being retrieved. Defaulted to first element
-	std::string StringState::toString(std::uint32_t index)
+	std::string StringState::ToString(std::uint32_t index)
 	{
-		return mContext->get<std::string>(index);
+		return mContext->Get<std::string>(index);
 	}
 }

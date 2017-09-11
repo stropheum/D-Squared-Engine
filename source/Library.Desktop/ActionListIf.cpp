@@ -6,56 +6,56 @@ namespace Library
 {
 	ActionListIf::ActionListIf()
 	{
-		(*this)["Condition"].setStorage(&mCondition, 1);
-		(*this)["Then"].setType(DatumType::Scope);
-		(*this)["Else"].setType(DatumType::Scope);
+		(*this)["Condition"].SetStorage(&mCondition, 1);
+		(*this)["Then"].SetType(DatumType::Scope);
+		(*this)["Else"].SetType(DatumType::Scope);
 	}
 
-	void ActionListIf::update(WorldState& worldState)
+	void ActionListIf::Update(WorldState& worldState)
 	{
 		if (mCondition != 0)
 		{
-			for (std::uint32_t i = 0; i < (*this)["Then"].size(); i++)
+			for (std::uint32_t i = 0; i < (*this)["Then"].Size(); i++)
 			{
-				assert((*this)["Then"].get<Scope*>(i)->Is(Action::TypeIdClass()));
-				(*this)["Then"].get<Scope*>(i)->As<Action>()->update(worldState);
+				assert((*this)["Then"].Get<Scope*>(i)->Is(Action::TypeIdClass()));
+				(*this)["Then"].Get<Scope*>(i)->As<Action>()->Update(worldState);
 			}
 		}
 		else
 		{
-			for (std::uint32_t i = 0; i < (*this)["Else"].size(); i++)
+			for (std::uint32_t i = 0; i < (*this)["Else"].Size(); i++)
 			{
-				assert((*this)["Else"].get<Scope*>(i)->Is(Action::TypeIdClass()));
-				(*this)["Else"].get<Scope*>(i)->As<Action>()->update(worldState);
+				assert((*this)["Else"].Get<Scope*>(i)->Is(Action::TypeIdClass()));
+				(*this)["Else"].Get<Scope*>(i)->As<Action>()->Update(worldState);
 			}
 		}
 	}
 
-	void ActionListIf::setCondition(std::int32_t condition)
+	void ActionListIf::SetCondition(std::int32_t condition)
 	{
 		mCondition = condition;
 	}
 
-	std::int32_t ActionListIf::getCondition() const
+	std::int32_t ActionListIf::GetCondition() const
 	{
 		return mCondition;
 	}
 
-	Action* ActionListIf::createThenAction(const std::string& className, const std::string& instanceName)
+	Action* ActionListIf::CreateThenAction(const std::string& className, const std::string& instanceName)
 	{
-		Action* instance = Factory<Action>::create(className);
+		Action* instance = Factory<Action>::Create(className);
 		assert(instance != nullptr);
-		instance->setName(instanceName);
-		adopt(*instance, "Then");
+		instance->SetName(instanceName);
+		Adopt(*instance, "Then");
 		return instance;
 	}
 
-	Action* ActionListIf::createElseAction(const std::string& className, const std::string& instanceName)
+	Action* ActionListIf::CreateElseAction(const std::string& className, const std::string& instanceName)
 	{
-		Action* instance = Factory<Action>::create(className);
+		Action* instance = Factory<Action>::Create(className);
 		assert(instance != nullptr);
-		instance->setName(instanceName);
-		adopt(*instance, "Else");
+		instance->SetName(instanceName);
+		Adopt(*instance, "Else");
 		return instance;
 	}
 }

@@ -57,10 +57,10 @@ namespace TestLibraryDesktop
 			Library::SharedDataScope sharedData;
 			Library::XmlParseMaster parseMaster(&sharedData);
 			Library::XmlParseHelperScope helper;
-			sharedData.setXmlParseMaster(&parseMaster);
-			parseMaster.addHelper(helper);
+			sharedData.SetXmlParseMaster(&parseMaster);
+			parseMaster.AddHelper(helper);
 			
-			parseMaster.parseFromFile("Grammar.xml");
+			parseMaster.ParseFromFile("Grammar.xml");
 
 			Library::Scope scope = *sharedData.mScope;
 			Assert::IsTrue(scope["Name"] == "Dale");
@@ -76,7 +76,7 @@ namespace TestLibraryDesktop
 			);
 			Assert::IsTrue(scope["MyMatrix"] == expectedMatrix);
 
-			Library::Scope& pets = *scope["Pets"].get<Library::Scope*>(0);
+			Library::Scope& pets = *scope["Pets"].Get<Library::Scope*>(0);
 			Assert::IsTrue(pets["Dog"] == "Dozer");
 		}
 
@@ -85,13 +85,13 @@ namespace TestLibraryDesktop
 			Library::SharedDataScope data;
 			Library::XmlParseHelperScope helper1, helper2;
 			Assert::IsTrue(helper1.Equals(&helper2));
-			Assert::IsTrue(helper1 == helper1);
+			Assert::IsFalse(helper1 == helper1);
 
 			Library::XmlParseMaster master(&data);
-			helper1.initialize(&master);
+			helper1.Initialize(&master);
 			Assert::IsFalse(helper1.Equals(&helper2));
 
-			helper2.initialize(&master);
+			helper2.Initialize(&master);
 			Assert::IsTrue(helper1.Equals(&helper2));
 
 			Assert::IsTrue(helper1.ToString() == helper2.ToString() &&
@@ -104,15 +104,15 @@ namespace TestLibraryDesktop
 			Library::IXmlParseHelper* helperClone = nullptr;
 			Assert::IsFalse(helperOG.Equals(helperClone));
 
-			helperClone = helperOG.clone();
+			helperClone = helperOG.Clone();
 			Assert::IsTrue(helperOG.Equals(helperClone));
 
 			Library::SharedDataScope sharedData;
 			Library::XmlParseMaster parseMaster(&sharedData);
-			sharedData.setXmlParseMaster(&parseMaster);
-			parseMaster.addHelper(helperOG);
+			sharedData.SetXmlParseMaster(&parseMaster);
+			parseMaster.AddHelper(helperOG);
 
-			parseMaster.parseFromFile("Grammar.xml");
+			parseMaster.ParseFromFile("Grammar.xml");
 
 			Assert::IsFalse(helperOG.Equals(helperClone));
 
@@ -127,18 +127,18 @@ namespace TestLibraryDesktop
 			Library::XmlParseMaster::SharedData* sharedDataClone = nullptr;
 			Assert::IsFalse(sharedData.Equals(sharedDataClone));
 
-			sharedDataClone = sharedData.clone();
+			sharedDataClone = sharedData.Clone();
 			Assert::IsTrue(sharedData.Equals(sharedDataClone));
 
 			Library::XmlParseMaster parseMaster(&sharedData);
-			sharedData.setXmlParseMaster(&parseMaster);
-			parseMaster.addHelper(helper);
+			sharedData.SetXmlParseMaster(&parseMaster);
+			parseMaster.AddHelper(helper);
 
-			parseMaster.parseFromFile("Grammar.xml");
+			parseMaster.ParseFromFile("Grammar.xml");
 			Assert::IsFalse(sharedData.Equals(sharedDataClone));
 
 			delete sharedDataClone;
-			sharedDataClone = sharedData.clone();
+			sharedDataClone = sharedData.Clone();
 			Assert::IsTrue(sharedData.Equals(sharedDataClone));
 			delete sharedDataClone;
 		}
@@ -153,18 +153,18 @@ namespace TestLibraryDesktop
 
 			Library::XmlParseMaster parseMaster(&data1);
 			Library::XmlParseHelperScope helper;
-			data1.setXmlParseMaster(&parseMaster);
-			parseMaster.addHelper(helper);
+			data1.SetXmlParseMaster(&parseMaster);
+			parseMaster.AddHelper(helper);
 
-			parseMaster.parseFromFile("Grammar.xml");
+			parseMaster.ParseFromFile("Grammar.xml");
 			Assert::IsFalse(data1.Equals(&data2));
 
 			Library::XmlParseMaster parseMaster2(&data2);
 			Library::XmlParseHelperScope helper2;
-			data2.setXmlParseMaster(&parseMaster2);
-			parseMaster2.addHelper(helper2);
+			data2.SetXmlParseMaster(&parseMaster2);
+			parseMaster2.AddHelper(helper2);
 
-			parseMaster2.parseFromFile("Grammar.xml");
+			parseMaster2.ParseFromFile("Grammar.xml");
 			Assert::IsTrue(data1.Equals(&data2));
 			
 			Library::Scope& scope1 = *data1.mScope;

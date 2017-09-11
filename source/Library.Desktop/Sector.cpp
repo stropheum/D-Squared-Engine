@@ -11,57 +11,57 @@ namespace Library
 
 		Sector::Sector()
 	{
-		(*this)["Name"].setStorage(&mName, 1);
-		(*this)["Entities"].setType(DatumType::Scope);
+		(*this)["Name"].SetStorage(&mName, 1);
+		(*this)["Entities"].SetType(DatumType::Scope);
 	}
 
-	std::string Sector::name() const
+	std::string Sector::Name() const
 	{
 		return mName;
 	}
 
-	void Sector::setName(const std::string& name)
+	void Sector::SetName(const std::string& name)
 	{
 		(*this)["Name"] = name;
 	}
 
-	Datum& Sector::entities()
+	Datum& Sector::Entities()
 	{
 		return (*this)["Entities"];
 	}
 
-	Entity* Sector::createEntity(const std::string& className, const std::string& instanceName)
+	Entity* Sector::CreateEntity(const std::string& className, const std::string& instanceName)
 	{
-		Entity* instance = Factory<Entity>::create(className);
+		Entity* instance = Factory<Entity>::Create(className);
 		assert(instance != nullptr);
-		instance->setName(instanceName);
-		adopt(*instance, "Entities");
+		instance->SetName(instanceName);
+		Adopt(*instance, "Entities");
 		return instance;
 	}
 
-	void Sector::setWorld(World& world)
+	void Sector::SetWorld(World& world)
 	{
-		world.adopt(*this, mName);
+		world.Adopt(*this, mName);
 	}
 
-	World& Sector::getWorld()
+	World& Sector::GetWorld()
 	{
-		if (getParent() == nullptr)
+		if (GetParent() == nullptr)
 		{
 			throw std::exception("Parent is null");
 		}
-		assert(getParent()->Is(World::TypeIdClass()));
-		return *getParent()->As<World>();
+		assert(GetParent()->Is(World::TypeIdClass()));
+		return *GetParent()->As<World>();
 	}
 
-	void Sector::update(WorldState& worldState)
+	void Sector::Update(WorldState& worldState)
 	{
 		worldState.sector = this;
 
-		for (std::uint32_t i = 0; i < entities().size(); i++)
+		for (std::uint32_t i = 0; i < Entities().Size(); i++)
 		{
-			assert(entities()[i].Is(Entity::TypeIdClass()));
-			entities()[i].As<Entity>()->update(worldState);
+			assert(Entities()[i].Is(Entity::TypeIdClass()));
+			Entities()[i].As<Entity>()->Update(worldState);
 		}
 
 		worldState.sector = nullptr;

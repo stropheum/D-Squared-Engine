@@ -15,36 +15,36 @@ namespace Library
 {
 	EventQueue::~EventQueue()
 	{
-		if (!mQueue.isEmpty())
+		if (!mQueue.IsEmpty())
 		{
-			for (uint32_t i = 0; i < mQueue.size(); i++)
+			for (uint32_t i = 0; i < mQueue.Size(); i++)
 			{
-				if (mQueue[i]->deleteAfterPublishing())
+				if (mQueue[i]->DeleteAfterPublishing())
 				{
 					delete mQueue[i];
 				}
 			}
-			mQueue.clear();
+			mQueue.Clear();
 		}
 	}
 
-	void EventQueue::enqueue(EventPublisher& eventPublisher, GameTime& gameTime, std::chrono::milliseconds delay)
+	void EventQueue::Enqueue(EventPublisher& eventPublisher, GameTime& gameTime, std::chrono::milliseconds delay)
 	{
 		lock_guard<mutex> guard(mQueueMutex);
-		if (mQueue.find(&eventPublisher) == mQueue.end())
+		if (mQueue.Find(&eventPublisher) == mQueue.end())
 		{
-			eventPublisher.setTime(gameTime.CurrentTime(), delay);
-			mQueue.pushBack(&eventPublisher);
+			eventPublisher.SetTime(gameTime.CurrentTime(), delay);
+			mQueue.PushBack(&eventPublisher);
 		}
 	}
 
-	void EventQueue::send(EventPublisher& eventPublisher)
+	void EventQueue::Send(EventPublisher& eventPublisher)
 	{
 		lock_guard<mutex> guard(mQueueMutex);
-		eventPublisher.deliver();
+		eventPublisher.Deliver();
 	}
 
-	void EventQueue::update(GameTime& gameTime)
+	void EventQueue::Update(GameTime& gameTime)
 	{
 		Vector<EventPublisher*> nonExpiredEvents;
 		vector<future<void>> futures;
@@ -53,18 +53,18 @@ namespace Library
 		{
 			lock_guard<mutex> guard(mQueueMutex);	
 
-			for (uint32_t i = 0; i < queueCopy.size(); i++)
+			for (uint32_t i = 0; i < queueCopy.Size(); i++)
 			{
-				if (queueCopy[i]->isExpired(gameTime.CurrentTime()))
+				if (queueCopy[i]->IsExpired(gameTime.CurrentTime()))
 				{
 					futures.emplace_back(async(std::launch::async, [&queueCopy, i]
 					{
-						queueCopy[i]->deliver();
+						queueCopy[i]->Deliver();
 					}));
 				}
 				else
 				{
-					nonExpiredEvents.pushBack(mQueue[i]);
+					nonExpiredEvents.PushBack(mQueue[i]);
 				}
 			}
 		}
@@ -81,20 +81,20 @@ namespace Library
 		
 	}
 
-	void EventQueue::clear()
+	void EventQueue::Clear()
 	{
 		lock_guard<mutex> guard(mQueueMutex);
-		mQueue.clear();
+		mQueue.Clear();
 	}
 
-	bool EventQueue::isEmpty() const
+	bool EventQueue::IsEmpty() const
 	{
-		return mQueue.size() == 0;
+		return mQueue.Size() == 0;
 	}
 
-	uint32_t EventQueue::size() const
+	uint32_t EventQueue::Size() const
 	{
-		return mQueue.size();
+		return mQueue.Size();
 	}
 
 }

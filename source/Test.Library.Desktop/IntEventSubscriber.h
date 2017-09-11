@@ -6,15 +6,15 @@ class IntEventSubscriber :
 {
 	public:
 
-	/// Constructor. Automatically subscribes to Events of type "Foo"
+	/// Constructor. Automatically subscribes to Events of Type "Foo"
 	IntEventSubscriber();
 
-	/// Destructor. Automatically unsubscribes from Events of type "Foo"
+	/// Destructor. Automatically unsubscribes from Events of Type "Foo"
 	~IntEventSubscriber();
 
 	/// Notify method. Called when an event of type "Foo" is triggered
 	/// @Param event: The event that this object is being notified of
-	virtual void notify(const Library::EventPublisher& event) override;
+	virtual void Notify(const Library::EventPublisher& event) override;
 
 	std::int32_t mValue;
 	bool mNotified;

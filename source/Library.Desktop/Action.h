@@ -11,26 +11,36 @@ namespace Library
 
 	public:
 
-		/// Constructor
+		/**
+		 * Constructor
+		 */
 		Action();
 
-		/// Default destructor
+		/**
+		 * Default destructor
+		 */
 		~Action() = default;
 
-		/// Updates the game state
-		/// @Param worldState: The worldstate object storing information about the world
-		virtual void update(class WorldState& worldState) = 0;
+		/**
+		 * Updates the game state
+		 * @Param worldState: The worldstate object storing information about the world
+		 */
+		virtual void Update(class WorldState& worldState) = 0;
 
-		/// Accessor method for the name of the action
-		/// @Return: The name of the action
-		std::string name() const;
+		/**
+		 * Accessor method for the Name of the action
+		 * @Return: The Name of the action
+		 */
+		std::string Name() const;
 
-		/// Mutator method for the name of the action
-		/// @Param name: The new name of the action
-		void setName(const std::string& name);
+		/**
+		 * Mutator method for the Name of the action
+		 * @Param Name: The new Name of the action
+		 */
+		void SetName(const std::string& name);
 
 	protected:
-		std::string mName; /// The name of the action
+		std::string mName; // The Name of the action
 	};
 
 #define ActionFactory(ConcreteAction) ConcreteFactory(Action, ConcreteAction)

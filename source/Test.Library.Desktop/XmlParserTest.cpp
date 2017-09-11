@@ -51,10 +51,10 @@ namespace TestLibraryDesktop
 			Library::TestSharedData sharedData;
 			Library::XmlParseMaster parseMaster(&sharedData);
 			Library::TestParseHelper helper(&parseMaster);
-			sharedData.setXmlParseMaster(&parseMaster);
-			parseMaster.addHelper(helper);
+			sharedData.SetXmlParseMaster(&parseMaster);
+			parseMaster.AddHelper(helper);
 			char* xml = "<Person Name='Dale' Health='100' Mana='80' />";
-			parseMaster.parse(xml, static_cast<std::uint32_t>(strlen(xml)), true);
+			parseMaster.Parse(xml, static_cast<std::uint32_t>(strlen(xml)), true);
 		}
 
 		TEST_METHOD(TestParseFromFile)
@@ -62,14 +62,14 @@ namespace TestLibraryDesktop
 			Library::TestSharedData sharedData;
 			Library::XmlParseMaster parseMaster(&sharedData);
 			Library::TestParseHelper helper(&parseMaster);
-			sharedData.setXmlParseMaster(&parseMaster);
+			sharedData.SetXmlParseMaster(&parseMaster);
 
-			parseMaster.addHelper(helper);
-			parseMaster.parseFromFile("input.xml");
+			parseMaster.AddHelper(helper);
+			parseMaster.ParseFromFile("input.xml");
 			Assert::AreEqual(static_cast<std::string>("Dale"), sharedData.mName, L"Name not accurately parsed");
 			Assert::AreEqual(sharedData.mHealth, 100, L"Health not accurately parsed");
 			Assert::AreEqual(sharedData.mMana, 80, L"Mana value not accurately parsed");
-			Assert::AreEqual(sharedData.depth(), 0u, L"Depth not zero at end of parsing");
+			Assert::AreEqual(sharedData.Depth(), 0u, L"Depth not zero at end of parsing");
 		}
 
 		TEST_METHOD(TestClone)
@@ -77,11 +77,11 @@ namespace TestLibraryDesktop
 			Library::TestSharedData sharedData;
 			Library::XmlParseMaster parseMaster(&sharedData);
 			Library::TestParseHelper helper(&parseMaster);
-			sharedData.setXmlParseMaster(&parseMaster);
+			sharedData.SetXmlParseMaster(&parseMaster);
 
-			Library::XmlParseMaster* clone = parseMaster.clone();
+			Library::XmlParseMaster* clone = parseMaster.Clone();
 			UNREFERENCED_PARAMETER(clone);
-			Library::TestSharedData* data = clone->getSharedData()->As<Library::TestSharedData>();
+			Library::TestSharedData* data = clone->GetSharedData()->As<Library::TestSharedData>();
 			Assert::AreEqual(data->mName, sharedData.mName);
 
 			delete clone;

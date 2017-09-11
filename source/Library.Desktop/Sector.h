@@ -13,55 +13,83 @@ namespace Library
 		RTTI_DECLARATIONS(Sector, Attributed)
 
 	public:
-		/// Constructor
+
+		/**
+		 * Constructor
+		 */
 		Sector();
 
-		/// Defaulted destructor
+		/**
+		 * Defaulted destructor
+		 */
 		~Sector() = default;
 
-		/// Copy constructor(disabled)
+		/**
+		 * Copy constructor(disabled)
+		 */
 		Sector(const Sector& rhs) = delete;
 
-		/// Assignment operator(disabled)
+		/**
+		 * Assignment operator(disabled)
+		 */
 		Sector* operator=(const Sector& rhs) = delete;
 
-		/// Move copy constructor(disabled)
+		/**
+		 * Move copy constructor(disabled)
+		 */
 		Sector(Sector&& rhs) = delete;
 
-		/// Move assignment operator(disabled)
+		/**
+		 * Move assignment operator(disabled)
+		 */
 		Sector* operator=(Sector&& rhs) = delete;
 
-		/// Accessor method for the name of the sector
-		/// @Return: The name of the sector
-		std::string name() const;
+		/**
+		 * Accessor method for the Name of the sector
+		 * @Return: The Name of the sector
+		 */
+		std::string Name() const;
 
-		/// Mutator method for the name of the sector
-		/// @Param name: The new name of the sector
-		void setName(const std::string& name);
+		/**
+		 * Mutator method for the Name of the sector
+		 * @Param Name: The new Name of the sector
+		 */
+		void SetName(const std::string& name);
 
-		/// Accessor method for the entities datum in the sector
-		/// @Return: A datum reference of the collection of entities in the sector
-		Datum& entities();
+		/**
+		 * Accessor method for the Entities datum in the sector
+		 * @Return: A datum reference of the collection of Entities in the sector
+		 */
+		Datum& Entities();
 
-		/// Method for adding entities to the sector
-		/// @Param className: The name of the base class being instantiated
-		/// @Param instanceName: The name that the entity will be instantiated with
-		/// @Return: A freshly instantiated entity object
-		class Entity* createEntity(const std::string& className, const std::string& instanceName);
+		/**
+		 * Method for adding Entities to the sector
+		 * @Param ClassName: The Name of the base class being instantiated
+		 * @Param instanceName: The Name that the entity will be instantiated with
+		 * @Return: A freshly instantiated entity object
+		 */
+		class Entity* CreateEntity(const std::string& className, const std::string& instanceName);
 
-		/// Mutator method which allows the sector to be adopted into another world
-		/// @Param world: The new world where this sector will live
-		void setWorld(World& world);
+		/**
+		 * Mutator method which allows the sector to be adopted into another world
+		 * @Param world: The new world where this sector will live
+		 */
+		void SetWorld(World& world);
 
-		/// Accessor method for the world that this sector lives in
-		/// @Return: A reference to the world that this sector lives in
-		World& getWorld();
+		/**
+		 * Accessor method for the world that this sector lives in
+		 * @Return: A reference to the world that this sector lives in
+		 */
+		World& GetWorld();
 
-		/// Update method for handling change of game state
-		/// @Param worldState: The object that contains the world state data
-		void update(class WorldState& worldState);
+		/**
+		 * Update method for handling change of game state
+		 * @Param worldState: The object that contains the world state data
+		 */
+		void Update(class WorldState& worldState);
 
 	private:
+
 		std::string mName;
 	};
 }

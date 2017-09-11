@@ -9,15 +9,15 @@ namespace Library
 	class FooProductFactory final : public Factory<Library::RTTI>
 	{
 	public:
-		FooProductFactory() { add(this); }
-		~FooProductFactory() { remove(this); }
+		FooProductFactory() { Add(this); }
+		~FooProductFactory() { Remove(this); }
 		
-		virtual std::string className() const override
+		virtual std::string ClassName() const override
 		{
 			return "FooProduct";
 		}
 		
-		virtual Library::RTTI* create() override
+		virtual Library::RTTI* Create() override
 		{
 			Library::RTTI* product = new FooProduct();
 			assert(product != nullptr);
@@ -28,15 +28,15 @@ namespace Library
 	class BarProductFactory final : public Factory<Library::RTTI>
 	{
 	public:
-		BarProductFactory() { add(this); }
-		~BarProductFactory() { remove(this); }
+		BarProductFactory() { Add(this); }
+		~BarProductFactory() { Remove(this); }
 
-		virtual std::string className() const override
+		virtual std::string ClassName() const override
 		{
 			return "BarProduct";
 		}
 
-		virtual Library::RTTI* create() override
+		virtual Library::RTTI* Create() override
 		{
 			Library::RTTI* product = new BarProduct();
 			assert(product != nullptr);

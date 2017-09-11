@@ -10,7 +10,7 @@ namespace Library
 	{
 	}
 
-	XmlParseMaster::SharedData* TestSharedData::clone()
+	XmlParseMaster::SharedData* TestSharedData::Clone()
 	{
 		TestSharedData* clone = new TestSharedData();
 		clone->mName = mName;

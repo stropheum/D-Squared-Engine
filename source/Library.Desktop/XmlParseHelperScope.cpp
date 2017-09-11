@@ -21,12 +21,12 @@ namespace Library
 		}
 	}
 
-	void XmlParseHelperScope::initialize(XmlParseMaster* const xmlParseMaster)
+	void XmlParseHelperScope::Initialize(XmlParseMaster* const xmlParseMaster)
 	{
 		mXmlParseMaster = xmlParseMaster;
 	}
 
-	IXmlParseHelper* XmlParseHelperScope::clone()
+	IXmlParseHelper* XmlParseHelperScope::Clone()
 	{
 		XmlParseHelperScope* clone = new XmlParseHelperScope();
 
@@ -43,7 +43,7 @@ namespace Library
 		return clone;
 	}
 
-	bool XmlParseHelperScope::startElementHandler(
+	bool XmlParseHelperScope::StartElementHandler(
 		XmlParseMaster::SharedData& sharedData, const std::string& element, 
 		const HashMap<std::string, std::string> attributes)
 	{
@@ -54,35 +54,35 @@ namespace Library
 		if (element == "Integer")
 		{
 			mState = State::ParsingInteger;
-			Datum& datum = scope->append(attributes.find("Name")->second);
-			datum.setType(DatumType::Integer);
-			datum.setFromString(attributes.find("Value")->second);
+			Datum& datum = scope->Append(attributes.Find("Name")->second);
+			datum.SetType(DatumType::Integer);
+			datum.SetFromString(attributes.Find("Value")->second);
 		}
 		else if (element == "Float")
 		{
 			mState = State::ParsingFloat;
-			Datum& datum = scope->append(attributes.find("Name")->second);
-			datum.setType(DatumType::Float);
-			datum.setFromString(attributes.find("Value")->second);
+			Datum& datum = scope->Append(attributes.Find("Name")->second);
+			datum.SetType(DatumType::Float);
+			datum.SetFromString(attributes.Find("Value")->second);
 		}
 		else if (element == "Vector")
 		{
 			mState = (mState == State::ParsingMatrix) ? State::ParsingMatrix : State::ParsingVector;
 
 			std::string x, y, z, w;
-			x = attributes.find("X")->second;
-			y = attributes.find("Y")->second;
-			z = attributes.find("Z")->second;
-			w = attributes.find("W")->second;
+			x = attributes.Find("X")->second;
+			y = attributes.Find("Y")->second;
+			z = attributes.Find("Z")->second;
+			w = attributes.Find("W")->second;
 
 			if (mState == State::ParsingVector)
 			{
-				Datum& datum = scope->append(attributes.find("Name")->second);
-				datum.setType(DatumType::Vector);
+				Datum& datum = scope->Append(attributes.Find("Name")->second);
+				datum.SetType(DatumType::Vector);
 
 				std::stringstream ss;
 				ss << "vec4(" << x << ", " << y << ", " << z << ", " << w << ")";
-				datum.setFromString(ss.str());
+				datum.SetFromString(ss.str());
 			}
 			else if (mState == State::ParsingMatrix)
 			{
@@ -98,16 +98,16 @@ namespace Library
 		else if (element == "Matrix")
 		{
 			mState = State::ParsingMatrix;
-			mMatrixName = attributes.find("Name")->second;
-			// Only use this to set state to start grabbing component vectors
-			// TODO: possibly migrate the append call here so we have access to the name we need to create with
+			mMatrixName = attributes.Find("Name")->second;
+			// Only use this to Set state to start grabbing component vectors
+			// TODO: possibly migrate the Append call here so we have access to the Name we need to Create with
 		}
 		else if (element == "String")
 		{
 			mState = State::ParsingString;
-			Datum& datum = scope->append(attributes.find("Name")->second);
-			datum.setType(DatumType::String);
-			datum.set(attributes.find("Value")->second);
+			Datum& datum = scope->Append(attributes.Find("Name")->second);
+			datum.SetType(DatumType::String);
+			datum.Set(attributes.Find("Value")->second);
 		}
 		else if (element == "Scope")
 		{
@@ -121,7 +121,7 @@ namespace Library
 			}
 			else
 			{
-				Scope& newScope = scope->appendScope(attributes.find("Name")->second);
+				Scope& newScope = scope->AppendScope(attributes.Find("Name")->second);
 				data->mScope = &newScope; // Scope becomes the newly appended scope until we're done adding to it
 			}
 		}
@@ -129,33 +129,33 @@ namespace Library
 		return true;
 	}
 
-	bool XmlParseHelperScope::endElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element)
+	bool XmlParseHelperScope::EndElementHandler(XmlParseMaster::SharedData& sharedData, const std::string& element)
 	{
 		SharedDataScope* data = sharedData.As<SharedDataScope>();
 
-		assert(data->depth() > 0);
+		assert(data->Depth() > 0);
 		if (data == nullptr) { return false; }
 		
 		if (element == "Integer")
 		{
 			assert(mState == State::ParsingInteger);
-			mState = (data->depth() > 0) ? State::ParsingScope : State::NotParsing;
+			mState = (data->Depth() > 0) ? State::ParsingScope : State::NotParsing;
 		}
 
 		else if(element == "Float")
 		{
 			assert(mState == State::ParsingFloat);
-			mState = (data->depth() > 0) ? State::ParsingScope : State::NotParsing;
+			mState = (data->Depth() > 0) ? State::ParsingScope : State::NotParsing;
 		}
 
 		else if(element == "Vector")
 		{
 			assert(mState == State::ParsingVector || mState == State::ParsingMatrix);
-			if (data->depth() > 0)
+			if (data->Depth() > 0)
 			{
 				if (mState != State::ParsingMatrix)
 				{
-					mState = (data->depth() > 0) ? State::ParsingScope : State::NotParsing;
+					mState = (data->Depth() > 0) ? State::ParsingScope : State::NotParsing;
 				}
 			}
 		}
@@ -186,48 +186,34 @@ namespace Library
 			}
 			ss << ")";
 
-			Datum& datum = data->mScope->append(mMatrixName);
-			datum.setType(DatumType::Matrix);
-			datum.setFromString(ss.str());
+			Datum& datum = data->mScope->Append(mMatrixName);
+			datum.SetType(DatumType::Matrix);
+			datum.SetFromString(ss.str());
 
 			mMatrixComponentCount = 0;
 			assert(mState == State::ParsingMatrix);
-			mState = (data->depth() > 0) ? State::ParsingScope : State::NotParsing;
+			mState = (data->Depth() > 0) ? State::ParsingScope : State::NotParsing;
 		}
 
 		else if(element == "String")
 		{
 			assert(mState == State::ParsingString);
-			mState = (data->depth() > 0) ? State::ParsingScope : State::NotParsing;
+			mState = (data->Depth() > 0) ? State::ParsingScope : State::NotParsing;
 		}
 
 		else if (element == "Scope")
-		{	// We're done at this level, so jump up one
-			if (data->depth() > 1)
+		{	// We're done At this level, so jump up one
+			if (data->Depth() > 1)
 			{
-				data->mScope = data->mScope->getParent();
+				data->mScope = data->mScope->GetParent();
 			}
 
 			assert(mState == State::ParsingScope);
-			mState = (data->depth() > 1) ? State::ParsingScope : State::NotParsing;
+			mState = (data->Depth() > 1) ? State::ParsingScope : State::NotParsing;
 		}
 
-		if (data->depth() == 0) mState = State::NotParsing;
+		if (data->Depth() == 0) mState = State::NotParsing;
 		return true;
-	}
-
-	std::string XmlParseHelperScope::ToString() const
-	{
-		return "Xml Parse Helper Scope";
-	}
-
-	bool XmlParseHelperScope::Equals(const RTTI* rhs) const
-	{
-		if (this == rhs) { return true; }
-		if (rhs == nullptr) { return false; }
-
-		XmlParseHelperScope* rhsConverted = rhs->As<XmlParseHelperScope>();
-		return (rhsConverted != nullptr) ? operator==(*rhsConverted) : false;
 	}
 
 	bool XmlParseHelperScope::operator==(const XmlParseHelperScope& rhs) const

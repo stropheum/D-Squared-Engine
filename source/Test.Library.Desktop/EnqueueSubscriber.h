@@ -9,7 +9,7 @@ class EnqueueSubscriber :
 public:
 	explicit EnqueueSubscriber(Library::EventQueue& eventQueue, Library::GameTime& gametime, std::chrono::milliseconds delay);
 	~EnqueueSubscriber();
-	virtual void notify(const Library::EventPublisher& event) override;
+	virtual void Notify(const Library::EventPublisher& event) override;
 private:
 	Library::EventQueue* mEventQueue;
 	Library::GameTime mGameTime;

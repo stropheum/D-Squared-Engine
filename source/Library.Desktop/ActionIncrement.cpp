@@ -8,17 +8,17 @@ namespace Library
 	ActionIncrement::ActionIncrement():
 		mIncrementCount(0)
 	{
-		(*this)["IncrementCount"].setStorage(&mIncrementCount, 1);
+		(*this)["IncrementCount"].SetStorage(&mIncrementCount, 1);
 	}
 
-	void ActionIncrement::update(WorldState& worldState)
+	void ActionIncrement::Update(WorldState& worldState)
 	{
 		worldState.action = this;
 		mIncrementCount++;
 		worldState.action = nullptr;
 	}
 
-	std::int32_t ActionIncrement::getIncrementCount() const
+	std::int32_t ActionIncrement::GetIncrementCount() const
 	{
 		return mIncrementCount;
 	}

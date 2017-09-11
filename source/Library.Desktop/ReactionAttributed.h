@@ -9,23 +9,33 @@ namespace Library
 	{
 	public:
 
-		/// Constructor
+		/**
+		 * Constructor
+		 */
 		ReactionAttributed();
 
-		/// Destructor
+		/**
+		 * Destructor
+		 */
 		~ReactionAttributed();
 
-		/// Notifies the subscriber that an event has been triggered
-		/// @Param event: The event that the subscriber is being notified of
-		virtual void notify(const EventPublisher& event) override;
+		/**
+		 * Notifies the subscriber that an event has been triggered
+		 * @Param event: The event that the subscriber is being notified of
+		 */
+		virtual void Notify(const EventPublisher& event) override;
 
-		/// Accessor method for the subtype of the reaction
-		/// @Return: String representation of the subtype
-		std::string getSubtype();
+		/**
+		 * Accessor method for the subtype of the reaction
+		 * @Return: String representation of the subtype
+		 */
+		std::string GetSubtype();
 
-		/// Mutator method for the subtype of the reaction
-		/// @Param subtype: The subtype of the reaction
-		void setSubtype(const std::string& subtype);
+		/**
+		 * Mutator method for the subtype of the reaction
+		 * @Param subtype: The subtype of the reaction
+		 */
+		void SetSubtype(const std::string& subtype);
 	};
 
 	ReactionFactory(ReactionAttributed)

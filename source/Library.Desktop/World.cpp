@@ -10,49 +10,49 @@ namespace Library
 
 	World::World()
 	{
-		(*this)["Name"].setStorage(&mName, 1);
-		(*this)["Sectors"].setType(DatumType::Scope);
+		(*this)["Name"].SetStorage(&mName, 1);
+		(*this)["Sectors"].SetType(DatumType::Scope);
 	}
 
-	std::string World::name() const
+	std::string World::Name() const
 	{
 		return mName;
 	}
 
-	void World::setName(const std::string& name)
+	void World::SetName(const std::string& name)
 	{
 		(*this)["Name"] = name;
 	}
 
-	Datum& World::sectors()
+	Datum& World::Sectors()
 	{
 		return (*this)["Sectors"];
 	}
 
-	Sector* World::createSector(const std::string& name)
+	Sector* World::CreateSector(const std::string& name)
 	{
 		Sector* sector = new Sector();
-		sector->setName(name);
-		adopt(*sector, "Sectors");
+		sector->SetName(name);
+		Adopt(*sector, "Sectors");
 		return sector;
 	}
 
-	void World::update(WorldState& worldState, GameTime& gameTime)
+	void World::Update(WorldState& worldState, GameTime& gameTime)
 	{
 		worldState.world = this;
 
-		for (std::uint32_t i = 0; i < sectors().size(); i++)
+		for (std::uint32_t i = 0; i < Sectors().Size(); i++)
 		{
-			assert(sectors()[i].Is(Sector::TypeIdClass()));
-			sectors()[i].As<Sector>()->update(worldState);
+			assert(Sectors()[i].Is(Sector::TypeIdClass()));
+			Sectors()[i].As<Sector>()->Update(worldState);
 		}
 
-		mEventQueue.update(gameTime);
+		mEventQueue.Update(gameTime);
 
 		worldState.world = nullptr;
 	}
 
-	EventQueue& World::getEventQueue()
+	EventQueue& World::GetEventQueue()
 	{
 		return mEventQueue;
 	}
