@@ -39,13 +39,13 @@ namespace Library
 	}
 
 	template <typename Payload>
-	Event<Payload>::Event(Event<Payload>&& rhs):
+	Event<Payload>::Event(Event<Payload>&& rhs) noexcept:
 		EventPublisher(&rhs.sSubscriberList, sSubscriberListMutex, rhs.mDeleteAfterPublishing), mPayload(rhs.mPayload)
 	{
 	}
 
 	template <typename Payload>
-	Event<Payload>& Event<Payload>::operator=(Event<Payload>&& rhs)
+	Event<Payload>& Event<Payload>::operator=(Event<Payload>&& rhs) noexcept
 	{
 		if (this != &rhs)
 		{

@@ -72,56 +72,56 @@ namespace Library
 		throw std::exception("Calling SetStorage on Invalid type");
 	}
 
-	void TypeState::SetStorage(std::int32_t* data, std::uint32_t size)
+	void TypeState::SetStorage(std::int32_t* data, const std::uint32_t& size)
 	{
 		UNREFERENCED_PARAMETER(data);
 		UNREFERENCED_PARAMETER(size);
 		throw std::exception("Attempting to set storage on unknown type");
 	}
 
-	void TypeState::SetStorage(float* data, std::uint32_t size)
+	void TypeState::SetStorage(float* data, const std::uint32_t& size)
 	{
 		UNREFERENCED_PARAMETER(data);
 		UNREFERENCED_PARAMETER(size);
 		throw std::exception("Attempting to set storage on unknown type");
 	}
 
-	void TypeState::SetStorage(glm::vec4* data, std::uint32_t size)
+	void TypeState::SetStorage(glm::vec4* data, const std::uint32_t& size)
 	{
 		UNREFERENCED_PARAMETER(data);
 		UNREFERENCED_PARAMETER(size);
 		throw std::exception("Attempting to set storage on unknown type");
 	}
 
-	void TypeState::SetStorage(glm::mat4* data, std::uint32_t size)
+	void TypeState::SetStorage(glm::mat4* data, const std::uint32_t& size)
 	{
 		UNREFERENCED_PARAMETER(data);
 		UNREFERENCED_PARAMETER(size);
 		throw std::exception("Attempting to set storage on unknown type");
 	}
 
-	void TypeState::SetStorage(Scope** data, std::uint32_t size)
+	void TypeState::SetStorage(Scope** data, const std::uint32_t& size)
 	{
 		UNREFERENCED_PARAMETER(data);
 		UNREFERENCED_PARAMETER(size);
 		throw std::exception("Attempting to set storage on unknown type");
 	}
 
-	void TypeState::SetStorage(std::string* data, std::uint32_t size)
+	void TypeState::SetStorage(std::string* data, const std::uint32_t& size)
 	{
 		UNREFERENCED_PARAMETER(data);
 		UNREFERENCED_PARAMETER(size);
 		throw std::exception("Attempting to set storage on unknown type");
 	}
 
-	void TypeState::SetStorage(Library::RTTI** data, std::uint32_t size)
+	void TypeState::SetStorage(Library::RTTI** data, const std::uint32_t& size)
 	{
 		UNREFERENCED_PARAMETER(data);
 		UNREFERENCED_PARAMETER(size);
 		throw std::exception("Attempting to set storage on unknown type");
 	}
 
-	std::string TypeState::ToString(std::uint32_t index)
+	std::string TypeState::ToString(const std::uint32_t& index)
 	{
 		UNREFERENCED_PARAMETER(index);
 		return "";

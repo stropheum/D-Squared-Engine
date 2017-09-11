@@ -41,7 +41,7 @@ namespace Library
 		return false;
 	}
 
-	void TestParseHelper::CharDataHandler(XmlParseMaster::SharedData& sharedData, const std::string& buffer, const std::uint32_t bufferLength)
+	void TestParseHelper::CharDataHandler(XmlParseMaster::SharedData& sharedData, const std::string& buffer, const std::uint32_t& bufferLength)
 	{
 		UNREFERENCED_PARAMETER(sharedData);
 		UNREFERENCED_PARAMETER(buffer);

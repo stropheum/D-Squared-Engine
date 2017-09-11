@@ -5,7 +5,7 @@
 namespace Library
 {
 	WorldState::WorldState() :
-		world(nullptr), sector(nullptr), entity(nullptr), gameTime(nullptr)
+		world(nullptr), sector(nullptr), entity(nullptr), action(nullptr), gameTime(nullptr)
 	{
 	}
 

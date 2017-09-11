@@ -33,10 +33,10 @@ namespace Library
 
 		auto lhs = message->GetSubtype();
 		auto rhs = GetSubtype();
-//		if (Message->GetSubtype() == GetSubtype())
+
 		if (lhs == rhs)
 		{
-			for (auto iter = message->Begin(); iter != message->End(); ++iter)
+			for (auto iter = message->begin(); iter != message->end(); ++iter)
 			{
 				auto& datum = AppendAuxiliaryAttribute((*iter).first);
 				datum.SetType((*iter).second.Type());

@@ -9,10 +9,6 @@ namespace Library
 		TypeState(context)
 	{}
 
-	/// Comparison operator for Datum objects
-	/// @Param rhs: The Datum object being compared against
-	/// @Return: True if Type, Size, and each element of the Datum objects are equivalent. False otherwise
-	/// @Exception: THrown if called from this context
 	bool ScopeState::operator==(const Datum& rhs)
 	{
 		bool result = false;
@@ -41,9 +37,7 @@ namespace Library
 		return *mContext;
 	}
 
-	/// Sets the number of elements in the array
-	/// @param Size: The new number of elements in the array
-	void ScopeState::SetSize(std::uint32_t size)
+	void ScopeState::SetSize(const std::uint32_t& size)
 	{
 		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(Scope*) * size);
 		mContext->mCapacity = mContext->mSize = size;
@@ -57,7 +51,7 @@ namespace Library
 		}
 	}
 
-	void ScopeState::Reserve(std::uint32_t capacity)
+	void ScopeState::Reserve(const std::uint32_t& capacity)
 	{
 		if (capacity > mContext->mCapacity)
 		{

@@ -38,6 +38,7 @@ namespace Library
 		std::string GetPrototype() const;
 
 	private:
+
 		std::string mPrototype; // The Type of class being constructed
 	};
 

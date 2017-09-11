@@ -28,7 +28,8 @@ namespace Library
 		}
 	}
 
-	void EventQueue::Enqueue(EventPublisher& eventPublisher, GameTime& gameTime, std::chrono::milliseconds delay)
+	void EventQueue::Enqueue(EventPublisher& eventPublisher, 
+		GameTime& gameTime, const std::chrono::milliseconds& delay)
 	{
 		lock_guard<mutex> guard(mQueueMutex);
 		if (mQueue.Find(&eventPublisher) == mQueue.end())

@@ -141,26 +141,26 @@ namespace Library
 	}
 
 	template <typename T>
-	T& Vector<T>::At(const std::uint32_t index)
+	T& Vector<T>::At(const std::uint32_t& index)
 	{
 		return operator[](index);
 	}
 
 	template <typename T>
-	const T& Vector<T>::At(const std::uint32_t index) const
+	const T& Vector<T>::At(const std::uint32_t& index) const
 	{
 		return const_cast<const T&>(operator[](index));
 	}
 
 	template <typename T>
-	T& Vector<T>::operator[](const std::uint32_t index)
+	T& Vector<T>::operator[](const std::uint32_t& index)
 	{
 		if (index >= mSize) throw std::exception("Index out of bounds");
 		return *(mBuffer + index);
 	}
 
 	template <typename T>
-	const T& Vector<T>::operator[](const std::uint32_t index) const
+	const T& Vector<T>::operator[](const std::uint32_t& index) const
 	{
 		if (mBuffer == nullptr) throw std::exception("Buffer is null");
 		if (index >= mSize) throw std::exception("Index out of bounds");
@@ -261,15 +261,13 @@ namespace Library
 		if (!mFixedSize) Reserve(mSize);
 	}
 
-	/// //////////////////////////////// ///
-	///  Vector Iterator implementation  ///
-	/// //////////////////////////////// ///
+
 	template <typename T>
 	Vector<T>::Iterator::Iterator() :
 		mOwner(nullptr), mIndex(0) {}
 
 	template <typename T>
-	Vector<T>::Iterator::Iterator(const Vector<T>* owner, const std::uint32_t index) :
+	Vector<T>::Iterator::Iterator(const Vector<T>* owner, const std::uint32_t& index) :
 		mOwner(owner), mIndex(index) {}
 
 	template <typename T>

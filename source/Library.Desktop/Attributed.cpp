@@ -43,12 +43,12 @@ namespace Library
 		return *this;
 	}
 
-	Attributed::Attributed(Attributed&& rhs)
+	Attributed::Attributed(Attributed&& rhs) noexcept
 	{
 		operator=(rhs);
 	}
 
-	Attributed& Attributed::operator=(Attributed&& rhs)
+	Attributed& Attributed::operator=(Attributed&& rhs) noexcept
 	{
 		if (this != &rhs)
 		{
@@ -140,7 +140,7 @@ namespace Library
 		}
 	}
 
-	bool Attributed::IsPrescribedAttribute(std::string name) const
+	bool Attributed::IsPrescribedAttribute(const std::string& name) const
 	{
 		if (IsAttribute(name))
 		{
@@ -155,17 +155,17 @@ namespace Library
 		return false;
 	}
 
-	bool Attributed::IsAuxiliaryAttribute(std::string name) const
+	bool Attributed::IsAuxiliaryAttribute(const std::string& name) const
 	{
 		return !IsPrescribedAttribute(name);
 	}
 
-	bool Attributed::IsAttribute(std::string name) const
+	bool Attributed::IsAttribute(const std::string& name) const
 	{
 		return Find(name) != nullptr;
 	}
 
-	Datum& Attributed::AppendAuxiliaryAttribute(std::string name)
+	Datum& Attributed::AppendAuxiliaryAttribute(const std::string& name)
 	{
 		return Append(name);
 	}
@@ -174,7 +174,7 @@ namespace Library
 
 #pragma region Private Methods
 
-	/// Returns The signature of this attributed object
+	// Returns The signature of this attributed object
 	Attributed::Signature& Attributed::GetSignature(const std::string& name)
 	{	
 		Signature* result = nullptr;

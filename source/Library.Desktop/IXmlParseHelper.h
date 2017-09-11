@@ -15,7 +15,7 @@ namespace Library
 		 * Constructor
 		 * @Param xmlParseMaster: The Parse master associated with this helper
 		 */
-		explicit IXmlParseHelper(XmlParseMaster* const xmlParseMaster=nullptr);
+		explicit IXmlParseHelper(XmlParseMaster* const xmlParseMaster = nullptr);
 
 		/**
 		 * Destructor
@@ -52,7 +52,7 @@ namespace Library
 		 * @Param bufferLength: The number of characters in the buffer
 		 * @Return: True if the helper can handle parsing the data
 		 */
-		virtual void CharDataHandler(XmlParseMaster::SharedData& sharedData, const std::string& buffer, const std::uint32_t bufferLength);
+		virtual void CharDataHandler(XmlParseMaster::SharedData& sharedData, const std::string& buffer, const std::uint32_t& bufferLength);
 
 		/**
 		 * Method used for copying instances of Parse helpers

@@ -12,7 +12,7 @@
 namespace Library
 {
 	class Scope;
-	/// Types of possible Datum
+	// Types of possible Datum
 	enum class DatumType
 	{
 		Unknown, // Type not specified
@@ -60,7 +60,7 @@ namespace Library
 		 * Overloaded constructor
 		 * @Param Type: The Type of the Datum object
 		 */
-		Datum(DatumType type);
+		Datum(const DatumType& type);
 
 		/**
 		 *  Destructor
@@ -85,7 +85,7 @@ namespace Library
 		 * @Param index: The scope At the given index
 		 * @Return: The scope At the specified index
 		 */
-		Scope& operator[](std::uint32_t index);
+		Scope& operator[](const std::uint32_t& index);
 		
 		/**
 		 * Datum assignment operator
@@ -314,14 +314,14 @@ namespace Library
 		 * @Param Size: the new number of values
 		 * @Exception: Thrown if attempting to resize external data
 		 */
-		void SetSize(std::uint32_t size);
+		void SetSize(const std::uint32_t& size);
 
 		/**
 		 * Reserve additional Capacity for uninitialized values
 		 * @Param Capacity: The number of possible elements that the array will be able to hold
 		 * @Exception: Thrown if attempting to resize external storage
 		 */
-		void Reserve(std::uint32_t capacity);
+		void Reserve(const std::uint32_t& capacity);
 
 		/**
 		 * Clear the array without shrinking the Capacity
@@ -335,7 +335,7 @@ namespace Library
 		 * @Param data: The specified external storage
 		 * @Param Size: The number of elements available in the external storage
 		 */
-		void SetStorage(std::int32_t* data, std::uint32_t size);
+		void SetStorage(std::int32_t* data, const std::uint32_t& size);
 
 		/**
 		 * Sets the external storage to the specified float*
@@ -343,7 +343,7 @@ namespace Library
 		 * @Param data: The specified external storage
 		 * @Param Size: The number of elements available in the external storage
 		 */
-		void SetStorage(float* data, std::uint32_t size);
+		void SetStorage(float* data, const std::uint32_t& size);
 
 		/**
 		 * Sets the external storage to the specified glm::vec4*
@@ -351,7 +351,7 @@ namespace Library
 		 * @Param data: The specified external storage
 		 * @Param Size: The number of elements available in the external storage
 		 */
-		void SetStorage(glm::vec4* data, std::uint32_t size);
+		void SetStorage(glm::vec4* data, const std::uint32_t& size);
 
 		/**
 		 * Sets the external storage to the specified glm::mat4*
@@ -359,7 +359,7 @@ namespace Library
 		 * @Param data: The specified external storage
 		 * @Param Size: The number of elements available in the external storage
 		 */
-		void SetStorage(glm::mat4* data, std::uint32_t size);
+		void SetStorage(glm::mat4* data, const std::uint32_t& size);
 
 		/**
 		 * Sets the external storage to the specified std::string*
@@ -367,7 +367,7 @@ namespace Library
 		 * @Param data: The specified external storage
 		 * @Param Size: The number of elements available in the external storage
 		 */
-		void SetStorage(std::string* data, std::uint32_t size);
+		void SetStorage(std::string* data, const std::uint32_t& size);
 
 		/**
 		 * Sets the external storage to the specified RTTI**
@@ -375,7 +375,7 @@ namespace Library
 		 * @Param data: The specified external storage
 		 * @Param Size: The number of elements available in the external storage
 		 */
-		void SetStorage(Library::RTTI** data, std::uint32_t size);
+		void SetStorage(Library::RTTI** data, const std::uint32_t& size);
 		
 		/**
 		 * Sets a specified index of the array to the specified value
@@ -384,7 +384,7 @@ namespace Library
 		 * @Exception invalidType: Thrown if calling Set on invalid Type
 		 * @Exception indexOutObBounds: Thrown if attempting to Set beyond existing Size
 		 */
-		void Set(const std::int32_t& value, const std::uint32_t index = 0);
+		void Set(const std::int32_t& value, const std::uint32_t& index = 0);
 
 		/**
 		 * Sets a specified index of the array to the specified value
@@ -393,7 +393,7 @@ namespace Library
 		 * @Exception: Thrown if calling Set on invalid Type
 		 * @Exception: Thrown if attempting to Set beyond existing Size
 		 */
-		void Set(const float& value, const std::uint32_t index = 0);
+		void Set(const float& value, const std::uint32_t& index = 0);
 
 		/**
 		 * Sets a specified index of the array to the specified value
@@ -402,7 +402,7 @@ namespace Library
 		 * @Exception: Thrown if calling Set on invalid Type
 		 * @Exception: Thrown if attempting to Set beyond existing Size
 		 */
-		void Set(const glm::vec4& value, const std::uint32_t index = 0);
+		void Set(const glm::vec4& value, const std::uint32_t& index = 0);
 
 		/**
 		 * Sets a specified index of the array to the specified value
@@ -411,7 +411,7 @@ namespace Library
 		 * @Exception: Thrown if calling Set on invalid Type
 		 * @Exception: Thrown if attempting to Set beyond existing Size
 		 */
-		void Set(const glm::mat4& value, const std::uint32_t index = 0);
+		void Set(const glm::mat4& value, const std::uint32_t& index = 0);
 
 		/**
 		 * Sets a specified index of the array to the specified value
@@ -420,7 +420,7 @@ namespace Library
 		 * @Exception: Thrown if calling Set on invalid Type
 		 * @Exception: Thrown if attempting to Set beyond existing Size
 		 */
-		void Set(Scope* const& value, const std::uint32_t index = 0);
+		void Set(Scope* const& value, const std::uint32_t& index = 0);
 
 		/**
 		 * Sets a specified index of the array to the specified value
@@ -429,7 +429,7 @@ namespace Library
 		 * @Exception: Thrown if calling Set on invalid Type
 		 * @Exception: Thrown if attempting to Set beyond existing Size
 		 */
-		void Set(const std::string& value, const std::uint32_t index = 0);
+		void Set(const std::string& value, const std::uint32_t& index = 0);
 
 		/**
 		 * Sets a specified index of the array to the specified value
@@ -438,7 +438,7 @@ namespace Library
 		 * @Exception: Thrown if calling Set on invalid Type
 		 * @Exception: Thrown if attempting to Set beyond existing Size
 		 */
-		void Set(Library::RTTI* const& value, const std::uint32_t index = 0);
+		void Set(Library::RTTI* const& value, const std::uint32_t& index = 0);
 
 		/**
 		 * Pushes an std::int32_t to the Back of the array
@@ -503,7 +503,7 @@ namespace Library
 		 * @Param index: Optional index of the value being retrieved. Defaulted to first element
 		 * @Exception invalidFormat: Thrown if unable to properly Parse string
 		 */
-		std::string ToString(std::uint32_t index = 0);
+		std::string ToString(const std::uint32_t& index = 0) const;
 
 		/**
 		 * Gets the item At the specified index in the array
@@ -513,7 +513,7 @@ namespace Library
 		 * @Exception: Thrown if data is null
 		 * @Exception: Thrown if index is greater than or equal to current Size
 		 */
-		template <typename T> T& Get(const std::uint32_t index = 0);
+		template <typename T> T& Get(const std::uint32_t& index = 0);
 
 		/**
 		* Gets the item At the specified index in the array
@@ -523,7 +523,7 @@ namespace Library
 		* @Exception: Thrown if data is null
 		* @Exception: Thrown if index is greater than or equal to current Size
 		*/
-		template<typename T> const T& Get(const std::uint32_t index = 0) const;
+		template<typename T> const T& Get(const std::uint32_t& index = 0) const;
 
 	private:
 		TypeState* mTypeState; // State pattern object. Type-specific tasks will be delegated to this
@@ -543,7 +543,7 @@ namespace Library
 	 * @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	 */
 	template<>
-	inline std::int32_t& Datum::Get(const std::uint32_t index)
+	inline std::int32_t& Datum::Get(const std::uint32_t& index)
 	{
 		if (mType != DatumType::Integer) throw std::exception("Calling Get on invalid Type");
 		if (mData.i == nullptr) throw std::exception("Attempting to dereference nullptr");
@@ -560,7 +560,7 @@ namespace Library
 	* @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	*/
 	template<>
-	inline const std::int32_t& Datum::Get(const std::uint32_t index) const
+	inline const std::int32_t& Datum::Get(const std::uint32_t& index) const
 	{
 		if (mType != DatumType::Integer) throw std::exception("Calling Get on invalid Type");
 		if (mData.i == nullptr) throw std::exception("Attempting to dereference nullptr");
@@ -577,7 +577,7 @@ namespace Library
 	 * @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	 */
 	template<>
-	inline float& Datum::Get(const std::uint32_t index)
+	inline float& Datum::Get(const std::uint32_t& index)
 	{
 		if (mType != DatumType::Float) throw std::exception("Calling Get on invalid Type");
 		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
@@ -594,7 +594,7 @@ namespace Library
 	* @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	*/
 	template<>
-	inline const float& Datum::Get(const std::uint32_t index) const
+	inline const float& Datum::Get(const std::uint32_t& index) const
 	{
 		if (mType != DatumType::Float) throw std::exception("Calling Get on invalid Type");
 		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
@@ -611,7 +611,7 @@ namespace Library
 	 * @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	 */
 	template<>
-	inline glm::vec4& Datum::Get(const std::uint32_t index)
+	inline glm::vec4& Datum::Get(const std::uint32_t& index)
 	{
 		if (mType != DatumType::Vector) throw std::exception("Calling Get on invalid Type");
 		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
@@ -628,7 +628,7 @@ namespace Library
 	* @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	*/
 	template<>
-	inline const glm::vec4& Datum::Get(const std::uint32_t index) const
+	inline const glm::vec4& Datum::Get(const std::uint32_t& index) const
 	{
 		if (mType != DatumType::Vector) throw std::exception("Calling Get on invalid Type");
 		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
@@ -645,7 +645,7 @@ namespace Library
 	 * @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	 */
 	template<>
-	inline glm::mat4& Datum::Get(const std::uint32_t index)
+	inline glm::mat4& Datum::Get(const std::uint32_t& index)
 	{
 		if (mType != DatumType::Matrix) throw std::exception("Calling Get on invalid Type");
 		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
@@ -662,7 +662,7 @@ namespace Library
 	* @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	*/
 	template<>
-	inline const glm::mat4& Datum::Get(const std::uint32_t index) const
+	inline const glm::mat4& Datum::Get(const std::uint32_t& index) const
 	{
 		if (mType != DatumType::Matrix) throw std::exception("Calling Get on invalid Type");
 		if (mData.f == nullptr) throw std::exception("Attempting to dereference nullptr");
@@ -679,7 +679,7 @@ namespace Library
 	 * @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	 */
 	template<>
-	inline Scope*& Datum::Get(const std::uint32_t index)
+	inline Scope*& Datum::Get(const std::uint32_t& index)
 	{
 		if (mType != DatumType::Scope) throw std::exception("Calling et on invalid Type");
 		if (mData.sc == nullptr) throw std::exception("Attempting to dereference nullptr");
@@ -696,7 +696,7 @@ namespace Library
 	* @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	*/
 	template<>
-	inline Scope* const& Datum::Get(const std::uint32_t index) const
+	inline Scope* const& Datum::Get(const std::uint32_t& index) const
 	{
 		if (mType != DatumType::Scope) throw std::exception("Calling et on invalid Type");
 		if (mData.sc == nullptr) throw std::exception("Attempting to dereference nullptr");
@@ -713,7 +713,7 @@ namespace Library
 	 * @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	 */
 	template<>
-	inline std::string& Datum::Get(const std::uint32_t index)
+	inline std::string& Datum::Get(const std::uint32_t& index)
 	{
 		if (mType != DatumType::String) throw std::exception("Calling Get on invalid Type");
 		if (mData.s == nullptr) throw std::exception("Attempting to dereference nullptr");
@@ -730,7 +730,7 @@ namespace Library
 	* @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	*/
 	template<>
-	inline const std::string& Datum::Get(const std::uint32_t index) const
+	inline const std::string& Datum::Get(const std::uint32_t& index) const
 	{
 		if (mType != DatumType::String) throw std::exception("Calling Get on invalid Type");
 		if (mData.s == nullptr) throw std::exception("Attempting to dereference nullptr");
@@ -747,7 +747,7 @@ namespace Library
 	 * @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	 */
 	template<>
-	inline Library::RTTI*& Datum::Get(const std::uint32_t index)
+	inline Library::RTTI*& Datum::Get(const std::uint32_t& index)
 	{
 		if (mType != DatumType::Pointer) throw std::exception("Calling Get on invalid Type");
 		if (mData.r == nullptr) throw std::exception("Attempting to dereference nullptr");
@@ -764,7 +764,7 @@ namespace Library
 	* @Exception indexOutOfBounds; Thrown when attempting to access a nonexistent index
 	*/
 	template<>
-	inline Library::RTTI* const& Datum::Get(const std::uint32_t index) const
+	inline Library::RTTI* const& Datum::Get(const std::uint32_t& index) const
 	{
 		if (mType != DatumType::Pointer) throw std::exception("Calling Get on invalid Type");
 		if (mData.r == nullptr) throw std::exception("Attempting to dereference nullptr");

@@ -18,7 +18,7 @@ namespace Library
 	{}
 
 	template <typename TKey, typename TValue, class HashFunctor>
-	HashMap<TKey, TValue, HashFunctor>::HashMap(HashMap<TKey, TValue, HashFunctor>&& rhs)
+	HashMap<TKey, TValue, HashFunctor>::HashMap(HashMap<TKey, TValue, HashFunctor>&& rhs) noexcept
 	{
 		operator=(std::move(rhs));
 	}
@@ -191,7 +191,7 @@ namespace Library
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
-	std::uint32_t HashMap<TKey, TValue, HashFunctor>::size() const
+	std::uint32_t HashMap<TKey, TValue, HashFunctor>::Size() const
 	{
 		return mSize;
 	}
@@ -212,7 +212,7 @@ namespace Library
 		mOwner(rhs.mOwner), mBucketIndex(rhs.mBucketIndex), mIter(rhs.mIter) {}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
-	HashMap<TKey, TValue, HashFunctor>::Iterator::Iterator(const HashMap<TKey, TValue, HashFunctor>* owner, std::uint32_t bucketIndex, typename Library::Vector<PairType>::Iterator iter) :
+	HashMap<TKey, TValue, HashFunctor>::Iterator::Iterator(const HashMap<TKey, TValue, HashFunctor>* owner, const std::uint32_t& bucketIndex, typename Library::Vector<PairType>::Iterator iter) :
 		mOwner(owner), mBucketIndex(bucketIndex), mIter(iter) {}
 
 	template <typename TKey, typename TValue, typename HashFunctor>

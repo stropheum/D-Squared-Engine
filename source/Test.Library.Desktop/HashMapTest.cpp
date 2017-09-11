@@ -134,54 +134,54 @@ namespace TestLibraryDesktop
 		{
 			// int tests
 			Library::HashMap<int, int> intcopy1(intMap);
-			Assert::IsTrue(intMap.size() == intcopy1.size(), L"HashMap sizes not equal");
+			Assert::IsTrue(intMap.Size() == intcopy1.Size(), L"HashMap sizes not equal");
 
 			intMap.Insert(std::pair<int, int>(1, 1));
 			Library::HashMap<int, int> intcopy2(intMap);
-			Assert::AreEqual(intMap.size(), intcopy2.size(), L"HashMap sizes not equal");
+			Assert::AreEqual(intMap.Size(), intcopy2.Size(), L"HashMap sizes not equal");
 			Assert::IsFalse(intMap.begin() == intMap.end(), L"begin of non-empty HashMap equals end");
 			Assert::IsFalse(intcopy2.begin() == intcopy2.end(), L"begin of non-empty HashMap equals end");
 
 			// ptr tests
 			Library::HashMap<int*, int> ptrcopy1(ptrMap);
-			Assert::IsTrue(ptrMap.size() == ptrcopy1.size(), L"HashMap sizes not equal");
+			Assert::IsTrue(ptrMap.Size() == ptrcopy1.Size(), L"HashMap sizes not equal");
 
 			ptrMap.Insert(std::pair<int*, int>(&x, 1));
 			Library::HashMap<int*, int> ptrcopy2(ptrMap);
-			Assert::AreEqual(ptrMap.size(), ptrcopy2.size(), L"HashMap sizes not equal");
+			Assert::AreEqual(ptrMap.Size(), ptrcopy2.Size(), L"HashMap sizes not equal");
 			Assert::IsFalse(ptrMap.begin() == ptrMap.end(), L"begin of non-empty HashMap equals end");
 			Assert::IsFalse(ptrcopy2.begin() == ptrcopy2.end(), L"begin of non-empty HashMap equals end");
 
 
 			// char* tests
 			Library::HashMap<char*, int> chrcopy1(chrMap);
-			Assert::IsTrue(chrMap.size() == chrcopy1.size(), L"HashMap sizes not equal");
+			Assert::IsTrue(chrMap.Size() == chrcopy1.Size(), L"HashMap sizes not equal");
 
 			chrMap.Insert(std::pair<char*, int>(a, 1));
 			Library::HashMap<char*, int> chrcopy2(chrMap);
-			Assert::AreEqual(chrMap.size(), chrcopy2.size(), L"HashMap sizes not equal");
+			Assert::AreEqual(chrMap.Size(), chrcopy2.Size(), L"HashMap sizes not equal");
 			Assert::IsFalse(chrMap.begin() == chrMap.end(), L"begin of non-empty HashMap equals end");
 			Assert::IsFalse(chrcopy2.begin() == chrcopy2.end(), L"begin of non-empty HashMap equals end");
 
 
 			// str test
 			Library::HashMap<std::string, int> strcopy1(strMap);
-			Assert::IsTrue(strMap.size() == strcopy1.size(), L"HashMap sizes not equal");
+			Assert::IsTrue(strMap.Size() == strcopy1.Size(), L"HashMap sizes not equal");
 
 			strMap.Insert(std::pair<std::string, int>(s, 1));
 			Library::HashMap<std::string, int> strcopy2(strMap);
-			Assert::AreEqual(strMap.size(), strcopy2.size(), L"HashMap sizes not equal");
+			Assert::AreEqual(strMap.Size(), strcopy2.Size(), L"HashMap sizes not equal");
 			Assert::IsFalse(strMap.begin() == strMap.end(), L"begin of non-empty HashMap equals end");
 			Assert::IsFalse(strcopy2.begin() == strcopy2.end(), L"begin of non-empty HashMap equals end");
 			
 			
 			// foo tests
 			Library::HashMap<Foo, int> foocopy1(fooMap);
-			Assert::IsTrue(fooMap.size() == foocopy1.size(), L"HashMap sizes not equal");
+			Assert::IsTrue(fooMap.Size() == foocopy1.Size(), L"HashMap sizes not equal");
 
 			fooMap.Insert(std::pair<Foo, int>(foo, 1));
 			Library::HashMap<Foo, int> foocopy2(fooMap);
-			Assert::AreEqual(fooMap.size(), foocopy2.size(), L"HashMap sizes not equal");
+			Assert::AreEqual(fooMap.Size(), foocopy2.Size(), L"HashMap sizes not equal");
 			Assert::IsFalse(fooMap.begin() == fooMap.end(), L"begin of non-empty HashMap equals end");
 			Assert::IsFalse(foocopy2.begin() == foocopy2.end(), L"begin of non-empty HashMap equals end");
 		}
@@ -191,24 +191,24 @@ namespace TestLibraryDesktop
 			// int tests
 			Library::HashMap<int, int> intcopy1;
 			intcopy1 = intMap;
-			Assert::IsTrue(intMap.size() == intcopy1.size(), L"HashMap sizes not equal");
+			Assert::IsTrue(intMap.Size() == intcopy1.Size(), L"HashMap sizes not equal");
 
 			intMap.Insert(std::pair<int, int>(1, 1));
 			Library::HashMap<int, int> intcopy2;
 			intcopy2 = intMap;
-			Assert::AreEqual(intMap.size(), intcopy2.size(), L"HashMap sizes not equal");
+			Assert::AreEqual(intMap.Size(), intcopy2.Size(), L"HashMap sizes not equal");
 			Assert::IsFalse(intMap.begin() == intMap.end(), L"begin of non-empty HashMap equals end");
 			Assert::IsFalse(intcopy2.begin() == intcopy2.end(), L"begin of non-empty HashMap equals end");
 
 			// pointer tests
 			Library::HashMap<int*, int> ptrcopy1;
 			ptrcopy1 = ptrMap;
-			Assert::IsTrue(ptrMap.size() == ptrcopy1.size(), L"HashMap sizes not equal");
+			Assert::IsTrue(ptrMap.Size() == ptrcopy1.Size(), L"HashMap sizes not equal");
 
 			ptrMap.Insert(std::pair<int*, int>(&x, 1));
 			Library::HashMap<int*, int> ptrcopy2;
 			ptrcopy2 = ptrMap;
-			Assert::AreEqual(ptrMap.size(), ptrcopy2.size(), L"HashMap sizes not equal");
+			Assert::AreEqual(ptrMap.Size(), ptrcopy2.Size(), L"HashMap sizes not equal");
 			Assert::IsFalse(ptrMap.begin() == ptrMap.end(), L"begin of non-empty HashMap equals end");
 			Assert::IsFalse(ptrcopy2.begin() == ptrcopy2.end(), L"begin of non-empty HashMap equals end");
 
@@ -216,12 +216,12 @@ namespace TestLibraryDesktop
 			// char* tests
 			Library::HashMap<char*, int> chrcopy1;
 			chrcopy1 = chrMap;
-			Assert::IsTrue(chrMap.size() == chrcopy1.size(), L"HashMap sizes not equal");
+			Assert::IsTrue(chrMap.Size() == chrcopy1.Size(), L"HashMap sizes not equal");
 
 			chrMap.Insert(std::pair<char*, int>(a, 1));
 			Library::HashMap<char*, int> chrcopy2;
 			chrcopy2 = chrMap;
-			Assert::AreEqual(chrMap.size(), chrcopy2.size(), L"HashMap sizes not equal");
+			Assert::AreEqual(chrMap.Size(), chrcopy2.Size(), L"HashMap sizes not equal");
 			Assert::IsFalse(chrMap.begin() == chrMap.end(), L"begin of non-empty HashMap equals end");
 			Assert::IsFalse(chrcopy2.begin() == chrcopy2.end(), L"begin of non-empty HashMap equals end");
 
@@ -229,12 +229,12 @@ namespace TestLibraryDesktop
 			// string tests
 			Library::HashMap<std::string, int> strcopy1;
 			strcopy1 = strMap;
-			Assert::IsTrue(strMap.size() == strcopy1.size(), L"HashMap sizes not equal");
+			Assert::IsTrue(strMap.Size() == strcopy1.Size(), L"HashMap sizes not equal");
 
 			strMap.Insert(std::pair<std::string, int>(s, 1));
 			Library::HashMap<std::string, int> strcopy2;
 			strcopy2 = strMap;
-			Assert::AreEqual(strMap.size(), strcopy2.size(), L"HashMap sizes not equal");
+			Assert::AreEqual(strMap.Size(), strcopy2.Size(), L"HashMap sizes not equal");
 			Assert::IsFalse(strMap.begin() == strMap.end(), L"begin of non-empty HashMap equals end");
 			Assert::IsFalse(strcopy2.begin() == strcopy2.end(), L"begin of non-empty HashMap equals end");
 
@@ -242,12 +242,12 @@ namespace TestLibraryDesktop
 			// foo tests
 			Library::HashMap<Foo, int> foocopy1;
 			foocopy1 = fooMap;
-			Assert::IsTrue(fooMap.size() == foocopy1.size(), L"HashMap sizes not equal");
+			Assert::IsTrue(fooMap.Size() == foocopy1.Size(), L"HashMap sizes not equal");
 
 			fooMap.Insert(std::pair<Foo, int>(foo, 1));
 			Library::HashMap<Foo, int> foocopy2;
 			foocopy2 = fooMap;
-			Assert::AreEqual(fooMap.size(), foocopy2.size(), L"HashMap sizes not equal");
+			Assert::AreEqual(fooMap.Size(), foocopy2.Size(), L"HashMap sizes not equal");
 			Assert::IsFalse(fooMap.begin() == fooMap.end(), L"begin of non-empty HashMap equals end");
 			Assert::IsFalse(foocopy2.begin() == foocopy2.end(), L"begin of non-empty HashMap equals end");
 		}
@@ -336,98 +336,98 @@ namespace TestLibraryDesktop
 			// int tests
 			Assert::IsFalse(intMap.ContainsKey(1), L"Empty HashMap should not contain any keys");
 			
-			std::uint32_t intMapSize = intMap.size();
+			std::uint32_t intMapSize = intMap.Size();
 			intMap.Insert(std::pair<const int, int>(1, 1));
 			Assert::IsTrue(intMap.ContainsKey(1), L"Key doesn't exist in HashMap after inserting");
-			Assert::AreNotEqual(intMapSize, intMap.size(), L"Size not changing after inserting into HashMap");
+			Assert::AreNotEqual(intMapSize, intMap.Size(), L"Size not changing after inserting into HashMap");
 			
-			intMapSize = intMap.size();
+			intMapSize = intMap.Size();
 			intMap.Remove(1);
 			Assert::IsFalse(intMap.ContainsKey(1), L"Key still exists in HashMap after removing");
-			Assert::AreNotEqual(intMapSize, intMap.size(), L"Size not changing after removing from HashMap");
+			Assert::AreNotEqual(intMapSize, intMap.Size(), L"Size not changing after removing from HashMap");
 			
-			intMapSize = intMap.size();
+			intMapSize = intMap.Size();
 			intMap.Remove(1);
-			Assert::AreEqual(intMapSize, intMap.size(), L"Size should not change after removing non-existent key");
+			Assert::AreEqual(intMapSize, intMap.Size(), L"Size should not change after removing non-existent key");
 
 
 			// pointer tests
 			Assert::IsFalse(ptrMap.ContainsKey(&x), L"Empty HashMap should not contain any keys");
 
-			std::uint32_t ptrMapSize = ptrMap.size();
+			std::uint32_t ptrMapSize = ptrMap.Size();
 			ptrMap.Insert(std::pair<int*, int>(&x, 1));
 			Assert::IsTrue(ptrMap.ContainsKey(&x), L"Key doesn't exist in HashMap after inserting");
-			Assert::AreNotEqual(ptrMapSize, ptrMap.size(), L"Size not changing after inserting into HashMap");
+			Assert::AreNotEqual(ptrMapSize, ptrMap.Size(), L"Size not changing after inserting into HashMap");
 
-			ptrMapSize = ptrMap.size();
+			ptrMapSize = ptrMap.Size();
 			ptrMap.Remove(&x);
 			Assert::IsFalse(ptrMap.ContainsKey(&x), L"Key still exists in HashMap after removing");
-			Assert::AreNotEqual(ptrMapSize, ptrMap.size(), L"Size not changing after removing from HashMap");
+			Assert::AreNotEqual(ptrMapSize, ptrMap.Size(), L"Size not changing after removing from HashMap");
 
-			ptrMapSize = ptrMap.size();
+			ptrMapSize = ptrMap.Size();
 			ptrMap.Remove(&x);
-			Assert::AreEqual(ptrMapSize, ptrMap.size(), L"Size should not change after removing non-existent key");
+			Assert::AreEqual(ptrMapSize, ptrMap.Size(), L"Size should not change after removing non-existent key");
 
 
 			// char* tests
 			Assert::IsFalse(chrMap.ContainsKey(a), L"Empty HashMap should not contain any keys");
 
-			std::uint32_t chrMapSize = chrMap.size();
+			std::uint32_t chrMapSize = chrMap.Size();
 			chrMap.Insert(std::pair<char*, int>(a, 1));
 			Assert::IsTrue(chrMap.ContainsKey(a), L"Key doesn't exist in HashMap after inserting");
-			Assert::AreNotEqual(chrMapSize, chrMap.size(), L"Size not changing after inserting into HashMap");
+			Assert::AreNotEqual(chrMapSize, chrMap.Size(), L"Size not changing after inserting into HashMap");
 
-			chrMapSize = chrMap.size();
+			chrMapSize = chrMap.Size();
 			chrMap.Remove(a);
 			Assert::IsFalse(chrMap.ContainsKey(a), L"Key still exists in HashMap after removing");
-			Assert::AreNotEqual(chrMapSize, chrMap.size(), L"Size not changing after removing from HashMap");
+			Assert::AreNotEqual(chrMapSize, chrMap.Size(), L"Size not changing after removing from HashMap");
 
-			chrMapSize = chrMap.size();
+			chrMapSize = chrMap.Size();
 			chrMap.Remove(a);
-			Assert::AreEqual(chrMapSize, chrMap.size(), L"Size should not change after removing non-existent key");
+			Assert::AreEqual(chrMapSize, chrMap.Size(), L"Size should not change after removing non-existent key");
 
 			// string tests
 			Assert::IsFalse(strMap.ContainsKey(s), L"Empty HashMap should not contain any keys");
 
-			std::uint32_t strMapSize = strMap.size();
+			std::uint32_t strMapSize = strMap.Size();
 			strMap.Insert(std::pair<std::string, int>(s, 1));
 			Assert::IsTrue(strMap.ContainsKey(s), L"Key doesn't exist in HashMap after inserting");
-			Assert::AreNotEqual(strMapSize, strMap.size(), L"Size not changing after inserting into HashMap");
+			Assert::AreNotEqual(strMapSize, strMap.Size(), L"Size not changing after inserting into HashMap");
 
-			strMapSize = strMap.size();
+			strMapSize = strMap.Size();
 			strMap.Remove(s);
 			Assert::IsFalse(strMap.ContainsKey(s), L"Key still exists in HashMap after removing");
-			Assert::AreNotEqual(strMapSize, strMap.size(), L"Size not changing after removing from HashMap");
+			Assert::AreNotEqual(strMapSize, strMap.Size(), L"Size not changing after removing from HashMap");
 
-			strMapSize = strMap.size();
+			strMapSize = strMap.Size();
 			strMap.Remove(s);
-			Assert::AreEqual(strMapSize, strMap.size(), L"Size should not change after removing non-existent key");
+			Assert::AreEqual(strMapSize, strMap.Size(), L"Size should not change after removing non-existent key");
 
 
 			// foo tests
 			Assert::IsFalse(fooMap.ContainsKey(foo), L"Empty HashMap should not contain any keys");
 
-			std::uint32_t fooMapSize = fooMap.size();
+			std::uint32_t fooMapSize = fooMap.Size();
 			fooMap.Insert(std::pair<Foo, int>(foo, 1));
 			Assert::IsTrue(fooMap.ContainsKey(foo), L"Key doesn't exist in HashMap after inserting");
-			Assert::AreNotEqual(fooMapSize, fooMap.size(), L"Size not changing after inserting into HashMap");
+			Assert::AreNotEqual(fooMapSize, fooMap.Size(), L"Size not changing after inserting into HashMap");
 
-			fooMapSize = fooMap.size();
+			fooMapSize = fooMap.Size();
 			fooMap.Remove(foo);
 			Assert::IsFalse(fooMap.ContainsKey(foo), L"Key still exists in HashMap after removing");
-			Assert::AreNotEqual(fooMapSize, fooMap.size(), L"Size not changing after removing from HashMap");
+			Assert::AreNotEqual(fooMapSize, fooMap.Size(), L"Size not changing after removing from HashMap");
 
-			fooMapSize = fooMap.size();
+			fooMapSize = fooMap.Size();
 			fooMap.Remove(foo);
-			Assert::AreEqual(fooMapSize, fooMap.size(), L"Size should not change after removing non-existent key");
+			Assert::AreEqual(fooMapSize, fooMap.Size(), L"Size should not change after removing non-existent key");
 		}
 
 		TEST_METHOD(TestIndexOperator)
 		{
 			// int tests
-			std::uint32_t intMapSize = intMap.size();
+			std::uint32_t intMapSize = intMap.Size();
 			auto& intMapVal = intMap[1];
-			Assert::AreNotEqual(intMapSize, intMap.size(), L"HashMap Size not increasing after indexing a non-existent key");
+			Assert::AreNotEqual(intMapSize, intMap.Size(), L"HashMap Size not increasing after indexing a non-existent key");
 
 			intMap.Insert(std::pair<int, int>(1, 1));
 			Assert::AreNotEqual(intMap[1], 1, L"Incorrect value returned with index operator");
@@ -439,9 +439,9 @@ namespace TestLibraryDesktop
 			Assert::ExpectException<std::exception>([&] { constIntMap[2]; }, L"Indexing nonexistent key value");
 
 			// pointer tests
-			std::uint32_t ptrMapSize = ptrMap.size();
+			std::uint32_t ptrMapSize = ptrMap.Size();
 			auto& ptrMapVal = ptrMap[&x];
-			Assert::AreNotEqual(ptrMapSize, ptrMap.size(), L"HashMap Size not increasing after indexing a non-existent key");
+			Assert::AreNotEqual(ptrMapSize, ptrMap.Size(), L"HashMap Size not increasing after indexing a non-existent key");
 
 			ptrMap.Insert(std::pair<int*, int>(&x, 1));
 			Assert::AreNotEqual(ptrMap[&x], 1, L"Incorrect value returned with index operator");
@@ -451,9 +451,9 @@ namespace TestLibraryDesktop
 
 
 			// char* tests
-			std::uint32_t chrMapSize = chrMap.size();
+			std::uint32_t chrMapSize = chrMap.Size();
 			auto& chrMapVal = chrMap[a];
-			Assert::AreNotEqual(chrMapSize, chrMap.size(), L"HashMap Size not increasing after indexing a non-existent key");
+			Assert::AreNotEqual(chrMapSize, chrMap.Size(), L"HashMap Size not increasing after indexing a non-existent key");
 
 			chrMap.Insert(std::pair<char*, int>(a, 1));
 			Assert::AreNotEqual(chrMap[a], 1, L"Incorrect value returned with index operator");
@@ -463,9 +463,9 @@ namespace TestLibraryDesktop
 
 
 			// string tests
-			std::uint32_t strMapSize = strMap.size();
+			std::uint32_t strMapSize = strMap.Size();
 			auto& strMapVal = strMap[s];
-			Assert::AreNotEqual(strMapSize, strMap.size(), L"HashMap Size not increasing after indexing a non-existent key");
+			Assert::AreNotEqual(strMapSize, strMap.Size(), L"HashMap Size not increasing after indexing a non-existent key");
 
 			strMap.Insert(std::pair<std::string, int>(s, 1));
 			Assert::AreNotEqual(strMap[s], 1, L"Incorrect value returned with index operator");
@@ -474,9 +474,9 @@ namespace TestLibraryDesktop
 			Assert::AreEqual(strMap[s], 1, L"HashMapValue not changed when assigned from index operator");
 
 			// foo tests
-			std::uint32_t fooMapSize = fooMap.size();
+			std::uint32_t fooMapSize = fooMap.Size();
 			auto& fooMapVal = fooMap[foo];
-			Assert::AreNotEqual(fooMapSize, fooMap.size(), L"HashMap Size not increasing after indexing a non-existent key");
+			Assert::AreNotEqual(fooMapSize, fooMap.Size(), L"HashMap Size not increasing after indexing a non-existent key");
 
 			fooMap.Insert(std::pair<Foo, int>(foo, 1));
 			Assert::AreNotEqual(fooMap[foo], 1, L"Incorrect value returned with index operator");
@@ -597,140 +597,140 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestClear)
 		{
 			// int tests
-			Assert::AreEqual(intMap.size(), 0U, L"HashMap Size should be zero when empty");
+			Assert::AreEqual(intMap.Size(), 0U, L"HashMap Size should be zero when empty");
 			intMap.Insert(std::pair<int, int>(1, 1));
-			Assert::IsTrue(intMap.size() > 0, L"HashMap Size should be non-zero when not empty");
+			Assert::IsTrue(intMap.Size() > 0, L"HashMap Size should be non-zero when not empty");
 			intMap.Clear();
-			Assert::AreEqual(intMap.size(), 0U, L"HashMap Size should be zero when cleared");
+			Assert::AreEqual(intMap.Size(), 0U, L"HashMap Size should be zero when cleared");
 			intMap.Clear();
-			Assert::AreEqual(intMap.size(), 0U, L"HashMap Size should be zero when clearing an empty HashMap");
+			Assert::AreEqual(intMap.Size(), 0U, L"HashMap Size should be zero when clearing an empty HashMap");
 
 
 			// pointer tests
-			Assert::AreEqual(ptrMap.size(), 0U, L"HashMap Size should be zero when empty");
+			Assert::AreEqual(ptrMap.Size(), 0U, L"HashMap Size should be zero when empty");
 			ptrMap.Insert(std::pair<int*, int>(&x, 1));
-			Assert::IsTrue(ptrMap.size() > 0, L"HashMap Size should be non-zero when not empty");
+			Assert::IsTrue(ptrMap.Size() > 0, L"HashMap Size should be non-zero when not empty");
 			ptrMap.Clear();
-			Assert::AreEqual(ptrMap.size(), 0U, L"HashMap Size should be zero when cleared");
+			Assert::AreEqual(ptrMap.Size(), 0U, L"HashMap Size should be zero when cleared");
 			ptrMap.Clear();
-			Assert::AreEqual(ptrMap.size(), 0U, L"HashMap Size should be zero when clearing an empty HashMap");
+			Assert::AreEqual(ptrMap.Size(), 0U, L"HashMap Size should be zero when clearing an empty HashMap");
 
 
 			// char* tests
-			Assert::AreEqual(chrMap.size(), 0U, L"HashMap Size should be zero when empty");
+			Assert::AreEqual(chrMap.Size(), 0U, L"HashMap Size should be zero when empty");
 			chrMap.Insert(std::pair<char*, int>(a, 1));
-			Assert::IsTrue(chrMap.size() > 0, L"HashMap Size should be non-zero when not empty");
+			Assert::IsTrue(chrMap.Size() > 0, L"HashMap Size should be non-zero when not empty");
 			chrMap.Clear();
-			Assert::AreEqual(chrMap.size(), 0U, L"HashMap Size should be zero when cleared");
+			Assert::AreEqual(chrMap.Size(), 0U, L"HashMap Size should be zero when cleared");
 			chrMap.Clear();
-			Assert::AreEqual(chrMap.size(), 0U, L"HashMap Size should be zero when clearing an empty HashMap");
+			Assert::AreEqual(chrMap.Size(), 0U, L"HashMap Size should be zero when clearing an empty HashMap");
 
 
 			// string tests
-			Assert::AreEqual(strMap.size(), 0U, L"HashMap Size should be zero when empty");
+			Assert::AreEqual(strMap.Size(), 0U, L"HashMap Size should be zero when empty");
 			strMap.Insert(std::pair<std::string, int>(s, 1));
-			Assert::IsTrue(strMap.size() > 0, L"HashMap Size should be non-zero when not empty");
+			Assert::IsTrue(strMap.Size() > 0, L"HashMap Size should be non-zero when not empty");
 			strMap.Clear();
-			Assert::AreEqual(strMap.size(), 0U, L"HashMap Size should be zero when cleared");
+			Assert::AreEqual(strMap.Size(), 0U, L"HashMap Size should be zero when cleared");
 			strMap.Clear();
-			Assert::AreEqual(strMap.size(), 0U, L"HashMap Size should be zero when clearing an empty HashMap");
+			Assert::AreEqual(strMap.Size(), 0U, L"HashMap Size should be zero when clearing an empty HashMap");
 		}
 
 		TEST_METHOD(TestSize)
 		{
 			// int tests
-			Assert::AreEqual(intMap.size(), 0U, L"Length of empty HashMap should be zero");
+			Assert::AreEqual(intMap.Size(), 0U, L"Length of empty HashMap should be zero");
 			
 			intMap.Insert(std::pair<int, int>(1, 1));
-			Assert::AreEqual(intMap.size(), 1U, L"Size should be one after inserting one item");
+			Assert::AreEqual(intMap.Size(), 1U, L"Size should be one after inserting one item");
 			
 			intMap.Insert(std::pair<int, int>(2, 2));
-			Assert::AreEqual(intMap.size(), 2U, L"Size should increase when adding a value");
+			Assert::AreEqual(intMap.Size(), 2U, L"Size should increase when adding a value");
 
 			intMap.Remove(10);
-			Assert::AreEqual(intMap.size(), 2U, L"Size should not change when removing a non-existent value");
+			Assert::AreEqual(intMap.Size(), 2U, L"Size should not change when removing a non-existent value");
 
 			intMap.Remove(1);
-			Assert::AreEqual(intMap.size(), 1U, L"Size should decrease when removing an item");
+			Assert::AreEqual(intMap.Size(), 1U, L"Size should decrease when removing an item");
 
 			intMap.Clear();
-			Assert::AreEqual(intMap.size(), 0U, L"Size should be zero after clearing");
+			Assert::AreEqual(intMap.Size(), 0U, L"Size should be zero after clearing");
 
 
 			// pointer tests
-			Assert::AreEqual(ptrMap.size(), 0U, L"Length of empty HashMap should be zero");
+			Assert::AreEqual(ptrMap.Size(), 0U, L"Length of empty HashMap should be zero");
 
 			ptrMap.Insert(std::pair<int*, int>(&x, 1));
-			Assert::AreEqual(ptrMap.size(), 1U, L"Size should be one after inserting one item");
+			Assert::AreEqual(ptrMap.Size(), 1U, L"Size should be one after inserting one item");
 
 			ptrMap.Insert(std::pair<int*, int>(&y, 2));
-			Assert::AreEqual(ptrMap.size(), 2U, L"Size should increase when adding a value");
+			Assert::AreEqual(ptrMap.Size(), 2U, L"Size should increase when adding a value");
 
 			ptrMap.Remove(&z);
-			Assert::AreEqual(ptrMap.size(), 2U, L"Size should not change when removing a non-existent value");
+			Assert::AreEqual(ptrMap.Size(), 2U, L"Size should not change when removing a non-existent value");
 
 			ptrMap.Remove(&x);
-			Assert::AreEqual(ptrMap.size(), 1U, L"Size should decrease when removing an item");
+			Assert::AreEqual(ptrMap.Size(), 1U, L"Size should decrease when removing an item");
 
 			ptrMap.Clear();
-			Assert::AreEqual(ptrMap.size(), 0U, L"Size should be zero after clearing");
+			Assert::AreEqual(ptrMap.Size(), 0U, L"Size should be zero after clearing");
 
 
 			// char* tests
-			Assert::AreEqual(chrMap.size(), 0U, L"Length of empty HashMap should be zero");
+			Assert::AreEqual(chrMap.Size(), 0U, L"Length of empty HashMap should be zero");
 
 			chrMap.Insert(std::pair<char*, int>(a, 1));
-			Assert::AreEqual(chrMap.size(), 1U, L"Size should be one after inserting one item");
+			Assert::AreEqual(chrMap.Size(), 1U, L"Size should be one after inserting one item");
 
 			chrMap.Insert(std::pair<char*, int>(b, 2));
-			Assert::AreEqual(chrMap.size(), 2U, L"Size should increase when adding a value");
+			Assert::AreEqual(chrMap.Size(), 2U, L"Size should increase when adding a value");
 
 			chrMap.Remove(c);
-			Assert::AreEqual(chrMap.size(), 2U, L"Size should not change when removing a non-existent value");
+			Assert::AreEqual(chrMap.Size(), 2U, L"Size should not change when removing a non-existent value");
 
 			chrMap.Remove(a);
-			Assert::AreEqual(chrMap.size(), 1U, L"Size should decrease when removing an item");
+			Assert::AreEqual(chrMap.Size(), 1U, L"Size should decrease when removing an item");
 
 			chrMap.Clear();
-			Assert::AreEqual(chrMap.size(), 0U, L"Size should be zero after clearing");
+			Assert::AreEqual(chrMap.Size(), 0U, L"Size should be zero after clearing");
 
 
 			// string tests
-			Assert::AreEqual(strMap.size(), 0U, L"Length of empty HashMap should be zero");
+			Assert::AreEqual(strMap.Size(), 0U, L"Length of empty HashMap should be zero");
 
 			strMap.Insert(std::pair<std::string, int>(s, 1));
-			Assert::AreEqual(strMap.size(), 1U, L"Size should be one after inserting one item");
+			Assert::AreEqual(strMap.Size(), 1U, L"Size should be one after inserting one item");
 
 			strMap.Insert(std::pair<std::string, int>(t, 2));
-			Assert::AreEqual(strMap.size(), 2U, L"Size should increase when adding a value");
+			Assert::AreEqual(strMap.Size(), 2U, L"Size should increase when adding a value");
 
 			strMap.Remove(u);
-			Assert::AreEqual(strMap.size(), 2U, L"Size should not change when removing a non-existent value");
+			Assert::AreEqual(strMap.Size(), 2U, L"Size should not change when removing a non-existent value");
 
 			strMap.Remove(s);
-			Assert::AreEqual(strMap.size(), 1U, L"Size should decrease when removing an item");
+			Assert::AreEqual(strMap.Size(), 1U, L"Size should decrease when removing an item");
 
 			strMap.Clear();
-			Assert::AreEqual(strMap.size(), 0U, L"Size should be zero after clearing");
+			Assert::AreEqual(strMap.Size(), 0U, L"Size should be zero after clearing");
 
 
 			// foo tests
-			Assert::AreEqual(fooMap.size(), 0U, L"Length of empty HashMap should be zero");
+			Assert::AreEqual(fooMap.Size(), 0U, L"Length of empty HashMap should be zero");
 
 			fooMap.Insert(std::pair<Foo, int>(foo, 1));
-			Assert::AreEqual(fooMap.size(), 1U, L"Size should be one after inserting one item");
+			Assert::AreEqual(fooMap.Size(), 1U, L"Size should be one after inserting one item");
 
 			fooMap.Insert(std::pair<Foo, int>(bar, 2));
-			Assert::AreEqual(fooMap.size(), 2U, L"Size should increase when adding a value");
+			Assert::AreEqual(fooMap.Size(), 2U, L"Size should increase when adding a value");
 
 			fooMap.Remove(gar);
-			Assert::AreEqual(fooMap.size(), 2U, L"Size should not change when removing a non-existent value");
+			Assert::AreEqual(fooMap.Size(), 2U, L"Size should not change when removing a non-existent value");
 
 			fooMap.Remove(foo);
-			Assert::AreEqual(fooMap.size(), 1U, L"Size should decrease when removing an item");
+			Assert::AreEqual(fooMap.Size(), 1U, L"Size should decrease when removing an item");
 
 			fooMap.Clear();
-			Assert::AreEqual(fooMap.size(), 0U, L"Size should be zero after clearing");
+			Assert::AreEqual(fooMap.Size(), 0U, L"Size should be zero after clearing");
 		}
 
 		TEST_METHOD(TestContainsKey)

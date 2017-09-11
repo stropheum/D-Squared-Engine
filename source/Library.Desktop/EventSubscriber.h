@@ -25,6 +25,7 @@ namespace Library
 		virtual void Notify(const EventPublisher& event) = 0;
 
 	protected:
+
 		std::mutex mNotifyMutex; // Mutex to prevent multiple accesses to the event subscriber
 	};
 }

@@ -47,7 +47,7 @@ namespace Library
 		 * Mutator method for the Delay of the event
 		 * @Param Delay: The Delay of the event
 		 */
-		void SetDelay(const std::int32_t delay);
+		void SetDelay(const std::int32_t& delay);
 	};
 
 	ActionFactory(ActionEvent)

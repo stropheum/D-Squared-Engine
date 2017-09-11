@@ -31,7 +31,7 @@ namespace Library
 		}
 	}
 
-	void ActionListIf::SetCondition(std::int32_t condition)
+	void ActionListIf::SetCondition(const std::int32_t& condition)
 	{
 		mCondition = condition;
 	}

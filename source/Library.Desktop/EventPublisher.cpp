@@ -34,7 +34,7 @@ namespace Library
 		return *this;
 	}
 
-	EventPublisher::EventPublisher(EventPublisher&& rhs):
+	EventPublisher::EventPublisher(EventPublisher&& rhs) noexcept:
 		mDeleteAfterPublishing(rhs.mDeleteAfterPublishing), mTimeEnqueued(rhs.mTimeEnqueued), 
 		mMillisecondDelay(rhs.mMillisecondDelay), mSubscriberList(rhs.mSubscriberList), mSubscriberListMutex(rhs.mSubscriberListMutex)
 	{
@@ -42,7 +42,7 @@ namespace Library
 		rhs.mSubscriberList = nullptr;
 	}
 
-	EventPublisher& EventPublisher::operator=(EventPublisher&& rhs)
+	EventPublisher& EventPublisher::operator=(EventPublisher&& rhs) noexcept
 	{
 		if (this != &rhs)
 		{
@@ -58,7 +58,7 @@ namespace Library
 		return *this;
 	}
 
-	void EventPublisher::SetTime(const high_resolution_clock::time_point& timePoint, milliseconds millisecondDelay)
+	void EventPublisher::SetTime(const high_resolution_clock::time_point& timePoint, const milliseconds& millisecondDelay)
 	{
 		mTimeEnqueued = timePoint;
 		mMillisecondDelay = millisecondDelay;
@@ -79,7 +79,7 @@ namespace Library
 		return timePoint > (mTimeEnqueued + mMillisecondDelay);
 	}
 
-	void EventPublisher::Deliver()
+	void EventPublisher::Deliver() const
 	{
 		std::vector<std::future<void>> futures;
 		{

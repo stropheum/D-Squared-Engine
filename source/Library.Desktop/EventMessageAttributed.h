@@ -46,6 +46,7 @@ namespace Library
 		void SetWorldState(WorldState& worldState);
 
 	private:
+
 		std::string mSubtype; // The subtype of the event Message attributed
 		WorldState* mWorldState; // The world state object
 	};

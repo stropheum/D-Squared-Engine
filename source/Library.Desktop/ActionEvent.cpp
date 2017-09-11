@@ -30,7 +30,7 @@ namespace Library
 		ema.SetWorldState(worldState);
 		ema.SetSubtype(GetSubtype());
 
-		for (auto iter = Begin(); iter != End(); ++iter)
+		for (auto iter = begin(); iter != end(); ++iter)
 		{
 			if (IsAuxiliaryAttribute((*iter).first))
 			{
@@ -59,7 +59,7 @@ namespace Library
 		return (*this)["Delay"].Get<std::int32_t>(0);
 	}
 
-	void ActionEvent::SetDelay(const std::int32_t delay)
+	void ActionEvent::SetDelay(const std::int32_t& delay)
 	{
 		(*this)["Delay"] = delay;
 	}

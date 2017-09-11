@@ -40,7 +40,7 @@ namespace Library
 		/**
 		 * Move copy constructor;
 		 */
-		HashMap(HashMap<TKey, TValue, HashFunctor>&& rhs);
+		HashMap(HashMap<TKey, TValue, HashFunctor>&& rhs) noexcept;
 
 		/**
 		 * Assignment operator
@@ -119,7 +119,7 @@ namespace Library
 		 * The number of elements inserted into the HashMap
 		 * @Return: The number of elements that have been inserted into the HashMap
 		 */
-		std::uint32_t size() const;
+		std::uint32_t Size() const;
 
 		/**
 		 * Determines if a value has been inserted into the HashMap with the specified key
@@ -129,8 +129,9 @@ namespace Library
 		bool ContainsKey(const TKey& key) const;
 
 	private:
-		std::uint32_t mBucketCount;			 // Number of buckets in the hash map.
-		HashFunctor mHashFunctor;			 // The hash function being used by this HashMap
+
+		std::uint32_t mBucketCount; // Number of buckets in the hash map.
+		HashFunctor mHashFunctor; // The hash function being used by this HashMap
 		Library::Vector<BucketType> mBuckets; // Collection of buckets in the hash map
 		std::uint32_t mSize;
 
@@ -233,7 +234,7 @@ namespace Library
 			 * @Param bucketIndex: The index into the Vector chain
 			 * @Param iter: The iterator that mIter is being assigned to
 			 */
-			Iterator(const HashMap<TKey, TValue, HashFunctor>* owner, std::uint32_t bucketIndex, typename Library::Vector<PairType>::Iterator iter);
+			Iterator(const HashMap<TKey, TValue, HashFunctor>* owner, const std::uint32_t& bucketIndex, typename Library::Vector<PairType>::Iterator iter);
 
 			const HashMap<TKey, TValue, HashFunctor>* mOwner;	// The HashMap that owns this Iterator
 			std::uint32_t mBucketIndex;							// The index into the Vector chain
