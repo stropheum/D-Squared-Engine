@@ -35,22 +35,4 @@ namespace Library
 	{
 		return "IXmlParseHelper";
 	}
-
-	bool IXmlParseHelper::Equals(const RTTI* rhs) const
-	{
-		if (dynamic_cast<const Library::RTTI*>(this) == rhs)
-		{
-			return true;
-		}
-
-		IXmlParseHelper* data = rhs->As<IXmlParseHelper>();
-		bool result = false;
-
-		if (data != nullptr)
-		{
-			result = this == data;
-		}
-
-		return result;
-	}
 }

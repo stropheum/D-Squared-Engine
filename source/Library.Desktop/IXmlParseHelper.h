@@ -66,13 +66,6 @@ namespace Library
 		 */
 		std::string ToString() const override;
 
-		/**
-		 * RTTI Equals comparison
-		 * @Param rhs: The RTTI object being compared against
-		 * @Return: True if the objects are shared data and identical pointers
-		 */
-		bool Equals(const RTTI* rhs) const override;
-
 	protected:
 		XmlParseMaster* mXmlParseMaster;
 		const std::string mValidElementName;
