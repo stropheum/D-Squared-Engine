@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Scope.h"
-#include "Vector.h"
+
+
+using namespace std;
 
 namespace Library
 {
@@ -8,7 +10,7 @@ namespace Library
 
 #pragma region Constructors/Destructor
 
-	Scope::Scope(const std::uint32_t& capacity) :
+	Scope::Scope(const uint32_t& capacity) :
 		mMap(13), mVector(), mParent(nullptr)
 	{
 		mVector.Reserve(capacity);
@@ -65,21 +67,21 @@ namespace Library
 
 #pragma region Public Methods
 
-	Datum* Scope::Find(const std::string& key)
+	Datum* Scope::Find(const string& key)
 	{
 		auto iter = mMap.Find(key);
 		Datum* result = (iter != mMap.end()) ? &(*iter).second : nullptr;
 		return result;
 	}
 
-	Datum* const Scope::Find(const std::string& key) const
+	Datum* const Scope::Find(const string& key) const
 	{
 		auto iter = mMap.Find(key);
 		Datum* const result = (iter != mMap.end()) ? &(*iter).second : nullptr;
 		return result;
 	}
 
-	Datum* Scope::Search(const std::string& key, Scope** foundScope)
+	Datum* Scope::Search(const string& key, Scope** foundScope)
 	{
 		auto result = Find(key);
 
@@ -96,10 +98,10 @@ namespace Library
 		return result;
 	}
 
-	Datum& Scope::Append(const std::string& key)
+	Datum& Scope::Append(const string& key)
 	{
 		bool found = false;
-		auto iter = mMap.Insert(std::pair<std::string, Datum>(key, Datum()), found);
+		auto iter = mMap.Insert(pair<string, Datum>(key, Datum()), found);
 
 		if (!found)
 		{
@@ -109,10 +111,10 @@ namespace Library
 		return result.second;
 	}
 
-	Datum& Scope::Append(const std::string& key, bool& found)
+	Datum& Scope::Append(const string& key, bool& found)
 	{
 		bool datumFound;
-		auto iter = mMap.Insert(std::pair<std::string, Datum>(key, Datum()), datumFound);
+		auto iter = mMap.Insert(pair<string, Datum>(key, Datum()), datumFound);
 		found = datumFound;
 
 		if (!datumFound)
@@ -123,7 +125,7 @@ namespace Library
 		return result.second;
 	}
 
-	Scope& Scope::AppendScope(const std::string& key)
+	Scope& Scope::AppendScope(const string& key)
 	{
 		Datum* found = Find(key);
 		Scope* result = nullptr;
@@ -148,7 +150,7 @@ namespace Library
 		return *result;
 	}
 
-	void Scope::Adopt(Scope& child, const std::string& key)
+	void Scope::Adopt(Scope& child, const string& key)
 	{
 		bool found;
 		Datum& datum = Append(key, found);
@@ -166,16 +168,16 @@ namespace Library
 		return mParent;
 	}
 
-	Datum& Scope::operator[](const std::string& key)
+	Datum& Scope::operator[](const string& key)
 	{
 		return Append(key);
 	}
 
-	Datum& Scope::operator[](const std::uint32_t& index)
+	Datum& Scope::operator[](const uint32_t& index)
 	{
 		if (index >= mVector.Size())
 		{
-			throw std::exception("Index out of bounds");
+			throw exception("Index out of bounds");
 		}
 		return mVector[index]->second;
 	}
@@ -188,7 +190,7 @@ namespace Library
 		{	// If the sizes are not equal, the vectors are not equivalent
 			result = true;
 
-			for (std::uint32_t i = 0; i < mVector.Size(); i++)
+			for (uint32_t i = 0; i < mVector.Size(); i++)
 			{
 				if (*mVector[i] != *rhs.mVector[i])
 				{	// If we encounter a bad match, the vectors are not equivalent
@@ -206,11 +208,11 @@ namespace Library
 		return !(operator==(rhs));
 	}
 
-	std::string Scope::FindName(Scope* const scope) 
+	string Scope::FindName(Scope* const scope) 
 	{
-		std::string result = "";
+		string result = "";
 
-		for (std::uint32_t i = 0; i < mVector.Size(); i++)
+		for (uint32_t i = 0; i < mVector.Size(); i++)
 		{
 			auto& foundPair = mVector[i];
 			if (foundPair->second.Type() == DatumType::Scope)
@@ -226,13 +228,13 @@ namespace Library
 
 		if (!result.compare(""))
 		{
-			throw std::exception("Child not found in the specified scope");
+			throw exception("Child not found in the specified scope");
 		}
 
 		return result;
 	}
 
-	std::string Scope::ToString() const
+	string Scope::ToString() const
 	{
 		return "Scope";
 	}
@@ -243,12 +245,12 @@ namespace Library
 		return (scope != nullptr) ? operator==(*scope) : false;
 	}
 
-	HashMap<const std::string, Datum>::Iterator Scope::begin() const
+	HashMap<const string, Datum>::Iterator Scope::begin() const
 	{
 		return mMap.begin();
 	}
 
-	HashMap<const std::string, Datum>::Iterator Scope::end() const
+	HashMap<const string, Datum>::Iterator Scope::end() const
 	{
 		return mMap.end();
 	}
@@ -259,12 +261,12 @@ namespace Library
 
 	void Scope::Clear()
 	{	
-		for (std::uint32_t i = 0; i < mVector.Size(); i++)
+		for (uint32_t i = 0; i < mVector.Size(); i++)
 		{	// Loop through vector searching for Scope types
 			Datum& datum = mVector[i]->second;
 			if (datum.Type() == DatumType::Scope)
 			{	// When a Scope Type is found, delete all scopes in the datum
-				for (std::uint32_t j = 0; j < datum.Size(); j++)
+				for (uint32_t j = 0; j < datum.Size(); j++)
 				{
 					delete &datum[j];
 				}
@@ -279,13 +281,13 @@ namespace Library
 	void Scope::Orphan()
 	{
 		Scope* parent = GetParent();
-		std::string key = parent->FindName(this);
+		string key = parent->FindName(this);
 		
 		auto& parentVector = parent->mVector;
-		for (std::uint32_t i = 0; i < parentVector.Size(); i++)
+		for (uint32_t i = 0; i < parentVector.Size(); i++)
 		{	// Search the vector for the index that matches
 
-			std::string pKey = parentVector[i]->first;
+			string pKey = parentVector[i]->first;
 			if (pKey == key)
 			{	// we found the index, so we're going to jam everything down
 				parentVector.Remove(parentVector[i]);

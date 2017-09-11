@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "SharedDataScope.h"
-#include "Scope.h"
 
+
+using namespace std;
 
 namespace Library
 {
@@ -27,7 +28,7 @@ namespace Library
 		return clone;
 	}
 
-	std::string SharedDataScope::ToString() const
+	string SharedDataScope::ToString() const
 	{
 		return "Shared Data Scope";
 	}

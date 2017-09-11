@@ -2,6 +2,8 @@
 #include "Action.h"
 
 
+using namespace std;
+
 namespace Library
 {
 	RTTI_DEFINITIONS(Action)
@@ -15,7 +17,7 @@ namespace Library
 		return mName;
 	}
 
-	void Action::SetName(const std::string& name)
+	void Action::SetName(const string& name)
 	{
 		mName = name;
 	}

@@ -1,8 +1,5 @@
 #include "pch.h"
 #include "XmlParseHelperScope.h"
-#include "SharedDataScope.h"
-#include "Scope.h"
-#include <sstream>
 
 
 using namespace std;

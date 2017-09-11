@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "Datum.h"
-#include "ScopeState.h"
-#include "Scope.h"
+
+
+using namespace std;
 
 namespace Library
 {
@@ -35,10 +36,10 @@ namespace Library
 	Datum::Datum(Datum&& rhs) :
 		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
 	{
-		operator=(std::move(rhs)); // Perform a deep copy of all the data
+		operator=(move(rhs)); // Perform a deep copy of all the data
 	}
 
-	Scope& Datum::operator[](const std::uint32_t& index)
+	Scope& Datum::operator[](const uint32_t& index)
 	{
 		return *Get<Scope*>(index);
 	}
@@ -59,37 +60,37 @@ namespace Library
 				switch (rhs.mType)
 				{
 				case DatumType::Integer:
-					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					for (uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						PushBack(rhs.Get<std::int32_t>(i));
+						PushBack(rhs.Get<int32_t>(i));
 					}
 					break;
 				case DatumType::Float:
-					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					for (uint32_t i = 0; i < rhs.mSize; i++)
 					{
 						PushBack(rhs.Get<float>(i));
 					}
 					break;
 				case DatumType::Vector:
-					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					for (uint32_t i = 0; i < rhs.mSize; i++)
 					{
 						PushBack(rhs.Get<glm::vec4>(i));
 					}
 					break;
 				case DatumType::Matrix:
-					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					for (uint32_t i = 0; i < rhs.mSize; i++)
 					{
 						PushBack(rhs.Get<glm::mat4>(i));
 					}
 					break;
 				case DatumType::String:
-					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					for (uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						PushBack(rhs.Get<std::string>(i));
+						PushBack(rhs.Get<string>(i));
 					}
 					break;
 				case DatumType::Pointer:
-					for (std::uint32_t i = 0; i < rhs.mSize; i++)
+					for (uint32_t i = 0; i < rhs.mSize; i++)
 					{
 						PushBack(rhs.Get<Library::RTTI*>(i));
 					}
@@ -130,7 +131,7 @@ namespace Library
 		return *this;
 	}
 
-	Datum& Datum::operator=(const std::int32_t& rhs)
+	Datum& Datum::operator=(const int32_t& rhs)
 	{
 		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
 		SetType(DatumType::Integer);
@@ -165,7 +166,7 @@ namespace Library
 		return mTypeState->operator=(rhs);
 	}
 
-	Datum& Datum::operator=(const std::string& rhs)
+	Datum& Datum::operator=(const string& rhs)
 	{
 		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
 		SetType(DatumType::String);
@@ -190,7 +191,7 @@ namespace Library
 		return mType == rhs;
 	}
 
-	bool Datum::operator==(const std::int32_t& rhs) const
+	bool Datum::operator==(const int32_t& rhs) const
 	{
 		return mType == DatumType::Integer &&
 			mSize == 1 && mData.i[0] == rhs;
@@ -220,7 +221,7 @@ namespace Library
 			mSize == 1 && mData.sc[0] == rhs;
 	}
 
-	bool Datum::operator==(const std::string& rhs) const
+	bool Datum::operator==(const string& rhs) const
 	{
 		return mType == DatumType::String &&
 			mSize == 1 && mData.s[0] == rhs;
@@ -242,7 +243,7 @@ namespace Library
 		return !(operator==(rhs));
 	}
 
-	bool Datum::operator!=(const std::int32_t& rhs) const
+	bool Datum::operator!=(const int32_t& rhs) const
 	{
 		return !(operator==(rhs));
 	}
@@ -262,7 +263,7 @@ namespace Library
 		return !(operator==(rhs));
 	}
 
-	bool Datum::operator!=(const std::string& rhs) const
+	bool Datum::operator!=(const string& rhs) const
 	{
 		return !(operator==(rhs));
 	}
@@ -282,7 +283,7 @@ namespace Library
 		if (mType == type) return; // Avoid double instantiation of state without throwing an exception
 
 		if (mType == DatumType::Unknown) mType = type;
-		else throw std::exception("Attempting to change Type on Datum object");
+		else throw exception("Attempting to change Type on Datum object");
 
 		if (mTypeState != nullptr)
 		{	// If we've already Set state, make sure we delete the old Type state
@@ -315,26 +316,26 @@ namespace Library
 		}
 	}
 
-	std::uint32_t Datum::Size() const
+	uint32_t Datum::Size() const
 	{
 		return mSize;
 	}
 
-	std::uint32_t Datum::Capacity() const
+	uint32_t Datum::Capacity() const
 	{
 		return mCapacity;
 	}
 
-	void Datum::SetSize(const std::uint32_t& size)
+	void Datum::SetSize(const uint32_t& size)
 	{
-		if (mDataIsExternal) throw std::exception("Attempting to resize external storage");
+		if (mDataIsExternal) throw exception("Attempting to resize external storage");
 		mTypeState->SetSize(size);
 	}
 
-	void Datum::Reserve(const std::uint32_t& capacity)
+	void Datum::Reserve(const uint32_t& capacity)
 	{
 		if (mType == DatumType::Unknown) return;
-		if (mDataIsExternal) throw std::exception("Attempting to resize external storage");
+		if (mDataIsExternal) throw exception("Attempting to resize external storage");
 		mTypeState->Reserve(capacity);
 	}
 
@@ -343,7 +344,7 @@ namespace Library
 		mTypeState->Clear();
 	}
 
-	void Datum::SetStorage(std::int32_t* data, const std::uint32_t& size)
+	void Datum::SetStorage(int32_t* data, const uint32_t& size)
 	{
 		if (mTypeState == nullptr)
 		{
@@ -353,7 +354,7 @@ namespace Library
 		mTypeState->SetStorage(data, size);
 	}
 
-	void Datum::SetStorage(float* data, const std::uint32_t& size)
+	void Datum::SetStorage(float* data, const uint32_t& size)
 	{
 		if (mTypeState == nullptr)
 		{
@@ -363,7 +364,7 @@ namespace Library
 		mTypeState->SetStorage(data, size);
 	}
 
-	void Datum::SetStorage(glm::vec4* data, const std::uint32_t& size)
+	void Datum::SetStorage(glm::vec4* data, const uint32_t& size)
 	{
 		if (mTypeState == nullptr)
 		{
@@ -373,7 +374,7 @@ namespace Library
 		mTypeState->SetStorage(data, size);
 	}
 
-	void Datum::SetStorage(glm::mat4* data, const std::uint32_t& size)
+	void Datum::SetStorage(glm::mat4* data, const uint32_t& size)
 	{
 		if (mTypeState == nullptr)
 		{
@@ -383,7 +384,7 @@ namespace Library
 		mTypeState->SetStorage(data, size);
 	}
 
-	void Datum::SetStorage(std::string* data, const std::uint32_t& size)
+	void Datum::SetStorage(string* data, const uint32_t& size)
 	{
 		if (mTypeState == nullptr)
 		{
@@ -393,7 +394,7 @@ namespace Library
 		mTypeState->SetStorage(data, size);
 	}
 
-	void Datum::SetStorage(Library::RTTI** data, const std::uint32_t& size)
+	void Datum::SetStorage(Library::RTTI** data, const uint32_t& size)
 	{
 		if (mTypeState == nullptr)
 		{
@@ -403,21 +404,21 @@ namespace Library
 		mTypeState->SetStorage(data, size);
 	}
 
-	void Datum::Set(const std::int32_t& value, const std::uint32_t& index)
+	void Datum::Set(const int32_t& value, const uint32_t& index)
 	{
-		if (mType != DatumType::Integer) { throw std::exception("Calling Set on invalid Type"); }
-		if (index > mSize) { throw std::exception("Attempting to Set beyond current Size"); }
+		if (mType != DatumType::Integer) { throw exception("Calling Set on invalid Type"); }
+		if (index > mSize) { throw exception("Attempting to Set beyond current Size"); }
 		if (index == mSize)
 		{
 			PushBack(value); // If setting end, divert functionality to a push Back
 		}
-		new(mData.i + index) std::int32_t(value);
+		new(mData.i + index) int32_t(value);
 	}
 
-	void Datum::Set(const float& value, const std::uint32_t& index)
+	void Datum::Set(const float& value, const uint32_t& index)
 	{
-		if (mType != DatumType::Float) { throw std::exception("Calling Set on invalid Type"); }
-		if (index > mSize) { throw std::exception("Attempting to Set beyond current Size"); }
+		if (mType != DatumType::Float) { throw exception("Calling Set on invalid Type"); }
+		if (index > mSize) { throw exception("Attempting to Set beyond current Size"); }
 		if (index == mSize)
 		{
 			PushBack(value); // If setting end, divert functionality to a push Back
@@ -425,10 +426,10 @@ namespace Library
 		new(mData.f + index) float(value);
 	}
 
-	void Datum::Set(const glm::vec4& value, const std::uint32_t& index)
+	void Datum::Set(const glm::vec4& value, const uint32_t& index)
 	{
-		if (mType != DatumType::Vector) { throw std::exception("Calling Set on invalid Type"); }
-		if (index > mSize) { throw std::exception("Attempting to Set beyond current Size"); }
+		if (mType != DatumType::Vector) { throw exception("Calling Set on invalid Type"); }
+		if (index > mSize) { throw exception("Attempting to Set beyond current Size"); }
 		if (index == mSize)
 		{
 			PushBack(value); // If setting end, divert functionality to a push Back
@@ -436,10 +437,10 @@ namespace Library
 		new(mData.v + index) glm::vec4(value);
 	}
 
-	void Datum::Set(const glm::mat4& value, const std::uint32_t& index)
+	void Datum::Set(const glm::mat4& value, const uint32_t& index)
 	{
-		if (mType != DatumType::Matrix) { throw std::exception("Calling Set on invalid Type"); }
-		if (index > mSize) { throw std::exception("Attempting to Set beyond current Size"); }
+		if (mType != DatumType::Matrix) { throw exception("Calling Set on invalid Type"); }
+		if (index > mSize) { throw exception("Attempting to Set beyond current Size"); }
 		if (index == mSize)
 		{
 			PushBack(value); // If setting end, divert functionality to a push Back
@@ -447,10 +448,10 @@ namespace Library
 		new(mData.m + index) glm::mat4(value);
 	}
 
-	void Datum::Set(Scope* const& value, const std::uint32_t& index)
+	void Datum::Set(Scope* const& value, const uint32_t& index)
 	{
-		if (mType != DatumType::Scope) { throw std::exception("Calling Set on invalid Type"); }
-		if (index > mSize) { throw std::exception("Attempting to Set beyond current Size"); }
+		if (mType != DatumType::Scope) { throw exception("Calling Set on invalid Type"); }
+		if (index > mSize) { throw exception("Attempting to Set beyond current Size"); }
 		if (index == mSize)
 		{
 			PushBack(value); // If setting end, divert functionality to a push Back
@@ -458,10 +459,10 @@ namespace Library
 		new(mData.sc + index) Scope*(value);
 	}
 
-	void Datum::Set(const std::string& value, const std::uint32_t& index)
+	void Datum::Set(const string& value, const uint32_t& index)
 	{
-		if (mType != DatumType::String) { throw std::exception("Calling Set on invalid Type"); }
-		if (index > mSize) { throw std::exception("Attempting to Set beyond current Size"); }
+		if (mType != DatumType::String) { throw exception("Calling Set on invalid Type"); }
+		if (index > mSize) { throw exception("Attempting to Set beyond current Size"); }
 		if (index == mSize)
 		{
 			PushBack(value); // If setting end, divert functionality to a push Back
@@ -470,10 +471,10 @@ namespace Library
 		mData.s[index] = value;
 	}
 
-	void Datum::Set(Library::RTTI* const& value, const std::uint32_t& index)
+	void Datum::Set(Library::RTTI* const& value, const uint32_t& index)
 	{
-		if (mType != DatumType::Pointer) { throw std::exception("Calling Set on invalid Type"); }
-		if (index > mSize) { throw std::exception("Attempting to Set beyond current Size"); }
+		if (mType != DatumType::Pointer) { throw exception("Calling Set on invalid Type"); }
+		if (index > mSize) { throw exception("Attempting to Set beyond current Size"); }
 		if (index == mSize)
 		{
 			PushBack(value); // If setting end, divert functionality to a push Back
@@ -481,7 +482,7 @@ namespace Library
 		new(mData.r + index) RTTI*(value);
 	}
 
-	void Datum::PushBack(const std::int32_t& value)
+	void Datum::PushBack(const int32_t& value)
 	{
 		SetSize(mSize + 1);
 		Set(value, mSize - 1);
@@ -511,7 +512,7 @@ namespace Library
 		Set(value, mSize - 1);
 	}
 
-	void Datum::PushBack(const std::string& value)
+	void Datum::PushBack(const string& value)
 	{
 		SetSize(mSize + 1);
 		Set(value, mSize - 1);
@@ -519,7 +520,7 @@ namespace Library
 
 	void Datum::PushBack(RTTI* const& value)
 	{
-		if (value == nullptr) throw std::exception("Attempting to push Back nullptr");
+		if (value == nullptr) throw exception("Attempting to push Back nullptr");
 		SetSize(mSize + 1);
 		Set(value, mSize - 1);
 	}
@@ -528,7 +529,7 @@ namespace Library
 	{
 		if (mType == DatumType::Scope)
 		{
-			for (std::uint32_t i = 0; i < mSize; i++)
+			for (uint32_t i = 0; i < mSize; i++)
 			{
 				if(mData.sc[i] == scope)
 				{
@@ -540,12 +541,12 @@ namespace Library
 		}
 	}
 
-	void Datum::SetFromString(const std::string& value, const std::uint32_t& index)
+	void Datum::SetFromString(const string& value, const uint32_t& index)
 	{
 		mTypeState->SetFromString(value, index);
 	}
 
-	std::string Datum::ToString(const std::uint32_t& index) const
+	string Datum::ToString(const uint32_t& index) const
 	{	
 		if (mType == DatumType::Unknown) return "Unknown Type";
 		return mTypeState->ToString(index);

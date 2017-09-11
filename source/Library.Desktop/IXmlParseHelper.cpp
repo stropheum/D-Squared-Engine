@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "IXmlParseHelper.h"
-#include "XmlParseMaster.h"
 
+
+using namespace std;
 
 namespace Library
 {
@@ -24,14 +25,15 @@ namespace Library
 		}
 	}
 
-	void IXmlParseHelper::CharDataHandler(XmlParseMaster::SharedData& sharedData, const std::string& buffer, const std::uint32_t& bufferLength)
+	void IXmlParseHelper::CharDataHandler(XmlParseMaster::SharedData& sharedData, 
+		const string& buffer, const uint32_t& bufferLength)
 	{
 		UNREFERENCED_PARAMETER(sharedData);
 		UNREFERENCED_PARAMETER(buffer);
 		UNREFERENCED_PARAMETER(bufferLength);
 	}
 
-	std::string IXmlParseHelper::ToString() const
+	string IXmlParseHelper::ToString() const
 	{
 		return "IXmlParseHelper";
 	}

@@ -1,17 +1,15 @@
 #include "pch.h"
 #include "EventPublisher.h"
-#include "EventSubscriber.h"
-#include <vector>
-#include <future>
 
 
-using namespace std::chrono;
+using namespace std;
+using namespace chrono;
 
 namespace Library
 {
 	RTTI_DEFINITIONS(EventPublisher)
 
-	EventPublisher::EventPublisher(Vector<EventSubscriber*>* subscriberList, std::mutex& subscriberListMutex, bool deleteAfterPublishing):
+	EventPublisher::EventPublisher(Vector<EventSubscriber*>* subscriberList, mutex& subscriberListMutex, bool deleteAfterPublishing):
 		mDeleteAfterPublishing(deleteAfterPublishing), mTimeEnqueued(), mMillisecondDelay(0), mSubscriberList(subscriberList), mSubscriberListMutex(&subscriberListMutex)
 	{
 	}
@@ -69,26 +67,26 @@ namespace Library
 		return mTimeEnqueued;
 	}
 
-	std::chrono::milliseconds EventPublisher::Delay() const
+	chrono::milliseconds EventPublisher::Delay() const
 	{
 		return mMillisecondDelay;
 	}
 
-	bool EventPublisher::IsExpired(const std::chrono::high_resolution_clock::time_point& timePoint) const
+	bool EventPublisher::IsExpired(const chrono::high_resolution_clock::time_point& timePoint) const
 	{
 		return timePoint > (mTimeEnqueued + mMillisecondDelay);
 	}
 
 	void EventPublisher::Deliver() const
 	{
-		std::vector<std::future<void>> futures;
+		vector<future<void>> futures;
 		{
-			std::lock_guard<std::mutex> guard(*mSubscriberListMutex);
+			lock_guard<mutex> guard(*mSubscriberListMutex);
 			Vector<EventSubscriber*> subListCopy(*mSubscriberList);
-			for (std::uint32_t i = 0; i < subListCopy.Size(); i++)
+			for (uint32_t i = 0; i < subListCopy.Size(); i++)
 			{
 				EventSubscriber* subscriber = subListCopy[i];
-				futures.emplace_back(std::async(&EventSubscriber::Notify, subscriber, std::cref(*this)));
+				futures.emplace_back(async(&EventSubscriber::Notify, subscriber, cref(*this)));
 			}
 		}
 

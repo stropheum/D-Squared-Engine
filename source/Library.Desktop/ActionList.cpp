@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "ActionList.h"
-#include "WorldState.h"
 
+
+using namespace std;
 
 namespace Library
 {
@@ -16,7 +17,7 @@ namespace Library
 	{
 		worldState.action = this;
 
-		for (std::uint32_t i = 0; i < (*this)["Actions"].Size(); i++)
+		for (uint32_t i = 0; i < (*this)["Actions"].Size(); i++)
 		{
 			Scope* scope = (*this)["Actions"].Get<Scope*>(i);
 			assert(scope != nullptr);
@@ -28,7 +29,7 @@ namespace Library
 		worldState.action = nullptr;
 	}
 
-	Action* ActionList::CreateAction(const std::string& className, const std::string& instanceName)
+	Action* ActionList::CreateAction(const string& className, const string& instanceName)
 	{
 		Action* instance = Factory<Action>::Create(className);
 		assert(instance != nullptr);

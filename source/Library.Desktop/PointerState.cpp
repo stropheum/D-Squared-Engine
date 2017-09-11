@@ -2,6 +2,8 @@
 #include "PointerState.h"
 
 
+using namespace std;
+
 namespace Library
 {
 	PointerState::PointerState(Datum* const context):
@@ -15,7 +17,7 @@ namespace Library
 		if (mContext->mType == rhs.mType && mContext->mSize == rhs.mSize)
 		{
 			result = true;
-			for (std::uint32_t i = 0; i < mContext->mSize; i++)
+			for (uint32_t i = 0; i < mContext->mSize; i++)
 			{
 				if (mContext->mData.r[i] != rhs.mData.r[i])
 				{
@@ -35,21 +37,21 @@ namespace Library
 		return *mContext;
 	}
 
-	void PointerState::SetSize(const std::uint32_t& size)
+	void PointerState::SetSize(const uint32_t& size)
 	{
 		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(Library::RTTI*) * size);
 		mContext->mCapacity = mContext->mSize = size;
 
 		if (size <mContext->mSize)
 		{
-			for (std::uint32_t i = size; i < mContext->mSize; i++)
+			for (uint32_t i = size; i < mContext->mSize; i++)
 			{
 				mContext->mData.r[i] = nullptr;
 			}
 		}
 	}
 
-	void PointerState::Reserve(const std::uint32_t& capacity)
+	void PointerState::Reserve(const uint32_t& capacity)
 	{
 		if (capacity > mContext->mCapacity)
 		{
@@ -62,16 +64,16 @@ namespace Library
 	{
 		if (mContext->mSize > 0)
 		{
-			for (std::uint32_t i = 0; i < mContext->mSize; i++) mContext->mData.r[i] = nullptr;
+			for (uint32_t i = 0; i < mContext->mSize; i++) mContext->mData.r[i] = nullptr;
 			mContext->mSize = 0;
 		}
 	}
 
-	void PointerState::SetFromString(const std::string& value, const std::uint32_t& index)
+	void PointerState::SetFromString(const string& value, const uint32_t& index)
 	{
 		UNREFERENCED_PARAMETER(value);
 		UNREFERENCED_PARAMETER(index);
-		throw std::exception("Attempting to Set pointer from string");
+		throw exception("Attempting to Set pointer from string");
 	}
 
 	void PointerState::SetStorage(const Datum& rhs)
@@ -79,9 +81,9 @@ namespace Library
 		SetStorage(rhs.mData.r, rhs.mSize);
 	}
 
-	void PointerState::SetStorage(Library::RTTI** data, const std::uint32_t& size)
+	void PointerState::SetStorage(Library::RTTI** data, const uint32_t& size)
 	{
-		if (mContext->mType != DatumType::Pointer) { throw std::exception("Attempting to reassign Datum Type"); }
+		if (mContext->mType != DatumType::Pointer) { throw exception("Attempting to reassign Datum Type"); }
 
 		if (mContext->mCapacity > 0) Clear();
 
@@ -90,7 +92,7 @@ namespace Library
 		mContext->mCapacity = mContext->mSize = size;
 	}
 
-	std::string PointerState::ToString(const std::uint32_t& index)
+	string PointerState::ToString(const uint32_t& index)
 	{
 		UNREFERENCED_PARAMETER(index);
 		return "";

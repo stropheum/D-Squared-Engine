@@ -1,15 +1,9 @@
 #include "pch.h"
 #include "EventQueue.h"
-#include "EventPublisher.h"
-#include <algorithm>
-#include "GameTime.h"
-#include "EventMessageAttributed.h"
-#include "Event.h"
-#include <future>
 
 
 using namespace std;
-using namespace std::chrono;
+using namespace chrono;
 
 namespace Library
 {
@@ -29,7 +23,7 @@ namespace Library
 	}
 
 	void EventQueue::Enqueue(EventPublisher& eventPublisher, 
-		GameTime& gameTime, const std::chrono::milliseconds& delay)
+		GameTime& gameTime, const chrono::milliseconds& delay)
 	{
 		lock_guard<mutex> guard(mQueueMutex);
 		if (mQueue.Find(&eventPublisher) == mQueue.end())
@@ -58,7 +52,7 @@ namespace Library
 			{
 				if (queueCopy[i]->IsExpired(gameTime.CurrentTime()))
 				{
-					futures.emplace_back(async(std::launch::async, [&queueCopy, i]
+					futures.emplace_back(async(launch::async, [&queueCopy, i]
 					{
 						queueCopy[i]->Deliver();
 					}));
