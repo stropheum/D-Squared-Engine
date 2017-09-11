@@ -166,10 +166,10 @@ namespace TestLibraryDesktop
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(100)));
 			world->Update(worldState, gameTime);
 
-//			Assert::IsTrue(reaction1["Power"].Type() == DatumType::Integer);
-//			Assert::AreEqual(reaction1["Power"].Get<std::int32_t>(0), 100);
-//			Assert::IsTrue(reaction2["Power"].Type() == DatumType::Integer);
-//			Assert::AreEqual(reaction2["Power"].Get<std::int32_t>(0), 200);
+			Assert::IsTrue(reaction1["Power"].Type() == DatumType::Integer);
+			Assert::AreEqual(reaction1["Power"].Get<std::int32_t>(0), 100);
+			Assert::IsTrue(reaction2["Power"].Type() == DatumType::Integer);
+			Assert::AreEqual(reaction2["Power"].Get<std::int32_t>(0), 200);
 
 			delete world;
 		}
