@@ -7,10 +7,27 @@ namespace Library
 	class WorldState
 	{
 	public:
+
+		/**
+		 * Constructor
+		 */
 		WorldState();
+
+		/**
+		 * Destructor
+		 */
 		~WorldState();
 
+		/**
+		 * Accessor method for the gametime
+		 * @Return: A reference to the gametime object
+		 */
 		GameTime& GetGameTime() const;
+
+		/**
+		 * Mutator method for the gametime
+		 * @Param gameTime: A reference to the gametime object
+		 */
 		void SetGameTime(GameTime& gameTime);
 
 		class World* world;

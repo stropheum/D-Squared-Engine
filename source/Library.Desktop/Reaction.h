@@ -12,10 +12,14 @@ namespace Library
 
 	public:
 
-		/// Default constructor
+		/**
+		 * Default constructor
+		 */
 		Reaction() = default;
 
-		/// Default destructor
+		/**
+		 * Default destructor
+		 */
 		virtual ~Reaction() = default;
 	};
 

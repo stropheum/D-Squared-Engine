@@ -8,22 +8,33 @@ namespace Library
 		public ActionList
 	{
 	public:
-		/// Constructor
+
+		/**
+		 *  Constructor
+		 */
 		ActionListIf();
 
-		/// Destructor(defautled)
+		/**
+		 *  Destructor(defautled)
+		 */
 		~ActionListIf() = default;
 
-		/// Executes the if statement. Runs through "then" attribute updates if condition is true, "else" attributes otherwise
-		/// @Param worldState: The world state object that stores the current world state
+		/**
+		 * Executes the if statement. Runs through "then" attribute updates if condition is true, "else" attributes otherwise
+		 * @Param worldState: The world state object that stores the current world state
+		 */
 		virtual void Update(WorldState& worldState) override;
 
-		/// Mutator method for the if statement's condition
-		/// @Param condition: The new condition for the if statement
+		/**
+		 * Mutator method for the if statement's condition
+		 * @Param condition: The new condition for the if statement
+		 */
 		void SetCondition(std::int32_t condition);
 
-		/// Accessor method for the if statement's condition
-		/// @Return: The condition for the if statement
+		/**
+		 * Accessor method for the if statement's condition
+		 * @Return: The condition for the if statement
+		 */
 		std::int32_t GetCondition() const;
 
 		Action* CreateThenAction(const std::string& className, const std::string& instanceName);

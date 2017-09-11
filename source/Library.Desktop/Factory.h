@@ -9,9 +9,9 @@ namespace Library
 
 #pragma region ConcreteFactory Macro
 
-		/// Macro used to generate factories for concrete products. 
-		/// This macro should be put in the header file of any class 
-		/// that wishes to have an associated factory
+// Macro used to generate factories for concrete products. 
+// This macro should be put in the header file of any class 
+// that wishes to have an associated factory
 #define ConcreteFactory(AbstractProduct, ConcreteProduct)				\
 	class ConcreteProduct##Factory : public Factory<AbstractProduct>	\
 	{																	\
@@ -36,20 +36,28 @@ namespace Library
 
 	public:
 
-		/// Constructor
+		/**
+		 * Constructor
+		 */
 		Factory() {};
 
-		/// Virtual destructor
+		/**
+		 * Virtual destructor
+		 */
 		virtual ~Factory() = default;
 
-		/// Class Name accessor method
-		/// @Return: The Name of the product that the derived class creates
+		/**
+		 * Class Name accessor method
+		 * @Return: The Name of the product that the derived class creates
+		 */
 		virtual std::string ClassName() const = 0;
 
 	private:
 
-		/// Creates an instance of the product that the factory is responsible for
-		/// @Return: An instance of this factory's Type of product
+		/**
+		 * Creates an instance of the product that the factory is responsible for
+		 * @Return: An instance of this factory's Type of product
+		 */
 		virtual AbstractProduct* Create() = 0;
 
 #pragma endregion
@@ -58,9 +66,11 @@ namespace Library
 
 	public:
 
-		/// Finds a factory in the static hashmap, if it exists
-		/// @Param ClassName: The Name of the factory in question
-		/// @Return: A pointer to the factory if it exists, nullptr otherwise
+		/**
+		 * Finds a factory in the static hashmap, if it exists
+		 * @Param ClassName: The Name of the factory in question
+		 * @Return: A pointer to the factory if it exists, nullptr otherwise
+		 */
 		static Factory<AbstractProduct>* Find(const std::string className)
 		{
 			Factory<AbstractProduct>* result = nullptr;
@@ -74,9 +84,11 @@ namespace Library
 			return result;
 		}
 
-		/// Creates an instance of a product by searching through the hashmap to Find the associated key
-		/// @Param ClassName: The Name of the product being created
-		/// @Return: A pointr to the created product if a factory exists to Create one. Nullptr otherwise
+		/**
+		 * Creates an instance of a product by searching through the hashmap to Find the associated key
+		 * @Param ClassName: The Name of the product being created
+		 * @Return: A pointr to the created product if a factory exists to Create one. Nullptr otherwise
+		 */
 		static AbstractProduct* Create(const std::string className)
 		{
 			AbstractProduct* result = nullptr;
@@ -90,15 +102,19 @@ namespace Library
 			return result;
 		}
 
-		/// Accessor to the begin iterator for the static hashmap
-		/// @Return: The beginning of the static hashmap of factory pointers
+		/**
+		 * Accessor to the begin iterator for the static hashmap
+		 * @Return: The beginning of the static hashmap of factory pointers
+		 */
 		static typename HashMap<std::string, Factory<AbstractProduct>*>::Iterator Begin()
 		{
 			return sFactoryMap.begin();
 		}
 
-		/// Accesssor to the end iterator for the static hashmap
-		/// @Return: The end of the static hashmap of factory pointers
+		/**
+		 * Accesssor to the end iterator for the static hashmap
+		 * @Return: The end of the static hashmap of factory pointers
+		 */
 		static typename HashMap<std::string, Factory<AbstractProduct>*>::Iterator End()
 		{
 			return sFactoryMap.end();
@@ -106,8 +122,10 @@ namespace Library
 
 	protected:
 		
-		/// Adds a factory pointer to the static hashmap of factory pointers
-		/// @Param factory: The factory pointer being added to the hashmap
+		/**
+		 * Adds a factory pointer to the static hashmap of factory pointers
+		 * @Param factory: The factory pointer being added to the hashmap
+		 */
 		static void Add(Factory<AbstractProduct>* const factory)
 		{
 			if (!sFactoryMap.ContainsKey(factory->ClassName()))
@@ -116,8 +134,10 @@ namespace Library
 			}
 		}
 
-		/// Removes a factory pointer from the static hashmap of factory pointers
-		/// @Param factory: The factory pointer being added to the hashmap
+		/**
+		 * Removes a factory pointer from the static hashmap of factory pointers
+		 * @Param factory: The factory pointer being added to the hashmap
+		 */
 		static void Remove(const Factory<AbstractProduct>* factory)
 		{
 			if (sFactoryMap.ContainsKey(factory->ClassName()))
@@ -127,7 +147,8 @@ namespace Library
 		}
 
 	private:
-		/// The hashmap of string, factory pointer pairs of all factories currently subscribed to the abstract factory
+
+		// The hashmap of string, factory pointer pairs of all factories currently subscribed to the abstract factory
 		static HashMap<std::string, Factory<AbstractProduct>*> sFactoryMap;
 
 #pragma endregion

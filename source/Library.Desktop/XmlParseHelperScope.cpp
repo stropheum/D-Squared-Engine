@@ -216,20 +216,6 @@ namespace Library
 		return true;
 	}
 
-	std::string XmlParseHelperScope::ToString() const
-	{
-		return "Xml Parse Helper Scope";
-	}
-
-	bool XmlParseHelperScope::Equals(const RTTI* rhs) const
-	{
-		if (this == rhs) { return true; }
-		if (rhs == nullptr) { return false; }
-
-		XmlParseHelperScope* rhsConverted = rhs->As<XmlParseHelperScope>();
-		return (rhsConverted != nullptr) ? operator==(*rhsConverted) : false;
-	}
-
 	bool XmlParseHelperScope::operator==(const XmlParseHelperScope& rhs) const
 	{
 		bool matricesEquivalent = true;

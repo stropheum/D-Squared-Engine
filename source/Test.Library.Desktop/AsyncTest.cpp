@@ -210,7 +210,7 @@ namespace TestLibraryDesktop
 			EventQueue queue;
 
 			Vector<Event<Foo>> events;
-			for (std::uint32_t i = 0; i < 500; i++)
+			for (std::uint32_t i = 0; i < 100; i++)
 			{
 				events.PushBack(Event<Foo>(Foo(i)));
 			}
@@ -234,7 +234,7 @@ namespace TestLibraryDesktop
 
 			time.SetCurrentTime(high_resolution_clock::time_point(milliseconds(50000)));
 
-			Assert::AreEqual(500u, queue.Size());
+			Assert::AreEqual(100u, queue.Size());
 			queue.Update(time);
 			Assert::AreEqual(0u, queue.Size());
 		}

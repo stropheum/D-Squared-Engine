@@ -9,30 +9,44 @@ namespace Library
 	{
 	public:
 
-		/// Constructor
+		/**
+		 * Constructor
+		 */
 		ActionEvent();
 
-		/// Destructor
+		/**
+		 * Destructor
+		 */
 		~ActionEvent() = default;
 
-		/// Updates the game state
-		/// @Param worldState: The worldstate object storing information about the world
+		/**
+		 * Updates the game state
+		 * @Param worldState: The worldstate object storing information about the world
+		 */
 		virtual void Update(class WorldState& worldState) override;
 
-		/// Accessor method for the subtype of the reaction
-		/// @Return: String representation of the subtype
+		/**
+		 * Accessor method for the subtype of the reaction
+		 * @Return: String representation of the subtype
+		 */
 		std::string GetSubtype();
 
-		/// Mutator method for the subtype of the reaction
-		/// @Param subtype: The subtype of the reaction
+		/**
+		 * Mutator method for the subtype of the reaction
+		 * @Param subtype: The subtype of the reaction
+		 */
 		void SetSubtype(const std::string& subtype);
 
-		/// Accessor method for the Delay of the event
-		/// @Return: The Delay in milliseconds
+		/**
+		 * Accessor method for the Delay of the event
+		 * @Return: The Delay in milliseconds
+		 */
 		const std::int32_t& GetDelay();
 
-		/// Mutator method for the Delay of the event
-		/// @Param Delay: The Delay of the event
+		/**
+		 * Mutator method for the Delay of the event
+		 * @Param Delay: The Delay of the event
+		 */
 		void SetDelay(const std::int32_t delay);
 	};
 
