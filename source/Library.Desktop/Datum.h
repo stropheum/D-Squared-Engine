@@ -501,6 +501,7 @@ namespace Library
 		template<typename T> const T& Get(const std::uint32_t& index = 0) const;
 
 	private:
+
 		TypeState* mTypeState; // State pattern object. Type-specific tasks will be delegated to this
 		DatumType mType; // The Type of the Datum object
 		DatumValues mData; // The data union of the Datum object. Can be allocated internally or assigned externally
