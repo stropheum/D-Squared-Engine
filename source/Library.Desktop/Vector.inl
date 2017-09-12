@@ -25,6 +25,26 @@ namespace Library
 		operator=(rhs);
 	}
 
+	template <typename T>
+	Vector<T>& Vector<T>::operator=(const Vector<T>& rhs)
+	{
+		if (this != &rhs)
+		{
+			mFixedSize = rhs.mFixedSize;
+
+			Clear();
+			Reserve(rhs.mCapacity);
+			if (rhs.mSize > 0)
+			{
+				for (auto iter = rhs.begin(); iter != rhs.end(); ++iter)
+				{
+					PushBack(*iter);
+				}
+			}
+		}
+		return *this;
+	}
+
 	template <class T>
 	Vector<T>::Vector(Vector<T>&& rhs) noexcept
 	{
@@ -68,26 +88,6 @@ namespace Library
 		}
 
 		return result;
-	}
-
-	template <typename T>
-	Vector<T>& Vector<T>::operator=(const Vector<T>& rhs)
-	{
-		if (this != &rhs)
-		{
-			mFixedSize = rhs.mFixedSize;
-
-			Clear();
-			Reserve(rhs.mCapacity);
-			if (rhs.mSize > 0)
-			{
-				for (auto iter = rhs.begin(); iter != rhs.end(); ++iter)
-				{
-					PushBack(*iter);
-				}
-			}
-		}
-		return *this;
 	}
 
 	template <typename T>

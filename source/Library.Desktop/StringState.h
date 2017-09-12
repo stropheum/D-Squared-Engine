@@ -7,11 +7,19 @@ namespace Library
 	{
 	public:
 
-		/**
-		 * Constructor
-		 * @Param context: The Datum object that the state operates one
-		 */
+#pragma region Construction/Copy/Assignment
+
 		explicit StringState(Datum* const context);
+
+		StringState(const StringState& rhs) = delete;
+
+		StringState& operator=(const StringState& rhs) = delete;
+
+		StringState(StringState&& rhs) = delete;
+
+		StringState& operator=(StringState&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Comparison operator for Datum objects

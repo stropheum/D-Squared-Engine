@@ -9,11 +9,19 @@ namespace Library
 	{
 	public:
 
-		/**
-		 * Constructor
-		 * @Param context: The context of the scope
-		 */
+#pragma region Construction/Copy/Assignment
+
 		explicit ScopeState(Datum* context);
+
+		ScopeState(const ScopeState& rhs) = delete;
+
+		ScopeState& operator=(const ScopeState& rhs) = delete;
+
+		ScopeState(ScopeState&& rhs) = delete;
+
+		ScopeState& operator=(ScopeState&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Comparison operator for Datum objects

@@ -20,40 +20,21 @@ namespace Library
 	public:
 		class Iterator;
 
-		/**
-		 * Constructor for HashMap
-		 * @Param hashMapSize: The predefined 
-		 */
+#pragma region Construction/Copy/Assignment
+
 		explicit HashMap(std::uint32_t hashMapSize = defaultBucketCount);
 
-		/**
-		 * Virtual destructor to prevent inheritance
-		 */
 		virtual ~HashMap() = default;
 
-		/**
-		 * Copy constructor
-		 * @Param rhs: Constant reference to the HashMap being copied
-		 */
 		HashMap(const HashMap<TKey, TValue, HashFunctor>& rhs);
 
-		/**
-		 * Move copy constructor;
-		 */
-		HashMap(HashMap<TKey, TValue, HashFunctor>&& rhs) noexcept;
-
-		/**
-		 * Assignment operator
-		 * @Param rhs: Constant reference to the HAshMap being copied
-		 * @Return: A deep copy of the right-hand HashMap 
-		 */
 		HashMap<TKey, TValue, HashFunctor>& operator=(const HashMap<TKey, TValue, HashFunctor>& rhs);
 
-		/**
-		 * Move assignment operator
-		 */
+		HashMap(HashMap<TKey, TValue, HashFunctor>&& rhs) noexcept;
+
 		HashMap<TKey, TValue, HashFunctor>& operator=(const HashMap<TKey, TValue, HashFunctor>&& rhs) ;
 
+#pragma endregion
 
 		/**
 		 * Finds an instance of a key in the HashMap and returns its associated value

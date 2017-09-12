@@ -38,15 +38,21 @@ namespace Library
 
 	public:
 
-		/**
-		 * Constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		Factory() {};
 
-		/**
-		 * Virtual destructor
-		 */
 		virtual ~Factory() = default;
+
+		Factory(const Factory& rhs) = delete;
+
+		Factory& operator=(const Factory& rhs) = delete;
+
+		Factory(Factory&& rhs) = delete;
+
+		Factory& operator=(Factory&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Class Name accessor method

@@ -17,11 +17,20 @@ namespace Library
 			RTTI_DECLARATIONS(SharedData, RTTI)
 		public:
 			
-			/**
-			 * Constructor for Shared Data
-			 */
-			SharedData(): mParseMaster(nullptr), mDepth(0) {}
+#pragma region SharedData Construction/Copy/Assignment
 			
+			SharedData(): mParseMaster(nullptr), mDepth(0) {}
+
+			SharedData(const SharedData& rhs) = default;
+
+			SharedData& operator=(const SharedData& rhs) = default;
+			
+			SharedData(SharedData&& rhs) = delete;
+
+			SharedData& operator=(SharedData&& rhs) = delete;
+			
+#pragma endregion
+
 			/**
 			 * Clone method for Shared data
 			 * @Return: A pointer to the freshly allocated Shared Data Clone. Client will be responsible for deleting it
@@ -109,16 +118,21 @@ namespace Library
 		};
 #pragma endregion
 
-		/**
-		 * Constructor for XmlParseMaster
-		 * @Param sharedData: The shared data object that the Parse master will output data into
-		 */
+#pragma region Construction/Copy/Assignment
+
 		explicit XmlParseMaster(SharedData* const sharedData);
 
-		/**
-		 * Destructor for XmlParseMaster
-		 */
 		virtual ~XmlParseMaster();
+
+		explicit XmlParseMaster(const XmlParseMaster& rhs) = default;
+
+		XmlParseMaster& operator=(const XmlParseMaster& rhs) = default;
+
+		XmlParseMaster(XmlParseMaster&& rhs) = delete;
+
+		XmlParseMaster& operator=(XmlParseMaster&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Clones the current Parse master by instantiating a new one with the same internal state

@@ -8,9 +8,9 @@ namespace Library
 {
 	RTTI_DEFINITIONS(Action)
 
-	Action::Action()
-	{
-	}
+	Action::Action() :
+		mName()
+	{}
 
 	std::string Action::Name() const
 	{

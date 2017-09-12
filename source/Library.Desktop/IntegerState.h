@@ -8,11 +8,19 @@ namespace Library
 	{
 	public:
 
-		/**
-		 * Constructor
-		 * @Param context: The Datum object that the state operates one
-		 */
+#pragma region Construction/Copy/Assignment
+
 		explicit IntegerState(Datum* const context);
+
+		IntegerState(const IntegerState& rhs) = delete;
+
+		IntegerState& operator=(const IntegerState& rhs) = delete;
+
+		IntegerState(IntegerState&& rhs) = delete;
+
+		IntegerState& operator=(IntegerState&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Comparison operator for Datum objects

@@ -51,34 +51,23 @@ namespace Library
 			Library::RTTI** r;	// Array pointer for RTTI pointers
 		};
 
-		/**
-		 *  Constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		Datum();
 
-		/**
-		 * Overloaded constructor
-		 * @Param Type: The Type of the Datum object
-		 */
-		Datum(const DatumType& type);
+		explicit Datum(const DatumType& type);
 
-		/**
-		 *  Destructor
-		 */
 		~Datum();
 
-		/**
-		 * Copy constructor
-		 * @Param rhs: Datum object being copied
-		 * @Exception: Thrown if attempting to construct a non-existing datum Type
-		 */
 		Datum(const Datum& rhs);
 
-		/**
-		 * Move copy constructor
-		 * @Param rhs: Datum object being copied
-		 */
-		Datum(Datum&& rhs);
+		Datum& operator=(const Datum& rhs);
+
+		Datum(Datum&& rhs) noexcept;
+
+		Datum& operator=(Datum&& rhs) noexcept;
+
+#pragma endregion
 
 		/**
 		 * Index operator for accessing nested scopes
@@ -87,20 +76,6 @@ namespace Library
 		 */
 		Scope& operator[](const std::uint32_t& index);
 		
-		/**
-		 * Datum assignment operator
-		 * @Param rhs: Datum object being assigned to
-		 * @Return; The newly copied Datum object
-		 */
-		Datum& operator=(const Datum& rhs);
-
-		/**
-		 * Datum move assignment operator
-		 * @Param rhs: Datum object being assigned to
-		 * @Return: The newly copied Datum object
-		 */
-		Datum& operator=(Datum&& rhs);
-
 		/**
 		 * Type assignment operator
 		 * @Param rhs: DatumType being assigned to

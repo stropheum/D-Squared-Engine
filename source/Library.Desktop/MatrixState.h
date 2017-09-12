@@ -8,11 +8,19 @@ namespace Library
 	{
 	public:
 
-		/**
-		 * Constructor
-		 * @Param context: The Datum object that the state operates one
-		 */
+#pragma region Construction/Copy/Assignment
+
 		explicit MatrixState(Datum* const context);
+
+		MatrixState(const MatrixState& rhs) = delete;
+
+		MatrixState& operator=(const MatrixState& rhs) = delete;
+
+		MatrixState(MatrixState&& rhs) = delete;
+
+		MatrixState& operator=(MatrixState&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Comparison operator for Datum objects

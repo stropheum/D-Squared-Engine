@@ -9,15 +9,21 @@ namespace Library
 	{
 	public:
 
-		/**
-		 *  Constructor
-		 */
+#pragma region Cosntruction/Copy/Assignment
+
 		ActionCreateAction();
 
-		/**
-		 *  Destructor(Defaulted)
-		 */
-		~ActionCreateAction() = default;
+		virtual ~ActionCreateAction() = default;
+
+		ActionCreateAction(const ActionCreateAction& rhs) = delete;
+
+		ActionCreateAction& operator=(const ActionCreateAction& rhs) = delete;
+
+		ActionCreateAction(ActionCreateAction&& rhs) = delete;
+
+		ActionCreateAction& operator=(ActionCreateAction&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Creates an action

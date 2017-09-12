@@ -11,15 +11,21 @@ namespace Library
 
 	public:
 
-		/**
-		 * Constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		Action();
 
-		/**
-		 * Default destructor
-		 */
-		~Action() = default;
+		virtual ~Action() = default;
+
+		Action(const Action& rhs) = delete;
+
+		Action& operator=(const Action& rhs) = delete;
+
+		Action(Action&& rhs) = delete;
+
+		Action& operator=(Action&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Updates the game state

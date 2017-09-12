@@ -8,11 +8,19 @@ namespace Library
 	{
 	public:
 
-		/**
-		 * Constructor
-		 * @Param context: The Datum object that the state operates one
-		 */
+#pragma region Construction/Copy/Assignment
+
 		explicit FloatState(Datum* const context);
+
+		FloatState(const FloatState& rhs) = delete;
+
+		FloatState& operator=(const FloatState& rhs) = delete;
+
+		FloatState(FloatState&& rhs) = delete;
+
+		FloatState& operator=(FloatState&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Comparison operator for Datum objects

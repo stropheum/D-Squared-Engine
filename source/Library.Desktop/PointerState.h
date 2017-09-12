@@ -8,11 +8,19 @@ namespace Library
 	{
 	public:
 
-		/**
-		 * Constructor
-		 * @Param context: The Datum object that the state operates one
-		 */
+#pragma region Construction/Copy/Assignment
+
 		explicit PointerState(Datum* const context);
+
+		PointerState(const PointerState& rhs) = delete;
+
+		PointerState& operator=(const PointerState& rhs) = delete;
+
+		PointerState(PointerState&& rhs) = delete;
+
+		PointerState& operator=(PointerState&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Comparison operator for Datum objects

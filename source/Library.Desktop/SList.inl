@@ -8,6 +8,18 @@ namespace Library
 		mSize(0), mFront(nullptr), mBack(nullptr) {}
 
 	template <typename T>
+	SList<T>::~SList()
+	{
+		Node* current = mFront;
+		while (current != nullptr)
+		{
+			Node* newCurrent = current->mNext;
+			delete(current);
+			current = newCurrent;
+		}
+	}
+
+	template <typename T>
 	SList<T>::SList(const SList<T>& obj) :
 		SList()
 	{
@@ -33,18 +45,6 @@ namespace Library
 			}
 		}
 		return *this;
-	}
-
-	template <typename T>
-	SList<T>::~SList()
-	{
-		Node* current = mFront;
-		while (current != nullptr)
-		{
-			Node* newCurrent = current->mNext;
-			delete(current);
-			current = newCurrent;
-		}
 	}
 
 	template <typename T>

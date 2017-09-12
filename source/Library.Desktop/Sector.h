@@ -14,35 +14,21 @@ namespace Library
 
 	public:
 
-		/**
-		 * Constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		Sector();
 
-		/**
-		 * Defaulted destructor
-		 */
 		~Sector() = default;
 
-		/**
-		 * Copy constructor(disabled)
-		 */
 		Sector(const Sector& rhs) = delete;
 
-		/**
-		 * Assignment operator(disabled)
-		 */
 		Sector* operator=(const Sector& rhs) = delete;
 
-		/**
-		 * Move copy constructor(disabled)
-		 */
 		Sector(Sector&& rhs) = delete;
 
-		/**
-		 * Move assignment operator(disabled)
-		 */
 		Sector* operator=(Sector&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Accessor method for the Name of the sector

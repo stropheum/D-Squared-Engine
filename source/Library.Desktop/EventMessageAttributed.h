@@ -11,15 +11,21 @@ namespace Library
 	{
 	public:
 
-		/**
-		 * Constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		EventMessageAttributed();
 
-		/**
-		 * Default destructor
-		 */
 		virtual ~EventMessageAttributed() = default;
+
+		EventMessageAttributed(const EventMessageAttributed& rhs) = default;
+
+		EventMessageAttributed& operator=(const EventMessageAttributed& rhs) = default;
+
+		EventMessageAttributed(EventMessageAttributed&& rhs) = delete;
+
+		EventMessageAttributed& operator=(EventMessageAttributed&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Accessor for the event Message attributed subtype

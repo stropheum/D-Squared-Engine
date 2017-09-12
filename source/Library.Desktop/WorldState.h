@@ -8,15 +8,21 @@ namespace Library
 	{
 	public:
 
-		/**
-		 * Constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		WorldState();
 
-		/**
-		 * Destructor
-		 */
 		~WorldState();
+
+		WorldState(const WorldState& rhs) = delete;
+
+		WorldState& operator=(const WorldState& rhs) = delete;
+
+		WorldState(WorldState&& rhs) = delete;
+
+		WorldState& operator=(WorldState&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Accessor method for the gametime

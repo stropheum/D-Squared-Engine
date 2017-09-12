@@ -21,6 +21,7 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace Library;
+using namespace std;
 
 
 namespace TestLibraryDesktop
@@ -90,6 +91,26 @@ namespace TestLibraryDesktop
 			Entity* entity = new Entity();
 			Action* action = entity->CreateAction("ActionList", "newAction");
 			Assert::IsTrue(action != nullptr);
+			delete entity;
+		}
+
+		TEST_METHOD(TestActionIncrement)
+		{
+			WorldState worldState;
+			Entity* entity = new Entity();
+			Action* action = entity->CreateAction("ActionIncrement", "newAction");
+			Assert::IsTrue(action != nullptr);
+
+			ActionIncrement* actionIncrement = dynamic_cast<ActionIncrement*>(action);
+			Assert::IsTrue(actionIncrement != nullptr);
+			Assert::AreEqual(0, actionIncrement->GetIncrementCount());
+
+			actionIncrement->Update(worldState);
+			Assert::AreEqual(1, actionIncrement->GetIncrementCount());
+
+			actionIncrement->Update(worldState);
+			Assert::AreEqual(2, actionIncrement->GetIncrementCount());
+
 			delete entity;
 		}
 

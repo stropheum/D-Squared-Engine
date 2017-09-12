@@ -8,11 +8,19 @@ namespace Library
 	{
 	public:
 
-		/**
-		 * Constructor
-		 * @Param context: The Datum object that the state operates one
-		 */
+#pragma region Construction/Copy/Assignment
+
 		explicit VectorState(Datum* const context);
+
+		VectorState(const VectorState& rhs) = delete;
+
+		VectorState& operator=(const VectorState& rhs) = delete;
+
+		VectorState(VectorState&& rhs) = delete;
+
+		VectorState& operator=(VectorState&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Comparison operator for Datum objects

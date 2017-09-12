@@ -9,15 +9,21 @@ namespace Library
 	{
 	public:
 
-		/**
-		 *  Constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		ActionDestroyAction();
 
-		/**
-		 *  Destructor(defaulted)
-		 */
 		~ActionDestroyAction() = default;
+
+		ActionDestroyAction(const ActionDestroyAction& rhs) = delete;
+
+		ActionDestroyAction& operator=(const ActionDestroyAction& rhs) = delete;
+
+		ActionDestroyAction(ActionDestroyAction&& rhs) = delete;
+
+		ActionDestroyAction& operator=(ActionDestroyAction&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Destroys the action with the specified Name, if it exists in the hierarchy

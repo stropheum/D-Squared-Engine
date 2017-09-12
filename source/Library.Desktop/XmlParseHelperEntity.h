@@ -12,10 +12,21 @@ namespace Library
 
 	public:
 		
-		/**
-		 * Constructor for xml Parse helper scope
-		 */
+#pragma region Construction/Copy/Assignment
+
 		XmlParseHelperEntity();
+
+		~XmlParseHelperEntity() = default;
+
+		XmlParseHelperEntity(const XmlParseHelperEntity& rhs) = delete;
+
+		XmlParseHelperEntity& operator=(const XmlParseHelperEntity& rhs) = delete;
+
+		XmlParseHelperEntity(XmlParseHelperEntity&& rhs) = delete;
+
+		XmlParseHelperEntity& operator=(XmlParseHelperEntity&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Initializes the helper to be associated with a Parse master
