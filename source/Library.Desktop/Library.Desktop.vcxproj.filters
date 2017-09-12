@@ -389,5 +389,8 @@
     <None Include="Event.inl">
       <Filter>Event\Event</Filter>
     </None>
+    <None Include="Datum.inl">
+      <Filter>Datum</Filter>
+    </None>
   </ItemGroup>
 </Project>
