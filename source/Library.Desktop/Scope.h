@@ -11,32 +11,21 @@ namespace Library
 	{
 		RTTI_DECLARATIONS(Library::Scope, Library::RTTI)
 
-#pragma region Constructors/Destructor
 	public:
 
-		/**
-		 * Constructor
-		 * @Param Capacity: Initial Capacity of the scope. Defaulted to 1
-		 */
-		Scope(const std::uint32_t& capacity = 1);
+#pragma region Construction/Copy/Assignment
 
-		/**
-		 * Copy constructor
-		 * @Param rhs: The Scope being copied
-		 */
+		explicit Scope(const std::uint32_t& capacity = 1);
+
+		~Scope();
+
 		Scope(const Scope& rhs);
 
-		/**
-		 * Assignment operator
-		 * Performs a deep copy of the specified Scope
-		 * @Param rhs: The Scope being copied
-		 */
 		Scope& operator=(const Scope& rhs);
 
-		/**
-		 * Destructor
-		 */
-		~Scope();
+		Scope(Scope&& rhs) = delete;
+
+		Scope& operator=(Scope&& rhs) = delete;
 
 #pragma endregion
 

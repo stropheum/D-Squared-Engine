@@ -11,15 +11,21 @@ namespace Library
 
 	public:
 
-		/**
-		 * Constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		ActionList();
 
-		/**
-		 * Destructor(defaulted)
-		 */
-		~ActionList() = default;
+		virtual ~ActionList() = default;
+
+		ActionList(const ActionList& rhs) = delete;
+
+		ActionList& operator=(const ActionList& rhs) = delete;
+
+		ActionList(ActionList&& rhs) = delete;
+
+		ActionList& operator=(ActionList&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Updates the Actions contained in the action list

@@ -10,40 +10,18 @@ namespace Library
 
 	public:
 
-#pragma region Constructors, Copy/Move semantics
+#pragma region Construction/Copy/Assignment
 
-		/**
-		 *  Constructor
-		 */
 		Attributed();
-		
-		/**
-		 *  Virtual destructor to ensure that class is abstract
-		 */
+
 		virtual ~Attributed();
 
-		/**
-		 * Copy constructor
-		 * @Param rhs: The Attributed object being copied
-		 */
 		Attributed(const Attributed& rhs);
 
-		/**
-		 * Assignment Operator
-		 * @Param rhs: The attributed object being assigned to
-		 */
 		Attributed& operator=(const Attributed& rhs);
 
-		/**
-		 * Move copy constructor
-		 * @Param rhs: The attributed object being copied
-		 */
 		Attributed(Attributed&& rhs) noexcept;
 
-		/**
-		 * Move assignment operator
-		 * @Param rhs; The attributed object being assigned to
-		 */
 		Attributed& operator=(Attributed&& rhs) noexcept;
 
 #pragma endregion

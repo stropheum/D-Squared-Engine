@@ -18,28 +18,21 @@ namespace Library
 	public:
 		class Iterator;
 
-		/**
-		 * Default constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		SList();
+
+		~SList();
 		
-		/**
-		 * Copy constructor using deep copy semantics
-		 * @Param rhs: SList being copied
-		 */
 		SList(const SList<T>& rhs);
 
-		/**
-		 * Assignment operator
-		 * @Param rhs: Const reference to the SList being copied
-		 * @Return: Reference to a copy of the SList
-		 */
 		SList<T>& operator=(const SList<T>& rhs);
 
-		/**
-		 * Destructor which De-allocates every object in the list individually
-		 */
-		~SList();
+		SList(SList&& rhs) = delete;
+
+		SList& operator=(SList&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Push an object to the Front of the list

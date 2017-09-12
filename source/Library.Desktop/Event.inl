@@ -16,7 +16,7 @@ namespace Library
 	std::mutex Event<Payload>::sSubscriberListMutex;
 
 	template <typename Payload>
-	Event<Payload>::Event(const Payload& payload, bool deleteAfterPublishing):
+	Event<Payload>::Event(const Payload& payload, bool deleteAfterPublishing) :
 		EventPublisher(&sSubscriberList, sSubscriberListMutex, deleteAfterPublishing), mPayload(payload)
 	{
 	}

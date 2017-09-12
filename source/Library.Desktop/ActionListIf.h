@@ -9,15 +9,21 @@ namespace Library
 	{
 	public:
 
-		/**
-		 *  Constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		ActionListIf();
 
-		/**
-		 *  Destructor(defautled)
-		 */
-		~ActionListIf() = default;
+		virtual ~ActionListIf() = default;
+
+		ActionListIf(const ActionListIf& rhs) = delete;
+
+		ActionListIf& operator=(const ActionListIf& rhs) = delete;
+
+		ActionListIf(ActionListIf&& rhs) = delete;
+
+		ActionListIf& operator=(ActionListIf&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Executes the if statement. Runs through "then" attribute updates if condition is true, "else" attributes otherwise

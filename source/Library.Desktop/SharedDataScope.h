@@ -12,15 +12,21 @@ namespace Library
 
 	public:
 		
-		/**
-		 * Constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		SharedDataScope();
 
-		/**
-		 * Destructor
-		 */
 		~SharedDataScope();
+
+		SharedDataScope(const SharedDataScope& rhs) = delete;
+
+		SharedDataScope& operator=(const SharedDataScope& rhs) = delete;
+
+		SharedDataScope(SharedDataScope&& rhs) = delete;
+
+		SharedDataScope& operator=(SharedDataScope&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Clones a copy of the current SharedData object and returns a newly allocated one

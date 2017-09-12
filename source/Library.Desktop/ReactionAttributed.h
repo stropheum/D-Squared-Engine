@@ -9,15 +9,21 @@ namespace Library
 	{
 	public:
 
-		/**
-		 * Constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		ReactionAttributed();
 
-		/**
-		 * Destructor
-		 */
 		~ReactionAttributed();
+
+		ReactionAttributed(const ReactionAttributed& rhs) = delete;
+
+		ReactionAttributed& operator=(const ReactionAttributed& rhs) = delete;
+
+		ReactionAttributed(ReactionAttributed&& rhs) = delete;
+
+		ReactionAttributed& operator=(ReactionAttributed&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Notifies the subscriber that an event has been triggered

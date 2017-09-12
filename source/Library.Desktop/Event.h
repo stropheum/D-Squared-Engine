@@ -12,43 +12,21 @@ namespace Library
 
 	public:
 
-		/**
-		 * Constructor
-		 * @Param paylod: The payload that this event will carry to its destination
-		 * @Param DeleteAfterPublishing: Value to determine if the event queue should delete this after when delivered
-		 */
-		Event(const Payload& payload, bool deleteAfterPublishing = false);
+#pragma region Construction/Copy/Assignment
 
-		/**
-		 * Default destructor
-		 */
+		explicit Event(const Payload& payload, bool deleteAfterPublishing = false);
+
 		~Event() = default;
 
-		/**
-		 * Copy constructor
-		 * @Param rhs: The event being copied
-		 */
-		Event(const Event<Payload>& rhs);
-
-		/**
-		 * Assignment operator
-		 * @Param rhs: The event being assigned to
-		 * @Return: A copy of the event
-		 */
 		Event<Payload>& operator=(const Event<Payload>& rhs);
 
-		/**
-		 * Move copy constructor
-		 * @Param rhs: The event being moved to this object
-		 */
+		Event(const Event<Payload>& rhs);
+
+		Event<Payload>& operator=(Event<Payload>&& rhs) noexcept;
+
 		Event(Event<Payload>&& rhs) noexcept;
 
-		/**
-		 * Move assignment operator
-		 * @Param rhs: The event being moved
-		 * @Return: The newly moved event
-		 */
-		Event<Payload>& operator=(Event<Payload>&& rhs) noexcept;
+#pragma endregion
 
 		/**
 		 * Adds the event subscriber to the static list of event subscribers

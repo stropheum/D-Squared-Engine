@@ -10,15 +10,21 @@ namespace Library
 	{
 	public:
 		
-		/**
-		 * Default constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		EventQueue() = default;
 
-		/**
-		 * Destructor
-		 */
 		~EventQueue();
+
+		EventQueue(const EventQueue& rhs) = delete;
+
+		EventQueue& operator=(const EventQueue& rhs) = delete;
+
+		EventQueue(EventQueue&& rhs) = delete;
+
+		EventQueue& operator=(EventQueue&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 *Adds an event to the queue At a specified time

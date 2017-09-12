@@ -14,43 +14,21 @@ namespace Library
 
 	public:
 
-		/**
-		 * Constructor
-		 * @Param subscriberList: The static list of subscribers for a given Type
-		 * @Param DeleteAfterPublishing: Bool to determine if the event queue should delete this when delivered
-		 */
+#pragma region Construction/Copy/Assignment
+
 		explicit EventPublisher(Vector<class EventSubscriber*>* subscriberList, std::mutex& subscriberListMutex, bool deleteAfterPublishing = false);
 
-		/**
-		 * Default destructor
-		 */
 		virtual ~EventPublisher() = default;
 		
-		/**
-		 * Copy constructor
-		 * @Param rhs: The event publisher being copied
-		 */
 		EventPublisher(const EventPublisher& rhs);
 
-		/**
-		 * Assignment operator
-		 * @Param rhs: The event publisher being assigned to
-		 * @Return: A reference to the newly copied event publisher
-		 */
 		EventPublisher& operator=(const EventPublisher& rhs);
 
-		/**
-		 * Move copy constructor
-		 * @Param rhs: The event publisher being copied
-		 */
 		EventPublisher(EventPublisher&& rhs) noexcept;
 
-		/**
-		 * Move assignment operator
-		 * @Param rhs: The event publisher being copied
-		 * @Return: A reference to the newly copied event publisher
-		 */
 		EventPublisher& operator=(EventPublisher&& rhs) noexcept;
+
+#pragma endregion
 
 		/**
 		 * Sets the time point and Delay of the event publisher

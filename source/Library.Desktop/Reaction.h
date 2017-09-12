@@ -12,15 +12,22 @@ namespace Library
 
 	public:
 
-		/**
-		 * Default constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		Reaction() = default;
 
-		/**
-		 * Default destructor
-		 */
 		virtual ~Reaction() = default;
+
+		Reaction(const Reaction& rhs) = delete;
+
+		Reaction& operator=(const Reaction& rhs) = delete;
+
+		Reaction(Reaction&& rhs) = delete;
+
+		Reaction& operator=(Reaction&& rhs) = delete;
+
+#pragma endregion
+
 	};
 
 #define ReactionFactory(ConcreteReaction) ConcreteFactory(Reaction, ConcreteReaction)

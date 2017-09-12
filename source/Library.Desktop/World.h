@@ -14,30 +14,21 @@ namespace Library
 
 	public:
 
-		/**
-		 * Constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		World();
 
-		/**
-		 * Assignment operator(disabled)
-		 */
-		World* operator=(const World& rhs) = delete;
+		~World() = default;
 
-		/**
-		 * Copy Constructor(disabled)
-		 */
 		World(const World& rhs) = delete;
 
-		/**
-		 * Move copy constructor(disabled)
-		 */
+		World* operator=(const World& rhs) = delete;
+
+		World(World&& rhs) = delete;
+
 		World* operator=(World&& rhs) = delete;
 
-		/**
-		 * Move assignment operator(disabled)
-		 */
-		World(World&& rhs) = delete;
+#pragma endregion
 
 		/**
 		 * Accessor method for the Name of the world

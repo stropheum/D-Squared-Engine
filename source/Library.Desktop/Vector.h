@@ -17,49 +17,27 @@ namespace Library
 	public:
 		class Iterator;
 		
-		/**
-		 * Default constructor
-		 * Allocates memory in mBuffer for a Capacity of 10 templated values
-		 */
+#pragma region Construction/Copy/Assignment
+
 		explicit Vector(bool fixedSize = false);
 
-		/**
-		 * Copy constructor
-		 * @Param rhs: The Vector being copied
-		 */
+		~Vector();
+
 		Vector(const Vector<T>& rhs);
+
+		Vector<T>& operator=(const Vector<T>& rhs);
+
+		Vector(Vector<T>&& rhs) noexcept;
+
+		Vector<T>& operator=(Vector<T>&& rhs) noexcept;
+
+#pragma endregion
 
 		/**
 		 * Comparison operator
 		 * @Param rhs: Vector being compared against
 		 */
 		bool operator==(const Vector<T>& rhs) const;
-
-		/**
-		 * Assignment operator
-		 * @Param rhs: Vector being copied
-		 * @Return: A copy of the right hand side Vector
-		 */
-		Vector<T>& operator=(const Vector<T>& rhs);
-
-		/**
-		 * Destructor
-		 * Clears each value stored in the vector and then frees the buffer that they were stored on
-		 */
-		~Vector();
-
-		/**
-		 * Move copy constructor
-		 * @Param rhs: The vector being copied
-		 */
-		Vector(Vector<T>&& rhs) noexcept;
-
-		/**
-		 * Move assignment operator
-		 * @Param rhg: The vector being copied
-		 * @Return: A reference to the newly copied vector
-		 */
-		Vector<T>& operator=(Vector<T>&& rhs) noexcept;
 
 		/**
 		 * Finds a value in the Vector, if it exists

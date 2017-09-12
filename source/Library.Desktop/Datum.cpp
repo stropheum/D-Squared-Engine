@@ -33,22 +33,11 @@ namespace Library
 		operator=(rhs); // Perform a deep copy of all the data
 	}
 
-	Datum::Datum(Datum&& rhs) :
-		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
-	{
-		operator=(move(rhs)); // Perform a deep copy of all the data
-	}
-
-	Scope& Datum::operator[](const uint32_t& index)
-	{
-		return *Get<Scope*>(index);
-	}
-
 	Datum& Datum::operator=(const Datum& rhs)
-	{	
+	{
 		if (this != &rhs)
 		{
-			
+
 			SetType(rhs.mType); // Must Set Type in order to instantiate mTypeState
 			if (rhs.mDataIsExternal)
 			{
@@ -103,8 +92,14 @@ namespace Library
 		return *this;
 	}
 
-	Datum& Datum::operator=(Datum&& rhs)
-	{	
+	Datum::Datum(Datum&& rhs) noexcept :
+		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
+	{
+		operator=(move(rhs)); // Perform a deep copy of all the data
+	}
+
+	Datum& Datum::operator=(Datum&& rhs) noexcept
+	{
 		SetType(rhs.mType); // Must Set Type in order to instantiate mTypeState
 		if (rhs.mDataIsExternal)
 		{
@@ -123,6 +118,11 @@ namespace Library
 		rhs.mSize = NULL;
 
 		return *this;
+	}
+
+	Scope& Datum::operator[](const uint32_t& index)
+	{
+		return *Get<Scope*>(index);
 	}
 
 	Datum& Datum::operator=(const DatumType& rhs)

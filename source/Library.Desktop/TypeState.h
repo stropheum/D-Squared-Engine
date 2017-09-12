@@ -13,8 +13,23 @@ namespace Library
 	class TypeState
 	{
 	public:
+
+#pragma region Construction/Copy/Assignment
+
+		TypeState() = default;
+
 		virtual ~TypeState() = default;
+
+		TypeState(const TypeState& rhs) = delete;
+
+		TypeState& operator=(const TypeState& rhs) = delete;
+
+		TypeState(TypeState&& rhs) = delete;
+
+		TypeState& operator=(TypeState&& rhs) = delete;
 		
+#pragma endregion
+
 		/**
 		 * Comparison operator for Datum objects
 		 * @Param rhs: The Datum object being compared against

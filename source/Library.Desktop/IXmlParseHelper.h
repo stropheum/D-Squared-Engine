@@ -11,16 +11,21 @@ namespace Library
 		RTTI_DECLARATIONS(IXmlParseHelper, RTTI)
 	public:
 		
-		/**
-		 * Constructor
-		 * @Param xmlParseMaster: The Parse master associated with this helper
-		 */
+#pragma region Construction/Copy/Assignment
+
 		explicit IXmlParseHelper(XmlParseMaster* const xmlParseMaster = nullptr);
 
-		/**
-		 * Destructor
-		 */
 		virtual ~IXmlParseHelper();
+
+		IXmlParseHelper(const IXmlParseHelper& rhs) = delete;
+
+		IXmlParseHelper& operator=(const IXmlParseHelper& rhs) = delete;
+
+		IXmlParseHelper(IXmlParseHelper&& rhs) = delete;
+
+		IXmlParseHelper& operator=(IXmlParseHelper&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Initializes the helper to be associated with a Parse master

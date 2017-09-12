@@ -13,35 +13,21 @@ namespace Library
 
 	public:
 
-		/**
-		 * Constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		Entity();
 
-		/**
-		 * Defautled destructor
-		 */
 		~Entity() = default;
 
-		/**
-		 * Assignment operator(disabled)
-		 */
-		Entity* operator=(const Entity& rhs) = delete;
-
-		/**
-		 * Copy constructor(disabled)
-		 */
 		Entity(const Entity& rhs) = delete;
 
-		/**
-		 * Move assignment operator(disabled)
-		 */
+		Entity* operator=(const Entity& rhs) = delete;
+
+		Entity(Entity&& rhs) = delete;
+
 		Entity* operator=(Entity&& rhs) = delete;
 
-		/**
-		 * Move cppy constructor(disabled)
-		 */
-		Entity(Entity&& rhs) = delete;
+#pragma endregion
 
 		/**
 		 * Accessor method for the Name of the entity

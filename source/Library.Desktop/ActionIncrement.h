@@ -9,15 +9,21 @@ namespace Library
 	{
 	public:
 
-		/**
-		 * Constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		ActionIncrement();
 
-		/**
-		 * Default Destrutor
-		 */
-		~ActionIncrement() = default;
+		virtual ~ActionIncrement() = default;
+
+		ActionIncrement(const ActionIncrement& rhs) = delete;
+
+		ActionIncrement& operator=(const ActionIncrement& rhs) = delete;
+
+		ActionIncrement(ActionIncrement&& rhs) = delete;
+
+		ActionIncrement& operator=(ActionIncrement&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Updates the action based on the current world state

@@ -8,15 +8,21 @@ namespace Library
 	{
 	public:
 
-		/**
-		 * Default constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		EventSubscriber() = default;
 
-		/**
-		 * Default destructor
-		 */
 		virtual ~EventSubscriber() = default;
+
+		EventSubscriber(const EventSubscriber& rhs) = delete;
+
+		EventSubscriber& operator=(const EventSubscriber& rhs) = delete;
+
+		EventSubscriber(EventSubscriber&& rhs) = delete;
+
+		EventSubscriber& operator=(EventSubscriber&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Notifies the subscriber that an event has been triggered

@@ -9,15 +9,21 @@ namespace Library
 	{
 	public:
 
-		/**
-		 * Constructor
-		 */
+#pragma region Construction/Copy/Assignment
+
 		ActionEvent();
 
-		/**
-		 * Destructor
-		 */
 		~ActionEvent() = default;
+
+		ActionEvent(const ActionEvent& rhs) = delete;
+
+		ActionEvent& operator=(const ActionEvent& rhs) = delete;
+
+		ActionEvent(ActionEvent&& rhs) = delete;
+
+		ActionEvent& operator=(ActionEvent&& rhs) = delete;
+
+#pragma endregion
 
 		/**
 		 * Updates the game state
