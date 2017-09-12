@@ -13,7 +13,7 @@ namespace Library
 		Node* current = mFront;
 		while (current != nullptr)
 		{
-			Node* newCurrent = current->mNext;
+			Node* newCurrent = current->Next();
 			delete(current);
 			current = newCurrent;
 		}
@@ -26,8 +26,8 @@ namespace Library
 		auto current = obj.mFront;
 		while (current != nullptr)
 		{
-			PushBack(current->mData);
-			current = current->mNext;
+			PushBack(current->Data());
+			current = current->Next();
 		}
 	}
 
@@ -40,8 +40,8 @@ namespace Library
 			auto current = rhs.mFront;
 			while (current != nullptr)
 			{
-				PushBack(current->mData);
-				current = current->mNext;
+				PushBack(current->Data());
+				current = current->Next();
 			}
 		}
 		return *this;
@@ -52,12 +52,12 @@ namespace Library
 	{
 		auto temp = mFront;
 		mFront = new Node(data);
-		mFront->mNext = temp;
+		mFront->Next() = temp;
 		mSize++;
 		if (mBack == nullptr)
 		{
 			mBack = mFront;
-			mBack->mNext = nullptr;
+			mBack->Next() = nullptr;
 		}
 
 		return Iterator(this, mFront);
@@ -70,13 +70,13 @@ namespace Library
 		{
 			mFront = new Node(data);
 			mBack = mFront;
-			mBack->mNext = nullptr;
+			mBack->Next() = nullptr;
 		}
 		else
 		{
-			mBack->mNext = new Node(data);
-			mBack = mBack->mNext;
-			mBack->mNext = nullptr;
+			mBack->Next() = new Node(data);
+			mBack = mBack->Next();
+			mBack->Next() = nullptr;
 		}
 
 		mSize++;
@@ -89,10 +89,10 @@ namespace Library
 		auto current = mFront;
 		if (current != nullptr)
 		{
-			while (current->mNext != nullptr)
+			while (current->Next() != nullptr)
 			{
 				auto temp = current;
-				current = current->mNext;
+				current = current->Next();
 				delete(temp);
 			}
 		}
@@ -105,8 +105,8 @@ namespace Library
 		if (mFront == nullptr) { throw std::exception("Popping Front on null SList"); }
 
 		auto oldFront = mFront;
-		auto result = mFront->mData;
-		mFront = mFront->mNext;
+		auto result = mFront->Data();
+		mFront = mFront->Next();
 		delete(oldFront);
 		mSize--;
 		return result;
@@ -119,7 +119,7 @@ namespace Library
 		{
 			throw std::exception("SList is null");
 		}
-		return mFront->mData;
+		return mFront->Data();
 	}
 
 	template <typename T>
@@ -129,7 +129,7 @@ namespace Library
 		{
 			throw std::exception("SList is null");
 		}
-		return mFront->mData;
+		return mFront->Data();
 	}
 
 	template <typename T>
@@ -139,7 +139,7 @@ namespace Library
 		{
 			throw std::exception("List is null");
 		}
-		return mBack->mData;
+		return mBack->Data();
 	}
 
 	template <typename T>
@@ -149,7 +149,7 @@ namespace Library
 		{
 			throw std::exception("List is null");
 		}
-		return mBack->mData;
+		return mBack->Data();
 	}
 
 	template <typename T>
@@ -190,8 +190,8 @@ namespace Library
 			if (location == iter)
 			{
 				Node* temp = new Node(value);
-				temp->mNext = location.mNode->mNext;
-				location.mNode->mNext = temp;
+				temp->Next() = location.mNode->Next();
+				location.mNode->Next() = temp;
 				return Iterator(this, temp);
 			}
 		}
@@ -212,10 +212,10 @@ namespace Library
 	template <typename T>
 	void SList<T>::Remove(const T& value)
 	{
-		if (mFront->mData == value)
+		if (mFront->Data() == value)
 		{
 			Node* removeNode = mFront;
-			mFront = mFront->mNext;
+			mFront = mFront->Next();
 			delete(removeNode);
 			return;
 		}
@@ -225,9 +225,9 @@ namespace Library
 		{
 			if (lastNode != nullptr)
 			{
-				if (iter.mNode->mData == value)
+				if (iter.mNode->Data() == value)
 				{
-					lastNode->mNext = iter.mNode->mNext;
+					lastNode->Next() = iter.mNode->Next();
 					delete(iter.mNode);
 					return;
 				}
@@ -273,7 +273,7 @@ namespace Library
 	{
 		if (mNode != nullptr)
 		{
-			mNode = mNode->mNext;
+			mNode = mNode->Next();
 		}
 		else
 		{
@@ -293,6 +293,6 @@ namespace Library
 	template <typename T>
 	T& SList<T>::Iterator::operator*()
 	{
-		return mNode->mData;
+		return mNode->Data();
 	}
 }
