@@ -84,7 +84,7 @@ namespace Library
 		 * Accessor method for the parent of the current Scope
 		 * @Return: A pointer to the parent of this Scope
 		 */
-		Scope* GetParent();
+		Scope* GetParent() const;
 
 		/**
 		 * Index operator

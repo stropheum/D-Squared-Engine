@@ -65,7 +65,7 @@ namespace Library
 		 * Accessor method for the parent sector
 		 * @Return: A reference to the sector that contains this entity
 		 */
-		Sector& GetSector();
+		Sector& GetSector() const;
 
 		/**
 		 * Update method for handling change of game state

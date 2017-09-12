@@ -163,7 +163,7 @@ namespace Library
 		datum.PushBack(&child);
 	}
 
-	Scope* Scope::GetParent()
+	Scope* Scope::GetParent() const
 	{
 		return mParent;
 	}

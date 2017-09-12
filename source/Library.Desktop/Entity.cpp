@@ -43,7 +43,7 @@ namespace Library
 		sector.Adopt(*this, mName);
 	}
 
-	Sector& Entity::GetSector()
+	Sector& Entity::GetSector() const
 	{
 		if (GetParent() == nullptr)
 		{
