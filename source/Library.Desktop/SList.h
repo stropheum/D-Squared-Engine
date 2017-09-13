@@ -199,30 +199,36 @@ namespace Library
 		{
 		public:
 			
-			/**
-			 *Constructor
-			 *@Param data: The value contained in the node
-			 */
+#pragma region Node Construction/Copy/Assignment
+
 			explicit Node(T data) : mData(data), mNext(nullptr) {}
 
-			/**
-			 * Node destructor
-			 */
 			~Node() {}
 
-			/**
-			 * Default copy constructor
-			 */
 			Node(const Node& rhs) = default;
 
-			T mData;     // Data being contained by the node
-			Node* mNext;  // Pointer to the node that this node is linked to
+			Node& operator=(const Node& rhs) = delete;
+
+			Node(Node&& rhs) = delete;
+
+			Node& operator=(Node&& rhs) = delete;
+
+#pragma endregion
+
+			T& Data() { return mData; }
+
+			Node*& Next() { return mNext; }
+
+		private:
+
+			T mData; // Data being contained by the node
+			Node* mNext; // Pointer to the node that this node is linked to
+
 		};
 
 		std::uint32_t mSize; // Number of elements in the list
-
-		Node* mFront;    // Front node in the list
-		Node* mBack;     // Back node in the list
+		Node* mFront; // Front node in the list
+		Node* mBack; // Back node in the list
 	};
 
 
