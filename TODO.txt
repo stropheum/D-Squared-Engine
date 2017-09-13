@@ -1,0 +1,254 @@
+1 - Cross-Platform Solution
+	x Nothing. All comments addressed
+
+2 - Templated Singly-Linked List
+	x pushFront and pushBack should accept const T references instead of copies. 
+
+	x You need const versions of front() and back(). 
+
+	x pushFront must assign mBack when you push the first value on to the list (and therefore mBack == mFront). 
+
+	x pushBack should be assigning mBack. 
+
+	x pushBack should not be iterating through the list in order to get to the last item of the list -- that's the point of the mBack pointer. 
+
+	x popFront can't dereference mFront before testing it for nullptr. 
+
+	x popFront should throw an exception when called against an empty list. 
+
+	x front() can't dereference mFront before testing it for nullptr. 
+
+	x back() can't dereference mFront before testing it for nullptr. 
+
+	x Furthermore, back() should employ mBack and not iterate through the entire list. 
+
+	x You have compiler warnings for the Release builds of the your unit tests. You also have a linker warning for your unit test project.
+	
+	x I recommend against #includ'ing pch.h in header files. Just include pch.h in .cpp files. 
+
+	x Why does SList.h include "windows.h" I encourage you to use cstdint instead of plain 'ol ints. And use unsigned ints if you don't intend to allow a value to be negative (e.g. Size). 
+
+	x clear() could be slight improved with a bit of refactoring. Likewise for the copy ctor and assignment operator. 
+
+	x Place your classes within namespaces.
+	
+	x Be consistent in your naming/capitalization conventions (e.g. Node::mNode verfuse Node::next).
+
+3 - Singly-Linked List Iterator
+	- Don't submit your build\packages folder. 
+
+	- find() should be marked const. 
+
+	- The Iterator's equality operators should be marked const and their rhs parameters should be const references. 
+
+	- The Iterator's increment operators should return Iterator objects (an Iterator reference for the prefix increment and an Iterator copy for the post-fix). 
+
+	- Perform self-assignment testing for the assignment operator. 
+
+	- Your post-fix increment operator is incorrect. It needs to make a copy of itself (which it subsequently returns) before incrementing itself. 
+
+	- Your Iterator dereference operator must test for nullptr before reference mNode. 
+
+	- You _must_ implement the default ctor yourself (in this example). A defaulted ctor does not initialize the class data members. 
+
+	- remove() must test mFront for null before dereferencing mFront.
+
+	- pushFront and pushBack should accept const T references, instead of copies. Likewise for insertAfter. 
+
+	- It's a bad design to store mBegin and mEnd iterators as class members and return references to those in begin() and end(). 
+
+	- insertAfter should mark the location argument as a const Iterator reference, as the method should not be modifying that parameter. 
+
+	- Refactor the Iterator == operator.
+
+	- Missing ExpectException tests for Iterator's operator++
+
+	- Your Doxygen document should include @brief/@summary, @param, @return, @exception tags as appropriate.
+
+4 - Templated Vector
+	- Your Vector == operator should be rewritten to early out on the mSize comparison. This then guarantees valid indices from 0 to mSize for both the lhs and rhs and no try/catch block would be necessary. 
+
+	- As is your catch block shouldn't simply suppress the exception and you should break out of the loop once you find an element that doesn't match. 
+
+	- Your assignment operator should not prevent assignment to a Vector that has a nullptr mBuffer. 
+
+	- Perform a self-assignment test for operator=. 
+
+	- In the operator prefix increment operator and dereference operator, you must test mOwner for nullptr before dereferencing it. Also, you must test mIndex >= mOwner->size().
+
+	- You should have a const version of the iterator derference operator. For the Vector copy ctor, don't call the default ctor which allocates memory -- just to immediately free that memory in the subsequent call to the assignment operator. No reason for both tests in the conditional: if (mBuffer == nullptr || mSize == 0)
+
+	- A couple of missing blocks in Remove and Vector::operator==.
+
+5 - Templated Hashmap
+	- Your DefaultHash<Foo> specialization should reside in the unit test project. 
+
+	- You have unnecessary and incorrect specializations for DefaultHash<int> , DefaultHash<int*> and the template DefaultHash<T> is incorrect -- because you cannot cast an array of bytes to a char* and then strlen to determine the length of the data. That will only work for char* data. 
+
+	- You have an unfinished Vector ctor: explicit Vector(std::uint32_t maxSize, bool fixedSize = false); It's not documented and not implemented. It could be called though and then you'd get a linker error. 
+
+	- There is no self-assignment test necessary for a copy constructor, only an assignment operator. Furthermore, don't throw an exception on self-assignment, within the assignment operator; just don't do anything. 
+
+	- You should guarantee that the hashmap cannot be constructed with a hashmap size of 0. 
+
+	- insert is incorrect. It should only create a new entry in a chain if the key doesn't already exist. 
+
+	- clear is increasing the size of your hashmap with its all to initializeBuckets.
+
+	- No need for a separate mHashMapSize. That value is already stored in mBuckets.Size(). 
+
+	- Your Iterator should have a non-const version of the dereference operators and the const versions should return const PairType references/pointers. 
+
+	- Your implementation has an initially out-of-sync mHashMapSize variable from what you actually allocated for the mBuckets vector. Then you PushBack additional elements and end up with a number (7) of unused buckets. 
+
+	- Your copy ctor should invoke the mBuckets Vector's copy ctor. It should not reimplement the deep-copy. Likewise for the assignment operator. 
+
+	- Line 61 of find create an Iterator that is never used. 
+
+	- Insert should not find the entry you just added. 
+
+	- Refactor Vector<T>::PushBack to return a Vector<T>::Iterator. 
+
+	- The non-const Hashmap::operator[] should not call find and insert. Just call insert (which should call find). 
+
+	- Don't put your classes in their own namespaces. Use one namespace for all of your containers.
+
+	- You should be testing your DefaultHash template and specializations independent from the Hashmap class. 
+
+	- Missing a test for the const version of operator[]. 
+
+	- Why is your Assert::ExpectException commented out on line 412 of HashMapTest.cpp?
+
+7 - Datum
+	- Datum::Datum(DatumType type) has a bug in it where DatumType::Unknown is passed in. You end up dereferencing mTypeState which is nullptr. 
+
+	- Datum& Datum::operator=(const Datum& rhs) needs a self-assignment test. Likewise for the move assignment operator. 
+
+	- For your copy and move assignment operators you should allow different "typed" Datums to be copied/moved. That reveals a bug where you aren't clearing existing memory in the lhs Datum. 
+
+	- The move assignment operator should "steal" memory, not deep-copy. 
+
+	- bool Datum::operator==(const Datum& rhs) const is potentially dereferencing nullptr (mTypeState). Likewise for setSize, reserve, and clear. 
+
+	- You have a memory leak because you are allocating TypeState-derived objects but not deleting them. RTTI comparsion needs to use RTTI::Equals.
+
+	- Move the get template specializations to the Datum.cpp file. Mark single-parameter ctors explicit (most of the time). 
+
+	- Initialize the mData union member (to nullptr). 
+
+	- It's unclear why you moved away from placement new for strings? Use std::to_string and std::stof and stoi for conversions.
+
+	- Your memory leak detection is broken because you are wrapping that code in a #if of _Debug and the preprocessor define is _DEBUG. Case matters. 
+
+	- You have a broken unit test that fails after the first run. TestAssignmentOperator.
+
+8 - Scope
+	- virtual ~Scope(); Your assignment operator should include a self-assignment test. Your assignment operator must call Clear before copying. You must also deep-copy child scopes. As you have it, you are aliasing a Scope pointer (which is ungood). Do something like: Scope& Scope::operator=(const Scope& rhs) { if (this != &rhs) { clear(); mVector.reserve(rhs.mVector.size()); for (auto& it : mVector) { auto& existingPair = *it; Datum& existingDatum = const_cast<Datum&>(existingPair.second); Datum& newDatum = append(existingPair.first); if (existingDatum.type() == DatumType::Scope) { newDatum.setType(DatumType::Scope); newDatum.reserve(existingDatum.size()); for (uint32_t i = 0; i < existingDatum.size(); ++i) { Scope* scope = new Scope(*existingDatum.get<Scope*>(i)); scope->mParent = this; newDatum.pushBack(scope); } } else { newDatum = existingDatum; } } } return *this; } 
+
+	- Your == operator for ScopeState must be implemented. As you have it, comparisons for Scope's with child Scopes, throws an exception. 
+
+	- appendScope must _always_ set the newly created Scope as a child to "this" Scope. Scope::orphan could be dereferencing nullptr.
+
+	- You need const versions of all of Datum's get methods. 
+
+	- append() should not call find on the order vector after (possibly) adding an entry through HashMap::insert. Instead, have an overloaded HashMap::insert that returns a output parameter bool -- for if a value was actually inserted -- and use that to test (with no search cost). 
+
+	- appendScope should not do a "double find" when it needs to create a new entry in the hashmap. 
+
+	- Scope::orphan should verify that the passed in child Scope is actually parented by "this".
+
+	- Missing a few blocks, but with the deep-copy fixes in place, your tests don't fail (currently they do).
+
+9 - Attributed
+	- In order to properly implement move semantics in Attributed, you have to implement move semantics for all supporting classes (Scope, Hashmap, and Vector).
+
+	- Anywhere that takes strings, should use const string references (instead of copies). 
+
+	- "this" should be considered a prescribed attributes. Within the assignment operator, you have the following: if (rhs.mPrescribedAttributes.size() > 1) { // We only do a copy if there is more than the "this" pointer stored for (std::uint32_t i = 1; i < rhs.mPrescribedAttributes.size(); i++) { mPrescribedAttributes.pushBack(rhs.mPrescribedAttributes[i]); } } Which includes a comment as if "this" was included in mPrescribedAttributes. It is not. It could be, but it currently isn't. So you have a bug that won't copy the list of prescribed attributes if you only have a single prescribed attribute. 
+
+	- Your move ctor is invoking the copy assignment operator (should be the move assignment operator). 
+
+	- Your current implementation of move semantics is incorrect. 
+
+	- populate is incorrectly assigning an initialValue when the signature indicates the use of external storage. Furthermore, it's repeatedly overwriting the zeroth index of the appended datum. 
+
+	- isPrescribedAttribute and isAuxililaryAttribute should be be testing if the attribute exists in the scope.
+
+	- Signature's ctors should be in the .cpp file (not the header). 
+
+	- No need to keep a vector of signatures for mAuxiliaryAttributes. It's never used. 
+
+	- Attributed& Attributed::operator=(const Attributed& rhs) should just invoke the vector assignment operator, for copying mPrescribedAttributes. 
+
+	- Within populate, don't make a copy of each signature -- use references. 
+
+	- getSignature is unused. Remove it.
+
+	- You've commented out memory leak detection. Need RTTI tests. Need tests for move semantics. Need to test prescribed attributes of type pointer.
+
+10 - Xml Parse Master
+	- XmlParseMaster::endElementHandler and XmlParseMaster::charDataHandler are incomplete. They should be iterating through the list of helpers and calling their respective methods.
+
+	- IXmlParseHelper::startElementHandler should pass the attributes hashmap as a const reference instead of a copy. 
+
+	- Within IXmlParseHelper::Equals, there's no reason to do: dynamic_cast<const Library::RTTI*>(this). Furthemore, the rest of that method: IXmlParseHelper* data = rhs->As<IXmlParseHelper>(); bool result = false; if (data != nullptr) { result = this == data; } Just does a pointer comparison, again. Likewise for SharedData::Equals. 
+
+	- parseFromFile should pass the filaname parameter as a const reference, not a copy. 
+
+	- mHelpersAreInitialized needs to be "resetable". Within XmlParseMaster::startElementHandler, data->incrementDepth(); should happen before you iterate through the helpers.
+
+	- IXmlParseHelper::startElementHandler and IXmlParseHelper::endElementHandler should be pure virtual. 
+
+	- You aren't using mValidElementName. Remove it. 
+
+	- XmlParseMaster should not store mDepth. That already resides in SharedData (and should only be there).
+
+	- Test char data. You need to test XmlParseMaster::parse more than once (that's the who purpose of the bool for isEndOfFile).
+
+11 - Xml Table Parser
+	- You could you condense/simplify your Datum parsing by employing a hashmap<string, DatumType>. I don't think you need a state machine for this. 
+
+	- -Unclear why the matrix parsing is handled in the end element handler while all other parsing happens in the start element handler.
+
+	- Include RTTI testing and address some of the partial tests.
+
+12 - Factory
+	- static Factory<AbstractProduct>* find(const std::string className) and the static Create should accept const string references, instead of copies. 
+
+	- static void add(Factory<AbstractProduct>* const factory) should pass the factory parameter as a reference, instead of a pointer, to prevent nulls. Likewise for remove. 
+
+	- static void remove(const Factory<AbstractProduct>* factory) should not do two "Finds" (one from containsKey and one for remove).
+
+	- Include testing for multiple "groups" of factories.
+
+13 - Entity
+	- Sector::Update and Entity::Update need to set their respective world state references.
+
+	- World's Name and Sectors Scope entries need to be prescribed attributes. Likewise for Sector and Entity's data. 
+
+	- Within World::setName your code: (*this)["Name"] = name; Does an unnecessary lookup for the "Name" attribute. Use the mName class member -- that's why it exists. 
+
+	- Once you have code like: assert(sectors()[i].Is(Sector::TypeIdClass())); sectors()[i].As<Sector>()->update(worldState); Where the assert guarantees that the cast, then call static_cast<T> instead of RTTI::As<T>. For example: static_cast<Sector&>(sectors()[i]).update(worldState);
+
+	- Test with Xml files containing more than 1 of each type (e.g. multiple Sectors in the World and Entities per Sector). 
+
+	- When testing World::Update, test with Sectors and Entities within the World (otherwise the Update early-outs).
+
+14 - Action
+	x No comments
+
+15 - Event
+	x No comments
+
+16 - Reaction
+	x No comments
+
+17 - Async Event
+	x No comments
+
+Action Expression Extra Credit
+	- Do this
+
+TODO: Specify all copy/move semantics for all classes, even if unused. Good practice/uniformity
+
+TODO: Your tests should be much more robust. Start using a code coverage tool.
