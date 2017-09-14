@@ -281,7 +281,6 @@
     <ClCompile Include="XmlParseMaster.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Datum.inl" />
     <None Include="Event.inl" />
     <None Include="HashMap.inl" />
     <None Include="packages.config" />

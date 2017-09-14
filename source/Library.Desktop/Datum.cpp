@@ -316,6 +316,10 @@ namespace Library
 			case DatumType::Pointer:
 				mTypeState = new PointerState(this);
 				break;
+			case DatumType::Unknown: 
+			break;
+			default: 
+			break;
 		}
 	}
 
@@ -555,5 +559,131 @@ namespace Library
 	{	
 		if (mType == DatumType::Unknown) { return "Unknown Type"; }
 		return mTypeState->ToString(index);
+	}
+
+	template<>
+	std::int32_t& Datum::Get(const std::uint32_t& index)
+	{
+		if (mType != DatumType::Integer) { throw std::exception("Calling Get on invalid Type"); }
+		if (mData.i == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
+		if (index >= mSize) { throw std::exception("Accessing beyond array bounds"); }
+		return mData.i[index];
+	}
+
+	template<>
+	const std::int32_t& Datum::Get(const std::uint32_t& index) const
+	{
+		if (mType != DatumType::Integer) { throw std::exception("Calling Get on invalid Type"); }
+		if (mData.i == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
+		if (index >= mSize) { throw std::exception("Accessing beyond array bounds"); }
+		return mData.i[index];
+	}
+
+	template<>
+	float& Datum::Get(const std::uint32_t& index)
+	{
+		if (mType != DatumType::Float) { throw std::exception("Calling Get on invalid Type"); }
+		if (mData.f == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
+		if (index >= mSize) { throw std::exception("Accessing beyond array bounds"); }
+		return mData.f[index];
+	}
+
+	template<>
+	const float& Datum::Get(const std::uint32_t& index) const
+	{
+		if (mType != DatumType::Float) { throw std::exception("Calling Get on invalid Type"); }
+		if (mData.f == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
+		if (index >= mSize) { throw std::exception("Accessing beyond array bounds"); }
+		return mData.f[index];
+	}
+	
+	template<>
+	glm::vec4& Datum::Get(const std::uint32_t& index)
+	{
+		if (mType != DatumType::Vector) { throw std::exception("Calling Get on invalid Type"); }
+		if (mData.f == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
+		if (index >= mSize) { throw std::exception("Accessing beyond array bounds"); }
+		return mData.v[index];
+	}
+	
+	template<>
+	const glm::vec4& Datum::Get(const std::uint32_t& index) const
+	{
+		if (mType != DatumType::Vector) { throw std::exception("Calling Get on invalid Type"); }
+		if (mData.f == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
+		if (index >= mSize) { throw std::exception("Accessing beyond array bounds"); }
+		return mData.v[index];
+	}
+	
+	template<>
+	glm::mat4& Datum::Get(const std::uint32_t& index)
+	{
+		if (mType != DatumType::Matrix) { throw std::exception("Calling Get on invalid Type"); }
+		if (mData.f == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
+		if (index >= mSize) { throw std::exception("Accessing beyond array bounds"); }
+		return mData.m[index];
+	}
+	
+	template<>
+	const glm::mat4& Datum::Get(const std::uint32_t& index) const
+	{
+		if (mType != DatumType::Matrix) { throw std::exception("Calling Get on invalid Type"); }
+		if (mData.f == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
+		if (index >= mSize) { throw std::exception("Accessing beyond array bounds"); }
+		return mData.m[index];
+	}
+	
+	template<>
+	Scope*& Datum::Get(const std::uint32_t& index)
+	{
+		if (mType != DatumType::Scope) { throw std::exception("Calling et on invalid Type"); }
+		if (mData.sc == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
+		if (index >= mSize) { throw std::exception("Accessing beyond array bounds"); }
+		return mData.sc[index];
+	}
+
+	template<>
+	Scope* const& Datum::Get(const std::uint32_t& index) const
+	{
+		if (mType != DatumType::Scope) { throw std::exception("Calling et on invalid Type"); }
+		if (mData.sc == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
+		if (index >= mSize) { throw std::exception("Accessing beyond array bounds"); }
+		return mData.sc[index];
+	}
+
+	template<>
+	std::string& Datum::Get(const std::uint32_t& index)
+	{
+		if (mType != DatumType::String) { throw std::exception("Calling Get on invalid Type"); }
+		if (mData.s == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
+		if (index >= mSize) { throw std::exception("Accessing beyond array bounds"); }
+		return mData.s[index];
+	}
+
+	template<>
+	const std::string& Datum::Get(const std::uint32_t& index) const
+	{
+		if (mType != DatumType::String) { throw std::exception("Calling Get on invalid Type"); }
+		if (mData.s == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
+		if (index >= mSize) { throw std::exception("Accessing beyond array bounds"); }
+		return mData.s[index];
+	}
+
+	template<>
+	Library::RTTI*& Datum::Get(const std::uint32_t& index)
+	{
+		if (mType != DatumType::Pointer) { throw std::exception("Calling Get on invalid Type"); }
+		if (mData.r == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
+		if (index >= mSize) { throw std::exception("Accessing beyond array bounds"); }
+		return mData.r[index];
+	}
+
+	template<>
+	Library::RTTI* const& Datum::Get(const std::uint32_t& index) const
+	{
+		if (mType != DatumType::Pointer) { throw std::exception("Calling Get on invalid Type"); }
+		if (mData.r == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
+		if (index >= mSize) { throw std::exception("Accessing beyond array bounds"); }
+		return mData.r[index];
 	}
 }
