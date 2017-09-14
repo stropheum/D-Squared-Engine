@@ -297,6 +297,10 @@ namespace Library
 	template <typename T>
 	T& SList<T>::Iterator::operator*()
 	{
+		if (mNode == nullptr)
+		{
+			throw std::exception("De-referencing nullptr on S-List iterator");
+		}
 		return mNode->Data();
 	}
 }
