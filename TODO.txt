@@ -76,8 +76,9 @@
 
 	x In the operator prefix increment operator and dereference operator, you must test mOwner for nullptr before dereferencing it. Also, you must test mIndex >= mOwner->size().
 
-	x You should have a const version of the iterator derference operator. For the Vector copy ctor, don't call the default ctor which allocates memory -- just to immediately free that memory in the subsequent call to the assignment operator. No reason for both tests in the conditional: if (mBuffer == nullptr || mSize == 0)
+	x You should have a const version of the iterator derference operator. 
 
+	x For the Vector copy ctor, don't call the default ctor which allocates memory -- just to immediately free that memory in the subsequent call to the assignment operator. No reason for both tests in the conditional: if (mBuffer == nullptr || mSize == 0)
 	x A couple of missing blocks in Remove and Vector::operator==.
 
 5 - Templated Hashmap
