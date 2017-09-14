@@ -167,7 +167,7 @@ namespace Library
 			/**
 			 * Prefix increment operator. Sets node reference to its linked node
 			 */
-			Iterator operator++();
+			Iterator& operator++();
 
 			/**
 			 * Postfix increment operator. Calls prefix increment operator

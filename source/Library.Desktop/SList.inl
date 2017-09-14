@@ -273,7 +273,7 @@ namespace Library
 	}
 
 	template <typename T>
-	typename SList<T>::Iterator SList<T>::Iterator::operator++()
+	typename SList<T>::Iterator& SList<T>::Iterator::operator++()
 	{
 		if (mNode != nullptr)
 		{
