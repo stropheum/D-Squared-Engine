@@ -512,16 +512,22 @@ namespace Library
 
 	template<> std::int32_t& Datum::Get(const std::uint32_t& index);
 	template<> const std::int32_t& Datum::Get(const std::uint32_t& index) const;
+
 	template<> float& Datum::Get(const std::uint32_t& index);
 	template<> const float& Datum::Get(const std::uint32_t& index) const;
+
 	template<> glm::vec4& Datum::Get(const std::uint32_t& index);
 	template<> const glm::vec4& Datum::Get(const std::uint32_t& index) const;
+
 	template<> glm::mat4& Datum::Get(const std::uint32_t& index);
 	template<> const glm::mat4& Datum::Get(const std::uint32_t& index) const;
+
 	template<> Scope*& Datum::Get(const std::uint32_t& index);
 	template<> Scope* const& Datum::Get(const std::uint32_t& index) const;
+
 	template<> std::string& Datum::Get(const std::uint32_t& index);
 	template<> const std::string& Datum::Get(const std::uint32_t& index) const;
+
 	template<> RTTI*& Datum::Get(const std::uint32_t& index);
 	template<> RTTI* const& Datum::Get(const std::uint32_t& index) const;
 }

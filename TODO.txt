@@ -131,11 +131,11 @@
 
 	x bool Datum::operator==(const Datum& rhs) const is potentially dereferencing nullptr (mTypeState). Likewise for setSize, reserve, and clear. 
 
-	- You have a memory leak because you are allocating TypeState-derived objects but not deleting them. RTTI comparsion needs to use RTTI::Equals.
+	x You have a memory leak because you are allocating TypeState-derived objects but not deleting them. RTTI comparsion needs to use RTTI::Equals.
 
-	- Move the get template specializations to the Datum.cpp file. Mark single-parameter ctors explicit (most of the time). 
+	x Move the get template specializations to the Datum.cpp file. Mark single-parameter ctors explicit (most of the time). 
 
-	- Initialize the mData union member (to nullptr). 
+	x Initialize the mData union member (to nullptr). 
 
 	- It's unclear why you moved away from placement new for strings? Use std::to_string and std::stof and stoi for conversions.
 
