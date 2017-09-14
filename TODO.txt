@@ -115,9 +115,9 @@
 
 	x You should be testing your DefaultHash template and specializations independent from the Hashmap class. 
 
-	- Missing a test for the const version of operator[]. 
+	x Missing a test for the const version of operator[]. 
 
-	- Why is your Assert::ExpectException commented out on line 412 of HashMapTest.cpp?
+	x Why is your Assert::ExpectException commented out on line 412 of HashMapTest.cpp?
 
 7 - Datum
 	- Datum::Datum(DatumType type) has a bug in it where DatumType::Unknown is passed in. You end up dereferencing mTypeState which is nullptr. 
