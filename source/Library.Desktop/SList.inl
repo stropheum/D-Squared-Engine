@@ -165,15 +165,15 @@ namespace Library
 	}
 
 	template <typename T>
-	typename SList<T>::Iterator SList<T>::begin()
+	typename SList<T>::Iterator SList<T>::begin() const
 	{
-		return Iterator(this, mFront);
+		return Iterator(const_cast<SList<T>* const>(this), mFront);
 	}
 
 	template <typename T>
-	typename SList<T>::Iterator SList<T>::end()
+	typename SList<T>::Iterator SList<T>::end() const
 	{
-		return Iterator(this, nullptr);
+		return Iterator(const_cast<SList<T>* const>(this), nullptr);
 	}
 
 	template <typename T>
@@ -200,19 +200,23 @@ namespace Library
 	}
 
 	template <typename T>
-	typename SList<T>::Iterator SList<T>::Find(const T& value) 
+	typename SList<T>::Iterator SList<T>::Find(const T& value) const
 	{
 		for (auto iter = begin(); iter != end(); ++iter)
 		{
-			if (*iter == value) return iter;
+			if (*iter == value) 
+			{
+				return iter;
+			}
 		}
+
 		return end();
 	}
 
 	template <typename T>
 	void SList<T>::Remove(const T& value)
 	{
-		if (mFront->Data() == value)
+		if (mFront != nullptr && mFront->Data() == value)
 		{
 			Node* removeNode = mFront;
 			mFront = mFront->Next();
@@ -236,6 +240,10 @@ namespace Library
 		}
 	}
 
+	template <class T>
+	SList<T>::Iterator::Iterator() :
+		mOwner(nullptr), mNode(nullptr)
+	{}
 
 	template <typename T>
 	SList<T>::Iterator::Iterator(SList<T>* owner, Node* node) :
@@ -269,7 +277,7 @@ namespace Library
 	}
 
 	template <typename T>
-	typename SList<T>::Iterator SList<T>::Iterator::operator++()
+	typename SList<T>::Iterator& SList<T>::Iterator::operator++()
 	{
 		if (mNode != nullptr)
 		{
@@ -293,6 +301,10 @@ namespace Library
 	template <typename T>
 	T& SList<T>::Iterator::operator*()
 	{
+		if (mNode == nullptr)
+		{
+			throw std::exception("De-referencing nullptr on S-List iterator");
+		}
 		return mNode->Data();
 	}
 }

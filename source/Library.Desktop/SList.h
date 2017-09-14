@@ -99,13 +99,13 @@ namespace Library
 		 * Accessor for the iterator pointing to the beginning of the list
 		 * @Return: An iterator that points to the Front node
 		 */
-		Iterator begin();
+		Iterator begin() const;
 
 		/**
 		* Accessor for the iterator pointing to the end of the list
 		* @Return: An iterator that points to the back node
 		*/
-		Iterator end();
+		Iterator end() const;
 
 		/**
 		 * Inserts a value after the value in a given iterator
@@ -120,7 +120,7 @@ namespace Library
 		 * @Param value: The value being found from the list
 		 * @Return: An iterator pointing to the value if it exists in the list, end otherwise
 		 */
-		Iterator Find(const T& value);
+		Iterator Find(const T& value) const;
 
 		/**
 		 * Removes the first instance of a value from the list
@@ -136,7 +136,7 @@ namespace Library
 			/**
 			 * Constructor. Takes a node reference and assigns owner to current SList object
 			 */
-			Iterator() = default;
+			Iterator();
 
 			/**
 			 * Copy constructor. Creates new Iterator with identical member references
@@ -167,7 +167,7 @@ namespace Library
 			/**
 			 * Prefix increment operator. Sets node reference to its linked node
 			 */
-			Iterator operator++();
+			Iterator& operator++();
 
 			/**
 			 * Postfix increment operator. Calls prefix increment operator

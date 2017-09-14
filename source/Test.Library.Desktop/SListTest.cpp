@@ -331,8 +331,7 @@ namespace TestLibraryDesktop
 			list->PushFront(2);
 			list->PushFront(3);
 
-			Library::SList<int> newList;
-			newList = *list;
+			Library::SList<int> newList = *list;
 
 			for (std::uint32_t i = 0; i < list->Size(); i++)
 			{
@@ -466,6 +465,9 @@ namespace TestLibraryDesktop
 			
 			++fooIter;
 			Assert::AreEqual(foo, *fooIter, L"Pre increment not pointing to correct node");
+
+			Library::SList<int>::Iterator defaultIter{};
+			Assert::ExpectException<std::exception>([&]() { ++defaultIter; }, L"Default constructed iterator should not be incrementable");
 		}
 
 		TEST_METHOD(TestIteratorPostIncrement)
