@@ -99,13 +99,13 @@ namespace Library
 		 * Accessor for the iterator pointing to the beginning of the list
 		 * @Return: An iterator that points to the Front node
 		 */
-		Iterator begin();
+		Iterator begin() const;
 
 		/**
 		* Accessor for the iterator pointing to the end of the list
 		* @Return: An iterator that points to the back node
 		*/
-		Iterator end();
+		Iterator end() const;
 
 		/**
 		 * Inserts a value after the value in a given iterator
@@ -120,7 +120,7 @@ namespace Library
 		 * @Param value: The value being found from the list
 		 * @Return: An iterator pointing to the value if it exists in the list, end otherwise
 		 */
-		Iterator Find(const T& value);
+		Iterator Find(const T& value) const;
 
 		/**
 		 * Removes the first instance of a value from the list

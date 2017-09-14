@@ -165,15 +165,15 @@ namespace Library
 	}
 
 	template <typename T>
-	typename SList<T>::Iterator SList<T>::begin()
+	typename SList<T>::Iterator SList<T>::begin() const
 	{
-		return Iterator(this, mFront);
+		return Iterator(const_cast<SList<T>* const>(this), mFront);
 	}
 
 	template <typename T>
-	typename SList<T>::Iterator SList<T>::end()
+	typename SList<T>::Iterator SList<T>::end() const
 	{
-		return Iterator(this, nullptr);
+		return Iterator(const_cast<SList<T>* const>(this), nullptr);
 	}
 
 	template <typename T>
@@ -200,12 +200,16 @@ namespace Library
 	}
 
 	template <typename T>
-	typename SList<T>::Iterator SList<T>::Find(const T& value) 
+	typename SList<T>::Iterator SList<T>::Find(const T& value) const
 	{
 		for (auto iter = begin(); iter != end(); ++iter)
 		{
-			if (*iter == value) return iter;
+			if (*iter == value) 
+			{
+				return iter;
+			}
 		}
+
 		return end();
 	}
 
