@@ -216,7 +216,7 @@ namespace Library
 	template <typename T>
 	void SList<T>::Remove(const T& value)
 	{
-		if (mFront->Data() == value)
+		if (mFront != nullptr && mFront->Data() == value)
 		{
 			Node* removeNode = mFront;
 			mFront = mFront->Next();
