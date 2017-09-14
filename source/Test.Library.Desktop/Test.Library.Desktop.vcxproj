@@ -239,6 +239,7 @@ xcopy "$(ProjectDir)input.xml" "$(TargetDir)" /Y /I</Command>
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="DefaultHashTest.cpp" />
     <ClCompile Include="EnqueueSubscriber.cpp" />
     <ClCompile Include="EventTest.cpp" />
     <ClCompile Include="FactoryTest.cpp" />

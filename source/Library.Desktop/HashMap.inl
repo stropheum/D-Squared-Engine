@@ -8,7 +8,7 @@ namespace Library
 	HashMap<TKey, TValue, HashFunctor>::HashMap(std::uint32_t bucketCount):
 		mBucketCount(bucketCount), mBuckets(), mSize(0)
 	{	// HashMaps need to be constructed with At least one bucket, or nothing will be able to be stored
-		if (mBucketCount == 0) throw std::exception("HashMap constructed with an invalid amount of buckets");
+		if (mBucketCount == 0) { throw std::exception("HashMap constructed with an invalid amount of buckets"); }
 		InitializeBuckets();
 	}
 
@@ -150,7 +150,7 @@ namespace Library
 	const TValue& HashMap<TKey, TValue, HashFunctor>::operator[](const TKey& key) const
 	{
 		auto iter = Find(key);
-		if (iter == end()) throw std::exception("Indexing out of bounds on const HashMap");
+		if (iter == end()) { throw std::exception("Indexing out of bounds on const HashMap"); }
 		return iter->second;
 	}
 
@@ -218,7 +218,7 @@ namespace Library
 	template <typename TKey, typename TValue, typename HashFunctor>
 	typename HashMap<TKey, TValue, HashFunctor>::Iterator& HashMap<TKey, TValue, HashFunctor>::Iterator::operator=(const Iterator& rhs)
 	{
-		if (rhs.mOwner == nullptr) throw std::exception("Right hand side owner is null");
+		if (rhs.mOwner == nullptr) { throw std::exception("Right hand side owner is null"); }
 		mOwner = rhs.mOwner;
 		mBucketIndex = rhs.mBucketIndex;
 		mIter = rhs.mIter;
@@ -228,7 +228,7 @@ namespace Library
 	template <typename TKey, typename TValue, typename HashFunctor>
 	typename HashMap<TKey, TValue, HashFunctor>::Iterator& HashMap<TKey, TValue, HashFunctor>::Iterator::operator++()
 	{
-		if (mOwner == nullptr) throw std::exception("Incrementing beyond HashMap bounds");
+		if (mOwner == nullptr) { throw std::exception("Incrementing beyond HashMap bounds"); }
 		
 		if (mBucketIndex < mOwner->mBucketCount)
 		{	// As long as we are within proper range, don't bypass increment
@@ -257,14 +257,14 @@ namespace Library
 	template <typename TKey, typename TValue, typename HashFunctor>
 	typename HashMap<TKey, TValue, HashFunctor>::PairType& HashMap<TKey, TValue, HashFunctor>::Iterator::operator*()
 	{
-		if (mOwner == nullptr) throw std::exception("Attempting to dereference null iterator");
+		if (mOwner == nullptr) { throw std::exception("Attempting to dereference null iterator"); }
 		return (*mIter);
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
 	const typename HashMap<TKey, TValue, HashFunctor>::PairType& HashMap<TKey, TValue, HashFunctor>::Iterator::operator*() const
 	{
-		if (mOwner == nullptr) throw std::exception("Attempting to dereference null iterator");
+		if (mOwner == nullptr) { throw std::exception("Attempting to dereference null iterator"); }
 		return (*mIter);
 	}
 
@@ -283,7 +283,7 @@ namespace Library
 	template <typename TKey, typename TValue, typename HashFunctor>
 	bool HashMap<TKey, TValue, HashFunctor>::Iterator::operator==(const Iterator& rhs) const
 	{
-		if (mOwner == nullptr) throw std::exception("Owner is null");
+		if (mOwner == nullptr) { throw std::exception("Owner is null"); }
 
 		return mOwner == rhs.mOwner &&
 			mBucketIndex == rhs.mBucketIndex &&
@@ -293,7 +293,7 @@ namespace Library
 	template <typename TKey, typename TValue, typename HashFunctor>
 	bool HashMap<TKey, TValue, HashFunctor>::Iterator::operator!=(const Iterator& rhs) const
 	{
-		if (mOwner == nullptr) throw std::exception("Owner is null");
+		if (mOwner == nullptr) { throw std::exception("Owner is null"); }
 		return !(operator==(rhs));
 	}
 }
