@@ -289,20 +289,20 @@ namespace Library
 		 * @Param Size: the new number of values
 		 * @Exception: Thrown if attempting to resize external data
 		 */
-		void SetSize(const std::uint32_t& size);
+		void SetSize(const std::uint32_t& size) const;
 
 		/**
 		 * Reserve additional Capacity for uninitialized values
 		 * @Param Capacity: The number of possible elements that the array will be able to hold
 		 * @Exception: Thrown if attempting to resize external storage
 		 */
-		void Reserve(const std::uint32_t& capacity);
+		void Reserve(const std::uint32_t& capacity) const;
 
 		/**
 		 * Clear the array without shrinking the Capacity
 		 * @Exception: Thrown if trying to Clear with an invalid Type Set
 		 */
-		void Clear();
+		void Clear() const;
 
 		/**
 		 * Sets the external storage to the specified int32_t*
@@ -471,7 +471,7 @@ namespace Library
 		 * @Param index: The location being Set to. Default is 0
 		 * @Exception: Thrown if syntax is invalid
 		 */
-		void SetFromString(const std::string& value, const std::uint32_t& index = 0);
+		void SetFromString(const std::string& value, const std::uint32_t& index = 0) const;
 
 		/**
 		 * A string representation of a piece of data stored in the Datum object

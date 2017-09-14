@@ -14,7 +14,7 @@ namespace Library
 		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false)
 	{
 		SetType(type);
-		if (type != DatumType::Unknown) Reserve(mCapacity);
+		if (type != DatumType::Unknown) { Reserve(mCapacity); }
 	}
 
 	Datum::~Datum()
@@ -100,22 +100,25 @@ namespace Library
 
 	Datum& Datum::operator=(Datum&& rhs) noexcept
 	{
-		SetType(rhs.mType); // Must Set Type in order to instantiate mTypeState
-		if (rhs.mDataIsExternal)
+		if (this != &rhs)
 		{
-			mTypeState->SetStorage(rhs);
-		}
-		else
-		{
-			mData = rhs.mData;
-			mType = rhs.mType;
-			mCapacity = rhs.mCapacity;
-			mSize = rhs.mSize;
-		}
+			SetType(rhs.mType); // Must Set Type in order to instantiate mTypeState
+			if (rhs.mDataIsExternal)
+			{
+				mTypeState->SetStorage(rhs);
+			}
+			else
+			{
+				mData = move(rhs.mData);
+				mType = move(rhs.mType);
+				mCapacity = move(rhs.mCapacity);
+				mSize = move(rhs.mSize);
+			}
 
-		rhs.mType = DatumType::Unknown;
-		rhs.mCapacity = NULL;
-		rhs.mSize = NULL;
+			rhs.mType = DatumType::Unknown;
+			rhs.mCapacity = NULL;
+			rhs.mSize = NULL;
+		}
 
 		return *this;
 	}
@@ -182,7 +185,7 @@ namespace Library
 
 	bool Datum::operator==(const Datum& rhs) const
 	{
-		if (mType == DatumType::Unknown && rhs.mType == DatumType::Unknown) return true;
+		if (mType == DatumType::Unknown && rhs.mType == DatumType::Unknown) { return true; }
 		return mTypeState->operator==(rhs);
 	}
 
@@ -280,10 +283,10 @@ namespace Library
 
 	void Datum::SetType(const DatumType& type)
 	{
-		if (mType == type) return; // Avoid double instantiation of state without throwing an exception
+		if (mType == type) { return; } // Avoid double instantiation of state without throwing an exception
 
-		if (mType == DatumType::Unknown) mType = type;
-		else throw exception("Attempting to change Type on Datum object");
+		if (mType == DatumType::Unknown) { mType = type; }
+		else { throw exception("Attempting to change Type on Datum object"); }
 
 		if (mTypeState != nullptr)
 		{	// If we've already Set state, make sure we delete the old Type state
@@ -326,21 +329,23 @@ namespace Library
 		return mCapacity;
 	}
 
-	void Datum::SetSize(const uint32_t& size)
+	void Datum::SetSize(const uint32_t& size) const
 	{
-		if (mDataIsExternal) throw exception("Attempting to resize external storage");
+		if (mType == DatumType::Unknown) { return; } // We don't have a type so we won't set size
+		if (mDataIsExternal) { throw exception("Attempting to resize external storage"); }
 		mTypeState->SetSize(size);
 	}
 
-	void Datum::Reserve(const uint32_t& capacity)
+	void Datum::Reserve(const uint32_t& capacity) const
 	{
-		if (mType == DatumType::Unknown) return;
-		if (mDataIsExternal) throw exception("Attempting to resize external storage");
+		if (mType == DatumType::Unknown) { return; }
+		if (mDataIsExternal) { throw exception("Attempting to resize external storage"); }
 		mTypeState->Reserve(capacity);
 	}
 
-	void Datum::Clear()
+	void Datum::Clear() const
 	{
+		if (mType == DatumType::Unknown) { return; } // We don't have a type so we do nothing
 		mTypeState->Clear();
 	}
 
@@ -520,7 +525,7 @@ namespace Library
 
 	void Datum::PushBack(RTTI* const& value)
 	{
-		if (value == nullptr) throw exception("Attempting to push Back nullptr");
+		if (value == nullptr) { throw exception("Attempting to push Back nullptr"); }
 		SetSize(mSize + 1);
 		Set(value, mSize - 1);
 	}
@@ -541,14 +546,14 @@ namespace Library
 		}
 	}
 
-	void Datum::SetFromString(const string& value, const uint32_t& index)
+	void Datum::SetFromString(const string& value, const uint32_t& index) const
 	{
 		mTypeState->SetFromString(value, index);
 	}
 
 	string Datum::ToString(const uint32_t& index) const
 	{	
-		if (mType == DatumType::Unknown) return "Unknown Type";
+		if (mType == DatumType::Unknown) { return "Unknown Type"; }
 		return mTypeState->ToString(index);
 	}
 }

@@ -82,7 +82,7 @@
 	x A couple of missing blocks in Remove and Vector::operator==.
 
 5 - Templated Hashmap
-	- Your DefaultHash<Foo> specialization should reside in the unit test project. 
+	x Your DefaultHash<Foo> specialization should reside in the unit test project. 
 
 	x You have unnecessary and incorrect specializations for DefaultHash<int> , DefaultHash<int*> and the template DefaultHash<T> is incorrect -- because you cannot cast an array of bytes to a char* and then strlen to determine the length of the data. That will only work for char* data. 
 
@@ -121,15 +121,15 @@
 	x Why is your Assert::ExpectException commented out on line 412 of HashMapTest.cpp?
 
 7 - Datum
-	- Datum::Datum(DatumType type) has a bug in it where DatumType::Unknown is passed in. You end up dereferencing mTypeState which is nullptr. 
+	x Datum::Datum(DatumType type) has a bug in it where DatumType::Unknown is passed in. You end up dereferencing mTypeState which is nullptr. 
 
-	- Datum& Datum::operator=(const Datum& rhs) needs a self-assignment test. Likewise for the move assignment operator. 
+	x Datum& Datum::operator=(const Datum& rhs) needs a self-assignment test. Likewise for the move assignment operator. 
 
-	- For your copy and move assignment operators you should allow different "typed" Datums to be copied/moved. That reveals a bug where you aren't clearing existing memory in the lhs Datum. 
+	x For your copy and move assignment operators you should allow different "typed" Datums to be copied/moved. That reveals a bug where you aren't clearing existing memory in the lhs Datum. 
 
-	- The move assignment operator should "steal" memory, not deep-copy. 
+	x The move assignment operator should "steal" memory, not deep-copy. 
 
-	- bool Datum::operator==(const Datum& rhs) const is potentially dereferencing nullptr (mTypeState). Likewise for setSize, reserve, and clear. 
+	x bool Datum::operator==(const Datum& rhs) const is potentially dereferencing nullptr (mTypeState). Likewise for setSize, reserve, and clear. 
 
 	- You have a memory leak because you are allocating TypeState-derived objects but not deleting them. RTTI comparsion needs to use RTTI::Equals.
 
