@@ -289,8 +289,9 @@ namespace Library
 	template <typename T>
 	typename Vector<T>::Iterator& Vector<T>::Iterator::operator++()
 	{
-		if (mOwner == nullptr) throw std::exception("Attempting to dereference nullptr");
-		if (mIndex > mOwner->Size()) throw std::exception("Incrementing beyond vector bounds");
+		if (mOwner == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
+		if (mIndex > mOwner->Size()) { throw std::exception("Incrementing beyond vector bounds"); }
+		
 		if (mIndex < mOwner->mSize)
 		{
 			mIndex++;
@@ -310,24 +311,30 @@ namespace Library
 	template <typename T>
 	T& Vector<T>::Iterator::operator*()
 	{
-		if (mOwner == nullptr) throw std::exception("Owner is null");
-		if (mIndex > mOwner->Size()) throw std::exception("Vector out of bounds");
+		if (mOwner == nullptr) { throw std::exception("Owner is null"); }
+		if (mIndex > mOwner->Size()) { throw std::exception("Vector out of bounds"); }
+
 		return const_cast<T&>(mOwner->operator[](mIndex));
 	}
 
 	template <typename T>
 	const T& Vector<T>::Iterator::operator*() const
 	{
-		if (mOwner == nullptr) throw std::exception("Owner is null");
-		if (mIndex > mOwner->Size()) throw std::exception("Vector out of bounds");
+		if (mOwner == nullptr) { throw std::exception("Owner is null"); }
+		if (mIndex > mOwner->Size()) { throw std::exception("Vector out of bounds"); }
+
 		return const_cast<T&>(mOwner->operator[](mIndex));
 	}
 
 	template <typename T>
 	typename Vector<T>::Iterator& Vector<T>::Iterator::operator=(const Iterator& rhs)
 	{
-		mOwner = rhs.mOwner;
-		mIndex = rhs.mIndex;
+		if (*this != rhs)
+		{
+			mOwner = rhs.mOwner;
+			mIndex = rhs.mIndex;
+		}
+		
 		return *this;
 	}
 }

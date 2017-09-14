@@ -35,50 +35,52 @@
 	x Be consistent in your naming/capitalization conventions (e.g. Node::mNode verfuse Node::next).
 
 3 - Singly-Linked List Iterator
-	- Don't submit your build\packages folder. 
+	x Don't submit your build\packages folder. 
 
-	- find() should be marked const. 
+	x find() should be marked const. 
 
-	- The Iterator's equality operators should be marked const and their rhs parameters should be const references. 
+	x The Iterator's equality operators should be marked const and their rhs parameters should be const references. 
 
-	- The Iterator's increment operators should return Iterator objects (an Iterator reference for the prefix increment and an Iterator copy for the post-fix). 
+	x The Iterator's increment operators should return Iterator objects (an Iterator reference for the prefix increment and an Iterator copy for the post-fix). 
 
-	- Perform self-assignment testing for the assignment operator. 
+	x Perform self-assignment testing for the assignment operator. 
 
-	- Your post-fix increment operator is incorrect. It needs to make a copy of itself (which it subsequently returns) before incrementing itself. 
+	x Your post-fix increment operator is incorrect. It needs to make a copy of itself (which it subsequently returns) before incrementing itself. 
 
-	- Your Iterator dereference operator must test for nullptr before reference mNode. 
+	x Your Iterator dereference operator must test for nullptr before reference mNode. 
 
-	- You _must_ implement the default ctor yourself (in this example). A defaulted ctor does not initialize the class data members. 
+	x You _must_ implement the default ctor yourself (in this example). A defaulted ctor does not initialize the class data members. 
 
-	- remove() must test mFront for null before dereferencing mFront.
+	x remove() must test mFront for null before dereferencing mFront.
 
-	- pushFront and pushBack should accept const T references, instead of copies. Likewise for insertAfter. 
+	x pushFront and pushBack should accept const T references, instead of copies. Likewise for insertAfter. 
 
-	- It's a bad design to store mBegin and mEnd iterators as class members and return references to those in begin() and end(). 
+	x It's a bad design to store mBegin and mEnd iterators as class members and return references to those in begin() and end(). 
 
-	- insertAfter should mark the location argument as a const Iterator reference, as the method should not be modifying that parameter. 
+	x insertAfter should mark the location argument as a const Iterator reference, as the method should not be modifying that parameter. 
 
-	- Refactor the Iterator == operator.
+	x Refactor the Iterator == operator.
 
-	- Missing ExpectException tests for Iterator's operator++
+	x Missing ExpectException tests for Iterator's operator++
 
-	- Your Doxygen document should include @brief/@summary, @param, @return, @exception tags as appropriate.
+	x Your Doxygen document should include @brief/@summary, @param, @return, @exception tags as appropriate.
 
 4 - Templated Vector
-	- Your Vector == operator should be rewritten to early out on the mSize comparison. This then guarantees valid indices from 0 to mSize for both the lhs and rhs and no try/catch block would be necessary. 
+	x Your Vector == operator should be rewritten to early out on the mSize comparison. This then guarantees valid indices from 0 to mSize for both the lhs and rhs and no try/catch block would be necessary. 
 
-	- As is your catch block shouldn't simply suppress the exception and you should break out of the loop once you find an element that doesn't match. 
+	x As is your catch block shouldn't simply suppress the exception and you should break out of the loop once you find an element that doesn't match. 
 
-	- Your assignment operator should not prevent assignment to a Vector that has a nullptr mBuffer. 
+	x Your assignment operator should not prevent assignment to a Vector that has a nullptr mBuffer. 
 
-	- Perform a self-assignment test for operator=. 
+	x Perform a self-assignment test for operator=. 
 
-	- In the operator prefix increment operator and dereference operator, you must test mOwner for nullptr before dereferencing it. Also, you must test mIndex >= mOwner->size().
+	x In the operator prefix increment operator and dereference operator, you must test mOwner for nullptr before dereferencing it. Also, you must test mIndex >= mOwner->size().
 
-	- You should have a const version of the iterator derference operator. For the Vector copy ctor, don't call the default ctor which allocates memory -- just to immediately free that memory in the subsequent call to the assignment operator. No reason for both tests in the conditional: if (mBuffer == nullptr || mSize == 0)
+	x You should have a const version of the iterator derference operator. 
 
-	- A couple of missing blocks in Remove and Vector::operator==.
+	x For the Vector copy ctor, don't call the default ctor which allocates memory -- just to immediately free that memory in the subsequent call to the assignment operator. No reason for both tests in the conditional: if (mBuffer == nullptr || mSize == 0)
+
+	x A couple of missing blocks in Remove and Vector::operator==.
 
 5 - Templated Hashmap
 	- Your DefaultHash<Foo> specialization should reside in the unit test project. 
