@@ -87,12 +87,13 @@ namespace Library
 	class DefaultHash<T*>
 	{
 	public:
-		std::uint32_t operator()(const int* key) const
+		std::uint32_t operator()(const T* key) const
 		{
 			const std::int8_t* bytes = reinterpret_cast<const std::int8_t*>(key);
 
 			std::uint32_t hash = 0;
-			for (std::uint32_t i = 0; i < strlen(reinterpret_cast<const char*>(bytes)); i++)
+			std::uint32_t size = sizeof(T*);
+			for (std::uint32_t i = 0; i < size; i++)
 			{
 				hash += bytes[i];
 			}

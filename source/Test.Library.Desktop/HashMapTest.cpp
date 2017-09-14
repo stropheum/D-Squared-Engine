@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 #include "HashMap.h"
 #include "Foo.h"
+#include <winnt.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -45,7 +46,7 @@ namespace TestLibraryDesktop
 		std::string u = "Uncle Phil";
 		Foo foo, bar, gar;
 	public:
-		/// Sets up leak detection logic
+		// Sets up leak detection logic
 		static void initializeLeakDetection()
 		{
 #if _DEBUG
@@ -54,7 +55,7 @@ namespace TestLibraryDesktop
 #endif //_Debug
 		}
 
-		/// Detects if memory state has been corrupted
+		// Detects if memory state has been corrupted
 		static void finalizeLeakDetection()
 		{
 #if _DEBUG
@@ -483,6 +484,51 @@ namespace TestLibraryDesktop
 
 			fooMapVal = 1;
 			Assert::AreEqual(fooMap[foo], 1, L"HashMapValue not changed when assigned from index operator");
+		}
+
+		TEST_METHOD(TestConstIndexOperator)
+		{
+			{	// int tests
+				Library::HashMap<int, int> map{};
+				map[1] = 10;
+				Assert::AreEqual(1u, map.Size(), L"HashMap Size not increasing after indexing a non-existent key");
+				Assert::AreEqual(10, map[1]);
+				Assert::AreEqual(10, const_cast<const Library::HashMap<int, int>*>(&map)->operator[](1));
+			}
+			{	// pointer tests
+				Library::HashMap<int*, int> map{};
+				int* key = new int(0);
+				map[key] = 10;
+				Assert::AreEqual(1u, map.Size(), L"HashMap size not increasing after indexing a non-existent key");
+				Assert::AreEqual(10, map[key]);
+				Assert::AreEqual(10, const_cast<const Library::HashMap<int*, int>*>(&map)->operator[](key));
+				delete key;
+			}
+			{	// char* tests
+				Library::HashMap<char*, int> map{};
+				char* key = new char(0);
+				map[key] = 10;
+				Assert::AreEqual(1u, map.Size(), L"HashMap size not increasing after indexing a non-existent key");
+				Assert::AreEqual(10, map[key]);
+				Assert::AreEqual(10, const_cast<const Library::HashMap<char*, int>*>(&map)->operator[](key));
+				delete key;
+			}
+			{	// string tests
+				Library::HashMap<std::string, int> map{};
+				std::string key = "key";
+				map[key] = 10;
+				Assert::AreEqual(1u, map.Size(), L"HashMap size not increasing after indexing a non-existent key");
+				Assert::AreEqual(10, map[key]);
+				Assert::AreEqual(10, const_cast<const Library::HashMap<std::string, int>*>(&map)->operator[](key));
+			}
+			{	// foo tests
+				Library::HashMap<Foo, int> map{};
+				Foo key(1);
+				map[key] = 10;
+				Assert::AreEqual(1u, map.Size(), L"HashMap size not increasing after indexing a non-existent key");
+				Assert::AreEqual(10, map[key]);
+				Assert::AreEqual(10, const_cast<const Library::HashMap<Foo, int>*>(&map)->operator[](key));
+			}
 		}
 
 		TEST_METHOD(TestBegin)
