@@ -136,7 +136,7 @@ namespace Library
 			/**
 			 * Constructor. Takes a node reference and assigns owner to current SList object
 			 */
-			Iterator() = default;
+			Iterator();
 
 			/**
 			 * Copy constructor. Creates new Iterator with identical member references

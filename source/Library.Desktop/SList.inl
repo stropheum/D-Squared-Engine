@@ -240,6 +240,10 @@ namespace Library
 		}
 	}
 
+	template <class T>
+	SList<T>::Iterator::Iterator() :
+		mOwner(nullptr), mNode(nullptr)
+	{}
 
 	template <typename T>
 	SList<T>::Iterator::Iterator(SList<T>* owner, Node* node) :
