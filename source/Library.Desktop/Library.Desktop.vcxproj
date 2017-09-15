@@ -103,10 +103,10 @@
     </Link>
     <Lib>
       <AdditionalDependencies>Expat.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\lib\$(PlatformName)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\source\bin\$(PlatformName)\$(Configuration)\</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\external\Expat\lib\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(Platform)\" /Y /I</Command>
+      <Command>xcopy "$(ProjectDir)..\..\external\Expat\source\bin\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(Platform)\" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -126,10 +126,10 @@
     </Link>
     <Lib>
       <AdditionalDependencies>Expat.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\lib\$(PlatformName)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\source\bin\$(PlatformName)\$(Configuration)\</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\external\Expat\lib\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(Platform)\" /Y /I</Command>
+      <Command>xcopy "$(ProjectDir)..\..\external\Expat\source\bin\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(Platform)\" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -154,10 +154,10 @@
       <AdditionalDependencies>Expat.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\lib\$(PlatformName)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\source\bin\$(PlatformName)\$(Configuration)\</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\external\Expat\lib\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(Platform)\" /Y /I</Command>
+      <Command>xcopy "$(ProjectDir)..\..\external\Expat\source\bin\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(Platform)\" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -180,10 +180,10 @@
     </Link>
     <Lib>
       <AdditionalDependencies>Expat.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\lib\$(PlatformName)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\source\bin\$(PlatformName)\$(Configuration)\</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\external\Expat\lib\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(Platform)\" /Y /I</Command>
+      <Command>xcopy "$(ProjectDir)..\..\external\Expat\source\bin\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(Platform)\" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
