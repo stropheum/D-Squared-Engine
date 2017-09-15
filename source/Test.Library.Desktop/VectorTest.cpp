@@ -3,7 +3,6 @@
 #include <Vector.h>
 #include "Foo.h"
 #include "implementation.h"
-#include <winnt.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -16,7 +15,7 @@ namespace TestLibraryDesktop
 		Library::Vector<int*> pointor;
 		Library::Vector<Foo>  footor;
 
-		/// Sets up leak detection logic
+		// Sets up leak detection logic
 		static void initializeLeakDetection()
 		{
 #if _DEBUG
@@ -25,7 +24,7 @@ namespace TestLibraryDesktop
 #endif //_Debug
 		}
 
-		/// Detects if memory state has been corrupted
+		// Detects if memory state has been corrupted
 		static void finalizeLeakDetection()
 		{
 #if _DEBUG
@@ -59,7 +58,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestCopyConstructor)
 		{
-			/// Int vector tests
+			// Int vector tests
 			Library::Vector<int> copyIntor(intor);
 			bool intcompare = intor == copyIntor;
 			Assert::IsTrue(intcompare, L"Copied vector not equivalent to original");
@@ -76,7 +75,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(pointor == copyPointor, L"Copied pointer vector not equivalent to original");
 			
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			int x = 1;
 			pointor.PushBack(&x);
 			Assert::IsFalse(pointor == copyPointor, L"Copied vector equivalent after modifying original");
@@ -88,7 +87,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(footor == copyFootor, L"Copied Foo vector not equivalent to original");
 			
 
-			/// Foo vector tests
+			// Foo vector tests
 			Foo foo(1);
 			footor.PushBack(foo);
 			Assert::IsFalse(footor == copyFootor, L"Copied Foo vector equivalent after modifying original");
@@ -99,7 +98,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestComparisonOperator)
 		{
-			/// Int vector tests
+			// Int vector tests
 			Assert::IsTrue(intor == intor, L"Vector not equivalent to itself");
 			
 			Library::Vector<int> copyIntor(intor);
@@ -112,7 +111,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(intor == constIntor, L"Const copy not equivalent");
 			
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			Assert::IsTrue(pointor == pointor, L"Vector not equivalent to itself");
 
 			Library::Vector<int*> copyPointor(pointor);
@@ -125,7 +124,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(pointor == constPointor, L"Const copy not equivalent");
 
 
-			/// Foo vector tests
+			// Foo vector tests
 			Assert::IsTrue(footor == footor, L"Vector not equivalent to itself");
 
 			Library::Vector<Foo> copyFootor(footor);
@@ -140,27 +139,104 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestAssignmentOperator)
 		{
-			/// Int vector tests
-			Library::Vector<int> copyIntor;
-			copyIntor = intor;
+			Library::Vector<int> copyIntor = intor;
 			Assert::IsTrue(intor == copyIntor, L"Copied vector not equivalent to original");
 
 
-			/// Pointer vector tests
-			Library::Vector<int*> copyPointor;
-			copyPointor = pointor;
+			// Pointer vector tests
+			Library::Vector<int*> copyPointor = pointor;
 			Assert::IsTrue(pointor == copyPointor, L"Copied pointer vector not equivalent to original");
 
 
-			/// Foo vector tests
-			Library::Vector<Foo> copyFootor;
-			copyFootor = footor;
+			// Foo vector tests
+			Library::Vector<Foo> copyFootor = footor;
 			Assert::IsTrue(footor == copyFootor, L"Copied Foo vector not equivalent to original");
+		}
+
+		TEST_METHOD(TestMoveSemantics)
+		{
+			// Int tests
+			Library::Vector<int> intVector;
+			for (int i = 0; i < 10; i++)
+			{
+				intVector.PushBack(i);
+			}
+
+			Assert::AreEqual(10u, intVector.Size());
+
+			Library::Vector<int> newIntVector = std::move(intVector);
+			Assert::AreEqual(10u, newIntVector.Size());
+			Assert::AreEqual(0u, intVector.Size());
+
+			for (int i = 0; i < 10; i++)
+			{
+				Assert::AreEqual(i, newIntVector[i]);
+			}
+
+			// Float tests
+			Library::Vector<float> floatVector;
+			for (int i = 0; i < 10; i++)
+			{
+				floatVector.PushBack(static_cast<float>(i));
+			}
+
+			Assert::AreEqual(10u, floatVector.Size());
+
+			Library::Vector<float> newFloatVector = std::move(floatVector);
+			Assert::AreEqual(10u, newFloatVector.Size());
+			Assert::AreEqual(0u, floatVector.Size());
+
+			for (int i = 0; i < 10; i++)
+			{
+				Assert::AreEqual(static_cast<float>(i), newFloatVector[i]);
+			}
+
+			// Pointer tests
+			int ints[10];
+			for (int i = 0; i < 10; i++)
+			{
+				ints[i] = i;
+			}
+
+			Library::Vector<int*> ptrVector;
+			for (int i = 0; i < 10; i++)
+			{
+				ptrVector.PushBack(&ints[i]);
+			}
+
+			Assert::AreEqual(10u, ptrVector.Size());
+
+			Library::Vector<int*> newPtrVector = std::move(ptrVector);
+			Assert::AreEqual(10u, newPtrVector.Size());
+			Assert::AreEqual(0u, ptrVector.Size());
+
+			for (int i = 0; i < 10; i++)
+			{
+				Assert::AreEqual(i, *newPtrVector[i]);
+			}
+
+			// Foo tests
+			Library::Vector<Foo> fooVector;
+			for (int i = 0; i < 10; i++)
+			{
+				fooVector.PushBack(Foo(i));
+			}
+
+			Assert::AreEqual(10u, fooVector.Size());
+
+			Library::Vector<Foo> newFooVector = std::move(fooVector);
+			Assert::AreEqual(10u, newFooVector.Size());
+			Assert::AreEqual(0u, fooVector.Size());
+
+			for (int i = 0; i < 10; i++)
+			{
+				Assert::AreEqual(Foo(i), newFooVector[i]);
+			}
 		}
 
 		TEST_METHOD(TestFind)
 		{
-			/// Int vector tests
+			// Int vector tests
 			auto iter = intor.Find(0);
 			Assert::IsTrue(iter == intor.end(), L"begin and end not equivalent on empty vector");
 			Assert::IsTrue(iter == intor.begin(), L"Find on first element not equivalent to Vector.begin()");
@@ -183,7 +259,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(constIntor.Find(1) == constIntor.begin(), L"Const Find value incorrect");
 
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			int x = 1;
 			int y = 2;
 			auto piter = pointor.Find(&x);
@@ -208,7 +284,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(constPointor.Find(&x) == constPointor.begin(), L"Const Find value incorrect");
 
 
-			/// Foo vector tests
+			// Foo vector tests
 			Foo foo(1);
 			Foo bar(2);
 			auto fooiter = footor.Find(foo);
@@ -235,7 +311,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestBegin)
 		{
-			/// Int vector tests
+			// Int vector tests
 			Assert::IsTrue(intor.begin() == intor.end(), L"begin should be equivalent to end on an empy vector");
 			
 			intor.PushBack(1);
@@ -250,7 +326,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(*constIntor.begin() == constIntor[0]);
 
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			int x = 1;
 			int y = 2;
 			Assert::IsTrue(pointor.begin() == pointor.end(), L"begin should be equivalent to end on an empy vector");
@@ -267,7 +343,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(*constPointor.begin() == constPointor[0]);
 
 
-			/// Foo vector tests
+			// Foo vector tests
 			Foo foo(1);
 			Foo bar(2);
 			Assert::IsTrue(footor.begin() == footor.end(), L"begin should be equivalent to end on an empy vector");
@@ -286,7 +362,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestEnd)
 		{
-			/// Int vector tests
+			// Int vector tests
 			Assert::IsTrue(intor.begin() == intor.end(), L"end should be equivalent to begin on an empty vector");
 			
 			Library::Vector<int>::Iterator iter = intor.end();
@@ -307,7 +383,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(constIter == constIntor.end());
 			
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			int x = 1;
 			pointor.PushBack(&x);
 			piter = pointor.begin();
@@ -324,7 +400,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(constPIter == constPointor.end());
 
 
-			/// Foo vector tests
+			// Foo vector tests
 			Foo foo(1);
 			footor.PushBack(foo);
 			fooiter = footor.begin();
@@ -338,7 +414,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestFront)
 		{
-			/// Int vector tests
+			// Int vector tests
 			auto func = [this] { intor.Front(); };
 			Assert::ExpectException<std::exception>(func, L"Front should be equivalent with begin on an empty vector");
 			
@@ -350,10 +426,9 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(intor.Front() == 5, L"Unable to modify Vector.Front()");
 
 			const Library::Vector<int> constIntVector(intor);
-//			auto val = constIntVector.Front();
 			Assert::IsTrue(constIntVector.Front() == intor.Front(), L"Front of const copied vector should be equivalent to original");
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			auto ptrfunc = [this] { pointor.Front(); };
 			Assert::ExpectException<std::exception>(ptrfunc, L"Front should be equivalent with begin on an empty vector");
 			
@@ -369,7 +444,7 @@ namespace TestLibraryDesktop
 			const Library::Vector<int*> constPtrVector(pointor);
 			Assert::IsTrue(constPtrVector.Front() == pointor.Front(), L"Front of const copied vector should be equivalent to original");
 
-			/// Foo vector tests
+			// Foo vector tests
 			auto foofunc = [this] { footor.Front(); };
 			Assert::ExpectException<std::exception>(foofunc, L"Front should be equivalent with begin on an empty vector");
 			
@@ -389,7 +464,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestBack)
 		{
-			/// Int vector tests
+			// Int vector tests
 			auto func = [this] { intor.Back(); };
 			Assert::ExpectException<std::exception>(func, L"Calling Back on an empty vector should throw an exception");
 			
@@ -403,7 +478,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(intor.Back() == 10, L"Vector.Back() not modifiable");
 
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			auto ptrfunc = [this] { pointor.Back(); };
 			Assert::ExpectException<std::exception>(ptrfunc, L"Calling Back on an empty vector should throw an exception");
 			
@@ -420,7 +495,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(pointor.Back() == &z, L"Vector.Back() not modifiable");
 
 
-			/// Foo vector tests
+			// Foo vector tests
 			auto foofunc = [this] { footor.Back(); };
 			Assert::ExpectException<std::exception>(foofunc, L"Calling Back on an empty vector should throw an exception");
 			
@@ -439,7 +514,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestAt)
 		{
-			/// Int vector tests
+			// Int vector tests
 			auto func1 = [this] { intor.At(0U); };
 			Assert::ExpectException<std::exception>(func1, L"Accessing index of an empty vector should throw an exception");
 			
@@ -456,7 +531,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(2 == constIntor.At(1U));
 
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			auto ptrfunc1 = [this] { pointor.At(0U); };
 			Assert::ExpectException<std::exception>(ptrfunc1, L"Accessing index of an empty vector should throw an exception");
 			
@@ -474,7 +549,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(&x == constPointor.At(0));
 			Assert::IsTrue(&y == constPointor.At(1));
 
-			/// Foo vector tests
+			// Foo vector tests
 			auto foofunc1 = [this] { footor.At(0); };
 			Assert::ExpectException<std::exception>(foofunc1, L"Accessing index of an empty vector should throw an exception");
 			
@@ -495,7 +570,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestIndexOperator)
 		{
-			/// Int vector tests
+			// Int vector tests
 			auto func1 = [this] { intor[0]; };
 			Assert::ExpectException<std::exception>(func1, L"Accessing index of an empty vector should throw an exception");
 			
@@ -512,7 +587,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(2 == constIntor[1]);
 
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			auto ptrfunc1 = [this] { pointor[0]; };
 			Assert::ExpectException<std::exception>(ptrfunc1, L"Accessing index of an empty vector should throw an exception");
 			
@@ -531,7 +606,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(&y == constPointor[1]);
 
 
-			/// Foo vector tests
+			// Foo vector tests
 			auto foofunc1 = [this] { footor[0U]; };
 			Assert::ExpectException<std::exception>(foofunc1, L"Accessing index of an empty vector should throw an exception");
 			
@@ -552,7 +627,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestPopBack)
 		{
-			/// Int vector tests
+			// Int vector tests
 			auto func1 = [this] { intor.PopBack(); };
 			Assert::ExpectException<std::exception>(func1, L"PopBack on empty vector should throw an exception");
 			
@@ -563,7 +638,7 @@ namespace TestLibraryDesktop
 			Assert::AreEqual(2U, intor.Size(), L"Vector Size not reducing after valid pop Back");
 
 
-//			/// Pointer vector tests
+			// Pointer vector tests
 			auto ptrfunc1 = [this] { pointor.PopBack(); };
 			Assert::ExpectException<std::exception>(ptrfunc1, L"PopBack on empty vector should throw an exception");
 			
@@ -577,7 +652,7 @@ namespace TestLibraryDesktop
 			Assert::AreEqual(2U, pointor.Size(), L"Vector Size not reducing after valid pop Back");
 
 
-			/// Foo vector tests
+			// Foo vector tests
 			auto foofunc1 = [this] { footor.PopBack(); };
 			Assert::ExpectException<std::exception>(foofunc1, L"PopBack on empty vector should throw an exception");
 			
@@ -597,7 +672,7 @@ namespace TestLibraryDesktop
 			intor.Reserve(10);
 			intor.PushBack(1);
 			intor.PopBack();
-			/// Int vector tests
+			// Int vector tests
 			Assert::IsTrue(intor.Size() == 0, L"Size not zero on empty vector");
 			
 			intor.PushBack(1);
@@ -610,7 +685,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(constIntor.Size() == 0);
 
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			Assert::IsTrue(pointor.Size() == 0, L"Size not zero on empty vector");
 
 			int x = 1;
@@ -624,7 +699,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(constPointor.Size() == 0);
 
 
-			/// Foo vector tests
+			// Foo vector tests
 			Assert::IsTrue(footor.Size() == 0, L"Size not zero on empty vector");
 			Foo foo(1);
 			footor.PushBack(foo);
@@ -639,7 +714,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestCapacity)
 		{
-			/// Int vector tests
+			// Int vector tests
 			Library::Vector<int> newintvector;
 			Assert::AreEqual(10U, newintvector.Capacity(), L"New Vector should have a Capacity of 10");
 			
@@ -662,7 +737,7 @@ namespace TestLibraryDesktop
 			}
 			
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			Library::Vector<int> newptrvector;
 			Assert::AreEqual(10U, newptrvector.Capacity(), L"New Vector should have a Capacity of 10");
 			
@@ -688,7 +763,7 @@ namespace TestLibraryDesktop
 			}
 
 
-			/// Foo vector tests
+			// Foo vector tests
 			Library::Vector<int> newfoovector;
 			Assert::AreEqual(10U, newfoovector.Capacity(), L"New Vector should have a Capacity of 10");
 			
@@ -716,7 +791,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestIsEmpty)
 		{
-			/// Int vector tests
+			// Int vector tests
 			const auto constIntor1(intor);
 			Assert::IsTrue(intor.IsEmpty(), L"Cleared vector should be empty");
 			Assert::IsTrue(constIntor1.IsEmpty());
@@ -732,7 +807,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(constIntor3.IsEmpty());
 
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			const auto constPointor1(pointor);
 			Assert::IsTrue(pointor.IsEmpty(), L"Cleared vector should be empty");
 			Assert::IsTrue(constPointor1.IsEmpty());
@@ -749,7 +824,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(constPointor3.IsEmpty());
 
 
-			/// Foo vector tests
+			// Foo vector tests
 			const auto constFootor1(footor);
 			Assert::IsTrue(footor.IsEmpty(), L"Cleared vector should be empty");
 			Assert::IsTrue(constFootor1.IsEmpty());
@@ -768,7 +843,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestPushBack)
 		{
-			/// Int vector tests
+			// Int vector tests
 			intor.PushBack(1);
 			Assert::IsTrue(intor.Back() == 1, L"Value pushed to Back does not match");
 			Assert::IsTrue(*intor.begin() == 1, L"First value pushed Back is not equivalent to begin");
@@ -777,7 +852,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(intor.Back() == 2, L"Second value pushed Back is not equivalent to begin");
 
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			int x = 1;
 			int y = 2;
 			pointor.PushBack(&x);
@@ -788,7 +863,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(pointor.Back() == &y, L"Second value pushed Back is not equivalent to begin");
 
 
-			/// Foo vector tests
+			// Foo vector tests
 			Foo foo(1);
 			Foo bar(2);
 			footor.PushBack(foo);
@@ -801,7 +876,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestReserve)
 		{
-			/// Int vector tests
+			// Int vector tests
 			Assert::IsTrue(intor.Capacity() == 0, L"Vector Capacity should be zero on Clear");
 			
 			intor.Reserve(100);
@@ -819,7 +894,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(intor.Capacity() == 10, L"Reserving smaller than current Size should shrink to fit");
 
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			Assert::IsTrue(pointor.Capacity() == 0, L"Vector Capacity should be zero on Clear");
 			
 			pointor.Reserve(100);
@@ -838,7 +913,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(intor.Capacity() == 10, L"Reserving smaller than current Size should shrink to fit");
 
 
-			/// Foo vector tests
+			// Foo vector tests
 			Assert::IsTrue(footor.Capacity() == 0, L"Vector Capacity should be zero on Clear");
 			
 			footor.Reserve(100);
@@ -858,7 +933,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestClear)
 		{
-			/// Int vector tests
+			// Int vector tests
 			intor.PushBack(1);
 			Assert::IsTrue(intor.Size() == 1, L"Size incorrect after pushing first value");
 			
@@ -867,7 +942,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(intor.Capacity() == 0, L"Capacity not zero after Clear");
 
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			int x = 1;
 			pointor.PushBack(&x);
 			Assert::IsTrue(pointor.Size() == 1, L"Size incorrect after pushing first value");
@@ -877,7 +952,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(pointor.Capacity() == 0, L"Capacity not zero after Clear");
 
 
-			/// Foo vector tests
+			// Foo vector tests
 			Foo foo(1);
 			footor.PushBack(foo);
 			Assert::IsTrue(footor.Size() == 1, L"Size incorrect after pushing first value");
@@ -889,7 +964,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestRemove)
 		{
-			/// Int vector tests
+			// Int vector tests
 			intor.PushBack(1);
 			intor.Remove(1);
 			Assert::IsTrue(intor.Size() == 0, L"Size not reducing after removing a value");
@@ -899,7 +974,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(intor.Size() == 1, L"Size changing after removing a nonexistent value");
 
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			int x = 1;
 			int y = 2;
 			pointor.PushBack(&x);
@@ -911,7 +986,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(pointor.Size() == 1, L"Size changing after removing a nonexistent value");
 
 
-			/// Foo vector tests
+			// Foo vector tests
 			Foo foo(1);
 			Foo bar(2);
 			footor.PushBack(foo);
@@ -925,7 +1000,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestShrinkToFit)
 		{
-			/// Int vector tests
+			// Int vector tests
 			intor.PushBack(1);
 			intor.PushBack(2);
 			intor.PushBack(3);
@@ -939,7 +1014,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(intor.Capacity() == 0, L"Capacity should be 0 after shrinking to fit on empty vector");
 
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			int x = 1;
 			int y = 2;
 			int z = 3;
@@ -956,7 +1031,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(pointor.Capacity() == 0, L"Capacity should be 3 after shrinking to fit on empty vector");
 
 
-			/// Foo vector tests
+			// Foo vector tests
 			Foo foo(1);
 			Foo bar(2);
 			Foo gar(3);
@@ -975,7 +1050,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestIteratorComparisonOperator)
 		{
-			/// int vector tests
+			// int vector tests
 			auto iter = intor.begin();
 			const auto iterCopy(iter);
 			Assert::IsTrue(iter == intor.begin(), L"Iterator should be equivalent to the value it was assigned to");
@@ -996,7 +1071,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(newIterCopy == newiter);
 
 
-			/// pointer vector tests
+			// pointer vector tests
 			auto piter = pointor.begin();
 			const auto piterCopy(piter);
 			Assert::IsTrue(piter == pointor.begin(), L"Iterator should be equivalent to the value it was assigned to");
@@ -1018,7 +1093,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(newpiterCopy == newpiter);
 
 
-			/// foo vector tests
+			// foo vector tests
 			auto fooiter = footor.begin();
 			const auto fooiterCopy(fooiter);
 			Assert::IsTrue(fooiter == footor.begin(), L"Iterator should be equivalent to the value it was assigned to");
@@ -1042,14 +1117,14 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestIteratorIncrement)
 		{
-			/// int vector tests
+			// int vector tests
 			intor.PushBack(1);
 			auto iter = intor.begin();
 			Assert::IsFalse(iter == intor.end(), L"Iterator assigned to begin on a non-empty vector should not be equivalent to end");
 			Assert::IsTrue(++iter == intor.end(), L"Incrementing an iterator on a Size of one vector should be equivalent to end");
 			
 
-			/// pointer vector tests
+			// pointer vector tests
 			int x = 1;
 			pointor.PushBack(&x);
 			auto piter = pointor.begin();
@@ -1057,7 +1132,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(++piter == pointor.end(), L"Incrementing an piterator on a Size of one vector should be equivalent to end");
 
 
-			/// foo vector tests
+			// foo vector tests
 			Foo foo(1);
 			footor.PushBack(foo);
 			auto fooiter = footor.begin();
@@ -1067,7 +1142,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestIteratorDereference)
 		{
-			/// Int vector tests
+			// Int vector tests
 			auto iter = intor.begin();
 			auto func1 = [&] { *iter; };
 			Assert::ExpectException<std::exception>(func1, L"Dereferencing begin on an empty vector should throw an exception");
@@ -1083,7 +1158,7 @@ namespace TestLibraryDesktop
 			Assert::ExpectException<std::exception>(func1, L"Dereferencing end of a vector should throw an exception");
 
 
-			/// Pointer vector tests
+			// Pointer vector tests
 			auto piter = pointor.begin();
 			auto func2 = [&] { *piter; };
 			Assert::ExpectException<std::exception>(func2, L"Dereferencing begin on an empty vector should throw an exception");
@@ -1100,7 +1175,7 @@ namespace TestLibraryDesktop
 			Assert::ExpectException<std::exception>(func2, L"Dereferencing end of a vector should throw an exception");
 
 
-			/// Foo vector tests
+			// Foo vector tests
 			auto fooiter = footor.begin();
 			auto func3 = [&] { *fooiter; };
 			Assert::ExpectException<std::exception>(func3, L"Dereferencing begin on an empty vector should throw an exception");

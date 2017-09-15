@@ -46,7 +46,8 @@ namespace Library
 	}
 
 	template <class T>
-	Vector<T>::Vector(Vector<T>&& rhs) noexcept
+	Vector<T>::Vector(Vector<T>&& rhs) noexcept :
+		mBuffer(nullptr), mSize(0), mCapacity(0), mFixedSize(false)
 	{
 		operator=(std::move(rhs));
 	}
@@ -58,6 +59,7 @@ namespace Library
 		{
 			Clear();
 
+			free(mBuffer);
 			mBuffer = rhs.mBuffer;
 			mSize = rhs.mSize;
 			mCapacity = rhs.mCapacity;
@@ -155,7 +157,7 @@ namespace Library
 	template <typename T>
 	T& Vector<T>::operator[](const std::uint32_t& index)
 	{
-		if (index >= mSize) throw std::exception("Index out of bounds");
+		if (index >= mSize) { throw std::exception("Index out of bounds"); }
 		return *(mBuffer + index);
 	}
 
@@ -209,7 +211,10 @@ namespace Library
 	template <typename T>
 	void Vector<T>::Reserve(std::uint32_t capacity)
 	{
-		if (capacity < mSize) capacity = mSize;
+		if (capacity < mSize)
+		{
+			capacity = mSize;
+		}
 		
 		T* temp = mBuffer;
 		mBuffer = static_cast<T*>(malloc(sizeof(T) * capacity));
@@ -222,6 +227,11 @@ namespace Library
 	template <typename T>
 	void Vector<T>::Clear()
 	{
+		if (mBuffer == nullptr)
+		{
+			return;
+		}
+
 		if (!IsEmpty())
 		{
 			while (mSize > 0)
@@ -229,6 +239,7 @@ namespace Library
 				PopBack();
 			}
 		}
+
 		ShrinkToFit();
 	}
 
@@ -258,7 +269,10 @@ namespace Library
 	template <class T>
 	void Vector<T>::ShrinkToFit()
 	{
-		if (!mFixedSize) Reserve(mSize);
+		if (!mFixedSize)
+		{
+			Reserve(mSize);
+		}
 	}
 
 

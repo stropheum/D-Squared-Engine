@@ -32,7 +32,7 @@ namespace Library
 
 		HashMap(HashMap<TKey, TValue, HashFunctor>&& rhs) noexcept;
 
-		HashMap<TKey, TValue, HashFunctor>& operator=(const HashMap<TKey, TValue, HashFunctor>&& rhs) ;
+		HashMap<TKey, TValue, HashFunctor>& operator=(HashMap<TKey, TValue, HashFunctor>&& rhs) ;
 
 #pragma endregion
 

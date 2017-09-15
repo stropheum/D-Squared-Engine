@@ -17,14 +17,8 @@ namespace Library
 		mBucketCount(rhs.mBucketCount), mBuckets(rhs.mBuckets), mSize(rhs.mSize)
 	{}
 
-	template <typename TKey, typename TValue, class HashFunctor>
-	HashMap<TKey, TValue, HashFunctor>::HashMap(HashMap<TKey, TValue, HashFunctor>&& rhs) noexcept
-	{
-		operator=(std::move(rhs));
-	}
-
 	template <typename TKey, typename TValue, typename HashFunctor>
-	HashMap<TKey, TValue, HashFunctor>& 
+	HashMap<TKey, TValue, HashFunctor>&
 		HashMap<TKey, TValue, HashFunctor>::operator=(const HashMap<TKey, TValue, HashFunctor>& rhs)
 	{
 		if (this != &rhs)
@@ -38,15 +32,23 @@ namespace Library
 	}
 
 	template <typename TKey, typename TValue, class HashFunctor>
-	HashMap<TKey, TValue, HashFunctor>& HashMap<TKey, TValue, HashFunctor>::operator=(const HashMap<TKey, TValue, HashFunctor>&& rhs)
+	HashMap<TKey, TValue, HashFunctor>::HashMap(HashMap<TKey, TValue, HashFunctor>&& rhs) noexcept :
+		mBucketCount(0), mHashFunctor(), mBuckets(), mSize(0)
+	{
+		operator=(std::move(rhs));
+	}
+
+	template <typename TKey, typename TValue, class HashFunctor>
+	HashMap<TKey, TValue, HashFunctor>& HashMap<TKey, TValue, HashFunctor>::operator=(HashMap<TKey, TValue, HashFunctor>&& rhs)
 	{
 		mBuckets = std::move(rhs.mBuckets);
+		mSize = rhs.mSize;
 		mBucketCount = rhs.mBucketCount;
 		mHashFunctor = rhs.mHashFunctor;
 
-		rhs.mBuckets = nullptr;
+		rhs.mBuckets.Clear();
+		rhs.mSize = 0;
 		rhs.mBucketCount = 0;
-		rhs.mHashFunctor = nullptr;
 
 		return *this;
 	}

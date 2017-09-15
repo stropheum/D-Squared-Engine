@@ -161,7 +161,10 @@
 	x Missing a few blocks, but with the deep-copy fixes in place, your tests don't fail (currently they do).
 
 9 - Attributed
-	- In order to properly implement move semantics in Attributed, you have to implement move semantics for all supporting classes (Scope, Hashmap, and Vector).
+	- In order to properly implement move semantics in Attributed, you have to implement move semantics for all supporting classes 
+		- Scope
+		x Hashmap 
+		x Vector
 
 	- Anywhere that takes strings, should use const string references (instead of copies). 
 

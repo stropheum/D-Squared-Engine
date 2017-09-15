@@ -40,6 +40,12 @@ namespace Library
 		bool operator==(const Vector<T>& rhs) const;
 
 		/**
+		 * Negated comparison operator
+		 * @Param rhs: Vector being compared against
+		 */
+		bool operator!=(const Vector<T>& rhs) const;
+
+		/**
 		 * Finds a value in the Vector, if it exists
 		 * @Param value: Value being searched for
 		 * @Return: An iterator pointing to the value if it exists, end() otherwise
