@@ -289,20 +289,20 @@ namespace Library
 		 * @Param Size: the new number of values
 		 * @Exception: Thrown if attempting to resize external data
 		 */
-		void SetSize(const std::uint32_t& size);
+		void SetSize(const std::uint32_t& size) const;
 
 		/**
 		 * Reserve additional Capacity for uninitialized values
 		 * @Param Capacity: The number of possible elements that the array will be able to hold
 		 * @Exception: Thrown if attempting to resize external storage
 		 */
-		void Reserve(const std::uint32_t& capacity);
+		void Reserve(const std::uint32_t& capacity) const;
 
 		/**
 		 * Clear the array without shrinking the Capacity
 		 * @Exception: Thrown if trying to Clear with an invalid Type Set
 		 */
-		void Clear();
+		void Clear() const;
 
 		/**
 		 * Sets the external storage to the specified int32_t*
@@ -471,7 +471,7 @@ namespace Library
 		 * @Param index: The location being Set to. Default is 0
 		 * @Exception: Thrown if syntax is invalid
 		 */
-		void SetFromString(const std::string& value, const std::uint32_t& index = 0);
+		void SetFromString(const std::string& value, const std::uint32_t& index = 0) const;
 
 		/**
 		 * A string representation of a piece of data stored in the Datum object
@@ -509,6 +509,25 @@ namespace Library
 		std::uint32_t mSize; // The current number of elements in the Datum object
 		bool mDataIsExternal; // True if data is stored externally of the Datum object
 	};
-}
 
-#include "Datum.inl"
+	template<> std::int32_t& Datum::Get(const std::uint32_t& index);
+	template<> const std::int32_t& Datum::Get(const std::uint32_t& index) const;
+
+	template<> float& Datum::Get(const std::uint32_t& index);
+	template<> const float& Datum::Get(const std::uint32_t& index) const;
+
+	template<> glm::vec4& Datum::Get(const std::uint32_t& index);
+	template<> const glm::vec4& Datum::Get(const std::uint32_t& index) const;
+
+	template<> glm::mat4& Datum::Get(const std::uint32_t& index);
+	template<> const glm::mat4& Datum::Get(const std::uint32_t& index) const;
+
+	template<> Scope*& Datum::Get(const std::uint32_t& index);
+	template<> Scope* const& Datum::Get(const std::uint32_t& index) const;
+
+	template<> std::string& Datum::Get(const std::uint32_t& index);
+	template<> const std::string& Datum::Get(const std::uint32_t& index) const;
+
+	template<> RTTI*& Datum::Get(const std::uint32_t& index);
+	template<> RTTI* const& Datum::Get(const std::uint32_t& index) const;
+}
