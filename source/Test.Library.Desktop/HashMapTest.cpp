@@ -78,7 +78,7 @@ namespace TestLibraryDesktop
 			fooMap.Clear();
 
 			initializeLeakDetection();
-			
+
 			x = 1;
 			y = 2;
 			z = 3;
@@ -174,8 +174,8 @@ namespace TestLibraryDesktop
 			Assert::AreEqual(strMap.Size(), strcopy2.Size(), L"HashMap sizes not equal");
 			Assert::IsFalse(strMap.begin() == strMap.end(), L"begin of non-empty HashMap equals end");
 			Assert::IsFalse(strcopy2.begin() == strcopy2.end(), L"begin of non-empty HashMap equals end");
-			
-			
+
+
 			// foo tests
 			Library::HashMap<Foo, int> foocopy1(fooMap);
 			Assert::IsTrue(fooMap.Size() == foocopy1.Size(), L"HashMap sizes not equal");
@@ -189,68 +189,159 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestAssignmentOperator)
 		{
-			// int tests
-			Library::HashMap<int, int> intcopy1;
-			intcopy1 = intMap;
+			Library::HashMap<int, int> intcopy1 = intMap;
 			Assert::IsTrue(intMap.Size() == intcopy1.Size(), L"HashMap sizes not equal");
 
 			intMap.Insert(std::pair<int, int>(1, 1));
-			Library::HashMap<int, int> intcopy2;
-			intcopy2 = intMap;
+			Library::HashMap<int, int> intcopy2 = intMap;
 			Assert::AreEqual(intMap.Size(), intcopy2.Size(), L"HashMap sizes not equal");
 			Assert::IsFalse(intMap.begin() == intMap.end(), L"begin of non-empty HashMap equals end");
 			Assert::IsFalse(intcopy2.begin() == intcopy2.end(), L"begin of non-empty HashMap equals end");
 
-			// pointer tests
-			Library::HashMap<int*, int> ptrcopy1;
-			ptrcopy1 = ptrMap;
+			Library::HashMap<int*, int> ptrcopy1 = ptrMap;
 			Assert::IsTrue(ptrMap.Size() == ptrcopy1.Size(), L"HashMap sizes not equal");
 
 			ptrMap.Insert(std::pair<int*, int>(&x, 1));
-			Library::HashMap<int*, int> ptrcopy2;
-			ptrcopy2 = ptrMap;
+			Library::HashMap<int*, int> ptrcopy2 = ptrMap;
 			Assert::AreEqual(ptrMap.Size(), ptrcopy2.Size(), L"HashMap sizes not equal");
 			Assert::IsFalse(ptrMap.begin() == ptrMap.end(), L"begin of non-empty HashMap equals end");
 			Assert::IsFalse(ptrcopy2.begin() == ptrcopy2.end(), L"begin of non-empty HashMap equals end");
 
 
-			// char* tests
-			Library::HashMap<char*, int> chrcopy1;
-			chrcopy1 = chrMap;
+			Library::HashMap<char*, int> chrcopy1 = chrMap;
 			Assert::IsTrue(chrMap.Size() == chrcopy1.Size(), L"HashMap sizes not equal");
 
 			chrMap.Insert(std::pair<char*, int>(a, 1));
-			Library::HashMap<char*, int> chrcopy2;
-			chrcopy2 = chrMap;
+			Library::HashMap<char*, int> chrcopy2 = chrMap;
 			Assert::AreEqual(chrMap.Size(), chrcopy2.Size(), L"HashMap sizes not equal");
 			Assert::IsFalse(chrMap.begin() == chrMap.end(), L"begin of non-empty HashMap equals end");
 			Assert::IsFalse(chrcopy2.begin() == chrcopy2.end(), L"begin of non-empty HashMap equals end");
 
 
-			// string tests
-			Library::HashMap<std::string, int> strcopy1;
-			strcopy1 = strMap;
+			Library::HashMap<std::string, int> strcopy1 = strMap;
 			Assert::IsTrue(strMap.Size() == strcopy1.Size(), L"HashMap sizes not equal");
 
 			strMap.Insert(std::pair<std::string, int>(s, 1));
-			Library::HashMap<std::string, int> strcopy2;
-			strcopy2 = strMap;
+			Library::HashMap<std::string, int> strcopy2 = strMap;
 			Assert::AreEqual(strMap.Size(), strcopy2.Size(), L"HashMap sizes not equal");
 			Assert::IsFalse(strMap.begin() == strMap.end(), L"begin of non-empty HashMap equals end");
 			Assert::IsFalse(strcopy2.begin() == strcopy2.end(), L"begin of non-empty HashMap equals end");
 
 
-			// foo tests
-			Library::HashMap<Foo, int> foocopy1;
-			foocopy1 = fooMap;
+			Library::HashMap<Foo, int> foocopy1 = fooMap;
 			Assert::IsTrue(fooMap.Size() == foocopy1.Size(), L"HashMap sizes not equal");
 
 			fooMap.Insert(std::pair<Foo, int>(foo, 1));
-			Library::HashMap<Foo, int> foocopy2;
-			foocopy2 = fooMap;
+			Library::HashMap<Foo, int> foocopy2 = fooMap;
 			Assert::AreEqual(fooMap.Size(), foocopy2.Size(), L"HashMap sizes not equal");
 			Assert::IsFalse(fooMap.begin() == fooMap.end(), L"begin of non-empty HashMap equals end");
 			Assert::IsFalse(foocopy2.begin() == foocopy2.end(), L"begin of non-empty HashMap equals end");
+		}
+
+		TEST_METHOD(TestMoveSemantics)
+		{
+			{	// int tests
+				Library::HashMap<int, int> map;
+				for (int i = 0; i < 5; i++)
+				{
+					map[i] = i;
+				}
+
+				Assert::AreEqual(5u, map.Size());
+
+				Library::HashMap<int, int> newMap = std::move(map);
+				Assert::AreEqual(0u, map.Size());
+				Assert::AreEqual(5u, newMap.Size());
+
+				for (int i = 0; i < 5; i++)
+				{
+					Assert::AreEqual(i, newMap[i]);
+				}
+			}
+
+			{	// pointer tests
+				int values[5] = { 1, 2, 3, 4, 5 };
+
+				Library::HashMap<int*, int> map;
+				for (int i = 0; i < 5; i++)
+				{
+					map[&values[i]] = i;
+				}
+
+				Assert::AreEqual(5u, map.Size());
+
+				Library::HashMap<int*, int> newMap = std::move(map);
+				Assert::AreEqual(0u, map.Size());
+				Assert::AreEqual(5u, newMap.Size());
+
+				for (int i = 0; i < 5; i++)
+				{
+					Assert::AreEqual(i, newMap[&values[i]]);
+				}
+			}
+
+			{	// char* tests
+				Library::HashMap<char*, int> map;
+				char* values[5] = { "1", "2", "3", "4", "5" };
+
+				for (int i = 0; i < 5; i++)
+				{
+					map[values[i]] = i;
+				}
+
+				Assert::AreEqual(5u, map.Size());
+
+				Library::HashMap<char*, int> newMap = std::move(map);
+				Assert::AreEqual(0u, map.Size());
+				Assert::AreEqual(5u, newMap.Size());
+
+				for (int i = 0; i < 5; i++)
+				{
+					Assert::AreEqual(i, newMap[values[i]]);
+				}
+			}
+
+			{	// string tests
+				Library::HashMap<std::string, int> map;
+				std::string values[5] = { "one", "two", "three", "four", "five" };
+
+				for (int i = 0; i < 5; i++)
+				{
+					map[values[i]] = i;
+				}
+
+				Assert::AreEqual(5u, map.Size());
+
+				Library::HashMap<std::string, int> newMap = std::move(map);
+				Assert::AreEqual(0u, map.Size());
+				Assert::AreEqual(5u, newMap.Size());
+
+				for (int i = 0; i < 5; i++)
+				{
+					Assert::AreEqual(i, newMap[values[i]]);
+				}
+			}
+
+			{	// foo tests
+				Library::HashMap<Foo, int> map;
+				Foo values[5] = { Foo(1), Foo(2), Foo(3), Foo(4), Foo(5) };
+
+				for (int i = 0; i < 5; i++)
+				{
+					map[values[i]] = i;
+				}
+
+				Assert::AreEqual(5u, map.Size());
+
+				Library::HashMap<Foo, int> newMap = std::move(map);
+				Assert::AreEqual(0u, map.Size());
+				Assert::AreEqual(5u, newMap.Size());
+
+				for (int i = 0; i < 5; i++)
+				{
+					Assert::AreEqual(i, newMap[values[i]]);
+				}
+			}
 		}
 
 		TEST_METHOD(TestFind)
@@ -296,19 +387,19 @@ namespace TestLibraryDesktop
 			// int tests
 			auto intInsert = intMap.Insert(std::pair<int, int>(1, 1));
 			Assert::IsTrue(intInsert == intMap.begin(), L"Inserting first element should return begin");
-			
+
 			intMap.Insert(std::pair<int, int>(10, 1));
 			Assert::IsTrue(intMap.ContainsKey(10), L"Key doesn't exist after inserting");
 
-			
+
 			// pointer tests
 			auto ptrInsert = ptrMap.Insert(std::pair<int*, int>(&x, 1));
 			Assert::IsTrue(ptrInsert == ptrMap.begin(), L"Inserting first element should return begin");
-			
+
 			ptrMap.Insert(std::pair<int*, int>(&y, 1));
 			Assert::IsTrue(ptrMap.ContainsKey(&y), L"Key doesn't exist after inserting");
 
-			
+
 			// char* tests
 			auto chrInsert = chrMap.Insert(std::pair<char*, int>(a, 1));
 			Assert::IsTrue(chrInsert == chrMap.begin(), L"Inserting first element should return begin");
@@ -336,17 +427,17 @@ namespace TestLibraryDesktop
 		{
 			// int tests
 			Assert::IsFalse(intMap.ContainsKey(1), L"Empty HashMap should not contain any keys");
-			
+
 			std::uint32_t intMapSize = intMap.Size();
 			intMap.Insert(std::pair<const int, int>(1, 1));
 			Assert::IsTrue(intMap.ContainsKey(1), L"Key doesn't exist in HashMap after inserting");
 			Assert::AreNotEqual(intMapSize, intMap.Size(), L"Size not changing after inserting into HashMap");
-			
+
 			intMapSize = intMap.Size();
 			intMap.Remove(1);
 			Assert::IsFalse(intMap.ContainsKey(1), L"Key still exists in HashMap after removing");
 			Assert::AreNotEqual(intMapSize, intMap.Size(), L"Size not changing after removing from HashMap");
-			
+
 			intMapSize = intMap.Size();
 			intMap.Remove(1);
 			Assert::AreEqual(intMapSize, intMap.Size(), L"Size should not change after removing non-existent key");
@@ -686,10 +777,10 @@ namespace TestLibraryDesktop
 		{
 			// int tests
 			Assert::AreEqual(intMap.Size(), 0U, L"Length of empty HashMap should be zero");
-			
+
 			intMap.Insert(std::pair<int, int>(1, 1));
 			Assert::AreEqual(intMap.Size(), 1U, L"Size should be one after inserting one item");
-			
+
 			intMap.Insert(std::pair<int, int>(2, 2));
 			Assert::AreEqual(intMap.Size(), 2U, L"Size should increase when adding a value");
 
@@ -841,7 +932,7 @@ namespace TestLibraryDesktop
 			// int tests
 			auto interator_1(intMap.begin());
 			Assert::IsTrue(interator_1 == intMap.begin() && interator_1 == intMap.end(), L"Iterator copy should be equivalent to begin and end of empty HashMap");
-			
+
 			intMap.Insert(std::pair<int, int>(1, 1));
 			auto interator_2(intMap.begin());
 			Assert::IsTrue(interator_2 == intMap.begin() && interator_2 != intMap.end(), L"Iterator copy should be equivalent to only the value it's assigned to");
@@ -1006,9 +1097,9 @@ namespace TestLibraryDesktop
 			intMap.Insert(std::pair<int, int>(1, 1));
 			intMap.Insert(std::pair<int, int>(2, 2));
 			auto interator = intMap.begin();
-			Assert::IsTrue(interator == intMap.begin() && ++interator != intMap.end(), 
+			Assert::IsTrue(interator == intMap.begin() && ++interator != intMap.end(),
 				L"Incrementing past first element should not return end when other items exist");
-			Assert::IsTrue(++interator == intMap.end() && ++interator == intMap.end(), 
+			Assert::IsTrue(++interator == intMap.end() && ++interator == intMap.end(),
 				L"Incrementing past end should still return end");
 
 
@@ -1016,9 +1107,9 @@ namespace TestLibraryDesktop
 			ptrMap.Insert(std::pair<int*, int>(&x, 1));
 			ptrMap.Insert(std::pair<int*, int>(&y, 2));
 			auto pointerator = ptrMap.begin();
-			Assert::IsTrue(pointerator == ptrMap.begin() && ++pointerator != ptrMap.end(), 
+			Assert::IsTrue(pointerator == ptrMap.begin() && ++pointerator != ptrMap.end(),
 				L"Incrementing past first element should not return end when other items exist");
-			Assert::IsTrue(++pointerator == ptrMap.end() && ++pointerator == ptrMap.end(), 
+			Assert::IsTrue(++pointerator == ptrMap.end() && ++pointerator == ptrMap.end(),
 				L"Incrementing past end should still return end");
 
 
@@ -1026,9 +1117,9 @@ namespace TestLibraryDesktop
 			chrMap.Insert(std::pair<char*, int>(a, 1));
 			chrMap.Insert(std::pair<char*, int>(b, 2));
 			auto charterator = chrMap.begin();
-			Assert::IsTrue(charterator == chrMap.begin() && ++charterator != chrMap.end(), 
+			Assert::IsTrue(charterator == chrMap.begin() && ++charterator != chrMap.end(),
 				L"Incrementing past first element should not return end when other items exist");
-			Assert::IsTrue(++charterator == chrMap.end() && ++charterator == chrMap.end(), 
+			Assert::IsTrue(++charterator == chrMap.end() && ++charterator == chrMap.end(),
 				L"Incrementing past end should still return end");
 
 
@@ -1036,9 +1127,9 @@ namespace TestLibraryDesktop
 			strMap.Insert(std::pair<std::string, int>(s, 1));
 			strMap.Insert(std::pair<std::string, int>(t, 2));
 			auto stringerator = strMap.begin();
-			Assert::IsTrue(stringerator == strMap.begin() && ++stringerator != strMap.end(), 
+			Assert::IsTrue(stringerator == strMap.begin() && ++stringerator != strMap.end(),
 				L"Incrementing past first element should not return end when other items exist");
-			Assert::IsTrue(++stringerator == strMap.end() && ++stringerator == strMap.end(), 
+			Assert::IsTrue(++stringerator == strMap.end() && ++stringerator == strMap.end(),
 				L"Incrementing past end should still return end");
 
 
@@ -1046,17 +1137,17 @@ namespace TestLibraryDesktop
 			fooMap.Insert(std::pair<Foo, int>(foo, 1));
 			fooMap.Insert(std::pair<Foo, int>(bar, 2));
 			auto footerator = fooMap.begin();
-			Assert::IsTrue(footerator == fooMap.begin() && ++footerator != fooMap.end(), 
+			Assert::IsTrue(footerator == fooMap.begin() && ++footerator != fooMap.end(),
 				L"Incrementing past first element should not return end when other items exist");
-			Assert::IsTrue(++footerator == fooMap.end() && ++footerator == fooMap.end(), 
+			Assert::IsTrue(++footerator == fooMap.end() && ++footerator == fooMap.end(),
 				L"Incrementing past end should still return end");
 		}
 
 		TEST_METHOD(TestIteratorDereferenceOperator)
 		{
 			// int tests
-			auto intFunc = [&]{ *intMap.begin(); };
-			Assert::ExpectException<std::exception>(intFunc, 
+			auto intFunc = [&] { *intMap.begin(); };
+			Assert::ExpectException<std::exception>(intFunc,
 				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			intMap.Insert(std::pair<int, int>(1, 1));
@@ -1066,7 +1157,7 @@ namespace TestLibraryDesktop
 
 			// pointer tests
 			auto ptrFunc = [&] { *ptrMap.begin(); };
-			Assert::ExpectException<std::exception>(ptrFunc, 
+			Assert::ExpectException<std::exception>(ptrFunc,
 				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			ptrMap.Insert(std::pair<int*, int>(&x, 1));
@@ -1076,7 +1167,7 @@ namespace TestLibraryDesktop
 
 			// char* tests
 			auto chrFunc = [&] { *chrMap.begin(); };
-			Assert::ExpectException<std::exception>(chrFunc, 
+			Assert::ExpectException<std::exception>(chrFunc,
 				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			chrMap.Insert(std::pair<char*, int>(a, 1));
@@ -1086,7 +1177,7 @@ namespace TestLibraryDesktop
 
 			// string tests
 			auto strFunc = [&] { *strMap.begin(); };
-			Assert::ExpectException<std::exception>(strFunc, 
+			Assert::ExpectException<std::exception>(strFunc,
 				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			strMap.Insert(std::pair<std::string, int>(s, 1));
@@ -1096,7 +1187,7 @@ namespace TestLibraryDesktop
 
 			// foo tests
 			auto fooFunc = [&] { *fooMap.begin(); };
-			Assert::ExpectException<std::exception>(fooFunc, 
+			Assert::ExpectException<std::exception>(fooFunc,
 				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			fooMap.Insert(std::pair<Foo, int>(foo, 1));
@@ -1108,17 +1199,17 @@ namespace TestLibraryDesktop
 		{
 			// int tests
 			auto intFunc = [&] { *intMap.begin(); };
-			Assert::ExpectException<std::exception>(intFunc, 
+			Assert::ExpectException<std::exception>(intFunc,
 				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			intMap.Insert(std::pair<int, int>(1, 1));
-			Assert::AreEqual(1,  intMap.begin()->first, L"Dereferencing iterator does not yield accurate key");
+			Assert::AreEqual(1, intMap.begin()->first, L"Dereferencing iterator does not yield accurate key");
 			Assert::AreEqual(1, intMap.begin()->second, L"Dereferencing iterator does not yield accurate value");
 
 
 			// pointer tests
 			auto ptrFunc = [&] { *ptrMap.begin(); };
-			Assert::ExpectException<std::exception>(ptrFunc, 
+			Assert::ExpectException<std::exception>(ptrFunc,
 				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			ptrMap.Insert(std::pair<int*, int>(&x, 1));
@@ -1128,7 +1219,7 @@ namespace TestLibraryDesktop
 
 			// char* tests
 			auto chrFunc = [&] { *chrMap.begin(); };
-			Assert::ExpectException<std::exception>(chrFunc, 
+			Assert::ExpectException<std::exception>(chrFunc,
 				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			chrMap.Insert(std::pair<char*, int>(a, 1));
@@ -1138,7 +1229,7 @@ namespace TestLibraryDesktop
 
 			// string tests
 			auto strFunc = [&] { *strMap.begin(); };
-			Assert::ExpectException<std::exception>(strFunc, 
+			Assert::ExpectException<std::exception>(strFunc,
 				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			strMap.Insert(std::pair<std::string, int>(s, 1));
@@ -1148,7 +1239,7 @@ namespace TestLibraryDesktop
 
 			// foo tests
 			auto fooFunc = [&] { *fooMap.begin(); };
-			Assert::ExpectException<std::exception>(fooFunc, 
+			Assert::ExpectException<std::exception>(fooFunc,
 				L"Exception should be thrown when attempting to dereference end of HashMap");
 
 			fooMap.Insert(std::pair<Foo, int>(foo, 1));
