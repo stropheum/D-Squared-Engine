@@ -137,28 +137,28 @@
 
 	x Initialize the mData union member (to nullptr). 
 
-	- It's unclear why you moved away from placement new for strings? Use std::to_string and std::stof and stoi for conversions.
+	x It's unclear why you moved away from placement new for strings? Use std::to_string and std::stof and stoi for conversions.
 
-	- Your memory leak detection is broken because you are wrapping that code in a #if of _Debug and the preprocessor define is _DEBUG. Case matters. 
+	x Your memory leak detection is broken because you are wrapping that code in a #if of _Debug and the preprocessor define is _DEBUG. Case matters. 
 
-	- You have a broken unit test that fails after the first run. TestAssignmentOperator.
+	x You have a broken unit test that fails after the first run. TestAssignmentOperator.
 
 8 - Scope
 	- virtual ~Scope(); Your assignment operator should include a self-assignment test. Your assignment operator must call Clear before copying. You must also deep-copy child scopes. As you have it, you are aliasing a Scope pointer (which is ungood). Do something like: Scope& Scope::operator=(const Scope& rhs) { if (this != &rhs) { clear(); mVector.reserve(rhs.mVector.size()); for (auto& it : mVector) { auto& existingPair = *it; Datum& existingDatum = const_cast<Datum&>(existingPair.second); Datum& newDatum = append(existingPair.first); if (existingDatum.type() == DatumType::Scope) { newDatum.setType(DatumType::Scope); newDatum.reserve(existingDatum.size()); for (uint32_t i = 0; i < existingDatum.size(); ++i) { Scope* scope = new Scope(*existingDatum.get<Scope*>(i)); scope->mParent = this; newDatum.pushBack(scope); } } else { newDatum = existingDatum; } } } return *this; } 
 
-	- Your == operator for ScopeState must be implemented. As you have it, comparisons for Scope's with child Scopes, throws an exception. 
+	x Your == operator for ScopeState must be implemented. As you have it, comparisons for Scope's with child Scopes, throws an exception. 
 
-	- appendScope must _always_ set the newly created Scope as a child to "this" Scope. Scope::orphan could be dereferencing nullptr.
+	x appendScope must _always_ set the newly created Scope as a child to "this" Scope. Scope::orphan could be dereferencing nullptr.
 
-	- You need const versions of all of Datum's get methods. 
+	x You need const versions of all of Datum's get methods. 
 
-	- append() should not call find on the order vector after (possibly) adding an entry through HashMap::insert. Instead, have an overloaded HashMap::insert that returns a output parameter bool -- for if a value was actually inserted -- and use that to test (with no search cost). 
+	x append() should not call find on the order vector after (possibly) adding an entry through HashMap::insert. Instead, have an overloaded HashMap::insert that returns a output parameter bool -- for if a value was actually inserted -- and use that to test (with no search cost). 
 
-	- appendScope should not do a "double find" when it needs to create a new entry in the hashmap. 
+	x appendScope should not do a "double find" when it needs to create a new entry in the hashmap. 
 
-	- Scope::orphan should verify that the passed in child Scope is actually parented by "this".
+	x Scope::orphan should verify that the passed in child Scope is actually parented by "this".
 
-	- Missing a few blocks, but with the deep-copy fixes in place, your tests don't fail (currently they do).
+	x Missing a few blocks, but with the deep-copy fixes in place, your tests don't fail (currently they do).
 
 9 - Attributed
 	- In order to properly implement move semantics in Attributed, you have to implement move semantics for all supporting classes (Scope, Hashmap, and Vector).
