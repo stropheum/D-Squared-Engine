@@ -174,21 +174,27 @@
 
 	x Your current implementation of move semantics is incorrect. 
 
-	- populate is incorrectly assigning an initialValue when the signature indicates the use of external storage. Furthermore, it's repeatedly overwriting the zeroth index of the appended datum. 
+	x populate is incorrectly assigning an initialValue when the signature indicates the use of external storage. Furthermore, it's repeatedly overwriting the zeroth index of the appended datum. 
 
-	- isPrescribedAttribute and isAuxililaryAttribute should be be testing if the attribute exists in the scope.
+	x isPrescribedAttribute and isAuxililaryAttribute should be be testing if the attribute exists in the scope.
 
-	- Signature's ctors should be in the .cpp file (not the header). 
+	x Signature's ctors should be in the .cpp file (not the header). 
 
-	- No need to keep a vector of signatures for mAuxiliaryAttributes. It's never used. 
+	x No need to keep a vector of signatures for mAuxiliaryAttributes. It's never used. 
 
-	- Attributed& Attributed::operator=(const Attributed& rhs) should just invoke the vector assignment operator, for copying mPrescribedAttributes. 
+	x Attributed& Attributed::operator=(const Attributed& rhs) should just invoke the vector assignment operator, for copying mPrescribedAttributes. 
 
-	- Within populate, don't make a copy of each signature -- use references. 
+	x Within populate, don't make a copy of each signature -- use references. 
 
-	- getSignature is unused. Remove it.
+	x getSignature is unused. Remove it.
 
-	- You've commented out memory leak detection. Need RTTI tests. Need tests for move semantics. Need to test prescribed attributes of type pointer.
+	x You've commented out memory leak detection. 
+
+	- Need RTTI tests. 
+
+	- Need tests for move semantics. 
+
+	- Need to test prescribed attributes of type pointer.
 
 10 - Xml Parse Master
 	- XmlParseMaster::endElementHandler and XmlParseMaster::charDataHandler are incomplete. They should be iterating through the list of helpers and calling their respective methods.

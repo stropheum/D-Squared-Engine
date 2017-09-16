@@ -1,7 +1,5 @@
 #pragma once
 #include "Scope.h"
-#include <glm/detail/type_vec4.hpp>
-#include <glm/mat4x2.hpp>
 
 
 namespace Library
@@ -82,14 +80,7 @@ namespace Library
 			 * There are constructor overloads for each Type of data, where InitialValue and storage will be Set uniquely
 			 */
 			Signature(const std::string name, const DatumType type,
-				const std::uint32_t size, std::int32_t* storage):
-				Name(name), Type(type), Size(size)
-			{
-				if (storage != nullptr)
-				{
-					Storage.i = storage;
-				}
-			}
+				const std::uint32_t size, std::int32_t* storage);
 
 			/**
 			 * Constructor For the float signature Type
@@ -101,14 +92,7 @@ namespace Library
 			 * There are constructor overloads for each Type of data, where InitialValue and storage will be Set uniquely
 			 */
 			Signature(const std::string name, const DatumType type,
-				const std::uint32_t size, float* const storage) :
-				Name(name), Type(type), Size(size)
-			{
-				if (storage != nullptr)
-				{
-					Storage.f = storage;
-				}
-			}
+				const std::uint32_t size, float* const storage);
 
 			/**
 			 * Constructor For the vector signature Type
@@ -120,14 +104,7 @@ namespace Library
 			 * There are constructor overloads for each Type of data, where InitialValue and storage will be Set uniquely
 			 */
 			Signature(const std::string name, const DatumType type,
-				const std::uint32_t size, glm::vec4* const storage) :
-				Name(name), Type(type), Size(size)
-			{
-				if (storage != nullptr)
-				{
-					Storage.v = storage;
-				}
-			}
+				const std::uint32_t size, glm::vec4* const storage);
 
 			/**
 			 * Constructor For the matrix signature Type
@@ -139,14 +116,7 @@ namespace Library
 			 * There are constructor overloads for each Type of data, where InitialValue and storage will be Set uniquely
 			 */
 			Signature(const std::string name, const DatumType type,
-				const std::uint32_t size, glm::mat4* const storage) :
-				Name(name), Type(type), Size(size)
-			{
-				if (storage != nullptr)
-				{
-					Storage.m = storage;
-				}
-			}
+				const std::uint32_t size, glm::mat4* const storage);
 
 			/**
 			 * Constructor For the string signature Type
@@ -158,14 +128,7 @@ namespace Library
 			 * There are constructor overloads for each Type of data, where InitialValue and storage will be Set uniquely
 			 */
 			Signature(const std::string name, const DatumType type,
-				const std::uint32_t size, std::string* const storage) :
-				Name(name), Type(type), Size(size)
-			{
-				if (storage != nullptr)
-				{
-					Storage.s = storage;
-				}
-			}
+				const std::uint32_t size, std::string* const storage);
 
 			/**
 			 * Constructor For the scope signature Type
@@ -176,14 +139,7 @@ namespace Library
 			 * There are constructor overloads for each Type of data, where InitialValue and storage will be Set uniquely
 			 */
 			Signature(const std::string name, const DatumType type,
-				const std::uint32_t size, Scope** const storage):
-				Name(name), Type(type), Size(size)
-			{
-				if (storage != nullptr)
-				{
-					Storage.sc = storage;
-				}
-			}
+				const std::uint32_t size, Scope** const storage);
 
 			/**
 			 * Constructor For the RTTI pointer signature Type
@@ -194,14 +150,7 @@ namespace Library
 			 * There are constructor overloads for each Type of data, where InitialValue and storage will be Set uniquely
 			 */
 			Signature(const std::string name, const DatumType type,
-				const std::uint32_t size, RTTI** const storage) :
-				Name(name), Type(type), Size(size)
-			{
-				if (storage != nullptr)
-				{
-					Storage.r = storage;
-				}
-			}
+				const std::uint32_t size, RTTI** const storage);
 
 			std::string Name;
 			DatumType Type;
@@ -212,21 +161,12 @@ namespace Library
 
 #pragma endregion
 
-	private:
-#pragma region Private Methods
-
-		Signature& GetSignature(const std::string& name);
-
-#pragma endregion
-
 	protected:
 #pragma region Protected Variables
 
 		// This vector is used for populating prescribed attributes in children of attributed
 		Vector<Signature> mPrescribedAttributes;
 
-		// This vector is used for populating auxiliary attributes in children of Attributed
-		Vector<Signature> mAuxiliaryAttributes;
 #pragma endregion
 
 	};
