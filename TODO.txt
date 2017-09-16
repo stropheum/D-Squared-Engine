@@ -161,12 +161,12 @@
 	x Missing a few blocks, but with the deep-copy fixes in place, your tests don't fail (currently they do).
 
 9 - Attributed
-	- In order to properly implement move semantics in Attributed, you have to implement move semantics for all supporting classes 
+	x In order to properly implement move semantics in Attributed, you have to implement move semantics for all supporting classes 
 		x Scope
 		x Hashmap 
 		x Vector
 
-	- Anywhere that takes strings, should use const string references (instead of copies). 
+	x Anywhere that takes strings, should use const string references (instead of copies). 
 
 	- "this" should be considered a prescribed attributes. Within the assignment operator, you have the following: if (rhs.mPrescribedAttributes.size() > 1) { // We only do a copy if there is more than the "this" pointer stored for (std::uint32_t i = 1; i < rhs.mPrescribedAttributes.size(); i++) { mPrescribedAttributes.pushBack(rhs.mPrescribedAttributes[i]); } } Which includes a comment as if "this" was included in mPrescribedAttributes. It is not. It could be, but it currently isn't. So you have a bug that won't copy the list of prescribed attributes if you only have a single prescribed attribute. 
 

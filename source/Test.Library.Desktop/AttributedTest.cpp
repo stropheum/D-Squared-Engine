@@ -123,6 +123,13 @@ namespace TestLibraryDesktop
 			myFoo_OG["External String"] = myStr;
 
 			Library::AttributedFoo myFoo_CPY(std::move(myFoo_OG));
+
+			Assert::IsTrue(myFoo_OG.Find("External Integer") == nullptr);
+			Assert::IsTrue(myFoo_OG.Find("External Float") == nullptr);
+			Assert::IsTrue(myFoo_OG.Find("External Vector") == nullptr);
+			Assert::IsTrue(myFoo_OG.Find("External Matrix") == nullptr);
+			Assert::IsTrue(myFoo_OG.Find("External String") == nullptr);
+
 			Assert::IsTrue(myFoo_CPY["External Integer"] == myInt);
 			Assert::IsTrue(myFoo_CPY["External Float"] == myFloat);
 			Assert::IsTrue(myFoo_CPY["External Vector"] == myVec);

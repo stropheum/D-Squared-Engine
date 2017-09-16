@@ -46,27 +46,32 @@ namespace Library
 		return *this;
 	}
 
-	Attributed::Attributed(Attributed&& rhs) noexcept
+	Attributed::Attributed(Attributed&& rhs) noexcept :
+		Scope(), mPrescribedAttributes(), mAuxiliaryAttributes() 
 	{
-		operator=(rhs);
+		(*this)["this"] = static_cast<RTTI*>(this);
+		operator=(move(rhs));
 	}
 
 	Attributed& Attributed::operator=(Attributed&& rhs) noexcept
 	{
 		if (this != &rhs)
 		{
-			(*this)["this"] = static_cast<RTTI*>(this);
-			
-			if (rhs.mPrescribedAttributes.Size() > 1)
-			{	// We only do a copy if there is more than the "this" pointer stored
-				for (uint32_t i = 1; i < rhs.mPrescribedAttributes.Size(); i++)
-				{
-					Adopt(rhs[i][0], mPrescribedAttributes[i].Name);
-				}
-			}
-
-			rhs.mPrescribedAttributes.Clear();
-			rhs.mAuxiliaryAttributes.Clear();
+			Scope::operator=(move(rhs));
+			mPrescribedAttributes = move(rhs.mPrescribedAttributes);
+			mAuxiliaryAttributes = move(rhs.mAuxiliaryAttributes);
+//			(*this)["this"] = static_cast<RTTI*>(this);
+//			
+//			if (rhs.mPrescribedAttributes.Size() > 1)
+//			{	// We only do a copy if there is more than the "this" pointer stored
+//				for (uint32_t i = 1; i < rhs.mPrescribedAttributes.Size(); i++)
+//				{
+//					Adopt(rhs[i][0], mPrescribedAttributes[i].Name);
+//				}
+//			}
+//
+//			rhs.mPrescribedAttributes.Clear();
+//			rhs.mAuxiliaryAttributes.Clear();
 		}
 		return *this;
 	}

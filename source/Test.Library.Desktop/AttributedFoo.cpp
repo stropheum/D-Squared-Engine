@@ -5,6 +5,8 @@
 #include "glm/mat4x4.hpp"
 
 
+using namespace std;
+
 namespace Library
 {
 	Datum::DatumValues* storage;
@@ -64,14 +66,22 @@ namespace Library
 		return (*this);
 	}
 
-	AttributedFoo::AttributedFoo(AttributedFoo&& rhs):
-		Attributed::Attributed(std::move(rhs))
+	AttributedFoo::AttributedFoo(AttributedFoo&& rhs) noexcept :
+		Attributed(move(rhs))
 	{
-		operator=(std::move(rhs));
-	}
+		mInt = move(rhs.mInt);
+		mFloat = move(rhs.mFloat);
+		mVector = move(rhs.mVector);
+		mMatrix = move(rhs.mMatrix);
+		mString = move(rhs.mString);
+		mScope = move(rhs.mScope);
 
-	AttributedFoo& AttributedFoo::operator=(AttributedFoo&& rhs)
-	{
+		iArray = move(rhs.iArray);
+		fArray = move(rhs.fArray);
+		vArray = move(rhs.vArray);
+		mArray = move(rhs.mArray);
+		sArray = move(rhs.sArray);
+
 		(*this)["External Integer"].SetStorage(&mInt, 1u);
 		(*this)["External Float"].SetStorage(&mFloat, 1u);
 		(*this)["External Vector"].SetStorage(&mVector, 1u);
@@ -84,19 +94,6 @@ namespace Library
 		(*this)["External Matrix Array"].SetStorage(mArray, 10u);
 		(*this)["External String Array"].SetStorage(sArray, 10u);
 
-		mInt = rhs.mInt;
-		mFloat = rhs.mFloat;
-		mVector = rhs.mVector;
-		mMatrix = rhs.mMatrix;
-		mString = rhs.mString;
-		mScope = rhs.mScope;
-
-		iArray = rhs.iArray;
-		fArray = rhs.fArray;
-		vArray = rhs.vArray;
-		mArray = rhs.mArray;
-		sArray = rhs.sArray;
-
 		rhs.mInt = 0;
 		rhs.mFloat = 0.0f;
 		rhs.mVector = glm::vec4(0);
@@ -107,6 +104,50 @@ namespace Library
 		rhs.vArray = nullptr;
 		rhs.mArray = nullptr;
 		rhs.sArray = nullptr;
+	}
+
+	AttributedFoo& AttributedFoo::operator=(AttributedFoo&& rhs) noexcept
+	{
+		if (this != &rhs)
+		{
+			Attributed::operator=(move(rhs));
+
+			mInt = move(rhs.mInt);
+			mFloat = move(rhs.mFloat);
+			mVector = move(rhs.mVector);
+			mMatrix = move(rhs.mMatrix);
+			mString = move(rhs.mString);
+			mScope = move(rhs.mScope);
+
+			iArray = move(rhs.iArray);
+			fArray = move(rhs.fArray);
+			vArray = move(rhs.vArray);
+			mArray = move(rhs.mArray);
+			sArray = move(rhs.sArray);
+
+			(*this)["External Integer"].SetStorage(&mInt, 1u);
+			(*this)["External Float"].SetStorage(&mFloat, 1u);
+			(*this)["External Vector"].SetStorage(&mVector, 1u);
+			(*this)["External Matrix"].SetStorage(&mMatrix, 1u);
+			(*this)["External String"].SetStorage(&mString, 1u);
+
+			(*this)["External Integer Array"].SetStorage(iArray, 10u);
+			(*this)["External Float Array"].SetStorage(fArray, 10u);
+			(*this)["External Vector Array"].SetStorage(vArray, 10u);
+			(*this)["External Matrix Array"].SetStorage(mArray, 10u);
+			(*this)["External String Array"].SetStorage(sArray, 10u);
+
+			rhs.mInt = 0;
+			rhs.mFloat = 0.0f;
+			rhs.mVector = glm::vec4(0);
+			rhs.mMatrix = glm::mat4(0);
+			rhs.mString = "";
+			rhs.iArray = nullptr;
+			rhs.fArray = nullptr;
+			rhs.vArray = nullptr;
+			rhs.mArray = nullptr;
+			rhs.sArray = nullptr;
+		}
 
 		return (*this);
 	}

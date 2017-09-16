@@ -1,5 +1,7 @@
 #pragma once
 #include "Scope.h"
+#include <glm/detail/type_vec4.hpp>
+#include <glm/mat4x2.hpp>
 
 
 namespace Library
@@ -60,8 +62,6 @@ namespace Library
 		 * @Return: A reference to the Datum created from the appended attribute
 		 */
 		Datum& AppendAuxiliaryAttribute(const std::string& name);
-
-		Vector<std::pair<std::string, Datum>> GetAuxilliaryAttributes() const;
 
 #pragma endregion
 
