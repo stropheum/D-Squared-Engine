@@ -162,7 +162,7 @@
 
 9 - Attributed
 	- In order to properly implement move semantics in Attributed, you have to implement move semantics for all supporting classes 
-		- Scope
+		x Scope
 		x Hashmap 
 		x Vector
 

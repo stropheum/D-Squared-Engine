@@ -58,6 +58,25 @@ namespace Library
 		return *this;
 	}
 
+	Scope::Scope(Scope&& rhs) noexcept :
+		mMap(), mVector(), mParent(nullptr)
+	{
+		operator=(move(rhs));
+	}
+
+	Scope& Scope::operator=(Scope&& rhs) noexcept
+	{
+		if (this != &rhs)
+		{
+			Clear();
+			mMap = move(rhs.mMap);
+			mVector = move(rhs.mVector);
+			mParent = rhs.mParent;
+		}
+		
+		return *this;
+	}
+
 	Scope::~Scope()
 	{
 		Clear();
@@ -69,8 +88,14 @@ namespace Library
 
 	Datum* Scope::Find(const string& key)
 	{
-		auto iter = mMap.Find(key);
-		Datum* result = (iter != mMap.end()) ? &(*iter).second : nullptr;
+		Datum* result = nullptr;
+
+		if (mMap.Size() > 0)
+		{
+			auto iter = mMap.Find(key);
+			result = (iter != mMap.end()) ? &(*iter).second : nullptr;
+		}
+
 		return result;
 	}
 

@@ -2,6 +2,12 @@
 #include "CppUnitTest.h"
 #include "Scope.h"
 #include "Datum.h"
+#define CLM_FORCE_CXX98
+#pragma warning(push)
+#pragma warning(disable:4201)
+#include "glm/glm.hpp"
+#include "glm/gtx/string_cast.hpp"
+#pragma warning(pop)
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -69,6 +75,72 @@ namespace TestLibraryDesktop
 
 			s1.Append("Datum? I hardly knew um");
 			Assert::IsFalse(s1 == s2 || s1 == s3);
+		}
+
+		TEST_METHOD(TestMoveSemantics)
+		{
+			Library::Scope scope;
+
+			glm::vec4 vector(1, 1, 1, 1);
+			glm::mat4 matrix(vector, vector, vector, vector);
+			Library::Scope* childScope = new Library::Scope();
+
+			scope["Int"] = 5;
+			scope["Float"] = 5.0f;
+			scope["String"] = "Five";
+			scope["Vector"] = vector;
+			scope["Matrix"] = matrix;
+			scope["Scope"] = childScope;
+
+			Assert::IsTrue(scope["Int"] == 5);
+			Assert::IsTrue(scope["Float"] == 5.0f);
+			Assert::IsTrue(scope["String"] == "Five");
+			Assert::IsTrue(scope["Vector"] == vector);
+			Assert::IsTrue(scope["Matrix"] == matrix);
+			Assert::IsTrue(scope["Scope"] == childScope);
+
+			Assert::IsTrue(scope.Find("Int") != nullptr);
+			Assert::IsTrue(scope.Find("Float") != nullptr);
+			Assert::IsTrue(scope.Find("String") != nullptr);
+			Assert::IsTrue(scope.Find("Vector") != nullptr);
+			Assert::IsTrue(scope.Find("Matrix") != nullptr);
+			Assert::IsTrue(scope.Find("Scope") != nullptr);
+
+			Library::Scope newScope;
+
+			// New scope shouldn't have these keys yet
+			Assert::IsTrue(newScope.Find("Int") == nullptr);
+			Assert::IsTrue(newScope.Find("Float") == nullptr);
+			Assert::IsTrue(newScope.Find("String") == nullptr);
+			Assert::IsTrue(newScope.Find("Vector") == nullptr);
+			Assert::IsTrue(newScope.Find("Matrix") == nullptr);
+			Assert::IsTrue(newScope.Find("Scope") == nullptr);
+
+			newScope = std::move(scope);
+
+			// Old scope shouldn't find our keys anymore
+			Assert::IsTrue(scope.Find("Int") == nullptr);
+			Assert::IsTrue(scope.Find("Float") == nullptr);
+			Assert::IsTrue(scope.Find("String") == nullptr);
+			Assert::IsTrue(scope.Find("Vector") == nullptr);
+			Assert::IsTrue(scope.Find("Matrix") == nullptr);
+			Assert::IsTrue(scope.Find("Scope") == nullptr);
+
+			// New scope should find our keys now
+			Assert::IsTrue(newScope.Find("Int") != nullptr);
+			Assert::IsTrue(newScope.Find("Float") != nullptr);
+			Assert::IsTrue(newScope.Find("String") != nullptr);
+			Assert::IsTrue(newScope.Find("Vector") != nullptr);
+			Assert::IsTrue(newScope.Find("Matrix") != nullptr);
+			Assert::IsTrue(newScope.Find("Scope") != nullptr);
+
+			// New scope should have the values associated with old scope
+			Assert::IsTrue(newScope["Int"] == 5);
+			Assert::IsTrue(newScope["Float"] == 5.0f);
+			Assert::IsTrue(newScope["String"] == "Five");
+			Assert::IsTrue(newScope["Vector"] == vector);
+			Assert::IsTrue(newScope["Matrix"] == matrix);
+			Assert::IsTrue(newScope["Scope"] == childScope);
 		}
 
 		TEST_METHOD(TestFind)

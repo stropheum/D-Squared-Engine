@@ -23,9 +23,9 @@ namespace Library
 
 		Scope& operator=(const Scope& rhs);
 
-		Scope(Scope&& rhs) = delete;
+		Scope(Scope&& rhs) noexcept;
 
-		Scope& operator=(Scope&& rhs) = delete;
+		Scope& operator=(Scope&& rhs) noexcept;
 
 #pragma endregion
 
