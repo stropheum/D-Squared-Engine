@@ -4,6 +4,7 @@
 #include "Vector.h"
 #include "DefaultHash.h"
 
+
 namespace Library
 {
 	template <typename TKey, typename TValue, class HashFunctor=DefaultHash<TKey>> class HashMap

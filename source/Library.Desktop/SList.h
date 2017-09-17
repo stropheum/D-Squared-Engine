@@ -1,15 +1,7 @@
 #pragma once
 #include <cstdint>
 
-/**
- * @Class SList: Singularly-Linked List
- * @Author: Dale Diaz
- *
- * An implementation of linked list which allows for dynamic adding of template items 
- * Items can be added indefinitely, ensured to be of the template Type, and are only 
- * exposed via method calls to Front and Back, which return references to the data At 
- * those respective nodes, and dereferencing and iterator object    
- */
+
 namespace Library
 {
 	template <class T> class SList

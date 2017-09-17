@@ -3,6 +3,7 @@
 #include "RTTI.h"
 #include "WorldState.h"
 
+
 namespace Library
 {
 	class SharedDataScope : public XmlParseMaster::SharedData

@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <string>
 
+
 namespace Library
 {
 	template <class T> class DefaultHash

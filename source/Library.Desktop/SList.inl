@@ -1,6 +1,7 @@
 #pragma once
 #include <exception>
 
+
 namespace Library
 {
 	template <typename T>

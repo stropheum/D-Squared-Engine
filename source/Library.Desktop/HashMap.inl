@@ -2,6 +2,7 @@
 #include <cstdint>
 #include "Vector.h"
 
+
 namespace Library
 {
 	template <typename TKey, typename TValue, typename HashFunctor>

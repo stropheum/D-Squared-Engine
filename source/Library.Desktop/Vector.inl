@@ -2,6 +2,7 @@
 #include <new>
 #include <cstdint>
 
+
 namespace Library
 {
 	template <typename T>

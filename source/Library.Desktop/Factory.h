@@ -1,6 +1,7 @@
 #pragma once
 #include "HashMap.h"
 
+
 namespace Library
 {
 	template <class AbstractProduct> class Factory
