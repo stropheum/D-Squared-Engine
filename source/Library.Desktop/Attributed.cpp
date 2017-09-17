@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Attributed.h"
+#include "Signature.h"
 
 
 using namespace std;
@@ -7,8 +8,6 @@ using namespace std;
 namespace Library
 {
 	RTTI_DEFINITIONS(Attributed)
-
-#pragma region Constructors, Copy/Move semantics
 
 	Attributed::Attributed()
 	{
@@ -54,10 +53,6 @@ namespace Library
 		}
 		return *this;
 	}
-
-#pragma endregion
-
-#pragma region Public Methods
 
 	void Attributed::Populate()
 	{
@@ -156,70 +151,5 @@ namespace Library
 	{
 		return Append(name);
 	}
-
-	Attributed::Signature::Signature(const std::string name, const DatumType type, const std::uint32_t size, std::int32_t* storage) :
-		Name(name), Type(type), Size(size)
-	{
-		if (storage != nullptr)
-		{
-			Storage.i = storage;
-		}
-	}
-
-	Attributed::Signature::Signature(const std::string name, const DatumType type, const std::uint32_t size, float* const storage) :
-		Name(name), Type(type), Size(size)
-	{
-		if (storage != nullptr)
-		{
-			Storage.f = storage;
-		}
-	}
-
-	Attributed::Signature::Signature(const std::string name, const DatumType type, const std::uint32_t size, glm::vec4* const storage) :
-		Name(name), Type(type), Size(size)
-	{
-		if (storage != nullptr)
-		{
-			Storage.v = storage;
-		}
-	}
-
-	Attributed::Signature::Signature(const std::string name, const DatumType type, const std::uint32_t size, glm::mat4* const storage) :
-		Name(name), Type(type), Size(size)
-	{
-		if (storage != nullptr)
-		{
-			Storage.m = storage;
-		}
-	}
-
-	Attributed::Signature::Signature(const std::string name, const DatumType type, const std::uint32_t size, std::string* const storage) :
-		Name(name), Type(type), Size(size)
-	{
-		if (storage != nullptr)
-		{
-			Storage.s = storage;
-		}
-	}
-
-	Attributed::Signature::Signature(const std::string name, const DatumType type, const std::uint32_t size, Scope** const storage) :
-		Name(name), Type(type), Size(size)
-	{
-		if (storage != nullptr)
-		{
-			Storage.sc = storage;
-		}
-	}
-
-	Attributed::Signature::Signature(const std::string name, const DatumType type, const std::uint32_t size, RTTI** const storage) :
-		Name(name), Type(type), Size(size)
-	{
-		if (storage != nullptr)
-		{
-			Storage.r = storage;
-		}
-	}
-
-#pragma endregion
 
 }

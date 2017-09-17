@@ -133,6 +133,9 @@
     <Filter Include="Action\DestroyAction">
       <UniqueIdentifier>{329127d5-3dba-4cb5-abbf-65d904d80cb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Attributed\Signature">
+      <UniqueIdentifier>{abdaa229-2441-42aa-b945-b3aeeecc098a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -267,6 +270,9 @@
     <ClInclude Include="ActionEvent.h">
       <Filter>Reaction\ActionEvent</Filter>
     </ClInclude>
+    <ClInclude Include="Signature.h">
+      <Filter>Attributed\Signature</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Datum.cpp">
@@ -373,6 +379,9 @@
     </ClCompile>
     <ClCompile Include="ActionEvent.cpp">
       <Filter>Reaction\ActionEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="Signature.cpp">
+      <Filter>Attributed\Signature</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

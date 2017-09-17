@@ -222,6 +222,7 @@
     <ClInclude Include="ScopeState.h" />
     <ClInclude Include="Sector.h" />
     <ClInclude Include="SharedDataScope.h" />
+    <ClInclude Include="Signature.h" />
     <ClInclude Include="SList.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="StringState.h" />
@@ -271,6 +272,7 @@
     <ClCompile Include="ScopeState.cpp" />
     <ClCompile Include="Sector.cpp" />
     <ClCompile Include="SharedDataScope.cpp" />
+    <ClCompile Include="Signature.cpp" />
     <ClCompile Include="StringState.cpp" />
     <ClCompile Include="TypeState.cpp" />
     <ClCompile Include="VectorState.cpp" />
