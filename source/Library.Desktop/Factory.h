@@ -5,6 +5,7 @@ namespace Library
 {
 	template <class AbstractProduct> class Factory
 	{
+
 #pragma region Abstract base class API
 
 #pragma region ConcreteFactory Macro

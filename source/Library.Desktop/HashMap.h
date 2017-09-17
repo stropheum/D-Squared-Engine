@@ -1,7 +1,6 @@
 #pragma once
 #include <cstdint>
 #include <utility>
-#include <functional>
 #include "Vector.h"
 #include "DefaultHash.h"
 
@@ -18,6 +17,7 @@ namespace Library
 		static const uint32_t defaultBucketCount = 13; // If no Size is specified, number of buckets defaults to 13
 
 	public:
+
 		class Iterator;
 
 #pragma region Construction/Copy/Assignment
@@ -122,9 +122,11 @@ namespace Library
 		void InitializeBuckets();
 
 	public:
+
 		class Iterator
 		{
 			friend class HashMap;
+
 		public:
 
 			/**
@@ -220,6 +222,7 @@ namespace Library
 			const HashMap<TKey, TValue, HashFunctor>* mOwner;	// The HashMap that owns this Iterator
 			std::uint32_t mBucketIndex;							// The index into the Vector chain
 			typename Library::Vector<PairType>::Iterator mIter;	// The Iterator on the Vector of PairTypes that is currently being iterated on
+
 		};
 	};
 }

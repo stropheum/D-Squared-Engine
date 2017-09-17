@@ -92,6 +92,12 @@ namespace Library
 		return result;
 	}
 
+	template <class T>
+	bool Vector<T>::operator!=(const Vector<T>& rhs) const
+	{
+		return !(operator=(rhs));
+	}
+
 	template <typename T>
 	typename Vector<T>::Iterator Vector<T>::Find(const T& value) const
 	{

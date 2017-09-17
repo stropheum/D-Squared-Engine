@@ -4,8 +4,7 @@
 
 namespace Library
 {
-	class ActionList :
-		public Action
+	class ActionList : public Action
 	{
 		RTTI_DECLARATIONS(ActionList, Action)
 
@@ -40,6 +39,7 @@ namespace Library
 		 * @Return: A freshly instantiated action object
 		 */
 		class Action* CreateAction(const std::string& className, const std::string& instanceName);
+
 	};
 
 	// Macro for creating a factory for action list objects

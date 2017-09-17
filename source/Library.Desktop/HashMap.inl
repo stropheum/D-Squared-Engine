@@ -5,7 +5,7 @@
 namespace Library
 {
 	template <typename TKey, typename TValue, typename HashFunctor>
-	HashMap<TKey, TValue, HashFunctor>::HashMap(std::uint32_t bucketCount):
+	HashMap<TKey, TValue, HashFunctor>::HashMap(std::uint32_t bucketCount) :
 		mBucketCount(bucketCount), mBuckets(), mSize(0)
 	{	// HashMaps need to be constructed with At least one bucket, or nothing will be able to be stored
 		if (mBucketCount == 0) { throw std::exception("HashMap constructed with an invalid amount of buckets"); }
@@ -13,7 +13,7 @@ namespace Library
 	}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
-	HashMap<TKey, TValue, HashFunctor>::HashMap(const HashMap<TKey, TValue, HashFunctor>& rhs):
+	HashMap<TKey, TValue, HashFunctor>::HashMap(const HashMap<TKey, TValue, HashFunctor>& rhs) :
 		mBucketCount(rhs.mBucketCount), mBuckets(rhs.mBuckets), mSize(rhs.mSize)
 	{}
 
@@ -207,15 +207,18 @@ namespace Library
 
 	template <typename TKey, typename TValue, typename HashFunctor>
 	HashMap<TKey, TValue, HashFunctor>::Iterator::Iterator():
-		mOwner(nullptr), mBucketIndex(0), mIter(Library::Vector<PairType>::Iterator()) {}
+		mOwner(nullptr), mBucketIndex(0), mIter(Library::Vector<PairType>::Iterator()) 
+	{}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
 	HashMap<TKey, TValue, HashFunctor>::Iterator::Iterator(const Iterator& rhs) :
-		mOwner(rhs.mOwner), mBucketIndex(rhs.mBucketIndex), mIter(rhs.mIter) {}
+		mOwner(rhs.mOwner), mBucketIndex(rhs.mBucketIndex), mIter(rhs.mIter) 
+	{}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
 	HashMap<TKey, TValue, HashFunctor>::Iterator::Iterator(const HashMap<TKey, TValue, HashFunctor>* owner, const std::uint32_t& bucketIndex, typename Library::Vector<PairType>::Iterator iter) :
-		mOwner(owner), mBucketIndex(bucketIndex), mIter(iter) {}
+		mOwner(owner), mBucketIndex(bucketIndex), mIter(iter) 
+	{}
 
 	template <typename TKey, typename TValue, typename HashFunctor>
 	typename HashMap<TKey, TValue, HashFunctor>::Iterator& HashMap<TKey, TValue, HashFunctor>::Iterator::operator=(const Iterator& rhs)

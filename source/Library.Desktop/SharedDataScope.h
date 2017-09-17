@@ -5,8 +5,7 @@
 
 namespace Library
 {
-	class SharedDataScope :
-		public XmlParseMaster::SharedData
+	class SharedDataScope : public XmlParseMaster::SharedData
 	{
 		RTTI_DECLARATIONS(SharedDataScope, XmlParseMaster::SharedData)
 
@@ -49,6 +48,7 @@ namespace Library
 
 		Scope* mScope; // The scope data of this object
 		WorldState mWorldState;
+
 	};
 }
 

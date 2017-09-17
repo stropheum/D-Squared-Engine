@@ -4,9 +4,9 @@
 
 namespace Library
 {
-	class ActionCreateAction :
-		public Action
+	class ActionCreateAction : public Action
 	{
+
 	public:
 
 #pragma region Cosntruction/Copy/Assignment
@@ -46,6 +46,7 @@ namespace Library
 	private:
 
 		std::string mPrototype; // The Type of class being constructed
+
 	};
 
 	ActionFactory(ActionCreateAction)

@@ -64,10 +64,12 @@ namespace Library
 #pragma endregion
 
 	protected:
+
 #pragma region Signature
 	
 		class Signature
 		{
+
 		public:
 			
 			/**
@@ -157,11 +159,13 @@ namespace Library
 			std::uint32_t Size;
 			Datum::DatumValues InitialValue;
 			Datum::DatumValues Storage;
+
 		};
 
 #pragma endregion
 
 	protected:
+
 #pragma region Protected Variables
 
 		// This vector is used for populating prescribed attributes in children of attributed

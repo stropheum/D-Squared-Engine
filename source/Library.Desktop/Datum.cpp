@@ -7,11 +7,13 @@ using namespace std;
 namespace Library
 {
 	Datum::Datum() :
-		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false), mData()
+		mTypeState(nullptr), mType(DatumType::Unknown), mData(), 
+		mCapacity(0), mSize(0), mDataIsExternal(false)
 	{}
 
 	Datum::Datum(const DatumType& type) :
-		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false), mData()
+		mTypeState(nullptr), mType(DatumType::Unknown), mData(), 
+		mCapacity(0), mSize(0), mDataIsExternal(false)
 	{
 		SetType(type);
 		if (type != DatumType::Unknown) { Reserve(mCapacity); }
@@ -28,7 +30,8 @@ namespace Library
 	}
 
 	Datum::Datum(const Datum& rhs) :
-		mTypeState(nullptr), mType(DatumType::Unknown), mCapacity(0), mSize(0), mDataIsExternal(false), mData()
+		mTypeState(nullptr), mType(DatumType::Unknown), mData(), 
+		mCapacity(0), mSize(0), mDataIsExternal(false)
 	{
 		operator=(rhs); // Perform a deep copy of all the data
 	}

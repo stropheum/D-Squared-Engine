@@ -4,9 +4,9 @@
 
 namespace Library
 {
-	class ActionEvent final:
-		public Action
+	class ActionEvent final: public Action
 	{
+
 	public:
 
 #pragma region Construction/Copy/Assignment
@@ -54,6 +54,7 @@ namespace Library
 		 * @Param Delay: The Delay of the event
 		 */
 		void SetDelay(const std::int32_t& delay);
+
 	};
 
 	ActionFactory(ActionEvent)

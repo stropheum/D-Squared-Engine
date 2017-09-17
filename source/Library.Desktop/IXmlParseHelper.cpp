@@ -8,7 +8,7 @@ namespace Library
 {
 	RTTI_DEFINITIONS(IXmlParseHelper)
 
-	IXmlParseHelper::IXmlParseHelper(XmlParseMaster* const xmlParseMaster):
+	IXmlParseHelper::IXmlParseHelper(XmlParseMaster* const xmlParseMaster) :
 		mXmlParseMaster(xmlParseMaster), mValidElementName("")
 	{
 		if (mXmlParseMaster != nullptr)

@@ -8,7 +8,7 @@ namespace Library
 {
 	RTTI_DEFINITIONS(XmlParseHelperScope)
 
-	XmlParseHelperScope::XmlParseHelperScope():
+	XmlParseHelperScope::XmlParseHelperScope() :
 		mState(State::NotParsing), mMatrixName(""), mMatrixComponentCount(0), mScopeHasBeenInitialized(false)
 	{
 		for (uint32_t i = 0; i < 4; i++)

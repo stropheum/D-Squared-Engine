@@ -36,7 +36,7 @@ namespace Library
 		{
 			if (Is(T::TypeIdClass()))
 			{
-				return (T*)this;
+				return dynamic_cast<T*>(const_cast<RTTI*>(this));
 			}
 
 			return nullptr;

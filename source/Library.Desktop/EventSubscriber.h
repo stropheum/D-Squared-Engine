@@ -6,6 +6,7 @@ namespace Library
 {
 	class EventSubscriber
 	{
+
 	public:
 
 #pragma region Construction/Copy/Assignment
@@ -33,6 +34,7 @@ namespace Library
 	protected:
 
 		std::mutex mNotifyMutex; // Mutex to prevent multiple accesses to the event subscriber
+
 	};
 }
 

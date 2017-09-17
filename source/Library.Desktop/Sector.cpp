@@ -8,7 +8,7 @@ namespace Library
 {
 	RTTI_DEFINITIONS(Sector)
 
-		Sector::Sector()
+	Sector::Sector()
 	{
 		(*this)["Name"].SetStorage(&mName, 1);
 		(*this)["Entities"].SetType(DatumType::Scope);
@@ -43,7 +43,7 @@ namespace Library
 		world.Adopt(*this, mName);
 	}
 
-	World& Sector::GetWorld()
+	World& Sector::GetWorld() const
 	{
 		if (GetParent() == nullptr)
 		{

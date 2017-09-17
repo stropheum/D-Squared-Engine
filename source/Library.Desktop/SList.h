@@ -15,7 +15,9 @@ namespace Library
 	template <class T> class SList
 	{
 		class Node;
+
 	public:
+
 		class Iterator;
 
 #pragma region Construction/Copy/Assignment
@@ -131,6 +133,7 @@ namespace Library
 		class Iterator
 		{
 			friend class SList;
+
 		public:
 			
 			/**
@@ -191,6 +194,7 @@ namespace Library
 
 			const SList<T>* mOwner; // The container that owns this iterator
 			Node* mNode;			// The node that this iterator points to
+
 		};
 
 	private:

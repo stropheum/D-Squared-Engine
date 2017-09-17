@@ -7,8 +7,7 @@
 
 namespace Library
 {
-	class EventPublisher abstract :
-		public RTTI
+	class EventPublisher abstract : public RTTI
 	{
 		RTTI_DECLARATIONS(EventPublisher, RTTI)
 
@@ -77,6 +76,7 @@ namespace Library
 		std::chrono::milliseconds mMillisecondDelay;	// The amount of Delay assigned for this event
 		Vector<class EventSubscriber*>* mSubscriberList;	// The list of subscribers to Notify of This event Type
 		std::mutex* mSubscriberListMutex;	// Mutex to prevent concurrent access to the subscriber list on Deliver
+
 	};
 }
 

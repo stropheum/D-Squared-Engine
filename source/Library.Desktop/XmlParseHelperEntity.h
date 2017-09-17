@@ -3,10 +3,10 @@
 #include "HashMap.h"
 #include "IXmlParseHelper.h"
 
+
 namespace Library
 {
-	class XmlParseHelperEntity :
-		public IXmlParseHelper
+	class XmlParseHelperEntity : public IXmlParseHelper
 	{
 		RTTI_DECLARATIONS(XmlParseHelperEntity, IXmlParseHelper)
 
@@ -75,6 +75,7 @@ namespace Library
 		bool operator==(const XmlParseHelperEntity& rhs) const;
 
 	private:
+
 		enum State
 		{
 			NotParsing,
@@ -88,6 +89,7 @@ namespace Library
 			ParsingEntity,
 			ParsingAction
 		};
+
 		enum ActionType
 		{
 			GenericAction,
@@ -95,6 +97,7 @@ namespace Library
 			CreateAction,
 			DestroyAction
 		};
+
 		State mState;
 		State mPreviousState;
 		ActionType mActionSubType;
@@ -102,6 +105,7 @@ namespace Library
 		std::uint32_t mMatrixComponentCount;
 		std::string mMatrixComponents[4][4];
 		bool mScopeHasBeenInitialized;
+
 	};
 }
 

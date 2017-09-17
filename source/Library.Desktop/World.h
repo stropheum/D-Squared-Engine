@@ -7,8 +7,7 @@
 
 namespace Library
 {
-	class World final :
-		public Attributed
+	class World final : public Attributed
 	{
 		RTTI_DECLARATIONS(World, Attributed)
 
@@ -68,8 +67,10 @@ namespace Library
 		EventQueue& GetEventQueue();
 
 	private:
+
 		std::string mName; // The Name of the world
 		EventQueue mEventQueue;
+
 	};
 }
 

@@ -102,7 +102,10 @@ namespace Library
 	template <typename T>
 	T SList<T>::PopFront()
 	{
-		if (mFront == nullptr) { throw std::exception("Popping Front on null SList"); }
+		if (mFront == nullptr)
+		{
+			throw std::exception("Popping Front on null SList");
+		}
 
 		auto oldFront = mFront;
 		auto result = mFront->Data();

@@ -1,12 +1,14 @@
 #pragma once
 #include "TypeState.h"
 
+
 namespace Library
 {
 	class Scope;
-	class ScopeState :
-		public TypeState
+
+	class ScopeState : public TypeState
 	{
+
 	public:
 
 #pragma region Construction/Copy/Assignment
@@ -40,7 +42,7 @@ namespace Library
 		
 		/**
 		 * Sets the number of elements in the array
-		 * @param Size: The new number of elements in the array
+		 * @param size: The new number of elements in the array
 		 */
 		void SetSize(const std::uint32_t& size) override;
 		
@@ -49,5 +51,6 @@ namespace Library
 		 * @Param: The new potential number of elements in the array
 		 */
 		void Reserve(const std::uint32_t& capacity) override;
+
 	};
 }

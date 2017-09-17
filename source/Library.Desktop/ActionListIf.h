@@ -4,9 +4,9 @@
 
 namespace Library
 {
-	class ActionListIf :
-		public ActionList
+	class ActionListIf : public ActionList
 	{
+
 	public:
 
 #pragma region Construction/Copy/Assignment
@@ -62,6 +62,7 @@ namespace Library
 	private:
 
 		std::int32_t mCondition; /// The condition to determine which Set of action will be executed
+
 	};
 
 	ActionFactory(ActionListIf)
