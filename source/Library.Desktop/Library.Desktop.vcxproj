@@ -71,20 +71,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -103,10 +103,10 @@
     </Link>
     <Lib>
       <AdditionalDependencies>Expat.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\source\bin\$(PlatformName)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\source\bin\$(PlatformTarget)\$(Configuration)\</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\external\Expat\source\bin\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(Platform)\" /Y /I</Command>
+      <Command>xcopy "$(ProjectDir)..\..\external\Expat\source\bin\$(PlatformTarget)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(PlatformTarget)\" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -126,10 +126,10 @@
     </Link>
     <Lib>
       <AdditionalDependencies>Expat.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\source\bin\$(PlatformName)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\source\bin\$(PlatformTarget)\$(Configuration)\</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\external\Expat\source\bin\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(Platform)\" /Y /I</Command>
+      <Command>xcopy "$(ProjectDir)..\..\external\Expat\source\bin\$(PlatformTarget)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(PlatformTarget)\" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -154,10 +154,10 @@
       <AdditionalDependencies>Expat.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\source\bin\$(PlatformName)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\source\bin\$(PlatformTarget)\$(Configuration)\</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\external\Expat\source\bin\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(Platform)\" /Y /I</Command>
+      <Command>xcopy "$(ProjectDir)..\..\external\Expat\source\bin\$(PlatformTarget)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(PlatformTarget)\" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -180,10 +180,10 @@
     </Link>
     <Lib>
       <AdditionalDependencies>Expat.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\source\bin\$(PlatformName)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\Expat\source\bin\$(PlatformTarget)\$(Configuration)\</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\external\Expat\source\bin\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(Platform)\" /Y /I</Command>
+      <Command>xcopy "$(ProjectDir)..\..\external\Expat\source\bin\$(PlatformTarget)\$(Configuration)\Expat.pdb" "$(ProjectDir)..\..\build\bin\Library.Desktop\$(Configuration)\$(PlatformTarget)\" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
