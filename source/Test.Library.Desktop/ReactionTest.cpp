@@ -36,37 +36,14 @@ namespace TestLibraryDesktop
 		ActionListIfFactory mActionListIfFactory;
 		ActionIncrementFactory mActionIncrementFactory;
 
-//		// Sets up leak detection logic
-//		static void initializeLeakDetection()
-//		{
-//#if _DEBUG
-//			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
-//			_CrtMemCheckpoint(&sStartMemState);
-//#endif //_DEBUG
-//		}
-//
-//		// Detects if memory state has been corrupted
-//		static void finalizeLeakDetection()
-//		{
-//#if _DEBUG
-//			_CrtMemState endMemState, diffMemState;
-//			_CrtMemCheckpoint(&endMemState);
-//			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
-//			{
-//				_CrtMemDumpStatistics(&diffMemState);
-//				Assert::Fail(L"Memory Leaks!");
-//			}
-//#endif //_DEBUG
-//		}
-
-		TEST_METHOD_INITIALIZE(methodInitialize)
+		TEST_METHOD_INITIALIZE(InitializeMethod)
 		{
-			LeakDetector::InitializeLeakDetection();
+			LeakDetector::Initialize();
 		}
 
-		TEST_METHOD_CLEANUP(methodCleanup)
+		TEST_METHOD_CLEANUP(CleanupMethod)
 		{
-			LeakDetector::FinalizeLeakDetection();
+			LeakDetector::Finalize();
 		}
 
 		TEST_METHOD(TestReactionAttributed)
@@ -129,10 +106,10 @@ namespace TestLibraryDesktop
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(100)));
 			world->Update(worldState, gameTime);
 
-//			Assert::IsTrue(reaction1["Power"].Type() == DatumType::Integer);
-//			Assert::AreEqual(reaction1["Power"].Get<std::int32_t>(0), 100);
-//			Assert::IsTrue(reaction2["Power"].Type() == DatumType::Integer);
-//			Assert::AreEqual(reaction2["Power"].Get<std::int32_t>(0), 100);
+			Assert::IsTrue(reaction1["Power"].Type() == DatumType::Integer);
+			Assert::AreEqual(reaction1["Power"].Get<std::int32_t>(0), 100);
+			Assert::IsTrue(reaction2["Power"].Type() == DatumType::Integer);
+			Assert::AreEqual(reaction2["Power"].Get<std::int32_t>(0), 100);
 
 			delete world;
 		}
@@ -220,7 +197,6 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(ra2.As<ReactionAttributed>() != nullptr);
 		}
 
-//		static _CrtMemState sStartMemState;
 	};
-//	_CrtMemState ReactionTest::sStartMemState;
+
 }

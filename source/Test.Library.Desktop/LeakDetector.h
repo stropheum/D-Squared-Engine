@@ -23,9 +23,9 @@ namespace TestLibraryDesktop
 
 #pragma endregion
 
-		static void InitializeLeakDetection();
+		static void Initialize();
 
-		static void FinalizeLeakDetection();
+		static void Finalize();
 
 	private:
 

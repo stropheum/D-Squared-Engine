@@ -14,33 +14,12 @@ namespace TestLibraryDesktop
 		Library::SList<int>*  list;
 		Library::SList<int*>* pList;
 		Library::SList<Foo>*  fooList;
+
 	public:
-//		// Sets up leak detection logic
-//		static void initializeLeakDetection()
-//		{
-//#ifdef _Debug
-//			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
-//			_CrtMemCheckpoint(&sStartMemState);
-//#endif //_Debug
-//		}
-//		
-//		// Detects if memory state has been corrupted
-//		static void finalizeLeakDetection()
-//		{
-//#ifdef _Debug
-//			_CrtMemState endMemState, diffMemState;
-//			_CrtMemCheckpoint(&endMemState);
-//			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
-//			{
-//				_CrtMemDumpStatistics(&diffMemState);
-//				Assert::Fail(L"Memory Leaks!");
-//			}
-//#endif //_Debug
-//		}
 
 		TEST_METHOD_INITIALIZE(InitializeMethod)
 		{
-			LeakDetector::InitializeLeakDetection();
+			LeakDetector::Initialize();
 
 			list    = new Library::SList<int> ();
 			pList   = new Library::SList<int*>();
@@ -53,7 +32,7 @@ namespace TestLibraryDesktop
 			delete(pList);
 			delete(list);
 
-			LeakDetector::FinalizeLeakDetection();
+			LeakDetector::Finalize();
 		}
 
 		TEST_METHOD(TestPushPopFront)
@@ -747,9 +726,6 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(fooCompare, L"Find called on middle value equivalent with end");
 		}
 
-//	private:
-//		static _CrtMemState sStartMemState;
 	};
 
-//	_CrtMemState SListTest::sStartMemState;
 }

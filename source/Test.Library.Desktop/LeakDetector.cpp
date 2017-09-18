@@ -10,7 +10,7 @@ namespace TestLibraryDesktop
 
 	_CrtMemState LeakDetector::sStartMemState;
 
-	void LeakDetector::InitializeLeakDetection()
+	void LeakDetector::Initialize()
 	{
 #if _DEBUG
 		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
@@ -18,7 +18,7 @@ namespace TestLibraryDesktop
 #endif //_DEBUG
 	}
 
-	void LeakDetector::FinalizeLeakDetection()
+	void LeakDetector::Finalize()
 	{
 #if _DEBUG
 		_CrtMemState endMemState, diffMemState;

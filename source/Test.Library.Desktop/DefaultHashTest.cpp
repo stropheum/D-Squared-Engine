@@ -10,39 +10,17 @@ namespace TestLibraryDesktop
 {
 	TEST_CLASS(DefaultHashTest)
 	{
+
 	public:
 
-//		// Sets up leak detection logic
-//		static void initializeLeakDetection()
-//		{
-//#if _DEBUG
-//			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
-//			_CrtMemCheckpoint(&sStartMemState);
-//#endif //_Debug
-//		}
-//
-//		// Detects if memory state has been corrupted
-//		static void finalizeLeakDetection()
-//		{
-//#if _DEBUG
-//			_CrtMemState endMemState, diffMemState;
-//			_CrtMemCheckpoint(&endMemState);
-//			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
-//			{
-//				_CrtMemDumpStatistics(&diffMemState);
-//				Assert::Fail(L"Memory Leaks!");
-//			}
-//#endif //_DEBUG
-//		}
-
-		TEST_METHOD_INITIALIZE(methodInitialize)
+		TEST_METHOD_INITIALIZE(InitializeMethod)
 		{
-			LeakDetector::InitializeLeakDetection();
+			LeakDetector::Initialize();
 		}
 
-		TEST_METHOD_CLEANUP(methodCleanup)
+		TEST_METHOD_CLEANUP(CleanupMethod)
 		{
-			LeakDetector::FinalizeLeakDetection();
+			LeakDetector::Finalize();
 		}
 
 		TEST_METHOD(TestGenericHash)
@@ -99,9 +77,6 @@ namespace TestLibraryDesktop
 			delete foo;
 		}
 
-//	private:
-//		static _CrtMemState sStartMemState;
 	};
 
-//	_CrtMemState DefaultHashTest::sStartMemState;
 }

@@ -20,14 +20,14 @@ namespace TestLibraryDesktop
 	{
 	public:
 
-		TEST_METHOD_INITIALIZE(methodInitialize)
+		TEST_METHOD_INITIALIZE(InitializeMethod)
 		{
-			LeakDetector::InitializeLeakDetection();
+			LeakDetector::Initialize();
 		}
 
-		TEST_METHOD_CLEANUP(methodCleanup)
+		TEST_METHOD_CLEANUP(CleanupMethod)
 		{
-			LeakDetector::FinalizeLeakDetection();
+			LeakDetector::Finalize();
 			Event<Foo>::UnsubscribeAll();
 		}
 
@@ -275,7 +275,6 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(sub1.mValue == Foo(1) || sub1.mValue == Foo(2) || sub1.mValue == Foo(3) || sub1.mValue == Foo(4));
 		}
 
-//		static _CrtMemState sStartMemState;
 	};
-//	_CrtMemState EventTest::sStartMemState;
+
 }
