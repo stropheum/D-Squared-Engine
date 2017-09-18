@@ -5,8 +5,7 @@
 
 namespace Library
 {
-	template <typename Payload> class Event final :
-		public EventPublisher
+	template <typename Payload> class Event final : public EventPublisher
 	{
 		RTTI_DECLARATIONS(Event, EventPublisher)
 
@@ -56,6 +55,7 @@ namespace Library
 		Payload mPayload; // The object that will be carried to the event subscribers for this Type
 		static Vector<class EventSubscriber*> sSubscriberList; // The static list of event subscribers for this event Type
 		static std::mutex sSubscriberListMutex;
+
 	};
 }
 

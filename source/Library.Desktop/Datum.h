@@ -1,7 +1,4 @@
 #pragma once
-
-#include "RTTI.h"
-
 #define CLM_FORCE_CXX98
 #pragma warning(push)
 #pragma warning(disable:4201)
@@ -9,9 +6,12 @@
 #include "glm/gtx/string_cast.hpp"
 #pragma warning(pop)
 
+
 namespace Library
 {
+	class RTTI;
 	class Scope;
+
 	// Types of possible Datum
 	enum class DatumType
 	{
@@ -37,6 +37,7 @@ namespace Library
 		friend class PointerState;	// Handles RTTI-pointer specific functionality
 		
 	public:
+
 		union DatumValues
 		{
 			DatumValues() : vp(nullptr) {}
@@ -48,7 +49,7 @@ namespace Library
 			glm::mat4* m;		// Matrix array pointer
 			Scope** sc;			// Array pointer for Scope pointers
 			std::string* s;		// String array pointer
-			Library::RTTI** r;	// Array pointer for RTTI pointers
+			RTTI** r;	// Array pointer for RTTI pointers
 		};
 
 #pragma region Construction/Copy/Assignment
@@ -138,7 +139,7 @@ namespace Library
 		 * @Return: The newly assigned Datum object
 		 * @Exception: Thrown if attempting to assign to invalid Datum Type or if Size is greater than 1
 		 */
-		Datum& operator=(Library::RTTI* const& rhs);
+		Datum& operator=(RTTI* const& rhs);
 
 		/**
 		 * Comparison operator for Datum objects
@@ -201,7 +202,7 @@ namespace Library
 		 * @Param rhs: The RTTI pointer being compared against
 		 * @Return: True if the pointers are the same. False if Size is not 1 or if Type is invalid
 		 */
-		bool operator==(Library::RTTI* const& rhs) const;
+		bool operator==(RTTI* const& rhs) const;
 
 		/**
 		 * Inequality operator for Datum
@@ -257,7 +258,7 @@ namespace Library
 		 * @Param rhs: The RTTI pointer being compared against
 		 * @Return: True if the pointers are not equivalent
 		 */
-		bool operator!=(Library::RTTI* const& rhs) const;
+		bool operator!=(RTTI* const& rhs) const;
 
 		/**
 		 * The Type associated with this object
@@ -350,7 +351,7 @@ namespace Library
 		 * @Param data: The specified external storage
 		 * @Param Size: The number of elements available in the external storage
 		 */
-		void SetStorage(Library::RTTI** data, const std::uint32_t& size);
+		void SetStorage(RTTI** data, const std::uint32_t& size);
 		
 		/**
 		 * Sets a specified index of the array to the specified value
@@ -413,7 +414,7 @@ namespace Library
 		 * @Exception: Thrown if calling Set on invalid Type
 		 * @Exception: Thrown if attempting to Set beyond existing Size
 		 */
-		void Set(Library::RTTI* const& value, const std::uint32_t& index = 0);
+		void Set(RTTI* const& value, const std::uint32_t& index = 0);
 
 		/**
 		 * Pushes an std::int32_t to the Back of the array
@@ -508,6 +509,7 @@ namespace Library
 		std::uint32_t mCapacity; // The number of elements of the Set Type that the Datum can hold
 		std::uint32_t mSize; // The current number of elements in the Datum object
 		bool mDataIsExternal; // True if data is stored externally of the Datum object
+
 	};
 
 	template<> std::int32_t& Datum::Get(const std::uint32_t& index);

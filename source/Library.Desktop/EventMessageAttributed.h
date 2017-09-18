@@ -6,9 +6,9 @@ namespace Library
 {
 	class WorldState;
 
-	class EventMessageAttributed final:
-		public Scope
+	class EventMessageAttributed final: public Scope
 	{
+
 	public:
 
 #pragma region Construction/Copy/Assignment
@@ -55,5 +55,6 @@ namespace Library
 
 		std::string mSubtype; // The subtype of the event Message attributed
 		WorldState* mWorldState; // The world state object
+
 	};
 }

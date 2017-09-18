@@ -1,14 +1,12 @@
 #pragma once
 #include "Attributed.h"
-#include "Factory.h"
 
 
 namespace Library
 {
 	class World;
 
-	class Sector final :
-		public Attributed
+	class Sector final : public Attributed
 	{
 		RTTI_DECLARATIONS(Sector, Attributed)
 
@@ -66,7 +64,7 @@ namespace Library
 		 * Accessor method for the world that this sector lives in
 		 * @Return: A reference to the world that this sector lives in
 		 */
-		World& GetWorld();
+		World& GetWorld() const;
 
 		/**
 		 * Update method for handling change of game state

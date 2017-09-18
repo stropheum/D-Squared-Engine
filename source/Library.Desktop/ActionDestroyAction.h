@@ -4,9 +4,9 @@
 
 namespace Library
 {
-	class ActionDestroyAction :
-		public Action
+	class ActionDestroyAction : public Action
 	{
+
 	public:
 
 #pragma region Construction/Copy/Assignment
@@ -46,6 +46,7 @@ namespace Library
 	private:
 
 		std::string mActionInstanceName; // The Name of the action being destroyed
+
 	};
 
 	ActionFactory(ActionDestroyAction)

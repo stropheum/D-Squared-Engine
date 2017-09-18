@@ -1,10 +1,12 @@
 #pragma once
+#include "TypeState.h"
+
 
 namespace Library
 {
-	class StringState :
-		public Library::TypeState
+	class StringState : public TypeState
 	{
+
 	public:
 
 #pragma region Construction/Copy/Assignment
@@ -78,6 +80,7 @@ namespace Library
 		 * @Param index: Optional index of the value being retrieved. Defaulted to first element
 		 */
 		std::string ToString(const std::uint32_t& index = 0) override;
+
 	};
 }
 

@@ -76,11 +76,10 @@ namespace Library
 		{
 			mState = (mState == State::ParsingMatrix) ? State::ParsingMatrix : State::ParsingVector;
 
-			string x, y, z, w;
-			x = attributes.Find("X")->second;
-			y = attributes.Find("Y")->second;
-			z = attributes.Find("Z")->second;
-			w = attributes.Find("W")->second;
+			string x = attributes.Find("X")->second;
+			string y = attributes.Find("Y")->second;
+			string z = attributes.Find("Z")->second;
+			string w = attributes.Find("W")->second;
 
 			if (mState == State::ParsingVector)
 			{

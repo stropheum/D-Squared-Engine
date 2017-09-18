@@ -14,7 +14,7 @@ namespace TestLibraryDesktop
 		Library::SList<int*>* pList;
 		Library::SList<Foo>*  fooList;
 	public:
-		/// Sets up leak detection logic
+		// Sets up leak detection logic
 		static void initializeLeakDetection()
 		{
 #ifdef _Debug
@@ -23,7 +23,7 @@ namespace TestLibraryDesktop
 #endif //_Debug
 		}
 		
-		/// Detects if memory state has been corrupted
+		// Detects if memory state has been corrupted
 		static void finalizeLeakDetection()
 		{
 #ifdef _Debug

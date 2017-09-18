@@ -7,14 +7,18 @@
 namespace Library
 {
 	class IXmlParseHelper; // Friend class declaration for IXmlParseHelper
+
 	class XmlParseMaster
 	{
+
 	public:
 
 #pragma region SharedData Implementation
+
 		class SharedData : public RTTI
 		{
 			RTTI_DECLARATIONS(SharedData, RTTI)
+
 		public:
 			
 #pragma region SharedData Construction/Copy/Assignment
@@ -113,9 +117,12 @@ namespace Library
 			}
 
 		protected:
+
 			XmlParseMaster* mParseMaster;
 			std::uint32_t mDepth;
+
 		};
+
 #pragma endregion
 
 #pragma region Construction/Copy/Assignment
@@ -221,6 +228,7 @@ namespace Library
 		std::uint32_t mDepth; // How deep the scoping is in the current parsing level
 		bool mClonedInstance; // This value is true if the Parse master was created via cloning. This means it is responsible for deleting its helpers and data
 		bool mHelpersAreInitialized; // This value is true if the helpers have been properly initialized
+	
 	};
 }
 

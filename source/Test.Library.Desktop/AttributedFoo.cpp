@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "AttributedFoo.h"
+#include "Signature.h"
 #include <Datum.h>
 #include "glm/vec4.hpp"
 #include "glm/mat4x4.hpp"

@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 
+
 namespace Library
 {
 	/**
@@ -14,7 +15,9 @@ namespace Library
 	 */
 	template <class T> class Vector
 	{
+
 	public:
+
 		class Iterator;
 		
 #pragma region Construction/Copy/Assignment

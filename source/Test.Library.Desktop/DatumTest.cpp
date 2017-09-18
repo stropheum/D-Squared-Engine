@@ -73,8 +73,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestCopyConstructor)
 		{
-			Library::Datum oldBusted;
-			oldBusted = Library::DatumType::Integer;
+			Library::Datum oldBusted(Library::DatumType::Integer);
 			Library::Datum newHotness = oldBusted;
 			Assert::IsTrue(oldBusted.Type() == newHotness.Type(), L"Copied types not equivalent");
 			Assert::IsTrue(oldBusted.Size() == newHotness.Size(), L"Copied sizes not equivalent");
@@ -178,7 +177,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(rDatCopy.Type() == Library::DatumType::Pointer);
 			Assert::IsTrue(rDatCopy.Size() == 0);
 			Assert::IsTrue(rDatCopy.Capacity() == 0);
-			//			Assert::AreEqual(static_cast<std::uint32_t>(r3->TypeIdInstance()), 0u);
+			Assert::AreEqual(static_cast<std::uint32_t>(r3->TypeIdInstance()), 0u);
 
 			auto rType = rDatCopy.Type();
 			auto rSize = rDatCopy.Size();
@@ -255,7 +254,10 @@ namespace TestLibraryDesktop
 			sDatumTemp = Library::DatumType::String;
 			Assert::IsTrue(sDatumTemp.Type() == Library::DatumType::String, L"Invalid Datum Type");
 
-			Assert::ExpectException<std::exception>([&] { sDatumTemp.SetType(Library::DatumType::Unknown); },
+			Assert::ExpectException<std::exception>([&] 
+			{ 
+				sDatumTemp.SetType(Library::DatumType::Unknown); 
+			},
 				L"No exception thrown when reassigning Type");
 		}
 
@@ -269,7 +271,10 @@ namespace TestLibraryDesktop
 			rDatumTemp = Library::DatumType::Pointer;
 			Assert::IsTrue(rDatumTemp.Type() == Library::DatumType::Pointer, L"Invalid Datum Type");
 
-			Assert::ExpectException<std::exception>([&] { rDatumTemp.SetType(Library::DatumType::Unknown); },
+			Assert::ExpectException<std::exception>([&] 
+			{ 
+				rDatumTemp.SetType(Library::DatumType::Unknown); 
+			},
 				L"No exception thrown when reassigning Type");
 		}
 
@@ -446,8 +451,7 @@ namespace TestLibraryDesktop
 			mDatum.PushBack(m1);
 			mDatum.PushBack(m2);
 			mDatum.PushBack(m2);
-			Library::Datum mDatumCopy;
-			mDatumCopy = mDatum;
+			Library::Datum mDatumCopy = mDatum;
 			Assert::IsTrue(mDatum == mDatumCopy);
 
 			auto mType = mDatumCopy.Type();
@@ -494,8 +498,7 @@ namespace TestLibraryDesktop
 			sDatum.PushBack(s1);
 			sDatum.PushBack(s2);
 			sDatum.PushBack(s2);
-			Library::Datum sDatumCopy;
-			sDatumCopy = sDatum;
+			Library::Datum sDatumCopy = sDatum;
 			Assert::IsTrue(sDatum == sDatumCopy);
 
 			auto sType = sDatumCopy.Type();
@@ -519,8 +522,8 @@ namespace TestLibraryDesktop
 			Library::Datum rDatum(Library::DatumType::Pointer);
 
 			// Pointer
-			//			rDatum = r1;
-			//			Assert::IsTrue(rDatum.Get<Library::RTTI*>(0) == r1);
+			rDatum = r1;
+			Assert::IsTrue(rDatum.Get<Library::RTTI*>(0) == r1);
 			Assert::ExpectException<std::exception>([&] { rDatum.Get<std::int32_t>(0); });
 			Assert::ExpectException<std::exception>([&] { rDatum.Get<float>(0); });
 			Assert::ExpectException<std::exception>([&] { rDatum.Get<glm::vec4>(0); });
@@ -538,11 +541,10 @@ namespace TestLibraryDesktop
 			free(rData);
 
 			// Move semantic assignment
-			//			rDatum.PushBack(r1);
-			//			rDatum.PushBack(r2);
-			//			rDatum.PushBack(r2);
-			Library::Datum rDatumCopy;
-			rDatumCopy = rDatum;
+			rDatum.PushBack(r1);
+			rDatum.PushBack(r2);
+			rDatum.PushBack(r2);
+			Library::Datum rDatumCopy = rDatum;
 			Assert::IsTrue(rDatum == rDatumCopy);
 
 			auto rType = rDatumCopy.Type();
@@ -878,12 +880,12 @@ namespace TestLibraryDesktop
 
 			Library::Datum iDatumTemp2;
 			iDatumTemp2 = i1;
-//			Assert::IsTrue(iDatumTemp2.Type() == Library::DatumType::Integer);
-//
-//			iDatumTemp2 = i2;
-//			Assert::IsTrue(iDatumTemp2.Type() == Library::DatumType::Integer);
-//			Assert::ExpectException<std::exception>([&] { iDatumTemp2 = f1; },
-//				L"Exception not being thrown when assigned improper Type");
+			Assert::IsTrue(iDatumTemp2.Type() == Library::DatumType::Integer);
+
+			iDatumTemp2 = i2;
+			Assert::IsTrue(iDatumTemp2.Type() == Library::DatumType::Integer);
+			Assert::ExpectException<std::exception>([&] { iDatumTemp2 = f1; },
+				L"Exception not being thrown when assigned improper Type");
 		}
 
 		TEST_METHOD(TestType_Float)
@@ -897,13 +899,13 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(fDatumTemp1.Type() == Library::DatumType::Float);
 
 			Library::Datum fDatumTemp2;
-//			fDatumTemp2 = f1;
-//			Assert::IsTrue(fDatumTemp2.Type() == Library::DatumType::Float);
-//
-//			fDatumTemp2 = f2;
-//			Assert::IsTrue(fDatumTemp2.Type() == Library::DatumType::Float);
-//			Assert::ExpectException<std::exception>([&] { fDatumTemp2 = i1; },
-//				L"Exception not being thrown when assigned improper Type");
+			fDatumTemp2 = f1;
+			Assert::IsTrue(fDatumTemp2.Type() == Library::DatumType::Float);
+
+			fDatumTemp2 = f2;
+			Assert::IsTrue(fDatumTemp2.Type() == Library::DatumType::Float);
+			Assert::ExpectException<std::exception>([&] { fDatumTemp2 = i1; },
+				L"Exception not being thrown when assigned improper Type");
 		}
 
 		TEST_METHOD(TestType_Vector)
@@ -917,13 +919,13 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(vDatumTemp1.Type() == Library::DatumType::Vector);
 
 			Library::Datum vDatumTemp2;
-//			vDatumTemp2 = v1;
-//			Assert::IsTrue(vDatumTemp2.Type() == Library::DatumType::Vector);
-//
-//			vDatumTemp2 = v2;
-//			Assert::IsTrue(vDatumTemp2.Type() == Library::DatumType::Vector);
-//			Assert::ExpectException<std::exception>([&] { vDatumTemp2 = i1; },
-//				L"Exception not being thrown when assigned improper Type");
+			vDatumTemp2 = v1;
+			Assert::IsTrue(vDatumTemp2.Type() == Library::DatumType::Vector);
+
+			vDatumTemp2 = v2;
+			Assert::IsTrue(vDatumTemp2.Type() == Library::DatumType::Vector);
+			Assert::ExpectException<std::exception>([&] { vDatumTemp2 = i1; },
+				L"Exception not being thrown when assigned improper Type");
 		}
 
 		TEST_METHOD(TestType_Matrix)
@@ -937,13 +939,13 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(mDatumTemp1.Type() == Library::DatumType::Matrix);
 
 			Library::Datum mDatumTemp2;
-//			mDatumTemp2 = m1;
-//			Assert::IsTrue(mDatumTemp2.Type() == Library::DatumType::Matrix);
-//
-//			mDatumTemp2 = m2;
-//			Assert::IsTrue(mDatumTemp2.Type() == Library::DatumType::Matrix);
-//			Assert::ExpectException<std::exception>([&] { mDatumTemp2 = i1; },
-//				L"Exception not being thrown when assigned improper Type");
+			mDatumTemp2 = m1;
+			Assert::IsTrue(mDatumTemp2.Type() == Library::DatumType::Matrix);
+
+			mDatumTemp2 = m2;
+			Assert::IsTrue(mDatumTemp2.Type() == Library::DatumType::Matrix);
+			Assert::ExpectException<std::exception>([&] { mDatumTemp2 = i1; },
+				L"Exception not being thrown when assigned improper Type");
 		}
 
 		TEST_METHOD(TestType_String)
@@ -957,13 +959,13 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(sDatumTemp1.Type() == Library::DatumType::String);
 
 			Library::Datum sDatumTemp2;
-//			sDatumTemp2 = s1;
-//			Assert::IsTrue(sDatumTemp2.Type() == Library::DatumType::String);
-//
-//			sDatumTemp2 = s2;
-//			Assert::IsTrue(sDatumTemp2.Type() == Library::DatumType::String);
-//			Assert::ExpectException<std::exception>([&] { sDatumTemp2 = i1; },
-//				L"Exception not being thrown when assigned improper Type");
+			sDatumTemp2 = s1;
+			Assert::IsTrue(sDatumTemp2.Type() == Library::DatumType::String);
+
+			sDatumTemp2 = s2;
+			Assert::IsTrue(sDatumTemp2.Type() == Library::DatumType::String);
+			Assert::ExpectException<std::exception>([&] { sDatumTemp2 = i1; },
+				L"Exception not being thrown when assigned improper Type");
 		}
 
 		TEST_METHOD(TestType_Pointer)
@@ -977,13 +979,13 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(rDatumTemp1.Type() == Library::DatumType::Pointer);
 
 			Library::Datum rDatumTemp2;
-//			rDatumTemp2 = r1;
-//			Assert::IsTrue(rDatumTemp2.Type() == Library::DatumType::Pointer);
-//
-//			rDatumTemp2 = r2;
-//			Assert::IsTrue(rDatumTemp2.Type() == Library::DatumType::Pointer);
-//			Assert::ExpectException<std::exception>([&] { rDatumTemp2 = i1; },
-//				L"Exception not being thrown when assigned improper Type");
+			rDatumTemp2 = r1;
+			Assert::IsTrue(rDatumTemp2.Type() == Library::DatumType::Pointer);
+
+			rDatumTemp2 = r2;
+			Assert::IsTrue(rDatumTemp2.Type() == Library::DatumType::Pointer);
+			Assert::ExpectException<std::exception>([&] { rDatumTemp2 = i1; },
+				L"Exception not being thrown when assigned improper Type");
 		}
 
 		TEST_METHOD(TestSize_Integer)
@@ -1725,22 +1727,22 @@ namespace TestLibraryDesktop
 			Library::Datum sDatum(Library::DatumType::String);
 
 			sDatum = s1;
-//			Assert::IsTrue(s1 == sDatum.ToString(), L"ToString invalid on scalar assignment");
-//			sDatum = s2;
-//			Assert::IsTrue(s2 == sDatum.ToString(), L"ToString invalid on scalar assignment");
-//			sDatum = s3;
-//			Assert::IsTrue(s3 == sDatum.ToString(), L"ToString invalid on scalar assignment");
-//
-//			sDatum.Clear();
-//			sDatum.PushBack(s1);
-//			sDatum.PushBack(s2);
-//			sDatum.PushBack(s3);
-//			Assert::IsTrue(s1 == sDatum.ToString(0), L"ToString invalid with multiple values");
-//			Assert::IsTrue(s2 == sDatum.ToString(1), L"ToString invalid with multiple values");
-//			Assert::IsTrue(s3 == sDatum.ToString(2), L"ToString invalid with multiple values");
-//
-//			sDatum.Set(s1, 1);
-//			Assert::IsTrue(s1 == sDatum.ToString(1), L"ToString invalid after Set");
+			Assert::IsTrue(s1 == sDatum.ToString(), L"ToString invalid on scalar assignment");
+			sDatum = s2;
+			Assert::IsTrue(s2 == sDatum.ToString(), L"ToString invalid on scalar assignment");
+			sDatum = s3;
+			Assert::IsTrue(s3 == sDatum.ToString(), L"ToString invalid on scalar assignment");
+
+			sDatum.Clear();
+			sDatum.PushBack(s1);
+			sDatum.PushBack(s2);
+			sDatum.PushBack(s3);
+			Assert::IsTrue(s1 == sDatum.ToString(0), L"ToString invalid with multiple values");
+			Assert::IsTrue(s2 == sDatum.ToString(1), L"ToString invalid with multiple values");
+			Assert::IsTrue(s3 == sDatum.ToString(2), L"ToString invalid with multiple values");
+
+			sDatum.Set(s1, 1);
+			Assert::IsTrue(s1 == sDatum.ToString(1), L"ToString invalid after Set");
 		}
 
 		TEST_METHOD(TestToString_Pointer)
@@ -1930,7 +1932,7 @@ namespace TestLibraryDesktop
 		{
 			Library::Datum sDatum(Library::DatumType::String);
 			sDatum = "Hello world";
-//			sDatum.SetSize(10);
+			sDatum.SetSize(10);
 		}
 
 		static _CrtMemState sStartMemState;

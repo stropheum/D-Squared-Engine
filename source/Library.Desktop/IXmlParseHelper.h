@@ -3,12 +3,13 @@
 #include "XmlParseMaster.h"
 #include "RTTI.h"
 
+
 namespace Library
 {
-	class IXmlParseHelper :
-		public RTTI
+	class IXmlParseHelper : public RTTI
 	{
 		RTTI_DECLARATIONS(IXmlParseHelper, RTTI)
+
 	public:
 		
 #pragma region Construction/Copy/Assignment
@@ -72,7 +73,9 @@ namespace Library
 		std::string ToString() const override;
 
 	protected:
+
 		XmlParseMaster* mXmlParseMaster;
 		const std::string mValidElementName;
+
 	};
 }

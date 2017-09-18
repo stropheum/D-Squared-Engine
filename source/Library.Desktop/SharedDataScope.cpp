@@ -8,7 +8,7 @@ namespace Library
 {
 	RTTI_DEFINITIONS(SharedDataScope)
 
-	SharedDataScope::SharedDataScope():
+	SharedDataScope::SharedDataScope() :
 		SharedData(), mScope(nullptr)
 	{
 	}

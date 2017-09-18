@@ -6,8 +6,7 @@
 
 namespace Library
 {
-	class Entity :
-		public Attributed
+	class Entity : public Attributed
 	{
 		RTTI_DECLARATIONS(Entity, Attributed)
 
@@ -74,7 +73,9 @@ namespace Library
 		void Update(class WorldState& worldState);
 
 	private:
+
 		std::string mName; // The Name of the entity
+
 	};
 		
 #define EntityFactory(ConcreteEntity) ConcreteFactory(Entity, ConcreteEntity)

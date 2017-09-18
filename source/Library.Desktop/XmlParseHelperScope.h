@@ -5,8 +5,7 @@
 
 namespace Library
 {
-	class XmlParseHelperScope :
-		public IXmlParseHelper
+	class XmlParseHelperScope : public IXmlParseHelper
 	{
 		RTTI_DECLARATIONS(XmlParseHelperScope, IXmlParseHelper)
 
@@ -65,6 +64,7 @@ namespace Library
 		bool operator==(const XmlParseHelperScope& rhs) const;
 
 	private:
+
 		enum State
 		{
 			NotParsing,
@@ -75,10 +75,12 @@ namespace Library
 			ParsingString,
 			ParsingScope,
 		};
+
 		State mState;
 		std::string mMatrixName;
 		std::uint32_t mMatrixComponentCount;
 		std::string mMatrixComponents[4][4];
 		bool mScopeHasBeenInitialized;
+
 	};
 }

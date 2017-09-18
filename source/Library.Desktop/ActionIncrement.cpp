@@ -6,7 +6,7 @@ using namespace std;
 
 namespace Library
 {
-	ActionIncrement::ActionIncrement():
+	ActionIncrement::ActionIncrement() :
 		mIncrementCount(0)
 	{
 		(*this)["IncrementCount"].SetStorage(&mIncrementCount, 1);

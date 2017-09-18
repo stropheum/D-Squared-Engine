@@ -11,7 +11,7 @@ namespace TestLibraryDesktop
 	{
 	public:
 
-		/// Sets up leak detection logic
+		// Sets up leak detection logic
 		static void initializeLeakDetection()
 		{
 #if _DEBUG
@@ -20,7 +20,7 @@ namespace TestLibraryDesktop
 #endif //_Debug
 		}
 
-		/// Detects if memory state has been corrupted
+		// Detects if memory state has been corrupted
 		static void finalizeLeakDetection()
 		{
 #if _DEBUG

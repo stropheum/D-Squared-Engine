@@ -1,11 +1,13 @@
 #pragma once
 
+
 namespace Library
 {
 	class GameTime;
 
 	class WorldState
 	{
+
 	public:
 
 #pragma region Construction/Copy/Assignment
@@ -42,5 +44,6 @@ namespace Library
 		class Action* action;
 
 		GameTime* gameTime;
+
 	};
 }

@@ -2,10 +2,10 @@
 #include "Attributed.h"
 #include "Factory.h"
 
+
 namespace Library
 {
-	class Action :
-		public Library::Attributed
+	class Action : public Library::Attributed
 	{
 		RTTI_DECLARATIONS(Action, Attributed)
 
@@ -46,7 +46,9 @@ namespace Library
 		void SetName(const std::string& name);
 
 	protected:
+
 		std::string mName; // The Name of the action
+
 	};
 
 #define ActionFactory(ConcreteAction) ConcreteFactory(Action, ConcreteAction)

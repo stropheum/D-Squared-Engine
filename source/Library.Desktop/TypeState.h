@@ -1,6 +1,7 @@
 #pragma once
 #include "Datum.h"
 
+
 namespace Library
 {
 	class Scope;
@@ -12,6 +13,7 @@ namespace Library
 	 */
 	class TypeState
 	{
+
 	public:
 
 #pragma region Construction/Copy/Assignment
@@ -89,7 +91,7 @@ namespace Library
 
 		/**
 		 * Sets the number of elements in the array
-		 * @param Size: The new number of elements in the array
+		 * @param size: The new number of elements in the array
 		 */
 		virtual void SetSize(const std::uint32_t& size) = 0;
 		
@@ -186,8 +188,9 @@ namespace Library
 		 * TypeState constructor. Used to generate valid states from children
 		 * @Param context: The Datum object that the state will operate on
 		 */
-		TypeState(Datum* const context);
+		explicit TypeState(Datum* const context);
 
 		Datum* mContext; // The Datum object that the state will operate on
+
 	};
 }

@@ -14,7 +14,6 @@ QueueClearSubscriber::QueueClearSubscriber(EventQueue& eventQueue):
 	Event<Foo>::Subscribe(*this);
 }
 
-
 QueueClearSubscriber::~QueueClearSubscriber()
 {
 	Event<Foo>::Unsubscribe(*this);

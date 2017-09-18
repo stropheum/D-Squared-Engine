@@ -8,6 +8,7 @@ namespace Library
 {
 	class EventQueue
 	{
+
 	public:
 		
 #pragma region Construction/Copy/Assignment
@@ -68,5 +69,6 @@ namespace Library
 
 		Vector<EventPublisher*> mQueue; // The queue of events
 		std::mutex mQueueMutex;
+
 	};
 }

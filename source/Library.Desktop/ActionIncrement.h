@@ -4,9 +4,9 @@
 
 namespace Library
 {
-	class ActionIncrement :
-		public Action
+	class ActionIncrement : public Action
 	{
+
 	public:
 
 #pragma region Construction/Copy/Assignment
@@ -40,6 +40,7 @@ namespace Library
 	private:
 
 		std::int32_t mIncrementCount;
+
 	};
 
 	ActionFactory(ActionIncrement)

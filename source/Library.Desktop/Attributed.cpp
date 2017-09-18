@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Attributed.h"
+#include "Signature.h"
 
 
 using namespace std;
@@ -7,8 +8,6 @@ using namespace std;
 namespace Library
 {
 	RTTI_DEFINITIONS(Attributed)
-
-#pragma region Constructors, Copy/Move semantics
 
 	Attributed::Attributed()
 	{
@@ -22,7 +21,7 @@ namespace Library
 		mPrescribedAttributes.Clear();
 	}
 
-	Attributed::Attributed(const  Attributed& rhs)
+	Attributed::Attributed(const Attributed& rhs)
 	{
 		operator=(rhs);
 	}
@@ -33,21 +32,13 @@ namespace Library
 		{
 			(*this)["this"] = static_cast<RTTI*>(this);
 			
-			if (rhs.mPrescribedAttributes.Size() > 1)
-			{	// We only do a copy if there is more than the "this" pointer stored
-				for (uint32_t i = 1; i < rhs.mPrescribedAttributes.Size(); i++)
-				{
-					mPrescribedAttributes.PushBack(rhs.mPrescribedAttributes[i]);
-				}
-			}
-
-			mAuxiliaryAttributes = rhs.mAuxiliaryAttributes;
+			mPrescribedAttributes = rhs.mPrescribedAttributes;
 		}
 		return *this;
 	}
 
 	Attributed::Attributed(Attributed&& rhs) noexcept :
-		Scope(), mPrescribedAttributes(), mAuxiliaryAttributes() 
+		Scope(), mPrescribedAttributes() 
 	{
 		(*this)["this"] = static_cast<RTTI*>(this);
 		operator=(move(rhs));
@@ -59,32 +50,15 @@ namespace Library
 		{
 			Scope::operator=(move(rhs));
 			mPrescribedAttributes = move(rhs.mPrescribedAttributes);
-			mAuxiliaryAttributes = move(rhs.mAuxiliaryAttributes);
-//			(*this)["this"] = static_cast<RTTI*>(this);
-//			
-//			if (rhs.mPrescribedAttributes.Size() > 1)
-//			{	// We only do a copy if there is more than the "this" pointer stored
-//				for (uint32_t i = 1; i < rhs.mPrescribedAttributes.Size(); i++)
-//				{
-//					Adopt(rhs[i][0], mPrescribedAttributes[i].Name);
-//				}
-//			}
-//
-//			rhs.mPrescribedAttributes.Clear();
-//			rhs.mAuxiliaryAttributes.Clear();
 		}
 		return *this;
 	}
-
-#pragma endregion
-
-#pragma region Public Methods
 
 	void Attributed::Populate()
 	{
 		for (uint32_t i = 0; i < mPrescribedAttributes.Size(); i++)
 		{
-			Signature attribute = mPrescribedAttributes[i];
+			Signature& attribute = mPrescribedAttributes[i];
 			auto& appendedScope = Append(attribute.Name);
 			appendedScope = attribute.Type;
 
@@ -178,44 +152,4 @@ namespace Library
 		return Append(name);
 	}
 
-#pragma endregion
-
-#pragma region Private Methods
-
-	// Returns The signature of this attributed object
-	Attributed::Signature& Attributed::GetSignature(const string& name)
-	{	
-		Signature* result = nullptr;
-
-		if (!IsAttribute(name))
-		{
-			throw exception("Attempting to get signature of nonexistent attribute");
-		}
-
-		if (IsPrescribedAttribute(name))
-		{
-			for (uint32_t i = 0; i < mPrescribedAttributes.Size(); i++)
-			{
-				if (mPrescribedAttributes[i].Name == name)
-				{
-					result = &mPrescribedAttributes[i];
-				}
-			}
-		}
-		else
-		{	// We know it's an auxiliary attribute, so we're going to Search through those now
-			for (uint32_t i = 0; i < mAuxiliaryAttributes.Size(); i++)
-			{
-				if (mAuxiliaryAttributes[i].Name == name)
-				{
-					result = &mAuxiliaryAttributes[i];
-				}
-			}
-		}
-
-		// Could potentially return a nullptr reference, but if IsAttribute works properly, 
-		// we could never hit that exception and would affect code coverage
-		return *result; 
-	}
-#pragma endregion
 }

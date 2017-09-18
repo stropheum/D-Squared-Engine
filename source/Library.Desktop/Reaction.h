@@ -5,8 +5,7 @@
 
 namespace Library
 {
-	class Reaction abstract : 
-		public ActionList, public EventSubscriber
+	class Reaction abstract : public ActionList, public EventSubscriber
 	{
 		RTTI_DECLARATIONS(Reaction, ActionList)
 

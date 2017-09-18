@@ -3,6 +3,7 @@
 #include "HashMap.h"
 #include "RTTI.h"
 
+
 namespace Library
 {
 	class Datum;
@@ -170,5 +171,6 @@ namespace Library
 
 		// The parent of this Scope. May be null if this is the top-level Scope
 		Scope* mParent;
+
 	};
 }
