@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "LeakDetector.h"
 #include "XmlParseMaster.h"
 #include "TestSharedData.h"
 #include "SharedDataScope.h"
 #include "Scope.h"
 #include "Datum.h"
 #include <glm/detail/type_vec4.hpp>
-#include <glm/mat4x4.hpp>
 #include "XmlParseHelperEntity.h"
 #include "Entity.h"
 #include "World.h"
@@ -25,37 +25,37 @@ namespace TestLibraryDesktop
 
 		Library::EntityFactory mEntityFactory;
 
-		// Sets up leak detection logic
-		static void initializeLeakDetection()
-		{
-#if _DEBUG
-			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
-			_CrtMemCheckpoint(&sStartMemState);
-#endif //_DEBUG
-		}
-
-		// Detects if memory state has been corrupted
-		static void finalizeLeakDetection()
-		{
-#if _DEBUG
-			_CrtMemState endMemState, diffMemState;
-			_CrtMemCheckpoint(&endMemState);
-			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
-			{
-				_CrtMemDumpStatistics(&diffMemState);
-				Assert::Fail(L"Memory Leaks!");
-			}
-#endif //_DEBUG
-		}
+//		// Sets up leak detection logic
+//		static void initializeLeakDetection()
+//		{
+//#if _DEBUG
+//			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
+//			_CrtMemCheckpoint(&sStartMemState);
+//#endif //_DEBUG
+//		}
+//
+//		// Detects if memory state has been corrupted
+//		static void finalizeLeakDetection()
+//		{
+//#if _DEBUG
+//			_CrtMemState endMemState, diffMemState;
+//			_CrtMemCheckpoint(&endMemState);
+//			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
+//			{
+//				_CrtMemDumpStatistics(&diffMemState);
+//				Assert::Fail(L"Memory Leaks!");
+//			}
+//#endif //_DEBUG
+//		}
 
 		TEST_METHOD_INITIALIZE(methodInitialize)
 		{
-			initializeLeakDetection();
+			LeakDetector::InitializeLeakDetection();
 		}
 
 		TEST_METHOD_CLEANUP(methodCleanup)
 		{
-			finalizeLeakDetection();
+			LeakDetector::FinalizeLeakDetection();
 		}
 
 		TEST_METHOD(TestParse)
@@ -151,7 +151,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestCloneLeaks)
 		{
-			/// Clone for leak detection. Cloning functioality already tests in other test class
+			// Clone for leak detection. Cloning functioality already tests in other test class
 			Library::SharedDataScope sharedData;
 			Library::XmlParseMaster parseMaster(&sharedData);
 			Library::XmlParseHelperEntity helper;
@@ -233,7 +233,7 @@ namespace TestLibraryDesktop
 			delete sector2;
 		}
 
-		static _CrtMemState sStartMemState;
+//		static _CrtMemState sStartMemState;
 	};
-	_CrtMemState XmlParseHelperEntityTest::sStartMemState;
+//	_CrtMemState XmlParseHelperEntityTest::sStartMemState;
 }

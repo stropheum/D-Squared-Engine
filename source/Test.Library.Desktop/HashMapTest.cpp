@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "LeakDetector.h"
 #include "HashMap.h"
 #include "Foo.h"
 #include <winnt.h>
@@ -46,28 +47,28 @@ namespace TestLibraryDesktop
 		std::string u = "Uncle Phil";
 		Foo foo, bar, gar;
 	public:
-		// Sets up leak detection logic
-		static void initializeLeakDetection()
-		{
-#if _DEBUG
-			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
-			_CrtMemCheckpoint(&sStartMemState);
-#endif //_Debug
-		}
-
-		// Detects if memory state has been corrupted
-		static void finalizeLeakDetection()
-		{
-#if _DEBUG
-			_CrtMemState endMemState, diffMemState;
-			_CrtMemCheckpoint(&endMemState);
-			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
-			{
-				_CrtMemDumpStatistics(&diffMemState);
-				Assert::Fail(L"Memory Leaks!");
-			}
-#endif //_Debug
-		}
+//		// Sets up leak detection logic
+//		static void initializeLeakDetection()
+//		{
+//#if _DEBUG
+//			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
+//			_CrtMemCheckpoint(&sStartMemState);
+//#endif //_Debug
+//		}
+//
+//		// Detects if memory state has been corrupted
+//		static void finalizeLeakDetection()
+//		{
+//#if _DEBUG
+//			_CrtMemState endMemState, diffMemState;
+//			_CrtMemCheckpoint(&endMemState);
+//			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
+//			{
+//				_CrtMemDumpStatistics(&diffMemState);
+//				Assert::Fail(L"Memory Leaks!");
+//			}
+//#endif //_Debug
+//		}
 
 		TEST_METHOD_INITIALIZE(methodInitialize)
 		{
@@ -77,7 +78,7 @@ namespace TestLibraryDesktop
 			strMap.Clear();
 			fooMap.Clear();
 
-			initializeLeakDetection();
+			LeakDetector::InitializeLeakDetection();
 
 			x = 1;
 			y = 2;
@@ -101,7 +102,7 @@ namespace TestLibraryDesktop
 			strMap.Clear();
 			fooMap.Clear();
 
-			finalizeLeakDetection();
+			LeakDetector::FinalizeLeakDetection();
 		}
 
 		TEST_METHOD(TestTemplateSpecialization)
@@ -1247,8 +1248,8 @@ namespace TestLibraryDesktop
 			Assert::AreEqual(1, fooMap.begin()->second, L"Dereferencing iterator does not yield accurate value");
 		}
 
-		static _CrtMemState sStartMemState;
+//		static _CrtMemState sStartMemState;
 	};
 
-	_CrtMemState HashMapTest::sStartMemState;
+//	_CrtMemState HashMapTest::sStartMemState;
 }

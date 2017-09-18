@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "LeakDetector.h"
 #include "AttributedFoo.h"
 #include "Datum.h"
 
@@ -11,37 +12,37 @@ namespace TestLibraryDesktop
 	{
 	public:
 
-		// Sets up leak detection logic
-		static void initializeLeakDetection()
-		{
-#if _DEBUG
-			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
-			_CrtMemCheckpoint(&sStartMemState);
-#endif //_Debug
-		}
-
-		// Detects if memory state has been corrupted
-		static void finalizeLeakDetection()
-		{
-#if _DEBUG
-			_CrtMemState endMemState, diffMemState;
-			_CrtMemCheckpoint(&endMemState);
-			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
-			{
-				_CrtMemDumpStatistics(&diffMemState);
-				Assert::Fail(L"Memory Leaks!");
-			}
-#endif //_Debug
-		}
+//		// Sets up leak detection logic
+//		static void initializeLeakDetection()
+//		{
+//#if _DEBUG
+//			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
+//			_CrtMemCheckpoint(&sStartMemState);
+//#endif //_Debug
+//		}
+//
+//		// Detects if memory state has been corrupted
+//		static void finalizeLeakDetection()
+//		{
+//#if _DEBUG
+//			_CrtMemState endMemState, diffMemState;
+//			_CrtMemCheckpoint(&endMemState);
+//			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
+//			{
+//				_CrtMemDumpStatistics(&diffMemState);
+//				Assert::Fail(L"Memory Leaks!");
+//			}
+//#endif //_Debug
+//		}
 
 		TEST_METHOD_INITIALIZE(methodInitialize)
 		{
-			initializeLeakDetection();
+			LeakDetector::InitializeLeakDetection();
 		}
 
 		TEST_METHOD_CLEANUP(methodCleanup)
 		{
-			finalizeLeakDetection();
+			LeakDetector::FinalizeLeakDetection();
 		}
 
 		TEST_METHOD(TestConstructor)
@@ -193,9 +194,9 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(myFoo.IsAttribute("new"));
 		}
 
-		private:
-			static _CrtMemState sStartMemState;
+//		private:
+//			static _CrtMemState sStartMemState;
 	};
 
-	_CrtMemState AttributedTest::sStartMemState;
+//	_CrtMemState AttributedTest::sStartMemState;
 }

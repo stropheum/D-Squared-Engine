@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "LeakDetector.h"
 #include "TestSharedData.h"
 #include "GameTime.h"
 #include "Event.h"
@@ -19,37 +20,14 @@ namespace TestLibraryDesktop
 	{
 	public:
 
-		// Sets up leak detection logic
-		static void initializeLeakDetection()
-		{
-#if _DEBUG
-			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
-			_CrtMemCheckpoint(&sStartMemState);
-#endif //_DEBUG
-		}
-
-		// Detects if memory state has been corrupted
-		static void finalizeLeakDetection()
-		{
-#if _DEBUG
-			_CrtMemState endMemState, diffMemState;
-			_CrtMemCheckpoint(&endMemState);
-			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
-			{
-				_CrtMemDumpStatistics(&diffMemState);
-				Assert::Fail(L"Memory Leaks!");
-			}
-#endif //_DEBUG
-		}
-
 		TEST_METHOD_INITIALIZE(methodInitialize)
 		{
-			initializeLeakDetection();
+			LeakDetector::InitializeLeakDetection();
 		}
 
 		TEST_METHOD_CLEANUP(methodCleanup)
 		{
-			finalizeLeakDetection();
+			LeakDetector::FinalizeLeakDetection();
 			Event<Foo>::UnsubscribeAll();
 		}
 
@@ -297,7 +275,7 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(sub1.mValue == Foo(1) || sub1.mValue == Foo(2) || sub1.mValue == Foo(3) || sub1.mValue == Foo(4));
 		}
 
-		static _CrtMemState sStartMemState;
+//		static _CrtMemState sStartMemState;
 	};
-	_CrtMemState EventTest::sStartMemState;
+//	_CrtMemState EventTest::sStartMemState;
 }

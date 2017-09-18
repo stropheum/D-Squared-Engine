@@ -1,5 +1,6 @@
  #include "pch.h"
 #include "CppUnitTest.h"
+#include "LeakDetector.h"
 #include <Vector.h>
 #include "Foo.h"
 #include "implementation.h"
@@ -15,35 +16,36 @@ namespace TestLibraryDesktop
 		Library::Vector<int*> pointor;
 		Library::Vector<Foo>  footor;
 
-		// Sets up leak detection logic
-		static void initializeLeakDetection()
-		{
-#if _DEBUG
-			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
-			_CrtMemCheckpoint(&sStartMemState);
-#endif //_Debug
-		}
-
-		// Detects if memory state has been corrupted
-		static void finalizeLeakDetection()
-		{
-#if _DEBUG
-			_CrtMemState endMemState, diffMemState;
-			_CrtMemCheckpoint(&endMemState);
-			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
-			{
-				_CrtMemDumpStatistics(&diffMemState);
-				Assert::Fail(L"Memory Leaks!");
-			}
-#endif //_Debug
-		}
+//		// Sets up leak detection logic
+//		static void initializeLeakDetection()
+//		{
+//#if _DEBUG
+//			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
+//			_CrtMemCheckpoint(&sStartMemState);
+//#endif //_Debug
+//		}
+//
+//		// Detects if memory state has been corrupted
+//		static void finalizeLeakDetection()
+//		{
+//#if _DEBUG
+//			_CrtMemState endMemState, diffMemState;
+//			_CrtMemCheckpoint(&endMemState);
+//			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
+//			{
+//				_CrtMemDumpStatistics(&diffMemState);
+//				Assert::Fail(L"Memory Leaks!");
+//			}
+//#endif //_Debug
+//		}
 
 		TEST_METHOD_INITIALIZE(InitializeMethod)
 		{
 			intor.Clear();
 			pointor.Clear();
 			footor.Clear();
-			initializeLeakDetection();
+
+			LeakDetector::InitializeLeakDetection();
 		}
 
 		TEST_METHOD_CLEANUP(CleanupMethod)
@@ -51,9 +53,8 @@ namespace TestLibraryDesktop
 			intor.Clear();
 			pointor.Clear();
 			footor.Clear();
-			// Here is the problem. Because these are class-level, even though they
-			// Destruct safely and are cleared on method Initialize, on cleanup they can still have mem allocated
-			finalizeLeakDetection();
+			
+			LeakDetector::FinalizeLeakDetection();
 		}
 
 		TEST_METHOD(TestCopyConstructor)
@@ -1192,9 +1193,9 @@ namespace TestLibraryDesktop
 			Assert::ExpectException<std::exception>(func3, L"Dereferencing end of a vector should throw an exception");
 		}
 
-	private:
-		static _CrtMemState sStartMemState;
+//	private:
+//		static _CrtMemState sStartMemState;
 	};
 
-	_CrtMemState VectorTest::sStartMemState;
+//	_CrtMemState VectorTest::sStartMemState;
 }
