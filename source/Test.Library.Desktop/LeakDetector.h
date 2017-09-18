@@ -9,7 +9,9 @@ namespace TestLibraryDesktop
 
 #pragma region Construction/Assignment/Move Semantics
 
+		LeakDetector() = delete;
 
+		~LeakDetector() = delete;
 
 		LeakDetector(const LeakDetector& rhs) = delete;
 
