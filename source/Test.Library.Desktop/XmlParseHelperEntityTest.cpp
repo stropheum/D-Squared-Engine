@@ -25,7 +25,7 @@ namespace TestLibraryDesktop
 
 		Library::EntityFactory mEntityFactory;
 
-		/// Sets up leak detection logic
+		// Sets up leak detection logic
 		static void initializeLeakDetection()
 		{
 #if _DEBUG
@@ -34,7 +34,7 @@ namespace TestLibraryDesktop
 #endif //_DEBUG
 		}
 
-		/// Detects if memory state has been corrupted
+		// Detects if memory state has been corrupted
 		static void finalizeLeakDetection()
 		{
 #if _DEBUG
@@ -164,7 +164,7 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(Testupdate)
 		{
-			/// Update has no current functionality, so test currently exists for coverage and leak detection
+			// Update has no current functionality, so test currently exists for coverage and leak detection
 			World* world = new World();
 			WorldState worldState;
 			GameTime gameTime;

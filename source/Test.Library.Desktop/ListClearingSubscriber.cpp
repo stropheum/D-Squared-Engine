@@ -10,10 +10,9 @@ ListClearingSubscriber::ListClearingSubscriber()
 	Library::Event<Foo>::Subscribe(*this);
 }
 
-
 ListClearingSubscriber::~ListClearingSubscriber()
 {
-//	Library::Event<Foo>::Unsubscribe(*this);
+	Library::Event<Foo>::Unsubscribe(*this);
 }
 
 void ListClearingSubscriber::Notify(const Library::EventPublisher& event)

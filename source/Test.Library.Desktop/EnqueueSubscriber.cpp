@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "EnqueueSubscriber.h"
-#include "Foo.h"
 #include "Event.h"
 #include "EventQueue.h"
 #include "GameTime.h"

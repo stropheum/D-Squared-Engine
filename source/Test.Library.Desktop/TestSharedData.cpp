@@ -7,8 +7,7 @@ namespace Library
 
 	TestSharedData::TestSharedData():
 		SharedData(), mName(""), mHealth(0), mMana(0)
-	{
-	}
+	{}
 
 	XmlParseMaster::SharedData* TestSharedData::Clone()
 	{
