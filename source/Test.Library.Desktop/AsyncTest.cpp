@@ -4,18 +4,11 @@
 #include "Datum.h"
 #include "GameTime.h"
 #include "Factory.h"
-#include "World.h"
-#include "Sector.h"
 #include "Entity.h"
-#include "Action.h"
 #include "ActionList.h"
-#include "WorldState.h"
 #include "ActionCreateAction.h"
-#include "Scope.h"
 #include "ActionDestroyAction.h"
 #include "ActionListIf.h"
-#include "SharedDataScope.h"
-#include "XmlParseHelperEntity.h"
 #include "ActionIncrement.h"
 #include "Event.h"
 #include "Foo.h"
@@ -45,7 +38,7 @@ namespace TestLibraryDesktop
 		ActionListIfFactory mActionListIfFactory;
 		ActionIncrementFactory mActionIncrementFactory;
 
-		/// Sets up leak detection logic
+		// Sets up leak detection logic
 		static void initializeLeakDetection()
 		{
 #if _DEBUG
@@ -54,7 +47,7 @@ namespace TestLibraryDesktop
 #endif //_DEBUG
 		}
 
-		/// Detects if memory state has been corrupted
+		// Detects if memory state has been corrupted
 		static void finalizeLeakDetection()
 		{
 #if _DEBUG
