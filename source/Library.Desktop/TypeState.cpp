@@ -34,7 +34,7 @@ namespace Library
 		throw exception("Invalid assignment operation");
 	}
 
-	Datum& TypeState::operator=(const glm::mat4& rhs)
+	Datum& TypeState::operator=(const glm::mat4x4& rhs)
 	{
 		UNREFERENCED_PARAMETER(rhs);
 		throw exception("Invalid assignment operation");
@@ -96,7 +96,7 @@ namespace Library
 		throw exception("Attempting to set storage on unknown type");
 	}
 
-	void TypeState::SetStorage(glm::mat4* data, const uint32_t& size)
+	void TypeState::SetStorage(glm::mat4x4* data, const uint32_t& size)
 	{
 		UNREFERENCED_PARAMETER(data);
 		UNREFERENCED_PARAMETER(size);

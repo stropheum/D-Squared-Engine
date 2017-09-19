@@ -1,5 +1,6 @@
 #pragma once
 #include "Datum.h"
+#include <glm/common.hpp>
 
 
 namespace Library
@@ -66,7 +67,7 @@ namespace Library
 		 * @Param rhs: The value being assigned to the first element of the array
 		 * @Exception: Thrown if called from this context
 		 */
-		virtual Datum& operator=(const glm::mat4& rhs);
+		virtual Datum& operator=(const glm::mat4x4& rhs);
 		
 		/**
 		 * Assignment operator
@@ -149,7 +150,7 @@ namespace Library
 		 * @Param Size: The Size of the array
 		 * @Exception: Thrown if called from this context
 		 */
-		virtual void SetStorage(glm::mat4* data, const std::uint32_t& size);
+		virtual void SetStorage(glm::mat4x4* data, const std::uint32_t& size);
 		
 		/**
 		 * Sets the external storage to the specified pointer
