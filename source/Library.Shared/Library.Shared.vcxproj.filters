@@ -4,9 +4,6 @@
     <Filter Include="Datum">
       <UniqueIdentifier>{fed2e44b-7171-4c2e-98e1-9f66e7a11e65}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Precompiled Header">
-      <UniqueIdentifier>{393aeed4-31f9-48c2-b621-ff8e80500f18}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Storage">
       <UniqueIdentifier>{dc64ff8e-29f5-447e-b883-0cb772b19506}</UniqueIdentifier>
     </Filter>
@@ -52,18 +49,6 @@
     <Filter Include="Attributed">
       <UniqueIdentifier>{ab220c37-ca5a-4ede-bd5d-0a2f424a2b09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="XmlParser">
-      <UniqueIdentifier>{962178d1-b14d-42ba-9a05-71ca9c8e3eea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="XmlParser\IXmlParseHelper">
-      <UniqueIdentifier>{7e46eaf5-46c6-4e59-a7e1-28bf125a2dd5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="XmlParser\XmlParseMaster">
-      <UniqueIdentifier>{6f080fac-7767-40af-ad9a-3cddfcc1d70d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="XmlParser\XmlParseHelperScope">
-      <UniqueIdentifier>{84e678f7-7113-4262-a713-bfe550cdd791}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Factory">
       <UniqueIdentifier>{fe1138b4-3753-4663-a380-1fbb27bdeaf6}</UniqueIdentifier>
     </Filter>
@@ -78,9 +63,6 @@
     </Filter>
     <Filter Include="GameTime">
       <UniqueIdentifier>{5c04cb7b-08f4-4de2-96db-02169c856534}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="XmlParser\XmlParseHelperEntity">
-      <UniqueIdentifier>{b691f31c-b224-4aa3-9c78-d7f46094a687}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sector">
       <UniqueIdentifier>{d3d57e6b-659e-4a78-9e2e-9739aef9c301}</UniqueIdentifier>
@@ -136,14 +118,32 @@
     <Filter Include="Attributed\Signature">
       <UniqueIdentifier>{abdaa229-2441-42aa-b945-b3aeeecc098a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Datum\_Datum">
+      <UniqueIdentifier>{c8a5f7e6-96de-42e8-84a1-186103747896}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World State\XmlParser">
+      <UniqueIdentifier>{962178d1-b14d-42ba-9a05-71ca9c8e3eea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World State\XmlParser\IXmlParseHelper">
+      <UniqueIdentifier>{7e46eaf5-46c6-4e59-a7e1-28bf125a2dd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World State\XmlParser\XmlParseMaster">
+      <UniqueIdentifier>{6f080fac-7767-40af-ad9a-3cddfcc1d70d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World State\XmlParser\XmlParseHelperScope">
+      <UniqueIdentifier>{84e678f7-7113-4262-a713-bfe550cdd791}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World State\XmlParser\XmlParseHelperEntity">
+      <UniqueIdentifier>{b691f31c-b224-4aa3-9c78-d7f46094a687}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Precompiled Header">
+      <UniqueIdentifier>{393aeed4-31f9-48c2-b621-ff8e80500f18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Datum.h">
-      <Filter>Datum</Filter>
-    </ClInclude>
     <ClInclude Include="DefaultHash.h">
       <Filter>Storage\HashMap</Filter>
     </ClInclude>
@@ -158,9 +158,6 @@
     </ClInclude>
     <ClInclude Include="Vector.h">
       <Filter>Storage\Vector</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Precompiled Header</Filter>
     </ClInclude>
     <ClInclude Include="IntegerState.h">
       <Filter>Datum\TypeState\Integer</Filter>
@@ -193,16 +190,16 @@
       <Filter>Attributed</Filter>
     </ClInclude>
     <ClInclude Include="IXmlParseHelper.h">
-      <Filter>XmlParser\IXmlParseHelper</Filter>
+      <Filter>World State\XmlParser\IXmlParseHelper</Filter>
     </ClInclude>
     <ClInclude Include="XmlParseMaster.h">
-      <Filter>XmlParser\XmlParseMaster</Filter>
+      <Filter>World State\XmlParser\XmlParseMaster</Filter>
     </ClInclude>
     <ClInclude Include="XmlParseHelperScope.h">
-      <Filter>XmlParser\XmlParseHelperScope</Filter>
+      <Filter>World State\XmlParser\XmlParseHelperScope</Filter>
     </ClInclude>
     <ClInclude Include="SharedDataScope.h">
-      <Filter>XmlParser\XmlParseHelperScope</Filter>
+      <Filter>World State\XmlParser\XmlParseHelperScope</Filter>
     </ClInclude>
     <ClInclude Include="Factory.h">
       <Filter>Factory</Filter>
@@ -226,7 +223,7 @@
       <Filter>GameTime</Filter>
     </ClInclude>
     <ClInclude Include="XmlParseHelperEntity.h">
-      <Filter>XmlParser\XmlParseHelperEntity</Filter>
+      <Filter>World State\XmlParser\XmlParseHelperEntity</Filter>
     </ClInclude>
     <ClInclude Include="Action.h">
       <Filter>Action</Filter>
@@ -273,14 +270,14 @@
     <ClInclude Include="Signature.h">
       <Filter>Attributed\Signature</Filter>
     </ClInclude>
+    <ClInclude Include="Datum.h">
+      <Filter>Datum\_Datum</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Precompiled Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Datum.cpp">
-      <Filter>Datum</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>Precompiled Header</Filter>
-    </ClCompile>
     <ClCompile Include="IntegerState.cpp">
       <Filter>Datum\TypeState\Integer</Filter>
     </ClCompile>
@@ -312,16 +309,16 @@
       <Filter>Attributed</Filter>
     </ClCompile>
     <ClCompile Include="IXmlParseHelper.cpp">
-      <Filter>XmlParser\IXmlParseHelper</Filter>
+      <Filter>World State\XmlParser\IXmlParseHelper</Filter>
     </ClCompile>
     <ClCompile Include="XmlParseMaster.cpp">
-      <Filter>XmlParser\XmlParseMaster</Filter>
+      <Filter>World State\XmlParser\XmlParseMaster</Filter>
     </ClCompile>
     <ClCompile Include="XmlParseHelperScope.cpp">
-      <Filter>XmlParser\XmlParseHelperScope</Filter>
+      <Filter>World State\XmlParser\XmlParseHelperScope</Filter>
     </ClCompile>
     <ClCompile Include="SharedDataScope.cpp">
-      <Filter>XmlParser\XmlParseHelperScope</Filter>
+      <Filter>World State\XmlParser\XmlParseHelperScope</Filter>
     </ClCompile>
     <ClCompile Include="Sector.cpp">
       <Filter>Sector</Filter>
@@ -342,7 +339,7 @@
       <Filter>GameTime</Filter>
     </ClCompile>
     <ClCompile Include="XmlParseHelperEntity.cpp">
-      <Filter>XmlParser\XmlParseHelperEntity</Filter>
+      <Filter>World State\XmlParser\XmlParseHelperEntity</Filter>
     </ClCompile>
     <ClCompile Include="Action.cpp">
       <Filter>Action</Filter>
@@ -382,6 +379,12 @@
     </ClCompile>
     <ClCompile Include="Signature.cpp">
       <Filter>Attributed\Signature</Filter>
+    </ClCompile>
+    <ClCompile Include="Datum.cpp">
+      <Filter>Datum\_Datum</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Precompiled Header</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
