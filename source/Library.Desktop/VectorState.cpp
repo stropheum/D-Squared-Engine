@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "VectorState.h"
+#include <glm\vec4.hpp>
 
 
 using namespace std;
@@ -32,8 +33,8 @@ namespace Library
 
 	Datum& VectorState::operator=(const glm::vec4& rhs)
 	{
-		if (mContext->mSize > 1) throw exception("Invalid assignment invocation");
-		if (mContext->mSize == 0) mContext->SetSize(1);
+		if (mContext->mSize > 1) { throw exception("Invalid assignment invocation"); }
+		if (mContext->mSize == 0) { mContext->SetSize(1); }
 		mContext->mData.v[0] = rhs;
 		return *mContext;
 	}

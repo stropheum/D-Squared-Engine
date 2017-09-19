@@ -33,8 +33,8 @@ namespace Library
 
 	Datum& ScopeState::operator=(Scope* const rhs)
 	{
-		if (mContext->mSize > 1) throw exception("Invalid assignment invocation");
-		if (mContext->mSize == 0) mContext->SetSize(1);
+		if (mContext->mSize > 1) { throw exception("Invalid assignment invocation"); }
+		if (mContext->mSize == 0) { mContext->SetSize(1); }
 		mContext->mData.sc[0] = rhs;
 		return *mContext;
 	}

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "MatrixState.h"
+#include <glm/mat4x4.hpp>
 
 
 using namespace std;
@@ -30,10 +31,10 @@ namespace Library
 		return result;
 	}
 
-	Datum& MatrixState::operator=(const glm::mat4& rhs)
+	Datum& MatrixState::operator=(const glm::mat4x4& rhs)
 	{
-		if (mContext->mSize > 1) throw exception("Invalid assignment invocation");
-		if (mContext->mSize == 0) mContext->SetSize(1);
+		if (mContext->mSize > 1) { throw exception("Invalid assignment invocation"); }
+		if (mContext->mSize == 0) { mContext->SetSize(1); }
 		mContext->mData.m[0] = rhs;
 		return *mContext;
 	}
@@ -96,7 +97,7 @@ namespace Library
 		SetStorage(rhs.mData.m, rhs.mSize);
 	}
 
-	void MatrixState::SetStorage(glm::mat4* data, const uint32_t& size)
+	void MatrixState::SetStorage(glm::mat4x4* data, const uint32_t& size)
 	{
 		if (mContext->mType != DatumType::Matrix) { throw exception("Attempting to reassign Datum Type"); }
 		
