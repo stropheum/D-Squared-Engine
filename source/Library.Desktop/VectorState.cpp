@@ -90,7 +90,7 @@ namespace Library
 	{
 		if (mContext->mType != DatumType::Vector) { throw exception("Attempting to reassign Datum Type"); }
 
-		if (mContext->mCapacity > 0) Clear();
+		if (mContext->mCapacity > 0) { Clear(); }
 
 		mContext->mDataIsExternal = true;
 		mContext->mType = DatumType::Vector;
