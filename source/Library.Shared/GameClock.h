@@ -1,6 +1,4 @@
 #pragma once
-
-#include <exception>
 #include <chrono>
 
 namespace Library

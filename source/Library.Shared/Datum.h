@@ -3,7 +3,6 @@
 #pragma warning(push)
 #pragma warning(disable:4201)
 #include "glm/glm.hpp"
-#include "glm/gtx/string_cast.hpp"
 #pragma warning(pop)
 
 
@@ -102,7 +101,7 @@ namespace Library
 		Datum& operator=(const float& rhs);
 
 		/**
-		 * Assignment operator for vec4
+		 * Assignment operator for glm::vec4
 		 * @Param rhs: Vector being assigned to
 		 * @Return: The newly assigned Datum object
 		 * @Exception: Thrown if attempting to assign to invalid Datum Type or if Size is greater than 1
@@ -233,7 +232,7 @@ namespace Library
 		bool operator!=(const float& rhs) const;
 
 		/**
-		 * Inequality operator for vec4
+		 * Inequality operator for glm::vec4
 		 * @Param rhs: The vector being compared against
 		 * @Return: True if the vectors are not equivalent
 		 */
@@ -322,7 +321,7 @@ namespace Library
 		void SetStorage(float* data, const std::uint32_t& size);
 
 		/**
-		 * Sets the external storage to the specified glm::vec4*
+		 * Sets the external storage to the specified glm::glm::vec4*
 		 * Note: Size on external storage is considered static
 		 * @Param data: The specified external storage
 		 * @Param Size: The number of elements available in the external storage
@@ -373,7 +372,7 @@ namespace Library
 
 		/**
 		 * Sets a specified index of the array to the specified value
-		 * @Param value: The vec4 being assigned
+		 * @Param value: The glm::vec4 being assigned
 		 * @Param index: The index of the value being assigned to
 		 * @Exception: Thrown if calling Set on invalid Type
 		 * @Exception: Thrown if attempting to Set beyond existing Size

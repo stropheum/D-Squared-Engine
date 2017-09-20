@@ -2,9 +2,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <string>
-#include "SList.h"
 #include "Vector.h"
-#include "HashMap.h"
 #include "Datum.h"
 
 
