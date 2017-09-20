@@ -3,6 +3,7 @@
 
 
 using namespace std;
+using namespace glm;
 
 namespace Library
 {
@@ -66,13 +67,13 @@ namespace Library
 				case DatumType::Vector:
 					for (uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						PushBack(rhs.Get<glm::vec4>(i));
+						PushBack(rhs.Get<vec4>(i));
 					}
 					break;
 				case DatumType::Matrix:
 					for (uint32_t i = 0; i < rhs.mSize; i++)
 					{
-						PushBack(rhs.Get<glm::mat4>(i));
+						PushBack(rhs.Get<mat4x4>(i));
 					}
 					break;
 				case DatumType::String:
@@ -151,37 +152,52 @@ namespace Library
 		return mTypeState->operator=(rhs);
 	}
 
-	Datum& Datum::operator=(const glm::vec4& rhs)
+	Datum& Datum::operator=(const vec4& rhs)
 	{
-		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
+		if (mTypeState != nullptr)
+		{
+			return mTypeState->operator=(rhs);
+		}
 		SetType(DatumType::Vector);
 		return mTypeState->operator=(rhs);
 	}
 
-	Datum& Datum::operator=(const glm::mat4& rhs)
+	Datum& Datum::operator=(const mat4x4& rhs)
 	{
-		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
+		if (mTypeState != nullptr)
+		{
+			return mTypeState->operator=(rhs);
+		}
 		SetType(DatumType::Matrix);
 		return mTypeState->operator=(rhs);
 	}
 
 	Datum& Datum::operator=(Scope* const rhs)
 	{
-		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
+		if (mTypeState != nullptr)
+		{
+			return mTypeState->operator=(rhs);
+		}
 		SetType(DatumType::Scope);
 		return mTypeState->operator=(rhs);
 	}
 
 	Datum& Datum::operator=(const string& rhs)
 	{
-		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
+		if (mTypeState != nullptr)
+		{
+			return mTypeState->operator=(rhs);
+		}
 		SetType(DatumType::String);
 		return mTypeState->operator=(rhs);
 	}
 
 	Datum& Datum::operator=(Library::RTTI* const& rhs)
 	{
-		if (mTypeState != nullptr) return mTypeState->operator=(rhs);
+		if (mTypeState != nullptr)
+		{
+			return mTypeState->operator=(rhs);
+		}
 		SetType(DatumType::Pointer);
 		return mTypeState->operator=(rhs);
 	}
@@ -209,13 +225,13 @@ namespace Library
 			mSize == 1 && mData.f[0] == rhs;
 	}
 
-	bool Datum::operator==(const glm::vec4& rhs) const
+	bool Datum::operator==(const vec4& rhs) const
 	{
 		return mType == DatumType::Vector &&
 			mSize == 1 && mData.v[0] == rhs;
 	}
 
-	bool Datum::operator==(const glm::mat4& rhs) const
+	bool Datum::operator==(const mat4x4& rhs) const
 	{
 		return mType == DatumType::Matrix &&
 			mSize == 1 && mData.m[0] == rhs;
@@ -259,12 +275,12 @@ namespace Library
 		return !(operator==(rhs));
 	}
 
-	bool Datum::operator!=(const glm::vec4& rhs) const
+	bool Datum::operator!=(const vec4& rhs) const
 	{
 		return !(operator==(rhs));
 	}
 
-	bool Datum::operator!=(const glm::mat4& rhs) const
+	bool Datum::operator!=(const mat4x4& rhs) const
 	{
 		return !(operator==(rhs));
 	}
@@ -376,7 +392,7 @@ namespace Library
 		mTypeState->SetStorage(data, size);
 	}
 
-	void Datum::SetStorage(glm::vec4* data, const uint32_t& size)
+	void Datum::SetStorage(vec4* data, const uint32_t& size)
 	{
 		if (mTypeState == nullptr)
 		{
@@ -386,7 +402,7 @@ namespace Library
 		mTypeState->SetStorage(data, size);
 	}
 
-	void Datum::SetStorage(glm::mat4* data, const uint32_t& size)
+	void Datum::SetStorage(mat4x4* data, const uint32_t& size)
 	{
 		if (mTypeState == nullptr)
 		{
@@ -438,7 +454,7 @@ namespace Library
 		new(mData.f + index) float(value);
 	}
 
-	void Datum::Set(const glm::vec4& value, const uint32_t& index)
+	void Datum::Set(const vec4& value, const uint32_t& index)
 	{
 		if (mType != DatumType::Vector) { throw exception("Calling Set on invalid Type"); }
 		if (index > mSize) { throw exception("Attempting to Set beyond current Size"); }
@@ -446,10 +462,10 @@ namespace Library
 		{
 			PushBack(value); // If setting end, divert functionality to a push Back
 		}
-		new(mData.v + index) glm::vec4(value);
+		new(mData.v + index) vec4(value);
 	}
 
-	void Datum::Set(const glm::mat4& value, const uint32_t& index)
+	void Datum::Set(const mat4x4& value, const uint32_t& index)
 	{
 		if (mType != DatumType::Matrix) { throw exception("Calling Set on invalid Type"); }
 		if (index > mSize) { throw exception("Attempting to Set beyond current Size"); }
@@ -457,7 +473,7 @@ namespace Library
 		{
 			PushBack(value); // If setting end, divert functionality to a push Back
 		}
-		new(mData.m + index) glm::mat4(value);
+		new(mData.m + index) mat4x4(value);
 	}
 
 	void Datum::Set(Scope* const& value, const uint32_t& index)
@@ -506,13 +522,13 @@ namespace Library
 		Set(value, mSize - 1);
 	}
 
-	void Datum::PushBack(const glm::vec4& value)
+	void Datum::PushBack(const vec4& value)
 	{
 		SetSize(mSize + 1);
 		Set(value, mSize - 1);
 	}
 
-	void Datum::PushBack(const glm::mat4& value)
+	void Datum::PushBack(const mat4x4& value)
 	{
 		SetSize(mSize + 1);
 		Set(value, mSize - 1);
@@ -601,7 +617,7 @@ namespace Library
 	}
 	
 	template<>
-	glm::vec4& Datum::Get(const std::uint32_t& index)
+	vec4& Datum::Get(const std::uint32_t& index)
 	{
 		if (mType != DatumType::Vector) { throw std::exception("Calling Get on invalid Type"); }
 		if (mData.f == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
@@ -610,7 +626,7 @@ namespace Library
 	}
 	
 	template<>
-	const glm::vec4& Datum::Get(const std::uint32_t& index) const
+	const vec4& Datum::Get(const std::uint32_t& index) const
 	{
 		if (mType != DatumType::Vector) { throw std::exception("Calling Get on invalid Type"); }
 		if (mData.f == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
@@ -619,7 +635,7 @@ namespace Library
 	}
 	
 	template<>
-	glm::mat4& Datum::Get(const std::uint32_t& index)
+	mat4x4& Datum::Get(const std::uint32_t& index)
 	{
 		if (mType != DatumType::Matrix) { throw std::exception("Calling Get on invalid Type"); }
 		if (mData.f == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
@@ -628,7 +644,7 @@ namespace Library
 	}
 	
 	template<>
-	const glm::mat4& Datum::Get(const std::uint32_t& index) const
+	const mat4x4& Datum::Get(const std::uint32_t& index) const
 	{
 		if (mType != DatumType::Matrix) { throw std::exception("Calling Get on invalid Type"); }
 		if (mData.f == nullptr) { throw std::exception("Attempting to dereference nullptr"); }

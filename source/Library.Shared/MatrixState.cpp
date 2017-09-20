@@ -30,7 +30,7 @@ namespace Library
 		return result;
 	}
 
-	Datum& MatrixState::operator=(const glm::mat4& rhs)
+	Datum& MatrixState::operator=(const glm::mat4x4& rhs)
 	{
 		if (mContext->mSize > 1) throw exception("Invalid assignment invocation");
 		if (mContext->mSize == 0) mContext->SetSize(1);
@@ -40,14 +40,14 @@ namespace Library
 
 	void MatrixState::SetSize(const uint32_t& size)
 	{
-		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(glm::mat4) * size);
+		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(glm::mat4x4) * size);
 		mContext->mCapacity = mContext->mSize = size;
 
 		if (size <mContext->mSize)
 		{
 			for (uint32_t i = size; i < mContext->mSize; i++)
 			{
-				mContext->mData.m[i] = glm::mat4(0);
+				mContext->mData.m[i] = glm::mat4x4(0);
 			}
 		}
 	}
@@ -56,7 +56,7 @@ namespace Library
 	{
 		if (capacity > mContext->mCapacity)
 		{
-			mContext->mData.vp = realloc(mContext->mData.vp, sizeof(glm::mat4) * capacity);
+			mContext->mData.vp = realloc(mContext->mData.vp, sizeof(glm::mat4x4) * capacity);
 			mContext->mCapacity = capacity;
 		}
 	}
@@ -65,7 +65,7 @@ namespace Library
 	{
 		if (mContext->mSize > 0)
 		{
-			for (uint32_t i = 0; i <mContext->mSize; i++) mContext->mData.m[i] = glm::mat4(0);
+			for (uint32_t i = 0; i <mContext->mSize; i++) mContext->mData.m[i] = glm::mat4x4(0);
 			mContext->mSize = 0;
 		}
 	}
@@ -84,7 +84,7 @@ namespace Library
 			&x3, &y3, &z3, &w3, 
 			&x4, &y4, &z4, &w4);
 
-		mContext->Set(glm::mat4(
+		mContext->Set(glm::mat4x4(
 			x1, y1, z1, w1, 
 			x2, y2, z2, w2, 
 			x3, y3, z3, w3, 
@@ -96,7 +96,7 @@ namespace Library
 		SetStorage(rhs.mData.m, rhs.mSize);
 	}
 
-	void MatrixState::SetStorage(glm::mat4* data, const uint32_t& size)
+	void MatrixState::SetStorage(glm::mat4x4* data, const uint32_t& size)
 	{
 		if (mContext->mType != DatumType::Matrix) { throw exception("Attempting to reassign Datum Type"); }
 		
@@ -109,6 +109,6 @@ namespace Library
 
 	string MatrixState::ToString(const uint32_t& index)
 	{
-		return glm::to_string(mContext->Get<glm::mat4>(index));
+		return glm::to_string(mContext->Get<glm::mat4x4>(index));
 	}
 }

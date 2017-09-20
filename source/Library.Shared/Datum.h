@@ -3,7 +3,6 @@
 #pragma warning(push)
 #pragma warning(disable:4201)
 #include "glm/glm.hpp"
-#include "glm/gtx/string_cast.hpp"
 #pragma warning(pop)
 
 
@@ -46,7 +45,7 @@ namespace Library
 			std::int32_t* i;	// Integer array pointer
 			float* f;			// Float array pointer
 			glm::vec4* v;		// Vector array pointer
-			glm::mat4* m;		// Matrix array pointer
+			glm::mat4x4* m;		// Matrix array pointer
 			Scope** sc;			// Array pointer for Scope pointers
 			std::string* s;		// String array pointer
 			RTTI** r;	// Array pointer for RTTI pointers
@@ -102,7 +101,7 @@ namespace Library
 		Datum& operator=(const float& rhs);
 
 		/**
-		 * Assignment operator for vec4
+		 * Assignment operator for glm::vec4
 		 * @Param rhs: Vector being assigned to
 		 * @Return: The newly assigned Datum object
 		 * @Exception: Thrown if attempting to assign to invalid Datum Type or if Size is greater than 1
@@ -115,7 +114,7 @@ namespace Library
 		 * @Return: The newly assigned Datum object
 		 * @Exception: Thrown if attempting to assign to invalid Datum Type or if Size is greater than 1
 		 */
-		Datum& operator=(const glm::mat4& rhs);
+		Datum& operator=(const glm::mat4x4& rhs);
 
 		/**
 		 * Assignment operator for Scope
@@ -181,7 +180,7 @@ namespace Library
 		 * @Param rhs: The matrix being  compared against
 		 * @Return: True if the matrices are equivalent. False if Size is not 1 or if Type is invalid
 		 */
-		bool operator==(const glm::mat4& rhs) const;
+		bool operator==(const glm::mat4x4& rhs) const;
 
 		/**
 		 * Comparison operator for Scope
@@ -233,7 +232,7 @@ namespace Library
 		bool operator!=(const float& rhs) const;
 
 		/**
-		 * Inequality operator for vec4
+		 * Inequality operator for glm::vec4
 		 * @Param rhs: The vector being compared against
 		 * @Return: True if the vectors are not equivalent
 		 */
@@ -244,7 +243,7 @@ namespace Library
 		 * @Param rhs: The matrix being compared against
 		 * @Return: True if the matrices are not equivalent
 		 */
-		bool operator!=(const glm::mat4& rhs) const;
+		bool operator!=(const glm::mat4x4& rhs) const;
 		
 		/**
 		 * Inequality operator for std::string
@@ -322,7 +321,7 @@ namespace Library
 		void SetStorage(float* data, const std::uint32_t& size);
 
 		/**
-		 * Sets the external storage to the specified glm::vec4*
+		 * Sets the external storage to the specified glm::glm::vec4*
 		 * Note: Size on external storage is considered static
 		 * @Param data: The specified external storage
 		 * @Param Size: The number of elements available in the external storage
@@ -335,7 +334,7 @@ namespace Library
 		 * @Param data: The specified external storage
 		 * @Param Size: The number of elements available in the external storage
 		 */
-		void SetStorage(glm::mat4* data, const std::uint32_t& size);
+		void SetStorage(glm::mat4x4* data, const std::uint32_t& size);
 
 		/**
 		 * Sets the external storage to the specified std::string*
@@ -373,7 +372,7 @@ namespace Library
 
 		/**
 		 * Sets a specified index of the array to the specified value
-		 * @Param value: The vec4 being assigned
+		 * @Param value: The glm::vec4 being assigned
 		 * @Param index: The index of the value being assigned to
 		 * @Exception: Thrown if calling Set on invalid Type
 		 * @Exception: Thrown if attempting to Set beyond existing Size
@@ -387,7 +386,7 @@ namespace Library
 		 * @Exception: Thrown if calling Set on invalid Type
 		 * @Exception: Thrown if attempting to Set beyond existing Size
 		 */
-		void Set(const glm::mat4& value, const std::uint32_t& index = 0);
+		void Set(const glm::mat4x4& value, const std::uint32_t& index = 0);
 
 		/**
 		 * Sets a specified index of the array to the specified value
@@ -438,7 +437,7 @@ namespace Library
 		 * Pushes an std::int32_t to the Back of the array
 		 * @Param value: The value being pushed onto the array
 		 */
-		void PushBack(const glm::mat4& value);
+		void PushBack(const glm::mat4x4& value);
 
 		/**
 		 * Pushes an std::int32_t to the Back of the array
@@ -521,8 +520,8 @@ namespace Library
 	template<> glm::vec4& Datum::Get(const std::uint32_t& index);
 	template<> const glm::vec4& Datum::Get(const std::uint32_t& index) const;
 
-	template<> glm::mat4& Datum::Get(const std::uint32_t& index);
-	template<> const glm::mat4& Datum::Get(const std::uint32_t& index) const;
+	template<> glm::mat4x4& Datum::Get(const std::uint32_t& index);
+	template<> const glm::mat4x4& Datum::Get(const std::uint32_t& index) const;
 
 	template<> Scope*& Datum::Get(const std::uint32_t& index);
 	template<> Scope* const& Datum::Get(const std::uint32_t& index) const;

@@ -35,7 +35,7 @@ namespace Library
 		 * @Param rhs: The matrix being Set to the only element in the Datum
 		 * @Return: The modified Datum object
 		 */
-		Datum& operator=(const glm::mat4& rhs) override;
+		Datum& operator=(const glm::mat4x4& rhs) override;
 
 		/**
 		 * Sets the number of matrices in the local buffer
@@ -73,7 +73,7 @@ namespace Library
 		 * @Pram Size: The number of elements in the external storage
 		 * @Exception: Thrown if attempting to reassign datum Type, or if local memory is already used
 		 */
-		void SetStorage(glm::mat4* data, const std::uint32_t& size) override;
+		void SetStorage(glm::mat4x4* data, const std::uint32_t& size) override;
 
 		/**
 		 * A string representation of a piece of data stored in the Datum object

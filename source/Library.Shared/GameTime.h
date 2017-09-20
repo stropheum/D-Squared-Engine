@@ -1,7 +1,5 @@
 #pragma once
-
 #include <chrono>
-#include "GameClock.h"
 
 namespace Library
 {
