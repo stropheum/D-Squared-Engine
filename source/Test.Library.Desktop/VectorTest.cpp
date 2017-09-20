@@ -89,6 +89,14 @@ namespace TestLibraryDesktop
 
 			const auto constIntor(intor);
 			Assert::IsTrue(intor == constIntor, L"Const copy not equivalent");
+
+			Library::Vector<int> wrongIntVector;
+			for (int i = 0; i < 100; i++)
+			{
+				intor.PushBack(100 - i);
+				wrongIntVector.PushBack(i);
+			}
+			Assert::IsFalse(intor == wrongIntVector);
 			
 
 			// Pointer vector tests
@@ -103,6 +111,16 @@ namespace TestLibraryDesktop
 			const auto constPointor(pointor);
 			Assert::IsTrue(pointor == constPointor, L"Const copy not equivalent");
 
+			int right = 5;
+			int wrong = 10;
+			Library::Vector<int*> wrongPtrVector;
+			for (int i = 0; i < 100; i++)
+			{
+				pointor.PushBack(&right);
+				wrongPtrVector.PushBack(&wrong);
+			}
+			Assert::IsFalse(pointor == wrongPtrVector);
+
 
 			// Foo vector tests
 			Assert::IsTrue(footor == footor, L"Vector not equivalent to itself");
@@ -115,6 +133,16 @@ namespace TestLibraryDesktop
 
 			const auto constFootor(footor);
 			Assert::IsTrue(footor == constFootor, L"Const copy not equivalent");
+
+			Foo rightFoo(5);
+			Foo wrongFoo(10);
+			Library::Vector<Foo> wrongFooVector;
+			for (int i = 0; i < 100; i++)
+			{
+				footor.PushBack(rightFoo);
+				wrongFooVector.PushBack(wrongFoo);
+			}
+			Assert::IsFalse(footor == wrongFooVector);
 		}
 
 		TEST_METHOD(TestAssignmentOperator)

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "XmlParseHelperScope.h"
+#include <cassert>
 
 
 using namespace std;

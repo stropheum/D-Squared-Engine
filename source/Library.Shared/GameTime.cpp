@@ -7,8 +7,7 @@ namespace Library
 {
 	GameTime::GameTime()
 		: mCurrentTime(), mTotalGameTime(0), mElapsedGameTime(0)
-	{
-	}
+	{}
 
 	const high_resolution_clock::time_point& GameTime::CurrentTime() const
 	{
