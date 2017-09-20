@@ -181,7 +181,7 @@ namespace TestLibraryDesktop
 		TEST_METHOD(TestSetWorld)
 		{
 			World* world1 = new World();
-			Sector* sector = world1->CreateSector("sector");
+			Sector* sector = world1->CreateSector("mSector");
 
 			Assert::IsTrue(sector->GetWorld() == *world1);
 

@@ -27,7 +27,7 @@ namespace Library
 
 		/**
 		 * Updates the game state
-		 * @Param worldState: The worldstate object storing information about the world
+		 * @Param worldState: The worldstate object storing information about the mWorld
 		 */
 		virtual void Update(class WorldState& worldState) override;
 

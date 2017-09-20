@@ -55,7 +55,7 @@ namespace Library
 
 	void Entity::Update(WorldState& worldState)
 	{
-		worldState.entity = this;
+		worldState.Entity() = this;
 
 		for (uint32_t i = 0; i < (*this)["Actions"].Size(); i++)
 		{
@@ -66,6 +66,6 @@ namespace Library
 			action->Update(worldState);
 		}
 
-		worldState.entity = nullptr;
+		worldState.Entity() = nullptr;
 	}
 }

@@ -4,6 +4,10 @@
 namespace Library
 {
 	class GameTime;
+	class World;
+	class Sector;
+	class Entity;
+	class Action;
 
 	class WorldState
 	{
@@ -34,16 +38,42 @@ namespace Library
 
 		/**
 		 * Mutator method for the gametime
-		 * @Param gameTime: A reference to the gametime object
+		 * @Param mGameTime: A reference to the gametime object
 		 */
 		void SetGameTime(GameTime& gameTime);
 
-		class World* world;
-		class Sector* sector;
-		class Entity* entity;
-		class Action* action;
+		/**
+		 * Accessor method for the world state's world pointer
+		 * @Return: A pointer to the world
+		 */
+		World*& World();
 
-		GameTime* gameTime;
+		/**
+		* Accessor method for the world state's sector pointer
+		* @Return: A pointer to the sector
+		*/
+		Sector*& Sector();
+
+		/**
+		* Accessor method for the world state's entity pointer
+		* @Return: A pointer to the entity
+		*/
+		Entity*& Entity();
+
+		/**
+		* Accessor method for the world state's action pointer
+		* @Return: A pointer to the action
+		*/
+		Action*& Action();
+
+	private:
+
+		class World* mWorld;
+		class Sector* mSector;
+		class Entity* mEntity;
+		class Action* mAction;
+
+		GameTime* mGameTime;
 
 	};
 }

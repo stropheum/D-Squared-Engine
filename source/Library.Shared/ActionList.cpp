@@ -15,7 +15,7 @@ namespace Library
 
 	void ActionList::Update(WorldState& worldState)
 	{
-		worldState.action = this;
+		worldState.Action() = this;
 
 		for (uint32_t i = 0; i < (*this)["Actions"].Size(); i++)
 		{
@@ -26,7 +26,7 @@ namespace Library
 			action->Update(worldState);
 		}
 
-		worldState.action = nullptr;
+		worldState.Action() = nullptr;
 	}
 
 	Action* ActionList::CreateAction(const string& className, const string& instanceName)

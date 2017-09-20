@@ -124,7 +124,7 @@ namespace Library
 		{
 			if (mState != State::NotParsing || mScopeHasBeenInitialized)
 			{
-				throw exception("Already parsing while attempting to parse a world");
+				throw exception("Already parsing while attempting to parse a mWorld");
 			}
 
 			mState = State::ParsingWorld;
@@ -138,7 +138,7 @@ namespace Library
 			assert(data->mScope->Is(World::TypeIdClass()));
 			if (mState != State::ParsingWorld)
 			{
-				throw exception("Attempting to parse a sector when not in a world");
+				throw exception("Attempting to parse a mSector when not in a mWorld");
 			}
 
 			mState = State::ParsingSector;
@@ -153,7 +153,7 @@ namespace Library
 			assert(data->mScope->Is(Sector::TypeIdClass()));
 			if(mState != State::ParsingSector)
 			{
-				throw exception("Attempting to parse an entity when not in a sector");
+				throw exception("Attempting to parse an mEntity when not in a mSector");
 			}
 
 			mState = State::ParsingEntity;
@@ -171,7 +171,7 @@ namespace Library
 			assert(data->mScope->Is(Entity::TypeIdClass()) || data->mScope->Is(Action::TypeIdClass()));
 			if (mState != State::ParsingEntity && mState != State::ParsingAction)
 			{
-				throw exception("Attempting to parse an action when not in an entity");
+				throw exception("Attempting to parse an mAction when not in an mEntity");
 			}
 
 			mState = State::ParsingAction;
@@ -321,7 +321,7 @@ namespace Library
 			}
 			else
 			{
-				throw exception("Attempting to enter an invalid state after parsing action");
+				throw exception("Attempting to enter an invalid state after parsing mAction");
 			}
 			data->mScope = data->mScope->GetParent();
 		}

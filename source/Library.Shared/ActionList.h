@@ -27,22 +27,22 @@ namespace Library
 #pragma endregion
 
 		/**
-		 * Updates the Actions contained in the action list
-		 * @Param worldState: The world state object that holds the current world state
+		 * Updates the Actions contained in the mAction list
+		 * @Param worldState: The mWorld state object that holds the current mWorld state
 		 */
 		virtual void Update(WorldState& worldState) override;
 
 		/**
-		 * Method for adding Actions to the action list
+		 * Method for adding Actions to the mAction list
 		 * @Param ClassName: The Name of the base class being instantiated
-		 * @Param instanceName: The Name that the action will be instantiated with
-		 * @Return: A freshly instantiated action object
+		 * @Param instanceName: The Name that the mAction will be instantiated with
+		 * @Return: A freshly instantiated mAction object
 		 */
 		class Action* CreateAction(const std::string& className, const std::string& instanceName);
 
 	};
 
-	// Macro for creating a factory for action list objects
+	// Macro for creating a factory for mAction list objects
 	ActionFactory(ActionList)
 }
 

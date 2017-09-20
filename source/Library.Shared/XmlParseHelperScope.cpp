@@ -112,7 +112,6 @@ namespace Library
 		{
 			mState = State::ParsingScope;
 
-			// TODO: On first scope tag, instantiate new scope
 			if (!mScopeHasBeenInitialized)
 			{
 				data->mScope = new Scope();

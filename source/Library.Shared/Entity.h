@@ -29,52 +29,52 @@ namespace Library
 #pragma endregion
 
 		/**
-		 * Accessor method for the Name of the entity
-		 * @Return: The entity's Name field
+		 * Accessor method for the Name of the mEntity
+		 * @Return: The mEntity's Name field
 		 */
 		std::string Name() const;
 
 		/**
-		 * Mutator method for the Name of the entity
-		 * @Param Name: the new Name of the entity
+		 * Mutator method for the Name of the mEntity
+		 * @Param Name: the new Name of the mEntity
 		 */
 		void SetName(const std::string& name);
 
 		/**
-		 * Accessor method for the Actions datum in the entity
-		 * @Return: A datum reference of the collection of Actions in the entity
+		 * Accessor method for the Actions datum in the mEntity
+		 * @Return: A datum reference of the collection of Actions in the mEntity
 		 */
 		Datum& Actions();
 
 		/**
-		 * Method for adding Actions to the entity
+		 * Method for adding Actions to the mEntity
 		 * @Param ClassName: The Name of the base class being instantiated
-		 * @Param instanceName: The Name that the action will be instantiated with
-		 * @Return: A freshly instantiated action object
+		 * @Param instanceName: The Name that the mAction will be instantiated with
+		 * @Return: A freshly instantiated mAction object
 		 */
 		class Action* CreateAction(const std::string& className, const std::string& instanceName);
 
 		/**
-		 * Mutator method for the parent sector
-		 * @Param sector: The new sector that will own this entity
+		 * Mutator method for the parent mSector
+		 * @Param mSector: The new mSector that will own this mEntity
 		 */
 		void SetSector(Sector& sector);
 
 		/**
-		 * Accessor method for the parent sector
-		 * @Return: A reference to the sector that contains this entity
+		 * Accessor method for the parent mSector
+		 * @Return: A reference to the mSector that contains this mEntity
 		 */
 		Sector& GetSector() const;
 
 		/**
 		 * Update method for handling change of game state
-		 * @Param worldState: The object that contains the world state data
+		 * @Param worldState: The object that contains the mWorld state data
 		 */
 		void Update(class WorldState& worldState);
 
 	private:
 
-		std::string mName; // The Name of the entity
+		std::string mName; // The Name of the mEntity
 
 	};
 		

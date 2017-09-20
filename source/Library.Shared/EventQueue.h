@@ -30,7 +30,7 @@ namespace Library
 		/**
 		 *Adds an event to the queue At a specified time
 		 *@Param eventPublisher: The event being added to the queue
-		 *@Param gameTime: The game time that the event was queued At
+		 *@Param mGameTime: The game time that the event was queued At
 		 *@Param Delay: The Delay after which the event will be delivered
 		 */
 		void Enqueue(class EventPublisher& eventPublisher, 
@@ -44,7 +44,7 @@ namespace Library
 
 		/**
 		 * Iterates over the queue and delivers any expired events
-		 * @Param gameTime: The current game time
+		 * @Param mGameTime: The current game time
 		 */
 		void Update(class GameTime& gameTime);
 

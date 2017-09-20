@@ -27,7 +27,7 @@ namespace Library
 
 		/**
 		 * Executes the if statement. Runs through "then" attribute updates if condition is true, "else" attributes otherwise
-		 * @Param worldState: The world state object that stores the current world state
+		 * @Param worldState: The mWorld state object that stores the current mWorld state
 		 */
 		virtual void Update(WorldState& worldState) override;
 
@@ -44,24 +44,24 @@ namespace Library
 		std::int32_t GetCondition() const;
 
 		/**
-		 * Creates a "then" action as the consequence of the if being true
+		 * Creates a "then" mAction as the consequence of the if being true
 		 * @Param className: The name of the class being created
 		 * @Param instanceName: The name of the instance of the class being created
-		 * @Return: A pointer to the newly instantiated action
+		 * @Return: A pointer to the newly instantiated mAction
 		 */
 		Action* CreateThenAction(const std::string& className, const std::string& instanceName);
 
 		/**
-		* Creates an "else" action as the consequence of the if being false
+		* Creates an "else" mAction as the consequence of the if being false
 		* @Param className: The name of the class being created
 		* @Param instanceName: The name of the instance of the class being created
-		* @Return: A pointer to the newly instantiated action
+		* @Return: A pointer to the newly instantiated mAction
 		*/
 		Action* CreateElseAction(const std::string& className, const std::string& instanceName);
 
 	private:
 
-		std::int32_t mCondition; /// The condition to determine which Set of action will be executed
+		std::int32_t mCondition; /// The condition to determine which Set of mAction will be executed
 
 	};
 

@@ -156,7 +156,7 @@ namespace TestLibraryDesktop
 		{
 			World* myworld = new World();
 			WorldState worldState;
-			worldState.world = myworld;
+			worldState.World() = myworld;
 			GameTime gameTime;
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(0)));
 			worldState.SetGameTime(gameTime);

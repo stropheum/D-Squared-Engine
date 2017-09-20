@@ -14,9 +14,9 @@ namespace Library
 
 	void ActionIncrement::Update(WorldState& worldState)
 	{
-		worldState.action = this;
+		worldState.Action() = this;
 		mIncrementCount++;
-		worldState.action = nullptr;
+		worldState.Action() = nullptr;
 	}
 
 	int32_t ActionIncrement::GetIncrementCount() const

@@ -38,7 +38,7 @@ namespace Library
 
 		Event<EventMessageAttributed>* event = new Event<EventMessageAttributed>(ema, true);
 		auto& delay = (*this)["Delay"].Get<int32_t>(0);
-		worldState.world->GetEventQueue().Enqueue(*event, worldState.GetGameTime(), milliseconds(delay));
+		worldState.World()->GetEventQueue().Enqueue(*event, worldState.GetGameTime(), milliseconds(delay));
 	}
 
 	string ActionEvent::GetSubtype()
