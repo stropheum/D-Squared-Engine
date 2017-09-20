@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "VectorState.h"
+#include <glm\gtx\string_cast.hpp>
 
 
 using namespace std;
@@ -32,8 +33,8 @@ namespace Library
 
 	Datum& VectorState::operator=(const glm::vec4& rhs)
 	{
-		if (mContext->mSize > 1) throw exception("Invalid assignment invocation");
-		if (mContext->mSize == 0) mContext->SetSize(1);
+		if (mContext->mSize > 1) { throw exception("Invalid assignment invocation"); }
+		if (mContext->mSize == 0) { mContext->SetSize(1); }
 		mContext->mData.v[0] = rhs;
 		return *mContext;
 	}
@@ -43,7 +44,7 @@ namespace Library
 		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(glm::vec4) * size);
 		mContext->mCapacity = mContext->mSize = size;
 
-		if (size <mContext->mSize)
+		if (size < mContext->mSize)
 		{
 			for (uint32_t i = size; i < mContext->mSize; i++)
 			{
@@ -89,7 +90,7 @@ namespace Library
 	{
 		if (mContext->mType != DatumType::Vector) { throw exception("Attempting to reassign Datum Type"); }
 
-		if (mContext->mCapacity > 0) Clear();
+		if (mContext->mCapacity > 0) { Clear(); }
 
 		mContext->mDataIsExternal = true;
 		mContext->mType = DatumType::Vector;

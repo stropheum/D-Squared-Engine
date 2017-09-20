@@ -66,6 +66,9 @@
     <ClInclude Include="QueueClearSubscriber.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LeakDetector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -150,6 +153,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DefaultHashTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LeakDetector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

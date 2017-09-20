@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "LeakDetector.h"
 #include "XmlParseMaster.h"
-#include "TestParseHelper.h"
 #include "TestSharedData.h"
 #include "XmlParseHelperScope.h"
 #include "SharedDataScope.h"
@@ -17,39 +17,17 @@ namespace TestLibraryDesktop
 {
 	TEST_CLASS(XmlParseHelperScopeTest)
 	{
+
 	public:
 
-		// Sets up leak detection logic
-		static void initializeLeakDetection()
+		TEST_METHOD_INITIALIZE(InitializeMethod)
 		{
-#if _DEBUG
-			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
-			_CrtMemCheckpoint(&sStartMemState);
-#endif //_Debug
+			LeakDetector::Initialize();
 		}
 
-		// Detects if memory state has been corrupted
-		static void finalizeLeakDetection()
+		TEST_METHOD_CLEANUP(CleanupMethod)
 		{
-#if _DEBUG
-			_CrtMemState endMemState, diffMemState;
-			_CrtMemCheckpoint(&endMemState);
-			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
-			{
-				_CrtMemDumpStatistics(&diffMemState);
-				Assert::Fail(L"Memory Leaks!");
-			}
-#endif //_Debug
-		}
-
-		TEST_METHOD_INITIALIZE(methodInitialize)
-		{
-			initializeLeakDetection();
-		}
-
-		TEST_METHOD_CLEANUP(methodCleanup)
-		{
-			finalizeLeakDetection();
+			LeakDetector::Finalize();
 		}
 
 		TEST_METHOD(TestParse)
@@ -171,8 +149,6 @@ namespace TestLibraryDesktop
 			Library::Scope& scope2 = *data2.mScope;
 			Assert::IsTrue(scope1["Name"] == "Dale" && scope2["Name"] == "Dale");
 		}
-		static _CrtMemState sStartMemState;
 	};
 
-	_CrtMemState XmlParseHelperScopeTest::sStartMemState;
 }

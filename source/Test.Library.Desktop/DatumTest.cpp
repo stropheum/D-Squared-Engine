@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "LeakDetector.h"
 #include "Datum.h"
 #include "RTTI.h"
 #include "FooRTTI.h"
@@ -29,46 +30,25 @@ namespace TestLibraryDesktop
 
 	TEST_CLASS(DatumTest)
 	{
+
 	public:
-		/// Sets up leak detection logic
-		static void initializeLeakDetection()
-		{
-#if _DEBUG
-			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
-			_CrtMemCheckpoint(&sStartMemState);
-#endif //_Debug
-		}
 
-		/// Detects if memory state has been corrupted
-		static void finalizeLeakDetection()
+		TEST_METHOD_INITIALIZE(InitializeMethod)
 		{
-#if _DEBUG
-			_CrtMemState endMemState, diffMemState;
-			_CrtMemCheckpoint(&endMemState);
-			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
-			{
-				_CrtMemDumpStatistics(&diffMemState);
-				Assert::Fail(L"Memory Leaks!");
-			}
-#endif //_Debug
-		}
-
-		TEST_METHOD_INITIALIZE(methodInitialize)
-		{
-			initializeLeakDetection();
+			LeakDetector::Initialize();
 
 			r1 = new FooRTTI();
 			r2 = new FooRTTI(2);
 			r3 = new FooRTTI(3);
 		}
 
-		TEST_METHOD_CLEANUP(methodCleanup)
+		TEST_METHOD_CLEANUP(CleanupMethod)
 		{
 			delete(r1);
 			delete(r2);
 			delete(r3);
 
-			finalizeLeakDetection();
+			LeakDetector::Finalize();
 		}
 
 		TEST_METHOD(TestCopyConstructor)
@@ -1935,8 +1915,6 @@ namespace TestLibraryDesktop
 			sDatum.SetSize(10);
 		}
 
-		static _CrtMemState sStartMemState;
 	};
 
-	_CrtMemState DatumTest::sStartMemState;
 }

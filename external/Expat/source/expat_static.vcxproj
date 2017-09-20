@@ -68,10 +68,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)bin\$(Platform)\$(Configuration)\</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)bin\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)bin\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)bin\$(PlatformTarget)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)bin\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)bin\$(PlatformTarget)\$(Configuration)\</IntDir>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
@@ -90,12 +90,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName)</TargetName>
-    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(ProjectDir)bin\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)bin\$(PlatformTarget)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(ProjectDir)bin\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)bin\$(PlatformTarget)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -126,8 +126,8 @@
 copy "$(ProjectDir)*.h" "..\include\"
 copy "$(ProjectDir)*.inl" "..\include\"
 
-mkdir "..\lib\$(Platform)\$(Configuration)\"
-copy "$(TargetPath)" "..\lib\$(Platform)\$(Configuration)\"</Command>
+mkdir "..\lib\$(PlatformTarget)\$(Configuration)\"
+copy "$(TargetPath)" "..\lib\$(PlatformTarget)\$(Configuration)\"</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -163,8 +163,8 @@ copy "$(TargetPath)" "..\lib\$(Platform)\$(Configuration)\"</Command>
 copy "$(ProjectDir)*.h" "..\include\"
 copy "$(ProjectDir)*.inl" "..\include\"
 
-mkdir "..\lib\$(Platform)\$(Configuration)\"
-copy "$(TargetPath)" "..\lib\$(Platform)\$(Configuration)\"</Command>
+mkdir "..\lib\$(PlatformTarget)\$(Configuration)\"
+copy "$(TargetPath)" "..\lib\$(PlatformTarget)\$(Configuration)\"</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -200,8 +200,8 @@ copy "$(TargetPath)" "..\lib\$(Platform)\$(Configuration)\"</Command>
 copy "$(ProjectDir)*.h" "..\include\"
 copy "$(ProjectDir)*.inl" "..\include\"
 
-mkdir "..\lib\$(Platform)\$(Configuration)\"
-copy "$(TargetPath)" "..\lib\$(Platform)\$(Configuration)\"</Command>
+mkdir "..\lib\$(PlatformTarget)\$(Configuration)\"
+copy "$(TargetPath)" "..\lib\$(PlatformTarget)\$(Configuration)\"</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -237,8 +237,8 @@ copy "$(TargetPath)" "..\lib\$(Platform)\$(Configuration)\"</Command>
 copy "$(ProjectDir)*.h" "..\include\"
 copy "$(ProjectDir)*.inl" "..\include\"
 
-mkdir "..\lib\$(Platform)\$(Configuration)\"
-copy "$(TargetPath)" "..\lib\$(Platform)\$(Configuration)\"</Command>
+mkdir "..\lib\$(PlatformTarget)\$(Configuration)\"
+copy "$(TargetPath)" "..\lib\$(PlatformTarget)\$(Configuration)\"</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>

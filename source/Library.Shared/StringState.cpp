@@ -32,8 +32,8 @@ namespace Library
 
 	Datum& StringState::operator=(const string& rhs)
 	{
-		if (mContext->mSize > 1) throw exception("Invalid assignment invocation");
-		if (mContext->mSize == 0) mContext->SetSize(1);
+		if (mContext->mSize > 1) { throw exception("Invalid assignment invocation"); }
+		if (mContext->mSize == 0) { mContext->SetSize(1); }
 		mContext->mData.s[0] = rhs;
 		return *mContext;
 	}

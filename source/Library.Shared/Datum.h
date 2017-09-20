@@ -329,7 +329,7 @@ namespace Library
 		void SetStorage(glm::vec4* data, const std::uint32_t& size);
 
 		/**
-		 * Sets the external storage to the specified glm::mat4*
+		 * Sets the external storage to the specified glm::mat4x4*
 		 * Note: Size on external storage is considered static
 		 * @Param data: The specified external storage
 		 * @Param Size: The number of elements available in the external storage

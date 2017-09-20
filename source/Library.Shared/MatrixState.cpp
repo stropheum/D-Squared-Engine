@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "MatrixState.h"
+#include <glm/mat4x4.hpp>
+#include <glm/gtx/string_cast.hpp>
 
 
 using namespace std;
@@ -32,8 +34,8 @@ namespace Library
 
 	Datum& MatrixState::operator=(const glm::mat4x4& rhs)
 	{
-		if (mContext->mSize > 1) throw exception("Invalid assignment invocation");
-		if (mContext->mSize == 0) mContext->SetSize(1);
+		if (mContext->mSize > 1) { throw exception("Invalid assignment invocation"); }
+		if (mContext->mSize == 0) { mContext->SetSize(1); }
 		mContext->mData.m[0] = rhs;
 		return *mContext;
 	}

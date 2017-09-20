@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "LeakDetector.h"
 #include "HashMap.h"
 #include "Foo.h"
 #include <winnt.h>
@@ -45,31 +46,10 @@ namespace TestLibraryDesktop
 		std::string t = "Tyler";
 		std::string u = "Uncle Phil";
 		Foo foo, bar, gar;
+
 	public:
-		// Sets up leak detection logic
-		static void initializeLeakDetection()
-		{
-#if _DEBUG
-			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
-			_CrtMemCheckpoint(&sStartMemState);
-#endif //_Debug
-		}
 
-		// Detects if memory state has been corrupted
-		static void finalizeLeakDetection()
-		{
-#if _DEBUG
-			_CrtMemState endMemState, diffMemState;
-			_CrtMemCheckpoint(&endMemState);
-			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
-			{
-				_CrtMemDumpStatistics(&diffMemState);
-				Assert::Fail(L"Memory Leaks!");
-			}
-#endif //_Debug
-		}
-
-		TEST_METHOD_INITIALIZE(methodInitialize)
+		TEST_METHOD_INITIALIZE(InitializeMethod)
 		{
 			intMap.Clear();
 			ptrMap.Clear();
@@ -77,7 +57,7 @@ namespace TestLibraryDesktop
 			strMap.Clear();
 			fooMap.Clear();
 
-			initializeLeakDetection();
+			LeakDetector::Initialize();
 
 			x = 1;
 			y = 2;
@@ -93,7 +73,7 @@ namespace TestLibraryDesktop
 			gar = Foo(3);
 		}
 
-		TEST_METHOD_CLEANUP(methodCleanup)
+		TEST_METHOD_CLEANUP(CleanupMethod)
 		{
 			intMap.Clear();
 			ptrMap.Clear();
@@ -101,7 +81,7 @@ namespace TestLibraryDesktop
 			strMap.Clear();
 			fooMap.Clear();
 
-			finalizeLeakDetection();
+			LeakDetector::Finalize();
 		}
 
 		TEST_METHOD(TestTemplateSpecialization)
@@ -1247,8 +1227,6 @@ namespace TestLibraryDesktop
 			Assert::AreEqual(1, fooMap.begin()->second, L"Dereferencing iterator does not yield accurate value");
 		}
 
-		static _CrtMemState sStartMemState;
 	};
 
-	_CrtMemState HashMapTest::sStartMemState;
 }

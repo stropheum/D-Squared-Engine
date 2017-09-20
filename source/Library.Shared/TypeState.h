@@ -1,5 +1,6 @@
 #pragma once
 #include "Datum.h"
+#include <glm/common.hpp>
 
 
 namespace Library

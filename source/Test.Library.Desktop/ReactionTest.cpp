@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "LeakDetector.h"
 #include "TestSharedData.h"
 #include "GameTime.h"
 #include "World.h"
@@ -35,37 +36,14 @@ namespace TestLibraryDesktop
 		ActionListIfFactory mActionListIfFactory;
 		ActionIncrementFactory mActionIncrementFactory;
 
-		// Sets up leak detection logic
-		static void initializeLeakDetection()
+		TEST_METHOD_INITIALIZE(InitializeMethod)
 		{
-#if _DEBUG
-			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
-			_CrtMemCheckpoint(&sStartMemState);
-#endif //_DEBUG
+			LeakDetector::Initialize();
 		}
 
-		// Detects if memory state has been corrupted
-		static void finalizeLeakDetection()
+		TEST_METHOD_CLEANUP(CleanupMethod)
 		{
-#if _DEBUG
-			_CrtMemState endMemState, diffMemState;
-			_CrtMemCheckpoint(&endMemState);
-			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
-			{
-				_CrtMemDumpStatistics(&diffMemState);
-				Assert::Fail(L"Memory Leaks!");
-			}
-#endif //_DEBUG
-		}
-
-		TEST_METHOD_INITIALIZE(methodInitialize)
-		{
-			initializeLeakDetection();
-		}
-
-		TEST_METHOD_CLEANUP(methodCleanup)
-		{
-			finalizeLeakDetection();
+			LeakDetector::Finalize();
 		}
 
 		TEST_METHOD(TestReactionAttributed)
@@ -94,10 +72,10 @@ namespace TestLibraryDesktop
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(100)));
 			world->Update(worldState, gameTime);
 
-//			Assert::IsTrue(physicalReaction["Power"].type() == DatumType::Integer);
-//			std::int32_t power = physicalReaction["Power"].Get<std::int32_t>(0);
-//			Assert::AreEqual(power, 100);
-//			Assert::IsFalse(magicalReaction["Power"].Type() == DatumType::Integer);
+			Assert::IsTrue(physicalReaction["Power"].Type() == DatumType::Integer);
+			std::int32_t power = physicalReaction["Power"].Get<std::int32_t>(0);
+			Assert::AreEqual(power, 100);
+			Assert::IsFalse(magicalReaction["Power"].Type() == DatumType::Integer);
 
 			delete world;
 		}
@@ -128,10 +106,10 @@ namespace TestLibraryDesktop
 			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(100)));
 			world->Update(worldState, gameTime);
 
-//			Assert::IsTrue(reaction1["Power"].Type() == DatumType::Integer);
-//			Assert::AreEqual(reaction1["Power"].Get<std::int32_t>(0), 100);
-//			Assert::IsTrue(reaction2["Power"].Type() == DatumType::Integer);
-//			Assert::AreEqual(reaction2["Power"].Get<std::int32_t>(0), 100);
+			Assert::IsTrue(reaction1["Power"].Type() == DatumType::Integer);
+			Assert::AreEqual(reaction1["Power"].Get<std::int32_t>(0), 100);
+			Assert::IsTrue(reaction2["Power"].Type() == DatumType::Integer);
+			Assert::AreEqual(reaction2["Power"].Get<std::int32_t>(0), 100);
 
 			delete world;
 		}
@@ -219,7 +197,6 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(ra2.As<ReactionAttributed>() != nullptr);
 		}
 
-		static _CrtMemState sStartMemState;
 	};
-	_CrtMemState ReactionTest::sStartMemState;
+
 }

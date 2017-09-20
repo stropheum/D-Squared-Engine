@@ -32,7 +32,7 @@ namespace Library
 
 	Datum& PointerState::operator=(Library::RTTI* const& rhs)
 	{
-		if (mContext->mSize == 0) mContext->SetSize(1);
+		if (mContext->mSize == 0) { mContext->SetSize(1); }
 		mContext->mData.r[0] = rhs;
 		return *mContext;
 	}

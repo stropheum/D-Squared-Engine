@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "LeakDetector.h"
 #include "HashMap.h"
 #include <winnt.h>
 
@@ -9,39 +10,17 @@ namespace TestLibraryDesktop
 {
 	TEST_CLASS(DefaultHashTest)
 	{
+
 	public:
 
-		// Sets up leak detection logic
-		static void initializeLeakDetection()
+		TEST_METHOD_INITIALIZE(InitializeMethod)
 		{
-#if _DEBUG
-			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
-			_CrtMemCheckpoint(&sStartMemState);
-#endif //_Debug
+			LeakDetector::Initialize();
 		}
 
-		// Detects if memory state has been corrupted
-		static void finalizeLeakDetection()
+		TEST_METHOD_CLEANUP(CleanupMethod)
 		{
-#if _DEBUG
-			_CrtMemState endMemState, diffMemState;
-			_CrtMemCheckpoint(&endMemState);
-			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
-			{
-				_CrtMemDumpStatistics(&diffMemState);
-				Assert::Fail(L"Memory Leaks!");
-			}
-#endif //_DEBUG
-		}
-
-		TEST_METHOD_INITIALIZE(methodInitialize)
-		{
-			initializeLeakDetection();
-		}
-
-		TEST_METHOD_CLEANUP(methodCleanup)
-		{
-			finalizeLeakDetection();
+			LeakDetector::Finalize();
 		}
 
 		TEST_METHOD(TestGenericHash)
@@ -98,9 +77,6 @@ namespace TestLibraryDesktop
 			delete foo;
 		}
 
-	private:
-		static _CrtMemState sStartMemState;
 	};
 
-	_CrtMemState DefaultHashTest::sStartMemState;
 }
