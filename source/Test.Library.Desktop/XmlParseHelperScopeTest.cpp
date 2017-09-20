@@ -54,7 +54,7 @@ namespace TestLibraryDesktop
 			);
 			Assert::IsTrue(scope["MyMatrix"] == expectedMatrix);
 
-			Library::Scope& pets = *scope["Pets"].Get<Library::Scope*>(0);
+			Library::Scope& pets = scope["Pets"].Get<Library::Scope>(0);
 			Assert::IsTrue(pets["Dog"] == "Dozer");
 		}
 

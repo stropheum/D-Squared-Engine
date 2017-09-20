@@ -523,8 +523,8 @@ namespace Library
 	template<> glm::mat4x4& Datum::Get(const std::uint32_t& index);
 	template<> const glm::mat4x4& Datum::Get(const std::uint32_t& index) const;
 
-	template<> Scope*& Datum::Get(const std::uint32_t& index);
-	template<> Scope* const& Datum::Get(const std::uint32_t& index) const;
+	template<> Scope& Datum::Get(const std::uint32_t& index);
+	template<> Scope const& Datum::Get(const std::uint32_t& index) const;
 
 	template<> std::string& Datum::Get(const std::uint32_t& index);
 	template<> const std::string& Datum::Get(const std::uint32_t& index) const;

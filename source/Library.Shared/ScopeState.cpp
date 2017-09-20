@@ -20,7 +20,7 @@ namespace Library
 			result = true;
 			for (uint32_t i = 0; i < mContext->Size(); i++)
 			{
-				if (*mContext->Get<Scope*>(i) != *rhs.Get<Scope*>(i))
+				if (mContext->Get<Scope>(i) != rhs.Get<Scope>(i))
 				{	// If every scope doesn't match, we're done
 					result = false;
 					break;
