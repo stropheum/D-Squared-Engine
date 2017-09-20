@@ -237,7 +237,8 @@ namespace TestLibraryDesktop
 			Event<Foo> eventCopy2(eventOG);
 			Assert::IsTrue(eventOG.Message() == eventCopy2.Message());
 
-			Event<Foo> movedEvent = std::move(eventOG);
+			Event<Foo> movedEvent(Foo(1));
+			movedEvent = std::move(eventOG);
 			Assert::IsTrue(movedEvent.Message() == Foo(5));
 
 			Event<Foo> movedCopyEvent(std::move(movedEvent));

@@ -17,20 +17,19 @@ namespace Library
 	template <typename Payload>
 	Event<Payload>::Event(const Payload& payload, bool deleteAfterPublishing) :
 		EventPublisher(&sSubscriberList, sSubscriberListMutex, deleteAfterPublishing), mPayload(payload)
-	{
-	}
+	{}
 
 	template <typename Payload>
-	Event<Payload>::Event(const Event<Payload>& rhs):
-		EventPublisher(&rhs.sSubscriberList, sSubscriberListMutex, rhs.mDeleteAfterPublishing), mPayload(rhs.mPayload)
-	{
-	}
+	Event<Payload>::Event(const Event<Payload>& rhs) :
+		EventPublisher(rhs), mPayload(rhs.mPayload)
+	{}
 
 	template <typename Payload>
 	Event<Payload>& Event<Payload>::operator=(const Event<Payload>& rhs)
 	{
 		if (this != &rhs)
 		{
+			EventPublisher::operator=(rhs);
 			mPayload = rhs.mPayload;
 			mDeleteAfterPublishing = rhs.mDeleteAfterPublishing;
 		}
@@ -38,18 +37,17 @@ namespace Library
 	}
 
 	template <typename Payload>
-	Event<Payload>::Event(Event<Payload>&& rhs) noexcept:
-		EventPublisher(&rhs.sSubscriberList, sSubscriberListMutex, rhs.mDeleteAfterPublishing), mPayload(rhs.mPayload)
-	{
-	}
+	Event<Payload>::Event(Event<Payload>&& rhs) noexcept :
+		EventPublisher(std::move(rhs)), mPayload(std::move(rhs.mPayload))
+	{}
 
 	template <typename Payload>
 	Event<Payload>& Event<Payload>::operator=(Event<Payload>&& rhs) noexcept
 	{
 		if (this != &rhs)
 		{
-			mPayload = rhs.mPayload;
-			mDeleteAfterPublishing = rhs.mDeleteAfterPublishing;
+			EventPublisher::operator=(std::move(rhs));
+			mPayload = std::move(rhs.mPayload);
 		}
 		return *this;
 	}
