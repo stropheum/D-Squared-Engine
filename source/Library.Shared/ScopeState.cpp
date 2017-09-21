@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "ScopeState.h"
-#include "Scope.h"
 
 
 using namespace std;

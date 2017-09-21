@@ -1,7 +1,5 @@
 #include "pch.h"
 #include "MatrixState.h"
-#include <glm/mat4x4.hpp>
-#include <glm/gtx/string_cast.hpp>
 
 
 using namespace std;

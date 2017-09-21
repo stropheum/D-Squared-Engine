@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "ActionEvent.h"
-#include "Signature.h"
 
 
 using namespace std;

@@ -13,6 +13,8 @@
 #include <vector>
 #include <future>
 #include <sstream>
+#include <cassert>
+#include <fstream>
 
 //////////////////////////
 //  Local Dependencies //
@@ -41,6 +43,8 @@
 #include "SharedDataScope.h"
 #include "ActionListIf.h"
 #include "IXmlParseHelper.h"
+#include "Signature.h"
+#include "Attributed.h"
 
 
 #define CLM_FORCE_CXX98

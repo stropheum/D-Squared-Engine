@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "VectorState.h"
-#include <glm\gtx\string_cast.hpp>
 
 
 using namespace std;
