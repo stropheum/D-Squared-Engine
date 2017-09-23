@@ -97,8 +97,7 @@ namespace Library
 		{
 			mState = State::ParsingMatrix;
 			mMatrixName = attributes.Find("Name")->second;
-			// Only use this to Set state to start grabbing component vectors
-			// TODO: possibly migrate the Append call here so we have access to the Name we need to Create with
+			scope->Append(mMatrixName);
 		}
 		else if (element == "String")
 		{
@@ -183,7 +182,9 @@ namespace Library
 			}
 			ss << ")";
 
-			Datum& datum = data->mScope->Append(mMatrixName);
+			// We added this on the start element handler, so finding should always work
+			assert(data->mScope->Find(mMatrixName) != nullptr);
+			Datum& datum = *data->mScope->Find(mMatrixName);
 			datum.SetType(DatumType::Matrix);
 			datum.SetFromString(ss.str());
 
