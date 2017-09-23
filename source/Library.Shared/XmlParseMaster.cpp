@@ -9,7 +9,8 @@ namespace Library
 	RTTI_DEFINITIONS(XmlParseMaster::SharedData)
 
 	XmlParseMaster::XmlParseMaster(SharedData* const sharedData):
-		mXmlParser(XML_ParserCreate(nullptr)), mActiveFileName(""), mSharedData(sharedData), mDepth(0), mClonedInstance(false), mHelpersAreInitialized(false)
+		mXmlParser(XML_ParserCreate(nullptr)), mActiveFileName(""), 
+		mSharedData(sharedData), mDepth(0), mClonedInstance(false), mHelpersAreInitialized(false)
 	{
 		XML_SetUserData(mXmlParser, mSharedData);
 		XML_SetElementHandler(mXmlParser, StartElementHandler, EndElementHandler);
