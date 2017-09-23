@@ -43,7 +43,7 @@ namespace Library
 		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(Scope*) * size);
 		mContext->mCapacity = mContext->mSize = size;
 
-		if (size <mContext->mSize)
+		if (size < mContext->mSize)
 		{
 			for (uint32_t i = size; i < mContext->mSize; i++)
 			{
