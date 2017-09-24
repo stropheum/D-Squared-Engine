@@ -14,7 +14,7 @@ namespace Library
 	{
 		bool result = false;
 
-		if (rhs.Type() == DatumType::Scope && mContext->Size() == rhs.Size())
+		if (rhs.Type() == DatumType::Scope)
 		{
 			result = true;
 			for (uint32_t i = 0; i < mContext->Size(); i++)
@@ -42,14 +42,6 @@ namespace Library
 	{
 		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(Scope*) * size);
 		mContext->mCapacity = mContext->mSize = size;
-
-		if (size < mContext->mSize)
-		{
-			for (uint32_t i = size; i < mContext->mSize; i++)
-			{
-				mContext->mData.sc[i] = nullptr;
-			}
-		}
 	}
 
 	void ScopeState::Reserve(const uint32_t& capacity)

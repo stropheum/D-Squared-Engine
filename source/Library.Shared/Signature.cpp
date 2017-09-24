@@ -4,7 +4,8 @@
 
 namespace Library
 {
-	Attributed::Signature::Signature(const std::string name, const DatumType type, const std::uint32_t size, std::int32_t* storage) :
+	Attributed::Signature::Signature(const std::string name, const DatumType type, 
+		const std::uint32_t size, std::int32_t* storage) :
 		Name(name), Type(type), Size(size)
 	{
 		if (storage != nullptr)
@@ -13,7 +14,8 @@ namespace Library
 		}
 	}
 
-	Attributed::Signature::Signature(const std::string name, const DatumType type, const std::uint32_t size, float* const storage) :
+	Attributed::Signature::Signature(const std::string name, const DatumType type, 
+		const std::uint32_t size, float* const storage) :
 		Name(name), Type(type), Size(size)
 	{
 		if (storage != nullptr)
@@ -22,7 +24,8 @@ namespace Library
 		}
 	}
 
-	Attributed::Signature::Signature(const std::string name, const DatumType type, const std::uint32_t size, glm::vec4* const storage) :
+	Attributed::Signature::Signature(const std::string name, const DatumType type, 
+		const std::uint32_t size, glm::vec4* const storage) :
 		Name(name), Type(type), Size(size)
 	{
 		if (storage != nullptr)
@@ -31,7 +34,8 @@ namespace Library
 		}
 	}
 
-	Attributed::Signature::Signature(const std::string name, const DatumType type, const std::uint32_t size, glm::mat4* const storage) :
+	Attributed::Signature::Signature(const std::string name, const DatumType type, 
+		const std::uint32_t size, glm::mat4* const storage) :
 		Name(name), Type(type), Size(size)
 	{
 		if (storage != nullptr)
@@ -40,7 +44,8 @@ namespace Library
 		}
 	}
 
-	Attributed::Signature::Signature(const std::string name, const DatumType type, const std::uint32_t size, std::string* const storage) :
+	Attributed::Signature::Signature(const std::string name, const DatumType type, 
+		const std::uint32_t size, std::string* const storage) :
 		Name(name), Type(type), Size(size)
 	{
 		if (storage != nullptr)
@@ -49,7 +54,8 @@ namespace Library
 		}
 	}
 
-	Attributed::Signature::Signature(const std::string name, const DatumType type, const std::uint32_t size, Scope** const storage) :
+	Attributed::Signature::Signature(const std::string name, const DatumType type, 
+		const std::uint32_t size, Scope** const storage) :
 		Name(name), Type(type), Size(size)
 	{
 		if (storage != nullptr)
@@ -58,7 +64,8 @@ namespace Library
 		}
 	}
 
-	Attributed::Signature::Signature(const std::string name, const DatumType type, const std::uint32_t size, RTTI** const storage) :
+	Attributed::Signature::Signature(const std::string name, const DatumType type, 
+		const std::uint32_t size, RTTI** const storage) :
 		Name(name), Type(type), Size(size)
 	{
 		if (storage != nullptr)

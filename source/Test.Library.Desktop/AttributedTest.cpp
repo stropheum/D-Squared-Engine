@@ -171,7 +171,6 @@ namespace TestLibraryDesktop
 			myFoo.AppendAuxiliaryAttribute("new");
 			Assert::IsTrue(myFoo.IsAttribute("new"));
 		}
-
 	};
 
 }

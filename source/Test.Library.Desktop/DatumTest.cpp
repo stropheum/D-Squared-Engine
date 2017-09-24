@@ -28,6 +28,9 @@ namespace TestLibraryDesktop
 	static FooRTTI* r1;
 	static FooRTTI* r2;
 	static FooRTTI* r3;
+	static Library::Scope* globalScope1;
+	static Library::Scope* globalScope2;
+	static Library::Scope* globalScope3;
 
 	TEST_CLASS(DatumTest)
 	{
@@ -41,13 +44,21 @@ namespace TestLibraryDesktop
 			r1 = new FooRTTI();
 			r2 = new FooRTTI(2);
 			r3 = new FooRTTI(3);
+
+			globalScope1 = new Library::Scope();
+			globalScope2 = new Library::Scope();
+			globalScope3 = new Library::Scope();
 		}
 
 		TEST_METHOD_CLEANUP(CleanupMethod)
 		{
-			delete(r1);
-			delete(r2);
-			delete(r3);
+			delete r1;
+			delete r2;
+			delete r3;
+
+			delete globalScope1;
+			delete globalScope2;
+			delete globalScope3;
 
 			LeakDetector::Finalize();
 		}
@@ -498,11 +509,11 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(sDatumCopy3.Size() == sSize);
 			Assert::IsTrue(sDatumCopy3.Capacity() == sCapa);
 		}
+
 		TEST_METHOD(TestAssignmentOperator_Pointer)
 		{
 			Library::Datum rDatum(Library::DatumType::Pointer);
 
-			// Pointer
 			rDatum = r1;
 			Assert::IsTrue(rDatum.Get<Library::RTTI*>(0) == r1);
 			Assert::ExpectException<std::exception>([&] { rDatum.Get<std::int32_t>(0); });
@@ -543,6 +554,28 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(rDatumCopy3.Type() == rType);
 			Assert::IsTrue(rDatumCopy3.Size() == rSize);
 			Assert::IsTrue(rDatumCopy3.Capacity() == rCapa);
+		}
+
+		TEST_METHOD(TestAssignmentOperator_Scope)
+		{
+			Library::Datum datum(Library::DatumType::Scope);
+
+			datum = globalScope1;
+			Assert::IsTrue(datum.Get<Library::Scope>(0) == *globalScope1);
+			Assert::ExpectException<std::exception>([&] { datum.Get<std::int32_t>(0); });
+			Assert::ExpectException<std::exception>([&] { datum.Get<float>(0); });
+			Assert::ExpectException<std::exception>([&] { datum.Get<glm::vec4>(0); });
+			Assert::ExpectException<std::exception>([&] { datum.Get<glm::mat4>(0); });
+			Assert::ExpectException<std::exception>([&] { datum.Get<std::string>(0); });
+
+			Library::Datum rDatumCopy1;
+			Library::Datum rDatumCopy2 = rDatumCopy1;
+			Assert::IsTrue(rDatumCopy1.Type() == rDatumCopy2.Type());
+			Assert::IsTrue(rDatumCopy1.Size() == rDatumCopy2.Size());
+			Assert::IsTrue(rDatumCopy1.Capacity() == rDatumCopy2.Capacity());
+
+			rDatumCopy2 = globalScope1;
+			Assert::IsTrue(datum == rDatumCopy2);
 		}
 
 		TEST_METHOD(TestEqualityOperator_Integer)
@@ -971,116 +1004,134 @@ namespace TestLibraryDesktop
 
 		TEST_METHOD(TestSize_Integer)
 		{
-			Library::Datum iDatum(Library::DatumType::Integer);
+			Library::Datum datum(Library::DatumType::Integer);
 
-			Assert::AreEqual(iDatum.Size(), 0u, L"Size not zero on empty Datum");
+			Assert::AreEqual(datum.Size(), 0u, L"Size not zero on empty Datum");
 
-			iDatum.PushBack(i1);
-			Assert::AreEqual(iDatum.Size(), 1u), L"Size does not reflect number of elements pushed";
+			datum.PushBack(i1);
+			Assert::AreEqual(datum.Size(), 1u), L"Size does not reflect number of elements pushed";
 
-			iDatum.PushBack(i2);
-			Assert::AreEqual(iDatum.Size(), 2u, L"Size does not reflect number of elements pushed");
+			datum.PushBack(i2);
+			Assert::AreEqual(datum.Size(), 2u, L"Size does not reflect number of elements pushed");
 
-			iDatum.SetSize(10);
-			Assert::AreEqual(iDatum.Size(), 10u, L"Size not equal after calling SetSize");
+			datum.SetSize(10);
+			Assert::AreEqual(datum.Size(), 10u, L"Size not equal after calling SetSize");
 
-			iDatum.SetSize(1);
-			Assert::AreEqual(iDatum.Size(), 1u, L"SetSize should reduce current Size");
+			datum.SetSize(1);
+			Assert::AreEqual(datum.Size(), 1u, L"SetSize should reduce current Size");
+
+			datum.SetSize(0);
+			Assert::AreEqual(datum.Size(), 0u);
 		}
 
 		TEST_METHOD(TestSize_Float)
 		{
-			Library::Datum fDatum(Library::DatumType::Float);
+			Library::Datum datum(Library::DatumType::Float);
 
-			Assert::AreEqual(fDatum.Size(), 0u, L"Size not zero on empty Datum");
+			Assert::AreEqual(datum.Size(), 0u, L"Size not zero on empty Datum");
 
-			fDatum.PushBack(f1);
-			Assert::AreEqual(fDatum.Size(), 1u), L"Size does not reflect number of elements pushed";
+			datum.PushBack(f1);
+			Assert::AreEqual(datum.Size(), 1u), L"Size does not reflect number of elements pushed";
 
-			fDatum.PushBack(f2);
-			Assert::AreEqual(fDatum.Size(), 2u, L"Size does not reflect number of elements pushed");
+			datum.PushBack(f2);
+			Assert::AreEqual(datum.Size(), 2u, L"Size does not reflect number of elements pushed");
 
-			fDatum.SetSize(10);
-			Assert::AreEqual(fDatum.Size(), 10u, L"Size not equal after calling SetSize");
+			datum.SetSize(10);
+			Assert::AreEqual(datum.Size(), 10u, L"Size not equal after calling SetSize");
 
-			fDatum.SetSize(1);
-			Assert::AreEqual(fDatum.Size(), 1u, L"SetSize should reduce current Size");
+			datum.SetSize(1);
+			Assert::AreEqual(datum.Size(), 1u, L"SetSize should reduce current Size");
+
+			datum.SetSize(0);
+			Assert::AreEqual(datum.Size(), 0u);
 		}
 
 		TEST_METHOD(TestSize_Vector)
 		{
-			Library::Datum vDatum(Library::DatumType::Vector);
+			Library::Datum datum(Library::DatumType::Vector);
 
-			Assert::AreEqual(vDatum.Size(), 0u, L"Size not zero on empty Datum");
+			Assert::AreEqual(datum.Size(), 0u, L"Size not zero on empty Datum");
 
-			vDatum.PushBack(v1);
-			Assert::AreEqual(vDatum.Size(), 1u), L"Size does not reflect number of elements pushed";
+			datum.PushBack(v1);
+			Assert::AreEqual(datum.Size(), 1u), L"Size does not reflect number of elements pushed";
 
-			vDatum.PushBack(v2);
-			Assert::AreEqual(vDatum.Size(), 2u, L"Size does not reflect number of elements pushed");
+			datum.PushBack(v2);
+			Assert::AreEqual(datum.Size(), 2u, L"Size does not reflect number of elements pushed");
 
-			vDatum.SetSize(10);
-			Assert::AreEqual(vDatum.Size(), 10u, L"Size not equal after calling SetSize");
+			datum.SetSize(10);
+			Assert::AreEqual(datum.Size(), 10u, L"Size not equal after calling SetSize");
 
-			vDatum.SetSize(1);
-			Assert::AreEqual(vDatum.Size(), 1u, L"SetSize should reduce current Size");
+			datum.SetSize(1);
+			Assert::AreEqual(datum.Size(), 1u, L"SetSize should reduce current Size");
+
+			datum.SetSize(0);
+			Assert::AreEqual(datum.Size(), 0u);
 		}
 
 		TEST_METHOD(TestSize_Matrix)
 		{
-			Library::Datum mDatum(Library::DatumType::Matrix);
+			Library::Datum datum(Library::DatumType::Matrix);
 
-			Assert::AreEqual(mDatum.Size(), 0u, L"Size not zero on empty Datum");
+			Assert::AreEqual(datum.Size(), 0u, L"Size not zero on empty Datum");
 
-			mDatum.PushBack(m1);
-			Assert::AreEqual(mDatum.Size(), 1u), L"Size does not reflect number of elements pushed";
+			datum.PushBack(m1);
+			Assert::AreEqual(datum.Size(), 1u), L"Size does not reflect number of elements pushed";
 
-			mDatum.PushBack(m2);
-			Assert::AreEqual(mDatum.Size(), 2u, L"Size does not reflect number of elements pushed");
+			datum.PushBack(m2);
+			Assert::AreEqual(datum.Size(), 2u, L"Size does not reflect number of elements pushed");
 
-			mDatum.SetSize(10);
-			Assert::AreEqual(mDatum.Size(), 10u, L"Size not equal after calling SetSize");
+			datum.SetSize(10);
+			Assert::AreEqual(datum.Size(), 10u, L"Size not equal after calling SetSize");
 
-			mDatum.SetSize(1);
-			Assert::AreEqual(mDatum.Size(), 1u, L"SetSize should reduce current Size");
+			datum.SetSize(1);
+			Assert::AreEqual(datum.Size(), 1u, L"SetSize should reduce current Size");
+
+			datum.SetSize(0);
+			Assert::AreEqual(datum.Size(), 0u);
 		}
 
 		TEST_METHOD(TestSize_String)
 		{
-			Library::Datum sDatum(Library::DatumType::String);
+			Library::Datum datum(Library::DatumType::String);
 
-			Assert::AreEqual(sDatum.Size(), 0u, L"Size not zero on empty Datum");
+			Assert::AreEqual(datum.Size(), 0u, L"Size not zero on empty Datum");
 
-			sDatum.PushBack(s1);
-			Assert::AreEqual(sDatum.Size(), 1u), L"Size does not reflect number of elements pushed";
+			datum.PushBack(s1);
+			Assert::AreEqual(datum.Size(), 1u), L"Size does not reflect number of elements pushed";
 
-			sDatum.PushBack(s2);
-			Assert::AreEqual(sDatum.Size(), 2u, L"Size does not reflect number of elements pushed");
+			datum.PushBack(s2);
+			Assert::AreEqual(datum.Size(), 2u, L"Size does not reflect number of elements pushed");
 
-			sDatum.SetSize(10);
-			Assert::AreEqual(sDatum.Size(), 10u, L"Size not equal after calling SetSize");
+			datum.SetSize(10);
+			Assert::AreEqual(datum.Size(), 10u, L"Size not equal after calling SetSize");
 
-			sDatum.SetSize(1);
-			Assert::AreEqual(sDatum.Size(), 1u, L"SetSize should reduce current Size");
+			datum.SetSize(1);
+			Assert::AreEqual(datum.Size(), 1u, L"SetSize should reduce current Size");
+
+			datum.SetSize(0);
+			Assert::AreEqual(datum.Size(), 0u);
 		}
 
 		TEST_METHOD(TestSize_Pointer)
 		{
-			Library::Datum rDatum(Library::DatumType::Pointer);
+			Library::Datum datum(Library::DatumType::Pointer);
 
-			Assert::AreEqual(rDatum.Size(), 0u, L"Size not zero on empty Datum");
+			Assert::AreEqual(datum.Size(), 0u, L"Size not zero on empty Datum");
 
-			rDatum.PushBack(r1);
-			Assert::AreEqual(rDatum.Size(), 1u), L"Size does not reflect number of elements pushed";
+			datum.PushBack(r1);
+			Assert::AreEqual(datum.Size(), 1u), L"Size does not reflect number of elements pushed";
 
-			rDatum.PushBack(r2);
-			Assert::AreEqual(rDatum.Size(), 2u, L"Size does not reflect number of elements pushed");
+			datum.PushBack(r2);
+			Assert::AreEqual(datum.Size(), 2u, L"Size does not reflect number of elements pushed");
 
-			rDatum.SetSize(10);
-			Assert::AreEqual(rDatum.Size(), 10u, L"Size not equal after calling SetSize");
+			datum.SetSize(10);
+			Assert::AreEqual(datum.Size(), 10u, L"Size not equal after calling SetSize");
 
-			rDatum.SetSize(1);
-			Assert::AreEqual(rDatum.Size(), 1u, L"SetSize should reduce current Size");
+			datum.SetSize(1);
+			Assert::AreEqual(datum.Size(), 1u, L"SetSize should reduce current Size");
+
+			datum.SetSize(0);
+			Assert::AreEqual(datum.Size(), 0u);
 		}
 
 		TEST_METHOD(TestReserve_Integer)
@@ -1426,19 +1477,19 @@ namespace TestLibraryDesktop
 			Library::Datum datum(Library::DatumType::Float);
 
 			int intValue = 1;
-			Assert::ExpectException<std::exception>([&]()
+			Assert::ExpectException<std::exception>([&]
 			{
 				datum.SetStorage(&intValue, 1);
 			});
 
 			std::string stringValue = "string";
-			Assert::ExpectException<std::exception>([&]()
+			Assert::ExpectException<std::exception>([&]
 			{
 				datum.SetStorage(&stringValue, 1);
 			});
 
 			glm::vec4 vectorValue(1.0f, 2.0f, 3.0f, 4.0f);
-			Assert::ExpectException<std::exception>([&]()
+			Assert::ExpectException<std::exception>([&]
 			{
 				datum.SetStorage(&vectorValue, 1);
 			});
@@ -1448,7 +1499,7 @@ namespace TestLibraryDesktop
 				2.0f, 2.0f, 2.0f, 2.0f,
 				3.0f, 3.0f, 3.0f, 3.0f,
 				4.0f, 4.0f, 4.0f, 4.0f);
-			Assert::ExpectException<std::exception>([&]()
+			Assert::ExpectException<std::exception>([&]
 			{
 				datum.SetStorage(&matrixValue, 1);
 			});

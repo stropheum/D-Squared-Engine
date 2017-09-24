@@ -42,14 +42,6 @@ namespace Library
 	{
 		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(float) * size);
 		mContext->mCapacity = mContext->mSize = size;
-
-		if (size < mContext->mSize)
-		{
-			for (uint32_t i = size; i < mContext->mSize; i++)
-			{
-				mContext->mData.f[i] = 0.0f;
-			}
-		}
 	}
 
 	void FloatState::Reserve(const uint32_t& capacity)
@@ -84,7 +76,7 @@ namespace Library
 
 	void FloatState::SetStorage(float* data, const uint32_t& size)
 	{
-		if (mContext->mType != DatumType::Float) { throw exception("Attempting to reassign Datum Type"); }
+		assert(mContext->mType == DatumType::Float);
 		
 		if (mContext->mCapacity > 0)
 		{

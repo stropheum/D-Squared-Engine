@@ -94,10 +94,7 @@ namespace Library
 
 	void StringState::SetStorage(string* data, const uint32_t& size)
 	{
-		if (mContext->mType != DatumType::String)
-		{
-			throw exception("Attempting to reassign Datum Type");
-		}
+		assert(mContext->mType == DatumType::String);
 		
 		if (mContext->mCapacity > 0) { Clear(); }
 

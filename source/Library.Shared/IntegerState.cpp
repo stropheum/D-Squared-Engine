@@ -43,14 +43,6 @@ namespace Library
 	{
 		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(int32_t) * size);
 		mContext->mCapacity = mContext->mSize = size;
-
-		if (size < mContext->mSize)
-		{
-			for (uint32_t i = size; i < mContext->mSize; i++)
-			{
-				mContext->mData.i[i] = 0;
-			}
-		}
 	}
 
 	void IntegerState::Reserve(const uint32_t& capacity)
@@ -84,10 +76,7 @@ namespace Library
 
 	void IntegerState::SetStorage(int32_t* data, const uint32_t& size)
 	{
-		if (mContext->mType != DatumType::Integer)
-		{
-			throw exception("Attempting to reassign Datum Type");
-		}
+		assert(mContext->mType == DatumType::Integer);
 		
 		if (mContext->mCapacity > 0) Clear();
 
