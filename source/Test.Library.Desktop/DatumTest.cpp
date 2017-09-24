@@ -4,6 +4,7 @@
 #include "Datum.h"
 #include "RTTI.h"
 #include "FooRTTI.h"
+#include "Scope.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -1655,6 +1656,8 @@ namespace TestLibraryDesktop
 			fDatum.Set(f1, 1);
 			Assert::IsTrue(fDatum.Get<float>(1) == f1);
 			Assert::ExpectException<std::exception>([&] { fDatum.Set(f1, 10); });
+
+
 		}
 
 		TEST_METHOD(TestSet_Vector)
@@ -1718,6 +1721,35 @@ namespace TestLibraryDesktop
 			sDatum.Set(s1, 1);
 			Assert::IsTrue(sDatum.Get<std::string>(1) == s1);
 			Assert::ExpectException<std::exception>([&] { sDatum.Set(s1, 10); });
+		}
+
+		TEST_METHOD(TestSet_Scope)
+		{
+			Library::Datum datum(Library::DatumType::Scope);
+			Library::Scope scope1;
+
+			Assert::ExpectException<std::exception>([&] 
+			{ 
+				datum.Set(&scope1, 10); 
+			});
+			Assert::ExpectException<std::exception>([&] 
+			{ 
+				datum.Set(i1, 0); 
+			});
+
+			datum.Reserve(10);
+			datum.Set(&scope1, 0);
+			Assert::IsTrue(datum == &scope1);
+
+			Library::Scope scope2, scope3;
+			datum.PushBack(&scope2);
+			datum.Set(&scope3, 0);
+			Assert::IsTrue(datum.Get<Library::Scope>(0) == scope3);
+			Assert::IsTrue(datum.Get<Library::Scope>(1) == scope2);
+
+			datum.Set(&scope1, 1);
+			Assert::IsTrue(datum.Get<Library::Scope>(1) == scope1);
+			Assert::ExpectException<std::exception>([&]() { datum.Set(&scope1, 10); });
 		}
 
 		TEST_METHOD(TestSet_Pointer)

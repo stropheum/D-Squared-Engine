@@ -174,8 +174,15 @@ namespace TestLibraryDesktop
 			Sector* wrongSector = new Sector();
 			Assert::IsFalse(entity->GetSector() == *wrongSector);
 
+			Entity* noSectorEntity = new Entity();
+			Assert::ExpectException<std::exception>([&]()
+			{
+				noSectorEntity->GetSector();
+			});
+
 			delete sector;
 			delete wrongSector;
+			delete noSectorEntity;
 		}
 
 		TEST_METHOD(TestSetWorld)
