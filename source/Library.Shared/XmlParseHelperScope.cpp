@@ -217,6 +217,7 @@ namespace Library
 	bool XmlParseHelperScope::operator==(const XmlParseHelperScope& rhs) const
 	{
 		bool matricesEquivalent = true;
+
 		for (uint32_t i = 0; i < 4; i++)
 		{
 			for (uint32_t j = 0; j < 4; j++)
@@ -224,7 +225,13 @@ namespace Library
 				if (mMatrixComponents[i][j] != rhs.mMatrixComponents[i][j])
 				{
 					matricesEquivalent = false;
+					break;
 				}
+			}
+
+			if (!matricesEquivalent)
+			{
+				break;
 			}
 		}
 

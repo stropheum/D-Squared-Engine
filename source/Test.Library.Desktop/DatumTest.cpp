@@ -1311,6 +1311,7 @@ namespace TestLibraryDesktop
 
 			free(iStorage);
 		}
+
 		TEST_METHOD(TestSetStorage_Float)
 		{
 			Library::Datum fDatum(Library::DatumType::Float);
@@ -1324,6 +1325,7 @@ namespace TestLibraryDesktop
 
 			free(fStorage);
 		}
+
 		TEST_METHOD(TestSetStorage_Vector)
 		{
 			Library::Datum vDatum(Library::DatumType::Vector);
@@ -1337,6 +1339,7 @@ namespace TestLibraryDesktop
 
 			free(vStorage);
 		}
+
 		TEST_METHOD(TestSetStorage_Matrix)
 		{
 			Library::Datum mDatum(Library::DatumType::Matrix);
@@ -1350,6 +1353,7 @@ namespace TestLibraryDesktop
 
 			free(mStorage);
 		}
+
 		TEST_METHOD(TestSetStorage_String)
 		{
 			Library::Datum sDatum(Library::DatumType::String);
@@ -1361,6 +1365,7 @@ namespace TestLibraryDesktop
 			sTemp2.SetStorage(sStorage, 10);
 			Assert::IsTrue(sTemp == sTemp2);
 		}
+
 		TEST_METHOD(TestSetStorage_Pointer)
 		{
 			Library::Datum rDatum(Library::DatumType::Pointer);
@@ -1373,6 +1378,241 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(rTemp == rTemp2);
 
 			free(rStorage);
+		}
+
+		TEST_METHOD(SetStorage_Invalid_Integer)
+		{
+			Library::Datum datum(Library::DatumType::Integer);
+			
+			float floatValue = 10.0f;
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&floatValue, 1);
+			});
+
+			std::string stringValue = "string";
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&stringValue, 1);
+			});
+
+			glm::vec4 vectorValue(1.0f, 2.0f, 3.0f, 4.0f);
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&vectorValue, 1);
+			});
+
+			glm::mat4 matrixValue(
+				1.0f, 1.0f, 1.0f, 1.0f,
+				2.0f, 2.0f, 2.0f, 2.0f,
+				3.0f, 3.0f, 3.0f, 3.0f,
+				4.0f, 4.0f, 4.0f, 4.0f);
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&matrixValue, 1);
+			});
+
+			Library::RTTI** pointerValue = static_cast<Library::RTTI**>(malloc(sizeof(Library::RTTI*) * 10));
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(pointerValue, 1);
+			});
+			free(pointerValue);
+		}
+
+		TEST_METHOD(SetStorage_Invalid_Float)
+		{
+			Library::Datum datum(Library::DatumType::Float);
+
+			int intValue = 1;
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&intValue, 1);
+			});
+
+			std::string stringValue = "string";
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&stringValue, 1);
+			});
+
+			glm::vec4 vectorValue(1.0f, 2.0f, 3.0f, 4.0f);
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&vectorValue, 1);
+			});
+
+			glm::mat4 matrixValue(
+				1.0f, 1.0f, 1.0f, 1.0f,
+				2.0f, 2.0f, 2.0f, 2.0f,
+				3.0f, 3.0f, 3.0f, 3.0f,
+				4.0f, 4.0f, 4.0f, 4.0f);
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&matrixValue, 1);
+			});
+
+			Library::RTTI** pointerValue = static_cast<Library::RTTI**>(malloc(sizeof(Library::RTTI*) * 10));
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(pointerValue, 1);
+			});
+			free(pointerValue);
+		}
+
+		TEST_METHOD(SetStorage_Invalid_String)
+		{
+			Library::Datum datum(Library::DatumType::String);
+
+			int intValue = 1;
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&intValue, 1);
+			});
+
+			float floatValue = 10.0f;
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&floatValue, 1);
+			});
+
+			glm::vec4 vectorValue(1.0f, 2.0f, 3.0f, 4.0f);
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&vectorValue, 1);
+			});
+
+			glm::mat4 matrixValue(
+				1.0f, 1.0f, 1.0f, 1.0f,
+				2.0f, 2.0f, 2.0f, 2.0f,
+				3.0f, 3.0f, 3.0f, 3.0f,
+				4.0f, 4.0f, 4.0f, 4.0f);
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&matrixValue, 1);
+			});
+
+			Library::RTTI** pointerValue = static_cast<Library::RTTI**>(malloc(sizeof(Library::RTTI*) * 10));
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(pointerValue, 1);
+			});
+			free(pointerValue);
+		}
+
+		TEST_METHOD(SetStorage_Invalid_Vector)
+		{
+			Library::Datum datum(Library::DatumType::Vector);
+
+			int intValue = 1;
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&intValue, 1);
+			});
+
+			float floatValue = 10.0f;
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&floatValue, 1);
+			});
+
+			std::string stringValue = "string";
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&stringValue, 1);
+			});
+
+			glm::mat4 matrixValue(
+				1.0f, 1.0f, 1.0f, 1.0f,
+				2.0f, 2.0f, 2.0f, 2.0f,
+				3.0f, 3.0f, 3.0f, 3.0f,
+				4.0f, 4.0f, 4.0f, 4.0f);
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&matrixValue, 1);
+			});
+
+			Library::RTTI** pointerValue = static_cast<Library::RTTI**>(malloc(sizeof(Library::RTTI*) * 10));
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(pointerValue, 1);
+			});
+			free(pointerValue);
+		}
+
+		TEST_METHOD(SetStorage_Invalid_Matrix)
+		{
+			Library::Datum datum(Library::DatumType::Matrix);
+
+			int intValue = 1;
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&intValue, 1);
+			});
+
+			float floatValue = 10.0f;
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&floatValue, 1);
+			});
+
+			std::string stringValue = "string";
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&stringValue, 1);
+			});
+
+			glm::vec4 vectorValue(1.0f, 2.0f, 3.0f, 4.0f);
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&vectorValue, 1);
+			});
+			
+			Library::RTTI** pointerValue = static_cast<Library::RTTI**>(malloc(sizeof(Library::RTTI*) * 10));
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(pointerValue, 1);
+			});
+			free(pointerValue);
+		}
+
+		TEST_METHOD(SetStorage_Invalid_Pointer)
+		{
+			Library::Datum datum(Library::DatumType::Pointer);
+
+			int intValue = 1;
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&intValue, 1);
+			});
+
+			float floatValue = 10.0f;
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&floatValue, 1);
+			});
+
+			std::string stringValue = "string";
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&stringValue, 1);
+			});
+
+			glm::vec4 vectorValue(1.0f, 2.0f, 3.0f, 4.0f);
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&vectorValue, 1);
+			});
+
+			glm::mat4 matrixValue(
+				1.0f, 1.0f, 1.0f, 1.0f,
+				2.0f, 2.0f, 2.0f, 2.0f,
+				3.0f, 3.0f, 3.0f, 3.0f,
+				4.0f, 4.0f, 4.0f, 4.0f);
+			Assert::ExpectException<std::exception>([&]()
+			{
+				datum.SetStorage(&matrixValue, 1);
+			});
 		}
 
 		TEST_METHOD(TestSet_Integer)

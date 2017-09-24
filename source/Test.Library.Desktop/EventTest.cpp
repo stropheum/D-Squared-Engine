@@ -125,7 +125,7 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(queue.IsEmpty());
 			Assert::IsFalse(subscriber.mValue == foo);
 
-			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(101)));
+			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(201)));
 			queue.Update(gameTime);
 			Assert::IsTrue(queue.IsEmpty());
 			Assert::IsTrue(subscriber.mValue == foo);
