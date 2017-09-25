@@ -54,8 +54,47 @@ namespace TestLibraryDesktop
 			);
 			Assert::IsTrue(scope["MyMatrix"] == expectedMatrix);
 
-			Library::Scope& pets = *scope["Pets"].Get<Library::Scope*>(0);
+			Library::Scope& pets = scope["Pets"].Get<Library::Scope>(0);
 			Assert::IsTrue(pets["Dog"] == "Dozer");
+		}
+
+		TEST_METHOD(TestEqualityOperator)
+		{
+			std::string xml1 = "										    \
+			<Scope Name='Level 1'>											\
+				<Matrix Name = 'MyMatrix'>									\
+					<Vector X = '1.0'  Y = '2.0'  Z = '3.0'  W = '4.0' />   \
+					<Vector X = '5.0'  Y = '6.0'  Z = '7.0'  W = '8.0' />	\
+					<Vector X = '9.0'  Y = '10.0' Z = '11.0' W = '12.0' />	\
+					<Vector X = '13.0' Y = '14.0' Z = '15.0' W = '16.0' />	\
+				</Matrix>													\
+			</Scope>														\\";
+
+			std::string xml2 = "										      \
+			<Scope Name='Level 1'>											  \
+				<Matrix Name = 'MyMatrix'>									  \
+					<Vector X = '11.0'  Y = '12.0'  Z = '13.0'  W = '14.0' /> \
+					<Vector X = '15.0'  Y = '16.0'  Z = '17.0'  W = '18.0' /> \
+					<Vector X = '19.0'  Y = '20.0' Z = '21.0' W = '22.0' />	  \
+					<Vector X = '23.0' Y = '24.0' Z = '25.0' W = '26.0' />	  \
+				</Matrix>													  \
+			</Scope>														  \\";
+
+			Library::SharedDataScope sharedData1, sharedData2;
+			Library::XmlParseMaster parseMaster1(&sharedData1);
+			Library::XmlParseMaster parseMaster2(&sharedData2);
+			Library::XmlParseHelperScope helper1, helper2;
+			
+			sharedData1.SetXmlParseMaster(&parseMaster1);
+			parseMaster1.AddHelper(helper1);
+
+			sharedData2.SetXmlParseMaster(&parseMaster2);
+			parseMaster2.AddHelper(helper2);
+
+			parseMaster1.Parse(const_cast<char*>(xml1.c_str()), static_cast<std::uint32_t>(xml1.length()), true);
+			parseMaster2.Parse(const_cast<char*>(xml2.c_str()), static_cast<std::uint32_t>(xml1.length()), true);
+
+			Assert::IsFalse(helper1 == helper2);
 		}
 
 		TEST_METHOD(TestHelperRTTI)
@@ -64,6 +103,7 @@ namespace TestLibraryDesktop
 			Library::XmlParseHelperScope helper1, helper2;
 			Assert::IsFalse(helper1.Equals(&helper2));
 			Assert::IsTrue(helper1 == helper1);
+			Assert::IsTrue(helper1 == helper2);
 
 			Library::XmlParseMaster master(&data);
 			helper1.Initialize(&master);
@@ -149,6 +189,7 @@ namespace TestLibraryDesktop
 			Library::Scope& scope2 = *data2.mScope;
 			Assert::IsTrue(scope1["Name"] == "Dale" && scope2["Name"] == "Dale");
 		}
+
 	};
 
 }

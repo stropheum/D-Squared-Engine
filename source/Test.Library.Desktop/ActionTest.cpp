@@ -107,13 +107,13 @@ namespace TestLibraryDesktop
 			ActionList aList;
 			aList.CreateAction("ActionCreateAction", "ActionCreateActionGenerically");
 
-			ActionCreateAction* aca1 = aList["Actions"].Get<Scope*>(0)->As<ActionCreateAction>();
+			ActionCreateAction* aca1 = aList["Actions"].Get<Scope>(0).As<ActionCreateAction>();
 			Assert::IsTrue(aca1 != nullptr);
 			aca1->SetPrototype("ActionList");
 			aca1->SetName("MyActionList");
 			aList.Update(worldState);
 
-			Assert::IsTrue(aList["Actions"].Get<Scope*>(1)->Is(ActionList::TypeIdClass()));
+			Assert::IsTrue(aList["Actions"].Get<Scope>(1).Is(ActionList::TypeIdClass()));
 		}
 
 		TEST_METHOD(TestActionDestroyAction)
@@ -123,7 +123,7 @@ namespace TestLibraryDesktop
 			ActionList actionList;
 			actionList.CreateAction("ActionList", "MyActionList");
 
-			ActionList* childActionList = actionList["Actions"].Get<Scope*>(0)->As<ActionList>();
+			ActionList* childActionList = actionList["Actions"].Get<Scope>(0).As<ActionList>();
 			Assert::IsTrue(childActionList != nullptr);
 
 			ActionDestroyAction* destroyAction = 
@@ -162,20 +162,20 @@ namespace TestLibraryDesktop
 			Assert::IsTrue(world != nullptr);
 			Assert::IsTrue(world->Name() == "Dales World");
 
-			Sector* sector = world->Sectors().Get<Scope*>(0)->As<Sector>();
+			Sector* sector = world->Sectors().Get<Scope>(0).As<Sector>();
 			Assert::IsTrue(sector != nullptr);
 			Assert::IsTrue(sector->Name() == "Dales Sector");
 
-			Entity* entity = sector->Entities().Get<Scope*>(0)->As<Entity>();
+			Entity* entity = sector->Entities().Get<Scope>(0).As<Entity>();
 			Assert::IsTrue(entity != nullptr);
 			Assert::IsTrue(entity->Name() == "Dale");
 
-			Action* action = entity->Actions().Get<Scope*>(0)->As<Action>();
+			Action* action = entity->Actions().Get<Scope>(0).As<Action>();
 			Assert::IsTrue(action != nullptr);
 			Assert::IsTrue(action->Name() == "MyList");
 			Assert::IsTrue(action->Is(ActionListIf::TypeIdClass()));
 
-			Action* then = (*action->As<ActionList>())["Then"].Get<Scope*>(0)->As<Action>();
+			Action* then = (*action->As<ActionList>())["Then"].Get<Scope>(0).As<Action>();
 			Assert::IsTrue(then != nullptr);
 
 			Assert::IsTrue(then->Is(ActionIncrement::TypeIdClass()));

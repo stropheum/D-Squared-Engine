@@ -15,18 +15,17 @@ namespace Library
 
 	void ActionList::Update(WorldState& worldState)
 	{
-		worldState.action = this;
+		worldState.Action() = this;
 
 		for (uint32_t i = 0; i < (*this)["Actions"].Size(); i++)
 		{
-			Scope* scope = (*this)["Actions"].Get<Scope*>(i);
-			assert(scope != nullptr);
-			Action* action = scope->As<Action>();
+			Scope& scope = (*this)["Actions"].Get<Scope>(i);
+			Action* action = scope.As<Action>();
 			assert(action != nullptr);
 			action->Update(worldState);
 		}
 
-		worldState.action = nullptr;
+		worldState.Action() = nullptr;
 	}
 
 	Action* ActionList::CreateAction(const string& className, const string& instanceName)

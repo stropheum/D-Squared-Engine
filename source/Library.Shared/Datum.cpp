@@ -129,7 +129,7 @@ namespace Library
 
 	Scope& Datum::operator[](const uint32_t& index)
 	{
-		return *Get<Scope*>(index);
+		return Get<Scope>(index);
 	}
 
 	Datum& Datum::operator=(const DatumType& rhs)
@@ -653,21 +653,21 @@ namespace Library
 	}
 	
 	template<>
-	Scope*& Datum::Get(const std::uint32_t& index)
+	Scope& Datum::Get(const std::uint32_t& index)
 	{
 		if (mType != DatumType::Scope) { throw std::exception("Calling et on invalid Type"); }
 		if (mData.sc == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
 		if (index >= mSize) { throw std::exception("Accessing beyond array bounds"); }
-		return mData.sc[index];
+		return *mData.sc[index];
 	}
 
 	template<>
-	Scope* const& Datum::Get(const std::uint32_t& index) const
+	const Scope& Datum::Get(const std::uint32_t& index) const
 	{
 		if (mType != DatumType::Scope) { throw std::exception("Calling et on invalid Type"); }
 		if (mData.sc == nullptr) { throw std::exception("Attempting to dereference nullptr"); }
 		if (index >= mSize) { throw std::exception("Accessing beyond array bounds"); }
-		return mData.sc[index];
+		return *mData.sc[index];
 	}
 
 	template<>

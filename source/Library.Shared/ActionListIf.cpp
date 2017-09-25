@@ -19,16 +19,16 @@ namespace Library
 		{
 			for (uint32_t i = 0; i < (*this)["Then"].Size(); i++)
 			{
-				assert((*this)["Then"].Get<Scope*>(i)->Is(Action::TypeIdClass()));
-				(*this)["Then"].Get<Scope*>(i)->As<Action>()->Update(worldState);
+				assert((*this)["Then"].Get<Scope>(i).Is(Action::TypeIdClass()));
+				(*this)["Then"].Get<Scope>(i).As<Action>()->Update(worldState);
 			}
 		}
 		else
 		{
 			for (uint32_t i = 0; i < (*this)["Else"].Size(); i++)
 			{
-				assert((*this)["Else"].Get<Scope*>(i)->Is(Action::TypeIdClass()));
-				(*this)["Else"].Get<Scope*>(i)->As<Action>()->Update(worldState);
+				assert((*this)["Else"].Get<Scope>(i).Is(Action::TypeIdClass()));
+				(*this)["Else"].Get<Scope>(i).As<Action>()->Update(worldState);
 			}
 		}
 	}

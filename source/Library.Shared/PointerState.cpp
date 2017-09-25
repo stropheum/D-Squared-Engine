@@ -41,14 +41,6 @@ namespace Library
 	{
 		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(Library::RTTI*) * size);
 		mContext->mCapacity = mContext->mSize = size;
-
-		if (size <mContext->mSize)
-		{
-			for (uint32_t i = size; i < mContext->mSize; i++)
-			{
-				mContext->mData.r[i] = nullptr;
-			}
-		}
 	}
 
 	void PointerState::Reserve(const uint32_t& capacity)
@@ -83,7 +75,7 @@ namespace Library
 
 	void PointerState::SetStorage(Library::RTTI** data, const uint32_t& size)
 	{
-		if (mContext->mType != DatumType::Pointer) { throw exception("Attempting to reassign Datum Type"); }
+		assert(mContext->mType == DatumType::Pointer);
 
 		if (mContext->mCapacity > 0) Clear();
 

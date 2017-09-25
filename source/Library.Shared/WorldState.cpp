@@ -7,7 +7,7 @@ using namespace std;
 namespace Library
 {
 	WorldState::WorldState() :
-		world(nullptr), sector(nullptr), entity(nullptr), action(nullptr), gameTime(nullptr)
+		mWorld(nullptr), mSector(nullptr), mEntity(nullptr), mAction(nullptr), mGameTime(nullptr)
 	{}
 
 	WorldState::~WorldState()
@@ -15,15 +15,35 @@ namespace Library
 
 	GameTime& WorldState::GetGameTime() const
 	{
-		if (gameTime == nullptr)
+		if (mGameTime == nullptr)
 		{
 			throw exception("Attempting to get gametime before setting");
 		}
-		return *gameTime;
+		return *mGameTime;
 	}
 
 	void WorldState::SetGameTime(GameTime& newGameTime)
 	{
-		gameTime = &newGameTime;
+		mGameTime = &newGameTime;
+	}
+
+	World*& WorldState::World()
+	{
+		return mWorld;
+	}
+
+	Sector*& WorldState::Sector()
+	{
+		return mSector;
+	}
+
+	Entity*& WorldState::Entity()
+	{
+		return mEntity;
+	}
+
+	Action*& WorldState::Action()
+	{
+		return mAction;
 	}
 }

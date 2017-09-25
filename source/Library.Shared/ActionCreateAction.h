@@ -26,20 +26,20 @@ namespace Library
 #pragma endregion
 
 		/**
-		 * Creates an action
-		 * @Param worldState: The world state object that stores the current world state
+		 * Creates an mAction
+		 * @Param worldState: The world state object that stores the current mWorld state
 		 */
 		virtual void Update(WorldState& worldState) override;
 		
 		/**
-		 * Mutator method for the action being created
-		 * @Param Name: The Name of the action being created
+		 * Mutator method for the mAction being created
+		 * @Param Name: The Name of the mAction being created
 		 */
 		void SetPrototype(const std::string& name);
 
 		/**
-		 * Accessor method for the action being created
-		 * @Return: The Name of the action being created
+		 * Accessor method for the mAction being created
+		 * @Return: The Name of the mAction being created
 		 */
 		std::string GetPrototype() const;
 

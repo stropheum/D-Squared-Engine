@@ -9,16 +9,17 @@ namespace Library
 {
 	RTTI_DEFINITIONS(EventPublisher)
 
-	EventPublisher::EventPublisher(Vector<EventSubscriber*>* subscriberList, mutex& subscriberListMutex, bool deleteAfterPublishing):
-		mDeleteAfterPublishing(deleteAfterPublishing), mTimeEnqueued(), mMillisecondDelay(0), mSubscriberList(subscriberList), mSubscriberListMutex(&subscriberListMutex)
-	{
-	}
+	EventPublisher::EventPublisher(Vector<EventSubscriber*>* subscriberList, 
+		mutex& subscriberListMutex, bool deleteAfterPublishing) :
+		mDeleteAfterPublishing(deleteAfterPublishing), mTimeEnqueued(), mMillisecondDelay(0), 
+		mSubscriberList(subscriberList), mSubscriberListMutex(&subscriberListMutex)
+	{}
 
-	EventPublisher::EventPublisher(const EventPublisher& rhs):
+	EventPublisher::EventPublisher(const EventPublisher& rhs) :
 		mDeleteAfterPublishing(rhs.mDeleteAfterPublishing), mTimeEnqueued(rhs.mTimeEnqueued), 
-		mMillisecondDelay(rhs.mMillisecondDelay), mSubscriberList(rhs.mSubscriberList), mSubscriberListMutex(rhs.mSubscriberListMutex)
-	{
-	}
+		mMillisecondDelay(rhs.mMillisecondDelay), mSubscriberList(rhs.mSubscriberList), 
+		mSubscriberListMutex(rhs.mSubscriberListMutex)
+	{}
 
 	EventPublisher& EventPublisher::operator=(const EventPublisher& rhs)
 	{
@@ -34,7 +35,8 @@ namespace Library
 
 	EventPublisher::EventPublisher(EventPublisher&& rhs) noexcept:
 		mDeleteAfterPublishing(rhs.mDeleteAfterPublishing), mTimeEnqueued(rhs.mTimeEnqueued), 
-		mMillisecondDelay(rhs.mMillisecondDelay), mSubscriberList(rhs.mSubscriberList), mSubscriberListMutex(rhs.mSubscriberListMutex)
+		mMillisecondDelay(rhs.mMillisecondDelay), mSubscriberList(rhs.mSubscriberList), 
+		mSubscriberListMutex(rhs.mSubscriberListMutex)
 	{
 		rhs.mMillisecondDelay = milliseconds(0);
 		rhs.mSubscriberList = nullptr;
@@ -56,7 +58,8 @@ namespace Library
 		return *this;
 	}
 
-	void EventPublisher::SetTime(const high_resolution_clock::time_point& timePoint, const milliseconds& millisecondDelay)
+	void EventPublisher::SetTime(const high_resolution_clock::time_point& timePoint, 
+		const milliseconds& millisecondDelay)
 	{
 		mTimeEnqueued = timePoint;
 		mMillisecondDelay = millisecondDelay;

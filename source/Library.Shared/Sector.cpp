@@ -55,7 +55,7 @@ namespace Library
 
 	void Sector::Update(WorldState& worldState)
 	{
-		worldState.sector = this;
+		worldState.Sector() = this;
 
 		for (uint32_t i = 0; i < Entities().Size(); i++)
 		{
@@ -63,6 +63,6 @@ namespace Library
 			Entities()[i].As<Entity>()->Update(worldState);
 		}
 
-		worldState.sector = nullptr;
+		worldState.Sector() = nullptr;
 	}
 }

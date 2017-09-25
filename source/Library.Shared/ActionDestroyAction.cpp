@@ -13,7 +13,7 @@ namespace Library
 
 	void ActionDestroyAction::Update(WorldState& worldState)
 	{
-		worldState.action = this;
+		worldState.Action() = this;
 
 		Datum* actions = GetParent()->Search("Actions");
 		assert(actions != nullptr);
@@ -30,7 +30,7 @@ namespace Library
 			}
 		}
 
-		worldState.action = nullptr;
+		worldState.Action() = nullptr;
 	}
 
 	void ActionDestroyAction::SetActionInstanceName(const string& name)

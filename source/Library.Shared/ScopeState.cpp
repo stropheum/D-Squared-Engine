@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "ScopeState.h"
-#include "Scope.h"
 
 
 using namespace std;
@@ -15,12 +14,12 @@ namespace Library
 	{
 		bool result = false;
 
-		if (rhs.Type() == DatumType::Scope && mContext->Size() == rhs.Size())
+		if (rhs.Type() == DatumType::Scope)
 		{
 			result = true;
 			for (uint32_t i = 0; i < mContext->Size(); i++)
 			{
-				if (*mContext->Get<Scope*>(i) != *rhs.Get<Scope*>(i))
+				if (mContext->Get<Scope>(i) != rhs.Get<Scope>(i))
 				{	// If every scope doesn't match, we're done
 					result = false;
 					break;
@@ -43,14 +42,6 @@ namespace Library
 	{
 		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(Scope*) * size);
 		mContext->mCapacity = mContext->mSize = size;
-
-		if (size <mContext->mSize)
-		{
-			for (uint32_t i = size; i < mContext->mSize; i++)
-			{
-				mContext->mData.sc[i] = nullptr;
-			}
-		}
 	}
 
 	void ScopeState::Reserve(const uint32_t& capacity)

@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Attributed.h"
-#include "Signature.h"
 
 
 using namespace std;

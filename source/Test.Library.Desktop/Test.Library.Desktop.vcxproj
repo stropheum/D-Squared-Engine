@@ -269,6 +269,7 @@ xcopy "$(ProjectDir)input.xml" "$(TargetDir)" /Y /I</Command>
       </SubType>
     </ClCompile>
     <ClCompile Include="SListTest.cpp" />
+    <ClCompile Include="TestGameTime.cpp" />
     <ClCompile Include="TestParseHelper.cpp" />
     <ClCompile Include="TestSharedData.cpp" />
     <ClCompile Include="VectorTest.cpp" />

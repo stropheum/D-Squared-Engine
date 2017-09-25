@@ -1,7 +1,5 @@
 #include "pch.h"
 #include "MatrixState.h"
-#include <glm/mat4x4.hpp>
-#include <glm/gtx/string_cast.hpp>
 
 
 using namespace std;
@@ -44,14 +42,6 @@ namespace Library
 	{
 		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(glm::mat4x4) * size);
 		mContext->mCapacity = mContext->mSize = size;
-
-		if (size <mContext->mSize)
-		{
-			for (uint32_t i = size; i < mContext->mSize; i++)
-			{
-				mContext->mData.m[i] = glm::mat4x4(0);
-			}
-		}
 	}
 
 	void MatrixState::Reserve(const uint32_t& capacity)
@@ -100,7 +90,7 @@ namespace Library
 
 	void MatrixState::SetStorage(glm::mat4x4* data, const uint32_t& size)
 	{
-		if (mContext->mType != DatumType::Matrix) { throw exception("Attempting to reassign Datum Type"); }
+		assert(mContext->mType == DatumType::Matrix);
 		
 		if (mContext->mCapacity > 0) Clear();
 

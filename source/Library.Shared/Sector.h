@@ -29,46 +29,46 @@ namespace Library
 #pragma endregion
 
 		/**
-		 * Accessor method for the Name of the sector
-		 * @Return: The Name of the sector
+		 * Accessor method for the Name of the mSector
+		 * @Return: The Name of the mSector
 		 */
 		std::string Name() const;
 
 		/**
-		 * Mutator method for the Name of the sector
-		 * @Param Name: The new Name of the sector
+		 * Mutator method for the Name of the mSector
+		 * @Param Name: The new Name of the mSector
 		 */
 		void SetName(const std::string& name);
 
 		/**
-		 * Accessor method for the Entities datum in the sector
-		 * @Return: A datum reference of the collection of Entities in the sector
+		 * Accessor method for the Entities datum in the mSector
+		 * @Return: A datum reference of the collection of Entities in the mSector
 		 */
 		Datum& Entities();
 
 		/**
-		 * Method for adding Entities to the sector
+		 * Method for adding Entities to the mSector
 		 * @Param ClassName: The Name of the base class being instantiated
-		 * @Param instanceName: The Name that the entity will be instantiated with
-		 * @Return: A freshly instantiated entity object
+		 * @Param instanceName: The Name that the mEntity will be instantiated with
+		 * @Return: A freshly instantiated mEntity object
 		 */
 		class Entity* CreateEntity(const std::string& className, const std::string& instanceName);
 
 		/**
-		 * Mutator method which allows the sector to be adopted into another world
-		 * @Param world: The new world where this sector will live
+		 * Mutator method which allows the mSector to be adopted into another mWorld
+		 * @Param mWorld: The new mWorld where this mSector will live
 		 */
 		void SetWorld(World& world);
 
 		/**
-		 * Accessor method for the world that this sector lives in
-		 * @Return: A reference to the world that this sector lives in
+		 * Accessor method for the mWorld that this mSector lives in
+		 * @Return: A reference to the mWorld that this mSector lives in
 		 */
 		World& GetWorld() const;
 
 		/**
 		 * Update method for handling change of game state
-		 * @Param worldState: The object that contains the world state data
+		 * @Param worldState: The object that contains the mWorld state data
 		 */
 		void Update(class WorldState& worldState);
 

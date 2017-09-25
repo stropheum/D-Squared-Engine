@@ -39,7 +39,7 @@ namespace Library
 
 	void World::Update(WorldState& worldState, GameTime& gameTime)
 	{
-		worldState.world = this;
+		worldState.World() = this;
 
 		for (uint32_t i = 0; i < Sectors().Size(); i++)
 		{
@@ -49,7 +49,7 @@ namespace Library
 
 		mEventQueue.Update(gameTime);
 
-		worldState.world = nullptr;
+		worldState.World() = nullptr;
 	}
 
 	EventQueue& World::GetEventQueue()

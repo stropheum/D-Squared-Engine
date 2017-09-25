@@ -125,7 +125,7 @@ namespace TestLibraryDesktop
 			Assert::IsFalse(queue.IsEmpty());
 			Assert::IsFalse(subscriber.mValue == foo);
 
-			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(101)));
+			gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(201)));
 			queue.Update(gameTime);
 			Assert::IsTrue(queue.IsEmpty());
 			Assert::IsTrue(subscriber.mValue == foo);
@@ -237,7 +237,8 @@ namespace TestLibraryDesktop
 			Event<Foo> eventCopy2(eventOG);
 			Assert::IsTrue(eventOG.Message() == eventCopy2.Message());
 
-			Event<Foo> movedEvent = std::move(eventOG);
+			Event<Foo> movedEvent(Foo(1));
+			movedEvent = std::move(eventOG);
 			Assert::IsTrue(movedEvent.Message() == Foo(5));
 
 			Event<Foo> movedCopyEvent(std::move(movedEvent));

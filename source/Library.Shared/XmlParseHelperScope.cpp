@@ -97,8 +97,7 @@ namespace Library
 		{
 			mState = State::ParsingMatrix;
 			mMatrixName = attributes.Find("Name")->second;
-			// Only use this to Set state to start grabbing component vectors
-			// TODO: possibly migrate the Append call here so we have access to the Name we need to Create with
+			scope->Append(mMatrixName);
 		}
 		else if (element == "String")
 		{
@@ -111,7 +110,6 @@ namespace Library
 		{
 			mState = State::ParsingScope;
 
-			// TODO: On first scope tag, instantiate new scope
 			if (!mScopeHasBeenInitialized)
 			{
 				data->mScope = new Scope();
@@ -184,7 +182,9 @@ namespace Library
 			}
 			ss << ")";
 
-			Datum& datum = data->mScope->Append(mMatrixName);
+			// We added this on the start element handler, so finding should always work
+			assert(data->mScope->Find(mMatrixName) != nullptr);
+			Datum& datum = *data->mScope->Find(mMatrixName);
 			datum.SetType(DatumType::Matrix);
 			datum.SetFromString(ss.str());
 
@@ -217,6 +217,7 @@ namespace Library
 	bool XmlParseHelperScope::operator==(const XmlParseHelperScope& rhs) const
 	{
 		bool matricesEquivalent = true;
+
 		for (uint32_t i = 0; i < 4; i++)
 		{
 			for (uint32_t j = 0; j < 4; j++)
@@ -224,7 +225,13 @@ namespace Library
 				if (mMatrixComponents[i][j] != rhs.mMatrixComponents[i][j])
 				{
 					matricesEquivalent = false;
+					break;
 				}
+			}
+
+			if (!matricesEquivalent)
+			{
+				break;
 			}
 		}
 

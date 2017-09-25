@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "ReactionAttributed.h"
-#include "Signature.h"
 
 
 using namespace std;

@@ -14,7 +14,7 @@ namespace Library
 
 	void ActionCreateAction::Update(WorldState& worldState)
 	{
-		worldState.action = this;
+		worldState.Action() = this;
 
 		assert(GetParent()->Is(Entity::TypeIdClass()) || GetParent()->Is(ActionList::TypeIdClass()));
 
@@ -28,7 +28,7 @@ namespace Library
 			GetParent()->As<ActionList>()->CreateAction(mPrototype, mName);
 		}
 
-		worldState.action = nullptr;
+		worldState.Action() = nullptr;
 	}
 
 	void ActionCreateAction::SetPrototype(const string& name)

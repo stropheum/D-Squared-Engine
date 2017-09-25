@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "VectorState.h"
-#include <glm\gtx\string_cast.hpp>
 
 
 using namespace std;
@@ -43,14 +42,6 @@ namespace Library
 	{
 		mContext->mData.vp = realloc(mContext->mData.vp, sizeof(glm::vec4) * size);
 		mContext->mCapacity = mContext->mSize = size;
-
-		if (size < mContext->mSize)
-		{
-			for (uint32_t i = size; i < mContext->mSize; i++)
-			{
-				mContext->mData.v[i] = glm::vec4(0);
-			}
-		}
 	}
 
 	void VectorState::Reserve(const uint32_t& capacity)
@@ -88,7 +79,7 @@ namespace Library
 
 	void VectorState::SetStorage(glm::vec4* data, const uint32_t& size)
 	{
-		if (mContext->mType != DatumType::Vector) { throw exception("Attempting to reassign Datum Type"); }
+		assert(mContext->mType == DatumType::Vector);
 
 		if (mContext->mCapacity > 0) { Clear(); }
 

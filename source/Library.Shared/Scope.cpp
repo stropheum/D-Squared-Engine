@@ -43,7 +43,7 @@ namespace Library
 
 					for (uint32_t i = 0; i < existingDatum.Size(); ++i)
 					{
-						Scope* scope = new Scope(*existingDatum.Get<Scope*>(i));
+						Scope* scope = new Scope(existingDatum.Get<Scope>(i));
 						scope->mParent = this;
 						newDatum.PushBack(scope);
 					}

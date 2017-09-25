@@ -40,21 +40,21 @@ namespace Library
 		void SetSubtype(const std::string& subtype);
 
 		/**
-		 * Accessor for the world state
-		 * @Return: A pointer to the world state
+		 * Accessor for the mWorld state
+		 * @Return: A pointer to the mWorld state
 		 */
 		WorldState* GetWorldState() const;
 
 		/**
-		 * Mutator for the world state poitner
-		 * @Param worldState: the world state
+		 * Mutator for the mWorld state poitner
+		 * @Param worldState: the mWorld state
 		 */
 		void SetWorldState(WorldState& worldState);
 
 	private:
 
 		std::string mSubtype; // The subtype of the event Message attributed
-		WorldState* mWorldState; // The world state object
+		WorldState* mWorldState; // The mWorld state object
 
 	};
 }

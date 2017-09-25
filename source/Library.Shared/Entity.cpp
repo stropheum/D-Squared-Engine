@@ -55,17 +55,16 @@ namespace Library
 
 	void Entity::Update(WorldState& worldState)
 	{
-		worldState.entity = this;
+		worldState.Entity() = this;
 
 		for (uint32_t i = 0; i < (*this)["Actions"].Size(); i++)
 		{
-			Scope* scope = (*this)["Actions"].Get<Scope*>(i);
-			assert(scope != nullptr);
-			Action* action = scope->As<Action>();
+			Scope& scope = (*this)["Actions"].Get<Scope>(i);
+			Action* action = scope.As<Action>();
 			assert(action != nullptr);
 			action->Update(worldState);
 		}
 
-		worldState.entity = nullptr;
+		worldState.Entity() = nullptr;
 	}
 }
