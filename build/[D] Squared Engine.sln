@@ -9,7 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game.Desktop.DirectX", "..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game.Desktop.OpenGL", "..\source\Game.Desktop.OpenGL\Game.Desktop.OpenGL.vcxproj", "{B8E06042-7380-4719-BE40-A7E608DE9D35}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test.Library.Desktop", "..\source\Test.Library.Desktop\Test.Library.Desktop.vcxproj", "{3AFAF43B-B593-4DE1-B01B-FCF886753AAD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test.Library.Shared", "..\source\Test.Library.Shared\Test.Library.Shared.vcxproj", "{3AFAF43B-B593-4DE1-B01B-FCF886753AAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

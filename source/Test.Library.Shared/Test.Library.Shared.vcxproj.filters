@@ -166,7 +166,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Test.Library.Desktop.rc">
+    <ResourceCompile Include="Test.Library.Shared.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

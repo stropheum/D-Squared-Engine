@@ -22,7 +22,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3AFAF43B-B593-4DE1-B01B-FCF886753AAD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>TestLibraryDesktop</RootNamespace>
+    <RootNamespace>TestLibraryShared</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -286,7 +286,7 @@ xcopy "$(ProjectDir)input.xml" "$(TargetDir)" /Y /I</Command>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Test.Library.Desktop.rc" />
+    <ResourceCompile Include="Test.Library.Shared.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
