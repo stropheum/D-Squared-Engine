@@ -15,6 +15,7 @@
 #include <sstream>
 #include <cassert>
 #include <fstream>
+#include <memory>
 
 //////////////////////////
 //  Local Dependencies //

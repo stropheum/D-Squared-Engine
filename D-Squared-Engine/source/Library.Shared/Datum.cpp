@@ -26,8 +26,6 @@ namespace Library
 		{	// Don't bother clearing memory if there isn't any reserved space
 			SetSize(0); // Remove all elements, allowing us to shrink buffer to zero
 		}
-
-		delete mTypeState;
 	}
 
 	Datum::Datum(const Datum& rhs) :
@@ -307,33 +305,28 @@ namespace Library
 		if (mType == DatumType::Unknown) { mType = type; }
 		else { throw exception("Attempting to change Type on Datum object"); }
 
-		if (mTypeState != nullptr)
-		{	// If we've already Set state, make sure we delete the old Type state
-			delete mTypeState;
-		}
-
 		switch (mType)
 		{
 			case DatumType::Integer:
-				mTypeState = new IntegerState(*this);
+                mTypeState = make_unique<IntegerState>(*this);
 				break;
 			case DatumType::Float:
-				mTypeState = new FloatState(*this);
+                mTypeState = make_unique<FloatState>(*this);
 				break;
 			case DatumType::Vector:
-				mTypeState = new VectorState(*this);
+                mTypeState = make_unique<VectorState>(*this);
 				break;
 			case DatumType::Matrix:
-				mTypeState = new MatrixState(*this);
+                mTypeState = make_unique<MatrixState>(*this);
 				break;
 			case DatumType::Scope:
-				mTypeState = new ScopeState(*this);
+                mTypeState = make_unique<ScopeState>(*this);
 				break;
 			case DatumType::String:
-				mTypeState = new StringState(*this);
-				break;
+                mTypeState = make_unique<StringState>(*this);
+		        break;
 			case DatumType::Pointer:
-				mTypeState = new PointerState(*this);
+                mTypeState = make_unique<PointerState>(*this);
 				break;
 			case DatumType::Unknown: 
 			break;

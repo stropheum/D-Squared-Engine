@@ -4,6 +4,7 @@
 #pragma warning(disable:4201)
 #include "glm/glm.hpp"
 #pragma warning(pop)
+#include <memory>
 
 
 namespace Library
@@ -502,7 +503,7 @@ namespace Library
 
 	private:
 
-		TypeState* mTypeState; // State pattern object. Type-specific tasks will be delegated to this
+	    std::unique_ptr<TypeState> mTypeState; // State pattern object. Type-specific tasks will be delegated to this
 		DatumType mType; // The Type of the Datum object
 		DatumValues mData; // The data union of the Datum object. Can be allocated internally or assigned externally
 		std::uint32_t mCapacity; // The number of elements of the Set Type that the Datum can hold
