@@ -11,7 +11,7 @@ namespace Library
 
 #pragma region Construction/Copy/Assignment
 
-		explicit StringState(Datum* const context);
+		explicit StringState(Datum& context);
 
 		StringState(const StringState& rhs) = delete;
 

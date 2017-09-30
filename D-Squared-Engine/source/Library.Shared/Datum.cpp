@@ -315,25 +315,25 @@ namespace Library
 		switch (mType)
 		{
 			case DatumType::Integer:
-				mTypeState = new IntegerState(this);
+				mTypeState = new IntegerState(*this);
 				break;
 			case DatumType::Float:
-				mTypeState = new FloatState(this);
+				mTypeState = new FloatState(*this);
 				break;
 			case DatumType::Vector:
-				mTypeState = new VectorState(this);
+				mTypeState = new VectorState(*this);
 				break;
 			case DatumType::Matrix:
-				mTypeState = new MatrixState(this);
+				mTypeState = new MatrixState(*this);
 				break;
 			case DatumType::Scope:
-				mTypeState = new ScopeState(this);
+				mTypeState = new ScopeState(*this);
 				break;
 			case DatumType::String:
-				mTypeState = new StringState(this);
+				mTypeState = new StringState(*this);
 				break;
 			case DatumType::Pointer:
-				mTypeState = new PointerState(this);
+				mTypeState = new PointerState(*this);
 				break;
 			case DatumType::Unknown: 
 			break;

@@ -10,7 +10,7 @@ namespace Library
 
 #pragma region Construction/Copy/Assignment
 
-		explicit PointerState(Datum* const context);
+		explicit PointerState(Datum& context);
 
 		PointerState(const PointerState& rhs) = delete;
 

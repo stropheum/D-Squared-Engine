@@ -188,9 +188,9 @@ namespace Library
 		 * TypeState constructor. Used to generate valid states from children
 		 * @Param context: The Datum object that the state will operate on
 		 */
-		explicit TypeState(Datum* const context);
+		explicit TypeState(Datum& context);
 
-		Datum* mContext; // The Datum object that the state will operate on
+		Datum& mContext; // The Datum object that the state will operate on
 
 	};
 }

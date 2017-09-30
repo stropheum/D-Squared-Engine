@@ -13,7 +13,7 @@ namespace Library
 
 #pragma region Construction/Copy/Assignment
 
-		explicit ScopeState(Datum* context);
+		explicit ScopeState(Datum& context);
 
 		ScopeState(const ScopeState& rhs) = delete;
 

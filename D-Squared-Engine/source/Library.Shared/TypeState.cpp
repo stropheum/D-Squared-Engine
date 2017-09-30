@@ -6,7 +6,7 @@ using namespace std;
 
 namespace Library
 {
-	TypeState::TypeState(Datum* const context):
+	TypeState::TypeState(Datum& context) :
 		mContext(context)
 	{}
 

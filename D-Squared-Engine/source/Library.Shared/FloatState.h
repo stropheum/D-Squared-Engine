@@ -11,7 +11,7 @@ namespace Library
 
 #pragma region Construction/Copy/Assignment
 
-		explicit FloatState(Datum* const context);
+		explicit FloatState(Datum& context);
 
 		FloatState(const FloatState& rhs) = delete;
 

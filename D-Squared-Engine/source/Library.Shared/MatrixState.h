@@ -12,7 +12,7 @@ namespace Library
 
 #pragma region Construction/Copy/Assignment
 
-		explicit MatrixState(Datum* const context);
+		explicit MatrixState(Datum& context);
 
 		MatrixState(const MatrixState& rhs) = delete;
 

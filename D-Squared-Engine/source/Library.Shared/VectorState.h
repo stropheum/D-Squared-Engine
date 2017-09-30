@@ -11,7 +11,7 @@ namespace Library
 
 #pragma region Construction/Copy/Assignment
 
-		explicit VectorState(Datum* const context);
+		explicit VectorState(Datum& context);
 
 		VectorState(const VectorState& rhs) = delete;
 
