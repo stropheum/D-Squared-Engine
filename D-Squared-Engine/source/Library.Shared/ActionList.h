@@ -30,7 +30,7 @@ namespace Library
 		 * Updates the Actions contained in the mAction list
 		 * @Param worldState: The mWorld state object that holds the current mWorld state
 		 */
-		virtual void Update(WorldState& worldState) override;
+		void Update(WorldState& worldState) override;
 
 		/**
 		 * Method for adding Actions to the mAction list

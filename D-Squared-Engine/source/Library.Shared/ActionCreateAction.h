@@ -29,7 +29,7 @@ namespace Library
 		 * Creates an mAction
 		 * @Param worldState: The world state object that stores the current mWorld state
 		 */
-		virtual void Update(WorldState& worldState) override;
+		void Update(WorldState& worldState) override;
 		
 		/**
 		 * Mutator method for the mAction being created

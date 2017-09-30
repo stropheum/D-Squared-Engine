@@ -20,11 +20,11 @@ namespace Library
 
 		Entity(const Entity& rhs) = delete;
 
-		Entity* operator=(const Entity& rhs) = delete;
+		Entity& operator=(const Entity& rhs) = delete;
 
 		Entity(Entity&& rhs) = delete;
 
-		Entity* operator=(Entity&& rhs) = delete;
+		Entity& operator=(Entity&& rhs) = delete;
 
 #pragma endregion
 

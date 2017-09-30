@@ -29,7 +29,7 @@ namespace Library
 		 * Destroys the mAction with the specified Name, if it exists in the hierarchy
 		 * @Param worldState: The mWorld state object that stores the current mWorld state
 		 */
-		virtual void Update(WorldState& worldState) override;
+		void Update(WorldState& worldState) override;
 
 		/**
 		 * Mutator method for the Name of the mAction being destroyed

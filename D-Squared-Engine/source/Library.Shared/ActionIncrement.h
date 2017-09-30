@@ -29,7 +29,7 @@ namespace Library
 		 * Updates the mAction based on the current mWorld state
 		 * @Param worldState: The current mWorld state
 		 */
-		virtual void Update(WorldState& worldState) override;
+		void Update(WorldState& worldState) override;
 
 		/**
 		 * Accessor for the current increment count

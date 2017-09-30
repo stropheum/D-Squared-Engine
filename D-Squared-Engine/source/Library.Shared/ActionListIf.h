@@ -29,7 +29,7 @@ namespace Library
 		 * Executes the if statement. Runs through "then" attribute updates if condition is true, "else" attributes otherwise
 		 * @Param worldState: The mWorld state object that stores the current mWorld state
 		 */
-		virtual void Update(WorldState& worldState) override;
+		void Update(WorldState& worldState) override;
 
 		/**
 		 * Mutator method for the if statement's condition
