@@ -47,8 +47,11 @@ namespace Library
 		const HashMap<string, string> attributes)
 	{
 		// Store off state to revert once the end element handler has been met
-		mPreviousState = 
-			(mState == State::NotParsing ||mState == State::ParsingWorld || mState == State::ParsingSector || mState == State::ParsingEntity) 
+		mPreviousState = (
+            mState == State::NotParsing || 
+            mState == State::ParsingWorld || 
+            mState == State::ParsingSector || 
+            mState == State::ParsingEntity) 
 			? mState 
 			: mPreviousState; 
 
