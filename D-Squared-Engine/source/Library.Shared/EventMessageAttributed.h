@@ -4,57 +4,57 @@
 
 namespace Library
 {
-	class WorldState;
+    class WorldState;
 
-	class EventMessageAttributed final: public Scope
-	{
+    class EventMessageAttributed final : public Scope
+    {
 
-	public:
+    public:
 
 #pragma region Construction/Copy/Assignment
 
-		EventMessageAttributed();
+        EventMessageAttributed();
 
-		virtual ~EventMessageAttributed() = default;
+        virtual ~EventMessageAttributed() = default;
 
-		EventMessageAttributed(const EventMessageAttributed& rhs) = default;
+        EventMessageAttributed(const EventMessageAttributed& rhs) = default;
 
-		EventMessageAttributed& operator=(const EventMessageAttributed& rhs) = default;
+        EventMessageAttributed& operator=(const EventMessageAttributed& rhs) = default;
 
-		EventMessageAttributed(EventMessageAttributed&& rhs) = delete;
+        EventMessageAttributed(EventMessageAttributed&& rhs) = delete;
 
-		EventMessageAttributed& operator=(EventMessageAttributed&& rhs) = delete;
+        EventMessageAttributed& operator=(EventMessageAttributed&& rhs) = delete;
 
 #pragma endregion
 
-		/**
-		 * Accessor for the event Message attributed subtype
-		 * @Return: The subtype of the event Message attributed
-		 */
-		const std::string& GetSubtype() const;
+        /**
+         * Accessor for the event Message attributed subtype
+         * @Return: The subtype of the event Message attributed
+         */
+        const std::string& GetSubtype() const;
 
-		/**
-		 * Mutator for the event Message attributed subtype
-		 * @Param subtype: The subtype of the event Message attributed
-		 */
-		void SetSubtype(const std::string& subtype);
+        /**
+         * Mutator for the event Message attributed subtype
+         * @Param subtype: The subtype of the event Message attributed
+         */
+        void SetSubtype(const std::string& subtype);
 
-		/**
-		 * Accessor for the mWorld state
-		 * @Return: A pointer to the mWorld state
-		 */
-		WorldState* GetWorldState() const;
+        /**
+         * Accessor for the mWorld state
+         * @Return: A pointer to the mWorld state
+         */
+        WorldState* GetWorldState() const;
 
-		/**
-		 * Mutator for the mWorld state poitner
-		 * @Param worldState: the mWorld state
-		 */
-		void SetWorldState(WorldState& worldState);
+        /**
+         * Mutator for the mWorld state poitner
+         * @Param worldState: the mWorld state
+         */
+        void SetWorldState(WorldState& worldState);
 
-	private:
+    private:
 
-		std::string mSubtype; // The subtype of the event Message attributed
-		WorldState* mWorldState; // The mWorld state object
+        std::string mSubtype; // The subtype of the event Message attributed
+        WorldState* mWorldState; // The mWorld state object
 
-	};
+    };
 }

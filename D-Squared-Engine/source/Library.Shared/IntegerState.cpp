@@ -6,89 +6,89 @@ using namespace std;
 
 namespace Library
 {
-	IntegerState::IntegerState(Datum& context) :
-		TypeState(context)
-	{}
+    IntegerState::IntegerState(Datum& context) :
+        TypeState(context)
+    {}
 
-	bool IntegerState::operator==(const Datum& rhs)
-	{
-		bool result = false;
+    bool IntegerState::operator==(const Datum& rhs)
+    {
+        bool result = false;
 
-		if (mContext.mType == rhs.mType && mContext.mSize == rhs.mSize)
-		{
-			result = true;
-			for (uint32_t i = 0; i < mContext.mSize; i++)
-			{
-				if (mContext.mData.i[i] != rhs.mData.i[i])
-				{
-					result = false;
-					break;
-				}
-			}
-		}
+        if (mContext.mType == rhs.mType && mContext.mSize == rhs.mSize)
+        {
+            result = true;
+            for (uint32_t i = 0; i < mContext.mSize; i++)
+            {
+                if (mContext.mData.i[i] != rhs.mData.i[i])
+                {
+                    result = false;
+                    break;
+                }
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	Datum& IntegerState::operator=(const int32_t& rhs)
-	{
-		if (mContext.mSize > 1) { throw exception("Invalid assignment invocation"); }
-		if (mContext.mSize == 0) { mContext.SetSize(1); }
-		mContext.mData.i[0] = rhs;
-		return mContext;
-	}
+    Datum& IntegerState::operator=(const int32_t& rhs)
+    {
+        if (mContext.mSize > 1) { throw exception("Invalid assignment invocation"); }
+        if (mContext.mSize == 0) { mContext.SetSize(1); }
+        mContext.mData.i[0] = rhs;
+        return mContext;
+    }
 
 
-	void IntegerState::SetSize(const uint32_t& size)
-	{
-		mContext.mData.vp = realloc(mContext.mData.vp, sizeof(int32_t) * size);
-		mContext.mCapacity = mContext.mSize = size;
-	}
+    void IntegerState::SetSize(const uint32_t& size)
+    {
+        mContext.mData.vp = realloc(mContext.mData.vp, sizeof(int32_t) * size);
+        mContext.mCapacity = mContext.mSize = size;
+    }
 
-	void IntegerState::Reserve(const uint32_t& capacity)
-	{
-		if (capacity > mContext.mCapacity)
-		{
-			mContext.mData.vp = realloc(mContext.mData.vp, sizeof(int32_t) * capacity);
-			mContext.mCapacity = capacity;
-		}
-	}
+    void IntegerState::Reserve(const uint32_t& capacity)
+    {
+        if (capacity > mContext.mCapacity)
+        {
+            mContext.mData.vp = realloc(mContext.mData.vp, sizeof(int32_t) * capacity);
+            mContext.mCapacity = capacity;
+        }
+    }
 
-	void IntegerState::Clear()
-	{
-		if (mContext.mSize > 0)
-		{
-			for (uint32_t i = 0; i < mContext.mSize; i++) mContext.mData.i[i] = 0;
-			mContext.mSize = 0;
-		}
-	}
+    void IntegerState::Clear()
+    {
+        if (mContext.mSize > 0)
+        {
+            for (uint32_t i = 0; i < mContext.mSize; i++) mContext.mData.i[i] = 0;
+            mContext.mSize = 0;
+        }
+    }
 
-	void IntegerState::SetFromString(const string& value, const uint32_t& index)
-	{
-		int32_t result = stoi(value);
-		mContext.Set(result, index);
-	}
+    void IntegerState::SetFromString(const string& value, const uint32_t& index)
+    {
+        int32_t result = stoi(value);
+        mContext.Set(result, index);
+    }
 
-	void IntegerState::SetStorage(const Datum& rhs)
-	{
-		SetStorage(rhs.mData.i, rhs.mSize);
-	}
+    void IntegerState::SetStorage(const Datum& rhs)
+    {
+        SetStorage(rhs.mData.i, rhs.mSize);
+    }
 
-	void IntegerState::SetStorage(int32_t* data, const uint32_t& size)
-	{
-		assert(mContext.mType == DatumType::Integer);
-		
-		if (mContext.mCapacity > 0) Clear();
+    void IntegerState::SetStorage(int32_t* data, const uint32_t& size)
+    {
+        assert(mContext.mType == DatumType::Integer);
 
-		mContext.mDataIsExternal = true;
-		mContext.mData.i = data;
-		mContext.mCapacity = mContext.mSize = size;
-	}
+        if (mContext.mCapacity > 0) Clear();
 
-	string IntegerState::ToString(const uint32_t& index)
-	{
-		char value[50];
-		sprintf_s(value, "%d", mContext.Get<int32_t>(index));
-		return value;
-	}
+        mContext.mDataIsExternal = true;
+        mContext.mData.i = data;
+        mContext.mCapacity = mContext.mSize = size;
+    }
+
+    string IntegerState::ToString(const uint32_t& index)
+    {
+        char value[50];
+        sprintf_s(value, "%d", mContext.Get<int32_t>(index));
+        return value;
+    }
 }

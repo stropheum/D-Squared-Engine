@@ -2,17 +2,16 @@
 #include "EventSubscriber.h"
 
 namespace Library {
-	class EventQueue;
+    class EventQueue;
 }
 
 class QueueClearSubscriber :
-	public Library::EventSubscriber
+    public Library::EventSubscriber
 {
 public:
-	QueueClearSubscriber(Library::EventQueue& eventQueue);
-	~QueueClearSubscriber();
-	virtual void Notify(const Library::EventPublisher& event) override;
+    QueueClearSubscriber(Library::EventQueue& eventQueue);
+    ~QueueClearSubscriber();
+    virtual void Notify(const Library::EventPublisher& event) override;
 private:
-	Library::EventQueue* mEventQueue;
+    Library::EventQueue* mEventQueue;
 };
-

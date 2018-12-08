@@ -5,29 +5,29 @@
 
 namespace Library
 {
-	class Reaction abstract : public ActionList, public EventSubscriber
-	{
-		RTTI_DECLARATIONS(Reaction, ActionList)
+    class Reaction abstract : public ActionList, public EventSubscriber
+    {
+        RTTI_DECLARATIONS(Reaction, ActionList)
 
-	public:
+    public:
 
 #pragma region Construction/Copy/Assignment
 
-		Reaction() = default;
+        Reaction() = default;
 
-		virtual ~Reaction() = default;
+        virtual ~Reaction() = default;
 
-		Reaction(const Reaction& rhs) = delete;
+        Reaction(const Reaction& rhs) = delete;
 
-		Reaction& operator=(const Reaction& rhs) = delete;
+        Reaction& operator=(const Reaction& rhs) = delete;
 
-		Reaction(Reaction&& rhs) = delete;
+        Reaction(Reaction&& rhs) = delete;
 
-		Reaction& operator=(Reaction&& rhs) = delete;
+        Reaction& operator=(Reaction&& rhs) = delete;
 
 #pragma endregion
 
-	};
+    };
 
 #define ReactionFactory(ConcreteReaction) ConcreteFactory(Reaction, ConcreteReaction)
 }

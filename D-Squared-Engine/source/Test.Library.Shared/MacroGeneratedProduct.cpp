@@ -2,15 +2,14 @@
 #include "MacroGeneratedProduct.h"
 
 namespace Library
-{	
-	RTTI_DEFINITIONS(MacroGeneratedProduct)
+{
+    RTTI_DEFINITIONS(MacroGeneratedProduct)
 
-	MacroGeneratedProduct::MacroGeneratedProduct()
-	{
-	}
+        MacroGeneratedProduct::MacroGeneratedProduct()
+    {
+    }
 
-	MacroGeneratedProduct::~MacroGeneratedProduct()
-	{
-	}
+    MacroGeneratedProduct::~MacroGeneratedProduct()
+    {
+    }
 }
-

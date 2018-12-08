@@ -4,38 +4,36 @@
 
 namespace Library
 {
-	class EventSubscriber
-	{
+    class EventSubscriber
+    {
 
-	public:
+    public:
 
 #pragma region Construction/Copy/Assignment
 
-		EventSubscriber() = default;
+        EventSubscriber() = default;
 
-		virtual ~EventSubscriber() = default;
+        virtual ~EventSubscriber() = default;
 
-		EventSubscriber(const EventSubscriber& rhs) = delete;
+        EventSubscriber(const EventSubscriber& rhs) = delete;
 
-		EventSubscriber& operator=(const EventSubscriber& rhs) = delete;
+        EventSubscriber& operator=(const EventSubscriber& rhs) = delete;
 
-		EventSubscriber(EventSubscriber&& rhs) = delete;
+        EventSubscriber(EventSubscriber&& rhs) = delete;
 
-		EventSubscriber& operator=(EventSubscriber&& rhs) = delete;
+        EventSubscriber& operator=(EventSubscriber&& rhs) = delete;
 
 #pragma endregion
 
-		/**
-		 * Notifies the subscriber that an event has been triggered
-		 * @Param event: The event that the subscriber is being notified of
-		 */
-		virtual void Notify(const EventPublisher& event) = 0;
+        /**
+         * Notifies the subscriber that an event has been triggered
+         * @Param event: The event that the subscriber is being notified of
+         */
+        virtual void Notify(const EventPublisher& event) = 0;
 
-	protected:
+    protected:
 
-		std::mutex mNotifyMutex; // Mutex to prevent multiple accesses to the event subscriber
+        std::mutex mNotifyMutex; // Mutex to prevent multiple accesses to the event subscriber
 
-	};
+    };
 }
-
-

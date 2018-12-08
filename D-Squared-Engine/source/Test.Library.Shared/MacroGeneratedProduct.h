@@ -5,15 +5,13 @@
 
 namespace Library
 {
-	class MacroGeneratedProduct : public RTTI
-	{
-		RTTI_DECLARATIONS(MacroGeneratedProduct, RTTI)
-	public:
-		MacroGeneratedProduct();
-		~MacroGeneratedProduct();
-	};
+    class MacroGeneratedProduct : public RTTI
+    {
+        RTTI_DECLARATIONS(MacroGeneratedProduct, RTTI)
+    public:
+        MacroGeneratedProduct();
+        ~MacroGeneratedProduct();
+    };
 
-	ConcreteFactory(RTTI, MacroGeneratedProduct)
+    ConcreteFactory(RTTI, MacroGeneratedProduct)
 }
-
-

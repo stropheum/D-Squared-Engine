@@ -19,204 +19,204 @@ using namespace Library;
 
 namespace TestLibraryDesktop
 {
-	TEST_CLASS(XmlParseHelperEntityTest)
-	{
-	public:
+    TEST_CLASS(XmlParseHelperEntityTest)
+    {
+    public:
 
-		Library::EntityFactory mEntityFactory;
+        Library::EntityFactory mEntityFactory;
 
-		TEST_METHOD_INITIALIZE(InitializeMethod)
-		{
-			LeakDetector::Initialize();
-		}
+        TEST_METHOD_INITIALIZE(InitializeMethod)
+        {
+            LeakDetector::Initialize();
+        }
 
-		TEST_METHOD_CLEANUP(CleanupMethod)
-		{
-			LeakDetector::Finalize();
-		}
+        TEST_METHOD_CLEANUP(CleanupMethod)
+        {
+            LeakDetector::Finalize();
+        }
 
-		TEST_METHOD(TestParse)
-		{
-			Library::SharedDataScope sharedData;
-			Library::XmlParseMaster parseMaster(&sharedData);
-			Library::XmlParseHelperEntity helper;
-			sharedData.SetXmlParseMaster(&parseMaster);
-			parseMaster.AddHelper(helper);
+        TEST_METHOD(TestParse)
+        {
+            Library::SharedDataScope sharedData;
+            Library::XmlParseMaster parseMaster(&sharedData);
+            Library::XmlParseHelperEntity helper;
+            sharedData.SetXmlParseMaster(&parseMaster);
+            parseMaster.AddHelper(helper);
 
-			parseMaster.ParseFromFile("EntityGrammar.xml");
+            parseMaster.ParseFromFile("EntityGrammar.xml");
 
-			Library::Scope* scope = sharedData.mScope;
-			World* world = scope->As<World>();
-			std::string name = world != nullptr ? world->Name() : "";
+            Library::Scope* scope = sharedData.mScope;
+            World* world = scope->As<World>();
+            std::string name = world != nullptr ? world->Name() : "";
 
-			Assert::IsTrue(name == "Dales World");
+            Assert::IsTrue(name == "Dales World");
 
-			Assert::IsTrue(world->Sectors()[0].As<Sector>() != nullptr);
-			Sector* sector = world->Sectors()[0].As<Sector>();
-			Assert::IsTrue(sector->Name() == "Dales Sector");
-			Assert::IsTrue(sector->GetParent() == world);
+            Assert::IsTrue(world->Sectors()[0].As<Sector>() != nullptr);
+            Sector* sector = world->Sectors()[0].As<Sector>();
+            Assert::IsTrue(sector->Name() == "Dales Sector");
+            Assert::IsTrue(sector->GetParent() == world);
 
-			Entity* entity = sector->Entities()[0].As<Entity>();
-			Assert::IsTrue(entity != nullptr);
-			Assert::IsTrue(entity->Name() == "Dale");
-			
-			Entity& entityRef = *entity;
-			Assert::IsTrue(entityRef["Health"] == 100);
-			Assert::IsTrue(entityRef["Power"] == 12.34f);
-			Assert::IsTrue(entityRef["Position"] == glm::vec4(1, 2, 3, 4));
-		}
+            Entity* entity = sector->Entities()[0].As<Entity>();
+            Assert::IsTrue(entity != nullptr);
+            Assert::IsTrue(entity->Name() == "Dale");
 
-		TEST_METHOD(TestWorldName)
-		{
-			World* world = new World();
+            Entity& entityRef = *entity;
+            Assert::IsTrue(entityRef["Health"] == 100);
+            Assert::IsTrue(entityRef["Power"] == 12.34f);
+            Assert::IsTrue(entityRef["Position"] == glm::vec4(1, 2, 3, 4));
+        }
 
-			Assert::IsTrue(world->Name() == "");
-			
-			world->SetName("NewName");
-			Assert::IsTrue(world->Name() == "NewName");
+        TEST_METHOD(TestWorldName)
+        {
+            World* world = new World();
 
-			delete world;
-		}
+            Assert::IsTrue(world->Name() == "");
 
-		TEST_METHOD(TestSectorName)
-		{
-			Sector* sector = new Sector();
+            world->SetName("NewName");
+            Assert::IsTrue(world->Name() == "NewName");
 
-			Assert::IsTrue(sector->Name() == "");
+            delete world;
+        }
 
-			sector->SetName("NewName");
-			Assert::IsTrue(sector->Name() == "NewName");
+        TEST_METHOD(TestSectorName)
+        {
+            Sector* sector = new Sector();
 
-			delete sector;
-		}
+            Assert::IsTrue(sector->Name() == "");
 
-		TEST_METHOD(TestEntityName)
-		{
-			Entity* entity = new Entity();
+            sector->SetName("NewName");
+            Assert::IsTrue(sector->Name() == "NewName");
 
-			Assert::IsTrue(entity->Name() == "");
+            delete sector;
+        }
 
-			entity->SetName("NewName");
-			Assert::IsTrue(entity->Name() == "NewName");
+        TEST_METHOD(TestEntityName)
+        {
+            Entity* entity = new Entity();
 
-			delete entity;
-		}
+            Assert::IsTrue(entity->Name() == "");
 
-		TEST_METHOD(TestCreateSector)
-		{
-			World* world = new World();
+            entity->SetName("NewName");
+            Assert::IsTrue(entity->Name() == "NewName");
 
-			Assert::IsTrue(world->Sectors().Size() == 0);
+            delete entity;
+        }
 
-			world->CreateSector("NewSector");
-			Assert::IsTrue(world->Sectors().Size() == 1);
+        TEST_METHOD(TestCreateSector)
+        {
+            World* world = new World();
 
-			delete world;
-		}
+            Assert::IsTrue(world->Sectors().Size() == 0);
 
-		TEST_METHOD(TestCreateEntity)
-		{
-			Sector* sector = new Sector();
+            world->CreateSector("NewSector");
+            Assert::IsTrue(world->Sectors().Size() == 1);
 
-			Assert::IsTrue(sector->Entities().Size() == 0);
+            delete world;
+        }
 
-			sector->CreateEntity("Entity", "Dale");
-			Assert::IsTrue(sector->Entities().Size() == 1);
+        TEST_METHOD(TestCreateEntity)
+        {
+            Sector* sector = new Sector();
 
-			delete sector;
-		}
+            Assert::IsTrue(sector->Entities().Size() == 0);
 
-		TEST_METHOD(TestCloneLeaks)
-		{
-			// Clone for leak detection. Cloning functioality already tests in other test class
-			Library::SharedDataScope sharedData;
-			Library::XmlParseMaster parseMaster(&sharedData);
-			Library::XmlParseHelperEntity helper;
-			sharedData.SetXmlParseMaster(&parseMaster);
-			parseMaster.AddHelper(helper);
-			XmlParseMaster* clone = parseMaster.Clone();
-			delete clone;
-			Assert::IsTrue(true);
-		}
+            sector->CreateEntity("Entity", "Dale");
+            Assert::IsTrue(sector->Entities().Size() == 1);
 
-		TEST_METHOD(Testupdate)
-		{
-			// Update has no current functionality, so test currently exists for coverage and leak detection
-			World* world = new World();
-			WorldState worldState;
-			GameTime gameTime;
-			world->Update(worldState, gameTime);
+            delete sector;
+        }
 
-			delete world;
-		}
+        TEST_METHOD(TestCloneLeaks)
+        {
+            // Clone for leak detection. Cloning functioality already tests in other test class
+            Library::SharedDataScope sharedData;
+            Library::XmlParseMaster parseMaster(&sharedData);
+            Library::XmlParseHelperEntity helper;
+            sharedData.SetXmlParseMaster(&parseMaster);
+            parseMaster.AddHelper(helper);
+            XmlParseMaster* clone = parseMaster.Clone();
+            delete clone;
+            Assert::IsTrue(true);
+        }
 
-		TEST_METHOD(TestGetWorld)
-		{
-			World* world = new World();
+        TEST_METHOD(Testupdate)
+        {
+            // Update has no current functionality, so test currently exists for coverage and leak detection
+            World* world = new World();
+            WorldState worldState;
+            GameTime gameTime;
+            world->Update(worldState, gameTime);
 
-			Sector* sector = world->CreateSector("NewSector");
-			Assert::IsTrue(sector->GetWorld() == *world);
+            delete world;
+        }
 
-			World* wrongWorld = new World();
-			Assert::IsFalse(sector->GetWorld() == *wrongWorld);
+        TEST_METHOD(TestGetWorld)
+        {
+            World* world = new World();
 
-			delete world;
-			delete wrongWorld;
-		}
+            Sector* sector = world->CreateSector("NewSector");
+            Assert::IsTrue(sector->GetWorld() == *world);
 
-		TEST_METHOD(TestGetSector)
-		{
-			Sector* sector = new Sector();
+            World* wrongWorld = new World();
+            Assert::IsFalse(sector->GetWorld() == *wrongWorld);
 
-			Entity* entity = sector->CreateEntity("Entity", "Dale");
-			Assert::IsTrue(entity->GetSector() == *sector);
+            delete world;
+            delete wrongWorld;
+        }
 
-			Sector* wrongSector = new Sector();
-			Assert::IsFalse(entity->GetSector() == *wrongSector);
+        TEST_METHOD(TestGetSector)
+        {
+            Sector* sector = new Sector();
 
-			Entity* noSectorEntity = new Entity();
-			Assert::ExpectException<std::exception>([&]()
-			{
-				noSectorEntity->GetSector();
-			});
+            Entity* entity = sector->CreateEntity("Entity", "Dale");
+            Assert::IsTrue(entity->GetSector() == *sector);
 
-			delete sector;
-			delete wrongSector;
-			delete noSectorEntity;
-		}
+            Sector* wrongSector = new Sector();
+            Assert::IsFalse(entity->GetSector() == *wrongSector);
 
-		TEST_METHOD(TestSetWorld)
-		{
-			World* world1 = new World();
-			Sector* sector = world1->CreateSector("mSector");
+            Entity* noSectorEntity = new Entity();
+            Assert::ExpectException<std::exception>([&]()
+            {
+                noSectorEntity->GetSector();
+            });
 
-			Assert::IsTrue(sector->GetWorld() == *world1);
+            delete sector;
+            delete wrongSector;
+            delete noSectorEntity;
+        }
 
-			World* world2 = new World();
-			sector->SetWorld(*world2);
-			Assert::IsTrue(sector->GetWorld() == *world2);
-			Assert::IsFalse(sector->GetWorld() == *world1);
+        TEST_METHOD(TestSetWorld)
+        {
+            World* world1 = new World();
+            Sector* sector = world1->CreateSector("mSector");
 
-			delete world1;
-			delete world2;
-		}
+            Assert::IsTrue(sector->GetWorld() == *world1);
 
-		TEST_METHOD(TestSetSector)
-		{
-			Sector* sector1 = new Sector();
-			Entity* entity = sector1->CreateEntity("Entity", "Dale");
+            World* world2 = new World();
+            sector->SetWorld(*world2);
+            Assert::IsTrue(sector->GetWorld() == *world2);
+            Assert::IsFalse(sector->GetWorld() == *world1);
 
-			Assert::IsTrue(entity->GetSector() == *sector1);
+            delete world1;
+            delete world2;
+        }
 
-			Sector* sector2 = new Sector();
-			entity->SetSector(*sector2);
-			Assert::IsTrue(entity->GetSector() == *sector2);
-			Assert::IsFalse(entity->GetSector() == *sector1);
+        TEST_METHOD(TestSetSector)
+        {
+            Sector* sector1 = new Sector();
+            Entity* entity = sector1->CreateEntity("Entity", "Dale");
 
-			delete sector1;
-			delete sector2;
-		}
+            Assert::IsTrue(entity->GetSector() == *sector1);
 
-	};
+            Sector* sector2 = new Sector();
+            entity->SetSector(*sector2);
+            Assert::IsTrue(entity->GetSector() == *sector2);
+            Assert::IsFalse(entity->GetSector() == *sector1);
+
+            delete sector1;
+            delete sector2;
+        }
+
+    };
 
 }

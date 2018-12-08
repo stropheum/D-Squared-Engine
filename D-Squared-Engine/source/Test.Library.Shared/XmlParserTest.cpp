@@ -10,81 +10,81 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace TestLibraryDesktop
 {
-	TEST_CLASS(XmlParserTest)
-	{
+    TEST_CLASS(XmlParserTest)
+    {
 
-	public:
+    public:
 
-		TEST_METHOD_INITIALIZE(InitializeMethod)
-		{
-			LeakDetector::Initialize();
-		}
+        TEST_METHOD_INITIALIZE(InitializeMethod)
+        {
+            LeakDetector::Initialize();
+        }
 
-		TEST_METHOD_CLEANUP(CleanupMethod)
-		{
-			LeakDetector::Finalize();
-		}
+        TEST_METHOD_CLEANUP(CleanupMethod)
+        {
+            LeakDetector::Finalize();
+        }
 
-		TEST_METHOD(TestParse)
-		{
-			Library::TestSharedData sharedData;
-			Library::XmlParseMaster parseMaster(&sharedData);
-			Library::TestParseHelper helper(&parseMaster);
-			sharedData.SetXmlParseMaster(&parseMaster);
-			parseMaster.AddHelper(helper);
-			char* xml = "<Person Name='Dale' Health='100' Mana='80' />";
-			parseMaster.Parse(xml, static_cast<std::uint32_t>(strlen(xml)), true);
-		}
+        TEST_METHOD(TestParse)
+        {
+            Library::TestSharedData sharedData;
+            Library::XmlParseMaster parseMaster(&sharedData);
+            Library::TestParseHelper helper(&parseMaster);
+            sharedData.SetXmlParseMaster(&parseMaster);
+            parseMaster.AddHelper(helper);
+            char* xml = "<Person Name='Dale' Health='100' Mana='80' />";
+            parseMaster.Parse(xml, static_cast<std::uint32_t>(strlen(xml)), true);
+        }
 
-		TEST_METHOD(TestParseFromFile)
-		{
-			Library::TestSharedData sharedData;
-			Library::XmlParseMaster parseMaster(&sharedData);
-			Library::TestParseHelper helper(&parseMaster);
-			sharedData.SetXmlParseMaster(&parseMaster);
+        TEST_METHOD(TestParseFromFile)
+        {
+            Library::TestSharedData sharedData;
+            Library::XmlParseMaster parseMaster(&sharedData);
+            Library::TestParseHelper helper(&parseMaster);
+            sharedData.SetXmlParseMaster(&parseMaster);
 
-			parseMaster.AddHelper(helper);
-			parseMaster.ParseFromFile("input.xml");
-			Assert::AreEqual(static_cast<std::string>("Dale"), sharedData.mName, L"Name not accurately parsed");
-			Assert::AreEqual(sharedData.mHealth, 100, L"Health not accurately parsed");
-			Assert::AreEqual(sharedData.mMana, 80, L"Mana value not accurately parsed");
-			Assert::AreEqual(sharedData.Depth(), 0u, L"Depth not zero at end of parsing");
-		}
+            parseMaster.AddHelper(helper);
+            parseMaster.ParseFromFile("input.xml");
+            Assert::AreEqual(static_cast<std::string>("Dale"), sharedData.mName, L"Name not accurately parsed");
+            Assert::AreEqual(sharedData.mHealth, 100, L"Health not accurately parsed");
+            Assert::AreEqual(sharedData.mMana, 80, L"Mana value not accurately parsed");
+            Assert::AreEqual(sharedData.Depth(), 0u, L"Depth not zero at end of parsing");
+        }
 
-		TEST_METHOD(TestClone)
-		{
-			Library::TestSharedData sharedData;
-			Library::XmlParseMaster parseMaster(&sharedData);
-			Library::TestParseHelper helper(&parseMaster);
-			sharedData.SetXmlParseMaster(&parseMaster);
+        TEST_METHOD(TestClone)
+        {
+            Library::TestSharedData sharedData;
+            Library::XmlParseMaster parseMaster(&sharedData);
+            Library::TestParseHelper helper(&parseMaster);
+            sharedData.SetXmlParseMaster(&parseMaster);
 
-			Library::XmlParseMaster* clone = parseMaster.Clone();
-			UNREFERENCED_PARAMETER(clone);
-			Library::TestSharedData* data = clone->GetSharedData()->As<Library::TestSharedData>();
-			Assert::AreEqual(data->mName, sharedData.mName);
+            Library::XmlParseMaster* clone = parseMaster.Clone();
+            UNREFERENCED_PARAMETER(clone);
+            Library::TestSharedData* data = clone->GetSharedData()->As<Library::TestSharedData>();
+            Assert::AreEqual(data->mName, sharedData.mName);
 
-			delete clone;
-		}
+            delete clone;
+        }
 
-		TEST_METHOD(TestRTTI)
-		{
-			Library::IXmlParseHelper* baseHelper = new Library::TestParseHelper();
-			Assert::AreEqual(std::string("IXmlParseHelper"), baseHelper->ToString(), L"ToString yielding improper value");
-			
-			Library::IXmlParseHelper* baseHelper2 = baseHelper;
-			Assert::IsTrue(baseHelper->Equals(baseHelper2));
+        TEST_METHOD(TestRTTI)
+        {
+            Library::IXmlParseHelper* baseHelper = new Library::TestParseHelper();
+            Assert::AreEqual(std::string("IXmlParseHelper"), baseHelper->ToString(), L"ToString yielding improper value");
 
-			Library::IXmlParseHelper* baseHelper3 = new Library::TestParseHelper();
-			Assert::IsFalse(baseHelper->Equals(baseHelper3));
+            Library::IXmlParseHelper* baseHelper2 = baseHelper;
+            Assert::IsTrue(baseHelper->Equals(baseHelper2));
 
-			delete baseHelper;
-			delete baseHelper3;
-			
+            Library::IXmlParseHelper* baseHelper3 = new Library::TestParseHelper();
+            Assert::IsFalse(baseHelper->Equals(baseHelper3));
 
-			Library::TestParseHelper derivedHelper;
-			Assert::AreEqual(std::string("IXmlParseHelper"), derivedHelper.ToString(), L"ToString yielding improper value");
-		}
+            delete baseHelper;
+            delete baseHelper3;
 
-	};
+
+            Library::TestParseHelper derivedHelper;
+            Assert::AreEqual(std::string("IXmlParseHelper"), derivedHelper.ToString(), L"ToString yielding improper value");
+        }
+
+    };
 
 }

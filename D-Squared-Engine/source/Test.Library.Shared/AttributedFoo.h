@@ -8,37 +8,35 @@
 
 namespace Library
 {
-	class AttributedFoo : public Attributed
-	{
-	public:
-		AttributedFoo();
-		~AttributedFoo();
+    class AttributedFoo : public Attributed
+    {
+    public:
+        AttributedFoo();
+        ~AttributedFoo();
 
-		AttributedFoo(const AttributedFoo& rhs);
-		AttributedFoo& operator=(const AttributedFoo& rhs);
+        AttributedFoo(const AttributedFoo& rhs);
+        AttributedFoo& operator=(const AttributedFoo& rhs);
 
-		AttributedFoo(AttributedFoo&& rhs) noexcept;
-		AttributedFoo& operator=(AttributedFoo&& rhs) noexcept;
-	
-	private:
-		void init();
+        AttributedFoo(AttributedFoo&& rhs) noexcept;
+        AttributedFoo& operator=(AttributedFoo&& rhs) noexcept;
 
-	public:
-		// Individual members
-		std::int32_t mInt;
-		float mFloat;
-		glm::vec4 mVector;
-		glm::mat4 mMatrix;
-		std::string mString;
-		Scope* mScope;
-		
-		// Array members
-		std::int32_t* iArray;
-		float* fArray;
-		glm::vec4* vArray;
-		glm::mat4* mArray;
-		std::string* sArray;
-	};
+    private:
+        void init();
+
+    public:
+        // Individual members
+        std::int32_t mInt;
+        float mFloat;
+        glm::vec4 mVector;
+        glm::mat4 mMatrix;
+        std::string mString;
+        Scope* mScope;
+
+        // Array members
+        std::int32_t* iArray;
+        float* fArray;
+        glm::vec4* vArray;
+        glm::mat4* mArray;
+        std::string* sArray;
+    };
 }
-
-

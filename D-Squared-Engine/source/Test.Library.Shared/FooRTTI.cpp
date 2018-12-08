@@ -3,11 +3,11 @@
 
 
 FooRTTI::FooRTTI() :
-	mData(0)
+    mData(0)
 {}
 
 FooRTTI::FooRTTI(int data) :
-	mData(data)
+    mData(data)
 {}
 
 FooRTTI::~FooRTTI()
@@ -15,5 +15,5 @@ FooRTTI::~FooRTTI()
 
 std::uint64_t FooRTTI::TypeIdInstance() const
 {
-	return 0U;
+    return 0U;
 }

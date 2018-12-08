@@ -2,34 +2,34 @@
 
 namespace TestLibraryDesktop
 {
-	class LeakDetector
-	{
+    class LeakDetector
+    {
 
-	public:
+    public:
 
 #pragma region Construction/Assignment/Move Semantics
 
-		LeakDetector() = delete;
+        LeakDetector() = delete;
 
-		~LeakDetector() = delete;
+        ~LeakDetector() = delete;
 
-		LeakDetector(const LeakDetector& rhs) = delete;
+        LeakDetector(const LeakDetector& rhs) = delete;
 
-		LeakDetector& operator=(const LeakDetector& rhs) = delete;
+        LeakDetector& operator=(const LeakDetector& rhs) = delete;
 
-		LeakDetector(LeakDetector&& rhs) = delete;
+        LeakDetector(LeakDetector&& rhs) = delete;
 
-		LeakDetector& operator=(LeakDetector&& rhs) = delete;
+        LeakDetector& operator=(LeakDetector&& rhs) = delete;
 
 #pragma endregion
 
-		static void Initialize();
+        static void Initialize();
 
-		static void Finalize();
+        static void Finalize();
 
-	private:
+    private:
 
-		static _CrtMemState sStartMemState;
+        static _CrtMemState sStartMemState;
 
-	};
+    };
 }
