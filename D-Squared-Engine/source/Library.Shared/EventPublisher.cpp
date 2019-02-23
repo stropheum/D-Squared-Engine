@@ -9,7 +9,7 @@ namespace Library
 {
     RTTI_DEFINITIONS(EventPublisher)
 
-        EventPublisher::EventPublisher(Vector<EventSubscriber*>* subscriberList,
+    EventPublisher::EventPublisher(Vector<EventSubscriber*>* subscriberList,
             mutex& subscriberListMutex, bool deleteAfterPublishing) :
         mDeleteAfterPublishing(deleteAfterPublishing), mTimeEnqueued(), mMillisecondDelay(0),
         mSubscriberList(subscriberList), mSubscriberListMutex(&subscriberListMutex)
