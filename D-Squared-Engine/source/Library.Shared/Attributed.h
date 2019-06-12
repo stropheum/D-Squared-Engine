@@ -64,7 +64,7 @@ namespace Library
         class Signature;
 
         // This vector is used for populating prescribed attributes in children of attributed
-        Vector<Signature> mPrescribedAttributes;
+        Vector<Signature> m_prescribedAttributes;
 
     };
 }

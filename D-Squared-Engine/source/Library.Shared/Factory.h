@@ -85,8 +85,8 @@ namespace Library
         {
             Factory<AbstractProduct>* result = nullptr;
 
-            auto foundIterator = sFactoryMap.Find(className);
-            if (foundIterator != sFactoryMap.end())
+            auto foundIterator = s_factoryMap.Find(className);
+            if (foundIterator != s_factoryMap.end())
             {
                 result = foundIterator->second;
             }
@@ -103,8 +103,8 @@ namespace Library
         {
             AbstractProduct* result = nullptr;
 
-            auto foundIterator = sFactoryMap.Find(className);
-            if (foundIterator != sFactoryMap.end())
+            auto foundIterator = s_factoryMap.Find(className);
+            if (foundIterator != s_factoryMap.end())
             {
                 result = (*foundIterator).second->Create();
             }
@@ -118,7 +118,7 @@ namespace Library
          */
         static typename HashMap<std::string, Factory<AbstractProduct>*>::Iterator Begin()
         {
-            return sFactoryMap.begin();
+            return s_factoryMap.begin();
         }
 
         /**
@@ -127,7 +127,7 @@ namespace Library
          */
         static typename HashMap<std::string, Factory<AbstractProduct>*>::Iterator End()
         {
-            return sFactoryMap.end();
+            return s_factoryMap.end();
         }
 
     protected:
@@ -138,9 +138,9 @@ namespace Library
          */
         static void Add(Factory<AbstractProduct>* const factory)
         {
-            if (!sFactoryMap.ContainsKey(factory->ClassName()))
+            if (!s_factoryMap.ContainsKey(factory->ClassName()))
             {
-                sFactoryMap[factory->ClassName()] = factory;
+                s_factoryMap[factory->ClassName()] = factory;
             }
         }
 
@@ -150,20 +150,20 @@ namespace Library
          */
         static void Remove(const Factory<AbstractProduct>* factory)
         {
-            if (sFactoryMap.ContainsKey(factory->ClassName()))
+            if (s_factoryMap.ContainsKey(factory->ClassName()))
             {
-                sFactoryMap.Remove(factory->ClassName());
+                s_factoryMap.Remove(factory->ClassName());
             }
         }
 
     private:
 
         // The hashmap of string, factory pointer pairs of all factories currently subscribed to the abstract factory
-        static HashMap<std::string, Factory<AbstractProduct>*> sFactoryMap;
+        static HashMap<std::string, Factory<AbstractProduct>*> s_factoryMap;
 
 #pragma endregion
     };
 
     template <class AbstractProduct>
-    HashMap<std::string, Factory<AbstractProduct>*> Factory<AbstractProduct>::sFactoryMap;
+    HashMap<std::string, Factory<AbstractProduct>*> Factory<AbstractProduct>::s_factoryMap;
 }

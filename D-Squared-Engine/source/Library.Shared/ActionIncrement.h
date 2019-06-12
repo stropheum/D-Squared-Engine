@@ -26,22 +26,22 @@ namespace Library
 #pragma endregion
 
         /**
-         * Updates the mAction based on the current mWorld state
-         * @Param worldState: The current mWorld state
+         * Updates the action based on the current world state
+         * @Param worldState: The current world state
          */
         void Update(WorldState& worldState) override;
 
         /**
          * Accessor for the current increment count
-         * @Return: The number of times the mAction has been incremented
+         * @Return: The number of times the action has been incremented
          */
         std::int32_t GetIncrementCount() const;
 
     private:
 
-        std::int32_t mIncrementCount;
+        std::int32_t m_incrementCount;
 
     };
 
-    ActionFactory(ActionIncrement)
+    ActionFactory(ActionIncrement);
 }

@@ -14,9 +14,9 @@ namespace Library
         (*this)["Delay"].SetType(DatumType::Integer);
         (*this)["Delay"] = 0;
 
-        mPrescribedAttributes.PushBack(
+        m_prescribedAttributes.PushBack(
             Signature("Subtype", DatumType::String, 1u, static_cast<string*>(nullptr)));
-        mPrescribedAttributes.PushBack(
+        m_prescribedAttributes.PushBack(
             Signature("Delay", DatumType::Integer, 1u, static_cast<int32_t*>(nullptr)));
     }
 

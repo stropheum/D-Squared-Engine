@@ -33,7 +33,7 @@ namespace Library
 
     protected:
 
-        std::mutex mNotifyMutex; // Mutex to prevent multiple accesses to the event subscriber
+        std::mutex m_notifyMutex; // Mutex to prevent multiple accesses to the event subscriber
 
     };
 }

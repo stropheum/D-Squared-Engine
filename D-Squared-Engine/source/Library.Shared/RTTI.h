@@ -57,11 +57,11 @@ namespace Library
     public:                                                                                        \
         typedef ParentType Parent;                                                                 \
         static std::string TypeName() { return std::string(#Type); }                               \
-        static std::uint64_t TypeIdClass() { return sRunTimeTypeId; }                              \
+        static std::uint64_t TypeIdClass() { return s_runTimeTypeId; }                             \
         virtual std::uint64_t TypeIdInstance() const override { return Type::TypeIdClass(); }      \
         virtual Library::RTTI* QueryInterface(const std::uint64_t id) const override               \
         {                                                                                          \
-            if (id == sRunTimeTypeId)                                                              \
+            if (id == s_runTimeTypeId)                                                              \
             {                                                                                      \
                 return (RTTI*)this;                                                                \
             }                                                                                      \
@@ -72,7 +72,7 @@ namespace Library
         }                                                                                          \
         virtual bool Is(std::uint64_t id) const override                                           \
         {                                                                                          \
-            if (id == sRunTimeTypeId)                                                              \
+            if (id == s_runTimeTypeId)                                                             \
             {                                                                                      \
                 return true;                                                                       \
             }                                                                                      \
@@ -93,7 +93,7 @@ namespace Library
             }                                                                                      \
         }                                                                                          \
     private:                                                                                       \
-        static std::uint64_t sRunTimeTypeId;                                                       \
+        static std::uint64_t s_runTimeTypeId;                                                      \
 
-#define RTTI_DEFINITIONS(Type) std::uint64_t Type::sRunTimeTypeId = reinterpret_cast<std::uint64_t>(&Type::sRunTimeTypeId);
+#define RTTI_DEFINITIONS(Type) std::uint64_t Type::s_runTimeTypeId = reinterpret_cast<std::uint64_t>(&Type::s_runTimeTypeId);
 }

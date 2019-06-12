@@ -6,9 +6,9 @@ using namespace std;
 
 namespace Library
 {
-    RTTI_DEFINITIONS(ActionList)
+    RTTI_DEFINITIONS(ActionList);
 
-        ActionList::ActionList()
+    ActionList::ActionList()
     {
         (*this)["Actions"].SetType(DatumType::Scope);
     }

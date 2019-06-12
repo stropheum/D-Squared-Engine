@@ -190,7 +190,7 @@ namespace Library
          */
         explicit TypeState(Datum& context);
 
-        Datum& mContext; // The Datum object that the state will operate on
+        Datum& m_context; // The Datum object that the state will operate on
 
     };
 }

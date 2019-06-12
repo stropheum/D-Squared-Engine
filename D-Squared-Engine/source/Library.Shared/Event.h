@@ -52,9 +52,9 @@ namespace Library
 
     private:
 
-        Payload mPayload; // The object that will be carried to the event subscribers for this Type
-        static Vector<class EventSubscriber*> sSubscriberList; // The static list of event subscribers for this event Type
-        static std::mutex sSubscriberListMutex;
+        Payload m_payload; // The object that will be carried to the event subscribers for this Type
+        static Vector<class EventSubscriber*> s_subscriberList; // The static list of event subscribers for this event Type
+        static std::mutex s_subscriberListMutex;
 
     };
 }

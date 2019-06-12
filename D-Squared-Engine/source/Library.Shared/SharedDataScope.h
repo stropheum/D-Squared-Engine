@@ -47,8 +47,8 @@ namespace Library
          */
         bool Equals(const RTTI* rhs) const override;
 
-        Scope* mScope; // The scope data of this object
-        WorldState mWorldState;
+        Scope* m_scope; // The scope data of this object
+        WorldState m_worldState;
 
     };
 }

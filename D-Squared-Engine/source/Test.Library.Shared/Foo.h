@@ -48,6 +48,6 @@ public:
     int getData() const;
 
 private:
-    /// Member int that is wrapped by foo
-    int* mData;
+    // Member int that is wrapped by foo
+    int* m_data;
 };

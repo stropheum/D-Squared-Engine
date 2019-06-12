@@ -7,7 +7,7 @@ using namespace std;
 namespace Library
 {
     TypeState::TypeState(Datum& context) :
-        mContext(context)
+        m_context(context)
     {}
 
     bool TypeState::operator==(const Datum& rhs)

@@ -10,7 +10,7 @@ namespace Library
     {
         (*this)["Subtype"].SetType(DatumType::String);
         (*this)["Subtype"] = "";
-        mPrescribedAttributes.PushBack(
+        m_prescribedAttributes.PushBack(
             Signature("Subtype", DatumType::String, 1u, static_cast<string*>(nullptr)));
         Event<EventMessageAttributed>::Subscribe(*this);
     }

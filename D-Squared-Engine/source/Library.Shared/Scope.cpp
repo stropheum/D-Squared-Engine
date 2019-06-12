@@ -11,13 +11,13 @@ namespace Library
 #pragma region Constructors/Destructor
 
         Scope::Scope(const uint32_t& capacity) :
-        mMap(13), mVector(), mParent(nullptr)
+        m_map(13), m_vector(), m_parent(nullptr)
     {
-        mVector.Reserve(capacity);
+        m_vector.Reserve(capacity);
     }
 
     Scope::Scope(const Scope& rhs) :
-        mMap(13), mVector(), mParent(nullptr)
+        m_map(13), m_vector(), m_parent(nullptr)
     {
         operator=(rhs);
     }
@@ -28,9 +28,9 @@ namespace Library
         {
             Clear();
 
-            mVector.Reserve(rhs.mVector.Size());
+            m_vector.Reserve(rhs.m_vector.Size());
 
-            for (auto& iter : rhs.mVector)
+            for (auto& iter : rhs.m_vector)
             {
                 auto& existingPair = *iter;
                 Datum& existingDatum = const_cast<Datum&>(existingPair.second);
@@ -44,7 +44,7 @@ namespace Library
                     for (uint32_t i = 0; i < existingDatum.Size(); ++i)
                     {
                         Scope* scope = new Scope(existingDatum.Get<Scope>(i));
-                        scope->mParent = this;
+                        scope->m_parent = this;
                         newDatum.PushBack(scope);
                     }
                 }
@@ -59,7 +59,7 @@ namespace Library
     }
 
     Scope::Scope(Scope&& rhs) noexcept :
-        mMap(), mVector(), mParent(nullptr)
+        m_map(), m_vector(), m_parent(nullptr)
     {
         operator=(move(rhs));
     }
@@ -69,9 +69,9 @@ namespace Library
         if (this != &rhs)
         {
             Clear();
-            mMap = move(rhs.mMap);
-            mVector = move(rhs.mVector);
-            mParent = rhs.mParent;
+            m_map = move(rhs.m_map);
+            m_vector = move(rhs.m_vector);
+            m_parent = rhs.m_parent;
         }
 
         return *this;
@@ -90,10 +90,10 @@ namespace Library
     {
         Datum* result = nullptr;
 
-        if (mMap.Size() > 0)
+        if (m_map.Size() > 0)
         {
-            auto iter = mMap.Find(key);
-            result = (iter != mMap.end()) ? &(*iter).second : nullptr;
+            auto iter = m_map.Find(key);
+            result = (iter != m_map.end()) ? &(*iter).second : nullptr;
         }
 
         return result;
@@ -101,8 +101,8 @@ namespace Library
 
     Datum* const Scope::Find(const string& key) const
     {
-        auto iter = mMap.Find(key);
-        Datum* const result = (iter != mMap.end()) ? &(*iter).second : nullptr;
+        auto iter = m_map.Find(key);
+        Datum* const result = (iter != m_map.end()) ? &(*iter).second : nullptr;
         return result;
     }
 
@@ -112,7 +112,7 @@ namespace Library
 
         if (result == nullptr)
         {	// If we didn't Find the key, Search in parent if they exist
-            result = (mParent != nullptr) ? mParent->Search(key) : nullptr;
+            result = (m_parent != nullptr) ? m_parent->Search(key) : nullptr;
         }
 
         if (result != nullptr && foundScope != nullptr)
@@ -126,11 +126,11 @@ namespace Library
     Datum& Scope::Append(const string& key)
     {
         bool found = false;
-        auto iter = mMap.Insert(pair<string, Datum>(key, Datum()), found);
+        auto iter = m_map.Insert(pair<string, Datum>(key, Datum()), found);
 
         if (!found)
         {
-            mVector.PushBack(iter);
+            m_vector.PushBack(iter);
         }
         auto& result = (*iter);
         return result.second;
@@ -139,12 +139,12 @@ namespace Library
     Datum& Scope::Append(const string& key, bool& found)
     {
         bool datumFound;
-        auto iter = mMap.Insert(pair<string, Datum>(key, Datum()), datumFound);
+        auto iter = m_map.Insert(pair<string, Datum>(key, Datum()), datumFound);
         found = datumFound;
 
         if (!datumFound)
         {
-            mVector.PushBack(iter);
+            m_vector.PushBack(iter);
         }
         auto& result = (*iter);
         return result.second;
@@ -158,7 +158,7 @@ namespace Library
         if (found != nullptr)
         {	// We know the scope exists already, so push Back another on the same key
             Scope* scope = new Scope();
-            scope->mParent = this;
+            scope->m_parent = this;
             found->PushBack(scope);
         }
         else
@@ -169,7 +169,7 @@ namespace Library
             datum = Library::DatumType::Scope;
             // Set result equal to the address of the first scope value in the newly created datum
             result = &datum[0];
-            result->mParent = this;
+            result->m_parent = this;
         }
 
         return *result;
@@ -180,17 +180,17 @@ namespace Library
         bool found;
         Datum& datum = Append(key, found);
         datum.SetType(DatumType::Scope);
-        if (child.mParent != nullptr)
+        if (child.m_parent != nullptr)
         {
             child.Orphan();
         }
-        child.mParent = this;
+        child.m_parent = this;
         datum.PushBack(&child);
     }
 
     Scope* Scope::GetParent() const
     {
-        return mParent;
+        return m_parent;
     }
 
     Datum& Scope::operator[](const string& key)
@@ -200,24 +200,24 @@ namespace Library
 
     Datum& Scope::operator[](const uint32_t& index)
     {
-        if (index >= mVector.Size())
+        if (index >= m_vector.Size())
         {
             throw exception("Index out of bounds");
         }
-        return mVector[index]->second;
+        return m_vector[index]->second;
     }
 
     bool Scope::operator==(const Scope& rhs) const
     {
         bool result = false;
 
-        if (mVector.Size() == rhs.mVector.Size())
+        if (m_vector.Size() == rhs.m_vector.Size())
         {	// If the sizes are not equal, the vectors are not equivalent
             result = true;
 
-            for (uint32_t i = 0; i < mVector.Size(); i++)
+            for (uint32_t i = 0; i < m_vector.Size(); i++)
             {
-                if (*mVector[i] != *rhs.mVector[i])
+                if (*m_vector[i] != *rhs.m_vector[i])
                 {	// If we encounter a bad match, the vectors are not equivalent
                     result = false;
                     break;
@@ -237,9 +237,9 @@ namespace Library
     {
         string result = "";
 
-        for (uint32_t i = 0; i < mVector.Size(); i++)
+        for (uint32_t i = 0; i < m_vector.Size(); i++)
         {
-            auto& foundPair = mVector[i];
+            auto& foundPair = m_vector[i];
             if (foundPair->second.Type() == DatumType::Scope)
             {
                 Scope* foundScope = nullptr;
@@ -272,12 +272,12 @@ namespace Library
 
     HashMap<const string, Datum>::Iterator Scope::begin() const
     {
-        return mMap.begin();
+        return m_map.begin();
     }
 
     HashMap<const string, Datum>::Iterator Scope::end() const
     {
-        return mMap.end();
+        return m_map.end();
     }
 
 #pragma endregion
@@ -286,9 +286,9 @@ namespace Library
 
     void Scope::Clear()
     {
-        for (uint32_t i = 0; i < mVector.Size(); i++)
+        for (uint32_t i = 0; i < m_vector.Size(); i++)
         {	// Loop through vector searching for Scope types
-            Datum& datum = mVector[i]->second;
+            Datum& datum = m_vector[i]->second;
             if (datum.Type() == DatumType::Scope)
             {	// When a Scope Type is found, delete all scopes in the datum
                 for (uint32_t j = 0; j < datum.Size(); j++)
@@ -298,9 +298,9 @@ namespace Library
             }
         }
 
-        mVector.Clear();
-        mMap.Clear();
-        mParent = nullptr;
+        m_vector.Clear();
+        m_map.Clear();
+        m_parent = nullptr;
     }
 
     void Scope::Orphan()
@@ -308,7 +308,7 @@ namespace Library
         Scope* parent = GetParent();
         string key = parent->FindName(this);
 
-        auto& parentVector = parent->mVector;
+        auto& parentVector = parent->m_vector;
         for (uint32_t i = 0; i < parentVector.Size(); i++)
         {	// Search the vector for the index that matches
 
@@ -320,9 +320,9 @@ namespace Library
         }
 
         // Eliminate the key from the hashmap
-        parent->mMap.Remove(key);
+        parent->m_map.Remove(key);
 
-        mParent = nullptr;
+        m_parent = nullptr;
     }
 
 #pragma endregion

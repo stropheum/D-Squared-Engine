@@ -9,7 +9,7 @@ using namespace Library;
 using namespace std;
 
 QueueClearSubscriber::QueueClearSubscriber(EventQueue& eventQueue) :
-    mEventQueue(&eventQueue)
+    m_eventQueue(&eventQueue)
 {
     Event<Foo>::Subscribe(*this);
 }
@@ -23,6 +23,6 @@ void QueueClearSubscriber::Notify(const Library::EventPublisher& event)
 {
     if (event.Is(Event<Foo>::TypeIdClass()))
     {
-        mEventQueue->Clear();
+        m_eventQueue->Clear();
     }
 }

@@ -37,9 +37,9 @@ namespace TestLibraryDesktop
             Event<Foo> myEvent(foo);
             MyEventSubscriber subscriber;
 
-            Assert::IsFalse(foo == subscriber.mValue);
+            Assert::IsFalse(foo == subscriber.m_value);
             subscriber.Notify(myEvent);
-            Assert::IsTrue(foo == subscriber.mValue);
+            Assert::IsTrue(foo == subscriber.m_value);
         }
 
         TEST_METHOD(TestEventQueue)
@@ -67,13 +67,13 @@ namespace TestLibraryDesktop
             Assert::IsFalse(eq.IsEmpty());
 
             gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(1000)));
-            Assert::IsFalse(foo == subscriber.mValue);
-            Assert::IsFalse(myEvent.Message() == subscriber.mValue);
+            Assert::IsFalse(foo == subscriber.m_value);
+            Assert::IsFalse(myEvent.Message() == subscriber.m_value);
 
             eq.Update(gameTime);
             Assert::IsTrue(eq.IsEmpty());
-            Assert::IsTrue(foo == subscriber.mValue);
-            Assert::IsTrue(myEvent.Message() == subscriber.mValue);
+            Assert::IsTrue(foo == subscriber.m_value);
+            Assert::IsTrue(myEvent.Message() == subscriber.m_value);
         }
 
         TEST_METHOD(TestSubscribe)
@@ -84,17 +84,17 @@ namespace TestLibraryDesktop
             Event<Foo> myevent(foo);
 
             MyEventSubscriber subscriber;
-            Assert::IsFalse(subscriber.mValue == foo);
+            Assert::IsFalse(subscriber.m_value == foo);
 
             myevent.Deliver();
-            Assert::IsTrue(subscriber.mValue == foo);
+            Assert::IsTrue(subscriber.m_value == foo);
 
             myevent.SetTime(gameTime.CurrentTime(), milliseconds(10));
-            subscriber.mValue = Foo(0);
-            Assert::IsFalse(subscriber.mValue == foo);
+            subscriber.m_value = Foo(0);
+            Assert::IsFalse(subscriber.m_value == foo);
 
             myevent.Deliver();
-            Assert::IsTrue(subscriber.mValue == foo);
+            Assert::IsTrue(subscriber.m_value == foo);
         }
 
         TEST_METHOD(TestQueueDelay)
@@ -105,7 +105,7 @@ namespace TestLibraryDesktop
             Event<Foo> myEvent(foo);
 
             MyEventSubscriber subscriber;
-            Assert::IsFalse(subscriber.mValue == foo);
+            Assert::IsFalse(subscriber.m_value == foo);
 
             gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(0)));
             myEvent.SetTime(gameTime.CurrentTime(), milliseconds(100));
@@ -114,21 +114,21 @@ namespace TestLibraryDesktop
             queue.Enqueue(myEvent, gameTime, myEvent.Delay());
 
             Assert::IsFalse(queue.IsEmpty());
-            Assert::IsFalse(subscriber.mValue == foo);
+            Assert::IsFalse(subscriber.m_value == foo);
 
             queue.Update(gameTime);
             Assert::IsFalse(queue.IsEmpty());
-            Assert::IsFalse(subscriber.mValue == foo);
+            Assert::IsFalse(subscriber.m_value == foo);
 
             gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(99)));
             queue.Update(gameTime);
             Assert::IsFalse(queue.IsEmpty());
-            Assert::IsFalse(subscriber.mValue == foo);
+            Assert::IsFalse(subscriber.m_value == foo);
 
             gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(201)));
             queue.Update(gameTime);
             Assert::IsTrue(queue.IsEmpty());
-            Assert::IsTrue(subscriber.mValue == foo);
+            Assert::IsTrue(subscriber.m_value == foo);
         }
 
         TEST_METHOD(TestSend)
@@ -139,12 +139,12 @@ namespace TestLibraryDesktop
             Foo foo(5);
             Event<Foo> myEvent(foo);
 
-            Assert::IsFalse(subscriber.mValue == foo);
-            Assert::IsFalse(myEvent.Message() == subscriber.mValue);
+            Assert::IsFalse(subscriber.m_value == foo);
+            Assert::IsFalse(myEvent.Message() == subscriber.m_value);
 
             queue.Send(myEvent);
-            Assert::IsTrue(subscriber.mValue == foo);
-            Assert::IsTrue(myEvent.Message() == subscriber.mValue);
+            Assert::IsTrue(subscriber.m_value == foo);
+            Assert::IsTrue(myEvent.Message() == subscriber.m_value);
         }
 
         TEST_METHOD(TestEventQueueClear)
@@ -273,7 +273,7 @@ namespace TestLibraryDesktop
 
             queue.Update(time);
             Assert::IsTrue(queue.Size() == 2);
-            Assert::IsTrue(sub1.mValue == Foo(1) || sub1.mValue == Foo(2) || sub1.mValue == Foo(3) || sub1.mValue == Foo(4));
+            Assert::IsTrue(sub1.m_value == Foo(1) || sub1.m_value == Foo(2) || sub1.m_value == Foo(3) || sub1.m_value == Foo(4));
         }
 
     };

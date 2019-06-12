@@ -40,7 +40,7 @@ namespace TestLibraryDesktop
 
             parseMaster.ParseFromFile("Grammar.xml");
 
-            Library::Scope scope = *sharedData.mScope;
+            Library::Scope scope = *sharedData.m_scope;
             Assert::IsTrue(scope["Name"] == "Dale");
             Assert::IsTrue(scope["Health"] == 10);
             Assert::IsTrue(scope["Power"] == 57.3f);
@@ -185,8 +185,8 @@ namespace TestLibraryDesktop
             parseMaster2.ParseFromFile("Grammar.xml");
             Assert::IsTrue(data1.Equals(&data2));
 
-            Library::Scope& scope1 = *data1.mScope;
-            Library::Scope& scope2 = *data2.mScope;
+            Library::Scope& scope1 = *data1.m_scope;
+            Library::Scope& scope2 = *data2.m_scope;
             Assert::IsTrue(scope1["Name"] == "Dale" && scope2["Name"] == "Dale");
         }
 

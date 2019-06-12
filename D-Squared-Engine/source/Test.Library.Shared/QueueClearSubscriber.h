@@ -13,5 +13,5 @@ public:
     ~QueueClearSubscriber();
     virtual void Notify(const Library::EventPublisher& event) override;
 private:
-    Library::EventQueue* mEventQueue;
+    Library::EventQueue* m_eventQueue;
 };

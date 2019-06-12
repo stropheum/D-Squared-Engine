@@ -9,33 +9,33 @@ namespace Library
 {
     EventQueue::~EventQueue()
     {
-        if (!mQueue.IsEmpty())
+        if (!m_queue.IsEmpty())
         {
-            for (uint32_t i = 0; i < mQueue.Size(); i++)
+            for (uint32_t i = 0; i < m_queue.Size(); i++)
             {
-                if (mQueue[i]->DeleteAfterPublishing())
+                if (m_queue[i]->DeleteAfterPublishing())
                 {
-                    delete mQueue[i];
+                    delete m_queue[i];
                 }
             }
-            mQueue.Clear();
+            m_queue.Clear();
         }
     }
 
     void EventQueue::Enqueue(EventPublisher& eventPublisher,
         GameTime& gameTime, const chrono::milliseconds& delay)
     {
-        lock_guard<mutex> guard(mQueueMutex);
-        if (mQueue.Find(&eventPublisher) == mQueue.end())
+        lock_guard<mutex> guard(m_queueMutex);
+        if (m_queue.Find(&eventPublisher) == m_queue.end())
         {
             eventPublisher.SetTime(gameTime.CurrentTime(), delay);
-            mQueue.PushBack(&eventPublisher);
+            m_queue.PushBack(&eventPublisher);
         }
     }
 
     void EventQueue::Send(EventPublisher& eventPublisher)
     {
-        lock_guard<mutex> guard(mQueueMutex);
+        lock_guard<mutex> guard(m_queueMutex);
         eventPublisher.Deliver();
     }
 
@@ -43,10 +43,10 @@ namespace Library
     {
         Vector<EventPublisher*> nonExpiredEvents;
         vector<future<void>> futures;
-        Vector<EventPublisher*> queueCopy(mQueue);
+        Vector<EventPublisher*> queueCopy(m_queue);
 
         {
-            lock_guard<mutex> guard(mQueueMutex);
+            lock_guard<mutex> guard(m_queueMutex);
 
             for (uint32_t i = 0; i < queueCopy.Size(); i++)
             {
@@ -59,7 +59,7 @@ namespace Library
                 }
                 else
                 {
-                    nonExpiredEvents.PushBack(mQueue[i]);
+                    nonExpiredEvents.PushBack(m_queue[i]);
                 }
             }
         }
@@ -70,26 +70,26 @@ namespace Library
         }
 
         {
-            lock_guard<mutex> assignmentGuard(mQueueMutex);
-            mQueue = nonExpiredEvents;
+            lock_guard<mutex> assignmentGuard(m_queueMutex);
+            m_queue = nonExpiredEvents;
         }
 
     }
 
     void EventQueue::Clear()
     {
-        lock_guard<mutex> guard(mQueueMutex);
-        mQueue.Clear();
+        lock_guard<mutex> guard(m_queueMutex);
+        m_queue.Clear();
     }
 
     bool EventQueue::IsEmpty() const
     {
-        return mQueue.Size() == 0;
+        return m_queue.Size() == 0;
     }
 
     uint32_t EventQueue::Size() const
     {
-        return mQueue.Size();
+        return m_queue.Size();
     }
 
 }

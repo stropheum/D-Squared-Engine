@@ -11,7 +11,7 @@ public:
     ~EnqueueSubscriber();
     virtual void Notify(const Library::EventPublisher& event) override;
 private:
-    Library::EventQueue* mEventQueue;
-    Library::GameTime mGameTime;
-    std::chrono::milliseconds mDelay;
+    Library::EventQueue* m_eventQueue;
+    Library::GameTime m_gameTime;
+    std::chrono::milliseconds m_delay;
 };

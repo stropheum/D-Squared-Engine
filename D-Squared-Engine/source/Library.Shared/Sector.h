@@ -74,6 +74,6 @@ namespace Library
 
     private:
 
-        std::string mName;
+        std::string m_name;
     };
 }

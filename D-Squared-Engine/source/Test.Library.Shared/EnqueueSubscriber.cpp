@@ -8,7 +8,7 @@
 using namespace Library;
 
 EnqueueSubscriber::EnqueueSubscriber(Library::EventQueue& eventQueue, Library::GameTime& gametime, std::chrono::milliseconds delay) :
-    mEventQueue(&eventQueue), mGameTime(gametime), mDelay(delay)
+    m_eventQueue(&eventQueue), m_gameTime(gametime), m_delay(delay)
 {
     Event<std::int32_t>::Subscribe(*this);
 }
@@ -24,6 +24,6 @@ void EnqueueSubscriber::Notify(const Library::EventPublisher& event)
     {
         std::int32_t message = event.As<Event<std::int32_t>>()->Message();
         Event<std::int32_t> newEvent(message);
-        mEventQueue->Enqueue(newEvent, mGameTime, mDelay);
+        m_eventQueue->Enqueue(newEvent, m_gameTime, m_delay);
     }
 }

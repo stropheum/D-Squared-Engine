@@ -112,10 +112,10 @@ namespace Library
 
     private:
 
-        std::uint32_t mBucketCount; // Number of buckets in the hash map.
-        HashFunctor mHashFunctor; // The hash function being used by this HashMap
-        Library::Vector<BucketType> mBuckets; // Collection of buckets in the hash map
-        std::uint32_t mSize;
+        std::uint32_t m_bucketCount; // Number of buckets in the hash map.
+        HashFunctor m_hashFunctor; // The hash function being used by this HashMap
+        Library::Vector<BucketType> m_buckets; // Collection of buckets in the hash map
+        std::uint32_t m_size;
 
         /**
          * Creates one vector of Type TData for each bucket in the specified Size
@@ -220,9 +220,9 @@ namespace Library
              */
             Iterator(const HashMap<TKey, TValue, HashFunctor>* owner, const std::uint32_t& bucketIndex, typename Library::Vector<PairType>::Iterator iter);
 
-            const HashMap<TKey, TValue, HashFunctor>* mOwner;	// The HashMap that owns this Iterator
-            std::uint32_t mBucketIndex;							// The index into the Vector chain
-            typename Library::Vector<PairType>::Iterator mIter;	// The Iterator on the Vector of PairTypes that is currently being iterated on
+            const HashMap<TKey, TValue, HashFunctor>* m_owner;	// The HashMap that owns this Iterator
+            std::uint32_t m_bucketIndex;							// The index into the Vector chain
+            typename Library::Vector<PairType>::Iterator m_iter;	// The Iterator on the Vector of PairTypes that is currently being iterated on
 
         };
     };

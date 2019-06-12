@@ -6,19 +6,19 @@ using namespace std;
 
 namespace Library
 {
-    RTTI_DEFINITIONS(Action)
+    RTTI_DEFINITIONS(Action);
 
-        Action::Action() :
-        mName()
+    Action::Action() :
+        m_name()
     {}
 
     std::string Action::Name() const
     {
-        return mName;
+        return m_name;
     }
 
     void Action::SetName(const string& name)
     {
-        mName = name;
+        m_name = name;
     }
 }

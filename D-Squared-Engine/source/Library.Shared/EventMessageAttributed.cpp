@@ -7,26 +7,26 @@ using namespace std;
 namespace Library
 {
     EventMessageAttributed::EventMessageAttributed() :
-        mSubtype(""), mWorldState(nullptr)
+        m_subtype(""), m_worldState(nullptr)
     {}
 
     const string& EventMessageAttributed::GetSubtype() const
     {
-        return mSubtype;
+        return m_subtype;
     }
 
     void EventMessageAttributed::SetSubtype(const string& subtype)
     {
-        mSubtype = subtype;
+        m_subtype = subtype;
     }
 
     WorldState* EventMessageAttributed::GetWorldState() const
     {
-        return mWorldState;
+        return m_worldState;
     }
 
     void EventMessageAttributed::SetWorldState(WorldState& worldState)
     {
-        mWorldState = &worldState;
+        m_worldState = &worldState;
     }
 }

@@ -503,12 +503,12 @@ namespace Library
 
     private:
 
-        std::unique_ptr<TypeState> mTypeState; // State pattern object. Type-specific tasks will be delegated to this
-        DatumType mType; // The Type of the Datum object
-        DatumValues mData; // The data union of the Datum object. Can be allocated internally or assigned externally
-        std::uint32_t mCapacity; // The number of elements of the Set Type that the Datum can hold
-        std::uint32_t mSize; // The current number of elements in the Datum object
-        bool mDataIsExternal; // True if data is stored externally of the Datum object
+        std::unique_ptr<TypeState> m_typeState; // State pattern object. Type-specific tasks will be delegated to this
+        DatumType m_type;                       // The Type of the Datum object
+        DatumValues m_data;                     // The data union of the Datum object. Can be allocated internally or assigned externally
+        std::uint32_t m_capacity;               // The number of elements of the Set Type that the Datum can hold
+        std::uint32_t m_size;                   // The current number of elements in the Datum object
+        bool m_dataIsExternal;                  // True if data is stored externally of the Datum object
 
     };
 

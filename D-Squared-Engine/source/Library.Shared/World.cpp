@@ -6,17 +6,17 @@ using namespace std;
 
 namespace Library
 {
-    RTTI_DEFINITIONS(World)
+    RTTI_DEFINITIONS(World);
 
-        World::World()
+    World::World()
     {
-        (*this)["Name"].SetStorage(&mName, 1);
+        (*this)["Name"].SetStorage(&m_name, 1);
         (*this)["Sectors"].SetType(DatumType::Scope);
     }
 
     string World::Name() const
     {
-        return mName;
+        return m_name;
     }
 
     void World::SetName(const string& name)
@@ -47,13 +47,13 @@ namespace Library
             Sectors()[i].As<Sector>()->Update(worldState);
         }
 
-        mEventQueue.Update(gameTime);
+        m_eventQueue.Update(gameTime);
 
         worldState.World() = nullptr;
     }
 
     EventQueue& World::GetEventQueue()
     {
-        return mEventQueue;
+        return m_eventQueue;
     }
 }

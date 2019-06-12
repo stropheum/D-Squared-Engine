@@ -7,6 +7,6 @@ public:
     FooRTTI();
     FooRTTI(int data);
     ~FooRTTI();
-    int mData;
+    int m_data;
     std::uint64_t TypeIdInstance() const override;
 };

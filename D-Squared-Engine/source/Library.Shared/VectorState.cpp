@@ -14,12 +14,12 @@ namespace Library
     {
         bool result = false;
 
-        if (mContext.mType == rhs.mType && mContext.mSize == rhs.mSize)
+        if (m_context.m_type == rhs.m_type && m_context.m_size == rhs.m_size)
         {
             result = true;
-            for (uint32_t i = 0; i < mContext.mSize; i++)
+            for (uint32_t i = 0; i < m_context.m_size; i++)
             {
-                if (mContext.mData.v[i] != rhs.mData.v[i])
+                if (m_context.m_data.v[i] != rhs.m_data.v[i])
                 {
                     result = false;
                     break;
@@ -32,33 +32,33 @@ namespace Library
 
     Datum& VectorState::operator=(const glm::vec4& rhs)
     {
-        if (mContext.mSize > 1) { throw exception("Invalid assignment invocation"); }
-        if (mContext.mSize == 0) { mContext.SetSize(1); }
-        mContext.mData.v[0] = rhs;
-        return mContext;
+        if (m_context.m_size > 1) { throw exception("Invalid assignment invocation"); }
+        if (m_context.m_size == 0) { m_context.SetSize(1); }
+        m_context.m_data.v[0] = rhs;
+        return m_context;
     }
 
     void VectorState::SetSize(const uint32_t& size)
     {
-        mContext.mData.vp = realloc(mContext.mData.vp, sizeof(glm::vec4) * size);
-        mContext.mCapacity = mContext.mSize = size;
+        m_context.m_data.vp = realloc(m_context.m_data.vp, sizeof(glm::vec4) * size);
+        m_context.m_capacity = m_context.m_size = size;
     }
 
     void VectorState::Reserve(const uint32_t& capacity)
     {
-        if (capacity > mContext.mCapacity)
+        if (capacity > m_context.m_capacity)
         {
-            mContext.mData.vp = realloc(mContext.mData.vp, sizeof(glm::vec4) * capacity);
-            mContext.mCapacity = capacity;
+            m_context.m_data.vp = realloc(m_context.m_data.vp, sizeof(glm::vec4) * capacity);
+            m_context.m_capacity = capacity;
         }
     }
 
     void VectorState::Clear()
     {
-        if (mContext.mSize > 0)
+        if (m_context.m_size > 0)
         {
-            for (uint32_t i = 0; i < mContext.mSize; i++) mContext.mData.v[i] = glm::vec4(NULL);
-            mContext.mSize = 0;
+            for (uint32_t i = 0; i < m_context.m_size; i++) m_context.m_data.v[i] = glm::vec4(NULL);
+            m_context.m_size = 0;
         }
     }
 
@@ -69,28 +69,28 @@ namespace Library
         float z;
         float w;
         sscanf_s(value.c_str(), "vec4(%f, %f, %f, %f)", &x, &y, &z, &w);
-        mContext.Set(glm::vec4(x, y, z, w), index);
+        m_context.Set(glm::vec4(x, y, z, w), index);
     }
 
     void VectorState::SetStorage(const Datum& rhs)
     {
-        SetStorage(rhs.mData.v, rhs.mSize);
+        SetStorage(rhs.m_data.v, rhs.m_size);
     }
 
     void VectorState::SetStorage(glm::vec4* data, const uint32_t& size)
     {
-        assert(mContext.mType == DatumType::Vector);
+        assert(m_context.m_type == DatumType::Vector);
 
-        if (mContext.mCapacity > 0) { Clear(); }
+        if (m_context.m_capacity > 0) { Clear(); }
 
-        mContext.mDataIsExternal = true;
-        mContext.mType = DatumType::Vector;
-        mContext.mData.v = data;
-        mContext.mCapacity = mContext.mSize = size;
+        m_context.m_dataIsExternal = true;
+        m_context.m_type = DatumType::Vector;
+        m_context.m_data.v = data;
+        m_context.m_capacity = m_context.m_size = size;
     }
 
     string VectorState::ToString(const uint32_t& index)
     {
-        return glm::to_string(mContext.Get<glm::vec4>(index));
+        return glm::to_string(m_context.Get<glm::vec4>(index));
     }
 }

@@ -68,14 +68,14 @@ namespace Library
 
     protected:
 
-        bool mDeleteAfterPublishing; // Boolean to determine if this event is deleted after being published
+        bool m_deleteAfterPublishing; // Boolean to determine if this event is deleted after being published
 
     private:
 
-        std::chrono::high_resolution_clock::time_point mTimeEnqueued;	// The time point when this event was queued
-        std::chrono::milliseconds mMillisecondDelay;	// The amount of Delay assigned for this event
-        Vector<class EventSubscriber*>* mSubscriberList;	// The list of subscribers to Notify of This event Type
-        std::mutex* mSubscriberListMutex;	// Mutex to prevent concurrent access to the subscriber list on Deliver
+        std::chrono::high_resolution_clock::time_point m_timeEnqueued;  // The time point when this event was queued
+        std::chrono::milliseconds m_millisecondDelay;                   // The amount of Delay assigned for this event
+        Vector<class EventSubscriber*>* m_subscriberList;               // The list of subscribers to Notify of This event Type
+        std::mutex* m_subscriberListMutex;                              // Mutex to prevent concurrent access to the subscriber list on Deliver
 
     };
 }

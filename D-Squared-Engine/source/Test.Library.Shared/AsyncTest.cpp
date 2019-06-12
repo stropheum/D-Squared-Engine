@@ -69,7 +69,7 @@ namespace TestLibraryDesktop
                 Assert::AreEqual(3u, queue.Size());
 
                 queue.Update(time);
-                std::int32_t data = sub1.mValue.getData();
+                std::int32_t data = sub1.m_value.getData();
                 Assert::IsTrue(data == 2 || data == 3 || data == 4);
             }
         }
@@ -93,17 +93,17 @@ namespace TestLibraryDesktop
             queue.Update(time);
             Assert::AreEqual(0u, queue.Size());
 
-            bool notified1 = sub1.mNotified;
-            bool notified2 = sub2.mNotified;
-            bool notified3 = sub3.mNotified;
-            bool notified4 = sub4.mNotified;
-            bool notified5 = sub5.mNotified;
+            bool notified1 = sub1.m_notified;
+            bool notified2 = sub2.m_notified;
+            bool notified3 = sub3.m_notified;
+            bool notified4 = sub4.m_notified;
+            bool notified5 = sub5.m_notified;
 
-            int32_t val1 = sub1.mValue;
-            int32_t val2 = sub2.mValue;
-            int32_t val3 = sub3.mValue;
-            int32_t val4 = sub4.mValue;
-            int32_t val5 = sub5.mValue;
+            int32_t val1 = sub1.m_value;
+            int32_t val2 = sub2.m_value;
+            int32_t val3 = sub3.m_value;
+            int32_t val4 = sub4.m_value;
+            int32_t val5 = sub5.m_value;
 
             Assert::AreEqual(true, notified1);
             Assert::AreEqual(true, notified2);

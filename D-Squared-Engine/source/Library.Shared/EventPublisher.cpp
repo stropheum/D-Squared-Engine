@@ -7,85 +7,94 @@ using namespace chrono;
 
 namespace Library
 {
-    RTTI_DEFINITIONS(EventPublisher)
+    RTTI_DEFINITIONS(EventPublisher);
 
-    EventPublisher::EventPublisher(Vector<EventSubscriber*>* subscriberList,
-            mutex& subscriberListMutex, bool deleteAfterPublishing) :
-        mDeleteAfterPublishing(deleteAfterPublishing), mTimeEnqueued(), mMillisecondDelay(0),
-        mSubscriberList(subscriberList), mSubscriberListMutex(&subscriberListMutex)
+    EventPublisher::EventPublisher(
+        Vector<EventSubscriber*>* subscriberList,
+        mutex& subscriberListMutex, bool deleteAfterPublishing) :
+        m_deleteAfterPublishing(deleteAfterPublishing), 
+        m_timeEnqueued(), 
+        m_millisecondDelay(0),
+        m_subscriberList(subscriberList), 
+        m_subscriberListMutex(&subscriberListMutex)
     {}
 
     EventPublisher::EventPublisher(const EventPublisher& rhs) :
-        mDeleteAfterPublishing(rhs.mDeleteAfterPublishing), mTimeEnqueued(rhs.mTimeEnqueued),
-        mMillisecondDelay(rhs.mMillisecondDelay), mSubscriberList(rhs.mSubscriberList),
-        mSubscriberListMutex(rhs.mSubscriberListMutex)
+        m_deleteAfterPublishing(rhs.m_deleteAfterPublishing), 
+        m_timeEnqueued(rhs.m_timeEnqueued),
+        m_millisecondDelay(rhs.m_millisecondDelay), 
+        m_subscriberList(rhs.m_subscriberList),
+        m_subscriberListMutex(rhs.m_subscriberListMutex)
     {}
 
     EventPublisher& EventPublisher::operator=(const EventPublisher& rhs)
     {
         if (this != &rhs)
         {
-            mTimeEnqueued = rhs.mTimeEnqueued;
-            mMillisecondDelay = rhs.mMillisecondDelay;
-            mSubscriberList = rhs.mSubscriberList;
-            mSubscriberListMutex = rhs.mSubscriberListMutex;
+            m_timeEnqueued = rhs.m_timeEnqueued;
+            m_millisecondDelay = rhs.m_millisecondDelay;
+            m_subscriberList = rhs.m_subscriberList;
+            m_subscriberListMutex = rhs.m_subscriberListMutex;
         }
         return *this;
     }
 
     EventPublisher::EventPublisher(EventPublisher&& rhs) noexcept :
-        mDeleteAfterPublishing(rhs.mDeleteAfterPublishing), mTimeEnqueued(rhs.mTimeEnqueued),
-        mMillisecondDelay(rhs.mMillisecondDelay), mSubscriberList(rhs.mSubscriberList),
-        mSubscriberListMutex(rhs.mSubscriberListMutex)
+        m_deleteAfterPublishing(rhs.m_deleteAfterPublishing), 
+        m_timeEnqueued(rhs.m_timeEnqueued),
+        m_millisecondDelay(rhs.m_millisecondDelay), 
+        m_subscriberList(rhs.m_subscriberList),
+        m_subscriberListMutex(rhs.m_subscriberListMutex)
     {
-        rhs.mMillisecondDelay = milliseconds(0);
-        rhs.mSubscriberList = nullptr;
+        rhs.m_millisecondDelay = milliseconds(0);
+        rhs.m_subscriberList = nullptr;
     }
 
     EventPublisher& EventPublisher::operator=(EventPublisher&& rhs) noexcept
     {
         if (this != &rhs)
         {
-            mTimeEnqueued = rhs.mTimeEnqueued;
-            mMillisecondDelay = rhs.mMillisecondDelay;
-            mSubscriberList = rhs.mSubscriberList;
-            mSubscriberListMutex = rhs.mSubscriberListMutex;
+            m_timeEnqueued = rhs.m_timeEnqueued;
+            m_millisecondDelay = rhs.m_millisecondDelay;
+            m_subscriberList = rhs.m_subscriberList;
+            m_subscriberListMutex = rhs.m_subscriberListMutex;
 
-            rhs.mMillisecondDelay = milliseconds(0);
-            rhs.mSubscriberList = nullptr;
+            rhs.m_millisecondDelay = milliseconds(0);
+            rhs.m_subscriberList = nullptr;
         }
 
         return *this;
     }
 
-    void EventPublisher::SetTime(const high_resolution_clock::time_point& timePoint,
+    void EventPublisher::SetTime(
+        const high_resolution_clock::time_point& timePoint,
         const milliseconds& millisecondDelay)
     {
-        mTimeEnqueued = timePoint;
-        mMillisecondDelay = millisecondDelay;
+        m_timeEnqueued = timePoint;
+        m_millisecondDelay = millisecondDelay;
     }
 
     high_resolution_clock::time_point EventPublisher::TimeEnqueued() const
     {
-        return mTimeEnqueued;
+        return m_timeEnqueued;
     }
 
     chrono::milliseconds EventPublisher::Delay() const
     {
-        return mMillisecondDelay;
+        return m_millisecondDelay;
     }
 
     bool EventPublisher::IsExpired(const chrono::high_resolution_clock::time_point& timePoint) const
     {
-        return timePoint > (mTimeEnqueued + mMillisecondDelay);
+        return timePoint > (m_timeEnqueued + m_millisecondDelay);
     }
 
     void EventPublisher::Deliver() const
     {
         vector<future<void>> futures;
         {
-            lock_guard<mutex> guard(*mSubscriberListMutex);
-            Vector<EventSubscriber*> subListCopy(*mSubscriberList);
+            lock_guard<mutex> guard(*m_subscriberListMutex);
+            Vector<EventSubscriber*> subListCopy(*m_subscriberList);
             for (uint32_t i = 0; i < subListCopy.Size(); i++)
             {
                 EventSubscriber* subscriber = subListCopy[i];
@@ -106,6 +115,6 @@ namespace Library
 
     bool EventPublisher::DeleteAfterPublishing() const
     {
-        return mDeleteAfterPublishing;
+        return m_deleteAfterPublishing;
     }
 }

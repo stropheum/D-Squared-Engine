@@ -67,8 +67,8 @@ namespace Library
 
     private:
 
-        Vector<EventPublisher*> mQueue; // The queue of events
-        std::mutex mQueueMutex;
+        Vector<EventPublisher*> m_queue; // The queue of events
+        std::mutex m_queueMutex;
 
     };
 }

@@ -98,13 +98,13 @@ namespace Library
             DestroyAction
         };
 
-        State mState;
-        State mPreviousState;
-        ActionType mActionSubType;
-        std::string mMatrixName;
-        std::uint32_t mMatrixComponentCount;
-        std::string mMatrixComponents[4][4];
-        bool mScopeHasBeenInitialized;
+        State m_state;
+        State m_previousState;
+        ActionType m_actionSubType;
+        std::string m_matrixName;
+        std::uint32_t m_matrixComponentCount;
+        std::string m_matrixComponents[4][4];
+        bool m_scopeHasBeenInitialized;
 
     };
 }

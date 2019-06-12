@@ -6,36 +6,39 @@ using namespace std;
 
 namespace Library
 {
-    RTTI_DEFINITIONS(XmlParseHelperScope)
+    RTTI_DEFINITIONS(XmlParseHelperScope);
 
-        XmlParseHelperScope::XmlParseHelperScope() :
-        mState(State::NotParsing), mMatrixName(""), mMatrixComponentCount(0), mScopeHasBeenInitialized(false)
+    XmlParseHelperScope::XmlParseHelperScope() :
+        m_state(State::NotParsing), 
+        m_matrixName(""), 
+        m_matrixComponentCount(0), 
+        m_scopeHasBeenInitialized(false)
     {
         for (uint32_t i = 0; i < 4; i++)
         {
             for (uint32_t j = 0; j < 4; j++)
             {
-                mMatrixComponents[i][j] = "";
+                m_matrixComponents[i][j] = "";
             }
         }
     }
 
     void XmlParseHelperScope::Initialize(XmlParseMaster* const xmlParseMaster)
     {
-        mXmlParseMaster = xmlParseMaster;
+        m_xmlParseMaster = xmlParseMaster;
     }
 
     IXmlParseHelper* XmlParseHelperScope::Clone()
     {
         XmlParseHelperScope* clone = new XmlParseHelperScope();
 
-        clone->mState = mState;
-        clone->mMatrixComponentCount = mMatrixComponentCount;
+        clone->m_state = m_state;
+        clone->m_matrixComponentCount = m_matrixComponentCount;
         for (uint32_t i = 0; i < 4; i++)
         {
             for (uint32_t j = 0; j < 4; j++)
             {
-                clone->mMatrixComponents[i][j] = mMatrixComponents[i][j];
+                clone->m_matrixComponents[i][j] = m_matrixComponents[i][j];
             }
         }
 
@@ -43,37 +46,38 @@ namespace Library
     }
 
     bool XmlParseHelperScope::StartElementHandler(
-        XmlParseMaster::SharedData& sharedData, const string& element,
+        XmlParseMaster::SharedData& sharedData, 
+        const string& element,
         const HashMap<string, string> attributes)
     {
         SharedDataScope* data = sharedData.As<SharedDataScope>();
         if (data == nullptr) { return false; }
-        Scope* scope = data->mScope;
+        Scope* scope = data->m_scope;
 
         if (element == "Integer")
         {
-            mState = State::ParsingInteger;
+            m_state = State::ParsingInteger;
             Datum& datum = scope->Append(attributes.Find("Name")->second);
             datum.SetType(DatumType::Integer);
             datum.SetFromString(attributes.Find("Value")->second);
         }
         else if (element == "Float")
         {
-            mState = State::ParsingFloat;
+            m_state = State::ParsingFloat;
             Datum& datum = scope->Append(attributes.Find("Name")->second);
             datum.SetType(DatumType::Float);
             datum.SetFromString(attributes.Find("Value")->second);
         }
         else if (element == "Vector")
         {
-            mState = (mState == State::ParsingMatrix) ? State::ParsingMatrix : State::ParsingVector;
+            m_state = (m_state == State::ParsingMatrix) ? State::ParsingMatrix : State::ParsingVector;
 
             string x = attributes.Find("X")->second;
             string y = attributes.Find("Y")->second;
             string z = attributes.Find("Z")->second;
             string w = attributes.Find("W")->second;
 
-            if (mState == State::ParsingVector)
+            if (m_state == State::ParsingVector)
             {
                 Datum& datum = scope->Append(attributes.Find("Name")->second);
                 datum.SetType(DatumType::Vector);
@@ -82,43 +86,43 @@ namespace Library
                 ss << "vec4(" << x << ", " << y << ", " << z << ", " << w << ")";
                 datum.SetFromString(ss.str());
             }
-            else if (mState == State::ParsingMatrix)
+            else if (m_state == State::ParsingMatrix)
             {
-                mMatrixComponents[mMatrixComponentCount][0] = x;
-                mMatrixComponents[mMatrixComponentCount][1] = y;
-                mMatrixComponents[mMatrixComponentCount][2] = z;
-                mMatrixComponents[mMatrixComponentCount][3] = w;
+                m_matrixComponents[m_matrixComponentCount][0] = x;
+                m_matrixComponents[m_matrixComponentCount][1] = y;
+                m_matrixComponents[m_matrixComponentCount][2] = z;
+                m_matrixComponents[m_matrixComponentCount][3] = w;
 
-                mMatrixComponentCount++;
-                assert(mMatrixComponentCount <= 4);
+                m_matrixComponentCount++;
+                assert(m_matrixComponentCount <= 4);
             }
         }
         else if (element == "Matrix")
         {
-            mState = State::ParsingMatrix;
-            mMatrixName = attributes.Find("Name")->second;
-            scope->Append(mMatrixName);
+            m_state = State::ParsingMatrix;
+            m_matrixName = attributes.Find("Name")->second;
+            scope->Append(m_matrixName);
         }
         else if (element == "String")
         {
-            mState = State::ParsingString;
+            m_state = State::ParsingString;
             Datum& datum = scope->Append(attributes.Find("Name")->second);
             datum.SetType(DatumType::String);
             datum.Set(attributes.Find("Value")->second);
         }
         else if (element == "Scope")
         {
-            mState = State::ParsingScope;
+            m_state = State::ParsingScope;
 
-            if (!mScopeHasBeenInitialized)
+            if (!m_scopeHasBeenInitialized)
             {
-                data->mScope = new Scope();
-                mScopeHasBeenInitialized = true;
+                data->m_scope = new Scope();
+                m_scopeHasBeenInitialized = true;
             }
             else
             {
                 Scope& newScope = scope->AppendScope(attributes.Find("Name")->second);
-                data->mScope = &newScope; // Scope becomes the newly appended scope until we're done adding to it
+                data->m_scope = &newScope; // Scope becomes the newly appended scope until we're done adding to it
             }
         }
 
@@ -134,31 +138,31 @@ namespace Library
 
         if (element == "Integer")
         {
-            assert(mState == State::ParsingInteger);
-            mState = (data->Depth() > 0) ? State::ParsingScope : State::NotParsing;
+            assert(m_state == State::ParsingInteger);
+            m_state = (data->Depth() > 0) ? State::ParsingScope : State::NotParsing;
         }
 
         else if (element == "Float")
         {
-            assert(mState == State::ParsingFloat);
-            mState = (data->Depth() > 0) ? State::ParsingScope : State::NotParsing;
+            assert(m_state == State::ParsingFloat);
+            m_state = (data->Depth() > 0) ? State::ParsingScope : State::NotParsing;
         }
 
         else if (element == "Vector")
         {
-            assert(mState == State::ParsingVector || mState == State::ParsingMatrix);
+            assert(m_state == State::ParsingVector || m_state == State::ParsingMatrix);
             if (data->Depth() > 0)
             {
-                if (mState != State::ParsingMatrix)
+                if (m_state != State::ParsingMatrix)
                 {
-                    mState = (data->Depth() > 0) ? State::ParsingScope : State::NotParsing;
+                    m_state = (data->Depth() > 0) ? State::ParsingScope : State::NotParsing;
                 }
             }
         }
 
         else if (element == "Matrix")
         {
-            assert(mMatrixComponentCount == 4);
+            assert(m_matrixComponentCount == 4);
             stringstream ss;
 
             // String format: mat4x4((%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f))
@@ -168,7 +172,7 @@ namespace Library
                 ss << "(";
                 for (uint32_t j = 0; j < 4; j++)
                 {
-                    ss << mMatrixComponents[i][j];
+                    ss << m_matrixComponents[i][j];
                     if (j < 3)
                     {	// Append commas in the first three elements of the row
                         ss << ",";
@@ -183,34 +187,34 @@ namespace Library
             ss << ")";
 
             // We added this on the start element handler, so finding should always work
-            assert(data->mScope->Find(mMatrixName) != nullptr);
-            Datum& datum = *data->mScope->Find(mMatrixName);
+            assert(data->m_scope->Find(m_matrixName) != nullptr);
+            Datum& datum = *data->m_scope->Find(m_matrixName);
             datum.SetType(DatumType::Matrix);
             datum.SetFromString(ss.str());
 
-            mMatrixComponentCount = 0;
-            assert(mState == State::ParsingMatrix);
-            mState = (data->Depth() > 0) ? State::ParsingScope : State::NotParsing;
+            m_matrixComponentCount = 0;
+            assert(m_state == State::ParsingMatrix);
+            m_state = (data->Depth() > 0) ? State::ParsingScope : State::NotParsing;
         }
 
         else if (element == "String")
         {
-            assert(mState == State::ParsingString);
-            mState = (data->Depth() > 0) ? State::ParsingScope : State::NotParsing;
+            assert(m_state == State::ParsingString);
+            m_state = (data->Depth() > 0) ? State::ParsingScope : State::NotParsing;
         }
 
         else if (element == "Scope")
         {	// We're done At this level, so jump up one
             if (data->Depth() > 1)
             {
-                data->mScope = data->mScope->GetParent();
+                data->m_scope = data->m_scope->GetParent();
             }
 
-            assert(mState == State::ParsingScope);
-            mState = (data->Depth() > 1) ? State::ParsingScope : State::NotParsing;
+            assert(m_state == State::ParsingScope);
+            m_state = (data->Depth() > 1) ? State::ParsingScope : State::NotParsing;
         }
 
-        if (data->Depth() == 0) mState = State::NotParsing;
+        if (data->Depth() == 0) m_state = State::NotParsing;
         return true;
     }
 
@@ -222,7 +226,7 @@ namespace Library
         {
             for (uint32_t j = 0; j < 4; j++)
             {
-                if (mMatrixComponents[i][j] != rhs.mMatrixComponents[i][j])
+                if (m_matrixComponents[i][j] != rhs.m_matrixComponents[i][j])
                 {
                     matricesEquivalent = false;
                     break;
@@ -235,9 +239,9 @@ namespace Library
             }
         }
 
-        return	mXmlParseMaster == rhs.mXmlParseMaster &&
-            mState == rhs.mState &&
+        return	m_xmlParseMaster == rhs.m_xmlParseMaster &&
+            m_state == rhs.m_state &&
             matricesEquivalent &&
-            mScopeHasBeenInitialized == rhs.mScopeHasBeenInitialized;
+            m_scopeHasBeenInitialized == rhs.m_scopeHasBeenInitialized;
     }
 }

@@ -52,17 +52,17 @@ namespace TestLibraryDesktop
             auto& myFooRef = myFoo_CPY["External Integer"];
             UNREFERENCED_PARAMETER(myFooRef);
 
-            Assert::IsTrue(myFoo_OG["External Integer"] == myFoo_OG.mInt);
-            Assert::IsTrue(myFoo_OG["External Float"] == myFoo_OG.mFloat);
-            Assert::IsTrue(myFoo_OG["External Vector"] == myFoo_OG.mVector);
-            Assert::IsTrue(myFoo_OG["External Matrix"] == myFoo_OG.mMatrix);
-            Assert::IsTrue(myFoo_OG["External String"] == myFoo_OG.mString);
+            Assert::IsTrue(myFoo_OG["External Integer"] == myFoo_OG.m_int);
+            Assert::IsTrue(myFoo_OG["External Float"] == myFoo_OG.m_float);
+            Assert::IsTrue(myFoo_OG["External Vector"] == myFoo_OG.m_vector);
+            Assert::IsTrue(myFoo_OG["External Matrix"] == myFoo_OG.m_matrix);
+            Assert::IsTrue(myFoo_OG["External String"] == myFoo_OG.m_string);
 
-            Assert::IsTrue(myFoo_CPY["External Integer"] == myFoo_OG.mInt);
-            Assert::IsTrue(myFoo_CPY["External Float"] == myFoo_OG.mFloat);
-            Assert::IsTrue(myFoo_CPY["External Vector"] == myFoo_OG.mVector);
-            Assert::IsTrue(myFoo_CPY["External Matrix"] == myFoo_OG.mMatrix);
-            Assert::IsTrue(myFoo_CPY["External String"] == myFoo_OG.mString);
+            Assert::IsTrue(myFoo_CPY["External Integer"] == myFoo_OG.m_int);
+            Assert::IsTrue(myFoo_CPY["External Float"] == myFoo_OG.m_float);
+            Assert::IsTrue(myFoo_CPY["External Vector"] == myFoo_OG.m_vector);
+            Assert::IsTrue(myFoo_CPY["External Matrix"] == myFoo_OG.m_matrix);
+            Assert::IsTrue(myFoo_CPY["External String"] == myFoo_OG.m_string);
 
             Assert::IsTrue(myFoo_CPY["External Integer"] == myFoo_OG["External Integer"]);
             Assert::IsTrue(myFoo_CPY["External Float"] == myFoo_OG["External Float"]);
@@ -121,11 +121,11 @@ namespace TestLibraryDesktop
             Library::AttributedFoo myFoo;
 
             Assert::IsTrue(myFoo[0] == myFoo["this"]);
-            Assert::IsTrue(myFoo["External Integer"] == myFoo.mInt);
-            Assert::IsTrue(myFoo["External Float"] == myFoo.mFloat);
-            Assert::IsTrue(myFoo["External Vector"] == myFoo.mVector);
-            Assert::IsTrue(myFoo["External Matrix"] == myFoo.mMatrix);
-            Assert::IsTrue(myFoo["External String"] == myFoo.mString);
+            Assert::IsTrue(myFoo["External Integer"] == myFoo.m_int);
+            Assert::IsTrue(myFoo["External Float"] == myFoo.m_float);
+            Assert::IsTrue(myFoo["External Vector"] == myFoo.m_vector);
+            Assert::IsTrue(myFoo["External Matrix"] == myFoo.m_matrix);
+            Assert::IsTrue(myFoo["External String"] == myFoo.m_string);
 
             Assert::ExpectException<std::exception>([&] { myFoo[12]; });
         }

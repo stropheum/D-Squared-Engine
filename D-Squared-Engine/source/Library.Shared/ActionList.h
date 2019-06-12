@@ -43,5 +43,5 @@ namespace Library
     };
 
     // Macro for creating a factory for mAction list objects
-    ActionFactory(ActionList)
+    ActionFactory(ActionList);
 }

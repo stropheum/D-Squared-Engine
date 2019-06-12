@@ -6,22 +6,29 @@
 namespace Library
 {
     template <typename Payload>
-    RTTI_DEFINITIONS(Event<Payload>)
-
-        template <typename Payload>
-    Vector<class EventSubscriber*> Event<Payload>::sSubscriberList;
+    RTTI_DEFINITIONS(Event<Payload>);
 
     template <typename Payload>
-    std::mutex Event<Payload>::sSubscriberListMutex;
+    Vector<class EventSubscriber*> Event<Payload>::s_subscriberList;
 
     template <typename Payload>
-    Event<Payload>::Event(const Payload& payload, bool deleteAfterPublishing) :
-        EventPublisher(&sSubscriberList, sSubscriberListMutex, deleteAfterPublishing), mPayload(payload)
+    std::mutex Event<Payload>::s_subscriberListMutex;
+
+    template <typename Payload>
+    Event<Payload>::Event(
+        const Payload& payload, 
+        bool deleteAfterPublishing) :
+        EventPublisher(
+            &s_subscriberList, 
+            s_subscriberListMutex, 
+            deleteAfterPublishing), 
+        m_payload(payload)
     {}
 
     template <typename Payload>
     Event<Payload>::Event(const Event<Payload>& rhs) :
-        EventPublisher(rhs), mPayload(rhs.mPayload)
+        EventPublisher(rhs), 
+m_payload(rhs.m_payload)
     {}
 
     template <typename Payload>
@@ -30,15 +37,15 @@ namespace Library
         if (this != &rhs)
         {
             EventPublisher::operator=(rhs);
-            mPayload = rhs.mPayload;
-            mDeleteAfterPublishing = rhs.mDeleteAfterPublishing;
+            m_payload = rhs.m_payload;
+            m_deleteAfterPublishing = rhs.m_deleteAfterPublishing;
         }
         return *this;
     }
 
     template <typename Payload>
     Event<Payload>::Event(Event<Payload>&& rhs) noexcept :
-        EventPublisher(std::move(rhs)), mPayload(std::move(rhs.mPayload))
+        EventPublisher(std::move(rhs)), m_payload(std::move(rhs.m_payload))
     {}
 
     template <typename Payload>
@@ -47,7 +54,7 @@ namespace Library
         if (this != &rhs)
         {
             EventPublisher::operator=(std::move(rhs));
-            mPayload = std::move(rhs.mPayload);
+            m_payload = std::move(rhs.m_payload);
         }
         return *this;
     }
@@ -55,28 +62,28 @@ namespace Library
     template <typename Payload>
     void Event<Payload>::Subscribe(EventSubscriber& eventSubscriber)
     {
-        sSubscriberList.PushBack(&eventSubscriber);
+        s_subscriberList.PushBack(&eventSubscriber);
     }
 
     template <typename Payload>
     void Event<Payload>::Unsubscribe(EventSubscriber& eventSubscriber)
     {
-        sSubscriberList.Remove(&eventSubscriber);
+        s_subscriberList.Remove(&eventSubscriber);
     }
 
     template <typename Payload>
     void Event<Payload>::UnsubscribeAll()
     {
-        std::lock_guard<std::mutex> guard(sSubscriberListMutex);
-        if (!sSubscriberList.IsEmpty())
+        std::lock_guard<std::mutex> guard(s_subscriberListMutex);
+        if (!s_subscriberList.IsEmpty())
         {
-            sSubscriberList.Clear();
+            s_subscriberList.Clear();
         }
     }
 
     template <typename Payload>
     const Payload& Event<Payload>::Message()
     {
-        return mPayload;
+        return m_payload;
     }
 }

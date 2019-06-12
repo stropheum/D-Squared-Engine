@@ -7,40 +7,40 @@ using namespace std::chrono;
 namespace Library
 {
     GameClock::GameClock() :
-        mStartTime(), mCurrentTime(), mLastTime()
+        m_startTime(), m_currentTime(), m_lastTime()
     {
         Reset();
     }
 
     const high_resolution_clock::time_point& GameClock::StartTime() const
     {
-        return mStartTime;
+        return m_startTime;
     }
 
     const high_resolution_clock::time_point& GameClock::CurrentTime() const
     {
-        return mCurrentTime;
+        return m_currentTime;
     }
 
     const high_resolution_clock::time_point& GameClock::LastTime() const
     {
-        return mLastTime;
+        return m_lastTime;
     }
 
     void GameClock::Reset()
     {
-        mStartTime = high_resolution_clock::now();
-        mCurrentTime = mStartTime;
-        mLastTime = mCurrentTime;
+        m_startTime = high_resolution_clock::now();
+        m_currentTime = m_startTime;
+        m_lastTime = m_currentTime;
     }
 
     void GameClock::UpdateGameTime(GameTime& gameTime)
     {
-        mCurrentTime = high_resolution_clock::now();
+        m_currentTime = high_resolution_clock::now();
 
-        gameTime.SetCurrentTime(mCurrentTime);
-        gameTime.SetTotalGameTime(duration_cast<milliseconds>(mCurrentTime - mStartTime));
-        gameTime.SetElapsedGameTime(duration_cast<milliseconds>(mCurrentTime - mLastTime));
-        mLastTime = mCurrentTime;
+        gameTime.SetCurrentTime(m_currentTime);
+        gameTime.SetTotalGameTime(duration_cast<milliseconds>(m_currentTime - m_startTime));
+        gameTime.SetElapsedGameTime(duration_cast<milliseconds>(m_currentTime - m_lastTime));
+        m_lastTime = m_currentTime;
     }
 }

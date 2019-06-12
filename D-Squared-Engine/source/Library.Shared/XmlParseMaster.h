@@ -23,7 +23,7 @@ namespace Library
 
 #pragma region SharedData Construction/Copy/Assignment
 
-            SharedData() : mParseMaster(nullptr), mDepth(0) {}
+            SharedData() : m_parseMaster(nullptr), m_depth(0) {}
 
             SharedData(const SharedData& rhs) = default;
 
@@ -47,7 +47,7 @@ namespace Library
              */
             void SetXmlParseMaster(XmlParseMaster* const parseMaster)
             {
-                mParseMaster = parseMaster;
+                m_parseMaster = parseMaster;
             }
 
             /**
@@ -56,7 +56,7 @@ namespace Library
              */
             XmlParseMaster* GetXmlParseMaster() const
             {
-                return mParseMaster;
+                return m_parseMaster;
             }
 
             /**
@@ -64,7 +64,7 @@ namespace Library
              */
             void IncrementDepth()
             {
-                mDepth++;
+                m_depth++;
             }
 
             /**
@@ -72,7 +72,7 @@ namespace Library
              */
             void DecrementDepth()
             {
-                mDepth--;
+                m_depth--;
             }
 
             /**
@@ -81,7 +81,7 @@ namespace Library
              */
             std::uint32_t Depth() const
             {
-                return mDepth;
+                return m_depth;
             }
 
             /**
@@ -118,8 +118,8 @@ namespace Library
 
         protected:
 
-            XmlParseMaster* mParseMaster;
-            std::uint32_t mDepth;
+            XmlParseMaster* m_parseMaster;
+            std::uint32_t m_depth;
 
         };
 
@@ -221,13 +221,13 @@ namespace Library
          */
         void HandleHelperInitialization();
 
-        XML_Parser mXmlParser; // The associated Expat parser object
-        std::string mActiveFileName; // The file being parsed, if any
-        SharedData* mSharedData; // The shared data that the Parse call will write to
-        Vector<IXmlParseHelper*> mHelpers; // The collection of helpers in the chain of responsibility
-        std::uint32_t mDepth; // How deep the scoping is in the current parsing level
-        bool mClonedInstance; // This value is true if the Parse master was created via cloning. This means it is responsible for deleting its helpers and data
-        bool mHelpersAreInitialized; // This value is true if the helpers have been properly initialized
+        XML_Parser m_xmlParser;             // The associated Expat parser object
+        std::string m_activeFileName;       // The file being parsed, if any
+        SharedData* m_sharedData;           // The shared data that the Parse call will write to
+        Vector<IXmlParseHelper*> m_helpers; // The collection of helpers in the chain of responsibility
+        std::uint32_t m_depth;              // How deep the scoping is in the current parsing level
+        bool m_clonedInstance;              // This value is true if the Parse master was created via cloning. This means it is responsible for deleting its helpers and data
+        bool m_helpersAreInitialized;       // This value is true if the helpers have been properly initialized
 
     };
 }

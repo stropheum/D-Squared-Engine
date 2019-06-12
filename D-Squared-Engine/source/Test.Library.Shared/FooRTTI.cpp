@@ -3,11 +3,11 @@
 
 
 FooRTTI::FooRTTI() :
-    mData(0)
+    m_data(0)
 {}
 
 FooRTTI::FooRTTI(int data) :
-    mData(data)
+    m_data(data)
 {}
 
 FooRTTI::~FooRTTI()

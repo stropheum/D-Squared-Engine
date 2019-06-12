@@ -29,25 +29,25 @@ namespace Library
 
         /**
          * Updates the game state
-         * @Param worldState: The worldstate object storing information about the mWorld
+         * @Param worldState: The worldstate object storing information about the world
          */
         virtual void Update(class WorldState& worldState) = 0;
 
         /**
-         * Accessor method for the Name of the mAction
-         * @Return: The Name of the mAction
+         * Accessor method for the Name of the action
+         * @Return: The Name of the action
          */
         std::string Name() const;
 
         /**
-         * Mutator method for the Name of the mAction
-         * @Param Name: The new Name of the mAction
+         * Mutator method for the Name of the action
+         * @Param Name: The new Name of the action
          */
         void SetName(const std::string& name);
 
     protected:
 
-        std::string mName; // The Name of the mAction
+        std::string m_name; // The Name of the action
 
     };
 

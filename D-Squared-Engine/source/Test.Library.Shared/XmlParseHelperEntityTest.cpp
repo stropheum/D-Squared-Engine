@@ -45,7 +45,7 @@ namespace TestLibraryDesktop
 
             parseMaster.ParseFromFile("EntityGrammar.xml");
 
-            Library::Scope* scope = sharedData.mScope;
+            Library::Scope* scope = sharedData.m_scope;
             World* world = scope->As<World>();
             std::string name = world != nullptr ? world->Name() : "";
 

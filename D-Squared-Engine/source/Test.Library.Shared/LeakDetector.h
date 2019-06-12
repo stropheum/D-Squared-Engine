@@ -29,7 +29,7 @@ namespace TestLibraryDesktop
 
     private:
 
-        static _CrtMemState sStartMemState;
+        static _CrtMemState s_startMemstate;
 
     };
 }

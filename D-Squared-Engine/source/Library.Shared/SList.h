@@ -197,7 +197,7 @@ namespace Library
 
 #pragma region Node Construction/Copy/Assignment
 
-            explicit Node(T data) : mData(data), mNext(nullptr) {}
+            explicit Node(T data) : m_data(data), m_next(nullptr) {}
 
             ~Node() {}
 
@@ -211,20 +211,20 @@ namespace Library
 
 #pragma endregion
 
-            T& Data() { return mData; }
+            T& Data() { return m_data; }
 
-            Node*& Next() { return mNext; }
+            Node*& Next() { return m_next; }
 
         private:
 
-            T mData; // Data being contained by the node
-            Node* mNext; // Pointer to the node that this node is linked to
+            T m_data; // Data being contained by the node
+            Node* m_next; // Pointer to the node that this node is linked to
 
         };
 
-        std::uint32_t mSize; // Number of elements in the list
-        Node* mFront; // Front node in the list
-        Node* mBack; // Back node in the list
+        std::uint32_t m_size; // Number of elements in the list
+        Node* m_front; // Front node in the list
+        Node* m_back; // Back node in the list
     };
 
 

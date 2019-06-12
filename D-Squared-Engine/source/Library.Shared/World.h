@@ -30,26 +30,26 @@ namespace Library
 #pragma endregion
 
         /**
-         * Accessor method for the Name of the mWorld
-         * @Return: The Name of the mWorld
+         * Accessor method for the Name of the world
+         * @Return: The Name of the world
          */
         std::string Name() const;
 
         /**
-         * Mutator method for the Name of the mWorld
-         * @Param Name: the new Name of the mWorld
+         * Mutator method for the Name of the world
+         * @Param Name: the new Name of the world
          */
         void SetName(const std::string& name);
 
         /**
-         * Accessor method for the collection of Sectors in the mWorld
+         * Accessor method for the collection of Sectors in the world
          * @Return: A datum reference containing the collection of Sectors
          */
         Datum& Sectors();
 
         /**
-         * Method used to Create a mSector as a child of this mWorld
-         * @Param Name: The Name of the freshly created mSector object
+         * Method used to Create a mSector as a child of this world
+         * @Param Name: The Name of the freshly created sector object
          */
         Sector* CreateSector(const std::string& name);
 
@@ -62,14 +62,14 @@ namespace Library
 
         /**
          * Accessor method for the event queue
-         * @Return: A reference to the event queue associated with this mWorld
+         * @Return: A reference to the event queue associated with this world
          */
         EventQueue& GetEventQueue();
 
     private:
 
-        std::string mName; // The Name of the mWorld
-        EventQueue mEventQueue;
+        std::string m_name; // The Name of the world
+        EventQueue m_eventQueue;
 
     };
 }

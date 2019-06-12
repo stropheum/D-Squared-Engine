@@ -8,14 +8,14 @@ namespace Library
 {
     ActionListIf::ActionListIf()
     {
-        (*this)["Condition"].SetStorage(&mCondition, 1);
+        (*this)["Condition"].SetStorage(&m_condition, 1);
         (*this)["Then"].SetType(DatumType::Scope);
         (*this)["Else"].SetType(DatumType::Scope);
     }
 
     void ActionListIf::Update(WorldState& worldState)
     {
-        if (mCondition != 0)
+        if (m_condition != 0)
         {
             for (uint32_t i = 0; i < (*this)["Then"].Size(); i++)
             {
@@ -35,12 +35,12 @@ namespace Library
 
     void ActionListIf::SetCondition(const int32_t& condition)
     {
-        mCondition = condition;
+        m_condition = condition;
     }
 
     int32_t ActionListIf::GetCondition() const
     {
-        return mCondition;
+        return m_condition;
     }
 
     Action* ActionListIf::CreateThenAction(const string& className, const string& instanceName)

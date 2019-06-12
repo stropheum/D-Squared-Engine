@@ -68,12 +68,12 @@ namespace Library
 
     private:
 
-        class World* mWorld;
-        class Sector* mSector;
-        class Entity* mEntity;
-        class Action* mAction;
+        class World* m_world;
+        class Sector* m_sector;
+        class Entity* m_entity;
+        class Action* m_action;
 
-        GameTime* mGameTime;
+        GameTime* m_gameTime;
 
     };
 }

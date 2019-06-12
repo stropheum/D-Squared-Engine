@@ -12,7 +12,7 @@ namespace Library
 {
     Datum::DatumValues* storage;
     AttributedFoo::AttributedFoo() :
-        Attributed(), mInt(0), mFloat(0.0f), mVector(0), mMatrix(0), mString(""), mScope()
+        Attributed(), m_int(0), m_float(0.0f), m_vector(0), m_matrix(0), m_string(""), m_scope()
     {
         init();
     }
@@ -36,11 +36,11 @@ namespace Library
     {
         init();
 
-        (*this)["External Integer"].SetStorage(&mInt, 1u);
-        (*this)["External Float"].SetStorage(&mFloat, 1u);
-        (*this)["External Vector"].SetStorage(&mVector, 1u);
-        (*this)["External Matrix"].SetStorage(&mMatrix, 1u);
-        (*this)["External String"].SetStorage(&mString, 1u);
+        (*this)["External Integer"].SetStorage(&m_int, 1u);
+        (*this)["External Float"].SetStorage(&m_float, 1u);
+        (*this)["External Vector"].SetStorage(&m_vector, 1u);
+        (*this)["External Matrix"].SetStorage(&m_matrix, 1u);
+        (*this)["External String"].SetStorage(&m_string, 1u);
 
         (*this)["External Integer Array"].SetStorage(iArray, 10u);
         (*this)["External Float Array"].SetStorage(fArray, 10u);
@@ -48,12 +48,12 @@ namespace Library
         (*this)["External Matrix Array"].SetStorage(mArray, 10u);
         (*this)["External String Array"].SetStorage(sArray, 10u);
 
-        mInt = rhs.mInt;
-        mFloat = rhs.mFloat;
-        mVector = rhs.mVector;
-        mMatrix = rhs.mMatrix;
-        mString = rhs.mString;
-        mScope = rhs.mScope;
+        m_int = rhs.m_int;
+        m_float = rhs.m_float;
+        m_vector = rhs.m_vector;
+        m_matrix = rhs.m_matrix;
+        m_string = rhs.m_string;
+        m_scope = rhs.m_scope;
 
         for (std::uint32_t i = 0; i < 10; i++)
         {
@@ -70,12 +70,12 @@ namespace Library
     AttributedFoo::AttributedFoo(AttributedFoo&& rhs) noexcept :
         Attributed(move(rhs))
     {
-        mInt = move(rhs.mInt);
-        mFloat = move(rhs.mFloat);
-        mVector = move(rhs.mVector);
-        mMatrix = move(rhs.mMatrix);
-        mString = move(rhs.mString);
-        mScope = move(rhs.mScope);
+        m_int = move(rhs.m_int);
+        m_float = move(rhs.m_float);
+        m_vector = move(rhs.m_vector);
+        m_matrix = move(rhs.m_matrix);
+        m_string = move(rhs.m_string);
+        m_scope = move(rhs.m_scope);
 
         iArray = move(rhs.iArray);
         fArray = move(rhs.fArray);
@@ -83,11 +83,11 @@ namespace Library
         mArray = move(rhs.mArray);
         sArray = move(rhs.sArray);
 
-        (*this)["External Integer"].SetStorage(&mInt, 1u);
-        (*this)["External Float"].SetStorage(&mFloat, 1u);
-        (*this)["External Vector"].SetStorage(&mVector, 1u);
-        (*this)["External Matrix"].SetStorage(&mMatrix, 1u);
-        (*this)["External String"].SetStorage(&mString, 1u);
+        (*this)["External Integer"].SetStorage(&m_int, 1u);
+        (*this)["External Float"].SetStorage(&m_float, 1u);
+        (*this)["External Vector"].SetStorage(&m_vector, 1u);
+        (*this)["External Matrix"].SetStorage(&m_matrix, 1u);
+        (*this)["External String"].SetStorage(&m_string, 1u);
 
         (*this)["External Integer Array"].SetStorage(iArray, 10u);
         (*this)["External Float Array"].SetStorage(fArray, 10u);
@@ -95,11 +95,11 @@ namespace Library
         (*this)["External Matrix Array"].SetStorage(mArray, 10u);
         (*this)["External String Array"].SetStorage(sArray, 10u);
 
-        rhs.mInt = 0;
-        rhs.mFloat = 0.0f;
-        rhs.mVector = glm::vec4(0);
-        rhs.mMatrix = glm::mat4(0);
-        rhs.mString = "";
+        rhs.m_int = 0;
+        rhs.m_float = 0.0f;
+        rhs.m_vector = glm::vec4(0);
+        rhs.m_matrix = glm::mat4(0);
+        rhs.m_string = "";
         rhs.iArray = nullptr;
         rhs.fArray = nullptr;
         rhs.vArray = nullptr;
@@ -113,12 +113,12 @@ namespace Library
         {
             Attributed::operator=(move(rhs));
 
-            mInt = move(rhs.mInt);
-            mFloat = move(rhs.mFloat);
-            mVector = move(rhs.mVector);
-            mMatrix = move(rhs.mMatrix);
-            mString = move(rhs.mString);
-            mScope = move(rhs.mScope);
+            m_int = move(rhs.m_int);
+            m_float = move(rhs.m_float);
+            m_vector = move(rhs.m_vector);
+            m_matrix = move(rhs.m_matrix);
+            m_string = move(rhs.m_string);
+            m_scope = move(rhs.m_scope);
 
             iArray = move(rhs.iArray);
             fArray = move(rhs.fArray);
@@ -126,11 +126,11 @@ namespace Library
             mArray = move(rhs.mArray);
             sArray = move(rhs.sArray);
 
-            (*this)["External Integer"].SetStorage(&mInt, 1u);
-            (*this)["External Float"].SetStorage(&mFloat, 1u);
-            (*this)["External Vector"].SetStorage(&mVector, 1u);
-            (*this)["External Matrix"].SetStorage(&mMatrix, 1u);
-            (*this)["External String"].SetStorage(&mString, 1u);
+            (*this)["External Integer"].SetStorage(&m_int, 1u);
+            (*this)["External Float"].SetStorage(&m_float, 1u);
+            (*this)["External Vector"].SetStorage(&m_vector, 1u);
+            (*this)["External Matrix"].SetStorage(&m_matrix, 1u);
+            (*this)["External String"].SetStorage(&m_string, 1u);
 
             (*this)["External Integer Array"].SetStorage(iArray, 10u);
             (*this)["External Float Array"].SetStorage(fArray, 10u);
@@ -138,11 +138,11 @@ namespace Library
             (*this)["External Matrix Array"].SetStorage(mArray, 10u);
             (*this)["External String Array"].SetStorage(sArray, 10u);
 
-            rhs.mInt = 0;
-            rhs.mFloat = 0.0f;
-            rhs.mVector = glm::vec4(0);
-            rhs.mMatrix = glm::mat4(0);
-            rhs.mString = "";
+            rhs.m_int = 0;
+            rhs.m_float = 0.0f;
+            rhs.m_vector = glm::vec4(0);
+            rhs.m_matrix = glm::mat4(0);
+            rhs.m_string = "";
             rhs.iArray = nullptr;
             rhs.fArray = nullptr;
             rhs.vArray = nullptr;
@@ -155,28 +155,28 @@ namespace Library
 
     void AttributedFoo::init()
     {
-        mPrescribedAttributes.PushBack(
-            Signature("External Integer", DatumType::Integer, 1u, &mInt)
+        m_prescribedAttributes.PushBack(
+            Signature("External Integer", DatumType::Integer, 1u, &m_int)
         );
 
-        mPrescribedAttributes.PushBack(
-            Signature("External Float", DatumType::Float, 1u, &mFloat)
+        m_prescribedAttributes.PushBack(
+            Signature("External Float", DatumType::Float, 1u, &m_float)
         );
 
-        mPrescribedAttributes.PushBack(
-            Signature("External Vector", DatumType::Vector, 1u, &mVector)
+        m_prescribedAttributes.PushBack(
+            Signature("External Vector", DatumType::Vector, 1u, &m_vector)
         );
 
-        mPrescribedAttributes.PushBack(
-            Signature("External Matrix", DatumType::Matrix, 1u, &mMatrix)
+        m_prescribedAttributes.PushBack(
+            Signature("External Matrix", DatumType::Matrix, 1u, &m_matrix)
         );
 
-        mPrescribedAttributes.PushBack(
-            Signature("External String", DatumType::String, 1u, &mString)
+        m_prescribedAttributes.PushBack(
+            Signature("External String", DatumType::String, 1u, &m_string)
         );
 
-        mPrescribedAttributes.PushBack(
-            Signature("Internal Scope", DatumType::Scope, 1u, &mScope)
+        m_prescribedAttributes.PushBack(
+            Signature("Internal Scope", DatumType::Scope, 1u, &m_scope)
         );
 
         iArray = new std::int32_t[10];
@@ -191,23 +191,23 @@ namespace Library
             fArray[i] = 10.0f;
         }
 
-        mPrescribedAttributes.PushBack(
+        m_prescribedAttributes.PushBack(
             Signature("External Integer Array", DatumType::Integer, 10u, iArray)
         );
 
-        mPrescribedAttributes.PushBack(
+        m_prescribedAttributes.PushBack(
             Signature("External Float Array", DatumType::Float, 10u, fArray)
         );
 
-        mPrescribedAttributes.PushBack(
+        m_prescribedAttributes.PushBack(
             Signature("External Vector Array", DatumType::Vector, 10u, vArray)
         );
 
-        mPrescribedAttributes.PushBack(
+        m_prescribedAttributes.PushBack(
             Signature("External Matrix Array", DatumType::Matrix, 10u, mArray)
         );
 
-        mPrescribedAttributes.PushBack(
+        m_prescribedAttributes.PushBack(
             Signature("External String Array", DatumType::String, 10u, sArray)
         );
 

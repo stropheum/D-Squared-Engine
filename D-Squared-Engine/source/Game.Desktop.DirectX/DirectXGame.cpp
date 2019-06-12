@@ -92,9 +92,9 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
         // close the application entirely
         PostQuitMessage(0);
         return 0;
-    } break;
+    }
+    break;
     default:
-        break;
     }
 
     // Handle any messages the switch statement didn't
@@ -102,7 +102,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 }
 
 
-/// This function initializes and prepares Direct3D for use
+// This function initializes and prepares Direct3D for use
 void initD3D(HWND hWnd)
 {
     d3d = Direct3DCreate9(D3D_SDK_VERSION);	// Create the Direct3D interface
@@ -130,7 +130,7 @@ void initD3D(HWND hWnd)
     init_graphics(); // call the function to Initialize the triangle
 }
 
-/// This is the function used to render a single frame
+// This is the function used to render a single frame
 void render_frame(void)
 {
     // Clear the window to a deep blue
@@ -149,7 +149,7 @@ void render_frame(void)
     d3ddev->Present(nullptr, nullptr, nullptr, nullptr); // displays the created frame
 }
 
-/// This is the function that cleans up Direct3D and COM
+// This is the function that cleans up Direct3D and COM
 void cleanD3D(void)
 {
     v_buffer->Release(); // close and release the vertex buffer
@@ -157,7 +157,7 @@ void cleanD3D(void)
     d3d->Release();	   // close and release Direct3D
 }
 
-/// This is the function that puts the 3D models into the video RAM
+// This is the function that puts the 3D models into the video RAM
 void init_graphics(void)
 {
     // Create the vertices using the CUSTOMVERTEX struct
@@ -181,7 +181,7 @@ void init_graphics(void)
     void* pVoid; // a void pointer
 
     // lock v_buffer and load the vertices into it
-    v_buffer->Lock(0, 0, (void**)&pVoid, 0);
+    v_buffer->Lock(0, 0, (void**)& pVoid, 0);
     memcpy(pVoid, vertices, sizeof(vertices));
     v_buffer->Unlock();
 }

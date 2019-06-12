@@ -14,12 +14,12 @@ namespace Library
     {
         bool result = false;
 
-        if (mContext.mType == rhs.mType && mContext.mSize == rhs.mSize)
+        if (m_context.m_type == rhs.m_type && m_context.m_size == rhs.m_size)
         {
             result = true;
-            for (uint32_t i = 0; i < mContext.mSize; i++)
+            for (uint32_t i = 0; i < m_context.m_size; i++)
             {
-                if (mContext.mData.f[i] != rhs.mData.f[i])
+                if (m_context.m_data.f[i] != rhs.m_data.f[i])
                 {
                     result = false;
                     break;
@@ -32,33 +32,33 @@ namespace Library
 
     Datum& FloatState::operator=(const float& rhs)
     {
-        if (mContext.mSize > 1) { throw exception("Invalid assignment invocation"); }
-        if (mContext.mSize == 0) { mContext.SetSize(1); }
-        mContext.mData.f[0] = rhs;
-        return mContext;
+        if (m_context.m_size > 1) { throw exception("Invalid assignment invocation"); }
+        if (m_context.m_size == 0) { m_context.SetSize(1); }
+        m_context.m_data.f[0] = rhs;
+        return m_context;
     }
 
     void FloatState::SetSize(const uint32_t& size)
     {
-        mContext.mData.vp = realloc(mContext.mData.vp, sizeof(float) * size);
-        mContext.mCapacity = mContext.mSize = size;
+        m_context.m_data.vp = realloc(m_context.m_data.vp, sizeof(float) * size);
+        m_context.m_capacity = m_context.m_size = size;
     }
 
     void FloatState::Reserve(const uint32_t& capacity)
     {
-        if (capacity > mContext.mCapacity)
+        if (capacity > m_context.m_capacity)
         {
-            mContext.mData.vp = realloc(mContext.mData.vp, sizeof(float) * capacity);
-            mContext.mCapacity = capacity;
+            m_context.m_data.vp = realloc(m_context.m_data.vp, sizeof(float) * capacity);
+            m_context.m_capacity = capacity;
         }
     }
 
     void FloatState::Clear()
     {
-        if (mContext.mSize > 0)
+        if (m_context.m_size > 0)
         {
-            for (uint32_t i = 0; i < mContext.mSize; i++) mContext.mData.f[i] = NULL;
-            mContext.mSize = 0;
+            for (uint32_t i = 0; i < m_context.m_size; i++) m_context.m_data.f[i] = NULL;
+            m_context.m_size = 0;
         }
     }
 
@@ -66,32 +66,32 @@ namespace Library
     {
         float result;
         sscanf_s(value.c_str(), "%f", &result);
-        mContext.Set(result, index);
+        m_context.Set(result, index);
     }
 
     void FloatState::SetStorage(const Datum& rhs)
     {
-        SetStorage(rhs.mData.f, rhs.mSize);
+        SetStorage(rhs.m_data.f, rhs.m_size);
     }
 
     void FloatState::SetStorage(float* data, const uint32_t& size)
     {
-        assert(mContext.mType == DatumType::Float);
+        assert(m_context.m_type == DatumType::Float);
 
-        if (mContext.mCapacity > 0)
+        if (m_context.m_capacity > 0)
         {
             Clear();
         }
 
-        mContext.mDataIsExternal = true;
-        mContext.mData.f = data;
-        mContext.mCapacity = mContext.mSize = size;
+        m_context.m_dataIsExternal = true;
+        m_context.m_data.f = data;
+        m_context.m_capacity = m_context.m_size = size;
     }
 
     string FloatState::ToString(const uint32_t& index)
     {
         char value[50];
-        sprintf_s(value, "%f", mContext.Get<float>(index));
+        sprintf_s(value, "%f", m_context.Get<float>(index));
         return value;
     }
 }

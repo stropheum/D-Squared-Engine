@@ -7,7 +7,7 @@
 namespace Library
 {
     MyEventSubscriber::MyEventSubscriber() :
-        mValue(0)
+        m_value(0)
     {
         Event<Foo>::Subscribe(*this);
     }
@@ -19,12 +19,12 @@ namespace Library
 
     void MyEventSubscriber::Notify(const EventPublisher& event)
     {
-        std::lock_guard<std::mutex> guard(mNotifyMutex);
+        std::lock_guard<std::mutex> guard(m_notifyMutex);
         assert(event.Is(Event<Foo>::TypeIdClass()));
         Event<Foo>* myEvent = event.As<Event<Foo>>();
         if (myEvent != nullptr)
         {
-            mValue = myEvent->Message();
+            m_value = myEvent->Message();
         }
     }
 }

@@ -164,13 +164,13 @@ namespace Library
     protected:
 
         // The HashMap that stores the true string, Datum pairs for Scope
-        HashMap<const std::string, Datum> mMap;
+        HashMap<const std::string, Datum> m_map;
 
         // The Vector that stores pointers to every inserted pair for easy indexing
-        Vector<HashMap<const std::string, Datum>::Iterator> mVector;
+        Vector<HashMap<const std::string, Datum>::Iterator> m_vector;
 
         // The parent of this Scope. May be null if this is the top-level Scope
-        Scope* mParent;
+        Scope* m_parent;
 
     };
 }

@@ -53,8 +53,8 @@ namespace Library
 
     private:
 
-        std::string mSubtype; // The subtype of the event Message attributed
-        WorldState* mWorldState; // The mWorld state object
+        std::string m_subtype; // The subtype of the event Message attributed
+        WorldState* m_worldState; // The mWorld state object
 
     };
 }

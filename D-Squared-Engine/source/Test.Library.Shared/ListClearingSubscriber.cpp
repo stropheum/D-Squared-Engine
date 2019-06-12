@@ -17,7 +17,7 @@ ListClearingSubscriber::~ListClearingSubscriber()
 
 void ListClearingSubscriber::Notify(const Library::EventPublisher& event)
 {
-    std::lock_guard<std::mutex> guard(mNotifyMutex);
+    std::lock_guard<std::mutex> guard(m_notifyMutex);
     if (event.Is(Library::Event<Foo>::TypeIdClass()))
     {
         Library::Event<Foo>::Unsubscribe(*this);

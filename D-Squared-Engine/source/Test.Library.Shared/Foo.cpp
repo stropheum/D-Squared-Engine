@@ -4,21 +4,21 @@
 /**
  * Default constructor
  */
-Foo::Foo() :mData(new int(1)) {}
+Foo::Foo() :m_data(new int(1)) {}
 
 /**
  * Constructor
  * @Param data: The data being wrapped by the foo object
  */
 Foo::Foo(int data) :
-    mData(new int(data)) {}
+    m_data(new int(data)) {}
 
 /**
  * Copy constructor
  * @Param rhs: Constant reference to the object being copied
  */
 Foo::Foo(const Foo& rhs) :
-    Foo(*(rhs.mData)) {}
+    Foo(*(rhs.m_data)) {}
 
 /**
  * Destructor
@@ -26,7 +26,7 @@ Foo::Foo(const Foo& rhs) :
  */
 Foo::~Foo()
 {
-    delete(mData);
+    delete(m_data);
 }
 
 /**
@@ -34,7 +34,7 @@ Foo::~Foo()
  */
 Foo& Foo::operator=(const Foo& rhs)
 {
-    *mData = *rhs.mData;
+    *m_data = *rhs.m_data;
     return *this;
 }
 
@@ -60,5 +60,5 @@ bool Foo::operator!=(const Foo& rhs) const
  */
 int Foo::getData() const
 {
-    return *mData;
+    return *m_data;
 }

@@ -6,15 +6,15 @@ namespace Library
     RTTI_DEFINITIONS(TestSharedData)
 
         TestSharedData::TestSharedData() :
-        SharedData(), mName(""), mHealth(0), mMana(0)
+        SharedData(), m_name(""), m_health(0), m_mana(0)
     {}
 
     XmlParseMaster::SharedData* TestSharedData::Clone()
     {
         TestSharedData* clone = new TestSharedData();
-        clone->mName = mName;
-        clone->mHealth = mHealth;
-        clone->mMana = mMana;
+        clone->m_name = m_name;
+        clone->m_health = m_health;
+        clone->m_mana = m_mana;
         return clone;
     }
 
@@ -36,9 +36,9 @@ namespace Library
         if (data != nullptr)
         {
             result =
-                (mName == data->mName) &&
-                (mHealth == data->mHealth) &&
-                (mMana == data->mMana);
+                (m_name == data->m_name) &&
+                (m_health == data->m_health) &&
+                (m_mana == data->m_mana);
         }
 
         return result;

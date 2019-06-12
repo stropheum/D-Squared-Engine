@@ -6,24 +6,24 @@ using namespace std;
 
 namespace Library
 {
-    RTTI_DEFINITIONS(SharedDataScope)
+    RTTI_DEFINITIONS(SharedDataScope);
 
-        SharedDataScope::SharedDataScope() :
-        SharedData(), mScope(nullptr)
-    {
-    }
+    SharedDataScope::SharedDataScope() :
+        SharedData(), 
+        m_scope(nullptr)
+    {}
 
     SharedDataScope::~SharedDataScope()
     {
-        delete mScope;
+        delete m_scope;
     }
 
     XmlParseMaster::SharedData* SharedDataScope::Clone()
     {
         SharedDataScope* clone = new SharedDataScope();
-        if (mScope != nullptr)
+        if (m_scope != nullptr)
         {
-            clone->mScope = new Scope(*mScope);
+            clone->m_scope = new Scope(*m_scope);
         }
         return clone;
     }
@@ -40,9 +40,9 @@ namespace Library
         SharedDataScope* data = rhs->As<SharedDataScope>();
         if (data == nullptr) { return false; }
         return
-            (mScope == data->mScope) ||
-            (mScope != nullptr) &&
-            (data->mScope != nullptr) &&
-            (*mScope == *data->mScope);
+            (m_scope == data->m_scope) ||
+            (m_scope != nullptr) &&
+            (data->m_scope != nullptr) &&
+            (*m_scope == *data->m_scope);
     }
 }

@@ -8,8 +8,8 @@ namespace Library
 {
     ActionCreateAction::ActionCreateAction()
     {
-        (*this)["Prototype"].SetStorage(&mPrototype, 1);
-        (*this)["Name"].SetStorage(&mName, 1);
+        (*this)["Prototype"].SetStorage(&m_prototype, 1);
+        (*this)["Name"].SetStorage(&m_name, 1);
     }
 
     void ActionCreateAction::Update(WorldState& worldState)
@@ -20,12 +20,12 @@ namespace Library
 
         if (GetParent()->Is(Entity::TypeIdClass()))
         {
-            GetParent()->As<Entity>()->CreateAction(mPrototype, mName);
+            GetParent()->As<Entity>()->CreateAction(m_prototype, m_name);
         }
 
         else if (GetParent()->Is(ActionList::TypeIdClass()))
         {
-            GetParent()->As<ActionList>()->CreateAction(mPrototype, mName);
+            GetParent()->As<ActionList>()->CreateAction(m_prototype, m_name);
         }
 
         worldState.Action() = nullptr;
@@ -38,6 +38,6 @@ namespace Library
 
     string ActionCreateAction::GetPrototype() const
     {
-        return mPrototype;
+        return m_prototype;
     }
 }

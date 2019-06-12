@@ -15,7 +15,7 @@ namespace Library
 
     void TestParseHelper::Initialize(XmlParseMaster* const xmlParseMaster)
     {
-        mXmlParseMaster = xmlParseMaster;
+        m_xmlParseMaster = xmlParseMaster;
     }
 
     bool TestParseHelper::StartElementHandler(XmlParseMaster::SharedData& sharedData,
@@ -25,9 +25,9 @@ namespace Library
 
         if (data != nullptr && element == "Person")
         {
-            data->mName = (*attributes.Find("Name")).second;
-            data->mHealth = std::stoi((*attributes.Find("Health")).second);
-            data->mMana = std::stoi((*attributes.Find("Mana")).second);
+            data->m_name = (*attributes.Find("Name")).second;
+            data->m_health = std::stoi((*attributes.Find("Health")).second);
+            data->m_mana = std::stoi((*attributes.Find("Mana")).second);
             return true;
         }
 

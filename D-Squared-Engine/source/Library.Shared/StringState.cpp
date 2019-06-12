@@ -14,12 +14,12 @@ namespace Library
     {
         bool result = false;
 
-        if (mContext.mType == rhs.mType && mContext.mSize == rhs.mSize && mContext.mCapacity == rhs.mCapacity)
+        if (m_context.m_type == rhs.m_type && m_context.m_size == rhs.m_size && m_context.m_capacity == rhs.m_capacity)
         {
             result = true;
-            for (uint32_t i = 0; i < mContext.mSize; i++)
+            for (uint32_t i = 0; i < m_context.m_size; i++)
             {
-                if (mContext.mData.s[i] != rhs.mData.s[i])
+                if (m_context.m_data.s[i] != rhs.m_data.s[i])
                 {
                     result = false;
                     break;
@@ -32,79 +32,79 @@ namespace Library
 
     Datum& StringState::operator=(const string& rhs)
     {
-        if (mContext.mSize > 1) { throw exception("Invalid assignment invocation"); }
-        if (mContext.mSize == 0) { mContext.SetSize(1); }
-        mContext.mData.s[0] = rhs;
-        return mContext;
+        if (m_context.m_size > 1) { throw exception("Invalid assignment invocation"); }
+        if (m_context.m_size == 0) { m_context.SetSize(1); }
+        m_context.m_data.s[0] = rhs;
+        return m_context;
     }
 
     void StringState::SetSize(const uint32_t& size)
     {
-        if (size < mContext.mSize)
+        if (size < m_context.m_size)
         {
-            for (uint32_t i = size; i < mContext.mSize; i++)
+            for (uint32_t i = size; i < m_context.m_size; i++)
             {
-                mContext.mData.s[i].string::~string();
+                m_context.m_data.s[i].string::~string();
             }
         }
 
-        mContext.mData.vp = realloc(mContext.mData.vp, sizeof(string) * size);
+        m_context.m_data.vp = realloc(m_context.m_data.vp, sizeof(string) * size);
 
-        if (size > mContext.mSize)
+        if (size > m_context.m_size)
         {	// If our new Size is larger than before, we need to default construct new strings
-            for (uint32_t i = mContext.mSize; i < size; i++)
+            for (uint32_t i = m_context.m_size; i < size; i++)
             {	// Use placement new to construct new strings
-                new(mContext.mData.s + i) string("");
+                new(m_context.m_data.s + i) string("");
             }
         }
 
-        mContext.mCapacity = mContext.mSize = size;
+        m_context.m_capacity = m_context.m_size = size;
     }
 
     void StringState::Reserve(const uint32_t& capacity)
     {
-        if (capacity > mContext.mCapacity)
+        if (capacity > m_context.m_capacity)
         {
-            mContext.mData.vp = realloc(mContext.mData.vp, sizeof(string) * capacity);
-            mContext.mCapacity = capacity;
+            m_context.m_data.vp = realloc(m_context.m_data.vp, sizeof(string) * capacity);
+            m_context.m_capacity = capacity;
         }
     }
 
     void StringState::Clear()
     {
-        if (mContext.mSize > 0)
+        if (m_context.m_size > 0)
         {
-            for (uint32_t i = 0; i < mContext.mSize; i++)
+            for (uint32_t i = 0; i < m_context.m_size; i++)
             {	// Placement new an empty string onto the array
-                mContext.mData.s[i].string::~string();
+                m_context.m_data.s[i].string::~string();
             }
-            mContext.mSize = 0;
+            m_context.m_size = 0;
         }
     }
 
     void StringState::SetFromString(const string& value, const uint32_t& index)
     {   // Strings don't have to be parsed, so they can be passed directly to Set
-        mContext.Set(value, index);
+        m_context.Set(value, index);
     }
 
     void StringState::SetStorage(const Datum& rhs)
     {
-        SetStorage(rhs.mData.s, rhs.mSize);
+        SetStorage(rhs.m_data.s, rhs.m_size);
     }
 
     void StringState::SetStorage(string* data, const uint32_t& size)
     {
-        assert(mContext.mType == DatumType::String);
+        assert(m_context.m_type == DatumType::String);
 
-        if (mContext.mCapacity > 0) { Clear(); }
+        if (m_context.m_capacity > 0) { Clear(); }
 
-        mContext.mDataIsExternal = true;
-        mContext.mData.s = data;
-        mContext.mCapacity = mContext.mSize = size;
+        m_context.m_dataIsExternal = true;
+        m_context.m_data.s = data;
+        m_context.m_capacity = m_context.m_size = size;
     }
 
     string StringState::ToString(const uint32_t& index)
     {
-        return mContext.Get<string>(index);
+        return m_context.Get<string>(index);
     }
 }

@@ -2,22 +2,20 @@
 #include "Attributed.h"
 
 
-using namespace std;
-
 namespace Library
 {
-    RTTI_DEFINITIONS(Attributed)
+    RTTI_DEFINITIONS(Attributed);
 
-        Attributed::Attributed()
+    Attributed::Attributed()
     {
         (*this)["this"] = static_cast<RTTI*>(this);
-        mPrescribedAttributes.PushBack(
-            Signature("this", DatumType::Pointer, 1u, static_cast<RTTI**>(nullptr)));
+        m_prescribedAttributes.PushBack(
+            Signature("this", DatumType::Pointer, 1u, static_cast<RTTI * *>(nullptr)));
     }
 
     Attributed::~Attributed()
     {
-        mPrescribedAttributes.Clear();
+        m_prescribedAttributes.Clear();
     }
 
     Attributed::Attributed(const Attributed& rhs)
@@ -31,33 +29,33 @@ namespace Library
         {
             (*this)["this"] = static_cast<RTTI*>(this);
 
-            mPrescribedAttributes = rhs.mPrescribedAttributes;
+            m_prescribedAttributes = rhs.m_prescribedAttributes;
         }
         return *this;
     }
 
     Attributed::Attributed(Attributed&& rhs) noexcept :
-        Scope(), mPrescribedAttributes()
+        Scope(), m_prescribedAttributes()
     {
         (*this)["this"] = static_cast<RTTI*>(this);
-        operator=(move(rhs));
+        operator=(std::move(rhs));
     }
 
     Attributed& Attributed::operator=(Attributed&& rhs) noexcept
     {
         if (this != &rhs)
         {
-            Scope::operator=(move(rhs));
-            mPrescribedAttributes = move(rhs.mPrescribedAttributes);
+            Scope::operator=(std::move(rhs));
+            m_prescribedAttributes = std::move(rhs.m_prescribedAttributes);
         }
         return *this;
     }
 
     void Attributed::Populate()
     {
-        for (uint32_t i = 0; i < mPrescribedAttributes.Size(); i++)
+        for (std::uint32_t i = 0; i < m_prescribedAttributes.Size(); i++)
         {
-            Signature& attribute = mPrescribedAttributes[i];
+            Signature& attribute = m_prescribedAttributes[i];
             auto& appendedScope = Append(attribute.Name);
             appendedScope = attribute.Type;
 
@@ -116,16 +114,16 @@ namespace Library
                 break;
 
             default:
-                throw exception("Setting storage of invalid/unknown type");
+                throw std::exception("Setting storage of invalid/unknown type");
             }
         }
     }
 
-    bool Attributed::IsPrescribedAttribute(const string& name) const
+    bool Attributed::IsPrescribedAttribute(const std::string& name) const
     {
         if (IsAttribute(name))
         {
-            for (auto iter = mPrescribedAttributes.begin(); iter != mPrescribedAttributes.end(); ++iter)
+            for (auto iter = m_prescribedAttributes.begin(); iter != m_prescribedAttributes.end(); ++iter)
             {
                 if ((*iter).Name == name)
                 {
@@ -136,17 +134,17 @@ namespace Library
         return false;
     }
 
-    bool Attributed::IsAuxiliaryAttribute(const string& name) const
+    bool Attributed::IsAuxiliaryAttribute(const std::string& name) const
     {
         return !IsPrescribedAttribute(name);
     }
 
-    bool Attributed::IsAttribute(const string& name) const
+    bool Attributed::IsAttribute(const std::string& name) const
     {
         return Find(name) != nullptr;
     }
 
-    Datum& Attributed::AppendAuxiliaryAttribute(const string& name)
+    Datum& Attributed::AppendAuxiliaryAttribute(const std::string& name)
     {
         return Append(name);
     }

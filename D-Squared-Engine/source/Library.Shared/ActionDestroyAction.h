@@ -26,26 +26,26 @@ namespace Library
 #pragma endregion
 
         /**
-         * Destroys the mAction with the specified Name, if it exists in the hierarchy
-         * @Param worldState: The mWorld state object that stores the current mWorld state
+         * Destroys the action with the specified Name, if it exists in the hierarchy
+         * @Param worldState: The world state object that stores the current mWorld state
          */
         void Update(WorldState& worldState) override;
 
         /**
-         * Mutator method for the Name of the mAction being destroyed
-         * @Param Name: The Name of the mAction being destroyed
+         * Mutator method for the Name of the action being destroyed
+         * @Param Name: The Name of the action being destroyed
          */
         void SetActionInstanceName(const std::string& name);
 
         /**
-         * Accessor for the Name of the mAction being destroyed
-         * @Return: The Name of the mAction being destroyed
+         * Accessor for the Name of the action being destroyed
+         * @Return: The Name of the action being destroyed
          */
         std::string GetActionInstanceName() const;
 
     private:
 
-        std::string mActionInstanceName; // The Name of the mAction being destroyed
+        std::string m_actionInstanceName; // The Name of the action being destroyed
 
     };
 

@@ -18,8 +18,8 @@ namespace Library
         void SetElapsedGameTime(const std::chrono::milliseconds& elapsedGameTime);
 
     private:
-        std::chrono::high_resolution_clock::time_point mCurrentTime;
-        std::chrono::milliseconds mTotalGameTime;
-        std::chrono::milliseconds mElapsedGameTime;
+        std::chrono::high_resolution_clock::time_point m_currentTime;
+        std::chrono::milliseconds m_totalGameTime;
+        std::chrono::milliseconds m_elapsedGameTime;
     };
 }

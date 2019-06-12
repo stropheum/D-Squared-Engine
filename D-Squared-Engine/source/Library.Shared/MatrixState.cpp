@@ -14,12 +14,12 @@ namespace Library
     {
         bool result = false;
 
-        if (mContext.mType == rhs.mType && mContext.mSize == rhs.mSize)
+        if (m_context.m_type == rhs.m_type && m_context.m_size == rhs.m_size)
         {
             result = true;
-            for (uint32_t i = 0; i < mContext.mSize; i++)
+            for (uint32_t i = 0; i < m_context.m_size; i++)
             {
-                if (mContext.mData.m[i] != rhs.mData.m[i])
+                if (m_context.m_data.m[i] != rhs.m_data.m[i])
                 {
                     result = false;
                     break;
@@ -32,33 +32,33 @@ namespace Library
 
     Datum& MatrixState::operator=(const glm::mat4x4& rhs)
     {
-        if (mContext.mSize > 1) { throw exception("Invalid assignment invocation"); }
-        if (mContext.mSize == 0) { mContext.SetSize(1); }
-        mContext.mData.m[0] = rhs;
-        return mContext;
+        if (m_context.m_size > 1) { throw exception("Invalid assignment invocation"); }
+        if (m_context.m_size == 0) { m_context.SetSize(1); }
+        m_context.m_data.m[0] = rhs;
+        return m_context;
     }
 
     void MatrixState::SetSize(const uint32_t& size)
     {
-        mContext.mData.vp = realloc(mContext.mData.vp, sizeof(glm::mat4x4) * size);
-        mContext.mCapacity = mContext.mSize = size;
+        m_context.m_data.vp = realloc(m_context.m_data.vp, sizeof(glm::mat4x4) * size);
+        m_context.m_capacity = m_context.m_size = size;
     }
 
     void MatrixState::Reserve(const uint32_t& capacity)
     {
-        if (capacity > mContext.mCapacity)
+        if (capacity > m_context.m_capacity)
         {
-            mContext.mData.vp = realloc(mContext.mData.vp, sizeof(glm::mat4x4) * capacity);
-            mContext.mCapacity = capacity;
+            m_context.m_data.vp = realloc(m_context.m_data.vp, sizeof(glm::mat4x4) * capacity);
+            m_context.m_capacity = capacity;
         }
     }
 
     void MatrixState::Clear()
     {
-        if (mContext.mSize > 0)
+        if (m_context.m_size > 0)
         {
-            for (uint32_t i = 0; i < mContext.mSize; i++) mContext.mData.m[i] = glm::mat4x4(0);
-            mContext.mSize = 0;
+            for (uint32_t i = 0; i < m_context.m_size; i++) m_context.m_data.m[i] = glm::mat4x4(0);
+            m_context.m_size = 0;
         }
     }
 
@@ -76,7 +76,7 @@ namespace Library
             &x3, &y3, &z3, &w3,
             &x4, &y4, &z4, &w4);
 
-        mContext.Set(glm::mat4x4(
+        m_context.Set(glm::mat4x4(
             x1, y1, z1, w1,
             x2, y2, z2, w2,
             x3, y3, z3, w3,
@@ -85,22 +85,22 @@ namespace Library
 
     void MatrixState::SetStorage(const Datum& rhs)
     {
-        SetStorage(rhs.mData.m, rhs.mSize);
+        SetStorage(rhs.m_data.m, rhs.m_size);
     }
 
     void MatrixState::SetStorage(glm::mat4x4* data, const uint32_t& size)
     {
-        assert(mContext.mType == DatumType::Matrix);
+        assert(m_context.m_type == DatumType::Matrix);
 
-        if (mContext.mCapacity > 0) Clear();
+        if (m_context.m_capacity > 0) Clear();
 
-        mContext.mDataIsExternal = true;
-        mContext.mData.m = data;
-        mContext.mCapacity = mContext.mSize = size;
+        m_context.m_dataIsExternal = true;
+        m_context.m_data.m = data;
+        m_context.m_capacity = m_context.m_size = size;
     }
 
     string MatrixState::ToString(const uint32_t& index)
     {
-        return glm::to_string(mContext.Get<glm::mat4x4>(index));
+        return glm::to_string(m_context.Get<glm::mat4x4>(index));
     }
 }

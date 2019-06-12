@@ -74,8 +74,8 @@ namespace Library
 
     protected:
 
-        XmlParseMaster* mXmlParseMaster;
-        const std::string mValidElementName;
+        XmlParseMaster* m_xmlParseMaster;
+        const std::string m_validElementName;
 
     };
 }

@@ -6,27 +6,30 @@ using namespace std;
 
 namespace Library
 {
-    RTTI_DEFINITIONS(IXmlParseHelper)
+    RTTI_DEFINITIONS(IXmlParseHelper);
 
-        IXmlParseHelper::IXmlParseHelper(XmlParseMaster* const xmlParseMaster) :
-        mXmlParseMaster(xmlParseMaster), mValidElementName("")
+    IXmlParseHelper::IXmlParseHelper(XmlParseMaster* const xmlParseMaster) :
+        m_xmlParseMaster(xmlParseMaster), 
+        m_validElementName("")
     {
-        if (mXmlParseMaster != nullptr)
+        if (m_xmlParseMaster != nullptr)
         {
-            mXmlParseMaster->AddHelper(*this);
+            m_xmlParseMaster->AddHelper(*this);
         }
     }
 
     IXmlParseHelper::~IXmlParseHelper()
     {
-        if (mXmlParseMaster != nullptr)
+        if (m_xmlParseMaster != nullptr)
         {
-            mXmlParseMaster->RemoveHelper(*this);
+            m_xmlParseMaster->RemoveHelper(*this);
         }
     }
 
-    void IXmlParseHelper::CharDataHandler(XmlParseMaster::SharedData& sharedData,
-        const string& buffer, const uint32_t& bufferLength)
+    void IXmlParseHelper::CharDataHandler(
+        XmlParseMaster::SharedData& sharedData,
+        const string& buffer, 
+        const uint32_t& bufferLength)
     {
         UNREFERENCED_PARAMETER(sharedData);
         UNREFERENCED_PARAMETER(buffer);

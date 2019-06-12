@@ -14,12 +14,12 @@ namespace Library
     {
         bool result = false;
 
-        if (mContext.mType == rhs.mType && mContext.mSize == rhs.mSize)
+        if (m_context.m_type == rhs.m_type && m_context.m_size == rhs.m_size)
         {
             result = true;
-            for (uint32_t i = 0; i < mContext.mSize; i++)
+            for (uint32_t i = 0; i < m_context.m_size; i++)
             {
-                if (mContext.mData.r[i] != rhs.mData.r[i])
+                if (m_context.m_data.r[i] != rhs.m_data.r[i])
                 {
                     result = false;
                     break;
@@ -32,32 +32,32 @@ namespace Library
 
     Datum& PointerState::operator=(Library::RTTI* const& rhs)
     {
-        if (mContext.mSize == 0) { mContext.SetSize(1); }
-        mContext.mData.r[0] = rhs;
-        return mContext;
+        if (m_context.m_size == 0) { m_context.SetSize(1); }
+        m_context.m_data.r[0] = rhs;
+        return m_context;
     }
 
     void PointerState::SetSize(const uint32_t& size)
     {
-        mContext.mData.vp = realloc(mContext.mData.vp, sizeof(Library::RTTI*) * size);
-        mContext.mCapacity = mContext.mSize = size;
+        m_context.m_data.vp = realloc(m_context.m_data.vp, sizeof(Library::RTTI*) * size);
+        m_context.m_capacity = m_context.m_size = size;
     }
 
     void PointerState::Reserve(const uint32_t& capacity)
     {
-        if (capacity > mContext.mCapacity)
+        if (capacity > m_context.m_capacity)
         {
-            mContext.mData.vp = realloc(mContext.mData.vp, sizeof(Library::RTTI*) * capacity);
-            mContext.mCapacity = capacity;
+            m_context.m_data.vp = realloc(m_context.m_data.vp, sizeof(Library::RTTI*) * capacity);
+            m_context.m_capacity = capacity;
         }
     }
 
     void PointerState::Clear()
     {
-        if (mContext.mSize > 0)
+        if (m_context.m_size > 0)
         {
-            for (uint32_t i = 0; i < mContext.mSize; i++) mContext.mData.r[i] = nullptr;
-            mContext.mSize = 0;
+            for (uint32_t i = 0; i < m_context.m_size; i++) m_context.m_data.r[i] = nullptr;
+            m_context.m_size = 0;
         }
     }
 
@@ -70,18 +70,18 @@ namespace Library
 
     void PointerState::SetStorage(const Datum& rhs)
     {
-        SetStorage(rhs.mData.r, rhs.mSize);
+        SetStorage(rhs.m_data.r, rhs.m_size);
     }
 
     void PointerState::SetStorage(Library::RTTI** data, const uint32_t& size)
     {
-        assert(mContext.mType == DatumType::Pointer);
+        assert(m_context.m_type == DatumType::Pointer);
 
-        if (mContext.mCapacity > 0) Clear();
+        if (m_context.m_capacity > 0) Clear();
 
-        mContext.mDataIsExternal = true;
-        mContext.mData.r = data;
-        mContext.mCapacity = mContext.mSize = size;
+        m_context.m_dataIsExternal = true;
+        m_context.m_data.r = data;
+        m_context.m_capacity = m_context.m_size = size;
     }
 
     string PointerState::ToString(const uint32_t& index)

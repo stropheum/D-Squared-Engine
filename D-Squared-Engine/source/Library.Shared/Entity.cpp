@@ -6,17 +6,17 @@ using namespace std;
 
 namespace Library
 {
-    RTTI_DEFINITIONS(Entity)
+    RTTI_DEFINITIONS(Entity);
 
-        Entity::Entity()
+    Entity::Entity()
     {
-        (*this)["Name"].SetStorage(&mName, 1);
+        (*this)["Name"].SetStorage(&m_name, 1);
         (*this)["Actions"].SetType(DatumType::Scope);
     }
 
     string Entity::Name() const
     {
-        return mName;
+        return m_name;
     }
 
     void Entity::SetName(const string& name)
@@ -40,7 +40,7 @@ namespace Library
 
     void Entity::SetSector(Sector& sector)
     {
-        sector.Adopt(*this, mName);
+        sector.Adopt(*this, m_name);
     }
 
     Sector& Entity::GetSector() const

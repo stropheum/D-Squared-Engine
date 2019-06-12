@@ -158,7 +158,7 @@ namespace TestLibraryDesktop
 
             parseMaster.ParseFromFile("ActionGrammar.xml");
 
-            World* world = sharedData.mScope->As<World>();
+            World* world = sharedData.m_scope->As<World>();
             Assert::IsTrue(world != nullptr);
             Assert::IsTrue(world->Name() == "Dales World");
 

@@ -6,42 +6,46 @@ using namespace std;
 
 namespace Library
 {
-    RTTI_DEFINITIONS(XmlParseMaster::SharedData)
+    RTTI_DEFINITIONS(XmlParseMaster::SharedData);
 
-        XmlParseMaster::XmlParseMaster(SharedData* const sharedData) :
-        mXmlParser(XML_ParserCreate(nullptr)), mActiveFileName(""),
-        mSharedData(sharedData), mDepth(0), mClonedInstance(false), mHelpersAreInitialized(false)
+    XmlParseMaster::XmlParseMaster(SharedData* const sharedData) :
+        m_xmlParser(XML_ParserCreate(nullptr)), 
+        m_activeFileName(""),
+        m_sharedData(sharedData), 
+        m_depth(0), 
+        m_clonedInstance(false), 
+        m_helpersAreInitialized(false)
     {
-        XML_SetUserData(mXmlParser, mSharedData);
-        XML_SetElementHandler(mXmlParser, StartElementHandler, EndElementHandler);
-        XML_SetCharacterDataHandler(mXmlParser, CharDataHandler);
+        XML_SetUserData(m_xmlParser, m_sharedData);
+        XML_SetElementHandler(m_xmlParser, StartElementHandler, EndElementHandler);
+        XML_SetCharacterDataHandler(m_xmlParser, CharDataHandler);
     }
 
     XmlParseMaster::~XmlParseMaster()
     {
-        if (mClonedInstance)
+        if (m_clonedInstance)
         {
-            delete mSharedData;
+            delete m_sharedData;
 
-            for (uint32_t i = 0; i < mHelpers.Size(); i++)
+            for (uint32_t i = 0; i < m_helpers.Size(); i++)
             {
-                delete mHelpers[i];
+                delete m_helpers[i];
             }
-            mHelpers.Clear();
+            m_helpers.Clear();
         }
 
-        XML_ParserFree(mXmlParser);
+        XML_ParserFree(m_xmlParser);
     }
 
     XmlParseMaster* XmlParseMaster::Clone() const
     {
-        XmlParseMaster* newParseMaster = new XmlParseMaster(mSharedData->Clone());
-        newParseMaster->mClonedInstance = true;
-        newParseMaster->mActiveFileName = mActiveFileName;
+        XmlParseMaster* newParseMaster = new XmlParseMaster(m_sharedData->Clone());
+        newParseMaster->m_clonedInstance = true;
+        newParseMaster->m_activeFileName = m_activeFileName;
 
-        for (uint32_t i = 0; i < mHelpers.Size(); i++)
+        for (uint32_t i = 0; i < m_helpers.Size(); i++)
         {
-            newParseMaster->mHelpers.PushBack(mHelpers[i]->Clone());
+            newParseMaster->m_helpers.PushBack(m_helpers[i]->Clone());
         }
 
         return newParseMaster;
@@ -49,25 +53,25 @@ namespace Library
 
     void XmlParseMaster::AddHelper(IXmlParseHelper& helper)
     {
-        mHelpers.PushBack(&helper);
+        m_helpers.PushBack(&helper);
     }
 
     void XmlParseMaster::RemoveHelper(IXmlParseHelper& helper)
     {
-        mHelpers.Remove(&helper);
+        m_helpers.Remove(&helper);
     }
 
     void XmlParseMaster::Parse(char* const xmlData, const uint32_t& length, const bool endOfFile)
     {
         HandleHelperInitialization();
-        XML_Parse(mXmlParser, xmlData, length, endOfFile);
+        XML_Parse(m_xmlParser, xmlData, length, endOfFile);
     }
 
     void XmlParseMaster::ParseFromFile(const string& fileName)
     {
         HandleHelperInitialization();
 
-        mActiveFileName = fileName;
+        m_activeFileName = fileName;
         ifstream input;
         input.open(fileName, ios::binary);
         input.seekg(0, ios::end);
@@ -83,17 +87,17 @@ namespace Library
 
     const string& XmlParseMaster::GetFileName() const
     {
-        return mActiveFileName;
+        return m_activeFileName;
     }
 
     void XmlParseMaster::SetSharedData(SharedData* const sharedData)
     {
-        mSharedData = sharedData;
+        m_sharedData = sharedData;
     }
 
     XmlParseMaster::SharedData* XmlParseMaster::GetSharedData() const
     {
-        return mSharedData;
+        return m_sharedData;
     }
 
     void XmlParseMaster::StartElementHandler(void* userData, const XML_Char* name, const XML_Char** atts)
@@ -109,7 +113,7 @@ namespace Library
             attributes[key] = value;
         }
 
-        Vector<IXmlParseHelper*>& helpers = data->GetXmlParseMaster()->mHelpers;
+        Vector<IXmlParseHelper*>& helpers = data->GetXmlParseMaster()->m_helpers;
 
         for (uint32_t i = 0; i < helpers.Size(); i++)
         {
@@ -125,7 +129,7 @@ namespace Library
     void XmlParseMaster::EndElementHandler(void* userData, const XML_Char* name)
     {
         SharedData* data = static_cast<SharedData*>(userData);
-        Vector<IXmlParseHelper*>& helpers = data->GetXmlParseMaster()->mHelpers;
+        Vector<IXmlParseHelper*>& helpers = data->GetXmlParseMaster()->m_helpers;
 
         for (uint32_t i = 0; i < helpers.Size(); i++)
         {
@@ -148,13 +152,13 @@ namespace Library
 
     void XmlParseMaster::HandleHelperInitialization()
     {
-        if (!mHelpersAreInitialized)
+        if (!m_helpersAreInitialized)
         {
-            for (uint32_t i = 0; i < mHelpers.Size(); i++)
+            for (uint32_t i = 0; i < m_helpers.Size(); i++)
             {	// Initialize all Parse helpers so they reflect the correct Parse master
-                mHelpers[i]->Initialize(this);
+                m_helpers[i]->Initialize(this);
             }
-            mHelpersAreInitialized = true;
+            m_helpersAreInitialized = true;
         }
     }
 }

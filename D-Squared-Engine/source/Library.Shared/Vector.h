@@ -184,10 +184,10 @@ namespace Library
         void ShrinkToFit();
 
     private:
-        T* mBuffer; // The space where elements will be stored
-        std::uint32_t mSize; // The number of elements in the Vector
-        std::uint32_t mCapacity; // The number of elements memory has been allocated for
-        bool mFixedSize; // Value to determine if the vector can be resized
+        T* m_buffer; // The space where elements will be stored
+        std::uint32_t m_size; // The number of elements in the Vector
+        std::uint32_t m_capacity; // The number of elements memory has been allocated for
+        bool m_fixedSize; // Value to determine if the vector can be resized
         static const std::uint32_t CAPACITY_INCREMENT = 10; // Standard Reserve value increment
 
     public:
@@ -258,8 +258,8 @@ namespace Library
              */
             Iterator(const Vector<T>* owner, const std::uint32_t& index);
 
-            const Vector<T>* mOwner; // The vector that owns this Iterator
-            std::uint32_t mIndex; // The location that this iterator points to
+            const Vector<T>* m_owner; // The vector that owns this Iterator
+            std::uint32_t m_index; // The location that this iterator points to
         };
     };
 }

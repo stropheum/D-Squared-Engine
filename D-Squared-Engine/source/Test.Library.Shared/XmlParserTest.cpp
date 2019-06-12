@@ -45,9 +45,9 @@ namespace TestLibraryDesktop
 
             parseMaster.AddHelper(helper);
             parseMaster.ParseFromFile("input.xml");
-            Assert::AreEqual(static_cast<std::string>("Dale"), sharedData.mName, L"Name not accurately parsed");
-            Assert::AreEqual(sharedData.mHealth, 100, L"Health not accurately parsed");
-            Assert::AreEqual(sharedData.mMana, 80, L"Mana value not accurately parsed");
+            Assert::AreEqual(static_cast<std::string>("Dale"), sharedData.m_name, L"Name not accurately parsed");
+            Assert::AreEqual(sharedData.m_health, 100, L"Health not accurately parsed");
+            Assert::AreEqual(sharedData.m_mana, 80, L"Mana value not accurately parsed");
             Assert::AreEqual(sharedData.Depth(), 0u, L"Depth not zero at end of parsing");
         }
 
@@ -61,7 +61,7 @@ namespace TestLibraryDesktop
             Library::XmlParseMaster* clone = parseMaster.Clone();
             UNREFERENCED_PARAMETER(clone);
             Library::TestSharedData* data = clone->GetSharedData()->As<Library::TestSharedData>();
-            Assert::AreEqual(data->mName, sharedData.mName);
+            Assert::AreEqual(data->m_name, sharedData.m_name);
 
             delete clone;
         }
