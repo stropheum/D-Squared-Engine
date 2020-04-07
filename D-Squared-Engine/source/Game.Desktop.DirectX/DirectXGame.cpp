@@ -94,7 +94,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
         return 0;
     }
     break;
-    default:
+    default: ;
     }
 
     // Handle any messages the switch statement didn't
