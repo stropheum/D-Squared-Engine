@@ -42,7 +42,7 @@ namespace Library
 
 #pragma region Construction/Copy/Assignment
 
-        Factory() {};
+        Factory() = default;;
 
         virtual ~Factory() = default;
 
