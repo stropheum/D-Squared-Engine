@@ -416,5 +416,6 @@
     <None Include="Event.inl">
       <Filter>Event\_Event</Filter>
     </None>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

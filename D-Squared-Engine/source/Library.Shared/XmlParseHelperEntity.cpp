@@ -92,7 +92,7 @@ namespace Library
 
             if (m_state == State::ParsingVector)
             {
-                assert(attributes.Find("Name") != attributes.end());
+                assert(attributes.Find("Name") != attributes.End());
                 pair<string, string> pair = *attributes.Find("Name");
                 Datum& datum = scope->Append(attributes.Find("Name")->second);
                 datum.SetType(DatumType::Vector);

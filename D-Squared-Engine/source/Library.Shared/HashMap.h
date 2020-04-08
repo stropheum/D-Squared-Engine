@@ -84,13 +84,13 @@ namespace Library
          * Points to the first data point in the HashMap
          * @Return: An iterator pointing to the first piece of data in the HashMap
          */
-        Iterator begin() const;
+        Iterator Begin() const;
 
         /**
          * Points to the end node in the last bucket in the HashMap
          * @Return: An iterator pointing to the end of the last bucket in the HashMap
          */
-        Iterator end() const;
+        Iterator End() const;
 
         /**
          * Clears all memory stored in the HashMap

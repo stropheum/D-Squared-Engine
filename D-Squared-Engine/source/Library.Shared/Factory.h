@@ -86,7 +86,7 @@ namespace Library
             Factory<AbstractProduct>* result = nullptr;
 
             auto foundIterator = s_factoryMap.Find(className);
-            if (foundIterator != s_factoryMap.end())
+            if (foundIterator != s_factoryMap.End())
             {
                 result = foundIterator->second;
             }
@@ -97,14 +97,14 @@ namespace Library
         /**
          * Creates an instance of a product by searching through the hashmap to Find the associated key
          * @Param ClassName: The Name of the product being created
-         * @Return: A pointr to the created product if a factory exists to Create one. Nullptr otherwise
+         * @Return: A pointer to the created product if a factory exists to Create one. Nullptr otherwise
          */
         static AbstractProduct* Create(const std::string& className)
         {
             AbstractProduct* result = nullptr;
 
             auto foundIterator = s_factoryMap.Find(className);
-            if (foundIterator != s_factoryMap.end())
+            if (foundIterator != s_factoryMap.End())
             {
                 result = (*foundIterator).second->Create();
             }
@@ -118,16 +118,16 @@ namespace Library
          */
         static typename HashMap<std::string, Factory<AbstractProduct>*>::Iterator Begin()
         {
-            return s_factoryMap.begin();
+            return s_factoryMap.Begin();
         }
 
         /**
-         * Accesssor to the end iterator for the static hashmap
+         * Accessor to the end iterator for the static hashmap
          * @Return: The end of the static hashmap of factory pointers
          */
         static typename HashMap<std::string, Factory<AbstractProduct>*>::Iterator End()
         {
-            return s_factoryMap.end();
+            return s_factoryMap.End();
         }
 
     protected:

@@ -191,7 +191,7 @@ namespace TestLibraryDesktop
             EventQueue queue;
             GameTime gameTime;
             queue.Enqueue(*event, gameTime, milliseconds(0));
-            gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(1)));
+            gameTime.SetCurrentTime(high_resolution_clock::time_point(milliseconds(100)));
             queue.Update(gameTime);
             Assert::IsTrue(queue.IsEmpty());
 

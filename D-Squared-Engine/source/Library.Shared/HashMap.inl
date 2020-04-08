@@ -81,7 +81,7 @@ namespace Library
         typename HashMap<TKey, TValue, HashFunctor>::Iterator result;
         if (iter == bucket.end())
         {
-            result = end();
+            result = End();
         }
         else
         {
@@ -96,7 +96,7 @@ namespace Library
     {
         auto iter = Find(entry.first);
 
-        if (iter == end())
+        if (iter == End())
         {
             m_size++;
             std::uint32_t bucketIndex = m_hashFunctor(entry.first) % m_bucketCount;
@@ -112,7 +112,7 @@ namespace Library
     {
         auto iter = Find(entry.first);
 
-        if (iter == end())
+        if (iter == End())
         {
             found = false;
             m_size++;
@@ -133,7 +133,7 @@ namespace Library
     {
         auto iter = Find(key);
 
-        if (iter != end())
+        if (iter != End())
         {
             std::uint32_t hashIndex = m_hashFunctor(key) % m_bucketCount;
             m_buckets[hashIndex].Remove(*iter);
@@ -153,14 +153,14 @@ namespace Library
     const TValue& HashMap<TKey, TValue, HashFunctor>::operator[](const TKey& key) const
     {
         auto iter = Find(key);
-        if (iter == end()) { throw std::exception("Indexing out of bounds on const HashMap"); }
+        if (iter == End()) { throw std::exception("Indexing out of bounds on const HashMap"); }
         return iter->second;
     }
 
     template <typename TKey, typename TValue, typename HashFunctor>
-    typename HashMap<TKey, TValue, HashFunctor>::Iterator HashMap<TKey, TValue, HashFunctor>::begin() const
+    typename HashMap<TKey, TValue, HashFunctor>::Iterator HashMap<TKey, TValue, HashFunctor>::Begin() const
     {
-        Iterator result = end();
+        Iterator result = End();
 
         if (m_size > 0)
         {
@@ -177,7 +177,7 @@ namespace Library
     }
 
     template <typename TKey, typename TValue, typename HashFunctor>
-    typename HashMap<TKey, TValue, HashFunctor>::Iterator HashMap<TKey, TValue, HashFunctor>::end() const
+    typename HashMap<TKey, TValue, HashFunctor>::Iterator HashMap<TKey, TValue, HashFunctor>::End() const
     {
         return Iterator(this, m_bucketCount, m_buckets[m_bucketCount - 1].end());
     }
@@ -203,7 +203,7 @@ namespace Library
     bool HashMap<TKey, TValue, HashFunctor>::ContainsKey(const TKey& key) const
     {
         auto iter = Find(key);
-        return iter != end();
+        return iter != End();
     }
 
     template <typename TKey, typename TValue, typename HashFunctor>

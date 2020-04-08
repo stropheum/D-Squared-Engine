@@ -93,7 +93,7 @@ namespace Library
         if (m_map.Size() > 0)
         {
             auto iter = m_map.Find(key);
-            result = (iter != m_map.end()) ? &(*iter).second : nullptr;
+            result = (iter != m_map.End()) ? &(*iter).second : nullptr;
         }
 
         return result;
@@ -102,7 +102,7 @@ namespace Library
     Datum* const Scope::Find(const string& key) const
     {
         auto iter = m_map.Find(key);
-        Datum* const result = (iter != m_map.end()) ? &(*iter).second : nullptr;
+        Datum* const result = (iter != m_map.End()) ? &(*iter).second : nullptr;
         return result;
     }
 
@@ -272,12 +272,12 @@ namespace Library
 
     HashMap<const string, Datum>::Iterator Scope::begin() const
     {
-        return m_map.begin();
+        return m_map.Begin();
     }
 
     HashMap<const string, Datum>::Iterator Scope::end() const
     {
-        return m_map.end();
+        return m_map.End();
     }
 
 #pragma endregion

@@ -129,9 +129,9 @@ namespace TestLibraryDesktop
             Library::HashMap<int, int> intcopy2(intMap);
             Assert::AreEqual(intMap.Size(), intcopy2.Size(),
                 L"HashMap sizes not equal");
-            Assert::IsFalse(intMap.begin() == intMap.end(),
+            Assert::IsFalse(intMap.Begin() == intMap.End(),
                 L"begin of non-empty HashMap equals end");
-            Assert::IsFalse(intcopy2.begin() == intcopy2.end(),
+            Assert::IsFalse(intcopy2.Begin() == intcopy2.End(),
                 L"begin of non-empty HashMap equals end");
         }
 
@@ -145,9 +145,9 @@ namespace TestLibraryDesktop
             Library::HashMap<int*, int> ptrcopy2(ptrMap);
             Assert::AreEqual(ptrMap.Size(), ptrcopy2.Size(),
                 L"HashMap sizes not equal");
-            Assert::IsFalse(ptrMap.begin() == ptrMap.end(),
+            Assert::IsFalse(ptrMap.Begin() == ptrMap.End(),
                 L"begin of non-empty HashMap equals end");
-            Assert::IsFalse(ptrcopy2.begin() == ptrcopy2.end(),
+            Assert::IsFalse(ptrcopy2.Begin() == ptrcopy2.End(),
                 L"begin of non-empty HashMap equals end");
         }
 
@@ -161,9 +161,9 @@ namespace TestLibraryDesktop
             Library::HashMap<char*, int> chrcopy2(chrMap);
             Assert::AreEqual(chrMap.Size(), chrcopy2.Size(),
                 L"HashMap sizes not equal");
-            Assert::IsFalse(chrMap.begin() == chrMap.end(),
+            Assert::IsFalse(chrMap.Begin() == chrMap.End(),
                 L"begin of non-empty HashMap equals end");
-            Assert::IsFalse(chrcopy2.begin() == chrcopy2.end(),
+            Assert::IsFalse(chrcopy2.Begin() == chrcopy2.End(),
                 L"begin of non-empty HashMap equals end");
         }
 
@@ -177,9 +177,9 @@ namespace TestLibraryDesktop
             Library::HashMap<std::string, int> strcopy2(strMap);
             Assert::AreEqual(strMap.Size(), strcopy2.Size(),
                 L"HashMap sizes not equal");
-            Assert::IsFalse(strMap.begin() == strMap.end(),
+            Assert::IsFalse(strMap.Begin() == strMap.End(),
                 L"begin of non-empty HashMap equals end");
-            Assert::IsFalse(strcopy2.begin() == strcopy2.end(),
+            Assert::IsFalse(strcopy2.Begin() == strcopy2.End(),
                 L"begin of non-empty HashMap equals end");
         }
 
@@ -193,9 +193,9 @@ namespace TestLibraryDesktop
             Library::HashMap<Foo, int> foocopy2(fooMap);
             Assert::AreEqual(fooMap.Size(), foocopy2.Size(),
                 L"HashMap sizes not equal");
-            Assert::IsFalse(fooMap.begin() == fooMap.end(),
+            Assert::IsFalse(fooMap.Begin() == fooMap.End(),
                 L"begin of non-empty HashMap equals end");
-            Assert::IsFalse(foocopy2.begin() == foocopy2.end(),
+            Assert::IsFalse(foocopy2.Begin() == foocopy2.End(),
                 L"begin of non-empty HashMap equals end");
         }
 
@@ -209,9 +209,9 @@ namespace TestLibraryDesktop
             Library::HashMap<int, int> intcopy2 = intMap;
             Assert::AreEqual(intMap.Size(), intcopy2.Size(),
                 L"HashMap sizes not equal");
-            Assert::IsFalse(intMap.begin() == intMap.end(),
+            Assert::IsFalse(intMap.Begin() == intMap.End(),
                 L"begin of non-empty HashMap equals end");
-            Assert::IsFalse(intcopy2.begin() == intcopy2.end(),
+            Assert::IsFalse(intcopy2.Begin() == intcopy2.End(),
                 L"begin of non-empty HashMap equals end");
         }
 
@@ -225,9 +225,9 @@ namespace TestLibraryDesktop
             Library::HashMap<int*, int> ptrcopy2 = ptrMap;
             Assert::AreEqual(ptrMap.Size(), ptrcopy2.Size(),
                 L"HashMap sizes not equal");
-            Assert::IsFalse(ptrMap.begin() == ptrMap.end(),
+            Assert::IsFalse(ptrMap.Begin() == ptrMap.End(),
                 L"begin of non-empty HashMap equals end");
-            Assert::IsFalse(ptrcopy2.begin() == ptrcopy2.end(),
+            Assert::IsFalse(ptrcopy2.Begin() == ptrcopy2.End(),
                 L"begin of non-empty HashMap equals end");
         }
 
@@ -241,9 +241,9 @@ namespace TestLibraryDesktop
             Library::HashMap<char*, int> chrcopy2 = chrMap;
             Assert::AreEqual(chrMap.Size(), chrcopy2.Size(),
                 L"HashMap sizes not equal");
-            Assert::IsFalse(chrMap.begin() == chrMap.end(),
+            Assert::IsFalse(chrMap.Begin() == chrMap.End(),
                 L"begin of non-empty HashMap equals end");
-            Assert::IsFalse(chrcopy2.begin() == chrcopy2.end(),
+            Assert::IsFalse(chrcopy2.Begin() == chrcopy2.End(),
                 L"begin of non-empty HashMap equals end");
         }
 
@@ -257,9 +257,9 @@ namespace TestLibraryDesktop
             Library::HashMap<std::string, int> strcopy2 = strMap;
             Assert::AreEqual(strMap.Size(), strcopy2.Size(),
                 L"HashMap sizes not equal");
-            Assert::IsFalse(strMap.begin() == strMap.end(),
+            Assert::IsFalse(strMap.Begin() == strMap.End(),
                 L"begin of non-empty HashMap equals end");
-            Assert::IsFalse(strcopy2.begin() == strcopy2.end(),
+            Assert::IsFalse(strcopy2.Begin() == strcopy2.End(),
                 L"begin of non-empty HashMap equals end");
         }
 
@@ -273,9 +273,9 @@ namespace TestLibraryDesktop
             Library::HashMap<Foo, int> foocopy2 = fooMap;
             Assert::AreEqual(fooMap.Size(), foocopy2.Size(),
                 L"HashMap sizes not equal");
-            Assert::IsFalse(fooMap.begin() == fooMap.end(),
+            Assert::IsFalse(fooMap.Begin() == fooMap.End(),
                 L"begin of non-empty HashMap equals end");
-            Assert::IsFalse(foocopy2.begin() == foocopy2.end(),
+            Assert::IsFalse(foocopy2.Begin() == foocopy2.End(),
                 L"begin of non-empty HashMap equals end");
         }
 
@@ -389,12 +389,12 @@ namespace TestLibraryDesktop
 
         TEST_METHOD(TestFind_Integer)
         {
-            Assert::IsTrue(intMap.Find(1) == intMap.end(),
+            Assert::IsTrue(intMap.Find(1) == intMap.End(),
                 L"Find on empty HashMap does not return end");
             intMap.Insert(std::pair<int, int>(1, 1));
-            Assert::IsTrue(intMap.Find(1) == intMap.begin(),
+            Assert::IsTrue(intMap.Find(1) == intMap.Begin(),
                 L"Only value inserted into HashMap is not begin");
-            Assert::IsFalse(intMap.Find(1) == intMap.end(),
+            Assert::IsFalse(intMap.Find(1) == intMap.End(),
                 L"Find on existing value should not return end");
             Assert::AreEqual((*intMap.Find(1)).second, 1,
                 L"Find returning incorrect value");
@@ -402,12 +402,12 @@ namespace TestLibraryDesktop
 
         TEST_METHOD(TestFind_Pointer)
         {
-            Assert::IsTrue(ptrMap.Find(&x) == ptrMap.end(),
+            Assert::IsTrue(ptrMap.Find(&x) == ptrMap.End(),
                 L"Find on empty HashMap does not return end");
             ptrMap.Insert(std::pair<int*, int>(&x, 1));
-            Assert::IsTrue(ptrMap.Find(&x) == ptrMap.begin(),
+            Assert::IsTrue(ptrMap.Find(&x) == ptrMap.Begin(),
                 L"Only value inserted into HashMap is not Begin");
-            Assert::IsFalse(ptrMap.Find(&x) == ptrMap.end(),
+            Assert::IsFalse(ptrMap.Find(&x) == ptrMap.End(),
                 L"Find on existing value should not return end");
             Assert::AreEqual((*ptrMap.Find(&x)).second, 1,
                 L"Find returning incorrect value");
@@ -415,12 +415,12 @@ namespace TestLibraryDesktop
 
         TEST_METHOD(TestFind_CharStar)
         {
-            Assert::IsTrue(chrMap.Find(c) == chrMap.end(),
+            Assert::IsTrue(chrMap.Find(c) == chrMap.End(),
                 L"Find on empty HashMap does not return end");
             chrMap.Insert(std::pair<char*, int>(c, 1));
-            Assert::IsTrue(chrMap.Find(c) == chrMap.begin(),
+            Assert::IsTrue(chrMap.Find(c) == chrMap.Begin(),
                 L"Only value inserted into HashMap is not begin");
-            Assert::IsFalse(chrMap.Find(c) == chrMap.end(),
+            Assert::IsFalse(chrMap.Find(c) == chrMap.End(),
                 L"Find on existing value should not return end");
             Assert::AreEqual((*chrMap.Find(c)).second, 1,
                 L"Find returning incorrect value");
@@ -428,12 +428,12 @@ namespace TestLibraryDesktop
 
         TEST_METHOD(TestFind_String)
         {
-            Assert::IsTrue(strMap.Find(s) == strMap.end(),
+            Assert::IsTrue(strMap.Find(s) == strMap.End(),
                 L"Find on empty HashMap does not return end");
             strMap.Insert(std::pair<std::string, int>(s, 1));
-            Assert::IsTrue(strMap.Find(s) == strMap.begin(),
+            Assert::IsTrue(strMap.Find(s) == strMap.Begin(),
                 L"Only value inserted into HashMap is not begin");
-            Assert::IsFalse(strMap.Find(s) == strMap.end(),
+            Assert::IsFalse(strMap.Find(s) == strMap.End(),
                 L"Find on existing value should not return end");
             Assert::AreEqual((*strMap.Find(s)).second, 1,
                 L"Find returning incorrect value");
@@ -441,12 +441,12 @@ namespace TestLibraryDesktop
 
         TEST_METHOD(TestFind_Foo)
         {
-            Assert::IsTrue(fooMap.Find(foo) == fooMap.end(),
+            Assert::IsTrue(fooMap.Find(foo) == fooMap.End(),
                 L"Find on empty HashMap does not return end");
             fooMap.Insert(std::pair<Foo, int>(foo, 1));
-            Assert::IsTrue(fooMap.Find(foo) == fooMap.begin(),
+            Assert::IsTrue(fooMap.Find(foo) == fooMap.Begin(),
                 L"Only value inserted into HashMap is not Begin");
-            Assert::IsFalse(fooMap.Find(foo) == fooMap.end(),
+            Assert::IsFalse(fooMap.Find(foo) == fooMap.End(),
                 L"Find on existing value should not return end");
             Assert::AreEqual((*fooMap.Find(foo)).second, 1,
                 L"Find returning incorrect value");
@@ -455,7 +455,7 @@ namespace TestLibraryDesktop
         TEST_METHOD(TestInsert_Integer)
         {
             auto intInsert = intMap.Insert(std::pair<int, int>(1, 1));
-            Assert::IsTrue(intInsert == intMap.begin(),
+            Assert::IsTrue(intInsert == intMap.Begin(),
                 L"Inserting first element should return begin");
 
             intMap.Insert(std::pair<int, int>(10, 1));
@@ -466,7 +466,7 @@ namespace TestLibraryDesktop
         TEST_METHOD(TestInsert_Pointer)
         {
             auto ptrInsert = ptrMap.Insert(std::pair<int*, int>(&x, 1));
-            Assert::IsTrue(ptrInsert == ptrMap.begin(),
+            Assert::IsTrue(ptrInsert == ptrMap.Begin(),
                 L"Inserting first element should return begin");
 
             ptrMap.Insert(std::pair<int*, int>(&y, 1));
@@ -477,7 +477,7 @@ namespace TestLibraryDesktop
         TEST_METHOD(TestInsert_CharStar)
         {
             auto chrInsert = chrMap.Insert(std::pair<char*, int>(a, 1));
-            Assert::IsTrue(chrInsert == chrMap.begin(),
+            Assert::IsTrue(chrInsert == chrMap.Begin(),
                 L"Inserting first element should return begin");
 
             chrMap.Insert(std::pair<char*, int>(b, 1));
@@ -488,7 +488,7 @@ namespace TestLibraryDesktop
         TEST_METHOD(TestInsert_String)
         {
             auto strInsert = strMap.Insert(std::pair<std::string, int>(s, 1));
-            Assert::IsTrue(strInsert == strMap.begin(),
+            Assert::IsTrue(strInsert == strMap.Begin(),
                 L"Inserting first element should return begin");
 
             strMap.Insert(std::pair<std::string, int>(t, 1));
@@ -499,7 +499,7 @@ namespace TestLibraryDesktop
         TEST_METHOD(TestInsert_Foo)
         {
             auto fooInsert = fooMap.Insert(std::pair<Foo, int>(foo, 1));
-            Assert::IsTrue(fooInsert == fooMap.begin(),
+            Assert::IsTrue(fooInsert == fooMap.Begin(),
                 L"Inserting first element should return begin");
 
             fooMap.Insert(std::pair<Foo, int>(bar, 1));
@@ -775,145 +775,145 @@ namespace TestLibraryDesktop
 
         TEST_METHOD(TestBegin_Integer)
         {
-            Assert::IsTrue(intMap.begin() == intMap.end(),
+            Assert::IsTrue(intMap.Begin() == intMap.End(),
                 L"begin does not equal end on empty HashMap");
 
             std::pair<const int, int> intPair(1, 1);
             intMap.Insert(intPair);
-            Assert::IsTrue(intPair == *(intMap.begin()));
+            Assert::IsTrue(intPair == *(intMap.Begin()));
 
             intMap.Remove(1);
-            Assert::IsTrue(intMap.begin() == intMap.end(),
+            Assert::IsTrue(intMap.Begin() == intMap.End(),
                 L"begin does not equal end on empty HashMap");
         }
 
         TEST_METHOD(TestBegin_Pointer)
         {
-            Assert::IsTrue(ptrMap.begin() == ptrMap.end(),
+            Assert::IsTrue(ptrMap.Begin() == ptrMap.End(),
                 L"begin does not equal end on empty HashMap");
 
             std::pair<int* const, int> ptrPair(&x, 1);
             ptrMap.Insert(ptrPair);
-            Assert::IsTrue(ptrPair == *(ptrMap.begin()));
+            Assert::IsTrue(ptrPair == *(ptrMap.Begin()));
 
             ptrMap.Remove(&x);
-            Assert::IsTrue(ptrMap.begin() == ptrMap.end(),
+            Assert::IsTrue(ptrMap.Begin() == ptrMap.End(),
                 L"begin does not equal end on empty HashMap");
         }
 
         TEST_METHOD(TestBegin_CharStar)
         {
-            Assert::IsTrue(chrMap.begin() == chrMap.end(),
+            Assert::IsTrue(chrMap.Begin() == chrMap.End(),
                 L"begin does not equal end on empty HashMap");
 
             std::pair<char* const, int> chrPair(a, 1);
             chrMap.Insert(chrPair);
-            Assert::IsTrue(chrPair == *(chrMap.begin()));
+            Assert::IsTrue(chrPair == *(chrMap.Begin()));
 
             chrMap.Remove(a);
-            Assert::IsTrue(chrMap.begin() == chrMap.end(),
+            Assert::IsTrue(chrMap.Begin() == chrMap.End(),
                 L"begin does not equal end on empty HashMap");
         }
 
         TEST_METHOD(TestBegin_String)
         {
-            Assert::IsTrue(strMap.begin() == strMap.end(),
+            Assert::IsTrue(strMap.Begin() == strMap.End(),
                 L"begin does not equal end on empty HashMap");
 
             std::pair<const std::string, int> strPair(s, 1);
             strMap.Insert(strPair);
-            Assert::IsTrue(strPair == *(strMap.begin()));
+            Assert::IsTrue(strPair == *(strMap.Begin()));
 
             strMap.Remove(s);
-            Assert::IsTrue(strMap.begin() == strMap.end(),
+            Assert::IsTrue(strMap.Begin() == strMap.End(),
                 L"begin does not equal end on empty HashMap");
         }
 
         TEST_METHOD(TestBegin_Foo)
         {
-            Assert::IsTrue(fooMap.begin() == fooMap.end(),
+            Assert::IsTrue(fooMap.Begin() == fooMap.End(),
                 L"begin does not equal end on empty HashMap");
 
             std::pair<const Foo, int> fooPair(foo, 1);
             fooMap.Insert(fooPair);
-            Assert::IsTrue(fooPair == *(fooMap.begin()));
+            Assert::IsTrue(fooPair == *(fooMap.Begin()));
 
             fooMap.Remove(foo);
-            Assert::IsTrue(fooMap.begin() == fooMap.end(),
+            Assert::IsTrue(fooMap.Begin() == fooMap.End(),
                 L"begin does not equal end on empty HashMap");
         }
 
         TEST_METHOD(TestEnd_Integer)
         {
-            Assert::IsTrue(intMap.begin() == intMap.end(),
+            Assert::IsTrue(intMap.Begin() == intMap.End(),
                 L"begin should be equivalent to end on empty HashMap");
             intMap.Insert(std::pair<int, int>(1, 1));
-            Assert::IsFalse(intMap.begin() == intMap.end(),
+            Assert::IsFalse(intMap.Begin() == intMap.End(),
                 L"begin should not be equivalent to end on non-empty HashMap");
             intMap.Remove(1);
-            Assert::IsTrue(intMap.begin() == intMap.end(),
+            Assert::IsTrue(intMap.Begin() == intMap.End(),
                 L"begin should be equivalent to end on empty HashMap");
-            auto intFunc = [&] { *intMap.end(); };
+            auto intFunc = [&] { *intMap.End(); };
             Assert::ExpectException<std::exception>(intFunc,
                 L"Dereferencing end of HashMap should throw exception");
         }
 
         TEST_METHOD(TestEnd_Pointer)
         {
-            Assert::IsTrue(ptrMap.begin() == ptrMap.end(),
+            Assert::IsTrue(ptrMap.Begin() == ptrMap.End(),
                 L"begin should be equivalent to end on empty HashMap");
             ptrMap.Insert(std::pair<int*, int>(&x, 1));
-            Assert::IsFalse(ptrMap.begin() == ptrMap.end(),
+            Assert::IsFalse(ptrMap.Begin() == ptrMap.End(),
                 L"begin should not be equivalent to end on non-empty HashMap");
             ptrMap.Remove(&x);
-            Assert::IsTrue(ptrMap.begin() == ptrMap.end(),
+            Assert::IsTrue(ptrMap.Begin() == ptrMap.End(),
                 L"begin should be equivalent to end on empty HashMap");
-            auto ptrFunc = [&] { *ptrMap.end(); };
+            auto ptrFunc = [&] { *ptrMap.End(); };
             Assert::ExpectException<std::exception>(ptrFunc,
                 L"Dereferencing end of HashMap should throw exception");
         }
 
         TEST_METHOD(TestEnd_CharStar)
         {
-            Assert::IsTrue(chrMap.begin() == chrMap.end(),
+            Assert::IsTrue(chrMap.Begin() == chrMap.End(),
                 L"begin should be equivalent to end on empty HashMap");
             chrMap.Insert(std::pair<char*, int>(a, 1));
-            Assert::IsFalse(chrMap.begin() == chrMap.end(),
+            Assert::IsFalse(chrMap.Begin() == chrMap.End(),
                 L"begin should not be equivalent to end on non-empty HashMap");
             chrMap.Remove(a);
-            Assert::IsTrue(chrMap.begin() == chrMap.end(),
+            Assert::IsTrue(chrMap.Begin() == chrMap.End(),
                 L"begin should be equivalent to end on empty HashMap");
-            auto chrFunc = [&] { *chrMap.end(); };
+            auto chrFunc = [&] { *chrMap.End(); };
             Assert::ExpectException<std::exception>(chrFunc,
                 L"Dereferencing end of HashMap should throw exception");
         }
 
         TEST_METHOD(TestEnd_String)
         {
-            Assert::IsTrue(strMap.begin() == strMap.end(),
+            Assert::IsTrue(strMap.Begin() == strMap.End(),
                 L"begin should be equivalent to end on empty HashMap");
             strMap.Insert(std::pair<std::string, int>(s, 1));
-            Assert::IsFalse(strMap.begin() == strMap.end(),
+            Assert::IsFalse(strMap.Begin() == strMap.End(),
                 L"begin should not be equivalent to end on non-empty HashMap");
             strMap.Remove(s);
-            Assert::IsTrue(strMap.begin() == strMap.end(),
+            Assert::IsTrue(strMap.Begin() == strMap.End(),
                 L"begin should be equivalent to end on empty HashMap");
-            auto strFunc = [&] { *strMap.end(); };
+            auto strFunc = [&] { *strMap.End(); };
             Assert::ExpectException<std::exception>(strFunc,
                 L"Dereferencing end of HashMap should throw exception");
         }
 
         TEST_METHOD(TestEnd_Foo)
         {
-            Assert::IsTrue(fooMap.begin() == fooMap.end(),
+            Assert::IsTrue(fooMap.Begin() == fooMap.End(),
                 L"begin should be equivalent to end on empty HashMap");
             fooMap.Insert(std::pair<Foo, int>(foo, 1));
-            Assert::IsFalse(fooMap.begin() == fooMap.end(),
+            Assert::IsFalse(fooMap.Begin() == fooMap.End(),
                 L"begin should not be equivalent to end on non-empty HashMap");
             fooMap.Remove(foo);
-            Assert::IsTrue(fooMap.begin() == fooMap.end(),
+            Assert::IsTrue(fooMap.Begin() == fooMap.End(),
                 L"begin should be equivalent to end on empty HashMap");
-            auto fooFunc = [&] { *fooMap.end(); };
+            auto fooFunc = [&] { *fooMap.End(); };
             Assert::ExpectException<std::exception>(fooFunc,
                 L"Dereferencing end of HashMap should throw exception");
         }
@@ -1201,17 +1201,17 @@ namespace TestLibraryDesktop
 
         TEST_METHOD(TestIteratorCopyConstructor_Integer)
         {
-            auto interator_1(intMap.begin());
-            Assert::IsTrue(interator_1 == intMap.begin() && interator_1 == intMap.end(),
+            auto interator_1(intMap.Begin());
+            Assert::IsTrue(interator_1 == intMap.Begin() && interator_1 == intMap.End(),
                 L"Iterator copy should be equivalent to begin and end of empty HashMap");
 
             intMap.Insert(std::pair<int, int>(1, 1));
-            auto interator_2(intMap.begin());
-            Assert::IsTrue(interator_2 == intMap.begin() && interator_2 != intMap.end(),
+            auto interator_2(intMap.Begin());
+            Assert::IsTrue(interator_2 == intMap.Begin() && interator_2 != intMap.End(),
                 L"Iterator copy should be equivalent to only the value it's assigned to");
 
-            auto interator_3(intMap.end());
-            Assert::IsTrue(interator_3 != intMap.begin() && interator_3 == intMap.end(),
+            auto interator_3(intMap.End());
+            Assert::IsTrue(interator_3 != intMap.Begin() && interator_3 == intMap.End(),
                 L"Iterator copy should be equivalent to only the value it's assigned to");
 
             auto interator_4(intMap.Find(1));
@@ -1222,17 +1222,17 @@ namespace TestLibraryDesktop
 
         TEST_METHOD(TestIteratorCopyConstructor_Pointer)
         {
-            auto pointerator_1(ptrMap.begin());
-            Assert::IsTrue(pointerator_1 == ptrMap.begin() && pointerator_1 == ptrMap.end(),
+            auto pointerator_1(ptrMap.Begin());
+            Assert::IsTrue(pointerator_1 == ptrMap.Begin() && pointerator_1 == ptrMap.End(),
                 L"Iterator copy should be equivalent to begin and end of empty HashMap");
 
             ptrMap.Insert(std::pair<int*, int>(&x, 1));
-            auto pointerator_2(ptrMap.begin());
-            Assert::IsTrue(pointerator_2 == ptrMap.begin() && pointerator_2 != ptrMap.end(),
+            auto pointerator_2(ptrMap.Begin());
+            Assert::IsTrue(pointerator_2 == ptrMap.Begin() && pointerator_2 != ptrMap.End(),
                 L"Iterator copy should be equivalent to only the value it's assigned to");
 
-            auto pointerator_3(ptrMap.end());
-            Assert::IsTrue(pointerator_3 != ptrMap.begin() && pointerator_3 == ptrMap.end(),
+            auto pointerator_3(ptrMap.End());
+            Assert::IsTrue(pointerator_3 != ptrMap.Begin() && pointerator_3 == ptrMap.End(),
                 L"Iterator copy should be equivalent to only the value it's assigned to");
 
             auto pointerator_4(ptrMap.Find(&x));
@@ -1243,17 +1243,17 @@ namespace TestLibraryDesktop
 
         TEST_METHOD(TestIteratorCopyConstructor_CharStar)
         {
-            auto charterator_1(chrMap.begin());
-            Assert::IsTrue(charterator_1 == chrMap.begin() && charterator_1 == chrMap.end(),
+            auto charterator_1(chrMap.Begin());
+            Assert::IsTrue(charterator_1 == chrMap.Begin() && charterator_1 == chrMap.End(),
                 L"Iterator copy should be equivalent to begin and end of empty HashMap");
 
             chrMap.Insert(std::pair<char*, int>(a, 1));
-            auto charterator_2(chrMap.begin());
-            Assert::IsTrue(charterator_2 == chrMap.begin() && charterator_2 != chrMap.end(),
+            auto charterator_2(chrMap.Begin());
+            Assert::IsTrue(charterator_2 == chrMap.Begin() && charterator_2 != chrMap.End(),
                 L"Iterator copy should be equivalent to only the value it's assigned to");
 
-            auto charterator_3(chrMap.end());
-            Assert::IsTrue(charterator_3 != chrMap.begin() && charterator_3 == chrMap.end(),
+            auto charterator_3(chrMap.End());
+            Assert::IsTrue(charterator_3 != chrMap.Begin() && charterator_3 == chrMap.End(),
                 L"Iterator copy should be equivalent to only the value it's assigned to");
 
             auto charterator_4(chrMap.Find(a));
@@ -1264,17 +1264,17 @@ namespace TestLibraryDesktop
 
         TEST_METHOD(TestIteratorCopyConstructor_String)
         {
-            auto stringerator_1(strMap.begin());
-            Assert::IsTrue(stringerator_1 == strMap.begin() && stringerator_1 == strMap.end(),
+            auto stringerator_1(strMap.Begin());
+            Assert::IsTrue(stringerator_1 == strMap.Begin() && stringerator_1 == strMap.End(),
                 L"Iterator copy should be equivalent to begin and end of empty HashMap");
 
             strMap.Insert(std::pair<std::string, int>(s, 1));
-            auto stringerator_2(strMap.begin());
-            Assert::IsTrue(stringerator_2 == strMap.begin() && stringerator_2 != strMap.end(),
+            auto stringerator_2(strMap.Begin());
+            Assert::IsTrue(stringerator_2 == strMap.Begin() && stringerator_2 != strMap.End(),
                 L"Iterator copy should be equivalent to only the value it's assigned to");
 
-            auto stringerator_3(strMap.end());
-            Assert::IsTrue(stringerator_3 != strMap.begin() && stringerator_3 == strMap.end(),
+            auto stringerator_3(strMap.End());
+            Assert::IsTrue(stringerator_3 != strMap.Begin() && stringerator_3 == strMap.End(),
                 L"Iterator copy should be equivalent to only the value it's assigned to");
 
             auto stringerator_4(strMap.Find(s));
@@ -1285,17 +1285,17 @@ namespace TestLibraryDesktop
 
         TEST_METHOD(TestIteratorCopyConstructor_Foo)
         {
-            auto footerator_1(fooMap.begin());
-            Assert::IsTrue(footerator_1 == fooMap.begin() && footerator_1 == fooMap.end(),
+            auto footerator_1(fooMap.Begin());
+            Assert::IsTrue(footerator_1 == fooMap.Begin() && footerator_1 == fooMap.End(),
                 L"Iterator copy should be equivalent to begin and end of empty HashMap");
 
             fooMap.Insert(std::pair<Foo, int>(foo, 1));
-            auto footerator_2(fooMap.begin());
-            Assert::IsTrue(footerator_2 == fooMap.begin() && footerator_2 != fooMap.end(),
+            auto footerator_2(fooMap.Begin());
+            Assert::IsTrue(footerator_2 == fooMap.Begin() && footerator_2 != fooMap.End(),
                 L"Iterator copy should be equivalent to only the value it's assigned to");
 
-            auto footerator_3(fooMap.end());
-            Assert::IsTrue(footerator_3 != fooMap.begin() && footerator_3 == fooMap.end(),
+            auto footerator_3(fooMap.End());
+            Assert::IsTrue(footerator_3 != fooMap.Begin() && footerator_3 == fooMap.End(),
                 L"Iterator copy should be equivalent to only the value it's assigned to");
 
             auto footerator_4(fooMap.Find(foo));
@@ -1306,17 +1306,17 @@ namespace TestLibraryDesktop
 
         TEST_METHOD(TestIteratorAssignmentOperator_Integer)
         {
-            auto interator_1 = intMap.begin();
-            Assert::IsTrue(interator_1 == intMap.begin() && interator_1 == intMap.end(),
+            auto interator_1 = intMap.Begin();
+            Assert::IsTrue(interator_1 == intMap.Begin() && interator_1 == intMap.End(),
                 L"Iterator copy should be equivalent to begin and end of empty HashMap");
 
             intMap.Insert(std::pair<int, int>(1, 1));
-            auto interator_2 = intMap.begin();
-            Assert::IsTrue(interator_2 == intMap.begin() && interator_2 != intMap.end(),
+            auto interator_2 = intMap.Begin();
+            Assert::IsTrue(interator_2 == intMap.Begin() && interator_2 != intMap.End(),
                 L"Iterator copy should be equivalent to only the value it's assigned to");
 
-            auto interator_3 = intMap.end();
-            Assert::IsTrue(interator_3 != intMap.begin() && interator_3 == intMap.end(),
+            auto interator_3 = intMap.End();
+            Assert::IsTrue(interator_3 != intMap.Begin() && interator_3 == intMap.End(),
                 L"Iterator copy should be equivalent to only the value it's assigned to");
 
             auto interator_4 = intMap.Find(1);
@@ -1327,17 +1327,17 @@ namespace TestLibraryDesktop
 
         TEST_METHOD(TestIteratorAssignmentOperator_Pointer)
         {
-            auto pointerator_1 = ptrMap.begin();
-            Assert::IsTrue(pointerator_1 == ptrMap.begin() && pointerator_1 == ptrMap.end(),
+            auto pointerator_1 = ptrMap.Begin();
+            Assert::IsTrue(pointerator_1 == ptrMap.Begin() && pointerator_1 == ptrMap.End(),
                 L"Iterator copy should be equivalent to begin and end of empty HashMap");
 
             ptrMap.Insert(std::pair<int*, int>(&x, 1));
-            auto pointerator_2 = ptrMap.begin();
-            Assert::IsTrue(pointerator_2 == ptrMap.begin() && pointerator_2 != ptrMap.end(),
+            auto pointerator_2 = ptrMap.Begin();
+            Assert::IsTrue(pointerator_2 == ptrMap.Begin() && pointerator_2 != ptrMap.End(),
                 L"Iterator copy should be equivalent to only the value it's assigned to");
 
-            auto pointerator_3 = ptrMap.end();
-            Assert::IsTrue(pointerator_3 != ptrMap.begin() && pointerator_3 == ptrMap.end(),
+            auto pointerator_3 = ptrMap.End();
+            Assert::IsTrue(pointerator_3 != ptrMap.Begin() && pointerator_3 == ptrMap.End(),
                 L"Iterator copy should be equivalent to only the value it's assigned to");
 
             auto pointerator_4 = ptrMap.Find(&x);
@@ -1348,17 +1348,17 @@ namespace TestLibraryDesktop
 
         TEST_METHOD(TestIteratorAssignmentOperator_CharStar)
         {
-            auto charterator_1 = chrMap.begin();
-            Assert::IsTrue(charterator_1 == chrMap.begin() && charterator_1 == chrMap.end(),
+            auto charterator_1 = chrMap.Begin();
+            Assert::IsTrue(charterator_1 == chrMap.Begin() && charterator_1 == chrMap.End(),
                 L"Find on empty map not returning End()");
 
             chrMap.Insert(std::pair<char*, int>(a, 1));
-            auto charterator_2 = chrMap.begin();
-            Assert::IsTrue(charterator_2 == chrMap.begin() && charterator_2 != chrMap.end(),
+            auto charterator_2 = chrMap.Begin();
+            Assert::IsTrue(charterator_2 == chrMap.Begin() && charterator_2 != chrMap.End(),
                 L"Find on empty map not returning End()");
 
-            auto charterator_3 = chrMap.end();
-            Assert::IsTrue(charterator_3 != chrMap.begin() && charterator_3 == chrMap.end(),
+            auto charterator_3 = chrMap.End();
+            Assert::IsTrue(charterator_3 != chrMap.Begin() && charterator_3 == chrMap.End(),
                 L"Find on empty map not returning End()");
 
             auto charterator_4 = chrMap.Find(a);
@@ -1369,17 +1369,17 @@ namespace TestLibraryDesktop
 
         TEST_METHOD(TestIteratorAssignmentOperator_String)
         {
-            auto stringerator_1 = strMap.begin();
-            Assert::IsTrue(stringerator_1 == strMap.begin() && stringerator_1 == strMap.end(),
+            auto stringerator_1 = strMap.Begin();
+            Assert::IsTrue(stringerator_1 == strMap.Begin() && stringerator_1 == strMap.End(),
                 L"Find on empty map not returning End()");
 
             strMap.Insert(std::pair<std::string, int>(s, 1));
-            auto stringerator_2 = strMap.begin();
-            Assert::IsTrue(stringerator_2 == strMap.begin() && stringerator_2 != strMap.end(),
+            auto stringerator_2 = strMap.Begin();
+            Assert::IsTrue(stringerator_2 == strMap.Begin() && stringerator_2 != strMap.End(),
                 L"Find on empty map not returning End()");
 
-            auto stringerator_3 = strMap.end();
-            Assert::IsTrue(stringerator_3 != strMap.begin() && stringerator_3 == strMap.end(),
+            auto stringerator_3 = strMap.End();
+            Assert::IsTrue(stringerator_3 != strMap.Begin() && stringerator_3 == strMap.End(),
                 L"Find on empty map not returning End()");
 
             auto stringerator_4 = strMap.Find(s);
@@ -1390,17 +1390,17 @@ namespace TestLibraryDesktop
 
         TEST_METHOD(TestIteratorAssignmentOperator_Foo)
         {
-            auto footerator_1 = fooMap.begin();
-            Assert::IsTrue(footerator_1 == fooMap.begin() && footerator_1 == fooMap.end(),
+            auto footerator_1 = fooMap.Begin();
+            Assert::IsTrue(footerator_1 == fooMap.Begin() && footerator_1 == fooMap.End(),
                 L"Find on empty map not returning End()");
 
             fooMap.Insert(std::pair<Foo, int>(foo, 1));
-            auto footerator_2 = fooMap.begin();
-            Assert::IsTrue(footerator_2 == fooMap.begin() && footerator_2 != fooMap.end(),
+            auto footerator_2 = fooMap.Begin();
+            Assert::IsTrue(footerator_2 == fooMap.Begin() && footerator_2 != fooMap.End(),
                 L"Find on empty map not returning End()");
 
-            auto footerator_3 = fooMap.end();
-            Assert::IsTrue(footerator_3 != fooMap.begin() && footerator_3 == fooMap.end(),
+            auto footerator_3 = fooMap.End();
+            Assert::IsTrue(footerator_3 != fooMap.Begin() && footerator_3 == fooMap.End(),
                 L"Find on empty map not returning End()");
 
             auto footerator_4 = fooMap.Find(foo);
@@ -1413,10 +1413,10 @@ namespace TestLibraryDesktop
         {
             intMap.Insert(std::pair<int, int>(1, 1));
             intMap.Insert(std::pair<int, int>(2, 2));
-            auto interator = intMap.begin();
-            Assert::IsTrue(interator == intMap.begin() && ++interator != intMap.end(),
+            auto interator = intMap.Begin();
+            Assert::IsTrue(interator == intMap.Begin() && ++interator != intMap.End(),
                 L"Incrementing past existing values");
-            Assert::IsTrue(++interator == intMap.end() && ++interator == intMap.end(),
+            Assert::IsTrue(++interator == intMap.End() && ++interator == intMap.End(),
                 L"Incrementing past end should still return end");
         }
 
@@ -1424,10 +1424,10 @@ namespace TestLibraryDesktop
         {
             ptrMap.Insert(std::pair<int*, int>(&x, 1));
             ptrMap.Insert(std::pair<int*, int>(&y, 2));
-            auto pointerator = ptrMap.begin();
-            Assert::IsTrue(pointerator == ptrMap.begin() && ++pointerator != ptrMap.end(),
+            auto pointerator = ptrMap.Begin();
+            Assert::IsTrue(pointerator == ptrMap.Begin() && ++pointerator != ptrMap.End(),
                 L"Incrementing past existing values");
-            Assert::IsTrue(++pointerator == ptrMap.end() && ++pointerator == ptrMap.end(),
+            Assert::IsTrue(++pointerator == ptrMap.End() && ++pointerator == ptrMap.End(),
                 L"Incrementing past end should still return end");
         }
 
@@ -1435,10 +1435,10 @@ namespace TestLibraryDesktop
         {
             chrMap.Insert(std::pair<char*, int>(a, 1));
             chrMap.Insert(std::pair<char*, int>(b, 2));
-            auto charterator = chrMap.begin();
-            Assert::IsTrue(charterator == chrMap.begin() && ++charterator != chrMap.end(),
+            auto charterator = chrMap.Begin();
+            Assert::IsTrue(charterator == chrMap.Begin() && ++charterator != chrMap.End(),
                 L"Incrementing past existing values");
-            Assert::IsTrue(++charterator == chrMap.end() && ++charterator == chrMap.end(),
+            Assert::IsTrue(++charterator == chrMap.End() && ++charterator == chrMap.End(),
                 L"Incrementing past end should still return end");
         }
 
@@ -1446,10 +1446,10 @@ namespace TestLibraryDesktop
         {
             strMap.Insert(std::pair<std::string, int>(s, 1));
             strMap.Insert(std::pair<std::string, int>(t, 2));
-            auto stringerator = strMap.begin();
-            Assert::IsTrue(stringerator == strMap.begin() && ++stringerator != strMap.end(),
+            auto stringerator = strMap.Begin();
+            Assert::IsTrue(stringerator == strMap.Begin() && ++stringerator != strMap.End(),
                 L"Incrementing past existing values");
-            Assert::IsTrue(++stringerator == strMap.end() && ++stringerator == strMap.end(),
+            Assert::IsTrue(++stringerator == strMap.End() && ++stringerator == strMap.End(),
                 L"Incrementing past end should still return end");
         }
 
@@ -1457,111 +1457,111 @@ namespace TestLibraryDesktop
         {
             fooMap.Insert(std::pair<Foo, int>(foo, 1));
             fooMap.Insert(std::pair<Foo, int>(bar, 2));
-            auto footerator = fooMap.begin();
-            Assert::IsTrue(footerator == fooMap.begin() && ++footerator != fooMap.end(),
+            auto footerator = fooMap.Begin();
+            Assert::IsTrue(footerator == fooMap.Begin() && ++footerator != fooMap.End(),
                 L"Incrementing past existing values");
-            Assert::IsTrue(++footerator == fooMap.end() && ++footerator == fooMap.end(),
+            Assert::IsTrue(++footerator == fooMap.End() && ++footerator == fooMap.End(),
                 L"Incrementing past end should still return end");
         }
 
         TEST_METHOD(TestIteratorDereferenceOperator_Integer)
         {
-            auto intFunc = [&] { *intMap.begin(); };
+            auto intFunc = [&] { *intMap.Begin(); };
             Assert::ExpectException<std::exception>(intFunc);
 
             intMap.Insert(std::pair<int, int>(1, 1));
-            Assert::AreEqual(1, (*intMap.begin()).first);
-            Assert::AreEqual(1, (*intMap.begin()).second);
+            Assert::AreEqual(1, (*intMap.Begin()).first);
+            Assert::AreEqual(1, (*intMap.Begin()).second);
         }
 
         TEST_METHOD(TestIteratorDereferenceOperator_Pointer)
         {
-            auto ptrFunc = [&] { *ptrMap.begin(); };
+            auto ptrFunc = [&] { *ptrMap.Begin(); };
             Assert::ExpectException<std::exception>(ptrFunc);
 
             ptrMap.Insert(std::pair<int*, int>(&x, 1));
-            Assert::AreEqual(&x, (*ptrMap.begin()).first);
-            Assert::AreEqual(1, (*ptrMap.begin()).second);
+            Assert::AreEqual(&x, (*ptrMap.Begin()).first);
+            Assert::AreEqual(1, (*ptrMap.Begin()).second);
         }
 
         TEST_METHOD(TestIteratorDereferenceOperator_CharStar)
         {
-            auto chrFunc = [&] { *chrMap.begin(); };
+            auto chrFunc = [&] { *chrMap.Begin(); };
             Assert::ExpectException<std::exception>(chrFunc);
 
             chrMap.Insert(std::pair<char*, int>(a, 1));
-            Assert::AreEqual(a, (*chrMap.begin()).first);
-            Assert::AreEqual(1, (*chrMap.begin()).second);
+            Assert::AreEqual(a, (*chrMap.Begin()).first);
+            Assert::AreEqual(1, (*chrMap.Begin()).second);
         }
 
         TEST_METHOD(TestIteratorDereferenceOperator_String)
         {
-            auto strFunc = [&] { *strMap.begin(); };
+            auto strFunc = [&] { *strMap.Begin(); };
             Assert::ExpectException<std::exception>(strFunc);
 
             strMap.Insert(std::pair<std::string, int>(s, 1));
-            Assert::AreEqual(s, (*strMap.begin()).first);
-            Assert::AreEqual(1, (*strMap.begin()).second);
+            Assert::AreEqual(s, (*strMap.Begin()).first);
+            Assert::AreEqual(1, (*strMap.Begin()).second);
         }
 
         TEST_METHOD(TestIteratorDereferenceOperator_Foo)
         {
-            auto fooFunc = [&] { *fooMap.begin(); };
+            auto fooFunc = [&] { *fooMap.Begin(); };
             Assert::ExpectException<std::exception>(fooFunc);
 
             fooMap.Insert(std::pair<Foo, int>(foo, 1));
-            Assert::IsTrue(foo == (*fooMap.begin()).first);
-            Assert::AreEqual(1, (*fooMap.begin()).second);
+            Assert::IsTrue(foo == (*fooMap.Begin()).first);
+            Assert::AreEqual(1, (*fooMap.Begin()).second);
         }
 
         TEST_METHOD(TestIteratorArrowOperator_Integer)
         {
-            auto intFunc = [&] { *intMap.begin(); };
+            auto intFunc = [&] { *intMap.Begin(); };
             Assert::ExpectException<std::exception>(intFunc);
 
             intMap.Insert(std::pair<int, int>(1, 1));
-            Assert::AreEqual(1, intMap.begin()->first);
-            Assert::AreEqual(1, intMap.begin()->second);
+            Assert::AreEqual(1, intMap.Begin()->first);
+            Assert::AreEqual(1, intMap.Begin()->second);
         }
 
         TEST_METHOD(TestIteratorArrowOperator_Pointer)
         {
-            auto ptrFunc = [&] { *ptrMap.begin(); };
+            auto ptrFunc = [&] { *ptrMap.Begin(); };
             Assert::ExpectException<std::exception>(ptrFunc);
 
             ptrMap.Insert(std::pair<int*, int>(&x, 1));
-            Assert::AreEqual(&x, ptrMap.begin()->first);
-            Assert::AreEqual(1, ptrMap.begin()->second);
+            Assert::AreEqual(&x, ptrMap.Begin()->first);
+            Assert::AreEqual(1, ptrMap.Begin()->second);
         }
 
         TEST_METHOD(TestIteratorArrowOperator_CharStar)
         {
-            auto chrFunc = [&] { *chrMap.begin(); };
+            auto chrFunc = [&] { *chrMap.Begin(); };
             Assert::ExpectException<std::exception>(chrFunc);
 
             chrMap.Insert(std::pair<char*, int>(a, 1));
-            Assert::AreEqual(a, chrMap.begin()->first);
-            Assert::AreEqual(1, chrMap.begin()->second);
+            Assert::AreEqual(a, chrMap.Begin()->first);
+            Assert::AreEqual(1, chrMap.Begin()->second);
         }
 
         TEST_METHOD(TestIteratorArrowOperator_String)
         {
-            auto strFunc = [&] { *strMap.begin(); };
+            auto strFunc = [&] { *strMap.Begin(); };
             Assert::ExpectException<std::exception>(strFunc);
 
             strMap.Insert(std::pair<std::string, int>(s, 1));
-            Assert::AreEqual(s, strMap.begin()->first);
-            Assert::AreEqual(1, strMap.begin()->second);
+            Assert::AreEqual(s, strMap.Begin()->first);
+            Assert::AreEqual(1, strMap.Begin()->second);
         }
 
         TEST_METHOD(TestIteratorArrowOperator_Foo)
         {
-            auto fooFunc = [&] { *fooMap.begin(); };
+            auto fooFunc = [&] { *fooMap.Begin(); };
             Assert::ExpectException<std::exception>(fooFunc);
 
             fooMap.Insert(std::pair<Foo, int>(foo, 1));
-            Assert::IsTrue(foo == fooMap.begin()->first);
-            Assert::AreEqual(1, fooMap.begin()->second);
+            Assert::IsTrue(foo == fooMap.Begin()->first);
+            Assert::AreEqual(1, fooMap.Begin()->second);
         }
 
     };
